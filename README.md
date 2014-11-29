@@ -8,7 +8,7 @@ This is a functional programming (FP) library in the style of [underscore.js](ht
   `each()` returns original list, calling function for its side effects;
   `map2()` and `map3()` vectorise over multiple inputs.
 
-* Iteratively a list to a single value by iteratively applying a binary 
+* Reduce a list to a single value by iteratively applying a binary 
   function: `reduce()` and `reduce_right()`.
 
 * Figure out if a list contains an object: `contains()`.
