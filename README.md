@@ -15,3 +15,6 @@ This is a functional programming (FP) library in the style of [underscore.js](ht
 * `keep()` or `discard()` elements where predicate is true.
 
 * Does `every()` element or `some()` elements match a predicate?
+
+* `invoke()` every function in a list with given arguments.
+.
