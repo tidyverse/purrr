@@ -9,7 +9,9 @@ This is a functional programming (FP) library in the style of [underscore.js](ht
 * Apply a function to each element: `map()` returns transformed list, 
   `each()` returns original list, calling function for its side effects.
 
-* `keep()` or `discard()` elements where predicate is true.
-
 * `reduce()` and `reduce_right()` iteratively a list to a single value 
   by iteratively applying a binary function.
+
+* `keep()` or `discard()` elements where predicate is true.
+
+* Does `every()` element or `some()` elements match a predicate?
