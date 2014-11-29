@@ -15,7 +15,7 @@ If supplied, the result of \code{map} will be a vector or matrix.
 If omitted, the result of \code{map} will be a list.}
 }
 \description{
-Extract elements of a list by position.
+A wrapper around \code{\link{map}()} for one of the most common use cases.
 }
 \examples{
 by_cyl <- split(mtcars, mtcars$cyl)

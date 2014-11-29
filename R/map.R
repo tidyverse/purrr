@@ -10,6 +10,8 @@
 #'   If supplied, the result of \code{map} will be a vector or matrix.
 #'   If omitted, the result of \code{map} will be a list.
 #' @return \code{map} the transformed input; \code{each} the input \code{.x}.
+#' @seealso \code{\link{pluck}} for a wrapper around a common use case:
+#'   extracting an element from each component.
 #' @export
 #' @examples
 #' 1:10 %>%

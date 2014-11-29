@@ -31,4 +31,8 @@ its side-effect and returns the original input.
   map(rnorm, n = 10) \%>\%
   map(mean, .type = numeric(1))
 }
+\seealso{
+\code{\link{pluck}} for a wrapper around a common use case:
+  extracting an element from each component.
+}
 

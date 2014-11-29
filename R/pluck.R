@@ -1,5 +1,7 @@
 #' Extract elements of a list by position.
 #'
+#' A wrapper around \code{\link{map}()} for one of the most common use cases.
+#'
 #' @inheritParams map
 #' @param .i A string or integer index.
 #' @export
