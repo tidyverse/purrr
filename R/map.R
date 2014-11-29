@@ -26,7 +26,7 @@ map <- function(.x, .f, ..., .type) {
 #' @export
 #' @rdname map
 each <- function(.x, .f, ...) {
-  for (i in seq_along(x)) {
+  for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }
   .x
