@@ -1,0 +1,8 @@
+Package: lowliner
+Title: What the Package Does (one line, title case)
+Version: 0.0.0.9000
+Authors@R: 'Hadley Wickham <h.wickham@gmail.com> [aut,cre]'
+Description: What the package does (one paragraph)
+Depends: R (>= 3.1.1)
+License: GPL-3
+LazyData: true
