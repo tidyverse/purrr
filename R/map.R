@@ -29,5 +29,5 @@ each <- function(.x, .f, ...) {
   for (i in seq_along(x)) {
     .f(.x[[i]], ...)
   }
-  x
+  .x
 }
