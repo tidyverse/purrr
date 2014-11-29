@@ -3,4 +3,5 @@
 export("%>%")
 export(each)
 export(map)
+export(pluck)
 importFrom(magrittr,"%>%")
