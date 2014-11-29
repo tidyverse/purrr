@@ -2,6 +2,7 @@
 
 export("%>%")
 export(compact)
+export(contains)
 export(detect)
 export(discard)
 export(each)
