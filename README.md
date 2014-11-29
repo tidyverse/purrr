@@ -21,8 +21,8 @@ A predicate function is a function that either returns `TRUE` or `FALSE`:
 
 * Does `every()` element or `some()` elements match a predicate?
 
-* The value (`detect()`) and `position()` of first element that agrees
-  with predicate.
+* Find the value (`detect()`) and index (`detect_index()`) of the first element 
+  that satisfies the predicate.
 
 ### Lists of functions
 
