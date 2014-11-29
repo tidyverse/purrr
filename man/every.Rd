@@ -15,8 +15,9 @@ some(.x, .f, ...)
 \code{TRUE} or \code{FALSE}}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
-
-\item{Either}{\code{TRUE} or \code{FALSE}.}
+}
+\value{
+Either \code{TRUE} or \code{FALSE}.
 }
 \description{
 Do every or some elements of a list satisfy a predicate?

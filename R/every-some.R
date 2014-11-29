@@ -3,7 +3,7 @@
 #' @inheritParams map
 #' @param .f A predicate function, i.e. a function that returns either
 #'   \code{TRUE} or \code{FALSE}
-#' @param Either \code{TRUE} or \code{FALSE}.
+#' @return Either \code{TRUE} or \code{FALSE}.
 #' @export
 #' @examples
 #' x <- list(0, 1, TRUE)
