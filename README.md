@@ -10,6 +10,8 @@ This is a functional programming (FP) library in the style of [underscore.js](ht
 * Iteratively a list to a single value by iteratively applying a binary 
   function: `reduce()` and `reduce_right()`.
 
+* Figure out if a list contains an object: `contains()`.
+
 ### Predicate functions
 
 A predicate function is a function that either returns `TRUE` or `FALSE`:
@@ -24,3 +26,7 @@ A predicate function is a function that either returns `TRUE` or `FALSE`:
 ### Lists of functions
 
 * `invoke()` every function in a list with given arguments.
+
+### Function operators
+
+* Fill in function arguments with `partial()`. 
