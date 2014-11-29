@@ -1,5 +1,7 @@
 # lowliner
 
+[![Build Status](https://travis-ci.org/hadley/lowliner.png?branch=master)](https://travis-ci.org/hadley/lowliner)
+
 This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/).
 
 ## Functions
