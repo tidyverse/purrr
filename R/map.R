@@ -11,7 +11,8 @@
 #'   If omitted, the result of \code{map} will be a list.
 #' @return \code{map} the transformed input; \code{each} the input \code{.x}.
 #' @seealso \code{\link{pluck}} for a wrapper around a common use case:
-#'   extracting an element from each component.
+#'   extracting an element from each component; \code{\link{map2}()} and
+#'   \code{\link{map3}()} to map over multiple inputs simulatenously
 #' @export
 #' @examples
 #' 1:10 %>%
@@ -32,4 +33,32 @@ each <- function(.x, .f, ...) {
     .f(.x[[i]], ...)
   }
   .x
+}
+
+
+#' Map over multiple inputs simultaneously.
+#'
+#' @inheritParams map
+#' @param .x,.y,.z Lists, usually of the same length. If not, lists will
+#'   be recycled to the length of the longest, using R's regular recycling
+#'   rules.
+#' @export
+#' @examples
+#' x <- list(1, 10, 100)
+#' y <- list(1, 2, 3)
+#' map2(x, y, `+`)
+map2 <- function(.x, .y, .f, ...) {
+  f <- function(x, y) {
+    .f(x, y, ...)
+  }
+  Map(f, .x, .y)
+}
+
+#' @export
+#' @rdname map2
+map3 <- function(.x, .y, .z, .f, ...) {
+  f <- function(x, y, z) {
+    .f(x, y, ...)
+  }
+  Map(f, .x, .y, .z)
 }

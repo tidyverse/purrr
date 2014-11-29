@@ -33,6 +33,7 @@ its side-effect and returns the original input.
 }
 \seealso{
 \code{\link{pluck}} for a wrapper around a common use case:
-  extracting an element from each component.
+  extracting an element from each component; \code{\link{map2}()} and
+  \code{\link{map3}()} to map over multiple inputs simulatenously
 }
 
