@@ -31,3 +31,5 @@ A predicate function is a function that either returns `TRUE` or `FALSE`:
 ### Function operators
 
 * Fill in function arguments with `partial()`. 
+
+* Convert a function to take a list of inputs with `splat()`.

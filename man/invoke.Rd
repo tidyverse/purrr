@@ -6,7 +6,7 @@
 invoke(.x, ..., .type)
 }
 \arguments{
-\item{.x}{A list of functions.}
+\item{.x}{A function or list of functions.}
 
 \item{...}{Arguments passed to each function.}
 

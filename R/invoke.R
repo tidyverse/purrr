@@ -1,6 +1,6 @@
 #' Invoke every element of a list of functions.
 #'
-#' @param .x A list of functions.
+#' @param .x A function or list of functions.
 #' @param ... Arguments passed to each function.
 #' @inheritParams map
 #' @export
@@ -10,5 +10,9 @@
 #' middle %>% invoke(rcauchy(100))
 #' middle %>% invoke(rcauchy(100), .type = numeric(1))
 invoke <- function(.x, ..., .type) {
-  map(.x, function(f) f(...), .type = .type)
+  if (is.function(.x)) {
+    .x(...)
+  } else {
+    map(.x, function(f) f(...), .type = .type)
+  }
 }
