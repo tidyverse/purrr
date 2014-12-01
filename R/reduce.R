@@ -4,6 +4,7 @@
 #' the right.
 #'
 #' @inheritParams map
+#' @param .f A two-argument function.
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using \code{x[[1]]}.
 #' @export

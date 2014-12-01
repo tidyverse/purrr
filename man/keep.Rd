@@ -9,13 +9,21 @@ keep(.x, .f, ...)
 
 discard(.x, .f, ...)
 
-compact(.x)
+compact(.x, .f = identity)
 }
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.f}{A predicate function, i.e. a function that either returns
-\code{TRUE} or \code{FALSE}}
+\item{.f}{A function, formula or string.
+
+  If a function, it is used as is.
+
+  If a formula, e.g. \code{~ x + 2}, it is converted to a function with
+  a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
+  typing for very simple anonymous functions.
+
+  If a string, e.g. \code{"y"}, it is converted to an extractor function,
+  \code{function(x) x[["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
@@ -34,9 +42,9 @@ rep(10, 10) \%>\%
   map(sample, 5) \%>\%
   keep(function(x) mean(x) > 6)
 
-# You can also create functions with \%>\%
+# Or use a formula
 rep(10, 10) \%>\%
   map(sample, 5) \%>\%
-  keep(. \%>\% {mean(.) > 6})
+  keep(~ mean(x) > 6)
 }
 

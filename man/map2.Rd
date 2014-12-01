@@ -13,7 +13,8 @@ map3(.x, .y, .z, .f, ...)
 be recycled to the length of the longest, using R's regular recycling
 rules.}
 
-\item{.f}{A function to apply to each element of \code{.x}.}
+\item{.f}{A function of two (for \code{map2}) or three (\code{map3})
+arguments.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }

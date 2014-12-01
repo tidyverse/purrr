@@ -11,7 +11,7 @@ reduce_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.f}{A function to apply to each element of \code{.x}.}
+\item{.f}{A two-argument function.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 

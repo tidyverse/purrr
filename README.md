@@ -2,7 +2,21 @@
 
 [![Build Status](https://travis-ci.org/hadley/lowliner.png?branch=master)](https://travis-ci.org/hadley/lowliner)
 
-This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/).
+This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). An alternative name for lowliner might be lplyr. By analogy with dplyr, it's a re-thinking of plyr specialised for lists.
+
+The following example uses lowliner to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2^.
+
+```R
+library(lowliner)
+
+mtcars %>%
+  split(.$cyl) %>%
+  map(~ lm(mpg ~ wt, data = x)) %>%
+  map(summary) %>%
+  map("r.squared", .type = numeric(1))
+```
+
+Note the three types of input to `map()`: a function, a formula (converted to an anonymous function), or a string (used to extract named components).
 
 ## Functions
 
@@ -37,3 +51,5 @@ A predicate function is a function that either returns `TRUE` or `FALSE`:
 * Convert a function to take a list of inputs with `splat()`.
 
 * Compose multiple functions into a single function with `compose()`.
+
+

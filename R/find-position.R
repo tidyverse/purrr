@@ -11,6 +11,8 @@
 #' 1:6 %>% detect(is_even)
 #' 1:6 %>% detect_index(is_even)
 detect <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+
   for (i in seq_along(.x)) {
     if (isTRUE(.f(.x[[i]], ...))) return(.x[[i]])
   }
@@ -20,6 +22,8 @@ detect <- function(.x, .f, ...) {
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+
   for (i in seq_along(.x)) {
     if (isTRUE(.f(.x[[i]], ...))) return(i)
   }

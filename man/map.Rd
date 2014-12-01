@@ -11,7 +11,16 @@ each(.x, .f, ...)
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.f}{A function to apply to each element of \code{.x}.}
+\item{.f}{A function, formula or string.
+
+  If a function, it is used as is.
+
+  If a formula, e.g. \code{~ x + 2}, it is converted to a function with
+  a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
+  typing for very simple anonymous functions.
+
+  If a string, e.g. \code{"y"}, it is converted to an extractor function,
+  \code{function(x) x[["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -30,6 +39,22 @@ its side-effect and returns the original input.
 1:10 \%>\%
   map(rnorm, n = 10) \%>\%
   map(mean, .type = numeric(1))
+
+# Or use an anonymous function
+1:10 \%>\%
+  map(function(x) rnorm(10, x))
+
+# Or a formula
+1:10 \%>\%
+  map(~ rnorm(10, x))
+
+# A more realistic example: split a data frame into pieces, fit a
+# model to each piece, summarise and extract R^2
+mtcars \%>\%
+  split(.$cyl) \%>\%
+  map(~ lm(mpg ~ wt, data = x)) \%>\%
+  map(summary) \%>\%
+  map("r.squared", .type = numeric(1))
 }
 \seealso{
 \code{\link{pluck}} for a wrapper around a common use case:

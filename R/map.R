@@ -4,7 +4,16 @@
 #' its side-effect and returns the original input.
 #'
 #' @param .x A list or vector.
-#' @param .f A function to apply to each element of \code{.x}.
+#' @param .f A function, formula or string.
+#'
+#'   If a function, it is used as is.
+#'
+#'   If a formula, e.g. \code{~ x + 2}, it is converted to a function with
+#'   a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
+#'   typing for very simple anonymous functions.
+#'
+#'   If a string, e.g. \code{"y"}, it is converted to an extractor function,
+#'   \code{function(x) x[["y"]]}.
 #' @param ... Additional arguments passed on to \code{.f}.
 #' @param .type Specifies the type of result of \code{.f}, if known.
 #'   If supplied, the result of \code{map} will be a vector or matrix.
@@ -18,7 +27,25 @@
 #' 1:10 %>%
 #'   map(rnorm, n = 10) %>%
 #'   map(mean, .type = numeric(1))
+#'
+#' # Or use an anonymous function
+#' 1:10 %>%
+#'   map(function(x) rnorm(10, x))
+#'
+#' # Or a formula
+#' 1:10 %>%
+#'   map(~ rnorm(10, x))
+#'
+#' # A more realistic example: split a data frame into pieces, fit a
+#' # model to each piece, summarise and extract R^2
+#' mtcars %>%
+#'   split(.$cyl) %>%
+#'   map(~ lm(mpg ~ wt, data = x)) %>%
+#'   map(summary) %>%
+#'   map("r.squared", .type = numeric(1))
 map <- function(.x, .f, ..., .type) {
+  .f <- as_function(.f)
+
   if (missing(.type)) {
     lapply(.x, .f, ...)
   } else {
@@ -39,6 +66,8 @@ each <- function(.x, .f, ...) {
 #' Map over multiple inputs simultaneously.
 #'
 #' @inheritParams map
+#' @param .f A function of two (for \code{map2}) or three (\code{map3})
+#'   arguments.
 #' @param .x,.y,.z Lists, usually of the same length. If not, lists will
 #'   be recycled to the length of the longest, using R's regular recycling
 #'   rules.
@@ -48,6 +77,7 @@ each <- function(.x, .f, ...) {
 #' y <- list(1, 2, 3)
 #' map2(x, y, `+`)
 map2 <- function(.x, .y, .f, ...) {
+  force(.f)
   f <- function(x, y) {
     .f(x, y, ...)
   }
@@ -57,6 +87,7 @@ map2 <- function(.x, .y, .f, ...) {
 #' @export
 #' @rdname map2
 map3 <- function(.x, .y, .z, .f, ...) {
+  force(.f)
   f <- function(x, y, z) {
     .f(x, y, ...)
   }

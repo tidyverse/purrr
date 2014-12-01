@@ -9,19 +9,18 @@
 #' evaluation of \code{.f} is stricter.
 #'
 #' @inheritParams map
-#' @param .f A predicate function, i.e. a function that either returns
-#'   \code{TRUE} or \code{FALSE}
 #' @export
 #' @examples
 #' rep(10, 10) %>%
 #'   map(sample, 5) %>%
 #'   keep(function(x) mean(x) > 6)
 #'
-#' # You can also create functions with %>%
+#' # Or use a formula
 #' rep(10, 10) %>%
 #'   map(sample, 5) %>%
-#'   keep(. %>% {mean(.) > 6})
+#'   keep(~ mean(x) > 6)
 keep <- function(.x, .f, ...) {
+  .f <- as_function(.f)
   sel <- vapply(.x, .f, logical(1), ...)
   .x[!is.na(sel) & sel]
 }
@@ -29,10 +28,14 @@ keep <- function(.x, .f, ...) {
 #' @export
 #' @rdname keep
 discard <- function(.x, .f, ...) {
+  .f <- as_function(.f)
   sel <- vapply(.x, .f, logical(1), ...)
   .x[is.na(sel) | sel]
 }
 
 #' @export
 #' @rdname keep
-compact <- function(.x) discard(.x, is.null)
+compact <- function(.x, .f = identity) {
+  .f <- as_function(.f)
+  .x %>% discard(function(x) is.null(.f(x)))
+}
