@@ -64,6 +64,10 @@ each <- function(.x, .f, ...) {
 
 #' Map over multiple inputs simultaneously.
 #'
+#' These functions are designed in such a way that arguments to be vectorised
+#' over come before the function name, and arguments that should be supplied to
+#' every call come after the function name.
+#'
 #' @inheritParams map
 #' @param .f A function of two (for \code{map2}) or three (\code{map3})
 #'   arguments.
@@ -75,6 +79,11 @@ each <- function(.x, .f, ...) {
 #' x <- list(1, 10, 100)
 #' y <- list(1, 2, 3)
 #' map2(x, y, `+`)
+#'
+#' # Split into pieces, fit model to each piece, then predict
+#' by_cyl <- mtcars %>% split(.$cyl)
+#' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
+#' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ...) {
   force(.f)
   f <- function(x, y) {

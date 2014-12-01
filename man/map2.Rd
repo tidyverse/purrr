@@ -19,11 +19,18 @@ arguments.}
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
 \description{
-Map over multiple inputs simultaneously.
+These functions are designed in such a way that arguments to be vectorised
+over come before the function name, and arguments that should be supplied to
+every call come after the function name.
 }
 \examples{
 x <- list(1, 10, 100)
 y <- list(1, 2, 3)
 map2(x, y, `+`)
+
+# Split into pieces, fit model to each piece, then predict
+by_cyl <- mtcars \%>\% split(.$cyl)
+mods <- by_cyl \%>\% map(~ lm(mpg ~ wt, data = .))
+map2(mods, by_cyl, predict)
 }
 
