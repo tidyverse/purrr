@@ -11,6 +11,7 @@
 #'   There is one special case: if there's a single unnamed input, the second
 #'   level list will be dropped. In this case, \code{rerun(n, x)} behaves like
 #'   \code{replicate(n, x, simplify = FALSE)}.
+#' @export
 #' @examples
 #' 10 %>% rerun(rnorm(5))
 #' 10 %>%
