@@ -92,3 +92,22 @@ map3 <- function(.x, .y, .z, .f, ...) {
   }
   Map(f, .x, .y, .z)
 }
+
+
+#' Modify elements where predicate is satisified.
+#'
+#' @inheritParams map
+#' @param .p A predicate function. Only those elements where \code{.p}
+#'   evaluates to \code{TRUE} will be modified.
+#' @export
+#' @examples
+#' x <- rerun(10, y = if (rbinom(1, 1, prob = 0.5) == 1) NULL else sample(100, 5))
+#' x %>% map_if(~ !is.null(x$y), ~ update_list(x, y = ~ y * 100))
+map_if <- function(.x, .p, .f, ...) {
+  .p <- as_function(.p)
+  .f <- as_function(.f)
+
+  sel <- vapply(.x, .p, logical(1))
+  .x[sel] <- lapply(.x[sel], .f, ...)
+  .x
+}

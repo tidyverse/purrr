@@ -9,6 +9,29 @@
 NULL
 
 
+#' Modify a list
+#'
+#' @param x A list.
+#' @param ... New values of a list. Use \code{NULL} to remove values.
+#'   Use a formula to evaluate in the context of the list values.
+#' @export
+#' @examples
+#' x <- list(x = 1:10, y = 4)
+#' update_list(x, z = 10)
+#' update_list(x, z = ~ x + y)
+update_list <- function(x, ...) {
+  new_values <- list(...)
+
+  is_formula <- map(new_values, ~inherits(x, "formula"), .type = logical(1))
+
+  new_values[is_formula] <- lapply(new_values[is_formula], function(f) {
+    stopifnot(length(f) == 2)
+    eval(f[[2]], x, environment(f))
+  })
+
+  modifyList(x, new_values)
+}
+
 as_function <- function(f) {
   if (is.function(f)) {
     f
