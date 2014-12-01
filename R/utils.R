@@ -60,3 +60,13 @@ as_function <- function(f) {
 rbenoulli <- function(n, p = 0.5) {
   sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(p, 1 - p))
 }
+
+#' Is a vector/list empty?
+#'
+#' @param x object to test
+#' @export
+#' @examples
+#' empty(NULL)
+#' empty(list())
+#' empty(list(NULL))
+empty <- function(x) length(x) == 0
