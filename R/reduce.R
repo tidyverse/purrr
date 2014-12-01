@@ -6,7 +6,9 @@
 #' @inheritParams map
 #' @param .f A two-argument function.
 #' @param .init If supplied, will be used as the first value to start
-#'   the accumulation, rather than using \code{x[[1]]}.
+#'   the accumulation, rather than using \code{x[[1]]}. This is useful if
+#'   you want to ensure that \code{reduce} returns the correct value when
+#'   \code{.x} is \code{\link{empty}()}.
 #' @export
 #' @examples
 #' 1:3 %>% reduce(`+`)
@@ -21,6 +23,11 @@
 #' x %>% reduce_right(c)
 #' # Equivalent to:
 #' x %>% rev() %>% reduce(c)
+#'
+#' # Use init when you want reduce to return a consistent type when
+#' # given an empty lists
+#' list() %>% reduce(`+`)
+#' list() %>% reduce(`+`, .init = 0)
 reduce <- function(.x, .f, ..., .init) {
   force(.f)
   f <- function(x, y) .f(x, y, ...)
