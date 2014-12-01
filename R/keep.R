@@ -18,7 +18,7 @@
 #' # Or use a formula
 #' rep(10, 10) %>%
 #'   map(sample, 5) %>%
-#'   keep(~ mean(x) > 6)
+#'   keep(~ mean(.) > 6)
 #'
 #' # Using a string instead of a function will select all list elements
 #' # where that subelement is TRUE

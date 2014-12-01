@@ -41,7 +41,7 @@ as_function <- function(f) {
     if (length(f) != 2) {
       stop("Formula must be one sided", call. = FALSE)
     }
-    make_function(alist(x = ), f[[2]], environment(f))
+    make_function(alist(. = ), f[[2]], environment(f))
   } else {
     stop("Don't know how to convert ", paste0(class(f), collapse = "/"),
       " into a function", call. = FALSE)

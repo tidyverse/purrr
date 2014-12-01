@@ -11,7 +11,7 @@ library(lowliner)
 
 mtcars %>%
   split(.$cyl) %>%
-  map(~ lm(mpg ~ wt, data = x)) %>%
+  map(~ lm(mpg ~ wt, data = .)) %>%
   map(summary) %>%
   map("r.squared", .type = numeric(1))
 ```

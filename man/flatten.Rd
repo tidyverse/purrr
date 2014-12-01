@@ -19,8 +19,8 @@ x <- rerun(10, sample(5))
 x \%>\% flatten(x)
 
 # You can use flatten in conjunction with map
-x \%>\% map(~ x[1]) \%>\% flatten()
+x \%>\% map(~ .[1]) \%>\% flatten()
 # But it's better to specify the .type argument
-x \%>\% map(~ x[1], .type = numeric(1))
+x \%>\% map(~ .[1], .type = numeric(1))
 }
 

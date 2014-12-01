@@ -33,13 +33,13 @@
 #'
 #' # Or a formula
 #' 1:10 %>%
-#'   map(~ rnorm(10, x))
+#'   map(~ rnorm(10, .))
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
 #' mtcars %>%
 #'   split(.$cyl) %>%
-#'   map(~ lm(mpg ~ wt, data = x)) %>%
+#'   map(~ lm(mpg ~ wt, data = .)) %>%
 #'   map(summary) %>%
 #'   map("r.squared", .type = numeric(1))
 map <- function(.x, .f, ..., .type) {
