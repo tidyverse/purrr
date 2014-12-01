@@ -110,8 +110,11 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #'   evaluates to \code{TRUE} will be modified.
 #' @export
 #' @examples
-#' x <- rerun(10, y = if (rbinom(1, 1, prob = 0.5) == 1) NULL else sample(100, 5))
-#' x %>% map_if(~ !is.null(x$y), ~ update_list(x, y = ~ y * 100))
+#' list(x = sample(c(TRUE, FALSE), 100, replace = TRUE), y = 1:100) %>%
+#'   zip() %>%
+#'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
+#'   unzip() %>%
+#'   map(flatten)
 map_if <- function(.x, .p, .f, ...) {
   .p <- as_function(.p)
   .f <- as_function(.f)
