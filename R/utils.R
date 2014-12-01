@@ -47,3 +47,16 @@ as_function <- function(f) {
       " into a function", call. = FALSE)
   }
 }
+
+#' Generate random samples from a Bernolli distribution
+#'
+#' @param n Number of samples
+#' @param p Probability of getting \code{TRUE}
+#' @return A logical vector
+#' @export
+#' @examples
+#' rbenoulli(10)
+#' rbenoulli(100, 0.1)
+rbenoulli <- function(n, prob = 0.5) {
+  sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(prob, 1 - prob))
+}

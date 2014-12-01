@@ -49,7 +49,7 @@ rep(10, 10) \%>\%
 
 # Using a string instead of a function will select all list elements
 # where that subelement is TRUE
-x <- rerun(5, a = sample(c(FALSE, TRUE), 1), b = sample(10))
+x <- rerun(5, a = rbenoulli(1), b = sample(10))
 x
 x \%>\% keep("a")
 x \%>\% discard("a")

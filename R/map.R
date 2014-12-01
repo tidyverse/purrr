@@ -110,7 +110,7 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #'   evaluates to \code{TRUE} will be modified.
 #' @export
 #' @examples
-#' list(x = sample(c(TRUE, FALSE), 100, replace = TRUE), y = 1:100) %>%
+#' list(x = rbenoulli(100), y = 1:100) %>%
 #'   zip() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   unzip() %>%

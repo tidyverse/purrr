@@ -28,7 +28,7 @@ evaluates to \code{TRUE} will be modified.}
 Modify elements where predicate is satisified.
 }
 \examples{
-list(x = sample(c(TRUE, FALSE), 100, replace = TRUE), y = 1:100) \%>\%
+list(x = rbenoulli(100), y = 1:100) \%>\%
   zip() \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
   unzip() \%>\%
