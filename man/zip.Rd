@@ -25,5 +25,7 @@ x <- rerun(10, x = runif(1), y = runif(5))
 unzip(x)
 
 zip(list(a = 1:5, b = 5:1))
+# unzip is similar to map2 used with list()
+map2(1:5, 5:1, list)
 }
 
