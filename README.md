@@ -4,7 +4,18 @@
 
 This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). An alternative name for lowliner might be lplyr. By analogy with dplyr, it's a re-thinking of plyr specialised for lists.
 
-The following example uses lowliner to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2^.
+## Installation
+
+lowliner is currently not on CRAN, but you can get it from github with:
+
+```R
+# install.packages("devtools")
+devtools::install_github("hadley/lowliner")
+```
+
+## Examples
+
+The following example uses lowliner to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2.
 
 ```R
 library(lowliner)
@@ -18,7 +29,31 @@ mtcars %>%
 
 Note the three types of input to `map()`: a function, a formula (converted to an anonymous function), or a string (used to extract named components).
 
-## Functions
+The following more complicated example shows how you might generate 100 random test-training splits, fit a model to each training split then evaluate based on the test split:
+
+```R
+partition <- function(df, probs) {
+  id <- sample(names(probs), NROW(df), prob = probs, replace = TRUE)
+  split(df, id)
+}
+
+splits <- rerun(100, partition(mtcars, c(test = 0.8, training = 0.2))) %>%
+  unzip()
+
+# Fit the models
+models <- splits$training %>% map(~ lm(mpg ~ wt, data = mtcars))
+# Make predictions on test data
+preds <- map2(models, splits$test, predict)
+
+# Evaluate mean-squared difference between predicted and actual
+msd <- function(x, y) sqrt(mean((x - y) ^ 2))
+diffs <- map2(preds, splits$test %>% map("mpg"), msd) %>% flatten()
+mean(diffs)
+```
+
+## API
+
+### Transformation
 
 * Apply a function to each element: `map()` returns transformed list; 
   `each()` returns original list, calling function for its side effects;
@@ -31,11 +66,11 @@ Note the three types of input to `map()`: a function, a formula (converted to an
 
 ### Predicate functions
 
-A predicate function is a function that either returns `TRUE` or `FALSE`:
+(A predicate function is a function that either returns `TRUE` or `FALSE`)
 
-* `keep()` or `discard()` elements where predicate is true.
+* `keep()` or `discard()` elements that satisfy the predicate..
 
-* Does `every()` element or `some()` elements match a predicate?
+* Does `every()` element or `some()` elements satisfy the predicate?
 
 * Find the value (`detect()`) and index (`detect_index()`) of the first element 
   that satisfies the predicate.
@@ -52,4 +87,10 @@ A predicate function is a function that either returns `TRUE` or `FALSE`:
 
 * Compose multiple functions into a single function with `compose()`.
 
+## Related work
 
+* [rlist](http://renkun.me/rlist/), another R package to support working
+  with lists. Similar goals but somewhat different philosophy.
+
+* List operations defined in the Haskell 
+  [prelude](http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11)
