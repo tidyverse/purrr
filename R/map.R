@@ -19,9 +19,8 @@
 #'   If supplied, the result of \code{map} will be a vector or matrix.
 #'   If omitted, the result of \code{map} will be a list.
 #' @return \code{map} the transformed input; \code{each} the input \code{.x}.
-#' @seealso \code{\link{pluck}} for a wrapper around a common use case:
-#'   extracting an element from each component; \code{\link{map2}()} and
-#'   \code{\link{map3}()} to map over multiple inputs simulatenously
+#' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
+#'   inputs simulatenously
 #' @export
 #' @examples
 #' 1:10 %>%
