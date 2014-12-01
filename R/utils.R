@@ -57,6 +57,6 @@ as_function <- function(f) {
 #' @examples
 #' rbenoulli(10)
 #' rbenoulli(100, 0.1)
-rbenoulli <- function(n, prob = 0.5) {
-  sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(prob, 1 - prob))
+rbenoulli <- function(n, p = 0.5) {
+  sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(p, 1 - p))
 }

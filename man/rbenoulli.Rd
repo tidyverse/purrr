@@ -3,7 +3,7 @@
 \alias{rbenoulli}
 \title{Generate random samples from a Bernolli distribution}
 \usage{
-rbenoulli(n, prob = 0.5)
+rbenoulli(n, p = 0.5)
 }
 \arguments{
 \item{n}{Number of samples}
