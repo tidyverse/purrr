@@ -75,6 +75,8 @@ mean(diffs)
 * Find the value (`detect()`) and index (`detect_index()`) of the first element 
   that satisfies the predicate.
 
+* Find the head/tail that satisfies a predict: `head_while()`, `tail_while()`.
+
 ### Lists of functions
 
 * `invoke()` every function in a list with given arguments.
@@ -86,6 +88,8 @@ mean(diffs)
 * Convert a function to take a list of inputs with `splat()`.
 
 * Compose multiple functions into a single function with `compose()`.
+
+* Negate a predicate funtion with `negate()`.
 
 ## Related work
 
