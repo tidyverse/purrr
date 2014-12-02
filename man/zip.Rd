@@ -6,13 +6,16 @@
 \usage{
 zip(.x)
 
-unzip(.x, fields = NULL)
+unzip(.x, fields = NULL, simplify = TRUE)
 }
 \arguments{
 \item{.x}{A list.}
 
 \item{fields}{Fields to use when unzipping - defaults to the names
 of the first sub-list.}
+
+\item{simplify}{If \code{TRUE}, lists containing atomic scalars of the
+same type will be converted to a vector.}
 }
 \description{
 Zip and unzip are useful transforms for turning a list-of-lists "inside-out".
@@ -21,8 +24,10 @@ For example, if you had a list of length n where each component had values
 and \code{b} that contained lists of length n.
 }
 \examples{
-x <- rerun(10, x = runif(1), y = runif(5))
+x <- rerun(5, x = runif(1), y = runif(5))
+str(x)
 unzip(x)
+unzip(x, simplify = TRUE)
 
 zip(list(a = 1:5, b = 5:1))
 # unzip is similar to map2 used with list()

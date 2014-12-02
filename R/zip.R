@@ -8,10 +8,14 @@
 #' @param .x A list.
 #' @param fields Fields to use when unzipping - defaults to the names
 #'   of the first sub-list.
+#' @param simplify If \code{TRUE}, lists containing atomic scalars of the
+#'   same type will be converted to a vector.
 #' @export
 #' @examples
-#' x <- rerun(10, x = runif(1), y = runif(5))
+#' x <- rerun(5, x = runif(1), y = runif(5))
+#' str(x)
 #' unzip(x)
+#' unzip(x, simplify = TRUE)
 #'
 #' zip(list(a = 1:5, b = 5:1))
 #' # unzip is similar to map2 used with list()
@@ -30,7 +34,7 @@ zip <- function(.x) {
 
 #' @export
 #' @rdname zip
-unzip <- function(.x, fields = NULL) {
+unzip <- function(.x, fields = NULL, simplify = TRUE) {
   if (length(.x) == 0) return(list())
 
   if (is.null(fields)) {
@@ -42,5 +46,24 @@ unzip <- function(.x, fields = NULL) {
     }
   }
 
-  lapply(fields, function(i) lapply(.x, .subset2, i))
+
+  out <- lapply(fields, function(i) lapply(.x, .subset2, i))
+  if (simplify) out <- lapply(out, simplify_list)
+  out
+}
+
+# Simplify a list of atomic vectors of the same type to a vector
+#
+# simplify_list(list(1, 2, 3))
+simplify_list <- function(x) {
+  is_atomic <- map(x, is.atomic, .type = logical(1))
+  if (!all(is_atomic)) return(x)
+
+  n <- map(x, length, .type = integer(1))
+  if (!all(n == 1)) return(x)
+
+  mode <- unique(map(x, typeof, .type = character(1)))
+  if (length(mode) > 1) return(x)
+
+  unlist(x)
 }
