@@ -32,23 +32,27 @@ Note the three types of input to `map()`: a function, a formula (converted to an
 The following more complicated example shows how you might generate 100 random test-training splits, fit a model to each training split then evaluate based on the test split:
 
 ```R
-partition <- function(df, probs) {
+library(dplyr)
+partition <- function(df, n, probs) {
   id <- sample(names(probs), NROW(df), prob = probs, replace = TRUE)
-  split(df, id)
+  replicate(n, split(df, id), simplify = FALSE) %>% unzip() %>% as_data_frame()
 }
+msd <- function(x, y) sqrt(mean((x - y) ^ 2))
 
-splits <- rerun(100, partition(mtcars, c(test = 0.8, training = 0.2))) %>%
-  unzip()
+# Genearte 100 random test-training splits
+boot <- partition(mtcars, 100, c(test = 0.8, training = 0.2))
+boot
 
-# Fit the models
-models <- splits$training %>% map(~ lm(mpg ~ wt, data = mtcars))
-# Make predictions on test data
-preds <- map2(models, splits$test, predict)
+boot <- boot %>% mutate(
+  # Fit the models
+  models = training %>% map(~ lm(mpg ~ wt, data = mtcars)),
+  # Make predictions on test data
+  preds = map2(models, test, predict),
+  diffs = map2(preds, test %>% map("mpg"), msd) 
+)
 
 # Evaluate mean-squared difference between predicted and actual
-msd <- function(x, y) sqrt(mean((x - y) ^ 2))
-diffs <- map2(preds, splits$test %>% map("mpg"), msd) %>% flatten()
-mean(diffs)
+mean(unlist(boot$diffs))
 ```
 
 ## API
@@ -97,6 +101,9 @@ mean(diffs)
 ## Philosophy
 
 The goal is not to try and simulate Haskell in R: lowliner does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.
+
+* Instead of point free style, use the pipe, `%>%` to write code that can be 
+  read from left to right.
 
 * Instead of currying, we use `...` to pass in extra arguments. 
 
