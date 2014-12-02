@@ -22,7 +22,7 @@
 #' map2(1:5, 5:1, list)
 zip <- function(.x) {
 
-  n <- unique(map(.x, length, .type = integer(1)))
+  n <- unique(map_v(.x, length, .type = integer(1)))
   if (length(n) != 1) {
     stop("All elements must be same length", call. = FALSE)
   }
@@ -50,22 +50,26 @@ unzip <- function(.x, fields = NULL, simplify = TRUE) {
   }
 
   out <- lapply(fields, function(i) lapply(.x, .subset2, i))
-  if (simplify) out <- lapply(out, simplify_list)
+  if (simplify) out <- lapply(out, simplify_if_possible)
   out
 }
 
 # Simplify a list of atomic vectors of the same type to a vector
 #
 # simplify_list(list(1, 2, 3))
-simplify_list <- function(x) {
-  is_atomic <- map(x, is.atomic, .type = logical(1))
-  if (!all(is_atomic)) return(x)
+can_simplify <- function(x) {
+  is_atomic <- vapply(x, is.atomic, logical(1))
+  if (!all(is_atomic)) return(FALSE)
 
-  n <- map(x, length, .type = integer(1))
-  if (!all(n == 1)) return(x)
+  n <- vapply(x, length, integer(1))
+  if (!all(n == 1)) return(FALSE)
 
-  mode <- unique(map(x, typeof, .type = character(1)))
-  if (length(mode) > 1) return(x)
+  mode <- unique(vapply(x, typeof, character(1)))
+  if (length(mode) > 1) return(FALSE)
 
+  TRUE
+}
+simplify_if_possible <- function(x) {
+  if (!can_simplify(x)) return(x)
   unlist(x)
 }

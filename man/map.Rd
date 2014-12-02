@@ -2,9 +2,12 @@
 \name{map}
 \alias{each}
 \alias{map}
+\alias{map_v}
 \title{Apply a function to each element of a list.}
 \usage{
 map(.x, .f, ..., .type)
+
+map_v(.x, .f, ..., .type)
 
 each(.x, .f, ...)
 }
@@ -25,15 +28,17 @@ each(.x, .f, ...)
 \item{...}{Additional arguments passed on to \code{.f}.}
 
 \item{.type}{Specifies the type of result of \code{.f}, if known.
-If supplied, the result of \code{map} will be a vector or matrix.
-If omitted, the result of \code{map} will be a list.}
+This will improve performance, and adds a test that output of \code{.f}
+is the type that you expect.}
 }
 \value{
-\code{map} the transformed input; \code{each} the input \code{.x}.
+\code{map} a list; \code{map_v} a vector;
+  \code{each} the input \code{.x}.
 }
 \description{
 \code{map} returns the transformed input; \code{each} calls \code{.f} for
-its side-effect and returns the original input.
+its side-effect and returns the original input. \code{map} always returns
+a list; \code{map_v} always returns an atomic vector (or dies trying).
 }
 \examples{
 1:10 \%>\%
@@ -54,7 +59,7 @@ mtcars \%>\%
   split(.$cyl) \%>\%
   map(~ lm(mpg ~ wt, data = .)) \%>\%
   map(summary) \%>\%
-  map("r.squared", .type = numeric(1))
+  map_v("r.squared")
 }
 \seealso{
 \code{\link{map2}()} and \code{\link{map3}()} to map over multiple

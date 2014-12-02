@@ -16,7 +16,7 @@
 #' 10 %>% rerun(rnorm(5))
 #' 10 %>%
 #'   rerun(x = rnorm(5), y = rnorm(5)) %>%
-#'   map(~ cor(.$x, .$y), .type = numeric(1))
+#'   map_v(~ cor(.$x, .$y))
 rerun <- function(n, ...) {
   dots <- substitute(list(...))
 

@@ -22,7 +22,7 @@ NULL
 update_list <- function(x, ...) {
   new_values <- list(...)
 
-  is_formula <- map(new_values, ~inherits(., "formula"), .type = logical(1))
+  is_formula <- map_v(new_values, ~inherits(., "formula"), .type = logical(1))
 
   new_values[is_formula] <- lapply(new_values[is_formula], function(f) {
     stopifnot(length(f) == 2)

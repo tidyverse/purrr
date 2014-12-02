@@ -20,7 +20,7 @@ x \%>\% flatten(x)
 
 # You can use flatten in conjunction with map
 x \%>\% map(~ .[1]) \%>\% flatten()
-# But it's better to specify the .type argument
-x \%>\% map(~ .[1], .type = numeric(1))
+# But it's better to use map_v
+x \%>\% map_v(~ .[1])
 }
 

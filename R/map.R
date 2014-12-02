@@ -1,7 +1,8 @@
 #' Apply a function to each element of a list.
 #'
 #' \code{map} returns the transformed input; \code{each} calls \code{.f} for
-#' its side-effect and returns the original input.
+#' its side-effect and returns the original input. \code{map} always returns
+#' a list; \code{map_v} always returns an atomic vector (or dies trying).
 #'
 #' @param .x A list or vector.
 #' @param .f A function, formula or string.
@@ -16,9 +17,10 @@
 #'   \code{function(x) x[["y"]]}.
 #' @param ... Additional arguments passed on to \code{.f}.
 #' @param .type Specifies the type of result of \code{.f}, if known.
-#'   If supplied, the result of \code{map} will be a vector or matrix.
-#'   If omitted, the result of \code{map} will be a list.
-#' @return \code{map} the transformed input; \code{each} the input \code{.x}.
+#'   This will improve performance, and adds a test that output of \code{.f}
+#'   is the type that you expect.
+#' @return \code{map} a list; \code{map_v} a vector;
+#'   \code{each} the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -41,12 +43,22 @@
 #'   split(.$cyl) %>%
 #'   map(~ lm(mpg ~ wt, data = .)) %>%
 #'   map(summary) %>%
-#'   map("r.squared", .type = numeric(1))
+#'   map_v("r.squared")
 map <- function(.x, .f, ..., .type) {
+  .f <- as_function(.f)
+  lapply(.x, .f, ...)
+}
+
+#' @rdname map
+#' @export
+map_v <- function(.x, .f, ..., .type) {
   .f <- as_function(.f)
 
   if (missing(.type)) {
-    lapply(.x, .f, ...)
+    out <- lapply(.x, .f, ...)
+    if (!can_simplify(out))
+      stop("Can not coerce output to a vector", call. = FALSE)
+    unlist(out)
   } else {
     vapply(.x, .f, ..., FUN.VALUE = .type)
   }

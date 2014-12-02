@@ -8,11 +8,21 @@
 #' middle <- list(m1 = mean, m2 = median)
 #'
 #' middle %>% invoke(rcauchy(100))
-#' middle %>% invoke(rcauchy(100), .type = numeric(1))
-invoke <- function(.x, ..., .type) {
+#' middle %>% invoke_v(rcauchy(100))
+invoke <- function(.x, ...) {
+  if (is.function(.x)) {
+    list(.x(...))
+  } else {
+    lapply(.x, function(f) f(...))
+  }
+}
+
+#' @export
+#' @rdname invoke
+invoke_v <- function(.x, ..., .type) {
   if (is.function(.x)) {
     .x(...)
   } else {
-    map(.x, function(f) f(...), .type = .type)
+    map_v(.x, function(f) f(...), .type = .type)
   }
 }
