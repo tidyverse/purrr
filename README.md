@@ -94,10 +94,35 @@ mean(diffs)
 
 * Negate a predicate funtion with `negate()`.
 
+## Philosophy
+
+The goal is not to try and simulate Haskell in R: lowliner does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.
+
+* Instead of currying, we use `...` to pass in extra arguments. 
+
+* Anonymous functions are verbose in R, so we provide two convenient shorthands.
+  For predicate functions, `~ . + 1` is equivalent to `function(.) . + 1`.
+  For chains of transformations functions, `. %>% f() %>% g()` is 
+  equivalent to `function(.) . %>% f() %>% g()`.
+  
+* R is weakly typed, so we can implement general `zip()` and `unzip()`, 
+  rather than having to specialise on the number of arguments. (That said
+  I still provide `map2()` and `map3()` since it's useful to clearly separate
+  which arguments are vectorised over).
+  
+* R has named arguments, so instead of providing different functions for
+  minor variations (e.g. `detect()` and `detectLast()`) I use a named 
+  argument, `.first`. Type-stable functions are easy to reason about so
+  additional arguments will never change the type of the output.
+  
 ## Related work
 
 * [rlist](http://renkun.me/rlist/), another R package to support working
   with lists. Similar goals but somewhat different philosophy.
 
-* List operations defined in the Haskell 
-  [prelude](http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11)
+* List operations defined in the Haskell [prelude][haskell]
+
+* Scala's [list methods][scala].
+
+[scala]:http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.List
+[haskell]:http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11
