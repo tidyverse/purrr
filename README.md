@@ -64,6 +64,9 @@ mean(diffs)
 
 * Figure out if a list contains an object: `contains()`.
 
+* Order, sort and split a list based on its components with `split_by()`,
+  `order_by()` and `sort_by()`
+
 ### Predicate functions
 
 (A predicate function is a function that either returns `TRUE` or `FALSE`)
