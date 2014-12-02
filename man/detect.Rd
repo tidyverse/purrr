@@ -4,9 +4,9 @@
 \alias{detect_index}
 \title{Find the value or position of the first match.}
 \usage{
-detect(.x, .f, ...)
+detect(.x, .f, ..., .right = FALSE)
 
-detect_index(.x, .f, ...)
+detect_index(.x, .f, ..., .right = FALSE)
 }
 \arguments{
 \item{.x}{A list or vector.}
@@ -15,10 +15,16 @@ detect_index(.x, .f, ...)
 \code{TRUE} or \code{FALSE}}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
+
+\item{.right}{If \code{FALSE}, the default, starts at the beginnging
+of the vector and move towards the end; if \code{TRUE}, starts at the end
+of the vector and moves towards the beginning.}
 }
 \value{
 \code{detect} the value of the first item that matches the
  predicate; \code{detect_index} the position of the matching item.
+ If not found, \code{detect} returns \code{NULL} and \code{detect_index}
+ returns 0.
 }
 \description{
 Find the value or position of the first match.
@@ -26,7 +32,10 @@ Find the value or position of the first match.
 \examples{
 is_even <- function(x) x \%\% 2 == 0
 
-1:6 \%>\% detect(is_even)
-1:6 \%>\% detect_index(is_even)
+3:10 \%>\% detect(is_even)
+3:10 \%>\% detect_index(is_even)
+
+3:10 \%>\% detect(is_even, .right = TRUE)
+3:10 \%>\% detect_index(is_even, .right = TRUE)
 }
 
