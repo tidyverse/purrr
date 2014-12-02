@@ -61,6 +61,17 @@ rbenoulli <- function(n, p = 0.5) {
   sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(p, 1 - p))
 }
 
+#' Generate random samples from a discrete uniform distribution
+#'
+#' @param n Number of samples to draw.
+#' @param a,b Range of the distribution (inclusive).
+#' @export
+#' @examples
+#' table(rdunif(1e3, 10))
+rdunif <- function(n, b, a = 1) {
+  sample(b - a + 1, n, replace = TRUE) + a - 1
+}
+
 #' Is a vector/list empty?
 #'
 #' @param x object to test
