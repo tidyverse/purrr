@@ -33,19 +33,27 @@ The following more complicated example shows how you might generate 100 random t
 
 ```R
 library(dplyr)
-partition <- function(df, n, probs) {
-  id <- sample(names(probs), NROW(df), prob = probs, replace = TRUE)
-  replicate(n, split(df, id), simplify = FALSE) %>% unzip() %>% as_data_frame()
+random_group <- function(n, probs) {
+  probs <- probs / sum(probs)
+  g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)), 
+    rightmost.closed = TRUE)
+  names(probs)[sample(g)]
 }
+partition <- function(df, n, probs) {
+  replicate(n, split(df, random_group(nrow(df), probs)), FALSE) %>% 
+    unzip() %>% 
+    as_data_frame()
+}
+
 msd <- function(x, y) sqrt(mean((x - y) ^ 2))
 
-# Genearte 100 random test-training splits
+# Genearte 100 rbootandom test-training splits
 boot <- partition(mtcars, 100, c(test = 0.8, training = 0.2))
 boot
 
 boot <- boot %>% mutate(
   # Fit the models
-  models = training %>% map(~ lm(mpg ~ wt, data = mtcars)),
+  models = map(training, ~ lm(mpg ~ wt, data = mtcars)),
   # Make predictions on test data
   preds = map2(models, test, predict),
   diffs = map2(preds, test %>% map("mpg"), msd) 
