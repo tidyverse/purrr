@@ -6,6 +6,6 @@ Description: A FP package for R in the spirit of underscore.js
 License: GPL-3
 LazyData: true
 Imports:
-    magrittr
+    magrittr (>= 1.5)
 Suggests:
     testthat
