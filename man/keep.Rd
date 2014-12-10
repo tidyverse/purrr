@@ -14,18 +14,11 @@ compact(.x, .f = identity)
 \arguments{
 \item{.x}{A list or vector.}
 
+\item{.p}{A single predicate function, or a logical vector of the
+same length as \code{.x}. Only those elements where \code{.p}
+evaluates to \code{TRUE} will be modified.}
+
 \item{...}{Additional arguments passed on to \code{.p}.}
-
-\item{.f}{A function, formula or string.
-
-  If a function, it is used as is.
-
-  If a formula, e.g. \code{~ x + 2}, it is converted to a function with
-  a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
-  typing for very simple anonymous functions.
-
-  If a string, e.g. \code{"y"}, it is converted to an extractor function,
-  \code{function(x) x[["y"]]}.}
 }
 \description{
 \code{keep} and \code{discard} are opposites. \code{compact} is a handy
