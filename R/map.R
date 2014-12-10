@@ -118,8 +118,9 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' Modify elements where predicate is satisified.
 #'
 #' @inheritParams map
-#' @param .p A single predicate function, or a logical vector of the
-#'   same length as \code{.x}. Only those elements where \code{.p}
+#' @param .p A single predicate function, a formula describing a
+#'   predicate function, or a logical vector of the same length
+#'   as \code{.x}. Only those elements where \code{.p}
 #'   evaluates to \code{TRUE} will be modified.
 #' @export
 #' @examples

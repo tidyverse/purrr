@@ -14,8 +14,9 @@ compact(.x, .f = identity)
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.p}{A single predicate function, or a logical vector of the
-same length as \code{.x}. Only those elements where \code{.p}
+\item{.p}{A single predicate function, a formula describing a
+predicate function, or a logical vector of the same length
+as \code{.x}. Only those elements where \code{.p}
 evaluates to \code{TRUE} will be modified.}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
