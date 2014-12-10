@@ -9,4 +9,4 @@ Imports:
     magrittr (>= 1.5)
 Suggests:
     testthat,
-    dplyr
+    dplyr (>= 0.3.0.9000)
