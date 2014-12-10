@@ -118,8 +118,9 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' Modify elements where predicate is satisified.
 #'
 #' @inheritParams map
-#' @param .p A predicate function.or a logical vector. Only those
-#'   elements where \code{.p} evaluates to \code{TRUE} will be modified.
+#' @param .p A single predicate function, or a logical vector of the
+#'   same length as \code{.x}. Only those elements where \code{.p}
+#'   evaluates to \code{TRUE} will be modified.
 #' @export
 #' @examples
 #' list(x = rbenoulli(100), y = 1:100) %>%

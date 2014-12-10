@@ -8,6 +8,8 @@
 #' \code{\link{Filter}} but the argument order is more convenient, and the
 #' evaluation of \code{.f} is stricter.
 #'
+#' @param .x A list or vector.
+#' @param ... Additional arguments passed on to \code{.p}.
 #' @inheritParams map_if
 #' @export
 #' @examples
@@ -27,14 +29,14 @@
 #' x %>% keep("a")
 #' x %>% discard("a")
 keep <- function(.x, .p, ...) {
-  sel <- find_selection(.x, .f)
+  sel <- find_selection(.x, .f, ...)
   .x[!is.na(sel) & sel]
 }
 
 #' @export
 #' @rdname keep
 discard <- function(.x, .p, ...) {
-  sel <- find_selection(.x, .f)
+  sel <- find_selection(.x, .f, ...)
   .x[is.na(sel) | !sel]
 }
 
