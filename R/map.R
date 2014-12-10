@@ -118,8 +118,8 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' Modify elements where predicate is satisified.
 #'
 #' @inheritParams map
-#' @param .p A predicate function. Only those elements where \code{.p}
-#'   evaluates to \code{TRUE} will be modified.
+#' @param .p A predicate function.or a logical vector. Only those
+#'   elements where \code{.p} evaluates to \code{TRUE} will be modified.
 #' @export
 #' @examples
 #' list(x = rbenoulli(100), y = 1:100) %>%
@@ -128,10 +128,9 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #'   unzip() %>%
 #'   map(flatten)
 map_if <- function(.x, .p, .f, ...) {
-  .p <- as_function(.p)
   .f <- as_function(.f)
+  sel <- find_selection(.x, .p)
 
-  sel <- vapply(.x, .p, logical(1))
   .x[sel] <- lapply(.x[sel], .f, ...)
   .x
 }

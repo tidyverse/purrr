@@ -8,7 +8,7 @@
 #' \code{\link{Filter}} but the argument order is more convenient, and the
 #' evaluation of \code{.f} is stricter.
 #'
-#' @inheritParams map
+#' @inheritParams map_if
 #' @export
 #' @examples
 #' rep(10, 10) %>%
@@ -26,17 +26,15 @@
 #' x
 #' x %>% keep("a")
 #' x %>% discard("a")
-keep <- function(.x, .f, ...) {
-  .f <- as_function(.f)
-  sel <- vapply(.x, .f, logical(1), ...)
+keep <- function(.x, .p, ...) {
+  sel <- find_selection(.x, .f)
   .x[!is.na(sel) & sel]
 }
 
 #' @export
 #' @rdname keep
-discard <- function(.x, .f, ...) {
-  .f <- as_function(.f)
-  sel <- vapply(.x, .f, logical(1), ...)
+discard <- function(.x, .p, ...) {
+  sel <- find_selection(.x, .f)
   .x[is.na(sel) | !sel]
 }
 

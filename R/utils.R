@@ -48,6 +48,16 @@ as_function <- function(f) {
   }
 }
 
+find_selection <- function(x, p) {
+  if (is.logical(p)) {
+    stopifnot(length(p) == length(x))
+    p
+  } else {
+    p <- as_function(p)
+    vapply(x, p, logical(1))
+  }
+}
+
 #' Generate random samples from a Bernolli distribution
 #'
 #' @param n Number of samples
