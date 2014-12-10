@@ -28,6 +28,9 @@ inner lists. Only those elements where \code{.p} evaluates to
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
+\value{
+The same type of object as \code{.x}.
+}
 \description{
 Modify elements where predicate is satisified.
 }
@@ -37,5 +40,10 @@ list(x = rbenoulli(100), y = 1:100) \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
   unzip() \%>\%
   map(flatten)
+
+# Convert factors to characters
+iris \%>\%
+  map_if(is.factor, as.character) \%>\%
+  str()
 }
 

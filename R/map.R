@@ -140,6 +140,7 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #'   objects, a string indicating the name of a logical element in the
 #'   inner lists. Only those elements where \code{.p} evaluates to
 #'   \code{TRUE} will be modified, kept or discarded.
+#' @return The same type of object as \code{.x}.
 #' @export
 #' @examples
 #' list(x = rbenoulli(100), y = 1:100) %>%
@@ -147,6 +148,11 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   unzip() %>%
 #'   map(flatten)
+#'
+#' # Convert factors to characters
+#' iris %>%
+#'   map_if(is.factor, as.character) %>%
+#'   str()
 map_if <- function(.x, .p, .f, ...) {
   .f <- as_function(.f)
   sel <- find_selection(.x, .p)
