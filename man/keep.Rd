@@ -9,7 +9,7 @@ keep(.x, .p, ...)
 
 discard(.x, .p, ...)
 
-compact(.x, .f = identity)
+compact(.x, .p = identity)
 }
 \arguments{
 \item{.x}{A list or vector.}

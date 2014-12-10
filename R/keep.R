@@ -42,7 +42,7 @@ discard <- function(.x, .p, ...) {
 
 #' @export
 #' @rdname keep
-compact <- function(.x, .f = identity) {
-  .f <- as_function(.f)
-  .x %>% discard(function(x) empty(.f(x)))
+compact <- function(.x, .p = identity) {
+  .f <- as_function(.p)
+  .x %>% discard(function(x) empty(.p(x)))
 }
