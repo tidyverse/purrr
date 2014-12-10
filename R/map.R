@@ -19,7 +19,7 @@
 #' @param .type Specifies the type of result of \code{.f}, if known.
 #'   This will improve performance, and adds a test that output of \code{.f}
 #'   is the type that you expect.
-#' @return \code{map} a list; \code{map_v} a vector;
+#' @return \code{map} a list; \code{map_v} a vector; \code{map_d} a data frame;
 #'   \code{each} the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
@@ -44,7 +44,15 @@
 #'   map(~ lm(mpg ~ wt, data = .)) %>%
 #'   map(summary) %>%
 #'   map_v("r.squared")
-map <- function(.x, .f, ..., .type) {
+#'
+#' # map, map_v and map_d allow you to control the output type:
+#' # * list
+#' mtcars %>% map(sum)
+#' # * vector
+#' mtcars %>% map_v(sum)
+#' # * data frame
+#' mtcars %>% map_d(sum)
+map <- function(.x, .f, ...) {
   .f <- as_function(.f)
   lapply(.x, .f, ...)
 }
@@ -63,6 +71,14 @@ map_v <- function(.x, .f, ..., .type) {
     vapply(.x, .f, ..., FUN.VALUE = .type)
   }
 }
+
+#' @export
+#' @rdname map
+map_d <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+  dplyr::as_data_frame(lapply(.x, .f, ...))
+}
+
 
 #' @export
 #' @rdname map

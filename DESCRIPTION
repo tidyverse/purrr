@@ -8,4 +8,5 @@ LazyData: true
 Imports:
     magrittr (>= 1.5)
 Suggests:
-    testthat
+    testthat,
+    dplyr

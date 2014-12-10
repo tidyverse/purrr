@@ -2,12 +2,15 @@
 \name{map}
 \alias{each}
 \alias{map}
+\alias{map_d}
 \alias{map_v}
 \title{Apply a function to each element of a list.}
 \usage{
-map(.x, .f, ..., .type)
+map(.x, .f, ...)
 
 map_v(.x, .f, ..., .type)
+
+map_d(.x, .f, ...)
 
 each(.x, .f, ...)
 }
@@ -32,7 +35,7 @@ This will improve performance, and adds a test that output of \code{.f}
 is the type that you expect.}
 }
 \value{
-\code{map} a list; \code{map_v} a vector;
+\code{map} a list; \code{map_v} a vector; \code{map_d} a data frame;
   \code{each} the input \code{.x}.
 }
 \description{
@@ -60,6 +63,14 @@ mtcars \%>\%
   map(~ lm(mpg ~ wt, data = .)) \%>\%
   map(summary) \%>\%
   map_v("r.squared")
+
+# map, map_v and map_d allow you to control the output type:
+# * list
+mtcars \%>\% map(sum)
+# * vector
+mtcars \%>\% map_v(sum)
+# * data frame
+mtcars \%>\% map_d(sum)
 }
 \seealso{
 \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
