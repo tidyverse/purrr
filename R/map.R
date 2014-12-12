@@ -55,7 +55,7 @@
 #' mtcars %>% map_d(sum)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  lapply(.x, .f, ...) %>% return_hook(.x)
+  lapply(.x, .f, ...) %>% output_hook(.x)
 }
 
 #' @rdname map
@@ -111,7 +111,7 @@ map2 <- function(.x, .y, .f, ...) {
   f <- function(x, y) {
     .f(x, y, ...)
   }
-  Map(f, .x, .y) %>% return_hook(.x)
+  Map(f, .x, .y) %>% output_hook(.x)
 }
 
 #' @export
@@ -121,7 +121,7 @@ map3 <- function(.x, .y, .z, .f, ...) {
   f <- function(x, y, z) {
     .f(x, y, ...)
   }
-  Map(f, .x, .y, .z) %>% return_hook(.x)
+  Map(f, .x, .y, .z) %>% output_hook(.x)
 }
 
 

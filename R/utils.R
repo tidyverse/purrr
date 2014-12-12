@@ -58,7 +58,7 @@ find_selection <- function(x, p, ...) {
   }
 }
 
-return_hook <- function(out, x) {
+output_hook <- function(out, x) {
   if (is.data.frame(x)) {
     dplyr::as_data_frame(out)
   } else {
