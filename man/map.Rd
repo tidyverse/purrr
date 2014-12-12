@@ -2,15 +2,12 @@
 \name{map}
 \alias{each}
 \alias{map}
-\alias{map_d}
 \alias{map_v}
 \title{Apply a function to each element of a list.}
 \usage{
 map(.x, .f, ...)
 
 map_v(.x, .f, ..., .type)
-
-map_d(.x, .f, ...)
 
 each(.x, .f, ...)
 }
@@ -35,13 +32,14 @@ This will improve performance, and adds a test that output of \code{.f}
 is the type that you expect.}
 }
 \value{
-\code{map} a list; \code{map_v} a vector; \code{map_d} a data frame;
-  \code{each} (invisibly) the input \code{.x}.
+\code{map} a list if \code{.x} is a list or a data frame if
+  \code{.x} is a data frame; \code{map_v} a vector; \code{map_d} a data
+  frame; \code{each} (invisibly) the input \code{.x}.
 }
 \description{
 \code{map} returns the transformed input; \code{each} calls \code{.f} for
-its side-effect and returns the original input. \code{map} always returns
-a list; \code{map_v} always returns an atomic vector (or dies trying).
+its side-effect and returns the original input. \code{map} returns a list
+or a data frame; \code{map_v} always returns an atomic vector (or dies trying).
 }
 \examples{
 1:10 \%>\%

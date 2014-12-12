@@ -1,8 +1,8 @@
 #' Apply a function to each element of a list.
 #'
 #' \code{map} returns the transformed input; \code{each} calls \code{.f} for
-#' its side-effect and returns the original input. \code{map} always returns
-#' a list; \code{map_v} always returns an atomic vector (or dies trying).
+#' its side-effect and returns the original input. \code{map} returns a list
+#' or a data frame; \code{map_v} always returns an atomic vector (or dies trying).
 #'
 #' @param .x A list or vector.
 #' @param .f A function, formula or string.
@@ -19,8 +19,9 @@
 #' @param .type Specifies the type of result of \code{.f}, if known.
 #'   This will improve performance, and adds a test that output of \code{.f}
 #'   is the type that you expect.
-#' @return \code{map} a list; \code{map_v} a vector; \code{map_d} a data frame;
-#'   \code{each} (invisibly) the input \code{.x}.
+#' @return \code{map} a list if \code{.x} is a list or a data frame if
+#'   \code{.x} is a data frame; \code{map_v} a vector; \code{map_d} a data
+#'   frame; \code{each} (invisibly) the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -54,7 +55,7 @@
 #' mtcars %>% map_d(sum)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  lapply(.x, .f, ...)
+  lapply(.x, .f, ...) %>% return_hook(.x)
 }
 
 #' @rdname map
@@ -70,13 +71,6 @@ map_v <- function(.x, .f, ..., .type) {
   } else {
     vapply(.x, .f, ..., FUN.VALUE = .type)
   }
-}
-
-#' @export
-#' @rdname map
-map_d <- function(.x, .f, ...) {
-  .f <- as_function(.f)
-  dplyr::as_data_frame(lapply(.x, .f, ...))
 }
 
 
@@ -117,7 +111,7 @@ map2 <- function(.x, .y, .f, ...) {
   f <- function(x, y) {
     .f(x, y, ...)
   }
-  Map(f, .x, .y)
+  Map(f, .x, .y) %>% return_hook(.x)
 }
 
 #' @export
@@ -127,7 +121,7 @@ map3 <- function(.x, .y, .z, .f, ...) {
   f <- function(x, y, z) {
     .f(x, y, ...)
   }
-  Map(f, .x, .y, .z)
+  Map(f, .x, .y, .z) %>% return_hook(.x)
 }
 
 
