@@ -20,7 +20,7 @@
 #'   This will improve performance, and adds a test that output of \code{.f}
 #'   is the type that you expect.
 #' @return \code{map} a list; \code{map_v} a vector; \code{map_d} a data frame;
-#'   \code{each} the input \code{.x}.
+#'   \code{each} (invisibly) the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -86,7 +86,7 @@ each <- function(.x, .f, ...) {
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }
-  .x
+  invisible(.x)
 }
 
 

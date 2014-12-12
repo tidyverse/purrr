@@ -36,7 +36,7 @@ is the type that you expect.}
 }
 \value{
 \code{map} a list; \code{map_v} a vector; \code{map_d} a data frame;
-  \code{each} the input \code{.x}.
+  \code{each} (invisibly) the input \code{.x}.
 }
 \description{
 \code{map} returns the transformed input; \code{each} calls \code{.f} for
