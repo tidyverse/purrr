@@ -31,7 +31,7 @@ data <- list(
 cross(data) \%>\%
   map(splat(paste))
 
-# This is equivalent to:
+# For this purpose, the long format is less pratical and requires a loop
 args <- cross(data, .wide = FALSE)
 
 out <- vector("list", length(args[[1]]))

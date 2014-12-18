@@ -23,7 +23,7 @@
 #' cross(data) %>%
 #'   map(splat(paste))
 #'
-#' # This is equivalent to:
+#' # For this purpose, the long format is less pratical and requires a loop
 #' args <- cross(data, .wide = FALSE)
 #'
 #' out <- vector("list", length(args[[1]]))
@@ -31,17 +31,25 @@
 #'   out[[i]] <- map(args, i) %>% splat(paste)()
 #' out
 cross <- function(.x, .wide = TRUE) {
+  n <- length(.x)
   remaining <- prod(vapply(.x, length, numeric(1)))
+  rep_factor <- 1
 
   if (remaining == 0) {
     return(list())
   }
 
-  out <- vector("list", length(.x))
-  names(out) <- names(.x)
-  rep_factor <- 1
+  if (.wide) {
+    model <- rep_len(list(NA), n)
+    names(model) <- names(.x)
+    out <- rep_len(list(model), remaining)
+  } else {
+    out <- vector("list", n)
+    names(out) <- names(.x)
+  }
 
-  for (i in seq_along(.x)) {
+
+  for (i in seq_len(n)) {
     x <- .x[[i]]
     x_length <- length(x)
     remaining <- remaining / x_length
@@ -50,12 +58,14 @@ cross <- function(.x, .wide = TRUE) {
     seq <- rep.int(seq, remaining)
     rep_factor <- rep_factor * x_length
 
-    out[[i]] <- x[seq]
+    if (.wide) {
+      for (j in seq_along(out)) {
+        out[[j]][[i]] <- x[seq][j]
+      }
+    } else {
+      out[[i]] <- x[seq]
+    }
   }
 
-  if (.wide) {
-    unzip(out) %>% map(as.list)
-  } else {
-    out
-  }
+  out
 }
