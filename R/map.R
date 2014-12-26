@@ -77,6 +77,7 @@ map_v <- function(.x, .f, ..., .type) {
 #' @export
 #' @rdname map
 each <- function(.x, .f, ...) {
+  .f <- as_function(.f, pluck = FALSE)
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }
@@ -91,11 +92,12 @@ each <- function(.x, .f, ...) {
 #' every call come after the function name.
 #'
 #' @inheritParams map
-#' @param .f A function of two (for \code{map2}) or three (\code{map3})
-#'   arguments.
-#' @param .x,.y,.z Lists, usually of the same length. If not, lists will
-#'   be recycled to the length of the longest, using R's regular recycling
-#'   rules.
+#' @param .f A function of two (for \code{map2} and \code{each2}) or three
+#'   (\code{map3} and \code{each3}) arguments.
+#' @param .x,.y,.z Lists, usually of the same length. If not,
+#'   \code{map2} and \code{map3} will recycle the lists to the length of
+#'   the longest, using R's regular recycling rules. \code{each2} and
+#'   \code{each3} recycle only lists of length 1.
 #' @export
 #' @examples
 #' x <- list(1, 10, 100)
@@ -122,6 +124,26 @@ map3 <- function(.x, .y, .z, .f, ...) {
     .f(x, y, ...)
   }
   Map(f, .x, .y, .z) %>% output_hook(.x)
+}
+
+#' @export
+#' @rdname map2
+each2 <- function(.x, .y, .f, ...) {
+  args <- recycle_args(x = .x, y = .y)
+  for (i in seq_along(args[[1]])) {
+    .f(args$x[[i]], args$y[[i]], ...)
+  }
+  invisible(.x)
+}
+
+#' @export
+#' @rdname map2
+each3 <- function(.x, .y, .z, .f, ...) {
+  args <- recycle_args(x = .x, y = .y, z = .z)
+  for (i in seq_along(args[[1]])) {
+    .f(args$x[[i]], args$y[[i]], args$z[[i]], ...)
+  }
+  invisible(.x)
 }
 
 
