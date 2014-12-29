@@ -77,7 +77,7 @@ map_v <- function(.x, .f, ..., .type) {
 #' @export
 #' @rdname map
 each <- function(.x, .f, ...) {
-  .f <- as_function(.f, pluck = FALSE)
+  .f <- as_function(.f)
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }
