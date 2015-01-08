@@ -17,10 +17,10 @@ A function.
 \description{
 Wraps a function in \code{\link{do.call}()}, so instead of taking multiple
 arguments, it takes a single named list which will be interpreted
-as its arguments.  This is useful when you want to pass a function a row
-of data frame or list, and don't want to manually pull it apart in
-your function. You can also specify default arguments for \code{.f}
-in the call to \code{splat()}.
+as its arguments. This is useful when you want to pass a function
+a row of data frame or list, and don't want to manually pull it
+apart in your function. You can also specify default arguments for
+\code{.f} in the call to \code{splat()}.
 }
 \examples{
 x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
@@ -30,8 +30,8 @@ splat(mean)(x)
 mean \%>\% splat() \%>\% invoke(x)
 
 # With functions that take a variable number of main arguments,
-# like \\code{paste()}, it is often easier to specify default
-# arguments directly in \\code{splat()}.
+# like paste(), it is often easier to specify default arguments
+# directly in splat().
 c("01", "01", "2001") \%>\% splat(paste, sep = "-")()
 }
 
