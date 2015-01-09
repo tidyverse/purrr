@@ -1,15 +1,27 @@
 #' Produce all combinations of list elements
 #'
-#' \code{cross} returns the product set of the elements of
-#' \code{.x}. It is similar to \code{expand.grid} but it takes and
-#' returns a list and the output is more amenable to mapping
-#' operations.
+#' \code{cross()} returns the product set of the elements of \code{.x}
+#' and \code{.y}. It is similar to \code{expand.grid()} but it returns
+#' a list. By default, the cartesian product is returned in wide
+#' format. This makes it more amenable to mapping
+#' operations. Switching \code{.wide} to \code{FALSE} turns the output
+#' to the long format, the equivalent to \code{expand.grid()}'s
+#' outputs.
+#'
+#' \code{cross3()} takes three three arguments instead of two and
+#' returns the cartesian product of the elements of the three
+#' objects. \code{cross_n()} takes a list \code{.l} and returns the
+#' cartesian product of all its elements. If \code{.l} is a data
+#' frame, \code{cross_n()} returns a data frame.
 #'
 #' @seealso expand.grid
-#' @param .x A list.
+#' @param .x,.y,.z Lists or atomic vectors.
+#' @param .l A list of lists or atomic vectors.
 #' @param .wide If \code{TRUE}, returns a list of unique combinations.
-#'   If \code{FALSE}, returns a list of the same size as \code{.x}
-#'   (this format is equivalent to \code{as.list(expand.grid(.x))}).
+#' If \code{FALSE}, returns a list of the same size as the number of
+#' arguments (2 for \code{cross()}, 3 for \code{cross3()},
+#' \code{length(.l)} for \code{cross_n()}).
+#' @return A list or a data frame.
 #' @export
 #' @examples
 #' # We build all combinations of names, greetings and separators from our
@@ -20,11 +32,12 @@
 #'   sep = c("! ", "... ")
 #' )
 #'
-#' cross(data) %>%
+#' data %>% 
+#'   cross_n() %>%
 #'   map(splat(paste))
 #'
 #' # For this purpose, the long format is less pratical and requires a loop
-#' args <- cross(data, .wide = FALSE)
+#' args <- cross_n(data, .wide = FALSE)
 #'
 #' out <- vector("list", length(args[[1]]))
 #' for (i in seq_along(out))
