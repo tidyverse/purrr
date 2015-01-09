@@ -20,8 +20,8 @@
 #'   This will improve performance, and adds a test that output of \code{.f}
 #'   is the type that you expect.
 #' @return \code{map} a list if \code{.x} is a list or a data frame if
-#'   \code{.x} is a data frame; \code{map_v} a vector; \code{map_d} a data
-#'   frame; \code{each} (invisibly) the input \code{.x}.
+#'   \code{.x} is a data frame; \code{map_v} a vector; \code{each} (invisibly)
+#'   the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -46,13 +46,11 @@
 #'   map(summary) %>%
 #'   map_v("r.squared")
 #'
-#' # map, map_v and map_d allow you to control the output type:
+#' # map, map_v allow you to control the output type:
 #' # * list
 #' mtcars %>% map(sum)
 #' # * vector
 #' mtcars %>% map_v(sum)
-#' # * data frame
-#' mtcars %>% map_d(sum)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
   lapply(.x, .f, ...) %>% output_hook(.x)
@@ -144,14 +142,11 @@ each3 <- function(.x, .y, .z, .f, ...) {
 }
 
 #' @export
+#' @rdname map2
 each_n <- function(.l, .f, ...) {
-  args_list <- c(
-    recycle_args(.l),
-    list(...)
-  )
-  args_list <- zip(args_list)
+  args_list <- recycle_args(.l) %>% zip()
   for (args in args_list) {
-    do.call(".f", args)
+    do.call(".f", c(args, list(...)))
   }
   invisible(.l)
 }
