@@ -144,6 +144,7 @@ each3 <- function(.x, .y, .z, .f, ...) {
 }
 
 #' @export
+#' @rdname map2
 each_n <- function(.l, .f, ...) {
   args_list <- recycle_args(.l) %>% zip()
   for (args in args_list) {
