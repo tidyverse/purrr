@@ -4,7 +4,7 @@
 #' @return A new predicate function.
 #' @export
 #' @examples
-#' x <- zip(list(x = 1:10, y = rbenoulli(10)))
+#' x <- zip(list(x = 1:10, y = rbernoulli(10)))
 #' x %>% keep("y") %>% length()
 #' x %>% keep(negate("y")) %>% length()
 #' # Same as

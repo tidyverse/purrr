@@ -163,7 +163,7 @@ each_n <- function(.l, .f, ...) {
 #' @return The same type of object as \code{.x}.
 #' @export
 #' @examples
-#' list(x = rbenoulli(100), y = 1:100) %>%
+#' list(x = rbernoulli(100), y = 1:100) %>%
 #'   zip() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   unzip() %>%
