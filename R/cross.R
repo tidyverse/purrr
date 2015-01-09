@@ -14,6 +14,15 @@
 #' cartesian product of all its elements. If \code{.l} is a data
 #' frame, \code{cross_n()} returns a data frame.
 #'
+#' When the number of combinations is large and the individual elements
+#' are heavy memory-wise, it is often useful to filter unwanted
+#' combinations on the fly. \code{.filter} must be a predicate
+#' functio! that takes the same number of arguments as the number of
+#' crossed objects (2 for \code{cross()}, 3 for \code{cross3()},
+#' \code{length(.l)} for \code{cross_n()}) and returns \code{TRUE} or
+#' \code{FALSE}. The combinations where the predicate function returns
+#' \code{TRUE} will be removed from the result.
+#'
 #' @seealso expand.grid
 #' @param .x,.y,.z Lists or atomic vectors.
 #' @param .l A list of lists or atomic vectors.
@@ -21,6 +30,7 @@
 #' If \code{FALSE}, returns a list of the same size as the number of
 #' arguments (2 for \code{cross()}, 3 for \code{cross3()},
 #' \code{length(.l)} for \code{cross_n()}).
+#' @param .filter A predicate function
 #' @return A list or a data frame.
 #' @export
 #' @examples
@@ -43,19 +53,23 @@
 #' for (i in seq_along(out))
 #'   out[[i]] <- map(args, i) %>% splat(paste)()
 #' out
-cross <- function(.x, .y, .wide = TRUE) {
-  cross_n(list(.x, .y), .wide = .wide)
+cross <- function(.x, .y, .wide = TRUE, .filter = NULL) {
+  cross_n(list(.x, .y), .wide = .wide, .filter = .filter)
 }
 
 #' @export
 #' @rdname cross
-cross3 <- function(.x, .y, .z, .wide = TRUE) {
-  cross_n(list(.x, .y, .z), .wide = .wide)
+cross3 <- function(.x, .y, .z, .wide = TRUE, .filter = NULL) {
+  cross_n(list(.x, .y, .z), .wide = .wide, .filter = .filter)
 }
 
 #' @export
 #' @rdname cross
-cross_n <- function(.l, .wide = TRUE) {
+cross_n <- function(.l, .wide = TRUE, .filter = NULL) {
+  if (!is.null(.filter)) {
+    return(filtered_cross(.l, .wide, .filter))
+  }
+
   n <- length(.l)
   remaining <- prod(vapply(.l, length, numeric(1)))
   rep_factor <- 1
@@ -93,4 +107,48 @@ cross_n <- function(.l, .wide = TRUE) {
   }
 
   out %>% output_hook(.l)
+}
+
+# This uses a slower algorithm that fills the combinations rows by
+# rows instead of columns by columns. This allows us to filter out
+# unwanted combinations. If wide is TRUE, we need an expensive
+# transpose at the end. So this function is slower but uses less memory in
+# case the number of combination is large, the individual elements
+# heavy and you don't need all combinations.
+filtered_cross <- function(l, wide = TRUE, filter) {
+  n <- length(l)
+  lengths <- lapply(l, length)
+  names <- names(l)
+
+  factors <- cumprod(lengths)
+  total_length <- factors[n]
+  factors <- c(1, factors[-n])
+
+  out <- replicate(total_length, vector("list", n), simplify = FALSE)
+
+  for (i in seq_along(out)) {
+    for (j in seq_len(n)) {
+      index <- floor((i - 1) / factors[j]) %% length(l[[j]]) + 1
+      out[[i]][[j]] <- l[[j]][[index]]
+    }
+    names(out[[i]]) <- names
+
+    # Filter out unwanted elements. We set them to NULL instead of
+    # completely removing them so we don't mess up the loop indexing.
+    # NULL elements are removed later on.
+    is_to_filter <- do.call(filter, unname(out[[i]]))
+    stopifnot(is.logical(is_to_filter))
+    if (is_to_filter) {
+      out[i] <- list(NULL)
+    }
+  }
+
+  # Remove filtered elements
+  out <- compact(out)
+
+  if (!wide) {
+    out <- lapply(unzip(out), unlist, recursive = FALSE)
+  }
+
+  out %>% output_hook(l)
 }
