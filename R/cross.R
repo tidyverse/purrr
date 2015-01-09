@@ -137,7 +137,9 @@ filtered_cross <- function(l, wide = TRUE, filter) {
     # completely removing them so we don't mess up the loop indexing.
     # NULL elements are removed later on.
     is_to_filter <- do.call(filter, unname(out[[i]]))
-    stopifnot(is.logical(is_to_filter))
+    if (!is.logical(is_to_filter) || !length(is_to_filter) == 1) {
+      stop("The filter function must return TRUE or FALSE", call. = FALSE)
+    }
     if (is_to_filter) {
       out[i] <- list(NULL)
     }
