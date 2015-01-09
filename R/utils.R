@@ -35,13 +35,13 @@ update_list <- function(x, ...) {
 as_function <- function(f) {
   if (is.function(f)) {
     f
-  } else if (is.character(f) || is.numeric(f)) {
-    function(g) .subset2(g, f)
   } else if (inherits(f, "formula")) {
     if (length(f) != 2) {
       stop("Formula must be one sided", call. = FALSE)
     }
     make_function(alist(. = ), f[[2]], environment(f))
+  } else if (is.character(f) || is.numeric(f)) {
+    function(g) .subset2(g, f)
   } else {
     stop("Don't know how to convert ", paste0(class(f), collapse = "/"),
       " into a function", call. = FALSE)
@@ -64,6 +64,16 @@ output_hook <- function(out, x) {
   } else {
     out
   }
+}
+
+recycle_args <- function(args) {
+  lengths <- lapply(args, length)
+  n <- do.call("max", lengths)
+
+  stopifnot(all(lengths %in% c(1, n)))
+  to_recycle <- lengths == 1
+  args[to_recycle] <- lapply(args[to_recycle], function(x) rep(x, n))
+  args
 }
 
 
