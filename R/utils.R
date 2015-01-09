@@ -68,11 +68,13 @@ output_hook <- function(out, x) {
 
 recycle_args <- function(...) {
   args <- list(...)
-  lengths <- map(args, length)
-  n <- splat(max)(lengths)
+  lengths <- lapply(args, length)
+  n <- do.call(max, lengths)
 
   stopifnot(all(lengths %in% c(1, n)))
-  map_if(args, lengths == 1, ~ rep(., n))
+  to_recycle <- lengths == 1
+  args[to_recycle] <- lapply(args[to_recycle], function(x) rep(x, n))
+  args
 }
 
 
