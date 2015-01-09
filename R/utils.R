@@ -77,16 +77,16 @@ recycle_args <- function(args) {
 }
 
 
-#' Generate random samples from a Bernolli distribution
+#' Generate random samples from a Bernoulli distribution
 #'
 #' @param n Number of samples
 #' @param p Probability of getting \code{TRUE}
 #' @return A logical vector
 #' @export
 #' @examples
-#' rbenoulli(10)
-#' rbenoulli(100, 0.1)
-rbenoulli <- function(n, p = 0.5) {
+#' rbernoulli(10)
+#' rbernoulli(100, 0.1)
+rbernoulli <- function(n, p = 0.5) {
   sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(p, 1 - p))
 }
 
