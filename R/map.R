@@ -145,13 +145,9 @@ each3 <- function(.x, .y, .z, .f, ...) {
 
 #' @export
 each_n <- function(.l, .f, ...) {
-  args_list <- c(
-    recycle_args(.l),
-    list(...)
-  )
-  args_list <- zip(args_list)
+  args_list <- recycle_args(.l) %>% zip()
   for (args in args_list) {
-    do.call(".f", args)
+    do.call(".f", c(args, list(...)))
   }
   invisible(.l)
 }
