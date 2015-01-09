@@ -66,10 +66,9 @@ output_hook <- function(out, x) {
   }
 }
 
-recycle_args <- function(...) {
-  args <- list(...)
+recycle_args <- function(args) {
   lengths <- lapply(args, length)
-  n <- do.call(max, lengths)
+  n <- do.call("max", lengths)
 
   stopifnot(all(lengths %in% c(1, n)))
   to_recycle <- lengths == 1

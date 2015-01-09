@@ -87,17 +87,21 @@ each <- function(.x, .f, ...) {
 
 #' Map over multiple inputs simultaneously.
 #'
-#' These functions are designed in such a way that arguments to be vectorised
-#' over come before the function name, and arguments that should be supplied to
-#' every call come after the function name.
+#' These functions are designed in such a way that arguments to be
+#' vectorised over come before the function name, and arguments that
+#' should be supplied to every call come after the function name.
+#'
+#' \code{map_n()} and \code{each_n()} take a single list \code{.l} and
+#' map over all its elements simultaneously.
 #'
 #' @inheritParams map
-#' @param .f A function of two (for \code{map2} and \code{each2}) or three
-#'   (\code{map3} and \code{each3}) arguments.
-#' @param .x,.y,.z Lists, usually of the same length. If not,
-#'   \code{map2} and \code{map3} will recycle the lists to the length of
-#'   the longest, using R's regular recycling rules. \code{each2} and
-#'   \code{each3} recycle only lists of length 1.
+#' @param .f A function of two (for \code{map2} and \code{each2}) or
+#' three (\code{map3} and \code{each3}) arguments. For \code{map_n}
+#' and \code{each_n}, the number of arguments must correspond to the
+#' number of elements of \code{.l}.
+#' @param .x,.y,.z Lists of the same length or of length 1. Only
+#' lists of length 1 are recycled.
+#' @param .l A list of lists to be mapped on simultaneously.
 #' @export
 #' @examples
 #' x <- list(1, 10, 100)
@@ -109,43 +113,48 @@ each <- function(.x, .f, ...) {
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ...) {
-  force(.f)
-  f <- function(x, y) {
-    .f(x, y, ...)
-  }
-  Map(f, .x, .y) %>% output_hook(.x)
+  map_n(list(.x, .y), .f, ...)
 }
 
 #' @export
 #' @rdname map2
 map3 <- function(.x, .y, .z, .f, ...) {
-  force(.f)
-  f <- function(x, y, z) {
-    .f(x, y, ...)
-  }
-  Map(f, .x, .y, .z) %>% output_hook(.x)
+  map_n(list(.x, .y, .z), .f, ...)
+}
+
+#' @export
+#' @rdname map2
+map_n <- function(.l, .f, ...) {
+  args <- recycle_args(c(.l, list(...)))
+  do.call("Map", c(list(quote(.f)), args)) %>% output_hook(.l)
 }
 
 #' @export
 #' @rdname map2
 each2 <- function(.x, .y, .f, ...) {
-  args <- recycle_args(x = .x, y = .y)
-  for (i in seq_along(args[[1]])) {
-    .f(args$x[[i]], args$y[[i]], ...)
-  }
+  each_n(list(.x, .y), .f, ...)
   invisible(.x)
 }
 
 #' @export
 #' @rdname map2
 each3 <- function(.x, .y, .z, .f, ...) {
-  args <- recycle_args(x = .x, y = .y, z = .z)
-  for (i in seq_along(args[[1]])) {
-    .f(args$x[[i]], args$y[[i]], args$z[[i]], ...)
-  }
+  each_n(list(.x, .y, .z), .f, ...)
   invisible(.x)
 }
 
+#' @export
+each_n <- function(.l, .f, ...) {
+  args_list <- c(
+    recycle_args(.l),
+    list(...)
+  )
+  args_list <- zip(args_list)
+  for (args in args_list) {
+    do.call(".f", args)
+  }
+  invisible(.l)
+}
 
 #' Modify elements where predicate is satisified.
 #'
