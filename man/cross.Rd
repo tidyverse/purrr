@@ -72,6 +72,10 @@ out <- vector("list", length(args[[1]]))
 for (i in seq_along(out))
   out[[i]] <- map(args, i) \%>\% splat(paste)()
 out
+
+# We can filter out unwanted combinations with a predicate function
+filter <- function(x, y) x >= y
+cross(1:5, 1:5, .filter = filter) \%>\% str()
 }
 \seealso{
 expand.grid

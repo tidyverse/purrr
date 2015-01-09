@@ -53,6 +53,10 @@
 #' for (i in seq_along(out))
 #'   out[[i]] <- map(args, i) %>% splat(paste)()
 #' out
+#'
+#' # We can filter out unwanted combinations with a predicate function
+#' filter <- function(x, y) x >= y
+#' cross(1:5, 1:5, .filter = filter) %>% str()
 cross <- function(.x, .y, .wide = TRUE, .filter = NULL) {
   cross_n(list(.x, .y), .wide = .wide, .filter = .filter)
 }
