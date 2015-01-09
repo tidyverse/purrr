@@ -30,9 +30,21 @@
 #' for (i in seq_along(out))
 #'   out[[i]] <- map(args, i) %>% splat(paste)()
 #' out
-cross <- function(.x, .wide = TRUE) {
-  n <- length(.x)
-  remaining <- prod(vapply(.x, length, numeric(1)))
+cross <- function(.x, .y, .wide = TRUE) {
+  cross_n(list(.x, .y), .wide = .wide)
+}
+
+#' @export
+#' @rdname cross
+cross3 <- function(.x, .y, .z, .wide = TRUE) {
+  cross_n(list(.x, .y, .z), .wide = .wide)
+}
+
+#' @export
+#' @rdname cross
+cross_n <- function(.l, .wide = TRUE) {
+  n <- length(.l)
+  remaining <- prod(vapply(.l, length, numeric(1)))
   rep_factor <- 1
 
   if (remaining == 0) {
@@ -41,16 +53,16 @@ cross <- function(.x, .wide = TRUE) {
 
   if (.wide) {
     model <- rep_len(list(NA), n)
-    names(model) <- names(.x)
+    names(model) <- names(.l)
     out <- rep_len(list(model), remaining)
   } else {
     out <- vector("list", n)
-    names(out) <- names(.x)
+    names(out) <- names(.l)
   }
 
 
   for (i in seq_len(n)) {
-    x <- .x[[i]]
+    x <- .l[[i]]
     x_length <- length(x)
     remaining <- remaining / x_length
 
@@ -67,5 +79,5 @@ cross <- function(.x, .wide = TRUE) {
     }
   }
 
-  out
+  out %>% output_hook(.l)
 }
