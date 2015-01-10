@@ -111,21 +111,26 @@ each <- function(.x, .f, ...) {
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ...) {
-  map_n(list(.x, .y), .f, ...)
+  map_multi(list(.x, .y), .f, ...) %>% output_hook(.x)
 }
 
 #' @export
 #' @rdname map2
 map3 <- function(.x, .y, .z, .f, ...) {
-  map_n(list(.x, .y, .z), .f, ...)
+  map_multi(list(.x, .y, .z), .f, ...) %>% output_hook(.x)
 }
 
 #' @export
 #' @rdname map2
 map_n <- function(.l, .f, ...) {
-  args <- recycle_args(c(.l, list(...)))
-  do.call("Map", c(list(quote(.f)), args)) %>% output_hook(.l)
+  map_multi(.l, .f, ...) %>% output_hook(.l)
 }
+
+map_multi <- function(.l, .f, ...) {
+  args <- recycle_args(c(.l, list(...)))
+  do.call("Map", c(list(quote(.f)), args))
+}
+
 
 #' @export
 #' @rdname map2
