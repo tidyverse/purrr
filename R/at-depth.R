@@ -63,5 +63,11 @@ at_depth <- function(.x, .depth, .f, ...) {
     }
   }
 
-  recurse(.x, .depth)
+  if (.depth == 0) {
+    .f(.x, ...)
+  } else if (.depth > 0) {
+    recurse(.x, .depth)
+  } else {
+    stop(".depth cannot be negative", call. = FALSE)
+  }
 }
