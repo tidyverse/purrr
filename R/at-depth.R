@@ -2,6 +2,12 @@
 #' 
 #' \code{at_depth()} maps a function on lower levels of nested
 #' lists. In essence, \code{at_depth()} is a recursive map.
+#'
+#' \itemize{
+#'  \item \code{x \%>\% at_depth(0, fun)} is equivalent to \code{fun(x)}.
+#'  \item \code{x \%>\% at_depth(1, fun)} is equivalent to \code{map(x, fun)}.
+#'  \item \code{x \%>\% at_depth(2, fun)} is equivalent to \code{map(x, . \%>\% map(fun))}.
+#' }
 #' 
 #' @inheritParams map
 #' @param .x A deep list
