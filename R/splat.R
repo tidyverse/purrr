@@ -1,14 +1,15 @@
 #' `Splat' arguments to a function.
 #'
-#' Wraps a function in \code{\link{do.call}()}, so instead of taking multiple
-#' arguments, it takes a single named list which will be interpreted
-#' as its arguments. This is useful when you want to pass a function
-#' a row of data frame or list, and don't want to manually pull it
-#' apart in your function. You can also specify default arguments for
-#' \code{.f} in the call to \code{splat()}.
+#' Wraps a function in \code{\link{do.call}()}, so instead of taking
+#' multiple arguments, it takes a single named list which will be
+#' interpreted as its arguments. This is useful when you want to pass
+#' a function a row of data frame or list, and don't want to manually
+#' pull it apart in your function. You can also specify default
+#' arguments for \code{.f} in the call to \code{splat()}.
 #'
 #' @param .f Function to splat.
-#' @param ... Default arguments for \code{.f}.
+#' @param ... Default arguments for \code{.f}. These will be evaluated
+#' once when \code{splat()} is called.
 #' @return A function.
 #' @export
 #' @examples
@@ -26,7 +27,7 @@ splat <- function (.f, ...) {
   force(.f)
   defaults <- list(...)
   function(args = list()) {
-    do.call(.f, c(args, defaults))
+    do.call(".f", c(args, defaults))
   }
 }
 

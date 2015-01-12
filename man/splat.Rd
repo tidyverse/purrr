@@ -9,18 +9,19 @@ splat(.f, ...)
 \arguments{
 \item{.f}{Function to splat.}
 
-\item{...}{Default arguments for \code{.f}.}
+\item{...}{Default arguments for \code{.f}. These will be evaluated
+once when \code{splat()} is called.}
 }
 \value{
 A function.
 }
 \description{
-Wraps a function in \code{\link{do.call}()}, so instead of taking multiple
-arguments, it takes a single named list which will be interpreted
-as its arguments. This is useful when you want to pass a function
-a row of data frame or list, and don't want to manually pull it
-apart in your function. You can also specify default arguments for
-\code{.f} in the call to \code{splat()}.
+Wraps a function in \code{\link{do.call}()}, so instead of taking
+multiple arguments, it takes a single named list which will be
+interpreted as its arguments. This is useful when you want to pass
+a function a row of data frame or list, and don't want to manually
+pull it apart in your function. You can also specify default
+arguments for \code{.f} in the call to \code{splat()}.
 }
 \examples{
 x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
