@@ -19,12 +19,3 @@ test_that("map2() and map3() return a data frame when given one", {
   expect_is(out_map2, "data.frame")
   expect_is(out_map3, "data.frame")
 })
-
-test_that("map_n() returns a data frame when given one?", {
-  skip("Not sure yet what should happen")
-  df <- data.frame(a = c("a", "b"), b = c("a", "b"))
-
-  out <- map_n(df, paste)
-
-  expect_is(out, "data.frame? list?")
-})
