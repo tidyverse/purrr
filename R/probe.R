@@ -16,15 +16,11 @@
 #'   map_if(is_character, as.numeric) %>%
 #'   map_if(!is_character, as.character)
 probe <- function(.x, .p, ...) {
-  find_selection(.x, .p, ...)
-}
-
-find_selection <- function(x, p, ...) {
-  if (is.logical(p)) {
-    stopifnot(length(p) == length(x))
-    p
+  if (is.logical(.p)) {
+    stopifnot(length(.p) == length(.x))
+    .p
   } else {
-    p <- as_function(p)
-    vapply(x, p, logical(1), ...)
+    .p <- as_function(.p)
+    vapply(.x, .p, logical(1), ...)
   }
 }
