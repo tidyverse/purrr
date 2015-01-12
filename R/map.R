@@ -150,9 +150,9 @@ each3 <- function(.x, .y, .z, .f, ...) {
 #' @rdname map2
 each_n <- function(.l, .f, ...) {
   args_list <- recycle_args(.l) %>% zip()
-  lapply(args_list, function(args) {
+  for (args in args_list) {
     do.call(".f", c(args, list(...)))
-  })
+  }
   invisible(.l)
 }
 
