@@ -35,13 +35,13 @@ update_list <- function(x, ...) {
 as_function <- function(f) {
   if (is.function(f)) {
     f
-  } else if (is.character(f) || is.numeric(f)) {
-    function(g) .subset2(g, f)
   } else if (inherits(f, "formula")) {
     if (length(f) != 2) {
       stop("Formula must be one sided", call. = FALSE)
     }
     make_function(alist(. = ), f[[2]], environment(f))
+  } else if (is.character(f) || is.numeric(f)) {
+    function(g) .subset2(g, f)
   } else {
     stop("Don't know how to convert ", paste0(class(f), collapse = "/"),
       " into a function", call. = FALSE)
@@ -56,17 +56,27 @@ output_hook <- function(out, x) {
   }
 }
 
+recycle_args <- function(args) {
+  lengths <- lapply(args, length)
+  n <- do.call("max", lengths)
 
-#' Generate random samples from a Bernolli distribution
+  stopifnot(all(lengths %in% c(1, n)))
+  to_recycle <- lengths == 1
+  args[to_recycle] <- lapply(args[to_recycle], function(x) rep(x, n))
+  args
+}
+
+
+#' Generate random samples from a Bernoulli distribution
 #'
 #' @param n Number of samples
 #' @param p Probability of getting \code{TRUE}
 #' @return A logical vector
 #' @export
 #' @examples
-#' rbenoulli(10)
-#' rbenoulli(100, 0.1)
-rbenoulli <- function(n, p = 0.5) {
+#' rbernoulli(10)
+#' rbernoulli(100, 0.1)
+rbernoulli <- function(n, p = 0.5) {
   sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(p, 1 - p))
 }
 

@@ -20,8 +20,8 @@
 #'   This will improve performance, and adds a test that output of \code{.f}
 #'   is the type that you expect.
 #' @return \code{map} a list if \code{.x} is a list or a data frame if
-#'   \code{.x} is a data frame; \code{map_v} a vector; \code{map_d} a data
-#'   frame; \code{each} (invisibly) the input \code{.x}.
+#'   \code{.x} is a data frame; \code{map_v} a vector; \code{each} (invisibly)
+#'   the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -46,13 +46,11 @@
 #'   map(summary) %>%
 #'   map_v("r.squared")
 #'
-#' # map, map_v and map_d allow you to control the output type:
+#' # map, map_v allow you to control the output type:
 #' # * list
 #' mtcars %>% map(sum)
 #' # * vector
 #' mtcars %>% map_v(sum)
-#' # * data frame
-#' mtcars %>% map_d(sum)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
   lapply(.x, .f, ...) %>% output_hook(.x)
@@ -77,6 +75,7 @@ map_v <- function(.x, .f, ..., .type) {
 #' @export
 #' @rdname map
 each <- function(.x, .f, ...) {
+  .f <- as_function(.f)
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }
@@ -86,16 +85,21 @@ each <- function(.x, .f, ...) {
 
 #' Map over multiple inputs simultaneously.
 #'
-#' These functions are designed in such a way that arguments to be vectorised
-#' over come before the function name, and arguments that should be supplied to
-#' every call come after the function name.
+#' These functions are designed in such a way that arguments to be
+#' vectorised over come before the function name, and arguments that
+#' should be supplied to every call come after the function name.
+#'
+#' \code{map_n()} and \code{each_n()} take a single list \code{.l} and
+#' map over all its elements simultaneously.
 #'
 #' @inheritParams map
-#' @param .f A function of two (for \code{map2}) or three (\code{map3})
-#'   arguments.
-#' @param .x,.y,.z Lists, usually of the same length. If not, lists will
-#'   be recycled to the length of the longest, using R's regular recycling
-#'   rules.
+#' @param .f A function of two (for \code{map2} and \code{each2}) or
+#' three (\code{map3} and \code{each3}) arguments. For \code{map_n}
+#' and \code{each_n}, the number of arguments must correspond to the
+#' number of elements of \code{.l}.
+#' @param .x,.y,.z Lists of the same length or of length 1. Only
+#' lists of length 1 are recycled.
+#' @param .l A list of lists to be mapped on simultaneously.
 #' @export
 #' @examples
 #' x <- list(1, 10, 100)
@@ -107,23 +111,45 @@ each <- function(.x, .f, ...) {
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ...) {
-  force(.f)
-  f <- function(x, y) {
-    .f(x, y, ...)
-  }
-  Map(f, .x, .y) %>% output_hook(.x)
+  map_n(list(.x, .y), .f, ...)
 }
 
 #' @export
 #' @rdname map2
 map3 <- function(.x, .y, .z, .f, ...) {
-  force(.f)
-  f <- function(x, y, z) {
-    .f(x, y, ...)
-  }
-  Map(f, .x, .y, .z) %>% output_hook(.x)
+  map_n(list(.x, .y, .z), .f, ...)
 }
 
+#' @export
+#' @rdname map2
+map_n <- function(.l, .f, ...) {
+  args <- recycle_args(c(.l, list(...)))
+  do.call("Map", c(list(quote(.f)), args)) %>% output_hook(.l)
+}
+
+#' @export
+#' @rdname map2
+each2 <- function(.x, .y, .f, ...) {
+  each_n(list(.x, .y), .f, ...)
+  invisible(.x)
+}
+
+#' @export
+#' @rdname map2
+each3 <- function(.x, .y, .z, .f, ...) {
+  each_n(list(.x, .y, .z), .f, ...)
+  invisible(.x)
+}
+
+#' @export
+#' @rdname map2
+each_n <- function(.l, .f, ...) {
+  args_list <- recycle_args(.l) %>% zip()
+  for (args in args_list) {
+    do.call(".f", c(args, list(...)))
+  }
+  invisible(.l)
+}
 
 #' Modify elements where predicate is satisified.
 #'
@@ -137,7 +163,7 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' @return The same type of object as \code{.x}.
 #' @export
 #' @examples
-#' list(x = rbenoulli(100), y = 1:100) %>%
+#' list(x = rbernoulli(100), y = 1:100) %>%
 #'   zip() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   unzip() %>%
