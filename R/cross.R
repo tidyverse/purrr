@@ -50,14 +50,14 @@
 #'
 #' data %>% 
 #'   cross_n() %>%
-#'   map(splat(paste))
+#'   map(smash(paste))
 #'
 #' # For this purpose, the long format is less pratical and requires a loop
 #' args <- cross_n(data, .wide = FALSE)
 #'
 #' out <- vector("list", length(args[[1]]))
 #' for (i in seq_along(out))
-#'   out[[i]] <- map(args, i) %>% splat(paste)()
+#'   out[[i]] <- map(args, i) %>% map_call("paste")
 #' out
 #'
 #' # If we start with a data frame instead, we'll get a data frame in
