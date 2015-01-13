@@ -7,7 +7,7 @@
 \usage{
 zip(.x)
 
-unzip(.x, fields = NULL, simplify = TRUE)
+unzip(.x, .fields = NULL, .simplify = TRUE)
 }
 \arguments{
 \item{.x}{A list.}

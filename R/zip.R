@@ -34,7 +34,7 @@ zip <- function(.x) {
 
 #' @export
 #' @rdname zip
-unzip <- function(.x, fields = NULL, simplify = TRUE) {
+unzip <- function(.x, .fields = NULL, .simplify = TRUE) {
   if (length(.x) == 0) return(list())
 
   if (is.null(fields)) {
