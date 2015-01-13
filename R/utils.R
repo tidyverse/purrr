@@ -60,9 +60,6 @@ find_selection <- function(x, p, ...) {
 
 output_hook <- function(out, x) {
   if (is.data.frame(x)) {
-    if (is.null(names(out))) {
-      names(out) <- seq_along(out)
-    }
     dplyr::as_data_frame(out)
   } else {
     out
