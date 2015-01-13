@@ -6,16 +6,16 @@
 #' and \code{b} that contained lists of length n.
 #'
 #' @param .x A list.
-#' @param fields Fields to use when unzipping - defaults to the names
+#' @param .fields Fields to use when unzipping - defaults to the names
 #'   of the first sub-list.
-#' @param simplify If \code{TRUE}, lists containing atomic scalars of the
+#' @param .simplify If \code{TRUE}, lists containing atomic scalars of the
 #'   same type will be converted to a vector.
 #' @export
 #' @examples
 #' x <- rerun(5, x = runif(1), y = runif(5))
 #' str(x)
 #' unzip(x)
-#' unzip(x, simplify = TRUE)
+#' unzip(x, .simplify = TRUE)
 #'
 #' zip(list(a = 1:5, b = 5:1))
 #' # unzip is similar to map2 used with list()
@@ -34,23 +34,23 @@ zip <- function(.x) {
 
 #' @export
 #' @rdname zip
-unzip <- function(.x, fields = NULL, simplify = TRUE) {
+unzip <- function(.x, .fields = NULL, .simplify = TRUE) {
   if (length(.x) == 0) return(list())
 
-  if (is.null(fields)) {
+  if (is.null(.fields)) {
     if (is.null(names(.x[[1]]))) {
-      fields <- seq_along(.x[[1]])
+      .fields <- seq_along(.x[[1]])
     } else {
-      fields <- setNames(names(.x[[1]]), names(.x[[1]]))
+      .fields <- setNames(names(.x[[1]]), names(.x[[1]]))
     }
   } else {
-    if (is.character(fields) && is.null(names(fields))) {
-      names(fields) <- fields
+    if (is.character(.fields) && is.null(names(.fields))) {
+      names(.fields) <- .fields
     }
   }
 
-  out <- lapply(fields, function(i) lapply(.x, .subset2, i))
-  if (simplify) out <- lapply(out, simplify_if_possible)
+  out <- lapply(.fields, function(i) lapply(.x, .subset2, i))
+  if (.simplify) out <- lapply(out, simplify_if_possible)
   out
 }
 
