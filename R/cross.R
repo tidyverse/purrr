@@ -25,12 +25,18 @@
 #'
 #' @seealso expand.grid
 #' @param .x,.y,.z Lists or atomic vectors.
-#' @param .l A list of lists or atomic vectors.
+#' @param .l A list of lists or atomic vectors. Alternatively, a data frame.
 #' @param .wide If \code{TRUE}, returns a list of unique combinations.
 #' If \code{FALSE}, returns a list of the same size as the number of
 #' arguments (2 for \code{cross()}, 3 for \code{cross3()},
 #' \code{length(.l)} for \code{cross_n()}).
-#' @param .filter A predicate function
+#'
+#' \code{TRUE} is the default for lists so that each element of the
+#' returned list is one combination. The list can then be directly
+#' mapped over. \code{FALSE} is the default for data frames so that
+#' each row represents one combination.
+#' @param .filter A predicate function that takes the same number of
+#' arguments as the number of variables to be combined.
 #' @return A list or a data frame.
 #' @export
 #' @examples
@@ -54,72 +60,48 @@
 #'   out[[i]] <- map(args, i) %>% splat(paste)()
 #' out
 #'
-#' # We can filter out unwanted combinations with a predicate function
+#' # If we start with a data frame instead, we'll get a data frame in
+#' # long format, as with expand.grid().
+#' df <- data %>% dplyr::as_data_frame()
+#' out2 <- cross_n(df)
+#' 
+#' # The combinations would then typically be manipulated using dplyr
+#' out2 %>% dplyr::do(
+#'   smash(paste)(.) %>% dplyr::data_frame()
+#' )
+#'
+#' # Unwanted combinations can be filtered out with a predicate function
 #' filter <- function(x, y) x >= y
 #' cross(1:5, 1:5, .filter = filter) %>% str()
 cross <- function(.x, .y, .wide = TRUE, .filter = NULL) {
-  cross_n(list(.x, .y), .wide = .wide, .filter = .filter)
+  cross_row_by_row(list(.x, .y), wide = .wide, filter = .filter)
 }
 
 #' @export
 #' @rdname cross
 cross3 <- function(.x, .y, .z, .wide = TRUE, .filter = NULL) {
-  cross_n(list(.x, .y, .z), .wide = .wide, .filter = .filter)
+  cross_row_by_row(list(.x, .y, .z), wide = .wide, filter = .filter)
 }
+
 
 #' @export
 #' @rdname cross
 cross_n <- function(.l, .wide = TRUE, .filter = NULL) {
-  if (!is.null(.filter)) {
-    return(filtered_cross(.l, .wide, .filter))
-  }
-
-  n <- length(.l)
-  remaining <- prod(vapply(.l, length, numeric(1)))
-  rep_factor <- 1
-
-  if (remaining == 0) {
-    return(list())
-  }
-
-  if (.wide) {
-    model <- rep_len(list(NA), n)
-    names(model) <- names(.l)
-    out <- rep_len(list(model), remaining)
-  } else {
-    out <- vector("list", n)
-    names(out) <- names(.l)
-  }
-
-
-  for (i in seq_len(n)) {
-    x <- .l[[i]]
-    x_length <- length(x)
-    remaining <- remaining / x_length
-
-    seq <- rep.int(seq_len(x_length), rep.int(rep_factor, x_length))
-    seq <- rep.int(seq, remaining)
-    rep_factor <- rep_factor * x_length
-
-    if (.wide) {
-      for (j in seq_along(out)) {
-        out[[j]][[i]] <- x[seq][j]
-      }
-    } else {
-      out[[i]] <- x[seq]
-    }
-  }
-
-  out %>% output_hook(.l)
+  UseMethod("cross_n")
 }
 
-# This uses a slower algorithm that fills the combinations rows by
-# rows instead of columns by columns. This allows us to filter out
-# unwanted combinations. If wide is TRUE, we need an expensive
-# transpose at the end. So this function is slower but uses less memory in
-# case the number of combination is large, the individual elements
-# heavy and you don't need all combinations.
-filtered_cross <- function(l, wide = TRUE, filter) {
+#' @export
+cross_n.list <- function(.l, .wide = TRUE, .filter = NULL) {
+  cross_row_by_row(.l, wide = .wide, filter = .filter)
+}
+
+#' @export
+cross_n.data.frame <- function(.l, .wide = FALSE, .filter = NULL) {
+  out <- cross_row_by_row(.l, wide = .wide, filter = .filter)
+  out %>% dplyr::as_data_frame()
+}
+
+cross_row_by_row <- function(l, wide, filter = NULL) {
   n <- length(l)
   lengths <- lapply(l, length)
   names <- names(l)
@@ -140,21 +122,24 @@ filtered_cross <- function(l, wide = TRUE, filter) {
     # Filter out unwanted elements. We set them to NULL instead of
     # completely removing them so we don't mess up the loop indexing.
     # NULL elements are removed later on.
-    is_to_filter <- do.call(filter, unname(out[[i]]))
-    if (!is.logical(is_to_filter) || !length(is_to_filter) == 1) {
-      stop("The filter function must return TRUE or FALSE", call. = FALSE)
-    }
-    if (is_to_filter) {
-      out[i] <- list(NULL)
+    if (!is.null(filter)) {
+      is_to_filter <- do.call("filter", unname(out[[i]]))
+      if (!is.logical(is_to_filter) || !length(is_to_filter) == 1) {
+        stop("The filter function must return TRUE or FALSE", call. = FALSE)
+      }
+      if (is_to_filter) {
+        out[i] <- list(NULL)
+      }
     }
   }
 
   # Remove filtered elements
   out <- compact(out)
 
+  # Transpose if long format is requested
   if (!wide) {
-    out <- lapply(unzip(out), unlist, recursive = FALSE)
+    out <- lapply(unzip(out), flatten)
   }
 
-  out %>% output_hook(l)
+  out
 }

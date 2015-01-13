@@ -18,11 +18,17 @@ cross_n(.l, .wide = TRUE, .filter = NULL)
 \item{.wide}{If \code{TRUE}, returns a list of unique combinations.
 If \code{FALSE}, returns a list of the same size as the number of
 arguments (2 for \code{cross()}, 3 for \code{cross3()},
-\code{length(.l)} for \code{cross_n()}).}
+\code{length(.l)} for \code{cross_n()}).
 
-\item{.filter}{A predicate function}
+\code{TRUE} is the default for lists so that each element of the
+returned list is one combination. The list can then be directly
+mapped over. \code{FALSE} is the default for data frames so that
+each row represents one combination.}
 
-\item{.l}{A list of lists or atomic vectors.}
+\item{.filter}{A predicate function that takes the same number of
+arguments as the number of variables to be combined.}
+
+\item{.l}{A list of lists or atomic vectors. Alternatively, a data frame.}
 }
 \value{
 A list or a data frame.
@@ -73,7 +79,17 @@ for (i in seq_along(out))
   out[[i]] <- map(args, i) \%>\% splat(paste)()
 out
 
-# We can filter out unwanted combinations with a predicate function
+# If we start with a data frame instead, we'll get a data frame in
+# long format, as with expand.grid().
+df <- data \%>\% dplyr::as_data_frame()
+out2 <- cross_n(df)
+
+# The combinations would then typically be manipulated using dplyr
+out2 \%>\% dplyr::do(
+  smash(paste)(.) \%>\% dplyr::data_frame()
+)
+
+# Unwanted combinations can be filtered out with a predicate function
 filter <- function(x, y) x >= y
 cross(1:5, 1:5, .filter = filter) \%>\% str()
 }
