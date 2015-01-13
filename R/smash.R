@@ -48,12 +48,11 @@ smash <- function (.f, ...) {
 #' @seealso smash do.call
 #' @export
 #' @examples
-#' # We map a list of numbers to paste(), with sep = "-" as additional
-#' # arguments
-#' list("01", "01", "2001") %>%
+#' # We map a list of strings to paste(), with sep = "-" and the
+#' # string "2001" as additional arguments
+#' list("01", "01") %>%
 #'   map(~ sub("^01", "10", .)) %>%
-#'   map_call("paste", sep = "-")
+#'   map_call("paste", "2001", sep = "-")
 map_call <- function(.x, .f, ...) {
-  defaults <- list(...)
-  do.call(.f, enlist(.x, defaults))
+  do.call(.f, enlist(.x, ...))
 }
