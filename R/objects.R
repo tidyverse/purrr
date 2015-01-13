@@ -3,6 +3,7 @@
 #' This joins all arguments in a list. Non-list objects are
 #' encapsulated in a list before concatenation.
 #' @param ... Objects to concatenate.
+#' @export
 #' @examples
 #' inputs <- list(arg1 = "a", arg2 = "b")
 #'
