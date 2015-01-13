@@ -33,3 +33,27 @@ splat <- function (.f, ...) {
     do.call(".f", enlist(args, defaults))
   }
 }
+
+#' Map a list to a function call
+#'
+#' While `splat()` wraps a function in \code{\link{do.call}()},
+#' `map_call()` is directly equivalent to \code{do.call()} except that
+#' it takes a list as first argument instead of a function. This makes
+#' `map_call()` pipable.
+#' @param .x A list or a vector. Vectors are automatically wrapped in
+#'   a list.
+#' @param .f A function or the name of a function to call with the
+#'   elements of \code{.x} as arguments.
+#' @param ... Additional arguments passed on to \code{.f}.
+#' @seealso splat do.call
+#' @export
+#' @examples
+#' # We map a list of numbers to paste(), with sep = "-" as additional
+#' # arguments
+#' list("01", "01", "2001") %>%
+#'   map(~ sub("^01", "10", .)) %>%
+#'   map_call("paste", sep = "-")
+map_call <- function(.x, .f, ...) {
+  defaults <- list(...)
+  do.call(.f, enlist(.x, defaults))
+}
