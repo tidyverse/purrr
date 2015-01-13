@@ -34,7 +34,7 @@ for bare R objects. Bare objects have no class attributes. For
 example, a data frame is a list, but not a bare list.
 }
 \details{
-\itemize {
+\itemize{
   \item Like \code{\link{is_atomic}()} and unlike base R
         \code{is.atomic()}, \code{is_bare_atomic()} does not return
         \code{TRUE} for \code{NULL}.

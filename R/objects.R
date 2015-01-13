@@ -32,7 +32,7 @@ enlist <- function(...) {
 #' for bare R objects. Bare objects have no class attributes. For
 #' example, a data frame is a list, but not a bare list.
 #'
-#' \itemize {
+#' \itemize{
 #'   \item Like \code{\link{is_atomic}()} and unlike base R
 #'         \code{is.atomic()}, \code{is_bare_atomic()} does not return
 #'         \code{TRUE} for \code{NULL}.
@@ -94,11 +94,12 @@ is_bare_logical <- function(x) {
 #'
 #' Most of these predicates are simple aliases to base R functions. In
 #' addition:
-#' \itemize {
+#' \itemize{
 #'   \item Unlike \code{is.atomic()}, \code{is_atomic()} does not
 #'         return \code{TRUE} for \code{NULL}.
-#'   \item Unlike \code{is.vector()}, \code{is_vector()} does not
-#'         return \code{FALSE} for object with non-name attributes.
+#'   \item Unlike \code{is.vector()}, \code{is_vector()} test if an
+#'         object is an atomic vector or a list. \code{is.vector}
+#'         checks for the presence of attributes (other than name).
 #'   \item Unlike \code{is.numeric()}, \code{is_numeric()} only
 #'         returns \code{TRUE} for floating point numbers, not
 #'         integers.
