@@ -26,64 +26,116 @@ enlist <- function(...) {
   dots %>% flatten() %>% setNames(names)
 }
 
-#' Test for bare object type 
+#' Bare type predicates
 #'
 #' These predicates check for a given type but only return \code{TRUE}
 #' for bare R objects. Bare objects have no class attributes. For
 #' example, a data frame is a list, but not a bare list.
 #'
-#' Like \code{\link{is_atomic}()} and unlike base R
-#' \code{is.atomic()}, \code{is_bare_atomic()} does not return
-#' \code{TRUE} for \code{NULL}.
+#' \itemize {
+#'   \item Like \code{\link{is_atomic}()} and unlike base R
+#'         \code{is.atomic()}, \code{is_bare_atomic()} does not return
+#'         \code{TRUE} for \code{NULL}.
+#'   \item Unlike base R \code{is.numeric()}, \code{is_bare_numeric()}
+#'         only return \code{TRUE} for floating point numbers.
+#' }
 #' @param x object to be tested.
-#' @name bare-predicates
-#' @seealso is_atomic
+#' @seealso type-predicates
+#' @name bare-type-predicates
 NULL
 
 #' @export
-#' @rdname bare-predicates
+#' @rdname bare-type-predicates
 is_bare_list <- function(x) {
   !is.object(x) && is.list(x)
 }
 
 #' @export
-#' @rdname bare-predicates
-is_bare_numeric <- function(x) {
-  !is.object(x) && is.numeric(x)
-}
-
-#' @export
-#' @rdname bare-predicates
-is_bare_double <- function(x) {
-  !is.object(x) && is.double(x) 
-}
-
-#' @export
-#' @rdname bare-predicates
-is_bare_integer <- function(x) {
-  !is.object(x) && is.integer(x) 
-}
-
-#' @export
-#' @rdname bare-predicates
+#' @rdname bare-type-predicates
 is_bare_atomic <- function(x) {
   !is.object(x) && is_atomic(x)
 }
 
 #' @export
-#' @rdname bare-predicates
+#' @rdname bare-type-predicates
 is_bare_vector <- function(x) {
   is_bare_atomic(x) || is_bare_list(x)
 }
 
-
-#' Is an object atomic
-#'
-#' \code{is_atomic} is equivalent to \code{is.atomic} but does not
-#' return \code{TRUE} for \code{NULL}.
-#' @param x object to be tested.
-#' @seealso bare-predicates
 #' @export
+#' @rdname bare-type-predicates
+is_bare_numeric <- function(x) {
+  !is.object(x) && is.double(x)
+}
+
+#' @export
+#' @rdname bare-type-predicates
+is_bare_integer <- function(x) {
+  !is.object(x) && is.integer(x) 
+}
+
+#' @export
+#' @rdname bare-type-predicates
+is_bare_character <- function(x) {
+  !is.object(x) && is.character(x) 
+}
+
+#' @export
+#' @rdname bare-type-predicates
+is_bare_logical <- function(x) {
+  !is.object(x) && is.logical(x) 
+}
+
+
+#' Type predicates
+#'
+#' These type predicates aim to make type testing in R more
+#' consistent.
+#'
+#' Most of these predicates are simple aliases to base R functions. In
+#' addition:
+#' \itemize {
+#'   \item Unlike \code{is.atomic()}, \code{is_atomic()} does not
+#'         return \code{TRUE} for \code{NULL}.
+#'   \item Unlike \code{is.vector()}, \code{is_vector()} does not
+#'         return \code{FALSE} for object with non-name attributes.
+#'   \item Unlike \code{is.numeric()}, \code{is_numeric()} only
+#'         returns \code{TRUE} for floating point numbers, not
+#'         integers.
+#' }
+#' @param x object to be tested.
+#' @seealso bare-type-predicates
+#' @name type-predicates
+NULL
+
+#' @export
+#' @rdname type-predicates
+is_list <- is.list
+
+#' @export
+#' @rdname type-predicates
 is_atomic <- function(x) {
   is.atomic(x) && !is.null(x)
 }
+
+#' @export
+#' @rdname type-predicates
+is_vector <- function(x) {
+  is_atomic(x) || is.list(x)
+}
+
+#' @export
+#' @rdname type-predicates
+is_numeric <- is.double
+
+#' @export
+#' @rdname type-predicates
+is_integer <- is.integer
+
+#' @export
+#' @rdname type-predicates
+is_character <- is.character
+
+#' @export
+#' @rdname type-predicates
+is_logical <- is.logical
