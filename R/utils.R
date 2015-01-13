@@ -76,6 +76,10 @@ recycle_args <- function(args) {
   args
 }
 
+names2 <- function(x) {
+  names(x) %||% rep("", length(x))
+}
+
 
 #' Generate random samples from a Bernoulli distribution
 #'
