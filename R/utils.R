@@ -61,8 +61,6 @@ find_selection <- function(x, p, ...) {
 output_hook <- function(out, x) {
   if (is.data.frame(x)) {
     dplyr::as_data_frame(out)
-  } else if (is_atomic(x)) {
-    setNames(out, x)
   } else {
     out
   }
