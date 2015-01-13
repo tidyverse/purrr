@@ -59,7 +59,7 @@ at_depth <- function(.x, .depth, .f, ...) {
 
   recurse <- function(x, depth) {
     if (depth > 1) {
-      if (is.atomic(x) && depth >= 2) {
+      if (is.atomic(x)) {
         stop("List not deep enough", call. = FALSE)
       }
       lapply(x, recurse, depth = depth - 1)
