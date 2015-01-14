@@ -102,13 +102,3 @@ rbernoulli <- function(n, p = 0.5) {
 rdunif <- function(n, b, a = 1) {
   sample(b - a + 1, n, replace = TRUE) + a - 1
 }
-
-#' Is a vector/list empty?
-#'
-#' @param x object to test
-#' @export
-#' @examples
-#' empty(NULL)
-#' empty(list())
-#' empty(list(NULL))
-empty <- function(x) length(x) == 0
