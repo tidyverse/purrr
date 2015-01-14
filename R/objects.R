@@ -141,3 +141,14 @@ is_character <- is.character
 #' @export
 #' @rdname type-predicates
 is_logical <- is.logical
+
+
+#' Is a vector/list empty?
+#'
+#' @param x object to test
+#' @export
+#' @examples
+#' is_empty(NULL)
+#' is_empty(list())
+#' is_empty(list(NULL))
+is_empty <- function(x) length(x) == 0

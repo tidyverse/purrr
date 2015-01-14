@@ -44,5 +44,5 @@ discard <- function(.x, .p, ...) {
 #' @rdname keep
 compact <- function(.x, .p = identity) {
   .f <- as_function(.p)
-  .x %>% discard(function(x) empty(.p(x)))
+  .x %>% discard(function(x) is_empty(.p(x)))
 }
