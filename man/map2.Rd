@@ -41,7 +41,8 @@ should be supplied to every call come after the function name.
 }
 \details{
 \code{map_n()} and \code{each_n()} take a single list \code{.l} and
-map over all its elements simultaneously.
+map over all its elements simultaneously. \code{map2()} and
+\code{map3()} return a data frame when \code{.x} is a data frame.
 }
 \examples{
 x <- list(1, 10, 100)
