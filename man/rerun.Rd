@@ -4,16 +4,16 @@
 \alias{rerun}
 \title{Re-run expressions multiple times.}
 \usage{
-rerun(n, ...)
+rerun(.n, ...)
 }
 \arguments{
-\item{n}{Number of times to run expressions}
+\item{.n}{Number of times to run expressions}
 
 \item{...}{Expressions to re-run.}
 }
 \value{
-A list of length \code{n}. Each element of \code{...} will be
-  re-run once for each \code{n}. It
+A list of length \code{.n}. Each element of \code{...} will be
+  re-run once for each \code{.n}. It
 
   There is one special case: if there's a single unnamed input, the second
   level list will be dropped. In this case, \code{rerun(n, x)} behaves like
