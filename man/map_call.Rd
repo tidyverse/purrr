@@ -29,6 +29,6 @@ list("01", "01") \%>\%
   map_call("paste", "2001", sep = "-")
 }
 \seealso{
-smash do.call
+\code{\link{smash}()} and \code{\link{do.call}()}
 }
 

@@ -11,7 +11,7 @@
 #' @param ... Default arguments for \code{.f}. These will be evaluated
 #' once when \code{smash()} is called.
 #' @return A function.
-#' @seealso map_call do.call
+#' @seealso \code{\link{map_call}()} and \code{\link{do.call}()}
 #' @export
 #' @examples
 #' x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
@@ -45,7 +45,7 @@ smash <- function (.f, ...) {
 #' @param .f A function or the name of a function to call with the
 #'   elements of \code{.x} as arguments.
 #' @param ... Additional arguments passed on to \code{.f}.
-#' @seealso smash do.call
+#' @seealso \code{\link{smash}()} and \code{\link{do.call}()}
 #' @export
 #' @examples
 #' # We map a list of strings to paste(), with sep = "-" and the

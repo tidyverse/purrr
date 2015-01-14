@@ -38,6 +38,6 @@ c(1:100, NA, 1000) \%>\% smash(mean, na.rm = TRUE)()
 list(c(1:100, NA, 1000)) \%>\% smash(mean, na.rm = TRUE)()
 }
 \seealso{
-map_call do.call
+\code{\link{map_call}()} and \code{\link{do.call}()}
 }
 
