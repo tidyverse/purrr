@@ -63,12 +63,12 @@
 #' # because applying a function to the combinations requires a loop
 #' out <- vector("list", length = nrow(args))
 #' for (i in seq_along(out))
-#'   out[[i]] <- map(args, i) %>% as.list() %>% map_call("paste")
+#'   out[[i]] <- map(args, i) %>% map_call("paste")
 #' out
 #' 
 #' # In this case, the combinations could be manipulated using dplyr
 #' args %>% dplyr::do(
-#'   map_call(as.list(.), "paste") %>% dplyr::data_frame()
+#'   map_call(., "paste") %>% dplyr::data_frame()
 #' )
 #'
 #' # Unwanted combinations can be filtered out with a predicate function
