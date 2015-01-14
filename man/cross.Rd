@@ -15,14 +15,15 @@ cross_n(.l, .wide = TRUE, .filter = NULL)
 \arguments{
 \item{.x,.y,.z}{Lists or atomic vectors.}
 
-\item{.wide}{If \code{TRUE}, returns a list of unique combinations.
-If \code{FALSE}, returns a list of the same size as the number of
+\item{.wide}{Only relevant for lists, not data frames. If
+\code{TRUE}, returns a list of unique combinations.  If
+\code{FALSE}, returns a list of the same size as the number of
 arguments (2 for \code{cross()}, 3 for \code{cross3()},
 \code{length(.l)} for \code{cross_n()}).
 
 \code{TRUE} is the default for lists so that each element of the
 returned list is one combination. The list can then be directly
-mapped over. \code{FALSE} is the default for data frames so that
+mapped over. \code{FALSE} is hard coded for data frames so that
 each row represents one combination.}
 
 \item{.filter}{A predicate function that takes the same number of

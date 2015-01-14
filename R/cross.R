@@ -26,14 +26,15 @@
 #' @seealso expand.grid
 #' @param .x,.y,.z Lists or atomic vectors.
 #' @param .l A list of lists or atomic vectors. Alternatively, a data frame.
-#' @param .wide If \code{TRUE}, returns a list of unique combinations.
-#' If \code{FALSE}, returns a list of the same size as the number of
+#' @param .wide Only relevant for lists, not data frames. If
+#' \code{TRUE}, returns a list of unique combinations.  If
+#' \code{FALSE}, returns a list of the same size as the number of
 #' arguments (2 for \code{cross()}, 3 for \code{cross3()},
 #' \code{length(.l)} for \code{cross_n()}).
 #'
 #' \code{TRUE} is the default for lists so that each element of the
 #' returned list is one combination. The list can then be directly
-#' mapped over. \code{FALSE} is the default for data frames so that
+#' mapped over. \code{FALSE} is hard coded for data frames so that
 #' each row represents one combination.
 #' @param .filter A predicate function that takes the same number of
 #' arguments as the number of variables to be combined.
@@ -108,8 +109,8 @@ cross_n.list <- function(.l, .wide = TRUE, .filter = NULL) {
 }
 
 #' @export
-cross_n.data.frame <- function(.l, .wide = FALSE, .filter = NULL) {
-  out <- cross_row_by_row(.l, wide = .wide, filter = .filter)
+cross_n.data.frame <- function(.l, .filter = NULL) {
+  out <- cross_row_by_row(.l, wide = FALSE, filter = .filter)
   out %>% dplyr::as_data_frame()
 }
 
