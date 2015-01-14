@@ -73,6 +73,18 @@
 #' # Unwanted combinations can be filtered out with a predicate function
 #' filter <- function(x, y) x >= y
 #' cross(1:5, 1:5, .filter = filter) %>% str()
+#'
+#' # To give names to the components of the combinations, we map
+#' # setNames() on the product:
+#' grid <- seq_len(10) %>%
+#'   cross(., ., .filter = function(x, y) x == y) %>%
+#'   map(setNames, c("x", "y"))
+#' 
+#' # We can also encapsulate the arguments in a named list before
+#' # crossing:
+#' grid <- seq_len(10) %>%
+#'   list(x = ., y = .) %>%
+#'   cross_n(.filter = function(x, y) x == y)
 cross <- function(.x, .y, .wide = TRUE, .filter = NULL) {
   cross_row_by_row(list(.x, .y), wide = .wide, filter = .filter)
 }
