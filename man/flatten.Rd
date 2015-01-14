@@ -4,12 +4,12 @@
 \alias{flatten}
 \title{Flatten a list of lists into a list.}
 \usage{
-flatten(x, recursive = FALSE)
+flatten(.x, .recursive = FALSE)
 }
 \arguments{
-\item{x}{A list of flatten}
+\item{.x}{A list of flatten}
 
-\item{recursive}{Recursively flatten list components?}
+\item{.recursive}{Recursively flatten list components?}
 }
 \description{
 This is a wrapper for \code{\link{unlist}()} that defaults to
