@@ -175,7 +175,7 @@ each_n <- function(.l, .f, ...) {
 #'   str()
 map_if <- function(.x, .p, .f, ...) {
   .f <- as_function(.f)
-  sel <- find_selection(.x, .p)
+  sel <- probe(.x, .p)
 
   .x[sel] <- lapply(.x[sel], .f, ...)
   .x

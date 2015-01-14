@@ -48,16 +48,6 @@ as_function <- function(f) {
   }
 }
 
-find_selection <- function(x, p, ...) {
-  if (is.logical(p)) {
-    stopifnot(length(p) == length(x))
-    p
-  } else {
-    p <- as_function(p)
-    vapply(x, p, logical(1), ...)
-  }
-}
-
 output_hook <- function(out, x) {
   if (is.data.frame(x)) {
     dplyr::as_data_frame(out)
