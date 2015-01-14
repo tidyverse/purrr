@@ -6,25 +6,14 @@
 \alias{cross_n}
 \title{Produce all combinations of list elements}
 \usage{
-cross(.x, .y, .wide = TRUE, .filter = NULL)
+cross(.x, .y, .filter = NULL)
 
-cross3(.x, .y, .z, .wide = TRUE, .filter = NULL)
+cross3(.x, .y, .z, .filter = NULL)
 
-cross_n(.l, .wide = TRUE, .filter = NULL)
+cross_n(.l, .filter = NULL)
 }
 \arguments{
 \item{.x,.y,.z}{Lists or atomic vectors.}
-
-\item{.wide}{Only relevant for lists, not data frames. If
-\code{TRUE}, returns a list of unique combinations.  If
-\code{FALSE}, returns a list of the same size as the number of
-arguments (2 for \code{cross()}, 3 for \code{cross3()},
-\code{length(.l)} for \code{cross_n()}).
-
-\code{TRUE} is the default for lists so that each element of the
-returned list is one combination. The list can then be directly
-mapped over. \code{FALSE} is hard coded for data frames so that
-each row represents one combination.}
 
 \item{.filter}{A predicate function that takes the same number of
 arguments as the number of variables to be combined.}
@@ -32,7 +21,11 @@ arguments as the number of variables to be combined.}
 \item{.l}{A list of lists or atomic vectors. Alternatively, a data frame.}
 }
 \value{
-A list or a data frame.
+\code{cross()} and \code{cross3()} always return a
+list. \code{cross_n()} returns a list if \code{.l} is a list and a
+data frame if \code{.l} is a data frame. For lists, each element is
+one combination so that the list can be directly mapped over. For
+data frames, each row represents one combination.
 }
 \description{
 \code{cross()} returns the product set of the elements of \code{.x}
@@ -53,7 +46,7 @@ frame, \code{cross_n()} returns a data frame.
 When the number of combinations is large and the individual elements
 are heavy memory-wise, it is often useful to filter unwanted
 combinations on the fly. \code{.filter} must be a predicate
-functio! that takes the same number of arguments as the number of
+function that takes the same number of arguments as the number of
 crossed objects (2 for \code{cross()}, 3 for \code{cross3()},
 \code{length(.l)} for \code{cross_n()}) and returns \code{TRUE} or
 \code{FALSE}. The combinations where the predicate function returns
@@ -72,22 +65,29 @@ data \%>\%
   cross_n() \%>\%
   map(smash(paste))
 
-# For this purpose, the long format is less pratical and requires a loop
-args <- cross_n(data, .wide = FALSE)
+# If we start with a data frame instead, we'll get a data frame in
+# long format, as with expand.grid(). We have three columns id,
+# greeting and sep, with each row a particular combination
+df <- data \%>\% dplyr::as_data_frame()
+args <- cross_n(df)
 
-out <- vector("list", length(args[[1]]))
+# The long format can also be obtained with a list by unzipping
+# then flattening each element.
+data \%>\%
+  cross_n() \%>\%
+  unzip() \%>\%
+  map(flatten)
+
+# This format is often less pratical for functional programming
+# because applying a function to the combinations requires a loop
+out <- vector("list", length = nrow(args))
 for (i in seq_along(out))
-  out[[i]] <- map(args, i) \%>\% map_call("paste")
+  out[[i]] <- map(args, i) \%>\% as.list() \%>\% map_call("paste")
 out
 
-# If we start with a data frame instead, we'll get a data frame in
-# long format, as with expand.grid().
-df <- data \%>\% dplyr::as_data_frame()
-out2 <- cross_n(df)
-
-# The combinations would then typically be manipulated using dplyr
-out2 \%>\% dplyr::do(
-  smash(paste)(.) \%>\% dplyr::data_frame()
+# In this case, the combinations could be manipulated using dplyr
+args \%>\% dplyr::do(
+  map_call(as.list(.), "paste") \%>\% dplyr::data_frame()
 )
 
 # Unwanted combinations can be filtered out with a predicate function
@@ -96,17 +96,17 @@ cross(1:5, 1:5, .filter = filter) \%>\% str()
 
 # To give names to the components of the combinations, we map
 # setNames() on the product:
-grid <- seq_len(10) \%>\%
+seq_len(3) \%>\%
   cross(., ., .filter = function(x, y) x == y) \%>\%
   map(setNames, c("x", "y"))
 
 # We can also encapsulate the arguments in a named list before
 # crossing:
-grid <- seq_len(10) \%>\%
+seq_len(3) \%>\%
   list(x = ., y = .) \%>\%
   cross_n(.filter = function(x, y) x == y)
 }
 \seealso{
-expand.grid
+\code{\link{expand.grid}()}
 }
 
