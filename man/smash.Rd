@@ -31,10 +31,6 @@ smash(mean)(x)
 mean \%>\% smash() \%>\% invoke(x)
 
 # Default arguments can also be specified directly in smash()
-c(1:100, NA, 1000) \%>\% smash(mean, na.rm = TRUE)()
-
-# Note that when a smashed function gets a vector, it is wrapped
-# in a list. The above is equivalent to
 list(c(1:100, NA, 1000)) \%>\% smash(mean, na.rm = TRUE)()
 }
 \seealso{

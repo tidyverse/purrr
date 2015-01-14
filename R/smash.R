@@ -21,16 +21,12 @@
 #' mean %>% smash() %>% invoke(x)
 #'
 #' # Default arguments can also be specified directly in smash()
-#' c(1:100, NA, 1000) %>% smash(mean, na.rm = TRUE)()
-#'
-#' # Note that when a smashed function gets a vector, it is wrapped
-#' # in a list. The above is equivalent to
 #' list(c(1:100, NA, 1000)) %>% smash(mean, na.rm = TRUE)()
 smash <- function (.f, ...) {
   force(.f)
   defaults <- list(...)
   function(args = list()) {
-    do.call(".f", enlist(args, defaults))
+    do.call(".f", c(args, defaults))
   }
 }
 
@@ -54,5 +50,5 @@ smash <- function (.f, ...) {
 #'   map(~ sub("^01", "10", .)) %>%
 #'   map_call("paste", "2001", sep = "-")
 map_call <- function(.x, .f, ...) {
-  do.call(.f, enlist(.x, ...))
+  do.call(.f, c(.x, ...))
 }
