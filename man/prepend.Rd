@@ -18,7 +18,9 @@ A merged vector.
 }
 \description{
 This is a companion to \code{\link{append}()} to help merging two
-lists or atomic vectors.
+lists or atomic vectors. \code{prepend()} is a clearer semantic
+signal than `c()` that a vector is to be merged at the beginning of
+another, especially in a pipe chain.
 }
 \examples{
 x <- as.list(1:3)

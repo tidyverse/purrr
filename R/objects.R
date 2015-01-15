@@ -31,7 +31,9 @@ enlist <- function(...) {
 #' Prepend a vector
 #'
 #' This is a companion to \code{\link{append}()} to help merging two
-#' lists or atomic vectors.
+#' lists or atomic vectors. \code{prepend()} is a clearer semantic
+#' signal than `c()` that a vector is to be merged at the beginning of
+#' another, especially in a pipe chain.
 #'
 #' @param x the vector to be modified.
 #' @param values to be included in the modified vector.
