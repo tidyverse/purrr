@@ -36,8 +36,7 @@ smash <- function (.f, ...) {
 #' `map_call()` is directly equivalent to \code{do.call()} except that
 #' it takes a list as first argument instead of a function. This makes
 #' `map_call()` pipable.
-#' @param .x A list or a vector. Vectors are automatically wrapped in
-#'   a list.
+#' @param .x A list or a vector. Vectors are coerced to a list.
 #' @param .f A function or the name of a function to call with the
 #'   elements of \code{.x} as arguments.
 #' @param ... Additional arguments passed on to \code{.f}.

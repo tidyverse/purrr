@@ -7,8 +7,7 @@
 map_call(.x, .f, ...)
 }
 \arguments{
-\item{.x}{A list or a vector. Vectors are automatically wrapped in
-a list.}
+\item{.x}{A list or a vector. Vectors are coerced to a list.}
 
 \item{.f}{A function or the name of a function to call with the
 elements of \code{.x} as arguments.}
