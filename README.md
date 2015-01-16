@@ -102,7 +102,7 @@ mean(unlist(boot$diffs))
 
 * Fill in function arguments with `partial()`. 
 
-* Convert a function to take a list of inputs with `splat()`.
+* Convert a function to take a list of inputs with `smash()`.
 
 * Compose multiple functions into a single function with `compose()`.
 
