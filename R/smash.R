@@ -25,8 +25,8 @@
 smash <- function (.f, ...) {
   force(.f)
   defaults <- list(...)
-  function(args = list()) {
-    do.call(".f", c(args, defaults))
+  function(args = list(), ...) {
+    do.call(".f", c(args, defaults, list(...)))
   }
 }
 
