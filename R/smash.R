@@ -50,5 +50,5 @@ smash <- function (.f, ...) {
 #'   map(~ sub("^01", "10", .)) %>%
 #'   map_call("paste", "2001", sep = "-")
 map_call <- function(.x, .f, ...) {
-  do.call(.f, c(.x, ...))
+  do.call(.f, c(.x, list(...)))
 }
