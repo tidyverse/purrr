@@ -35,11 +35,8 @@ A list for \code{map_neighbours()}, a logical vector for
 }
 \description{
 \code{map_neighbours()} applies \code{.f} to all sequential pairs
-of the elements of \code{.x}.
-}
-\details{
-\code{probe_neighbours()} is similar but applies a predicate
-function \code{.p} and return a logical
+of the elements of \code{.x}. \code{probe_neighbours()} is similar
+but applies a predicate function \code{.p} and return a logical
 vector. \code{every_neighbours()} checks that a predicate function
 returns \code{TRUE} on all pairs. \code{some_neighbours()} checks
 that at least one pair returns \code{TRUE}.

@@ -1,10 +1,8 @@
 #' Apply a binary function sequentially on a list.
 #'
 #' \code{map_neighbours()} applies \code{.f} to all sequential pairs
-#' of the elements of \code{.x}.
-#'
-#' \code{probe_neighbours()} is similar but applies a predicate
-#' function \code{.p} and return a logical
+#' of the elements of \code{.x}. \code{probe_neighbours()} is similar
+#' but applies a predicate function \code{.p} and return a logical
 #' vector. \code{every_neighbours()} checks that a predicate function
 #' returns \code{TRUE} on all pairs. \code{some_neighbours()} checks
 #' that at least one pair returns \code{TRUE}.
@@ -89,22 +87,25 @@ some_neighbors <- some_neighbours
 
 #' Apply a binary function to pairs of list elements
 #'
-#' Apply a binary function to pairs of the elements of \code{.x}. The
-#' pairs are generated with \code{\link{cross_n}()} and can be
-#' filtered using the \code{.filter} argument. The default filter
-#' leaves only unique combinations. The elements of the combinations
-#' are recorded for each element of the returned list in the
-#' \code{parent} attribute.
-#'
+#' Apply a binary function to pairs of the elements of \code{.x}.
 #' \code{probe_pairs()} is similar but applies a predicate function
 #' \code{.p} and returns a logical vector. \code{every_pair()} checks
 #' that a predicate function returns \code{TRUE} on all
 #' pairs. \code{some_pairs()} checks that at least one pair returns
+#'
+#' The pairs are generated with \code{seq_along(.x) %>%
+#' \link{cross}(., .)}. They can be filtered using the \code{.filter}
+#' argument. The default filter leaves only unique combinations. The
+#' elements of the combinations are recorded for each element of the
+#' returned list in the \code{parent} attribute.
+#'
 #' \code{TRUE}.
 #' @inheritParams map_neighbours
-#' @param .filter A predicate function passed on to \code{cross_n()}
-#' to filter out unwanted combinations of the elements of
-#' \code{.x}. When \code{NULL}, all combinations are kept.
+#' @param .filter A binary predicate function that will receive two
+#' integers representing element positions in \code{.x}. If
+#' \code{.filter} returns \code{TRUE} for two given positions, the
+#' combination is filtered out. When \code{.filter = NULL}, all
+#' combinations are kept.
 #' @return A list for \code{map_pairs()}, a logical vector for
 #' \code{probe_pairs()}, \code{TRUE} or \code{FALSE} for
 #' \code{every_pairs()} and \code{some_pairs()}.

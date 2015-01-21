@@ -22,9 +22,11 @@ some_pairs(.x, .p, ..., .filter = `>=`)
 
 \item{...}{Additional arguments passed on to \code{.f} or \code{.p}.}
 
-\item{.filter}{A predicate function passed on to \code{cross_n()}
-to filter out unwanted combinations of the elements of
-\code{.x}. When \code{NULL}, all combinations are kept.}
+\item{.filter}{A binary predicate function that will receive two
+integers representing element positions in \code{.x}. If
+\code{.filter} returns \code{TRUE} for two given positions, the
+combination is filtered out. When \code{.filter = NULL}, all
+combinations are kept.}
 
 \item{.p}{A predicate function of at least two arguments.}
 }
@@ -34,18 +36,19 @@ A list for \code{map_pairs()}, a logical vector for
 \code{every_pairs()} and \code{some_pairs()}.
 }
 \description{
-Apply a binary function to pairs of the elements of \code{.x}. The
-pairs are generated with \code{\link{cross_n}()} and can be
-filtered using the \code{.filter} argument. The default filter
-leaves only unique combinations. The elements of the combinations
-are recorded for each element of the returned list in the
-\code{parent} attribute.
-}
-\details{
+Apply a binary function to pairs of the elements of \code{.x}.
 \code{probe_pairs()} is similar but applies a predicate function
 \code{.p} and returns a logical vector. \code{every_pair()} checks
 that a predicate function returns \code{TRUE} on all
 pairs. \code{some_pairs()} checks that at least one pair returns
+}
+\details{
+The pairs are generated with \code{seq_along(.x) %>%
+\link{cross}(., .)}. They can be filtered using the \code{.filter}
+argument. The default filter leaves only unique combinations. The
+elements of the combinations are recorded for each element of the
+returned list in the \code{parent} attribute.
+
 \code{TRUE}.
 }
 \examples{
