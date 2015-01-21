@@ -66,15 +66,23 @@ some_neighbours <- function(.x, .p, ...) {
   any(out)
 }
 
+#' @rdname map_neighbours
+#' @usage NULL
 #' @export
 map_neighbors <- map_neighbours
 
+#' @rdname map_neighbours
+#' @usage NULL
 #' @export
 probe_neighbors <- probe_neighbours
 
+#' @rdname map_neighbours
+#' @usage NULL
 #' @export
 every_neighbors <- every_neighbours
 
+#' @rdname map_neighbours
+#' @usage NULL
 #' @export
 some_neighbors <- some_neighbours
 
