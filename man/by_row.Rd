@@ -46,7 +46,8 @@ between \code{by_row()} and \code{map_rows()} is that in the former
 case, \code{..f} gets the data frame as argument, while in the
 latter, the columns are mapped to \code{..f}'s function
 signature. In essence, \code{map_row()} is equivalent to using
-\code{by_row()} with a stitched function (see \code{stitch()}).
+\code{by_row()} with a lifted function (see
+\code{\link{lift_dl}()}).
 }
 \examples{
 # ..f should be able to work with a list or a data frame. As it

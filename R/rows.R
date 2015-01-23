@@ -92,7 +92,8 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' case, \code{..f} gets the data frame as argument, while in the
 #' latter, the columns are mapped to \code{..f}'s function
 #' signature. In essence, \code{map_row()} is equivalent to using
-#' \code{by_row()} with a stitched function (see \code{stitch()}).
+#' \code{by_row()} with a lifted function (see
+#' \code{\link{lift_dl}()}).
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
 #'   created under the name \code{.out}. If it returns a data frame, it
