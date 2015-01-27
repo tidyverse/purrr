@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hadley/lowliner.png?branch=master)](https://travis-ci.org/hadley/lowliner)
 
-This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). An alternative name for lowliner might be lplyr. By analogy with dplyr, it's a re-thinking of plyr specialised for lists.
+This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [lodash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). An alternative name for lowliner might be lplyr. By analogy with dplyr, it's a re-thinking of plyr specialised for lists.
 
 ## Installation
 
