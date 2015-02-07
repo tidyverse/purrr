@@ -59,7 +59,7 @@ l1 \%>\% map(c("prop1", "param2")) \%>\% str()
 l1 \%>\% at_depth(2, "param2") \%>\% str()
 
 
-# at_depth can be used in a complementary way with other lowliner
+# at_depth can be used in a complementary way with other purrr
 # functions to make them operate at a lower level
 l2 <- list(
   obj1 = list(

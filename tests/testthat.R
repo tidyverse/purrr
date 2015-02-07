@@ -1,4 +1,4 @@
 library(testthat)
-library(lowliner)
+library(purrr)
 
-test_check("lowliner")
+test_check("purrr")

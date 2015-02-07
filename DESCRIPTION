@@ -1,8 +1,10 @@
-Package: lowliner
+Package: purrr
 Title: Functional Programming Tools.
 Version: 0.0.0.9000
 Authors@R: 'Hadley Wickham <h.wickham@gmail.com> [aut,cre]'
-Description: A FP package for R in the spirit of underscore.js
+Description: Make your pure functions purr with the purrr package. This package
+    complete R's FP tools with missing features from other programming
+    languages.
 License: GPL-3
 LazyData: true
 Imports:

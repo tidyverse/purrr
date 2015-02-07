@@ -1,24 +1,24 @@
-# lowliner
+# purrr
 
-[![Build Status](https://travis-ci.org/hadley/lowliner.png?branch=master)](https://travis-ci.org/hadley/lowliner)
+[![Build Status](https://travis-ci.org/hadley/purrr.png?branch=master)](https://travis-ci.org/hadley/purrr)
 
-This is a functional programming (FP) library in the style of [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). An alternative name for lowliner might be lplyr. By analogy with dplyr, it's a re-thinking of plyr specialised for lists.
+Purrr makes your pure functions purr by completing R's functional programming tools with important features from other languages, in the style of the JS packages [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). 
 
 ## Installation
 
-lowliner is currently not on CRAN, but you can get it from github with:
+purrr is currently not on CRAN, but you can get it from github with:
 
 ```R
 # install.packages("devtools")
-devtools::install_github("hadley/lowliner")
+devtools::install_github("hadley/purrr")
 ```
 
 ## Examples
 
-The following example uses lowliner to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2.
+The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2.
 
 ```R
-library(lowliner)
+library(purrr)
 
 mtcars %>%
   split(.$cyl) %>%
@@ -110,9 +110,9 @@ mean(unlist(boot$diffs))
 
 ## Philosophy
 
-The goal is not to try and simulate Haskell in R: lowliner does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.
+The goal is not to try and simulate Haskell in R: purrr does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.
 
-* Instead of point free style, use the pipe, `%>%` to write code that can be 
+* Instead of point free style, use the pipe, `%>%`, to write code that can be 
   read from left to right.
 
 * Instead of currying, we use `...` to pass in extra arguments. 
