@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hadley/purrr.png?branch=master)](https://travis-ci.org/hadley/purrr)
 
-Purrr makes your pure functions purr by completing R's functional programming tools with important features from other languages, in the style of the JS packages [underscore.js](http://underscorejs.org), [low-dash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). 
+Purrr makes your pure functions purr by completing R's functional programming tools with important features from other languages, in the style of the JS packages [underscore.js](http://underscorejs.org), [lodash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). 
 
 ## Installation
 
