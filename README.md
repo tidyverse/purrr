@@ -91,7 +91,7 @@ mean(unlist(boot$diffs))
 * Find the value (`detect()`) and index (`detect_index()`) of the first element 
   that satisfies the predicate.
 
-* Find the head/tail that satisfies a predict: `head_while()`, `tail_while()`.
+* Find the head/tail that satisfies a predicate: `head_while()`, `tail_while()`.
 
 ### Lists of functions
 
