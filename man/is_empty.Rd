@@ -7,7 +7,7 @@
 is_empty(x)
 }
 \arguments{
-\item{x}{object to test}
+\item{x}{object to test.}
 }
 \description{
 Is a vector/list empty?
