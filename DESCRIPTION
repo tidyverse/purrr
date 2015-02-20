@@ -8,7 +8,9 @@ Description: Make your pure functions purr with the purrr package. This package
 License: GPL-3
 LazyData: true
 Imports:
-    magrittr (>= 1.5)
+    magrittr (>= 1.5),
+    Rcpp
 Suggests:
     testthat,
     dplyr (>= 0.3.0.9000)
+LinkingTo: Rcpp, dplyr, BH
