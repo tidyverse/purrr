@@ -18,22 +18,22 @@
 #'
 #' 3:10 %>% detect(is_even, .right = TRUE)
 #' 3:10 %>% detect_index(is_even, .right = TRUE)
-detect <- function(.x, .f, ..., .right = FALSE) {
-  .f <- as_function(.f)
+detect <- function(.x, .p, ..., .right = FALSE) {
+  .p <- as_function(.p)
 
   for (i in index(.x, .right)) {
-    if (isTRUE(.f(.x[[i]], ...))) return(.x[[i]])
+    if (isTRUE(.p(.x[[i]], ...))) return(.x[[i]])
   }
   NULL
 }
 
 #' @export
 #' @rdname detect
-detect_index <- function(.x, .f, ..., .right = FALSE) {
-  .f <- as_function(.f)
+detect_index <- function(.x, .p, ..., .right = FALSE) {
+  .p <- as_function(.p)
 
   for (i in index(.x, .right)) {
-    if (isTRUE(.f(.x[[i]], ...))) return(i)
+    if (isTRUE(.p(.x[[i]], ...))) return(i)
   }
   0
 }

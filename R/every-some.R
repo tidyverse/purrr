@@ -1,8 +1,7 @@
 #' Do every or some elements of a list satisfy a predicate?
 #'
+#' @inheritParams map_if
 #' @inheritParams map
-#' @param .f A predicate function, i.e. a function that returns either
-#'   \code{TRUE} or \code{FALSE}
 #' @return Either \code{TRUE} or \code{FALSE}.
 #' @export
 #' @examples
@@ -13,20 +12,20 @@
 #' y <- list(0:10, 5.5)
 #' y %>% every(is.numeric)
 #' y %>% every(is.integer)
-every <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+every <- function(.x, .p, ...) {
+  .f <- as_function(.p)
   for (i in seq_along(.x)) {
-    if (!isTRUE(.f(.x[[i]], ...))) return(FALSE)
+    if (!isTRUE(.p(.x[[i]], ...))) return(FALSE)
   }
   TRUE
 }
 
 #' @export
 #' @rdname every
-some <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+some <- function(.x, .p, ...) {
+  .f <- as_function(.p)
   for (i in seq_along(.x)) {
-    if (isTRUE(.f(.x[[i]], ...))) return(TRUE)
+    if (isTRUE(.p(.x[[i]], ...))) return(TRUE)
   }
   FALSE
 }

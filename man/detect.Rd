@@ -5,15 +5,19 @@
 \alias{detect_index}
 \title{Find the value or position of the first match.}
 \usage{
-detect(.x, .f, ..., .right = FALSE)
+detect(.x, .p, ..., .right = FALSE)
 
-detect_index(.x, .f, ..., .right = FALSE)
+detect_index(.x, .p, ..., .right = FALSE)
 }
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.f}{A predicate function, i.e. a function that returns either
-\code{TRUE} or \code{FALSE}}
+\item{.p}{A single predicate function, a formula describing such a
+predicate function, or a logical vector of the same length as \code{.x}.
+Alternatively, if the elements of \code{.x} are themselves lists of
+objects, a string indicating the name of a logical element in the
+inner lists. Only those elements where \code{.p} evaluates to
+\code{TRUE} will be modified, kept or discarded.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 

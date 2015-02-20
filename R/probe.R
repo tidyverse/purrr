@@ -10,7 +10,7 @@
 #' # we first need to record a logical vector. Using a predicate function in both
 #' # map_if() calls would not work since they change the list contents.
 #' l <- list(a = 1, b = "2", c = "3")
-#' 
+#'
 #' is_character <- probe(l, is.character)
 #' l <- l %>%
 #'   map_if(is_character, as.numeric) %>%

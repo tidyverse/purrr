@@ -4,19 +4,15 @@
 \alias{negate}
 \title{Negate a predicate function.}
 \usage{
-negate(.f)
+negate(.p)
 }
 \arguments{
-\item{.f}{A function, formula or string.
-
-  If a function, it is used as is.
-
-  If a formula, e.g. \code{~ x + 2}, it is converted to a function with
-  a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
-  typing for very simple anonymous functions.
-
-  If a string, e.g. \code{"y"}, it is converted to an extractor function,
-  \code{function(x) x[["y"]]}.}
+\item{.p}{A single predicate function, a formula describing such a
+predicate function, or a logical vector of the same length as \code{.x}.
+Alternatively, if the elements of \code{.x} are themselves lists of
+objects, a string indicating the name of a logical element in the
+inner lists. Only those elements where \code{.p} evaluates to
+\code{TRUE} will be modified, kept or discarded.}
 }
 \value{
 A new predicate function.
