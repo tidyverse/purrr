@@ -5,15 +5,19 @@
 \alias{some}
 \title{Do every or some elements of a list satisfy a predicate?}
 \usage{
-every(.x, .f, ...)
+every(.x, .p, ...)
 
-some(.x, .f, ...)
+some(.x, .p, ...)
 }
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.f}{A predicate function, i.e. a function that returns either
-\code{TRUE} or \code{FALSE}}
+\item{.p}{A single predicate function, a formula describing such a
+predicate function, or a logical vector of the same length as \code{.x}.
+Alternatively, if the elements of \code{.x} are themselves lists of
+objects, a string indicating the name of a logical element in the
+inner lists. Only those elements where \code{.p} evaluates to
+\code{TRUE} will be modified, kept or discarded.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }

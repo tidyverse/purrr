@@ -1,6 +1,6 @@
 #' Negate a predicate function.
 #'
-#' @inheritParams map
+#' @inheritParams map_if
 #' @return A new predicate function.
 #' @export
 #' @examples
@@ -9,7 +9,7 @@
 #' x %>% keep(negate("y")) %>% length()
 #' # Same as
 #' x %>% discard("y") %>% length()
-negate <- function(.f) {
-  .f <- as_function(.f)
-  function(...) !.f(...)
+negate <- function(.p) {
+  .p <- as_function(.p)
+  function(...) !.p(...)
 }
