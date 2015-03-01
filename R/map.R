@@ -124,8 +124,9 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' @export
 #' @rdname map2
 map_n <- function(.l, .f, ...) {
-  args <- recycle_args(c(.l, list(...)))
-  do.call("Map", c(list(quote(.f)), args))
+  f <- partial(.f, ..., .first = FALSE)
+  args <- recycle_args(.l)
+  do.call("Map", c(list(quote(f)), args))
 }
 
 
