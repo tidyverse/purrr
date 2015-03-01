@@ -200,7 +200,7 @@ SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots,
   // avoid those, we store the slice in an environment.
   Environment shadow_env(calling_env);
   SET_TYPEOF(dots, LANGSXP);
-  dots = CDR(dots);  // cdr is the list that was used to capture dots
+  dots = CDR(dots);  // car is the list that was used to capture dots
   Shield<SEXP> lang_call(Rf_lcons(fun, Rf_lcons(Rf_install("shadowed"), dots)));
 
 

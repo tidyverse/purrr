@@ -20,13 +20,13 @@ SEXP as_data_frame(const SEXP x) {
 
 int is_atomic(int x) {
   switch(x) {
-	case CHARSXP:
-	case LGLSXP:
-	case INTSXP:
-	case REALSXP:
-	case CPLXSXP:
-	case STRSXP:
-	case RAWSXP:
+  case CHARSXP:
+  case LGLSXP:
+  case INTSXP:
+  case REALSXP:
+  case CPLXSXP:
+  case STRSXP:
+  case RAWSXP:
     return 1;
   default:
     return 0;
