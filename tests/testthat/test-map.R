@@ -20,7 +20,7 @@ test_that("map2() and map3() return a data frame when given one", {
   expect_is(out_map3, "data.frame")
 })
 
-test_that("map_n() does not recycle additional arguments (see #54)", {
+test_that("map_n() is not vectorized over additional arguments (see #54)", {
   f <- function(x, y, zs) zs
   actual <- list(1:3, 1:3)
   alleged <- map2(1:2, 1:2, f, zs = 1:3)
