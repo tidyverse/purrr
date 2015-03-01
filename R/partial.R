@@ -12,7 +12,7 @@
 #' similar as possible to the anonymous function that'd you'd create by hand,
 #' if you weren't using \code{partial}.
 #'
-#' @param _f a function. For the output source to read well, this should be an
+#' @param ...f a function. For the output source to read well, this should be an
 #'   be a named function.
 #' @param ... named arguments to \code{`_f`} that should be partially applied.
 #' @param .env the environment of the created function. Defaults to
@@ -51,16 +51,16 @@
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
-partial <- function(`_f`, ..., .env = parent.frame(), .lazy = TRUE) {
-  stopifnot(is.function(`_f`))
+partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE) {
+  stopifnot(is.function(...f))
 
   if (.lazy) {
-    fcall <- substitute(`_f`(...))
+    fcall <- substitute(...f(...))
   } else {
-    fcall <- make_call(substitute(`_f`), .args = list(...))
+    fcall <- make_call(substitute(...f), .args = list(...))
   }
   # Pass on ... from parent function
-  fcall[[length(fcall) + 1]] <- quote(...)
+  fcall[[n + 1]] <- quote(...)
 
   args <- list("..." = quote(expr = ))
   make_function(args, fcall, .env)
