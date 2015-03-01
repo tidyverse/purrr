@@ -19,6 +19,10 @@
 #'   \code{\link{parent.frame}} and you should rarely need to modify this.
 #' @param .lazy If \code{TRUE} arguments evaluated lazily, if \code{FALSE},
 #'   evaluated when \code{partial} is called.
+#' @param .first If \code{TRUE}, the partialized arguments are placed
+#'   to the front of the function signature. If \code{FALSE}, they are
+#'   moved to the back. Only useful to control position matching of
+#'   arguments when the partialized arguments are not named.
 #' @export
 #' @examples
 #' # Partial is designed to replace the use of anonymous functions for
@@ -51,7 +55,7 @@
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
-partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE) {
+partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE) {
   stopifnot(is.function(...f))
 
   if (.lazy) {
@@ -59,8 +63,18 @@ partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE) {
   } else {
     fcall <- make_call(substitute(...f), .args = list(...))
   }
+
   # Pass on ... from parent function
-  fcall[[n + 1]] <- quote(...)
+  n <- length(fcall)
+  if (!.first && n > 1) {
+    tmp <- fcall[1]
+    tmp[[2]] <- quote(...)
+    tmp[seq(3, n + 1)] <- fcall[seq(2, n)]
+    names(tmp)[seq(3, n + 1)] <- names2(fcall)[seq(2, n)]
+    fcall <- tmp
+  } else {
+    fcall[[n + 1]] <- quote(...)
+  }
 
   args <- list("..." = quote(expr = ))
   make_function(args, fcall, .env)
