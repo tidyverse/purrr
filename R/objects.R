@@ -103,19 +103,19 @@ is_bare_numeric <- function(x) {
 #' @export
 #' @rdname bare-type-predicates
 is_bare_integer <- function(x) {
-  !is.object(x) && is.integer(x) 
+  !is.object(x) && is.integer(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_character <- function(x) {
-  !is.object(x) && is.character(x) 
+  !is.object(x) && is.character(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_logical <- function(x) {
-  !is.object(x) && is.logical(x) 
+  !is.object(x) && is.logical(x)
 }
 
 
@@ -183,3 +183,13 @@ is_logical <- is.logical
 #' is_empty(list())
 #' is_empty(list(NULL))
 is_empty <- function(x) length(x) == 0
+
+
+#' Is a formula?
+#'
+#' @inheritParams is_empty
+#' @export
+#' @examples
+#' x <- disp ~ am
+#' is_formula(x)
+is_formula <- function(x) inherits(x, "formula")
