@@ -182,3 +182,41 @@ map_if <- function(.x, .p, .f, ...) {
   .x[sel] <- lapply(.x[sel], .f, ...)
   .x
 }
+
+#' Modify elements of a specified subset.
+#'
+#' @inheritParams map
+#' @param .at A character vector of names or a numeric vector of
+#'   positions. Only those elements corresponding to \code{.at} will be
+#'   modified.
+#' @return The same type of object as \code{.x}.
+#' @export
+#' @examples
+#' # Specify which columns to map with a numeric vector of positions:
+#' mtcars %>% map_at(c(1, 4, 5), as.character) %>% str()
+#'
+#' # Or with a vector of names:
+#' mtcars %>% map_at(c("cyl", "am"), as.character) %>% str()
+map_at <- function(.x, .at, .f, ...) {
+  .f <- as_function(.f)
+  sel <- inv_which(.x, .at)
+
+  .x[sel] <- lapply(.x[sel], .f, ...)
+  .x
+}
+
+inv_which <- function(x, sel) {
+  if (is.character(sel)) {
+    names <- names(x)
+    if (is.null(names)) {
+      stop("character indexing requires a named object", call. = FALSE)
+    }
+    names %in% sel
+  } else if (is.numeric(sel)) {
+    seq_along(x) %in% sel
+  } else if (is.logical(sel)) {
+    sel
+  } else {
+    stop("unrecognised index type", call. = FALSE)
+  }
+}
