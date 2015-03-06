@@ -161,7 +161,7 @@ each_n <- function(.l, .f, ...) {
 #'   Alternatively, if the elements of \code{.x} are themselves lists of
 #'   objects, a string indicating the name of a logical element in the
 #'   inner lists. Only those elements where \code{.p} evaluates to
-#'   \code{TRUE} will be modified, kept or discarded.
+#'   \code{TRUE} will be modified.
 #' @return The same type of object as \code{.x}.
 #' @export
 #' @examples
