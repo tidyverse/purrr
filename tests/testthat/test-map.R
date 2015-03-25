@@ -19,3 +19,5 @@ test_that("map2() and map3() return a data frame when given one", {
   expect_is(out_map2, "data.frame")
   expect_is(out_map3, "data.frame")
 })
+
+test_that("map2, map3, map_n recognise ...", {})
