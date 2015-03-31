@@ -26,5 +26,5 @@ flatten <- function(.x, .recursive = FALSE, .unname = FALSE) {
   } else if (.unname && !.recursive) {
     names(.x) <- NULL
   }
-  unlist(.x, recursive = .recursive, use.names = use_names)
+  unlist(.x, recursive = .recursive, use.names = use_names) %||% list()
 }
