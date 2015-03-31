@@ -20,4 +20,13 @@ test_that("map2() and map3() return a data frame when given one", {
   expect_is(out_map3, "data.frame")
 })
 
-test_that("map2, map3, map_n recognise ...", {})
+test_that("map2, map3, map_n recognise ...", {
+  ll <- list(x = c(1,2,3), y = c(4,5,6))
+  foo <- function(x, y, z) {
+    return(x + y + mean(z))
+  }
+  out_map <- map_n(ll, foo, z = c(1:100))
+  expect_is(out_map, "list")
+  expect_equal(length(out_map), 3)
+  expect_equal(sum(unlist(list(55.5, 57.5, 59.5))), 172.5)
+})
