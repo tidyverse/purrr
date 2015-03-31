@@ -28,5 +28,5 @@ test_that("map2, map3, map_n recognise ...", {
   out_map <- map_n(ll, foo, z = c(1:100))
   expect_is(out_map, "list")
   expect_equal(length(out_map), 3)
-  expect_equal(sum(unlist(list(55.5, 57.5, 59.5))), 172.5)
+  expect_equal(sum(unlist(out_map)), 172.5)
 })
