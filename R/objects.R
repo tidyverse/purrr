@@ -38,6 +38,9 @@
 #' enlist(x, c = df, d = 3, e = object, .objects = p) %>% str()
 enlist <- function(..., .objects = FALSE) {
   dots <- list(...)
+  if (length(dots) == 0) {
+    return(dots)
+  }
 
   if (!is_false(.objects)) {
     if (is_true(.objects)) {
