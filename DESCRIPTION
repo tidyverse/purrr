@@ -1,5 +1,5 @@
 Package: purrr
-Title: Functional Programming Tools.
+Title: Functional Programming Tools
 Version: 0.0.0.9000
 Authors@R: 'Hadley Wickham <h.wickham@gmail.com> [aut,cre]'
 Description: Make your pure functions purr with the purrr package. This package
