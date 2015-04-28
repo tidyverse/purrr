@@ -2,34 +2,34 @@
 % Please edit documentation in R/arrays.R
 \name{array-coercion}
 \alias{array-coercion}
-\alias{enlist_margin}
-\alias{flatten_margin}
+\alias{array_branch}
+\alias{array_tree}
 \title{Coerce array to list}
 \usage{
-flatten_margin(array, margin = NULL)
+array_branch(array, margin = NULL)
 
-enlist_margin(array, margin = NULL)
+array_tree(array, margin = NULL)
 }
 \arguments{
 \item{array}{An array to coerce into a list.}
 
-\item{margin}{A numeric vector indicating by position which indices
-will be flattened or enlisted. If \code{NULL}, a full margin is
+\item{margin}{A numeric vector indicating the positions of the
+indices to be to be enlisted. If \code{NULL}, a full margin is
 used.}
 }
 \description{
-\code{flatten_margin()} and \code{enlist_margin} enable arrays to
-be used with purrr's functionals by turning them into list. The
-coercion is controlled by the \code{margin} argument:
-\code{flatten_margin()} creates a flat list along all dimensions
-mentioned in \code{margin} and \code{enlist_margin()} creates an
-hierarchical list with as many levels as dimensions specified in
-\code{margin}.
+\code{array_branch()} and \code{array_tree()} enable arrays to be
+used with purrr's functionals by turning them into list. The
+details of the coercion are controlled by the \code{margin}
+argument. \code{array_tree()} creates an hierarchical list (a tree)
+that has as many levels as dimensions specified in \code{margin},
+while \code{array_branch()} creates a flat list (by analogy, a
+branch) along all mentioned dimensions.
 }
 \details{
-When no no margin is specified, all dimensions will be flattened or
-enlisted by default. When \code{margin} is \code{0}, the array is
-simply wrapped in a list.
+When no margin is specified, all dimensions are used by
+default. When \code{margin} is \code{0}, the array is simply
+wrapped in a list.
 }
 \examples{
 # We create an array with 3 dimensions
@@ -38,23 +38,24 @@ x <- array(1:12, c(2, 2, 3))
 # A full margin for such an array would be the vector 1:3. This is
 # the default if you don't specify a margin
 
-# Flattening along the full margin is equivalent to as.list(array)
-# and produces a list of size length(x):
-flatten_margin(x) \%>\% str()
+# Creating a branch along the full margin is equivalent to
+# as.list(array) and produces a list of size length(x):
+array_branch(x) \%>\% str()
 
-# Flattening along the first dimension yields a list of length 2
+# A branch along the first dimension yields a list of length 2
 # with each element containing a 2x3 arrays:
-flatten_margin(x, 1) \%>\% str()
+array_branch(x, 1) \%>\% str()
 
-# Flattening along the first and third dimensions yields a list of
+# A branch along the first and third dimensions yields a list of
 # length 2x3 whose elements contain a vector of length 2:
-flatten_margin(x, c(1, 3)) \%>\% str()
+array_branch(x, c(1, 3)) \%>\% str()
 
-# Enlisting the full margin creates a list of lists of lists:
-enlist_margin(x) \%>\% str()
+# Creating a tree from the full margin creates a list of lists of
+# lists:
+array_tree(x) \%>\% str()
 
-# The ordering and the depth of the hierarchy is controlled by the
+# The ordering and the depth of the tree are controlled by the
 # margin argument:
-enlist_margin(x, c(3, 1)) \%>\% str()
+array_tree(x, c(3, 1)) \%>\% str()
 }
 
