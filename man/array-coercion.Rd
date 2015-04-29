@@ -15,7 +15,8 @@ array_tree(array, margin = NULL)
 
 \item{margin}{A numeric vector indicating the positions of the
 indices to be to be enlisted. If \code{NULL}, a full margin is
-used.}
+used. If \code{numeric(0)}, the array as a whole is wrapped in a
+list.}
 }
 \description{
 \code{array_branch()} and \code{array_tree()} enable arrays to be
@@ -28,8 +29,8 @@ branch) along all mentioned dimensions.
 }
 \details{
 When no margin is specified, all dimensions are used by
-default. When \code{margin} is \code{0}, the array is simply
-wrapped in a list.
+default. When \code{margin} is numeric vector of length zero, the
+whole array is wrapped in a list.
 }
 \examples{
 # We create an array with 3 dimensions

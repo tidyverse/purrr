@@ -9,12 +9,13 @@
 #' branch) along all mentioned dimensions.
 #'
 #' When no margin is specified, all dimensions are used by
-#' default. When \code{margin} is \code{0}, the array is simply
-#' wrapped in a list.
+#' default. When \code{margin} is numeric vector of length zero, the
+#' whole array is wrapped in a list.
 #' @param array An array to coerce into a list.
 #' @param margin A numeric vector indicating the positions of the
 #'   indices to be to be enlisted. If \code{NULL}, a full margin is
-#'   used.
+#'   used. If \code{numeric(0)}, the array as a whole is wrapped in a
+#'   list.
 #' @name array-coercion
 #' @export
 #' @examples
@@ -47,7 +48,7 @@ array_branch <- function(array, margin = NULL) {
     dim(array) <- dim(array) %||% length(array)
     margin <- margin %||% seq_along(dim(array))
 
-  if (identical(margin, 0)) {
+  if (length(margin) == 0) {
     list(array)
   } else {
     apply(array, margin, list) %>% flatten()
