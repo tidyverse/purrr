@@ -4,7 +4,7 @@
 \alias{by_slice}
 \title{Apply a function to slices of a data frame}
 \usage{
-by_slice(.d, ..f, ..., .trace = TRUE)
+by_slice(.d, ..f, ..., .labels = TRUE)
 }
 \arguments{
 \item{.d}{A sliced data frame.}
@@ -17,9 +17,10 @@ number of columns between groups.}
 
 \item{...}{Further arguments passed to \code{..f}.}
 
-\item{.trace}{If \code{TRUE}, the returned data frame is prepended
-with the columns defining the slices in \code{.d}. They are
-recycled to match the output size in each slice if necessary.}
+\item{.labels}{If \code{TRUE}, the returned data frame is prepended
+with the labels of the slices (the columns in \code{.d} used to
+define the slices). They are recycled to match the output size in
+each slice if necessary.}
 }
 \value{
 A data frame.
@@ -62,10 +63,10 @@ mtcars \%>\%
   by_slice(map, mean)
 
 # If you don't need the slicing variables as identifiers, switch
-# .trace to FALSE:
+# .labels to FALSE:
 mtcars \%>\%
   slice_rows("cyl") \%>\%
-  by_slice(partial(lm, mpg ~ disp), .trace = FALSE) \%>\%
+  by_slice(partial(lm, mpg ~ disp), .labels = FALSE) \%>\%
   flatten() \%>\%
   map(coef)
 }

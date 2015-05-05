@@ -33,7 +33,8 @@ SEXP get_slice_col(const SEXP slice, int slice_i, int col_i) {
 
 // [[Rcpp::export]]
 SEXP process_slices(List& results, const List& slicers,
-                    const List& labels, int trace, int row_id = 0) {
+                    const List& labels, int include_labels,
+                    int row_id = 0) {
   int n_slices = results.size();
   int n_slicers = slicers.size();
 
@@ -75,7 +76,7 @@ SEXP process_slices(List& results, const List& slicers,
   int n_rows;
   n_rows = sum(res_sizes);
 
-  int cols_offset = trace ? n_slicers : 0;
+  int cols_offset = include_labels ? n_slicers : 0;
   int n_cols = cols_offset;
   if (all_df) {
     n_cols += Rf_length(results[0]);
@@ -83,8 +84,8 @@ SEXP process_slices(List& results, const List& slicers,
     n_cols += 1;
   }
 
-  // With by_row() and map_rows(), trace rows might not be unique. So
-  // create .row identifier column if output is length > 1
+  // With by_row() and map_rows(), include_labels rows might not be
+  // unique. So create .row identifier column if output is length > 1
   if (row_id && !all_size_one) {
     n_cols += 1;
   }
@@ -95,14 +96,14 @@ SEXP process_slices(List& results, const List& slicers,
   // Prepare output names
   CharacterVector slicers_names = slicers.names();
   CharacterVector out_names = no_init(n_cols);
-  if (trace) {
+  if (include_labels) {
     std::copy(slicers_names.begin(), slicers_names.end(), out_names.begin());
   }
 
 
-  // Fast routine for duplicating slicers if trace is requested.
-  // Adapted from reshape's code.
-  if (trace) {
+  // Fast routine for duplicating slicers if include_labels is
+  // requested.  Adapted from reshape's code.
+  if (include_labels) {
 #define REP_EACH_N(R_TYPE)                       \
     case R_TYPE: {                               \
       out[i] = rep_each_n(labels[i], res_sizes); \
@@ -183,7 +184,7 @@ SEXP process_slices(List& results, const List& slicers,
 
 // [[Rcpp::export]]
 SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots,
-                   int trace, const Environment& calling_env) {
+                   int include_labels, const Environment& calling_env) {
   ListOf<Symbol> slicers_symbols(data.attr("vars"));
   int n_slicers(slicers_symbols.size());
 
@@ -212,13 +213,14 @@ SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots,
     results[i] = Rf_eval(lang_call, shadow_env);
   }
 
-  return process_slices(results, data[slicers_names], data.attr("labels"), trace);
+  return process_slices(results, data[slicers_names],
+                        data.attr("labels"), include_labels);
 }
 
 
 // [[Rcpp::export]]
 SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots,
-                 int trace, const Environment& calling_env) {
+                 int include_labels, const Environment& calling_env) {
 
   // Shadow the argument in an environment and construct a call
   Environment shadow_env(calling_env);
@@ -237,5 +239,5 @@ SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots,
     results[i] = Rf_eval(lang_call, shadow_env);
   }
 
-  return process_slices(results, data, data, trace, 1);
+  return process_slices(results, data, data, include_labels, 1);
 }

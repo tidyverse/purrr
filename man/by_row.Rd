@@ -5,18 +5,19 @@
 \alias{map_rows}
 \title{Apply a function to each row of a data frame}
 \usage{
-by_row(.d, ..f, ..., .trace = TRUE)
+by_row(.d, ..f, ..., .labels = TRUE)
 
-map_rows(.d, .f, ..., .trace = TRUE)
+map_rows(.d, .f, ..., .labels = TRUE)
 }
 \arguments{
-\item{.d}{A data frame.}
+\item{.d}{A sliced data frame.}
 
 \item{...}{Further arguments passed to \code{..f}.}
 
-\item{.trace}{If \code{TRUE}, the returned data frame is prepended
-with the columns defining the slices in \code{.d}. They are
-recycled to match the output size in each slice if necessary.}
+\item{.labels}{If \code{TRUE}, the returned data frame is prepended
+with the labels of the slices (the columns in \code{.d} used to
+define the slices). They are recycled to match the output size in
+each slice if necessary.}
 
 \item{.f,..f}{A function to apply to each row. If \code{..f} does
 not return a data frame or an atomic vector, a list-column is
@@ -30,7 +31,7 @@ A data frame.
 \description{
 Applies \code{..f} to each row of \code{.d}. By default, the whole
 row is appended to the result to serve as identifier (set
-\code{.trace} to \code{FALSE} to prevent this). In addition, if
+\code{.labels} to \code{FALSE} to prevent this). In addition, if
 \code{..f} returns a multi-rows data frame or a non-scalar atomic
 vector, a \code{.row} column is appended to identify the row number
 in the original data frame. If \code{..f}'s output is not a data

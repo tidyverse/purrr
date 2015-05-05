@@ -7,47 +7,47 @@
 using namespace Rcpp;
 
 // process_slices
-SEXP process_slices(List& results, const List& slicers, const List& labels, int trace, int row_id = 0);
-RcppExport SEXP purrr_process_slices(SEXP resultsSEXP, SEXP slicersSEXP, SEXP labelsSEXP, SEXP traceSEXP, SEXP row_idSEXP) {
+SEXP process_slices(List& results, const List& slicers, const List& labels, int include_labels, int row_id);
+RcppExport SEXP purrr_process_slices(SEXP resultsSEXP, SEXP slicersSEXP, SEXP labelsSEXP, SEXP include_labelsSEXP, SEXP row_idSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< List& >::type results(resultsSEXP);
     Rcpp::traits::input_parameter< const List& >::type slicers(slicersSEXP);
     Rcpp::traits::input_parameter< const List& >::type labels(labelsSEXP);
-    Rcpp::traits::input_parameter< int >::type trace(traceSEXP);
+    Rcpp::traits::input_parameter< int >::type include_labels(include_labelsSEXP);
     Rcpp::traits::input_parameter< int >::type row_id(row_idSEXP);
-    __result = Rcpp::wrap(process_slices(results, slicers, labels, trace, row_id));
+    __result = Rcpp::wrap(process_slices(results, slicers, labels, include_labels, row_id));
     return __result;
 END_RCPP
 }
 // by_slice_impl
-SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots, int trace, const Environment& calling_env);
-RcppExport SEXP purrr_by_slice_impl(SEXP dataSEXP, SEXP funSEXP, SEXP dotsSEXP, SEXP traceSEXP, SEXP calling_envSEXP) {
+SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots, int include_labels, const Environment& calling_env);
+RcppExport SEXP purrr_by_slice_impl(SEXP dataSEXP, SEXP funSEXP, SEXP dotsSEXP, SEXP include_labelsSEXP, SEXP calling_envSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const List& >::type data(dataSEXP);
     Rcpp::traits::input_parameter< const SEXP >::type fun(funSEXP);
     Rcpp::traits::input_parameter< SEXP >::type dots(dotsSEXP);
-    Rcpp::traits::input_parameter< int >::type trace(traceSEXP);
+    Rcpp::traits::input_parameter< int >::type include_labels(include_labelsSEXP);
     Rcpp::traits::input_parameter< const Environment& >::type calling_env(calling_envSEXP);
-    __result = Rcpp::wrap(by_slice_impl(data, fun, dots, trace, calling_env));
+    __result = Rcpp::wrap(by_slice_impl(data, fun, dots, include_labels, calling_env));
     return __result;
 END_RCPP
 }
 // by_row_impl
-SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots, int trace, const Environment& calling_env);
-RcppExport SEXP purrr_by_row_impl(SEXP dataSEXP, SEXP funSEXP, SEXP dotsSEXP, SEXP traceSEXP, SEXP calling_envSEXP) {
+SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots, int include_labels, const Environment& calling_env);
+RcppExport SEXP purrr_by_row_impl(SEXP dataSEXP, SEXP funSEXP, SEXP dotsSEXP, SEXP include_labelsSEXP, SEXP calling_envSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const List& >::type data(dataSEXP);
     Rcpp::traits::input_parameter< const SEXP >::type fun(funSEXP);
     Rcpp::traits::input_parameter< SEXP >::type dots(dotsSEXP);
-    Rcpp::traits::input_parameter< int >::type trace(traceSEXP);
+    Rcpp::traits::input_parameter< int >::type include_labels(include_labelsSEXP);
     Rcpp::traits::input_parameter< const Environment& >::type calling_env(calling_envSEXP);
-    __result = Rcpp::wrap(by_row_impl(data, fun, dots, trace, calling_env));
+    __result = Rcpp::wrap(by_row_impl(data, fun, dots, include_labels, calling_env));
     return __result;
 END_RCPP
 }

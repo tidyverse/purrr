@@ -20,9 +20,10 @@
 #'   should have the same number of rows within groups and the same
 #'   number of columns between groups.
 #' @param ... Further arguments passed to \code{..f}.
-#' @param .trace If \code{TRUE}, the returned data frame is prepended
-#'   with the columns defining the slices in \code{.d}. They are
-#'   recycled to match the output size in each slice if necessary.
+#' @param .labels If \code{TRUE}, the returned data frame is prepended
+#'   with the labels of the slices (the columns in \code{.d} used to
+#'   define the slices). They are recycled to match the output size in
+#'   each slice if necessary.
 #' @return A data frame.
 #' @seealso \code{\link{by_row}()}, \code{\link{slice_rows}()}
 #' @useDynLib purrr
@@ -50,13 +51,13 @@
 #'   by_slice(map, mean)
 #'
 #' # If you don't need the slicing variables as identifiers, switch
-#' # .trace to FALSE:
+#' # .labels to FALSE:
 #' mtcars %>%
 #'   slice_rows("cyl") %>%
-#'   by_slice(partial(lm, mpg ~ disp), .trace = FALSE) %>%
+#'   by_slice(partial(lm, mpg ~ disp), .labels = FALSE) %>%
 #'   flatten() %>%
 #'   map(coef)
-by_slice <- function(.d, ..f, ..., .trace = TRUE) {
+by_slice <- function(.d, ..f, ..., .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
   } else if (!is.function(..f)) {
@@ -68,7 +69,7 @@ by_slice <- function(.d, ..f, ..., .trace = TRUE) {
   } else {
     dots <- substitute(pairlist(...))
     calling_env <- parent.frame()
-    by_slice_impl(.d, ..f, dots, .trace, calling_env)
+    by_slice_impl(.d, ..f, dots, .labels, calling_env)
   }
 }
 
@@ -77,7 +78,7 @@ by_slice <- function(.d, ..f, ..., .trace = TRUE) {
 #'
 #' Applies \code{..f} to each row of \code{.d}. By default, the whole
 #' row is appended to the result to serve as identifier (set
-#' \code{.trace} to \code{FALSE} to prevent this). In addition, if
+#' \code{.labels} to \code{FALSE} to prevent this). In addition, if
 #' \code{..f} returns a multi-rows data frame or a non-scalar atomic
 #' vector, a \code{.row} column is appended to identify the row number
 #' in the original data frame. If \code{..f}'s output is not a data
@@ -92,16 +93,13 @@ by_slice <- function(.d, ..f, ..., .trace = TRUE) {
 #' latter, the columns are mapped to \code{..f}'s function
 #' signature. In essence, \code{map_row()} is equivalent to using
 #' \code{by_row()} with a stitched function (see \code{stitch()}).
-#' @param .d A data frame.
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
 #'   created under the name \code{.out}. If it returns a data frame, it
 #'   should have the same number of rows within groups and the same
 #'   number of columns between groups.
 #' @param ... Further arguments passed to \code{..f}.
-#' @param .trace If \code{TRUE}, the returned data frame is prepended
-#'   with the columns defining the slices in \code{.d}. They are
-#'   recycled to match the output size in each slice if necessary.
+#' @inheritParams by_slice
 #' @return A data frame.
 #' @seealso \code{\link{by_slice}()}
 #' @useDynLib purrr
@@ -120,7 +118,7 @@ by_slice <- function(.d, ..f, ..., .trace = TRUE) {
 #' mtcars %>% map_rows(sum)
 #' mtcars %>% map_rows(punctuate_v(mean))
 #' }
-by_row <- function(.d, ..f, ..., .trace = TRUE) {
+by_row <- function(.d, ..f, ..., .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
   } else if (!is.function(..f)) {
@@ -129,13 +127,13 @@ by_row <- function(.d, ..f, ..., .trace = TRUE) {
 
   dots <- substitute(list(...))
   calling_env <- parent.frame()
-  by_row_impl(.d, ..f, dots, .trace, calling_env)
+  by_row_impl(.d, ..f, dots, .labels, calling_env)
 }
 
 #' @rdname by_row
 #' @export
-map_rows <- function(.d, .f, ..., .trace = TRUE) {
-  map_n(.d, .f, ...) %>% process_slices(.d, .d, .trace, TRUE)
+map_rows <- function(.d, .f, ..., .labels = TRUE) {
+  map_n(.d, .f, ...) %>% process_slices(.d, .d, .labels, TRUE)
 }
 
 
