@@ -4,14 +4,23 @@
 \alias{enlist}
 \title{Concatenate objects in a list}
 \usage{
-enlist(...)
+enlist(..., .objects = FALSE)
 }
 \arguments{
 \item{...}{Objects to concatenate.}
+
+\item{.objects}{If \code{FALSE}, all S3 objects are encapsulated in
+a list prior to concatenation. If \code{TRUE}, no objects are
+encapsulated and \code{enlist()} behaves like
+\code{c()}. Alternatively, \code{.objects} can be a character
+vector of classes. These classes will not be encapsulated before
+concatenation. \code{.objects} can also be a predicate
+function. The elements of \code{.x} for which \code{.objects}
+returns \code{TRUE} will not be encapsulated.}
 }
 \description{
-This joins all arguments in a list. Non-list objects are
-encapsulated in a list before concatenation.
+This joins all arguments in a list. List objects (i.e., S3 objects)
+are encapsulated in a list before concatenation.
 }
 \examples{
 inputs <- list(arg1 = "a", arg2 = "b")
@@ -20,5 +29,22 @@ inputs <- list(arg1 = "a", arg2 = "b")
 enlist(inputs, arg3 = c("c1", "c2")) \%>\% str()
 list(inputs, arg3 = c("c1", "c2")) \%>\% str()
 c(inputs, arg3 = c("c1", "c2")) \%>\% str()
+
+# With the .objects argument, you can specify which S3 objects
+# should be treated as bare lists
+x <- list(a = 1, b = 2)
+df <- mtcars[1:3]
+object <- structure(as.list(letters[1:5]), class = "letters")
+
+# Here all S3 objects are encapsulated
+enlist(x, c = df, d = 3, e = object) \%>\% str()
+
+# Now `df` is treated as a bare list and is not encapsulated
+enlist(x, c = df, d = 3, e = object, .objects = "data.frame") \%>\% str()
+
+# The predicate p() returns TRUE for `object`, preventing its
+# encapsulation
+p <- function(x) identical(x[[1]], "a")
+enlist(x, c = df, d = 3, e = object, .objects = p) \%>\% str()
 }
 
