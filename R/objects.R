@@ -103,19 +103,19 @@ is_bare_numeric <- function(x) {
 #' @export
 #' @rdname bare-type-predicates
 is_bare_integer <- function(x) {
-  !is.object(x) && is.integer(x) 
+  !is.object(x) && is.integer(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_character <- function(x) {
-  !is.object(x) && is.character(x) 
+  !is.object(x) && is.character(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_logical <- function(x) {
-  !is.object(x) && is.logical(x) 
+  !is.object(x) && is.logical(x)
 }
 
 
@@ -176,10 +176,23 @@ is_logical <- is.logical
 
 #' Is a vector/list empty?
 #'
-#' @param x object to test
+#' @param x object to test.
 #' @export
 #' @examples
 #' is_empty(NULL)
 #' is_empty(list())
 #' is_empty(list(NULL))
 is_empty <- function(x) length(x) == 0
+
+
+#' Can an object be used as index?
+#'
+#' \code{is_index()} checks that \code{x} is either a character or a
+#' numeric vector. It is shorter than directly calling the two type
+#' predicates. It also makes your code clearer by signalling that you
+#' need \code{x} to be an index for an atomic vector or a list.
+#' @param x object to test.
+#' @export
+is_index <- function(x) {
+  is.character(x) || is.numeric(x)
+}

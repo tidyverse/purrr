@@ -75,7 +75,7 @@ names2 <- function(x) {
     y
   } else {
     x
-  } 
+  }
 }
 
 
@@ -101,4 +101,39 @@ rbernoulli <- function(n, p = 0.5) {
 #' table(rdunif(1e3, 10))
 rdunif <- function(n, b, a = 1) {
   sample(b - a + 1, n, replace = TRUE) + a - 1
+}
+
+
+#' Generate sequences along an object
+#'
+#' \code{seq_window()} and \code{seq_pairs()} are sequence generators
+#' much like \code{seq_along()} except that they return a list of
+#' indices. They take an object \code{x} and generate a sequence of
+#' indices based on its length.
+#'
+#' \code{seq_window()} generates a sliding sequence with a window of
+#' length \code{size} while \code{seq_pairs()} creates a list of
+#' pairwise combinations.
+#' @name sequences
+#' @param x An object whose length will be used to generate a
+#'   sequence.
+#' @param size The size of the sliding window. Defaults to 2.
+#' @param filter A predicate function to filter out unwanted
+#'   combinations of indices.
+NULL
+
+#' @rdname sequences
+#' @export
+seq_window <- function(x, size = 2) {
+  stopifnot(size > 0 && size <= length(x))
+  seq_len(length(x) - size + 1) %>%
+    lapply(function(i) {
+      seq(i, i + size - 1)
+    })
+}
+
+#' @rdname sequences
+#' @export
+seq_pairs <- function(x, filter = `>=`) {
+  seq_along(x) %>% cross(., ., filter) %>% lapply(flatten)
 }
