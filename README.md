@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hadley/purrr.png?branch=master)](https://travis-ci.org/hadley/purrr)
 
-Purrr makes your pure functions purr by completing R's functional programming tools with important features from other languages, in the style of the JS packages [underscore.js](http://underscorejs.org), [lodash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/). 
+Purrr makes your pure functions purr by completing R's functional programming tools with important features from other languages, in the style of the JS packages [underscore.js](http://underscorejs.org), [lodash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/).
 
 ## Installation
 
@@ -35,13 +35,13 @@ The following more complicated example shows how you might generate 100 random t
 library(dplyr)
 random_group <- function(n, probs) {
   probs <- probs / sum(probs)
-  g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)), 
+  g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)),
     rightmost.closed = TRUE)
   names(probs)[sample(g)]
 }
 partition <- function(df, n, probs) {
-  replicate(n, split(df, random_group(nrow(df), probs)), FALSE) %>% 
-    unzip() %>% 
+  replicate(n, split(df, random_group(nrow(df), probs)), FALSE) %>%
+    unzip() %>%
     as_data_frame()
 }
 
@@ -56,7 +56,7 @@ boot <- boot %>% mutate(
   models = map(training, ~ lm(mpg ~ wt, data = mtcars)),
   # Make predictions on test data
   preds = map2(models, test, predict),
-  diffs = map2(preds, test %>% map("mpg"), msd) 
+  diffs = map2(preds, test %>% map("mpg"), msd)
 )
 
 # Evaluate mean-squared difference between predicted and actual
@@ -67,12 +67,12 @@ mean(unlist(boot$diffs))
 
 ### Transformation
 
-* Apply a function to each element: `map()` returns transformed list; 
-  `map_v()` returns transformed vector, `each()` returns original list, calling 
-  function for its side effects; `map2()` and `map3()` vectorise over multiple 
+* Apply a function to each element: `map()` returns transformed list;
+  `map_v()` returns transformed vector, `walk()` returns original list, calling
+  function for its side effects; `map2()` and `map3()` vectorise over multiple
   inputs.
 
-* Reduce a list to a single value by iteratively applying a binary 
+* Reduce a list to a single value by iteratively applying a binary
   function: `reduce()` and `reduce_right()`.
 
 * Figure out if a list contains an object: `contains()`.
@@ -88,19 +88,19 @@ mean(unlist(boot$diffs))
 
 * Does `every()` element or `some()` elements satisfy the predicate?
 
-* Find the value (`detect()`) and index (`detect_index()`) of the first element 
+* Find the value (`detect()`) and index (`detect_index()`) of the first element
   that satisfies the predicate.
 
 * Find the head/tail that satisfies a predicate: `head_while()`, `tail_while()`.
 
 ### Lists of functions
 
-* `invoke()` every function in a list with given arguments and returns 
+* `invoke()` every function in a list with given arguments and returns
   a list, `invoke_v()` returns a vector.
 
 ### Function operators
 
-* Fill in function arguments with `partial()`. 
+* Fill in function arguments with `partial()`.
 
 * Convert a function to take a list of inputs with `smash()`.
 
@@ -112,26 +112,26 @@ mean(unlist(boot$diffs))
 
 The goal is not to try and simulate Haskell in R: purrr does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.
 
-* Instead of point free style, use the pipe, `%>%`, to write code that can be 
+* Instead of point free style, use the pipe, `%>%`, to write code that can be
   read from left to right.
 
-* Instead of currying, we use `...` to pass in extra arguments. 
+* Instead of currying, we use `...` to pass in extra arguments.
 
 * Anonymous functions are verbose in R, so we provide two convenient shorthands.
   For predicate functions, `~ . + 1` is equivalent to `function(.) . + 1`.
-  For chains of transformations functions, `. %>% f() %>% g()` is 
+  For chains of transformations functions, `. %>% f() %>% g()` is
   equivalent to `function(.) . %>% f() %>% g()`.
-  
-* R is weakly typed, so we can implement general `zip()` and `unzip()`, 
+
+* R is weakly typed, so we can implement general `zip()` and `unzip()`,
   rather than having to specialise on the number of arguments. (That said
   I still provide `map2()` and `map3()` since it's useful to clearly separate
   which arguments are vectorised over).
-  
+
 * R has named arguments, so instead of providing different functions for
-  minor variations (e.g. `detect()` and `detectLast()`) I use a named 
+  minor variations (e.g. `detect()` and `detectLast()`) I use a named
   argument, `.first`. Type-stable functions are easy to reason about so
   additional arguments will never change the type of the output.
-  
+
 ## Related work
 
 * [rlist](http://renkun.me/rlist/), another R package to support working

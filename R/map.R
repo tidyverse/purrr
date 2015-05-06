@@ -1,8 +1,9 @@
 #' Apply a function to each element of a list.
 #'
-#' \code{map} returns the transformed input; \code{each} calls \code{.f} for
-#' its side-effect and returns the original input. \code{map} returns a list
-#' or a data frame; \code{map_v} always returns an atomic vector (or dies trying).
+#' \code{map()} returns the transformed input; \code{walk()} calls
+#' \code{.f} for its side-effect and returns the original
+#' input. \code{map()} returns a list or a data frame; \code{map_v()}
+#' always returns an atomic vector (or dies trying).
 #'
 #' @param .x A list or vector.
 #' @param .f A function, formula or string.
@@ -19,9 +20,9 @@
 #' @param .type Specifies the type of result of \code{.f}, if known.
 #'   This will improve performance, and adds a test that output of \code{.f}
 #'   is the type that you expect.
-#' @return \code{map} a list if \code{.x} is a list or a data frame if
-#'   \code{.x} is a data frame; \code{map_v} a vector; \code{each} (invisibly)
-#'   the input \code{.x}.
+#' @return \code{map()} a list if \code{.x} is a list or a data frame
+#'   if \code{.x} is a data frame; \code{map_v()} a vector;
+#'   \code{walk()} (invisibly) the input \code{.x}.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -74,7 +75,7 @@ map_v <- function(.x, .f, ..., .type) {
 
 #' @export
 #' @rdname map
-each <- function(.x, .f, ...) {
+walk <- function(.x, .f, ...) {
   .f <- as_function(.f)
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
@@ -89,14 +90,14 @@ each <- function(.x, .f, ...) {
 #' vectorised over come before the function name, and arguments that
 #' should be supplied to every call come after the function name.
 #'
-#' \code{map_n()} and \code{each_n()} take a single list \code{.l} and
+#' \code{map_n()} and \code{walk_n()} take a single list \code{.l} and
 #' map over all its elements simultaneously. \code{map2()} and
 #' \code{map3()} return a data frame when \code{.x} is a data frame.
 #'
 #' @inheritParams map
-#' @param .f A function of two (for \code{map2} and \code{each2}) or
-#' three (\code{map3} and \code{each3}) arguments. For \code{map_n}
-#' and \code{each_n}, the number of arguments must correspond to the
+#' @param .f A function of two (for \code{map2} and \code{walk2}) or
+#' three (\code{map3} and \code{walk3}) arguments. For \code{map_n}
+#' and \code{walk_n}, the number of arguments must correspond to the
 #' number of elements of \code{.l}.
 #' @param .x,.y,.z Lists of the same length or of length 1. Only
 #' lists of length 1 are recycled.
@@ -131,21 +132,21 @@ map_n <- function(.l, .f, ...) {
 
 #' @export
 #' @rdname map2
-each2 <- function(.x, .y, .f, ...) {
-  each_n(list(.x, .y), .f, ...)
+walk2 <- function(.x, .y, .f, ...) {
+  walk_n(list(.x, .y), .f, ...)
   invisible(.x)
 }
 
 #' @export
 #' @rdname map2
-each3 <- function(.x, .y, .z, .f, ...) {
-  each_n(list(.x, .y, .z), .f, ...)
+walk3 <- function(.x, .y, .z, .f, ...) {
+  walk_n(list(.x, .y, .z), .f, ...)
   invisible(.x)
 }
 
 #' @export
 #' @rdname map2
-each_n <- function(.l, .f, ...) {
+walk_n <- function(.l, .f, ...) {
   args_list <- recycle_args(.l) %>% zip()
   for (args in args_list) {
     do.call(".f", c(args, list(...)))
