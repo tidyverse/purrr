@@ -153,8 +153,12 @@ each_n <- function(.l, .f, ...) {
   invisible(.l)
 }
 
-#' Modify elements where predicate is satisified.
+#' Modify elements conditionally
 #'
+#' \code{map_if()} maps a function over the elements of \code{.x}
+#' satisfying a predicate. \code{map_at()} is similar but will modify
+#' the elements corresponding to a character vector of names or a
+#' mumeric vector of positions.
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
 #'   predicate function, or a logical vector of the same length as \code{.x}.
@@ -162,8 +166,11 @@ each_n <- function(.l, .f, ...) {
 #'   objects, a string indicating the name of a logical element in the
 #'   inner lists. Only those elements where \code{.p} evaluates to
 #'   \code{TRUE} will be modified.
+#' @param .at A character vector of names or a numeric vector of
+#'   positions. Only those elements corresponding to \code{.at} will be
+#'   modified.
 #' @return The same type of object as \code{.x}.
-#' @export
+#' @name conditional-map
 #' @examples
 #' list(x = rbernoulli(100), y = 1:100) %>%
 #'   zip() %>%
@@ -175,6 +182,16 @@ each_n <- function(.l, .f, ...) {
 #' iris %>%
 #'   map_if(is.factor, as.character) %>%
 #'   str()
+#'
+#' # Specify which columns to map with a numeric vector of positions:
+#' mtcars %>% map_at(c(1, 4, 5), as.character) %>% str()
+#'
+#' # Or with a vector of names:
+#' mtcars %>% map_at(c("cyl", "am"), as.character) %>% str()
+NULL
+
+#' @rdname conditional-map
+#' @export
 map_if <- function(.x, .p, .f, ...) {
   .f <- as_function(.f)
   sel <- probe(.x, .p)
@@ -183,20 +200,8 @@ map_if <- function(.x, .p, .f, ...) {
   .x
 }
 
-#' Modify elements of a specified subset.
-#'
-#' @inheritParams map
-#' @param .at A character vector of names or a numeric vector of
-#'   positions. Only those elements corresponding to \code{.at} will be
-#'   modified.
-#' @return The same type of object as \code{.x}.
+#' @rdname conditional-map
 #' @export
-#' @examples
-#' # Specify which columns to map with a numeric vector of positions:
-#' mtcars %>% map_at(c(1, 4, 5), as.character) %>% str()
-#'
-#' # Or with a vector of names:
-#' mtcars %>% map_at(c("cyl", "am"), as.character) %>% str()
 map_at <- function(.x, .at, .f, ...) {
   .f <- as_function(.f)
   sel <- inv_which(.x, .at)
@@ -214,8 +219,6 @@ inv_which <- function(x, sel) {
     names %in% sel
   } else if (is.numeric(sel)) {
     seq_along(x) %in% sel
-  } else if (is.logical(sel)) {
-    sel
   } else {
     stop("unrecognised index type", call. = FALSE)
   }
