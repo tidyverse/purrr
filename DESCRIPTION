@@ -1,5 +1,5 @@
 Package: purrr
-Title: Functional Programming Tools.
+Title: Functional Programming Tools
 Version: 0.0.0.9000
 Authors@R: 'Hadley Wickham <h.wickham@gmail.com> [aut,cre]'
 Description: Make your pure functions purr with the purrr package. This package
@@ -8,7 +8,9 @@ Description: Make your pure functions purr with the purrr package. This package
 License: GPL-3
 LazyData: true
 Imports:
-    magrittr (>= 1.5)
+    magrittr (>= 1.5),
+    Rcpp
 Suggests:
     testthat,
     dplyr (>= 0.3.0.9000)
+LinkingTo: Rcpp, dplyr, BH

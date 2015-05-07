@@ -75,7 +75,7 @@ names2 <- function(x) {
     y
   } else {
     x
-  } 
+  }
 }
 
 
@@ -102,3 +102,6 @@ rbernoulli <- function(n, p = 0.5) {
 rdunif <- function(n, b, a = 1) {
   sample(b - a + 1, n, replace = TRUE) + a - 1
 }
+
+# magrittr placeholder
+globalVariables(".")
