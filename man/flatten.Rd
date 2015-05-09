@@ -4,16 +4,24 @@
 \alias{flatten}
 \title{Flatten a list of lists into a list.}
 \usage{
-flatten(.x, .recursive = FALSE)
+flatten(.x, .recursive = FALSE, .unname = FALSE)
 }
 \arguments{
 \item{.x}{A list of flatten}
 
 \item{.recursive}{Recursively flatten list components?}
+
+\item{.unname}{Remove names before flattening?}
 }
 \description{
 This is a wrapper for \code{\link{unlist}()} that defaults to
 \code{recursive = FALSE}.
+}
+\details{
+When \code{.unname} is \code{TRUE} and \code{.recursive} is
+\code{FALSE}, only the names of \code{.x} are removed, leaving the
+inner lists intact. But if \code{.recursive} is \code{TRUE}, the
+names of all inner lists are also removed.
 }
 \examples{
 x <- rerun(10, sample(5))

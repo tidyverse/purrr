@@ -14,7 +14,7 @@ predicate function, or a logical vector of the same length as \code{.x}.
 Alternatively, if the elements of \code{.x} are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified, kept or discarded.}
+\code{TRUE} will be modified.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
