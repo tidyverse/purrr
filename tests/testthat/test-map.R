@@ -20,11 +20,13 @@ test_that("map2() and map3() return a data frame when given one", {
   expect_is(out_map3, "data.frame")
 })
 
-test_that("map_n() works with unnamed additional arguments", {
-  # Relies on map_n() using partial() with .first set to FALSE
-  f <- function(x, y, zs) zs
-  actual <- list(1:3, 1:3)
-  alleged <- map2(1:2, 1:2, f, 1:3)
-  expect_equal(actual, alleged)
+test_that("map2, map3, map_n recognise ...", {
+  ll <- list(x = c(1,2,3), y = c(4,5,6))
+  foo <- function(x, y, z) {
+    return(x + y + mean(z))
+  }
+  out_map <- map_n(ll, foo, z = c(1:100))
+  expect_is(out_map, "list")
+  expect_equal(length(out_map), 3)
+  expect_equal(sum(unlist(out_map)), 172.5)
 })
-
