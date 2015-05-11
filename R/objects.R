@@ -13,6 +13,9 @@
 #' c(inputs, arg3 = c("c1", "c2")) %>% str()
 splice <- function(...) {
   dots <- list(...)
+  if (length(dots) == 0) {
+    return(dots)
+  }
 
   names <- Map(function(dot, name) {
     if (is_bare_list(dot))
