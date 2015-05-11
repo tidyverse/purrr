@@ -1,18 +1,21 @@
-#' Concatenate objects in a list
+#' Splice objects and lists of objects into a list
 #'
-#' This joins all arguments in a list. Non-list objects are
-#' encapsulated in a list before concatenation.
+#' This splices all arguments into a list. Non-list objects and lists
+#' with a S3 class are encapsulated in a list before concatenation.
 #' @param ... Objects to concatenate.
 #' @export
 #' @examples
 #' inputs <- list(arg1 = "a", arg2 = "b")
 #'
-#' # enlist() concatenates the elements of inputs with arg3
-#' enlist(inputs, arg3 = c("c1", "c2")) %>% str()
+#' # splice() concatenates the elements of inputs with arg3
+#' splice(inputs, arg3 = c("c1", "c2")) %>% str()
 #' list(inputs, arg3 = c("c1", "c2")) %>% str()
 #' c(inputs, arg3 = c("c1", "c2")) %>% str()
-enlist <- function(...) {
+splice <- function(...) {
   dots <- list(...)
+  if (length(dots) == 0) {
+    return(dots)
+  }
 
   names <- Map(function(dot, name) {
     if (is_bare_list(dot))
