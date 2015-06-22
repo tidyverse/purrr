@@ -2,7 +2,7 @@
 #'
 #' Zip and unzip are useful transforms for turning a list-of-lists "inside-out".
 #' For example, if you had a list of length n where each component had values
-#' \code{a} and \code{b}, \code{unzip} would make a with elements \code{a}
+#' \code{a} and \code{b}, \code{unzip} would make a list with elements \code{a}
 #' and \code{b} that contained lists of length n.
 #'
 #' @param .x A list.
