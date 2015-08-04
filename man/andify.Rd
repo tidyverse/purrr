@@ -35,7 +35,7 @@ even_number_between_10_and_100(101) # FALSE
 even_number_between_10_and_100(102) # FALSE
 }
 \seealso{
-\code{\link{Orify}} to create new predicate functions linked by the || operator.
+\code{\link{orify}} to create new predicate functions linked by the || operator.
 
 Other predicate.function.operators: \code{\link{orify}}
 }

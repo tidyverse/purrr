@@ -3,7 +3,7 @@
 #' @param ... n functions to apply in order from left to right.
 #' @return A predicate function linked by the && operator.
 #' @family predicate function operators
-#' @seealso \code{\link{Orify}} to create new predicate functions linked by the || operator.
+#' @seealso \code{\link{orify}} to create new predicate functions linked by the || operator.
 #' @examples
 #' # Examples
 #' is_numeric <- is.numeric

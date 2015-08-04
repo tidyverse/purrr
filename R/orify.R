@@ -3,7 +3,7 @@
 #' @param ... n functions to apply in order from left to right
 #' @return A predicate function linked by the || operator.
 #' @family predicate function operators
-#' @seealso \code{\link{Andify}} to create new predicate functions linked by the && operator.
+#' @seealso \code{\link{andify}} to create new predicate functions linked by the && operator.
 #' @examples
 #' # Examples
 #' is_character_or_factor <- orify(is.character, is.factor)

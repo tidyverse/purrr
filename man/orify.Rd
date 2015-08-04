@@ -23,7 +23,7 @@ is_character_or_factor(factor(state.abb)) # TRUE
 is_character_or_factor(1:100) # FALSE
 }
 \seealso{
-\code{\link{Andify}} to create new predicate functions linked by the && operator.
+\code{\link{andify}} to create new predicate functions linked by the && operator.
 
 Other predicate.function.operators: \code{\link{andify}}
 }
