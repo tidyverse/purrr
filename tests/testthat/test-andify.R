@@ -1,4 +1,4 @@
-library(functools)
+library(purr)
 context("andify()")
 
 is_numeric <- is.numeric

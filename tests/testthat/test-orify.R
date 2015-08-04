@@ -1,7 +1,7 @@
-library(functools)
-context("Orify()")
+library(purrr)
+context("orify()")
 
-is_character_or_factor <- Orify(is.character, is.factor)
+is_character_or_factor <- orify(is.character, is.factor)
 test_that("Produces the correct output.", {
   expect_equal(is_character_or_factor(letters), TRUE)
   expect_equal(is_character_or_factor(factor(state.abb)), TRUE)
@@ -13,5 +13,5 @@ test_that("Produces the correct output type.", {
 })
 
 test_that("Produces the correct errors.", {
-  expect_error(Orify())
+  expect_error(orify())
 })
