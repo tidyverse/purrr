@@ -15,7 +15,7 @@ SEXP subset_slices(const List& data) {
   }
 
   CharacterVector classes = CharacterVector::create("tbl_df", "data.frame");
-  dplyr::DataFrameVisitors visitors(data);
+  dplyr::DataFrameSubsetVisitors visitors(data);
 
   List out = no_init(n_slices);
   for (int i = 0; i < n_slices; ++i) {
@@ -229,7 +229,7 @@ SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots,
   Shield<SEXP> lang_call(Rf_lcons(fun, Rf_lcons(Rf_install("shadowed"), dots)));
 
   int n_rows = Rf_length(data[0]);
-  dplyr::DataFrameVisitors visitors(data);
+  dplyr::DataFrameSubsetVisitors visitors(data);
   CharacterVector classes = CharacterVector::create("tbl_df", "data.frame");
   List results(n_rows);
 
