@@ -14,7 +14,7 @@ test_that("zero-length outputs are handled", {
 
 test_that("by_slice() does not replicate trace rows with list-column output", {
   out1 <- mtcars %>% slice_rows("cyl") %>% by_slice(list)
-  out2 <- mtcars %>% slice_rows("cyl") %>% by_slice(~ list(., .))
+  out2 <- mtcars %>% slice_rows("cyl") %>% by_slice(~ list(.x, .x))
   expect_equal(nrow(out1), 3)
   expect_equal(nrow(out2), 3)
 })

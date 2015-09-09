@@ -24,7 +24,7 @@ it takes a list as first argument instead of a function. This makes
 # We map a list of strings to paste(), with sep = "-" and the
 # string "2001" as additional arguments
 list("01", "01") \%>\%
-  map(~ sub("^01", "10", .)) \%>\%
+  map(~ sub("^01", "10", .x)) \%>\%
   map_call("paste", "2001", sep = "-")
 }
 \seealso{

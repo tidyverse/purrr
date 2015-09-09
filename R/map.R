@@ -10,9 +10,9 @@
 #'
 #'   If a function, it is used as is.
 #'
-#'   If a formula, e.g. \code{~ x + 2}, it is converted to a function with
-#'   a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
-#'   typing for very simple anonymous functions.
+#'   If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
+#'   a three arguments, \code{.x}, \code{.y}, \code{.z}. This allows you
+#'   to create very compact anonymous functions of up to 3 variables.
 #'
 #'   If a string, e.g. \code{"y"}, it is converted to an extractor function,
 #'   \code{function(x) x[["y"]]}.
@@ -37,13 +37,13 @@
 #'
 #' # Or a formula
 #' 1:10 %>%
-#'   map(~ rnorm(10, .))
+#'   map(~ rnorm(10, .x))
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
 #' mtcars %>%
 #'   split(.$cyl) %>%
-#'   map(~ lm(mpg ~ wt, data = .)) %>%
+#'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
 #'   map_v("r.squared")
 #'
@@ -106,7 +106,12 @@ walk <- function(.x, .f, ...) {
 #' @examples
 #' x <- list(1, 10, 100)
 #' y <- list(1, 2, 3)
+#' map2(x, y, ~ .x + .y)
+#' # Or just
 #' map2(x, y, `+`)
+#'
+#' z <- list(15, 20, 25)
+#' map3(x, y, z, ~ .x ^ .y + .z)
 #'
 #' # Split into pieces, fit model to each piece, then predict
 #' by_cyl <- mtcars %>% split(.$cyl)
@@ -125,6 +130,7 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' @export
 #' @rdname map2
 map_n <- function(.l, .f, ...) {
+  .f <- as_function(.f)
   f <- partial(.f, ..., .first = FALSE)
   args <- recycle_args(.l)
   do.call("Map", c(list(quote(f)), args))

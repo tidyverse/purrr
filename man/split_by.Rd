@@ -19,9 +19,9 @@ sort_by(.x, .f, ...)
 
   If a function, it is used as is.
 
-  If a formula, e.g. \code{~ x + 2}, it is converted to a function with
-  a single argument, \code{x}, e.g. \code{function(x) x + 2}. This is less
-  typing for very simple anonymous functions.
+  If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
+  a three arguments, \code{.x}, \code{.y}, \code{.z}. This allows you
+  to create very compact anonymous functions of up to 3 variables.
 
   If a string, e.g. \code{"y"}, it is converted to an extractor function,
   \code{function(x) x[["y"]]}.}

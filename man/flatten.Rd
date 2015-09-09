@@ -28,8 +28,8 @@ x <- rerun(10, sample(5))
 x \%>\% flatten(x)
 
 # You can use flatten in conjunction with map
-x \%>\% map(~ .[1]) \%>\% flatten()
+x \%>\% map(~ .x[1]) \%>\% flatten()
 # But it's better to use map_v
-x \%>\% map_v(~ .[1])
+x \%>\% map_v(~ .x[1])
 }
 

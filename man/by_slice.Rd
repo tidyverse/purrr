@@ -55,7 +55,7 @@ mtcars \%>\%
 # Mutating operation:
 mtcars \%>\%
   slice_rows(c("cyl", "am")) \%>\%
-  by_slice(map, ~ . / sd(.))
+  by_slice(map, ~ .x / sd(.x))
 
 # Summarising operation:
 mtcars \%>\%

@@ -36,10 +36,12 @@ as_function <- function(f) {
   if (is.function(f)) {
     f
   } else if (inherits(f, "formula")) {
+    .x <- NULL # hush R CMD check NOTE
+
     if (length(f) != 2) {
       stop("Formula must be one sided", call. = FALSE)
     }
-    make_function(alist(. = ), f[[2]], environment(f))
+    make_function(alist(.x = , .y = , .z = , . = .x), f[[2]], environment(f))
   } else if (is.character(f) || is.numeric(f)) {
     function(g) .subset2(g, f)
   } else {

@@ -47,7 +47,12 @@ map over all its elements simultaneously. \code{map2()} and
 \examples{
 x <- list(1, 10, 100)
 y <- list(1, 2, 3)
+map2(x, y, ~ .x + .y)
+# Or just
 map2(x, y, `+`)
+
+z <- list(15, 20, 25)
+map3(x, y, z, ~ .x ^ .y + .z)
 
 # Split into pieces, fit model to each piece, then predict
 by_cyl <- mtcars \%>\% split(.$cyl)
