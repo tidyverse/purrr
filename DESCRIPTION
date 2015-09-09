@@ -5,9 +5,9 @@ Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio", c("aut", "cre")),
     person("RStudio", role = "cph")
     )
-Description: Make your pure functions purr with the purrr package. This package
-    complete R's FP tools with missing features from other programming
-    languages.
+Description: Make your pure functions purr with the purrr package. This
+    package completes R's FP tools with missing features present in other
+    programming languages.
 License: GPL-3
 LazyData: true
 Imports:
@@ -16,4 +16,7 @@ Imports:
 Suggests:
     testthat,
     dplyr (>= 0.3.0.9000)
-LinkingTo: Rcpp, dplyr, BH
+LinkingTo:
+    Rcpp,
+    dplyr,
+    BH
