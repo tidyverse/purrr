@@ -1,9 +1,9 @@
 #' Produce all combinations of list elements
 #'
-#' \code{cross()} returns the product set of the elements of \code{.x}
-#' and \code{.y}. It is similar to \code{expand.grid()} but it returns
-#' a list. By default, the cartesian product is returned in wide
-#' format. This makes it more amenable to mapping
+#' \code{cross2()} returns the product set of the elements of
+#' \code{.x} and \code{.y}. It is similar to \code{expand.grid()} but
+#' it returns a list. By default, the cartesian product is returned in
+#' wide format. This makes it more amenable to mapping
 #' operations. Switching \code{.wide} to \code{FALSE} turns the output
 #' to the long format, the equivalent to \code{expand.grid()}'s
 #' outputs.
@@ -15,26 +15,27 @@
 #' combination by element. \code{cross_d} is similar but returns a
 #' data frame, with one combination by row.
 #'
-#' When the number of combinations is large and the individual elements
-#' are heavy memory-wise, it is often useful to filter unwanted
-#' combinations on the fly. \code{.filter} must be a predicate
-#' function that takes the same number of arguments as the number of
-#' crossed objects (2 for \code{cross()}, 3 for \code{cross3()},
-#' \code{length(.l)} for \code{cross_n()}) and returns \code{TRUE} or
-#' \code{FALSE}. The combinations where the predicate function returns
-#' \code{TRUE} will be removed from the result.
+#' When the number of combinations is large and the individual
+#' elements are heavy memory-wise, it is often useful to filter
+#' unwanted combinations on the fly. \code{.filter} must be a
+#' predicate function that takes the same number of arguments as the
+#' number of crossed objects (2 for \code{cross2()}, 3 for
+#' \code{cross3()}, \code{length(.l)} for \code{cross_n()}) and
+#' returns \code{TRUE} or \code{FALSE}. The combinations where the
+#' predicate function returns \code{TRUE} will be removed from the
+#' result.
 #' @seealso \code{\link{expand.grid}()}
 #' @param .x,.y,.z Lists or atomic vectors.
 #' @param .l A list of lists or atomic vectors. Alternatively, a data
 #'   frame. \code{cross_d()} requires all elements to be named.
 #' @param .filter A predicate function that takes the same number of
 #'   arguments as the number of variables to be combined.
-#' @return \code{cross()}, \code{cross3()} and \code{cross_n()} always
-#'   return a list. \code{cross_d()} always returns a data frame if
-#'   \code{.l} is a data frame. \code{cross_n()} returns a list where
-#'   each element is one combination so that the list can be directly
-#'   mapped over. \code{cross_d()} returns a data frame where each row
-#'   is one combination.
+#' @return \code{cross2()}, \code{cross3()} and \code{cross_n()}
+#'   always return a list. \code{cross_d()} always returns a data
+#'   frame if \code{.l} is a data frame. \code{cross_n()} returns a
+#'   list where each element is one combination so that the list can
+#'   be directly mapped over. \code{cross_d()} returns a data frame
+#'   where each row is one combination.
 #' @export
 #' @examples
 #' # We build all combinations of names, greetings and separators from our
@@ -50,9 +51,9 @@
 #'   map(smash(paste))
 #'
 #' # cross_n() returns the combinations in long format: many elements,
-#' # each representing one combination. With cross_d() we'll get a data
-#' # frame in long format. If we cross three objects, we'll get a data
-#' # frame of three columns, with each row being a particular
+#' # each representing one combination. With cross_d() we'll get a
+#' # data frame in long format. If we cross three objects, we'll get a
+#' # data frame of three columns, with each row being a particular
 #' # combination. This is the same format that expand.grid() returns.
 #' args <- data %>% cross_d()
 #'
@@ -74,12 +75,12 @@
 #'
 #' # Unwanted combinations can be filtered out with a predicate function
 #' filter <- function(x, y) x >= y
-#' cross(1:5, 1:5, .filter = filter) %>% str()
+#' cross2(1:5, 1:5, .filter = filter) %>% str()
 #'
 #' # To give names to the components of the combinations, we map
 #' # setNames() on the product:
 #' seq_len(3) %>%
-#'   cross(., ., .filter = function(x, y) x == y) %>%
+#'   cross2(., ., .filter = function(x, y) x == y) %>%
 #'   map(setNames, c("x", "y"))
 #'
 #' # We can also encapsulate the arguments in a named list before
@@ -87,19 +88,19 @@
 #' seq_len(3) %>%
 #'   list(x = ., y = .) %>%
 #'   cross_n(.filter = function(x, y) x == y)
-cross <- function(.x, .y, .filter = NULL) {
+cross2 <- function(.x, .y, .filter = NULL) {
   cross_n(list(.x, .y), .filter = .filter)
 }
 
 #' @export
-#' @rdname cross
+#' @rdname cross2
 cross3 <- function(.x, .y, .z, .filter = NULL) {
   cross_n(list(.x, .y, .z), .filter = .filter)
 }
 
 
 #' @export
-#' @rdname cross
+#' @rdname cross2
 cross_n <- function(.l, .filter = NULL) {
   if (is_empty(.l)) {
     return(.l)
@@ -140,7 +141,7 @@ cross_n <- function(.l, .filter = NULL) {
   compact(out)
 }
 
-#' @rdname cross
+#' @rdname cross2
 #' @export
 cross_d <- function(.l, .filter = NULL) {
   cross_n(.l, .filter = .filter) %>%
