@@ -224,20 +224,16 @@ NULL
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
-  .f <- as_function(.f)
   sel <- map_lgl(.x, .p)
-
-  .x[sel] <- lapply(.x[sel], .f, ...)
+  .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
 
 #' @rdname conditional-map
 #' @export
 map_at <- function(.x, .at, .f, ...) {
-  .f <- as_function(.f)
   sel <- inv_which(.x, .at)
-
-  .x[sel] <- lapply(.x[sel], .f, ...)
+  .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
 
