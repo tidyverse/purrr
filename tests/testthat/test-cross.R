@@ -11,6 +11,11 @@ test_that("long format corresponds to expand.grid output", {
 
 test_that("filtering works", {
   filter <- function(x, y) x >= y
-  out <- cross(1:3, 1:3, .filter = filter)
+  out <- cross2(1:3, 1:3, .filter = filter)
   expect_equal(out, list(list(1, 2), list(1, 3), list(2, 3)))
+})
+
+test_that("works with empty input", {
+  expect_equal(cross_n(list()), list())
+  expect_equal(cross_n(NULL), NULL)
 })
