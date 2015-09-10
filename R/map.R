@@ -206,7 +206,7 @@ walk_n <- function(.l, .f, ...) {
 #' list(x = rbernoulli(100), y = 1:100) %>%
 #'   zip() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   unzip() %>%
+#'   zip() %>%
 #'   map(flatten)
 #'
 #' # Convert factors to characters

@@ -13,14 +13,14 @@
 #' l2 %>% split_by("g") %>% map(. %>% map("y"))
 split_by <- function(.x, .f, ...) {
   vals <- map(.x, .f, ...)
-  split(.x, unzip(vals))
+  split(.x, zip(vals, .simplify = TRUE))
 }
 
 #' @export
 #' @rdname split_by
 order_by <- function(.x, .f, ...) {
   vals <- map(.x, .f, ...)
-  do.call("order", unzip(vals))
+  do.call("order", zip(vals, .simplify = TRUE))
 }
 
 #' @export

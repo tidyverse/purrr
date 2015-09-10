@@ -1,9 +1,9 @@
-#' Zip and unzip lists.
+#' Zip lists.
 #'
-#' Zip and unzip are useful transforms for turning a list-of-lists "inside-out".
-#' For example, if you had a list of length n where each component had values
-#' \code{a} and \code{b}, \code{unzip} would make a with elements \code{a}
-#' and \code{b} that contained lists of length n.
+#' Zip turns a list-of-lists "inside-out".  For example, if you had a list of
+#' length n where each component had values \code{a} and \code{b}, \code{unzip}
+#' would make a with elements \code{a} and \code{b} that contained lists of
+#' length n.
 #'
 #' @param .x A list.
 #' @param .fields Fields to use when unzipping - defaults to the names
@@ -13,28 +13,13 @@
 #' @export
 #' @examples
 #' x <- rerun(5, x = runif(1), y = runif(5))
-#' str(x)
-#' unzip(x)
-#' unzip(x, .simplify = TRUE)
+#' x %>% str()
+#' x %>% zip() %>% str()
+#' x %>% zip() %>% zip() %>% str()
 #'
-#' zip(list(a = 1:5, b = 5:1))
-#' # unzip is similar to map2 used with list()
-#' map2(1:5, 5:1, list)
-zip <- function(.x) {
-
-  n <- unique(map_int(.x, length))
-  if (length(n) != 1) {
-    stop("All elements must be same length", call. = FALSE)
-  }
-
-  lapply(seq_len(n), function(i) {
-    lapply(.x, .subset2, i)
-  })
-}
-
-#' @export
-#' @rdname zip
-unzip <- function(.x, .fields = NULL, .simplify = TRUE) {
+#' list(a = 1:5, b = 5:1) %>% zip()
+#' list(a = 1:5, b = 5:1) %>% zip(.simplify = TRUE)
+zip <- function(.x, .fields = NULL, .simplify = FALSE) {
   if (length(.x) == 0) return(list())
 
   if (is.null(.fields)) {

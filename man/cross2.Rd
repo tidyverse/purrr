@@ -109,7 +109,7 @@ seq_len(3) \%>\%
 # crossing:
 seq_len(3) \%>\%
   list(x = ., y = .) \%>\%
-  cross_n(.filter = function(x, y) x == y)
+  cross_n(.filter = ~ .x == .y)
 }
 \seealso{
 \code{\link{expand.grid}()}

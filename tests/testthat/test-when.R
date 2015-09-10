@@ -1,4 +1,4 @@
-context("unzip")
+context("when")
 
 test_that("when chooses the correct action", {
 

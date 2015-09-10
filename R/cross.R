@@ -87,7 +87,7 @@
 #' # crossing:
 #' seq_len(3) %>%
 #'   list(x = ., y = .) %>%
-#'   cross_n(.filter = function(x, y) x == y)
+#'   cross_n(.filter = ~ .x == .y)
 cross2 <- function(.x, .y, .filter = NULL) {
   cross_n(list(.x, .y), .filter = .filter)
 }
@@ -104,6 +104,10 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 cross_n <- function(.l, .filter = NULL) {
   if (is_empty(.l)) {
     return(.l)
+  }
+
+  if (!is.null(.filter)) {
+    .filter <- as_function(.filter)
   }
 
   n <- length(.l)
@@ -145,7 +149,7 @@ cross_n <- function(.l, .filter = NULL) {
 #' @export
 cross_d <- function(.l, .filter = NULL) {
   cross_n(.l, .filter = .filter) %>%
-    unzip() %>%
+    zip() %>%
     lapply(flatten) %>%
     dplyr::as_data_frame()
 }
