@@ -2,21 +2,26 @@
 % Please edit documentation in R/invoke.R
 \name{invoke}
 \alias{invoke}
-\alias{invoke_v}
+\alias{invoke_chr}
+\alias{invoke_dbl}
+\alias{invoke_int}
+\alias{invoke_lgl}
 \title{Invoke every element of a list of functions.}
 \usage{
 invoke(.x, ...)
 
-invoke_v(.x, ..., .type)
+invoke_lgl(.x, ...)
+
+invoke_int(.x, ...)
+
+invoke_dbl(.x, ...)
+
+invoke_chr(.x, ...)
 }
 \arguments{
 \item{.x}{A function or list of functions.}
 
 \item{...}{Arguments passed to each function.}
-
-\item{.type}{Specifies the type of result of \code{.f}, if known.
-This will improve performance, and adds a test that output of \code{.f}
-is the type that you expect.}
 }
 \description{
 Invoke every element of a list of functions.
@@ -25,6 +30,6 @@ Invoke every element of a list of functions.
 middle <- list(m1 = mean, m2 = median)
 
 middle \%>\% invoke(rcauchy(100))
-middle \%>\% invoke_v(rcauchy(100))
+middle \%>\% invoke_dbl(rcauchy(100))
 }
 

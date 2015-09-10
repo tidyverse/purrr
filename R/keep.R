@@ -29,14 +29,14 @@
 #' x %>% keep("a")
 #' x %>% discard("a")
 keep <- function(.x, .p, ...) {
-  sel <- probe(.x, .p, ...)
+  sel <- map_lgl(.x, .p, ...)
   .x[!is.na(sel) & sel]
 }
 
 #' @export
 #' @rdname keep
 discard <- function(.x, .p, ...) {
-  sel <- probe(.x, .p, ...)
+  sel <- map_lgl(.x, .p, ...)
   .x[is.na(sel) | !sel]
 }
 

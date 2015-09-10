@@ -25,8 +25,8 @@ inner lists. Only those elements where \code{.p} evaluates to
   If a function, it is used as is.
 
   If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
-  a three arguments, \code{.x}, \code{.y}, \code{.z}. This allows you
-  to create very compact anonymous functions of up to 3 variables.
+  a three arguments, \code{.x} or \code{.}, \code{.y}, \code{.z}. This allows
+  you to create very compact anonymous functions of up to 3 variables.
 
   If a string, e.g. \code{"y"}, it is converted to an extractor function,
   \code{function(x) x[["y"]]}.}

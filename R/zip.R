@@ -22,7 +22,7 @@
 #' map2(1:5, 5:1, list)
 zip <- function(.x) {
 
-  n <- unique(map_v(.x, length, .type = integer(1)))
+  n <- unique(map_int(.x, length))
   if (length(n) != 1) {
     stop("All elements must be same length", call. = FALSE)
   }

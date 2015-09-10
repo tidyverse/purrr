@@ -17,8 +17,8 @@
 #'
 #' # You can use flatten in conjunction with map
 #' x %>% map(~ .x[1]) %>% flatten()
-#' # But it's better to use map_v
-#' x %>% map_v(~ .x[1])
+#' # But it's better to use map_int etc.
+#' x %>% map_int(~ .x[1])
 flatten <- function(.x, .recursive = FALSE, .unname = FALSE) {
   use_names <- TRUE
   if (.unname && .recursive) {

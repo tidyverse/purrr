@@ -26,7 +26,7 @@ mtcars %>%
   split(.$cyl) %>%
   map(~ lm(mpg ~ wt, data = .)) %>%
   map(summary) %>%
-  map_v("r.squared")
+  map_dbl("r.squared")
 ```
 
 Note the three types of input to `map()`: a function, a formula (converted to an anonymous function), or a string (used to extract named components).
@@ -69,10 +69,10 @@ mean(unlist(boot$diffs))
 
 ### Transformation
 
-* Apply a function to each element: `map()` returns transformed list;
-  `map_v()` returns transformed vector, `walk()` returns original list, calling
-  function for its side effects; `map2()` and `map3()` vectorise over multiple
-  inputs.
+* Apply a function to each element: `map()` returns list;
+  `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` returns vector, 
+  `walk()` invisibly returns original list, calling function for its side 
+  effects; `map2()` and `map3()` vectorise over multiple inputs.
 
 * Reduce a list to a single value by iteratively applying a binary
   function: `reduce()` and `reduce_right()`.
@@ -98,7 +98,8 @@ mean(unlist(boot$diffs))
 ### Lists of functions
 
 * `invoke()` every function in a list with given arguments and returns
-  a list, `invoke_v()` returns a vector.
+  a list, `invoke_lgl()`/`invoke_int()`/`invoke_dbl()`/`invoke_chr()` returns 
+  vectors.
 
 ### Function operators
 

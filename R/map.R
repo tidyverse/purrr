@@ -2,8 +2,9 @@
 #'
 #' \code{map()} returns the transformed input; \code{walk()} calls
 #' \code{.f} for its side-effect and returns the original
-#' input. \code{map()} returns a list or a data frame; \code{map_v()}
-#' always returns an atomic vector (or dies trying).
+#' input. \code{map()} returns a list or a data frame; \code{map_lgl()},
+#' \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors
+#' of the corresponding type (or die trying).
 #'
 #' @param .x A list or vector.
 #' @param .f A function, formula or string.
@@ -11,18 +12,21 @@
 #'   If a function, it is used as is.
 #'
 #'   If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
-#'   a three arguments, \code{.x}, \code{.y}, \code{.z}. This allows you
-#'   to create very compact anonymous functions of up to 3 variables.
+#'   a three arguments, \code{.x} or \code{.}, \code{.y}, \code{.z}. This allows
+#'   you to create very compact anonymous functions of up to 3 variables.
 #'
 #'   If a string, e.g. \code{"y"}, it is converted to an extractor function,
 #'   \code{function(x) x[["y"]]}.
 #' @param ... Additional arguments passed on to \code{.f}.
-#' @param .type Specifies the type of result of \code{.f}, if known.
-#'   This will improve performance, and adds a test that output of \code{.f}
-#'   is the type that you expect.
 #' @return \code{map()} a list if \code{.x} is a list or a data frame
-#'   if \code{.x} is a data frame; \code{map_v()} a vector;
-#'   \code{walk()} (invisibly) the input \code{.x}.
+#'   if \code{.x} is a data frame.
+#'
+#'   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
+#'   vector, \code{map_dbl()}, a numeric vector, \code{map_chr()}, a character
+#'   vector.
+#'
+#'   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
+#'   its side effects, but this makes it easier to combine in a pipe.
 #' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
 #'   inputs simulatenously
 #' @export
@@ -45,33 +49,52 @@
 #'   split(.$cyl) %>%
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
-#'   map_v("r.squared")
+#'   map_dbl("r.squared")
 #'
-#' # map, map_v allow you to control the output type:
+#' # Use map_lgl(), map_dbl(), etc to reduce to a vector.
 #' # * list
 #' mtcars %>% map(sum)
 #' # * vector
-#' mtcars %>% map_v(sum)
+#' mtcars %>% map_dbl(sum)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
   lapply(.x, .f, ...) %>% output_hook(.x)
 }
 
 #' @rdname map
+#' @param .p A predicate: either a function, in any of the ways possible
+#'   for \code{.f}, or a logical vector the same length as \code{.x}.
 #' @export
-map_v <- function(.x, .f, ..., .type) {
-  .f <- as_function(.f)
-
-  if (missing(.type)) {
-    out <- lapply(.x, .f, ...)
-    if (!can_simplify(out))
-      stop("Can not coerce output to a vector", call. = FALSE)
-    unlist(out)
+map_lgl <- function(.x, .p, ...) {
+  if (is.logical(.p)) {
+    stopifnot(length(.p) == length(.x))
+    .p
   } else {
-    vapply(.x, .f, ..., FUN.VALUE = .type)
+    .p <- as_function(.p)
+    vapply(.x, .p, ..., FUN.VALUE = logical(1))
   }
 }
 
+#' @rdname map
+#' @export
+map_chr <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+  vapply(.x, .f, ..., FUN.VALUE = character(1))
+}
+
+#' @rdname map
+#' @export
+map_int <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+  vapply(.x, .f, ..., FUN.VALUE = integer(1))
+}
+
+#' @rdname map
+#' @export
+map_dbl <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+  vapply(.x, .f, ..., FUN.VALUE = double(1))
+}
 
 #' @export
 #' @rdname map
@@ -202,7 +225,7 @@ NULL
 #' @export
 map_if <- function(.x, .p, .f, ...) {
   .f <- as_function(.f)
-  sel <- probe(.x, .p)
+  sel <- map_lgl(.x, .p)
 
   .x[sel] <- lapply(.x[sel], .f, ...)
   .x

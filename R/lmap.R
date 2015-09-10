@@ -83,7 +83,7 @@ lmap <- function(.x, .f, ...) {
 #' @rdname lmap
 #' @export
 lmap_if <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p) %>% which()
+  sel <- map_lgl(.x, .p) %>% which()
   .x %>% lmap_at(sel, .f, ...)
 }
 

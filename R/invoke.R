@@ -8,7 +8,7 @@
 #' middle <- list(m1 = mean, m2 = median)
 #'
 #' middle %>% invoke(rcauchy(100))
-#' middle %>% invoke_v(rcauchy(100))
+#' middle %>% invoke_dbl(rcauchy(100))
 invoke <- function(.x, ...) {
   if (is.function(.x)) {
     list(.x(...))
@@ -19,10 +19,47 @@ invoke <- function(.x, ...) {
 
 #' @export
 #' @rdname invoke
-invoke_v <- function(.x, ..., .type) {
+invoke_lgl <- function(.x, ...) {
   if (is.function(.x)) {
-    .x(...)
+    out <- .x(...)
+    stopifnot(is.logical(out), length(out) == 1)
+    out
   } else {
-    map_v(.x, function(f) f(...), .type = .type)
+    map_lgl(.x, function(f) f(...))
+  }
+}
+#' @export
+#' @rdname invoke
+invoke_int <- function(.x, ...) {
+  if (is.function(.x)) {
+    out <- .x(...)
+    stopifnot(is.integer(out), length(out) == 1)
+    out
+  } else {
+    map_int(.x, function(f) f(...))
+  }
+}
+
+#' @export
+#' @rdname invoke
+invoke_dbl <- function(.x, ...) {
+  if (is.function(.x)) {
+    out <- .x(...)
+    stopifnot(is.double(out), length(out) == 1)
+    out
+  } else {
+    map_dbl(.x, function(f) f(...))
+  }
+}
+
+#' @export
+#' @rdname invoke
+invoke_chr <- function(.x, ...) {
+  if (is.function(.x)) {
+    out <- .x(...)
+    stopifnot(is.character(out), length(out) == 1)
+    out
+  } else {
+    map_chr(.x, function(f) f(...))
   }
 }

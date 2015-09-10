@@ -27,6 +27,6 @@ This is a convenient way of generating sample data. It works similarly to
 10 \%>\% rerun(rnorm(5))
 10 \%>\%
   rerun(x = rnorm(5), y = rnorm(5)) \%>\%
-  map_v(~ cor(.x$x, .x$y))
+  map_dbl(~ cor(.x$x, .x$y))
 }
 
