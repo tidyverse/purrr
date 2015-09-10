@@ -101,6 +101,10 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @export
 #' @rdname cross
 cross_n <- function(.l, .filter = NULL) {
+  if (is_empty(.l)) {
+    return(.l)
+  }
+
   n <- length(.l)
   lengths <- lapply(.l, length)
   names <- names(.l)
