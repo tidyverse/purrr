@@ -3,10 +3,10 @@
 \name{type-predicates}
 \alias{is_atomic}
 \alias{is_character}
+\alias{is_double}
 \alias{is_integer}
 \alias{is_list}
 \alias{is_logical}
-\alias{is_numeric}
 \alias{is_vector}
 \alias{type-predicates}
 \title{Type predicates}
@@ -17,7 +17,7 @@ is_atomic(x)
 
 is_vector(x)
 
-is_numeric()
+is_double()
 
 is_integer()
 
@@ -41,7 +41,7 @@ addition:
   \item Unlike \code{is.vector()}, \code{is_vector()} test if an
         object is an atomic vector or a list. \code{is.vector}
         checks for the presence of attributes (other than name).
-  \item Unlike \code{is.numeric()}, \code{is_numeric()} only
+  \item Unlike \code{is.numeric()}, \code{is_double()} only
         returns \code{TRUE} for floating point numbers, not
         integers.
 }
