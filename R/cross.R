@@ -149,7 +149,7 @@ cross_n <- function(.l, .filter = NULL) {
 #' @export
 cross_d <- function(.l, .filter = NULL) {
   cross_n(.l, .filter = .filter) %>%
-    zip() %>%
+    zip_n() %>%
     lapply(flatten) %>%
     dplyr::as_data_frame()
 }
