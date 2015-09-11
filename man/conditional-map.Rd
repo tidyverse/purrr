@@ -50,8 +50,7 @@ mumeric vector of positions.
 list(x = rbernoulli(100), y = 1:100) \%>\%
   zip_n() \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
-  zip_n() \%>\%
-  map(flatten)
+  zip_n(.simplify = TRUE)
 
 # Convert factors to characters
 iris \%>\%

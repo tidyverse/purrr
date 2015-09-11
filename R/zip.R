@@ -77,7 +77,9 @@ can_simplify <- function(x) {
   if (!all(n == 1)) return(FALSE)
 
   mode <- unique(vapply(x, typeof, character(1)))
-  if (length(mode) > 1) return(FALSE)
+  if (length(mode) > 1 && !all(c("double", "integer") %in% mode)) {
+    return(FALSE)
+  }
 
   TRUE
 }

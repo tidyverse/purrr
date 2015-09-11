@@ -2,6 +2,7 @@ context("zip")
 
 test_that("scalars simplified to vector", {
   expect_equal(zip_n(list(list(1), list(2)), .simplify = TRUE), list(1:2))
+  expect_equal(zip_n(list(list(1L), list(2)), .simplify = TRUE), list(1:2))
 })
 
 test_that("names preserved", {
