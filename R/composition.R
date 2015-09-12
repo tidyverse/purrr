@@ -14,6 +14,7 @@
 #' @inheritParams as_vector
 #' @param ..f A function to lift.
 #' @param ... Default arguments for \code{..f}. These will be
+#'   evaluated only once, when the lifting factory is called.
 #' @name lift
 #' @seealso \code{\link{map_call}()}
 NULL
@@ -35,7 +36,7 @@ NULL
 #' @export
 #' @examples
 #'
-#' ### Lifting from ... to list(...)
+#' ### Lifting from ... to list(...) or c(...)
 #'
 #' x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
 #' lift_dl(mean)(x)
@@ -106,7 +107,7 @@ lift_dv <- function (..f, ..., .unnamed = FALSE) {
 #'
 #'
 #' }
-#' ### Lifting from c(...) to list(...)
+#' ### Lifting from c(...) to list(...) or ...
 #'
 #' # Some functions such as mean() take an atomic vector. It is often
 #' # useful to transform them to functions taking a list. In the
@@ -165,7 +166,7 @@ lift_vd <- function(..f, ..., .type) {
 #'
 #'
 #' }
-#' ### Lifting from list(...) to list(...) or ...
+#' ### Lifting from list(...) to c(...) or ...
 #'
 #' # cross_n() normally takes a list of elements and returns their
 #' # cartesian product. By lifting it you can supply the arguments as
