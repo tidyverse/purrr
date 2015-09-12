@@ -69,10 +69,23 @@ mean(unlist(boot$diffs))
 
 ### Transformation
 
-* Apply a function to each element: `map()` returns list;
-  `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` returns vector, 
-  `walk()` invisibly returns original list, calling function for its side 
-  effects; `map2()` and `map3()` vectorise over multiple inputs.
+* Apply a function to each element: `map()` returns a list;
+  `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` return a vector;
+  `walk()` invisibly returns original list, calling the function for
+  its side effects; `map2()` and `map3()` vectorise over multiple
+  inputs; `at_depth()` maps a function at a specified level of nested
+  lists.
+
+* Apply a function conditionally with `map_if()` (where a predicate
+  returns `TRUE`) and `map_at()` (at specific locations).
+
+* Apply a function to slices of a data frame with `by_slice()`, or to
+  each row with `by_row()` or `map_rows()`.
+
+* Apply a function to list-elements of a list with `lmap()`,
+  `lmap_if()` and `lmap_at()`. Compared to traditional mapping, the
+  function is applied to `x[i]` instead of `x[[i]]`, preserving the
+  surrounding list and attributes.
 
 * Reduce a list to a single value by iteratively applying a binary
   function: `reduce()` and `reduce_right()`.
@@ -81,6 +94,17 @@ mean(unlist(boot$diffs))
 
 * Order, sort and split a list based on its components with `split_by()`,
   `order_by()` and `sort_by()`.
+
+### List manipulation and creation
+
+* Zip together two or more lists with `zip_n()`.
+
+* Create the cartesian product of the elements of several lists with
+  `cross_n()` and `cross_d()`.
+
+* Flatten a list with `flatten()`.
+
+* Splice lists and other objects with `splice()`.
 
 ### Predicate functions
 
@@ -105,11 +129,19 @@ mean(unlist(boot$diffs))
 
 * Fill in function arguments with `partial()`.
 
-* Convert a function to take a list of inputs with `smash()`.
+* Change the way your function takes input with the `lift_xy()`
+  composition helpers.
 
 * Compose multiple functions into a single function with `compose()`.
 
 * Negate a predicate funtion with `negate()`.
+
+### Objects coercion
+
+* Convert an array or matrix to a list with `array_tree()` and
+  `array_branch()`.
+
+* Convert a list to a vector with `as_vector()`.
 
 ## Philosophy
 
