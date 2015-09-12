@@ -38,23 +38,3 @@ zip <- function(.x, .fields = NULL, .simplify = FALSE) {
   if (.simplify) out <- lapply(out, simplify_if_possible)
   out
 }
-
-# Simplify a list of atomic vectors of the same type to a vector
-#
-# simplify_list(list(1, 2, 3))
-can_simplify <- function(x) {
-  is_atomic <- vapply(x, is.atomic, logical(1))
-  if (!all(is_atomic)) return(FALSE)
-
-  n <- vapply(x, length, integer(1))
-  if (!all(n == 1)) return(FALSE)
-
-  mode <- unique(vapply(x, typeof, character(1)))
-  if (length(mode) > 1) return(FALSE)
-
-  TRUE
-}
-simplify_if_possible <- function(x) {
-  if (!can_simplify(x)) return(x)
-  unlist(x)
-}
