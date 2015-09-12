@@ -23,14 +23,8 @@ test_that("map2() and map3() return a data frame when given one", {
 test_that("map_n() is not vectorized over additional arguments (see #54)", {
   f <- function(x, y, zs) zs
   actual <- list(1:3, 1:3)
-  alleged <- map2(1:2, 1:2, f, zs = 1:3)
-  expect_equal(actual, alleged)
-})
-
-test_that("map_n() works with unnamed additional arguments", {
-  # Relies on map_n() using partial() with .first set to FALSE
-  f <- function(x, y, zs) zs
-  actual <- list(1:3, 1:3)
-  alleged <- map2(1:2, 1:2, f, 1:3)
-  expect_equal(actual, alleged)
+  alleged1 <- map2(1:2, 1:2, f, zs = 1:3)
+  alleged2 <- map2(1:2, 1:2, f, 1:3)
+  expect_equal(actual, alleged1)
+  expect_equal(actual, alleged2)
 })

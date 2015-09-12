@@ -10,7 +10,7 @@ partial(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE)
 \item{...f}{a function. For the output source to read well, this should be an
 be a named function.}
 
-\item{...}{named arguments to \code{`_f`} that should be partially applied.}
+\item{...}{named arguments to \code{...f} that should be partially applied.}
 
 \item{.env}{the environment of the created function. Defaults to
 \code{\link{parent.frame}} and you should rarely need to modify this.}

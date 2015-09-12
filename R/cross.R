@@ -48,7 +48,7 @@
 #'
 #' data %>%
 #'   cross_n() %>%
-#'   map(smash(paste))
+#'   map(lift_dl(paste))
 #'
 #' # cross_n() returns the combinations in long format: many elements,
 #' # each representing one combination. With cross_d() we'll get a
