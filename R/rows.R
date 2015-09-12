@@ -110,15 +110,14 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' # happens, sum() handles data frame so the following works:
 #' mtcars %>% by_row(sum)
 #'
-#' \dontrun{ % temporary examples until lift() and punctuate_v() make it (or not) in purrr
-#' # Other functions such as mean() may need to be adjusted:
-#' mtcars %>% by_row(lift(mean))
+#' # Other functions such as mean() may need to be adjusted with one
+#' # of the lift_xy() helpers:
+#' mtcars %>% by_row(lift_vl(mean))
 #'
 #' # To run a function with map_rows(), make sure it is variadic (that
 #' # it accepts dots)
 #' mtcars %>% map_rows(sum)
-#' mtcars %>% map_rows(punctuate_v(mean))
-#' }
+#' mtcars %>% map_rows(lift_vd(mean))
 by_row <- function(.d, ..f, ..., .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
