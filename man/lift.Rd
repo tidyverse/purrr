@@ -25,7 +25,8 @@ lift_lv(..f, ...)
 \arguments{
 \item{..f}{A function to lift.}
 
-\item{...}{Default arguments for \code{..f}. These will be}
+\item{...}{Default arguments for \code{..f}. These will be
+evaluated only once, when the lifting factory is called.}
 
 \item{.unnamed}{If \code{TRUE}, \code{ld} or \code{lv} will not
 name the parameters in the lifted function signature. This
@@ -83,7 +84,7 @@ an atomic vector. The details of this coercion can be controlled
 with \code{.type}.
 }
 \examples{
-### Lifting from ... to list(...)
+### Lifting from ... to list(...) or c(...)
 
 x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
 lift_dl(mean)(x)
@@ -117,7 +118,7 @@ mtcars[c(1, 2)] \%>\% lifted_identical()
 
 
 }
-### Lifting from c(...) to list(...)
+### Lifting from c(...) to list(...) or ...
 
 # Some functions such as mean() take an atomic vector. It is often
 # useful to transform them to functions taking a list. In the
@@ -139,7 +140,7 @@ lift_vd(tolower, .type = character(1))("this", "is", "ok")
 
 
 }
-### Lifting from list(...) to list(...) or ...
+### Lifting from list(...) to c(...) or ...
 
 # cross_n() normally takes a list of elements and returns their
 # cartesian product. By lifting it you can supply the arguments as
