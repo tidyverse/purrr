@@ -154,9 +154,11 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' @rdname map2
 map_n <- function(.l, .f, ...) {
   .f <- as_function(.f)
-  f <- partial(.f, ..., .first = FALSE)
   args <- recycle_args(.l)
-  do.call("Map", c(list(quote(f)), args))
+  do.call("mapply", c(
+    FUN = list(quote(.f)), args, MoreArgs = quote(list(...)),
+    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  ))
 }
 
 
