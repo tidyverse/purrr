@@ -88,12 +88,13 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #'
 #' \code{map_rows()} is intended to provide a version of
 #' \code{map_n()} that works better with data frames. The distinction
-#' between \code{by_row()} and \code{map_rows()} is that in the former
-#' case, \code{..f} gets the data frame as argument, while in the
-#' latter, the columns are mapped to \code{..f}'s function
-#' signature. In essence, \code{map_row()} is equivalent to using
-#' \code{by_row()} with a lifted function (see
-#' \code{\link{lift_dl}()}).
+#' between \code{by_row()} and \code{map_rows()} is that the former
+#' passes a data frame to \code{..f} while the latter maps the columns
+#' to its function call. This is essentially like using
+#' \code{\link{map_call}()} with each row of a data frame. Another way
+#' to view this is that \code{map_row()} is equivalent to using
+#' \code{by_row()} with a function lifted to accept dots (see
+#' \code{\link{lift_ld}()}).
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
 #'   created under the name \code{.out}. If it returns a data frame, it

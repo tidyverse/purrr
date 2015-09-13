@@ -179,7 +179,7 @@ walk3 <- function(.x, .y, .z, .f, ...) {
 #' @export
 #' @rdname map2
 walk_n <- function(.l, .f, ...) {
-  args_list <- recycle_args(.l) %>% zip()
+  args_list <- recycle_args(.l) %>% zip_n()
   for (args in args_list) {
     do.call(".f", c(args, list(...)))
   }
@@ -206,10 +206,9 @@ walk_n <- function(.l, .f, ...) {
 #' @name conditional-map
 #' @examples
 #' list(x = rbernoulli(100), y = 1:100) %>%
-#'   zip() %>%
+#'   zip_n() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   zip() %>%
-#'   map(flatten)
+#'   zip_n(.simplify = TRUE)
 #'
 #' # Convert factors to characters
 #' iris %>%

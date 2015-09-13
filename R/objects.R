@@ -71,7 +71,7 @@ prepend <- function(x, values, before = 1) {
 #'   \item Like \code{\link{is_atomic}()} and unlike base R
 #'         \code{is.atomic()}, \code{is_bare_atomic()} does not return
 #'         \code{TRUE} for \code{NULL}.
-#'   \item Unlike base R \code{is.numeric()}, \code{is_bare_numeric()}
+#'   \item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
 #'         only return \code{TRUE} for floating point numbers.
 #' }
 #' @param x object to be tested.
@@ -99,7 +99,7 @@ is_bare_vector <- function(x) {
 
 #' @export
 #' @rdname bare-type-predicates
-is_bare_numeric <- function(x) {
+is_bare_double <- function(x) {
   !is.object(x) && is.double(x)
 }
 
@@ -135,7 +135,7 @@ is_bare_logical <- function(x) {
 #'   \item Unlike \code{is.vector()}, \code{is_vector()} test if an
 #'         object is an atomic vector or a list. \code{is.vector}
 #'         checks for the presence of attributes (other than name).
-#'   \item Unlike \code{is.numeric()}, \code{is_numeric()} only
+#'   \item Unlike \code{is.numeric()}, \code{is_double()} only
 #'         returns \code{TRUE} for floating point numbers, not
 #'         integers.
 #' }
@@ -162,7 +162,7 @@ is_vector <- function(x) {
 
 #' @export
 #' @rdname type-predicates
-is_numeric <- is.double
+is_double <- is.double
 
 #' @export
 #' @rdname type-predicates

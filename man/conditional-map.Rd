@@ -48,10 +48,9 @@ mumeric vector of positions.
 }
 \examples{
 list(x = rbernoulli(100), y = 1:100) \%>\%
-  zip() \%>\%
+  zip_n() \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
-  zip() \%>\%
-  map(flatten)
+  zip_n(.simplify = TRUE)
 
 # Convert factors to characters
 iris \%>\%
