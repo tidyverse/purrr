@@ -11,39 +11,38 @@
 \alias{type-predicates}
 \title{Type predicates}
 \usage{
-is_list()
+is_list(x)
 
 is_atomic(x)
 
 is_vector(x)
 
-is_numeric()
+is_numeric(x)
 
-is_integer()
+is_integer(x)
 
-is_character()
+is_character(x)
 
-is_logical()
+is_logical(x)
 }
 \arguments{
 \item{x}{object to be tested.}
 }
 \description{
 These type predicates aim to make type testing in R more
-consistent.
+consistent. They are wrappers around \code{\link{typeof}}, so
+operate at a level beneath S3/S4 etc.
 }
 \details{
-Most of these predicates are simple aliases to base R functions. In
-addition:
+Compare to base R functions:
 \itemize{
   \item Unlike \code{is.atomic()}, \code{is_atomic()} does not
-        return \code{TRUE} for \code{NULL}.
+     return \code{TRUE} for \code{NULL}.
   \item Unlike \code{is.vector()}, \code{is_vector()} test if an
-        object is an atomic vector or a list. \code{is.vector}
-        checks for the presence of attributes (other than name).
-  \item Unlike \code{is.numeric()}, \code{is_numeric()} only
-        returns \code{TRUE} for floating point numbers, not
-        integers.
+     object is an atomic vector or a list. \code{is.vector}
+     checks for the presence of attributes (other than name).
+  \item \code{is_numeric()} is not so, (e.g.) dates and date times
+    \code{TRUE}, not \code{FALSE}.
 }
 }
 \seealso{
