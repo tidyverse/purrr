@@ -88,11 +88,13 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #'
 #' \code{map_rows()} is intended to provide a version of
 #' \code{map_n()} that works better with data frames. The distinction
-#' between \code{by_row()} and \code{map_rows()} is that in the former
-#' case, \code{..f} gets the data frame as argument, while in the
-#' latter, the columns are mapped to \code{..f}'s function
-#' signature. In essence, \code{map_row()} is equivalent to using
-#' \code{by_row()} with a stitched function (see \code{stitch()}).
+#' between \code{by_row()} and \code{map_rows()} is that the former
+#' passes a data frame to \code{..f} while the latter maps the columns
+#' to its function call. This is essentially like using
+#' \code{\link{map_call}()} with each row of a data frame. Another way
+#' to view this is that \code{map_row()} is equivalent to using
+#' \code{by_row()} with a function lifted to accept dots (see
+#' \code{\link{lift_ld}()}).
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
 #'   created under the name \code{.out}. If it returns a data frame, it
@@ -109,15 +111,14 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' # happens, sum() handles data frame so the following works:
 #' mtcars %>% by_row(sum)
 #'
-#' \dontrun{ % temporary examples until lift() and punctuate_v() make it (or not) in purrr
-#' # Other functions such as mean() may need to be adjusted:
-#' mtcars %>% by_row(lift(mean))
+#' # Other functions such as mean() may need to be adjusted with one
+#' # of the lift_xy() helpers:
+#' mtcars %>% by_row(lift_vl(mean))
 #'
 #' # To run a function with map_rows(), make sure it is variadic (that
 #' # it accepts dots)
 #' mtcars %>% map_rows(sum)
-#' mtcars %>% map_rows(punctuate_v(mean))
-#' }
+#' mtcars %>% map_rows(lift_vd(mean))
 by_row <- function(.d, ..f, ..., .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)

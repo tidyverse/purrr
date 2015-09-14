@@ -48,7 +48,7 @@
 #'
 #' data %>%
 #'   cross_n() %>%
-#'   map(smash(paste))
+#'   map(lift_dl(paste))
 #'
 #' # cross_n() returns the combinations in long format: many elements,
 #' # each representing one combination. With cross_d() we'll get a
@@ -149,7 +149,6 @@ cross_n <- function(.l, .filter = NULL) {
 #' @export
 cross_d <- function(.l, .filter = NULL) {
   cross_n(.l, .filter = .filter) %>%
-    zip() %>%
-    lapply(flatten) %>%
+    zip_n(.simplify = TRUE) %>%
     dplyr::as_data_frame()
 }

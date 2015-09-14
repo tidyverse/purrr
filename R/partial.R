@@ -14,7 +14,7 @@
 #'
 #' @param ...f a function. For the output source to read well, this should be an
 #'   be a named function.
-#' @param ... named arguments to \code{`_f`} that should be partially applied.
+#' @param ... named arguments to \code{...f} that should be partially applied.
 #' @param .env the environment of the created function. Defaults to
 #'   \code{\link{parent.frame}} and you should rarely need to modify this.
 #' @param .lazy If \code{TRUE} arguments evaluated lazily, if \code{FALSE},

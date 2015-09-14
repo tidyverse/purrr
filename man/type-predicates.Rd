@@ -3,6 +3,7 @@
 \name{type-predicates}
 \alias{is_atomic}
 \alias{is_character}
+\alias{is_double}
 \alias{is_integer}
 \alias{is_list}
 \alias{is_logical}
@@ -20,6 +21,8 @@ is_vector(x)
 is_numeric(x)
 
 is_integer(x)
+
+is_double(x)
 
 is_character(x)
 
@@ -39,10 +42,10 @@ Compare to base R functions:
   \item Unlike \code{is.atomic()}, \code{is_atomic()} does not
      return \code{TRUE} for \code{NULL}.
   \item Unlike \code{is.vector()}, \code{is_vector()} test if an
-     object is an atomic vector or a list. \code{is.vector}
-     checks for the presence of attributes (other than name).
-  \item \code{is_numeric()} is not so, (e.g.) dates and date times
-    \code{TRUE}, not \code{FALSE}.
+        object is an atomic vector or a list. \code{is.vector}
+        checks for the presence of attributes (other than name).
+  \item \code{is_numeric()} is not generic so, (e.g.) dates and date times
+    are \code{TRUE}, not \code{FALSE}.
 }
 }
 \seealso{

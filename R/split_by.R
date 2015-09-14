@@ -3,7 +3,7 @@
 #' @inheritParams map
 #' @export
 #' @examples
-#' l1 <- zip(list(x = sample(10), y = 1:10))
+#' l1 <- zip_n(list(x = sample(10), y = 1:10))
 #' l1
 #' l1 %>% order_by("x")
 #' l1 %>% sort_by("x")
@@ -13,14 +13,14 @@
 #' l2 %>% split_by("g") %>% map(. %>% map("y"))
 split_by <- function(.x, .f, ...) {
   vals <- map(.x, .f, ...)
-  split(.x, zip(vals, .simplify = TRUE))
+  split(.x, zip_n(vals, .simplify = TRUE))
 }
 
 #' @export
 #' @rdname split_by
 order_by <- function(.x, .f, ...) {
   vals <- map(.x, .f, ...)
-  do.call("order", zip(vals, .simplify = TRUE))
+  do.call("order", zip_n(vals, .simplify = TRUE))
 }
 
 #' @export

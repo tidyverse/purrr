@@ -3,6 +3,7 @@ Title: Functional Programming Tools
 Version: 0.0.0.9000
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio", c("aut", "cre")),
+    person("Lionel", "Henry", , "lionel.hry@gmail.com", "ctb"),
     person("RStudio", role = "cph")
     )
 Description: Make your pure functions purr with the purrr package. This

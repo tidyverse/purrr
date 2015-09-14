@@ -154,9 +154,11 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' @rdname map2
 map_n <- function(.l, .f, ...) {
   .f <- as_function(.f)
-  f <- partial(.f, ..., .first = FALSE)
   args <- recycle_args(.l)
-  do.call("Map", c(list(quote(f)), args))
+  do.call("mapply", c(
+    FUN = list(quote(.f)), args, MoreArgs = quote(list(...)),
+    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  ))
 }
 
 
@@ -177,7 +179,7 @@ walk3 <- function(.x, .y, .z, .f, ...) {
 #' @export
 #' @rdname map2
 walk_n <- function(.l, .f, ...) {
-  args_list <- recycle_args(.l) %>% zip()
+  args_list <- recycle_args(.l) %>% zip_n()
   for (args in args_list) {
     do.call(".f", c(args, list(...)))
   }
@@ -204,10 +206,9 @@ walk_n <- function(.l, .f, ...) {
 #' @name conditional-map
 #' @examples
 #' list(x = rbernoulli(100), y = 1:100) %>%
-#'   zip() %>%
+#'   zip_n() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   zip() %>%
-#'   map(flatten)
+#'   zip_n(.simplify = TRUE)
 #'
 #' # Convert factors to characters
 #' iris %>%
@@ -249,4 +250,26 @@ inv_which <- function(x, sel) {
   } else {
     stop("unrecognised index type", call. = FALSE)
   }
+}
+
+#' Map a list to a function call
+#'
+#' While \code{\link{lift_dl}()} wraps a function in
+#' \code{\link{do.call}()}, \code{map_call()} is directly equivalent
+#' to \code{do.call()} except that it takes a list as first argument
+#' instead of a function. This makes `map_call()` pipable.
+#' @param .x A list or a vector. Vectors are coerced to a list.
+#' @param .f A function or the name of a function to call with the
+#'   elements of \code{.x} as arguments.
+#' @param ... Additional arguments passed on to \code{.f}.
+#' @seealso \code{\link{lift_dl}()} and \code{\link{do.call}()}
+#' @export
+#' @examples
+#' # We map a list of strings to paste(), with sep = "-" and the
+#' # string "2001" as additional arguments
+#' list("01", "01") %>%
+#'   map(~ sub("^01", "10", .)) %>%
+#'   map_call("paste", "2001", sep = "-")
+map_call <- function(.x, .f, ...) {
+  do.call(.f, c(.x, list(...)))
 }

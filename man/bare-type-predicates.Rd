@@ -4,10 +4,10 @@
 \alias{bare-type-predicates}
 \alias{is_bare_atomic}
 \alias{is_bare_character}
+\alias{is_bare_double}
 \alias{is_bare_integer}
 \alias{is_bare_list}
 \alias{is_bare_logical}
-\alias{is_bare_numeric}
 \alias{is_bare_vector}
 \title{Bare type predicates}
 \usage{
@@ -17,7 +17,7 @@ is_bare_atomic(x)
 
 is_bare_vector(x)
 
-is_bare_numeric(x)
+is_bare_double(x)
 
 is_bare_integer(x)
 
@@ -38,7 +38,7 @@ example, a data frame is a list, but not a bare list.
   \item Like \code{\link{is_atomic}()} and unlike base R
         \code{is.atomic()}, \code{is_bare_atomic()} does not return
         \code{TRUE} for \code{NULL}.
-  \item Unlike base R \code{is.numeric()}, \code{is_bare_numeric()}
+  \item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
         only return \code{TRUE} for floating point numbers.
 }
 }
