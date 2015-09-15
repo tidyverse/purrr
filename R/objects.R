@@ -82,7 +82,7 @@ NULL
 #' @export
 #' @rdname bare-type-predicates
 is_bare_list <- function(x) {
-  !is.object(x) && is.list(x)
+  !is.object(x) && is_list(x)
 }
 
 #' @export
@@ -100,25 +100,31 @@ is_bare_vector <- function(x) {
 #' @export
 #' @rdname bare-type-predicates
 is_bare_double <- function(x) {
-  !is.object(x) && is.double(x)
+  !is.object(x) && is_double(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_integer <- function(x) {
-  !is.object(x) && is.integer(x)
+  !is.object(x) && is_integer(x)
+}
+
+#' @export
+#' @rdname bare-type-predicates
+is_bare_numeric <- function(x) {
+  !is.object(x) && is_numeric(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_character <- function(x) {
-  !is.object(x) && is.character(x)
+  !is.object(x) && is_character(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_logical <- function(x) {
-  !is.object(x) && is.logical(x)
+  !is.object(x) && is_logical(x)
 }
 
 
