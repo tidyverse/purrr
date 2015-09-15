@@ -8,6 +8,7 @@
 \alias{is_bare_integer}
 \alias{is_bare_list}
 \alias{is_bare_logical}
+\alias{is_bare_numeric}
 \alias{is_bare_vector}
 \title{Bare type predicates}
 \usage{
@@ -20,6 +21,8 @@ is_bare_vector(x)
 is_bare_double(x)
 
 is_bare_integer(x)
+
+is_bare_numeric(x)
 
 is_bare_character(x)
 
