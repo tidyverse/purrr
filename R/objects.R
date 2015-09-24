@@ -82,7 +82,7 @@ NULL
 #' @export
 #' @rdname bare-type-predicates
 is_bare_list <- function(x) {
-  !is.object(x) && is.list(x)
+  !is.object(x) && is_list(x)
 }
 
 #' @export
@@ -100,25 +100,31 @@ is_bare_vector <- function(x) {
 #' @export
 #' @rdname bare-type-predicates
 is_bare_double <- function(x) {
-  !is.object(x) && is.double(x)
+  !is.object(x) && is_double(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_integer <- function(x) {
-  !is.object(x) && is.integer(x)
+  !is.object(x) && is_integer(x)
+}
+
+#' @export
+#' @rdname bare-type-predicates
+is_bare_numeric <- function(x) {
+  !is.object(x) && is_numeric(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_character <- function(x) {
-  !is.object(x) && is.character(x)
+  !is.object(x) && is_character(x)
 }
 
 #' @export
 #' @rdname bare-type-predicates
 is_bare_logical <- function(x) {
-  !is.object(x) && is.logical(x)
+  !is.object(x) && is_logical(x)
 }
 
 
@@ -189,6 +195,63 @@ is_character <- function(x) {
 #' @rdname type-predicates
 is_logical <- function(x) {
   typeof(x) == "logical"
+}
+
+#' Scalar type predicates
+#'
+#' These predicates check for a given type and whether the vector is
+#' "scalar", that is, of length 1.
+#' @param x object to be tested.
+#' @seealso type-predicates bare-type-predicates
+#' @name scalar-type-predicates
+NULL
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_list <- function(x) {
+  is_list(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_atomic <- function(x) {
+  is_atomic(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_vector <- function(x) {
+  is_vector(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_numeric <- function(x) {
+  is_numeric(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_integer <- function(x) {
+  is_integer(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_double <- function(x) {
+  is_double(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_character <- function(x) {
+  is_character(x) && length(x) == 1
+}
+
+#' @export
+#' @rdname scalar-type-predicates
+is_scalar_logical <- function(x) {
+  is_logical(x) && length(x) == 1
 }
 
 #' Is a vector/list empty?
