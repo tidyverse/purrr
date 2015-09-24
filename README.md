@@ -129,8 +129,8 @@ mean(unlist(boot$diffs))
 
 * Fill in function arguments with `partial()`.
 
-* Change the way your function takes input with the `lift_xy()`
-  composition helpers.
+* Change the way your function takes input with `lift()` and the
+  `lift_xy()` family of composition helpers.
 
 * Compose multiple functions into a single function with `compose()`.
 

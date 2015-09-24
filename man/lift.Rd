@@ -12,6 +12,8 @@
 \usage{
 lift_dl(..f, ..., .unnamed = FALSE)
 
+lift(..f, ..., .unnamed = FALSE)
+
 lift_dv(..f, ..., .unnamed = FALSE)
 
 lift_vl(..f, ..., .type)
@@ -47,7 +49,8 @@ function taking a list to a function taking dots.
 The most important of those helpers is probably \code{lift_dl()}
 because it allows you to transform a regular function to one that
 takes a list. This is often essential for composition with purrr
-functional tools.
+functional tools. Since this is such a common function,
+\code{lift()} is provided as an alias for that operation.
 }
 \section{from ... to \code{list(...)} or \code{c(...)}}{
 
@@ -91,6 +94,9 @@ lift_dl(mean)(x)
 
 # Or in a pipe:
 mean \%>\% lift_dl() \%>\% invoke(x)
+
+# You can also use the lift() alias for this common operation:
+lift(mean)(x)
 
 # Default arguments can also be specified directly in lift_dl()
 list(c(1:100, NA, 1000)) \%>\% lift_dl(mean, na.rm = TRUE)()
