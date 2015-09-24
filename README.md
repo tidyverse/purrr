@@ -55,7 +55,7 @@ boot
 
 boot <- boot %>% mutate(
   # Fit the models
-  models = map(training, ~ lm(mpg ~ wt, data = mtcars)),
+  models = map(training, ~ lm(mpg ~ wt, data = .)),
   # Make predictions on test data
   preds = map2(models, test, predict),
   diffs = map2(preds, test %>% map("mpg"), msd)
