@@ -24,7 +24,7 @@ the same type will be converted to a vector.}
 \description{
 Zip turns a list-of-lists "inside-out".  For example, if you had a
 list of length n where each component had values \code{a} and
-\code{b}, \code{zip_n()} would make a with elements \code{a} and
+\code{b}, \code{zip_n()} would make a list with elements \code{a} and
 \code{b} that contained lists of length n.
 }
 \details{
