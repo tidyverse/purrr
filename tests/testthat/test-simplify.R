@@ -18,10 +18,18 @@ test_that("can_simplify() understands types as strings", {
   expect_false(can_simplify(x, "character"))
 })
 
-test_that("integer is coercible to numeric", {
+test_that("integer is coercible to double", {
   x <- list(1L, 2L)
   expect_true(can_simplify(x, "numeric"))
   expect_true(can_simplify(x, numeric(1)))
   expect_true(can_simplify(x, "double"))
   expect_true(can_simplify(x, double(1)))
+})
+
+test_that("numeric is an alias for double", {
+  expect_true(can_simplify(list(1, 2), "numeric"))
+})
+
+test_that("double is not coercible to integer", {
+  expect_false(can_simplify(list(1, 2), "integer"))
 })

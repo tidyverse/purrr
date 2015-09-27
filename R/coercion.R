@@ -55,21 +55,26 @@ can_simplify <- function(x, type = NULL) {
 }
 
 can_coerce <- function(x, type) {
+  actual <- typeof(x[[1]])
+
   if (is_mold(type)) {
     lengths <- unique(map_dbl(x, length))
     if (length(lengths) > 1 || !(lengths == length(type))) {
       return(FALSE)
+    } else {
+      type <- typeof(type)
     }
-    type <- typeof(type)
   }
 
-  actual <- typeof(x[[1]])
-  safe_int_coercions <- c("integer", "double", "numeric")
-  if (actual == "integer" && type %in% safe_int_coercions) {
-    TRUE
-  } else {
-    actual == type
+  if (actual == "integer" && type %in% c("integer", "double", "numeric")) {
+    return(TRUE)
   }
+
+  if (actual %in% c("integer", "double") && type == "numeric") {
+    return(TRUE)
+  }
+
+  actual == type
 }
 
 simplify_if_possible <- function(x, type = NULL) {
