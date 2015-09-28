@@ -12,7 +12,9 @@
 #'
 #' @param .x A list of vectors
 #' @param .type A vector mold or a string describing the type of the
-#'   input vectors.
+#'   input vectors. The latter can be any of the types returned by
+#'   \code{\link{typeof}()}, or "numeric" as a shorthand for either
+#'   "double" or "integer".
 #' @export
 #' @examples
 #' # Supply the type either with a string:

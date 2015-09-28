@@ -9,7 +9,9 @@
 #' number of elements.
 #' @inheritParams map
 #' @param .type A string indicating which type you expect the results
-#'   of \code{.f} should be.
+#'   of \code{.f} should be. This can be any of the types returned by
+#'   \code{\link{typeof}()}, or "numeric" as a shorthand for either
+#'   "double" or "integer".
 #' @export
 #' @seealso \code{\link{map_lgl}()}, \code{\link{map_chr}()},
 #'   \code{\link{map_dbl}()}, \code{\link{map_int}()}
