@@ -41,7 +41,7 @@ zip_n <- function(.x, .fields = NULL, .simplify = FALSE) {
     if (is.null(names(.x[[1]]))) {
       .fields <- seq_along(.x[[1]])
     } else {
-      .fields <- setNames(names(.x[[1]]), names(.x[[1]]))
+      .fields <- stats::setNames(names(.x[[1]]), names(.x[[1]]))
     }
   } else {
     if (is.character(.fields) && is.null(names(.fields))) {

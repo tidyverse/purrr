@@ -29,7 +29,7 @@ update_list <- function(x, ...) {
     eval(f[[2]], x, environment(f))
   })
 
-  modifyList(x, new_values)
+  utils::modifyList(x, new_values)
 }
 
 as_function <- function(f) {

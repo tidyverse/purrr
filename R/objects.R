@@ -27,7 +27,7 @@ splice <- function(...) {
 
   is_not_list <- vapply(dots, negate(is_bare_list), logical(1))
   dots[is_not_list] <- lapply(dots[is_not_list], list)
-  dots %>% flatten() %>% setNames(names)
+  dots %>% flatten() %>% stats::setNames(names)
 }
 
 
