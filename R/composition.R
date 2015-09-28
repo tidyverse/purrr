@@ -9,7 +9,8 @@
 #' The most important of those helpers is probably \code{lift_dl()}
 #' because it allows you to transform a regular function to one that
 #' takes a list. This is often essential for composition with purrr
-#' functional tools.
+#' functional tools. Since this is such a common function,
+#' \code{lift()} is provided as an alias for that operation.
 #'
 #' @inheritParams as_vector
 #' @param ..f A function to lift.
@@ -44,6 +45,9 @@ NULL
 #' # Or in a pipe:
 #' mean %>% lift_dl() %>% invoke(x)
 #'
+#' # You can also use the lift() alias for this common operation:
+#' lift(mean)(x)
+#'
 #' # Default arguments can also be specified directly in lift_dl()
 #' list(c(1:100, NA, 1000)) %>% lift_dl(mean, na.rm = TRUE)()
 #'
@@ -76,6 +80,10 @@ lift_dl <- function (..f, ..., .unnamed = FALSE) {
     do.call("..f", c(.x, defaults, list(...)))
   }
 }
+
+#' @rdname lift
+#' @export
+lift <- lift_dl
 
 #' @rdname lift
 #' @export
