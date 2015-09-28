@@ -36,7 +36,9 @@ prevents matching of arguments by name and match by position
 instead.}
 
 \item{.type}{A vector mold or a string describing the type of the
-input vectors.}
+input vectors. The latter can be any of the types returned by
+\code{\link{typeof}()}, or "numeric" as a shorthand for either
+"double" or "integer".}
 }
 \description{
 \code{lift_xy()} is a composition helper. It helps you compose

@@ -70,11 +70,11 @@ mean(unlist(boot$diffs))
 ### Transformation
 
 * Apply a function to each element: `map()` returns a list;
-  `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` return a vector;
-  `walk()` invisibly returns original list, calling the function for
-  its side effects; `map2()` and `map3()` vectorise over multiple
-  inputs; `at_depth()` maps a function at a specified level of nested
-  lists.
+  `flatmap()` and `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()`
+  return a vector; `walk()` invisibly returns original list, calling
+  the function for its side effects; `map2()` and `map3()` vectorise
+  over multiple inputs; `at_depth()` maps a function at a specified
+  level of nested lists.
 
 * Apply a function conditionally with `map_if()` (where a predicate
   returns `TRUE`) and `map_at()` (at specific locations).
