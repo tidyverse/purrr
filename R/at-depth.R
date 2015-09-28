@@ -59,7 +59,9 @@
 #' # Here we have a list with one branch shorter than the other.
 #' l3 <- l2
 #' l3[[1]] <- c(1, 2)
-#' print(try(l3 %>% at_depth(3, map_n, paste, sep = " / "), silent = TRUE))
+#' \dontrun{
+#' l3 %>% at_depth(3, map_n, paste, sep = " / ")
+#' }
 #' l3 %>% at_depth(3, map_n, paste, sep = " / ", .skip = TRUE)
 at_depth <- function(.x, .depth, .f, ..., .skip = FALSE) {
   .f <- as_function(.f)
