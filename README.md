@@ -8,7 +8,13 @@ Purrr makes your pure functions purr by completing R's functional programming to
 
 ## Installation
 
-purrr is currently not on CRAN, but you can get it from github with:
+Get the released version from CRAN:
+
+```R
+install.packages("purrr")
+```
+
+Or the development version from github with:
 
 ```R
 # install.packages("devtools")

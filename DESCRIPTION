@@ -1,22 +1,22 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio", c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
     person("Lionel", "Henry", , "lionel.hry@gmail.com", "ctb"),
     person("RStudio", role = "cph")
     )
-Description: Make your pure functions purr with the purrr package. This
-    package completes R's FP tools with missing features present in other
-    programming languages.
-License: GPL-3
+Description: Make your pure functions purr with the 'purrr' package. This
+    package completes R's functional programming tools with missing features
+    present in other programming languages.
+License: GPL-3 | file LICENSE
 LazyData: true
 Imports:
     magrittr (>= 1.5),
     Rcpp
 Suggests:
     testthat,
-    dplyr (>= 0.3.0.9000)
+    dplyr (>= 0.4)
 LinkingTo:
     Rcpp,
     dplyr,

@@ -10,5 +10,8 @@ There was 1 NOTE:
 
 * This is a new submission
 
+* http://cran.r-project.org/package=purrr does not exist yet, but hopefully 
+  will soon.
+
 ## Downstream dependencies
 This is a new submission.
