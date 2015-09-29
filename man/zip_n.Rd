@@ -6,20 +6,22 @@
 \alias{zip_n}
 \title{Zip lists.}
 \usage{
-zip_n(.x, .fields = NULL, .simplify = FALSE)
+zip_n(.l, .fields = NULL, .simplify = FALSE)
 
 zip2(.x, .y, .fields = NULL, .simplify = FALSE)
 
 zip3(.x, .y, .z, .fields = NULL, .simplify = FALSE)
 }
 \arguments{
-\item{.x, .y, .z}{Lists or vectors}
+\item{.l}{A list of lists or vectors to zip.}
 
 \item{.fields}{Fields to use when unzipping - defaults to the names
 of the first sub-list.}
 
 \item{.simplify}{If \code{TRUE}, lists containing atomic scalars of
 the same type will be converted to a vector.}
+
+\item{.x,.y,.z}{Lists or vectors to zip.}
 }
 \description{
 Zip turns a list-of-lists "inside-out".  For example, if you had a

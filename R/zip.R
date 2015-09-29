@@ -10,7 +10,8 @@
 #' input by zipping it twice. \code{zip2(x, y)} is a shortcut for
 #' \code{zip_n(list(x, y))}.
 #'
-#' @param .x,.y,.z Lists or vectors
+#' @param .x,.y,.z Lists or vectors to zip.
+#' @param .l A list of lists or vectors to zip.
 #' @param .fields Fields to use when unzipping - defaults to the names
 #'   of the first sub-list.
 #' @param .simplify If \code{TRUE}, lists containing atomic scalars of
@@ -34,14 +35,14 @@
 #' # but doesn't handle names and is not its own inverse.
 #' x %>% zip_n() %>% str()
 #' zip2(1:5, 5:1) %>% str()
-zip_n <- function(.x, .fields = NULL, .simplify = FALSE) {
-  if (length(.x) == 0) return(list())
+zip_n <- function(.l, .fields = NULL, .simplify = FALSE) {
+  if (length(.l) == 0) return(list())
 
   if (is.null(.fields)) {
-    if (is.null(names(.x[[1]]))) {
-      .fields <- seq_along(.x[[1]])
+    if (is.null(names(.l[[1]]))) {
+      .fields <- seq_along(.l[[1]])
     } else {
-      .fields <- stats::setNames(names(.x[[1]]), names(.x[[1]]))
+      .fields <- stats::setNames(names(.l[[1]]), names(.l[[1]]))
     }
   } else {
     if (is.character(.fields) && is.null(names(.fields))) {
@@ -49,7 +50,7 @@ zip_n <- function(.x, .fields = NULL, .simplify = FALSE) {
     }
   }
 
-  out <- lapply(.fields, function(i) lapply(.x, .subset2, i))
+  out <- lapply(.fields, function(i) lapply(.l, .subset2, i))
   if (.simplify) out <- lapply(out, simplify_if_possible)
   out
 }
