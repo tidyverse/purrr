@@ -24,8 +24,8 @@
 #'
 #' # You can also check that the results are of expected type
 #' \dontrun{
-#' c(mtcars) %>% flatmap(var_select, .type = "character")
-#' }
+#' c(mtcars) %>% flatmap(var_select, .type = "character")}
+#' 
 #' c(mtcars) %>% flatmap(var_select, .type = "numeric")
 flatmap <- function(.x, .f, ..., .type) {
   out <- map(.x, .f = .f, ...)
