@@ -189,6 +189,7 @@ walk3 <- function(.x, .y, .z, .f, ...) {
 #' @export
 #' @rdname map2
 walk_n <- function(.l, .f, ...) {
+  .f <- as_function(.f)
   args_list <- recycle_args(.l) %>% zip_n()
   for (args in args_list) {
     do.call(".f", c(args, list(...)))
