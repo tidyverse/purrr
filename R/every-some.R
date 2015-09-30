@@ -13,7 +13,7 @@
 #' y %>% every(is.numeric)
 #' y %>% every(is.integer)
 every <- function(.x, .p, ...) {
-  .f <- as_function(.p)
+  .p <- as_function(.p)
   for (i in seq_along(.x)) {
     if (!isTRUE(.p(.x[[i]], ...))) return(FALSE)
   }
@@ -23,7 +23,7 @@ every <- function(.x, .p, ...) {
 #' @export
 #' @rdname every
 some <- function(.x, .p, ...) {
-  .f <- as_function(.p)
+  .p <- as_function(.p)
   for (i in seq_along(.x)) {
     if (isTRUE(.p(.x[[i]], ...))) return(TRUE)
   }
