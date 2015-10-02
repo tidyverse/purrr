@@ -33,7 +33,7 @@
 #' @examples
 #' 1:10 %>%
 #'   map(rnorm, n = 10) %>%
-#'   map(mean, .type = numeric(1))
+#'   map(mean)
 #'
 #' # Or use an anonymous function
 #' 1:10 %>%
