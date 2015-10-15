@@ -34,7 +34,7 @@ SEXP get_slice_col(const SEXP slice, int slice_i, int col_i) {
 // [[Rcpp::export]]
 SEXP process_slices(List& results, const List& slicers,
                     const List& labels, int include_labels,
-                    int row_id = 0) {
+                    std::string output_colname, int row_id = 0) {
   int n_slices = results.size();
   int n_slicers = slicers.size();
 
@@ -143,15 +143,15 @@ SEXP process_slices(List& results, const List& slicers,
       out[cols_offset] = index;
       out[cols_offset + 1] = to;
       out_names[cols_offset] = ".row";
-      out_names[cols_offset + 1] = ".out";
+      out_names[cols_offset + 1] = output_colname;
     } else {
       out[cols_offset] = to;
-      out_names[cols_offset] = ".out";
+      out_names[cols_offset] = output_colname;
     }
 
   } else if (all_objects) {
     out[cols_offset] = results;
-    out_names[cols_offset] = ".out";
+    out_names[cols_offset] = output_colname;
 
   } else {
     // Check names consistency of slices of data frames
@@ -184,7 +184,8 @@ SEXP process_slices(List& results, const List& slicers,
 
 // [[Rcpp::export]]
 SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots,
-                   int include_labels, const Environment& calling_env) {
+                   int include_labels, const Environment& calling_env,
+                   std::string output_colname) {
   ListOf<Symbol> slicers_symbols(data.attr("vars"));
   int n_slicers(slicers_symbols.size());
 
@@ -214,13 +215,15 @@ SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots,
   }
 
   return process_slices(results, data[slicers_names],
-                        data.attr("labels"), include_labels);
+                        data.attr("labels"), include_labels,
+                        output_colname);
 }
 
 
 // [[Rcpp::export]]
 SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots,
-                 int include_labels, const Environment& calling_env) {
+                 int include_labels, const Environment& calling_env,
+                 std::string output_colname) {
 
   // Shadow the argument in an environment and construct a call
   Environment shadow_env(calling_env);
@@ -239,5 +242,6 @@ SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots,
     results[i] = Rcpp_eval(lang_call, shadow_env);
   }
 
-  return process_slices(results, data, data, include_labels, 1);
+  return process_slices(results, data, data, include_labels,
+                        output_colname, 1);
 }

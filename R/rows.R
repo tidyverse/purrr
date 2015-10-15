@@ -57,7 +57,7 @@
 #'   by_slice(partial(lm, mpg ~ disp), .labels = FALSE) %>%
 #'   flatten() %>%
 #'   map(coef)
-by_slice <- function(.d, ..f, ..., .labels = TRUE) {
+by_slice <- function(.d, ..f, ..., .to = ".out", .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
   } else if (!is.function(..f)) {
@@ -69,7 +69,7 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
   } else {
     dots <- substitute(pairlist(...))
     calling_env <- parent.frame()
-    by_slice_impl(.d, ..f, dots, .labels, calling_env)
+    by_slice_impl(.d, ..f, dots, .labels, calling_env, .to)
   }
 }
 
@@ -121,7 +121,7 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' # it accepts dots)
 #' mtcars %>% map_rows(sum)
 #' mtcars %>% map_rows(lift_vd(mean))
-by_row <- function(.d, ..f, ..., .labels = TRUE) {
+by_row <- function(.d, ..f, ..., .to = ".out", .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
   } else if (!is.function(..f)) {
@@ -130,7 +130,7 @@ by_row <- function(.d, ..f, ..., .labels = TRUE) {
 
   dots <- substitute(list(...))
   calling_env <- parent.frame()
-  by_row_impl(.d, ..f, dots, .labels, calling_env)
+  by_row_impl(.d, ..f, dots, .labels, calling_env, .to)
 }
 
 #' @rdname by_row

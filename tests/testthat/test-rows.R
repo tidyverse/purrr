@@ -29,3 +29,18 @@ test_that("rowwise mapping works with outputs of length > 1", {
   expect_equal(out1$.row, index)
   expect_equal(out2$.row, index)
 })
+
+test_that("output column is named according to .to", {
+  output1 <- mtcars %>%
+    slice_rows("cyl") %>%
+    by_slice(~ list(NULL), .to = "my_col", .labels = FALSE)
+  expect_equal(names(output1), "my_col")
+
+  output2 <- mtcars %>%
+    by_row(~ list(NULL), .to = "my_col", .labels = FALSE)
+  expect_equal(names(output2), "my_col")
+
+  output3 <- mtcars %>%
+    map_rows(function(...) list(3), .to = "my_col", .labels = FALSE)
+  expect_equal(names(output3), "my_col")
+})
