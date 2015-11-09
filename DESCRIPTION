@@ -17,9 +17,9 @@ Imports:
 Suggests:
     testthat,
     dplyr (>= 0.4)
-LinkingTo:
-    Rcpp,
+LinkingTo: Rcpp,
     dplyr,
     BH
 URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
+RoxygenNote: 5.0.0
