@@ -17,7 +17,7 @@
 #' @param ... Default arguments for \code{..f}. These will be
 #'   evaluated only once, when the lifting factory is called.
 #' @name lift
-#' @seealso \code{\link{map_call}()}
+#' @seealso \code{\link{invoke}()}
 NULL
 
 #' @rdname lift
@@ -198,7 +198,7 @@ lift_vd <- function(..f, ..., .type) {
 #' \dontrun{
 #' glue <- function(l) {
 #'   if (!is.list(l)) stop("not a list")
-#'   l %>% map_call(paste)
+#'   l %>% invoke(paste, .)
 #' }
 #'
 #' # This fails because glue() expects a list

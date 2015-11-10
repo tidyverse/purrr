@@ -251,25 +251,3 @@ inv_which <- function(x, sel) {
     stop("unrecognised index type", call. = FALSE)
   }
 }
-
-#' Map a list to a function call
-#'
-#' While \code{\link{lift_dl}()} wraps a function in
-#' \code{\link{do.call}()}, \code{map_call()} is directly equivalent
-#' to \code{do.call()} except that it takes a list as first argument
-#' instead of a function. This makes `map_call()` pipable.
-#' @param .x A list or a vector. Vectors are coerced to a list.
-#' @param .f A function or the name of a function to call with the
-#'   elements of \code{.x} as arguments.
-#' @param ... Additional arguments passed on to \code{.f}.
-#' @seealso \code{\link{lift_dl}()} and \code{\link{do.call}()}
-#' @export
-#' @examples
-#' # We map a list of strings to paste(), with sep = "-" and the
-#' # string "2001" as additional arguments
-#' list("01", "01") %>%
-#'   map(~ sub("^01", "10", .)) %>%
-#'   map_call(paste, "2001", sep = "-")
-map_call <- function(.x, .f, ...) {
-  do.call(.f, c(.x, list(...)))
-}

@@ -173,7 +173,7 @@ lift_ld(cross_n, .filter = `==`)(1:3, 1:3) \%>\% str()
 \dontrun{
 glue <- function(l) {
   if (!is.list(l)) stop("not a list")
-  l \%>\% map_call(paste)
+  l \%>\% invoke(paste, .)
 }
 
 # This fails because glue() expects a list
@@ -188,6 +188,6 @@ letters \%>\% lift_lv(glue, .type = "character")()  # succeeds
 }
 }
 \seealso{
-\code{\link{map_call}()}
+\code{\link{invoke}()}
 }
 

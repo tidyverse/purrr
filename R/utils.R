@@ -32,7 +32,7 @@ update_list <- function(x, ...) {
   utils::modifyList(x, new_values)
 }
 
-as_function <- function(f) {
+as_function <- function(f, subset = TRUE) {
   if (is.function(f)) {
     f
   } else if (inherits(f, "formula")) {
@@ -42,7 +42,7 @@ as_function <- function(f) {
       stop("Formula must be one sided", call. = FALSE)
     }
     make_function(alist(.x = , .y = , .z = , . = .x), f[[2]], environment(f))
-  } else if (is.character(f) || is.numeric(f)) {
+  } else if (subset && (is.character(f) || is.numeric(f))) {
     function(g) .subset2(g, f)
   } else {
     stop("Don't know how to convert ", paste0(class(f), collapse = "/"),

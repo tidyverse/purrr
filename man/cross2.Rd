@@ -87,13 +87,11 @@ args \%>\% as.list()
 # because applying a function to the combinations requires a loop
 out <- vector("list", length = nrow(args))
 for (i in seq_along(out))
-  out[[i]] <- map(args, i) \%>\% map_call("paste")
+  out[[i]] <- map(args, i) \%>\% invoke(paste, .)
 out
 
-# In this case, the combinations could be manipulated using dplyr
-args \%>\% dplyr::do(
-  map_call(., "paste") \%>\% dplyr::data_frame()
-)
+# It's easier to zip and then use invoke_map()
+args \%>\% zip_n() \%>\% map_chr(~ invoke(paste, .))
 
 # Unwanted combinations can be filtered out with a predicate function
 filter <- function(x, y) x >= y
