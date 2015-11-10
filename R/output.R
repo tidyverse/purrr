@@ -52,7 +52,7 @@ maybe <- function(.f, otherwise, quiet = TRUE) {
   force(otherwise)
 
   function(...) {
-    tryCatch(f(...),
+    tryCatch(.f(...),
       error = function(e) {
         if (!quiet)
           message("Error: ", e$message)
