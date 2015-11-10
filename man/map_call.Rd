@@ -25,7 +25,7 @@ instead of a function. This makes `map_call()` pipable.
 # string "2001" as additional arguments
 list("01", "01") \%>\%
   map(~ sub("^01", "10", .)) \%>\%
-  map_call("paste", "2001", sep = "-")
+  map_call(paste, "2001", sep = "-")
 }
 \seealso{
 \code{\link{lift_dl}()} and \code{\link{do.call}()}

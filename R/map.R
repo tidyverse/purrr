@@ -269,7 +269,7 @@ inv_which <- function(x, sel) {
 #' # string "2001" as additional arguments
 #' list("01", "01") %>%
 #'   map(~ sub("^01", "10", .)) %>%
-#'   map_call("paste", "2001", sep = "-")
+#'   map_call(paste, "2001", sep = "-")
 map_call <- function(.x, .f, ...) {
   do.call(.f, c(.x, list(...)))
 }
