@@ -23,12 +23,19 @@
 #'   map(safe_log) %>%
 #'   zip_n()
 #'
+#' # This is a bit easier to work with if you supply a default value
+#' # of the same type and use the simplify argument to zip_n():
+#' safe_log <- safe(log, otherwise = NA_real_)
+#' list("a", 10, 100) %>%
+#'   map(safe_log) %>%
+#'   zip_n(.simplify = TRUE)
+#'
 #' # To replace errors with a default value, use maybe().
 #' list("a", 10, 100) %>%
 #'   map_dbl(maybe(log, NA))
-safe <- function(.f, quiet = TRUE) {
+safe <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_function(.f)
-  function(...) capture_error(.f(...))
+  function(...) capture_error(.f(...), otherwise)
 }
 
 #' @export
@@ -56,14 +63,14 @@ maybe <- function(.f, otherwise, quiet = TRUE) {
 }
 
 
-capture_error <- function(code, quiet = TRUE) {
+capture_error <- function(code, otherwise = NULL, quiet = TRUE) {
   tryCatch(
     list(result = code, error = NULL),
     error = function(e) {
       if (!quiet)
         message("Error: ", e$message)
 
-      list(result = NULL, error = e)
+      list(result = otherwise, error = e)
     }
   )
 }

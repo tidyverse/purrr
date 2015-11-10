@@ -6,7 +6,7 @@
 \alias{safe}
 \title{Capture side effects}
 \usage{
-safe(.f, quiet = TRUE)
+safe(.f, otherwise = NULL, quiet = TRUE)
 
 outputs(.f)
 
@@ -24,10 +24,10 @@ maybe(.f, otherwise, quiet = TRUE)
   If a string, e.g. \code{"y"}, it is converted to an extractor function,
   \code{function(x) x[["y"]]}.}
 
+\item{otherwise}{Default value to use when an error occurs.}
+
 \item{quiet}{Hide errors (\code{TRUE}, the default), or display them
 as they occur?}
-
-\item{otherwise}{Default value to use when an error occurs.}
 }
 \value{
 \code{safe}: a list with components \code{result} and \code{error}.
@@ -49,6 +49,13 @@ safe_log("a")
 list("a", 10, 100) \%>\%
   map(safe_log) \%>\%
   zip_n()
+
+# This is a bit easier to work with if you supply a default value
+# of the same type and use the simplify argument to zip_n():
+safe_log <- safe(log, otherwise = NA_real_)
+list("a", 10, 100) \%>\%
+  map(safe_log) \%>\%
+  zip_n(.simplify = TRUE)
 
 # To replace errors with a default value, use maybe().
 list("a", 10, 100) \%>\%
