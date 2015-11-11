@@ -10,9 +10,9 @@
 \alias{lift_vl}
 \title{Lift the domain of a function}
 \usage{
-lift_dl(..f, ..., .unnamed = FALSE)
-
 lift(..f, ..., .unnamed = FALSE)
+
+lift_dl(..f, ..., .unnamed = FALSE)
 
 lift_dv(..f, ..., .unnamed = FALSE)
 
@@ -89,7 +89,6 @@ an atomic vector. The details of this coercion can be controlled
 with \code{.type}.
 }
 \examples{
-
 ### Lifting from ... to list(...) or c(...)
 
 x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
@@ -123,10 +122,9 @@ fun2(3, NA, 4, na.rm = TRUE)
 lifted_identical <- lift_dl(identical, .unnamed = TRUE)
 mtcars[c(1, 1)] \%>\% lifted_identical()
 mtcars[c(1, 2)] \%>\% lifted_identical()
-\dontrun{ \%spacing
+#
 
 
-}
 ### Lifting from c(...) to list(...) or ...
 
 # Some functions such as mean() take an atomic vector. It is often
@@ -141,14 +139,13 @@ mtcars \%>\% by_row(lift_vl(mean))
 # lift_vd():
 map_n(mtcars, lift_vd(mean))
 
-# lift_vd() will collect the arguments and concanete them to a
+# lift_vd() will collect the arguments and concatenate them to a
 # vector before passing them to ..f. You can add a check to assert
 # the type of vector you expect:
 lift_vd(tolower, .type = character(1))("this", "is", "ok")
-\dontrun{ \%spacing
+#
 
 
-}
 ### Lifting from list(...) to c(...) or ...
 
 # cross_n() normally takes a list of elements and returns their
@@ -170,22 +167,18 @@ mtcars \%>\% map_n(lift_ld(some, partial(`<`, 200)))
 # lift_ld()
 lift_ld(cross_n, .filter = `==`)(1:3, 1:3) \%>\% str()
 
-\dontrun{
+
+# Here is another function taking a list and that we can update to
+# take a vector:
 glue <- function(l) {
   if (!is.list(l)) stop("not a list")
   l \%>\% invoke(paste, .)
 }
 
-# This fails because glue() expects a list
-letters \%>\% glue()
+\dontrun{
+letters \%>\% glue()           # fails because glue() expects a list}
 
-# Once shackled, glue() expects a vector
-letters \%>\% lift_lv(glue)()
-
-# The input type can be checked by specifying .type
-letters \%>\% lift_lv(glue, .type = "numeric")()    # fails
-letters \%>\% lift_lv(glue, .type = "character")()  # succeeds
-}
+letters \%>\% lift_lv(glue)()  # succeeds
 }
 \seealso{
 \code{\link{invoke}()}

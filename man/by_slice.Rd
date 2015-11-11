@@ -26,20 +26,20 @@ each slice if necessary.}
 A data frame.
 }
 \description{
-\code{by_slice()} applies `..f` on each group of a data
+\code{by_slice()} applies \code{..f} on each group of a data
 frame. Groups should be set with \code{slice_rows()} or
 \code{\link[dplyr]{group_by}()}.
 }
 \details{
-\code{by_slice()} provide equivalent functionality to dplyr's
+\code{by_slice()} provides equivalent functionality to dplyr's
 \code{\link[dplyr]{do}()} function. In combination with
 \code{map()}, \code{by_slice()} is equivalent to
 \code{\link[dplyr]{summarise_each}()} and
 \code{\link[dplyr]{mutate_each}()}. The distinction between
 mutating and summarising operations is not as important as in dplyr
-because we do not act on the columns separately. When we map a
-function to each column, the only constraint is that the number of
-returned rows match inside each slice.
+because we do not act on the columns separately. The only
+constraint is that the mapped function must return the same number
+of rows for each variable mapped on.
 }
 \examples{
 # Here we fit a regression model inside each slice defined by the

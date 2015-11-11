@@ -42,10 +42,10 @@ example, a data frame is a list, but not a bare list.
         \code{is.atomic()}, \code{is_bare_atomic()} does not return
         \code{TRUE} for \code{NULL}.
   \item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
-        only return \code{TRUE} for floating point numbers.
+        only returns \code{TRUE} for floating point numbers.
 }
 }
 \seealso{
-type-predicates
+type-predicates scalar-type-predicates
 }
 

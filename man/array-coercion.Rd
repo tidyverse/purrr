@@ -44,7 +44,7 @@ x <- array(1:12, c(2, 2, 3))
 array_branch(x) \%>\% str()
 
 # A branch along the first dimension yields a list of length 2
-# with each element containing a 2x3 arrays:
+# with each element containing a 2x3 array:
 array_branch(x, 1) \%>\% str()
 
 # A branch along the first and third dimensions yields a list of

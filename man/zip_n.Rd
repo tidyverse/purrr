@@ -21,7 +21,7 @@ of the first sub-list.}
 \item{.simplify}{If \code{TRUE}, lists containing atomic scalars of
 the same type will be converted to a vector.}
 
-\item{.x,.y,.z}{Lists or vectors to zip.}
+\item{.x, .y, .z}{Lists or vectors to zip.}
 }
 \description{
 Zip turns a list-of-lists "inside-out".  For example, if you had a
