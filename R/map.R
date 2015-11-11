@@ -74,7 +74,7 @@ map_lgl <- function(.x, .p, ...) {
     .p
   } else {
     .p <- as_function(.p)
-    vapply(.x, .p, ..., FUN.VALUE = logical(1))
+    vmap_impl(environment(), ".x", ".p", "logical")
   }
 }
 
@@ -82,21 +82,21 @@ map_lgl <- function(.x, .p, ...) {
 #' @export
 map_chr <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  vapply(.x, .f, ..., FUN.VALUE = character(1))
+  vmap_impl(environment(), ".x", ".f", "character")
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  vapply(.x, .f, ..., FUN.VALUE = integer(1))
+  vmap_impl(environment(), ".x", ".f", "integer")
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  vapply(.x, .f, ..., FUN.VALUE = double(1))
+  vmap_impl(environment(), ".x", ".f", "double")
 }
 
 #' @rdname map

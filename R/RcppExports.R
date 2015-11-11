@@ -5,6 +5,10 @@ map_impl <- function(env, x_name, f_name) {
     .Call('purrr_map_impl', PACKAGE = 'purrr', env, x_name, f_name)
 }
 
+vmap_impl <- function(env, x_name, f_name, type) {
+    .Call('purrr_vmap_impl', PACKAGE = 'purrr', env, x_name, f_name, type)
+}
+
 map2_impl <- function(env, x_name, y_name, f_name) {
     .Call('purrr_map2_impl', PACKAGE = 'purrr', env, x_name, y_name, f_name)
 }

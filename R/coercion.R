@@ -60,7 +60,7 @@ can_coerce <- function(x, type) {
   actual <- typeof(x[[1]])
 
   if (is_mold(type)) {
-    lengths <- unique(map_dbl(x, length))
+    lengths <- unique(map_int(x, length))
     if (length(lengths) > 1 || !(lengths == length(type))) {
       return(FALSE)
     } else {

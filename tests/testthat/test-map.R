@@ -12,7 +12,7 @@ test_that("creates simple call", {
 
 test_that("fails on non-vectors", {
   expect_error(map(environment(), identity), "not a vector")
-  expect_error(map(quote("a"), identity), "not a vector")
+  expect_error(map(quote(a), identity), "not a vector")
 })
 
 test_that("0 length input gives 0 length output", {
