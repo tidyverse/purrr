@@ -96,7 +96,7 @@ mtcars \%>\% map_dbl(sum)
 mtcars \%>\%
   split(.$cyl) \%>\%
   map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map_df(coef)
+  map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
 }
