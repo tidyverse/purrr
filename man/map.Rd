@@ -4,6 +4,7 @@
 \alias{map}
 \alias{map_chr}
 \alias{map_dbl}
+\alias{map_df}
 \alias{map_int}
 \alias{map_lgl}
 \alias{walk}
@@ -18,6 +19,8 @@ map_chr(.x, .f, ...)
 map_int(.x, .f, ...)
 
 map_dbl(.x, .f, ...)
+
+map_df(.x, .f, ...)
 
 walk(.x, .f, ...)
 }
@@ -56,7 +59,8 @@ for \code{.f}, or a logical vector the same length as \code{.x}.}
 \code{.f} for its side-effect and returns the original
 input. \code{map()} returns a list or a data frame; \code{map_lgl()},
 \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors
-of the corresponding type (or die trying).
+of the corresponding type (or die trying); \code{map_df()} returns
+a data frame by row-binding the individual elements.
 }
 \examples{
 1:10 \%>\%
@@ -84,6 +88,15 @@ mtcars \%>\%
 mtcars \%>\% map(sum)
 # * vector
 mtcars \%>\% map_dbl(sum)
+
+# If each element of the output is a data frame, use
+# map_df to row-bind them together:
+mtcars \%>\%
+  split(.$cyl) \%>\%
+  map(~ lm(mpg ~ wt, data = .x)) \%>\%
+  map_df(coef)
+# (if you also want to preserve the variable names see
+# the broom package)
 }
 \seealso{
 \code{\link{map2}()} and \code{\link{map3}()} to map over multiple

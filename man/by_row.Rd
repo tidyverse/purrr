@@ -45,7 +45,7 @@ format.
 between \code{by_row()} and \code{map_rows()} is that the former
 passes a data frame to \code{..f} while the latter maps the columns
 to its function call. This is essentially like using
-\code{\link{map_call}()} with each row of a data frame. Another way
+\code{\link{invoke_map}()} with each row of a data frame. Another way
 to view this is that \code{map_row()} is equivalent to using
 \code{by_row()} with a function lifted to accept dots (see
 \code{\link{lift_ld}()}).

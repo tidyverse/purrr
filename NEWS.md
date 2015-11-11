@@ -10,3 +10,6 @@
 
 * Implement `set_names()`: a camel case alternative to `setNames()` with
   stricter equality checking (#119).
+
+* `map_df()` row-binds output together. It's the equivalent of `plyr::ldply()` 
+  (#127)

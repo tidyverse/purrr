@@ -4,7 +4,8 @@
 #' \code{.f} for its side-effect and returns the original
 #' input. \code{map()} returns a list or a data frame; \code{map_lgl()},
 #' \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors
-#' of the corresponding type (or die trying).
+#' of the corresponding type (or die trying); \code{map_df()} returns
+#' a data frame by row-binding the individual elements.
 #'
 #' @param .x A list or vector.
 #' @param .f A function, formula or string.
@@ -56,6 +57,15 @@
 #' mtcars %>% map(sum)
 #' # * vector
 #' mtcars %>% map_dbl(sum)
+#'
+#' # If each element of the output is a data frame, use
+#' # map_df to row-bind them together:
+#' mtcars %>%
+#'   split(.$cyl) %>%
+#'   map(~ lm(mpg ~ wt, data = .x)) %>%
+#'   map_df(coef)
+#' # (if you also want to preserve the variable names see
+#' # the broom package)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
   lapply(.x, .f, ...) %>% output_hook(.x)
@@ -95,6 +105,15 @@ map_dbl <- function(.x, .f, ...) {
   .f <- as_function(.f)
   vapply(.x, .f, ..., FUN.VALUE = double(1))
 }
+
+#' @rdname map
+#' @export
+map_df <- function(.x, .f, ...) {
+  .f <- as_function(.f)
+  res <- map(.x, .f, ...)
+  dplyr::bind_rows(res)
+}
+
 
 #' @export
 #' @rdname map
