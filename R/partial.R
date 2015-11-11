@@ -87,7 +87,7 @@ make_call <- function(f, ..., .args = list()) {
 
 make_function <- function(args, body, env = parent.frame()) {
   args <- as.pairlist(args)
-  stopifnot(is.language(body))
+  stopifnot(is.call(body) || is.name(body) || is.atomic(body))
   env <- as.environment(env)
 
   eval(call("function", args, body), env)
