@@ -153,7 +153,9 @@ walk <- function(.x, .f, ...) {
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ...) {
-  map_n(list(.x, .y), .f, ...) %>% output_hook(.x)
+  .f <- as_function(.f)
+  res <- map2_impl(environment(), ".x", ".y", ".f")
+  output_hook(res, .x)
 }
 
 #' @export

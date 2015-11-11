@@ -5,6 +5,10 @@ map_impl <- function(env, x_name, f_name) {
     .Call('purrr_map_impl', PACKAGE = 'purrr', env, x_name, f_name)
 }
 
+map2_impl <- function(env, x_name, y_name, f_name) {
+    .Call('purrr_map2_impl', PACKAGE = 'purrr', env, x_name, y_name, f_name)
+}
+
 process_slices <- function(results, slicers, labels, include_labels, row_id = 0L) {
     .Call('purrr_process_slices', PACKAGE = 'purrr', results, slicers, labels, include_labels, row_id)
 }
