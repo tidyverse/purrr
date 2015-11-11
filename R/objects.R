@@ -72,10 +72,10 @@ prepend <- function(x, values, before = 1) {
 #'         \code{is.atomic()}, \code{is_bare_atomic()} does not return
 #'         \code{TRUE} for \code{NULL}.
 #'   \item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
-#'         only return \code{TRUE} for floating point numbers.
+#'         only returns \code{TRUE} for floating point numbers.
 #' }
 #' @param x object to be tested.
-#' @seealso type-predicates
+#' @seealso type-predicates scalar-type-predicates
 #' @name bare-type-predicates
 NULL
 
@@ -145,7 +145,7 @@ is_bare_logical <- function(x) {
 #'     are \code{TRUE}, not \code{FALSE}.
 #' }
 #' @param x object to be tested.
-#' @seealso bare-type-predicates
+#' @seealso bare-type-predicates scalar-type-predicates
 #' @name type-predicates
 NULL
 

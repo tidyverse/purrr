@@ -29,26 +29,28 @@ number of columns between groups.}
 A data frame.
 }
 \description{
-Applies \code{..f} to each row of \code{.d}. By default, the whole
-row is appended to the result to serve as identifier (set
-\code{.labels} to \code{FALSE} to prevent this). In addition, if
-\code{..f} returns a multi-rows data frame or a non-scalar atomic
-vector, a \code{.row} column is appended to identify the row number
-in the original data frame. If \code{..f}'s output is not a data
-frame nor an atomic vector, a list-column is created. In all cases,
-\code{by_row()} and \code{map_row()} create a data frame in tidy
+\code{by_row()} and \code{map_rows()} apply \code{..f} to each row
+of \code{.d}. If \code{..f}'s output is not a data frame nor an
+atomic vector, a list-column is created. In all cases,
+\code{by_row()} and \code{map_rows()} create a data frame in tidy
 format.
 }
 \details{
+By default, the whole row is appended to the result to serve as
+identifier (set \code{.labels} to \code{FALSE} to prevent this). In
+addition, if \code{..f} returns a multi-rows data frame or a
+non-scalar atomic vector, a \code{.row} column is appended to
+identify the row number in the original data frame.
+
 \code{map_rows()} is intended to provide a version of
 \code{map_n()} that works better with data frames. The distinction
 between \code{by_row()} and \code{map_rows()} is that the former
 passes a data frame to \code{..f} while the latter maps the columns
 to its function call. This is essentially like using
-\code{\link{invoke_map}()} with each row of a data frame. Another way
-to view this is that \code{map_row()} is equivalent to using
+\code{\link{invoke}()} with each row of a data frame. Another way
+to view this is that \code{map_rows()} is equivalent to using
 \code{by_row()} with a function lifted to accept dots (see
-\code{\link{lift_ld}()}).
+\code{\link{lift}()}).
 }
 \examples{
 # ..f should be able to work with a list or a data frame. As it

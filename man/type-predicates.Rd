@@ -49,6 +49,6 @@ Compare to base R functions:
 }
 }
 \seealso{
-bare-type-predicates
+bare-type-predicates scalar-type-predicates
 }
 

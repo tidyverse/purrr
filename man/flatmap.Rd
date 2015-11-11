@@ -47,8 +47,8 @@ c(mtcars) \%>\% flatmap(var_select)
 
 # You can also check that the results are of expected type
 \dontrun{
-c(mtcars) \%>\% flatmap(var_select, .type = "character")
-}
+c(mtcars) \%>\% flatmap(var_select, .type = "character")}
+
 c(mtcars) \%>\% flatmap(var_select, .type = "numeric")
 }
 \seealso{

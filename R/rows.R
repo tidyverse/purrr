@@ -1,18 +1,18 @@
 #' Apply a function to slices of a data frame
 #'
-#' \code{by_slice()} applies `..f` on each group of a data
+#' \code{by_slice()} applies \code{..f} on each group of a data
 #' frame. Groups should be set with \code{slice_rows()} or
 #' \code{\link[dplyr]{group_by}()}.
 #'
-#' \code{by_slice()} provide equivalent functionality to dplyr's
+#' \code{by_slice()} provides equivalent functionality to dplyr's
 #' \code{\link[dplyr]{do}()} function. In combination with
 #' \code{map()}, \code{by_slice()} is equivalent to
 #' \code{\link[dplyr]{summarise_each}()} and
 #' \code{\link[dplyr]{mutate_each}()}. The distinction between
 #' mutating and summarising operations is not as important as in dplyr
-#' because we do not act on the columns separately. When we map a
-#' function to each column, the only constraint is that the number of
-#' returned rows match inside each slice.
+#' because we do not act on the columns separately. The only
+#' constraint is that the mapped function must return the same number
+#' of rows for each variable mapped on.
 #' @param .d A sliced data frame.
 #' @param ..f A function to apply to each slice. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
@@ -76,25 +76,27 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 
 #' Apply a function to each row of a data frame
 #'
-#' Applies \code{..f} to each row of \code{.d}. By default, the whole
-#' row is appended to the result to serve as identifier (set
-#' \code{.labels} to \code{FALSE} to prevent this). In addition, if
-#' \code{..f} returns a multi-rows data frame or a non-scalar atomic
-#' vector, a \code{.row} column is appended to identify the row number
-#' in the original data frame. If \code{..f}'s output is not a data
-#' frame nor an atomic vector, a list-column is created. In all cases,
-#' \code{by_row()} and \code{map_row()} create a data frame in tidy
+#' \code{by_row()} and \code{map_rows()} apply \code{..f} to each row
+#' of \code{.d}. If \code{..f}'s output is not a data frame nor an
+#' atomic vector, a list-column is created. In all cases,
+#' \code{by_row()} and \code{map_rows()} create a data frame in tidy
 #' format.
+#'
+#' By default, the whole row is appended to the result to serve as
+#' identifier (set \code{.labels} to \code{FALSE} to prevent this). In
+#' addition, if \code{..f} returns a multi-rows data frame or a
+#' non-scalar atomic vector, a \code{.row} column is appended to
+#' identify the row number in the original data frame.
 #'
 #' \code{map_rows()} is intended to provide a version of
 #' \code{map_n()} that works better with data frames. The distinction
 #' between \code{by_row()} and \code{map_rows()} is that the former
 #' passes a data frame to \code{..f} while the latter maps the columns
 #' to its function call. This is essentially like using
-#' \code{\link{invoke_map}()} with each row of a data frame. Another way
-#' to view this is that \code{map_row()} is equivalent to using
+#' \code{\link{invoke}()} with each row of a data frame. Another way
+#' to view this is that \code{map_rows()} is equivalent to using
 #' \code{by_row()} with a function lifted to accept dots (see
-#' \code{\link{lift_ld}()}).
+#' \code{\link{lift}()}).
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
 #'   created under the name \code{.out}. If it returns a data frame, it
