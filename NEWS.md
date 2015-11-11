@@ -19,3 +19,5 @@
 
 * `list_along()` and `rep_along()` generalise the idea of `seq_along(). 
   (#122).
+
+* `%||%` is now exported (#109).
