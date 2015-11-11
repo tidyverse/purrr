@@ -8,7 +8,8 @@ bool is_vector(RObject x) {
   case INTSXP:
   case REALSXP:
   case CPLXSXP:
-  case CHARSXP:
+  case STRSXP:
+  case RAWSXP:
   case VECSXP:
     return true;
   default:
