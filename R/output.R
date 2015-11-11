@@ -32,7 +32,7 @@
 #'
 #' # To replace errors with a default value, use maybe().
 #' list("a", 10, 100) %>%
-#'   map_dbl(maybe(log, NA))
+#'   map_dbl(maybe(log, NA_real_))
 safe <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_function(.f)
   function(...) capture_error(.f(...), otherwise)
