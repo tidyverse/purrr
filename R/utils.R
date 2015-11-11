@@ -11,7 +11,7 @@ NULL
 
 #' Modify a list
 #'
-#' @param x A list.
+#' @param _data A list.
 #' @param ... New values of a list. Use \code{NULL} to remove values.
 #'   Use a formula to evaluate in the context of the list values.
 #' @export
@@ -19,17 +19,17 @@ NULL
 #' x <- list(x = 1:10, y = 4)
 #' update_list(x, z = 10)
 #' update_list(x, z = ~ x + y)
-update_list <- function(x, ...) {
+update_list <- function(`_data`, ...) {
   new_values <- list(...)
 
   is_formula <- map_lgl(new_values, ~inherits(., "formula"))
 
   new_values[is_formula] <- lapply(new_values[is_formula], function(f) {
     stopifnot(length(f) == 2)
-    eval(f[[2]], x, environment(f))
+    eval(f[[2]], `_data`, environment(f))
   })
 
-  utils::modifyList(x, new_values)
+  utils::modifyList(`_data`, new_values)
 }
 
 #' Convert an object into a function.

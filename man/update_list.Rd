@@ -4,10 +4,10 @@
 \alias{update_list}
 \title{Modify a list}
 \usage{
-update_list(x, ...)
+update_list(`_data`, ...)
 }
 \arguments{
-\item{x}{A list.}
+\item{_data}{A list.}
 
 \item{...}{New values of a list. Use \code{NULL} to remove values.
 Use a formula to evaluate in the context of the list values.}
