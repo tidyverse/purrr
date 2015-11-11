@@ -3,6 +3,7 @@
 export("%>%")
 export(array_branch)
 export(array_tree)
+export(as_function)
 export(as_vector)
 export(at_depth)
 export(by_row)

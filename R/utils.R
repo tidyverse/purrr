@@ -32,20 +32,40 @@ update_list <- function(x, ...) {
   utils::modifyList(x, new_values)
 }
 
-as_function <- function(f) {
-  if (is.function(f)) {
-    f
-  } else if (inherits(f, "formula")) {
+#' Convert an object into a function.
+#'
+#' \code{as_function} is the powerhouse behind the varied function
+#' specifications that purrr functions allow.
+#'
+#' @param .f A function, formula or string.
+#'
+#'   If a function, it is used as is.
+#'
+#'   If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
+#'   a three arguments, \code{.x} or \code{.}, \code{.y}, \code{.z}. This allows
+#'   you to create very compact anonymous functions of up to 3 variables.
+#'
+#'   If a string, e.g. \code{"y"}, it is converted to an extractor function,
+#'   \code{function(x) x[["y"]]}.
+#' @export
+#' @examples
+#' as_function(~ . + 1)
+#' as_function(1)
+#' as_function(c("a", "b", "c"))
+as_function <- function(.f) {
+  if (is.function(.f)) {
+    .f
+  } else if (inherits(.f, "formula")) {
     .x <- NULL # hush R CMD check NOTE
 
-    if (length(f) != 2) {
+    if (length(.f) != 2) {
       stop("Formula must be one sided", call. = FALSE)
     }
-    make_function(alist(.x = , .y = , .z = , . = .x), f[[2]], environment(f))
-  } else if (is.character(f) || is.numeric(f)) {
-    function(g) .subset2(g, f)
+    make_function(alist(.x = , .y = , .z = , . = .x), .f[[2]], environment(.f))
+  } else if (is.character(.f) || is.numeric(.f)) {
+    function(g) .subset2(g, .f)
   } else {
-    stop("Don't know how to convert ", paste0(class(f), collapse = "/"),
+    stop("Don't know how to convert ", paste0(class(.f), collapse = "/"),
       " into a function", call. = FALSE)
   }
 }

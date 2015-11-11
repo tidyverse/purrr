@@ -13,3 +13,6 @@
 
 * `map_df()` row-binds output together. It's the equivalent of `plyr::ldply()` 
   (#127)
+
+* `as_function()`, which converts formuals etc to functions, is now
+  exported (#123).

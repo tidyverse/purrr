@@ -10,6 +10,7 @@
 #' }
 #'
 #' @inheritParams map
+#' @inheritParams as_function
 #' @param .x A deep list
 #' @param .depth Level of \code{.x} to map on.
 #' @export

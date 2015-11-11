@@ -7,17 +7,8 @@
 #' of the corresponding type (or die trying); \code{map_df()} returns
 #' a data frame by row-binding the individual elements.
 #'
+#' @inheritParams as_function
 #' @param .x A list or vector.
-#' @param .f A function, formula or string.
-#'
-#'   If a function, it is used as is.
-#'
-#'   If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
-#'   a three arguments, \code{.x} or \code{.}, \code{.y}, \code{.z}. This allows
-#'   you to create very compact anonymous functions of up to 3 variables.
-#'
-#'   If a string, e.g. \code{"y"}, it is converted to an extractor function,
-#'   \code{function(x) x[["y"]]}.
 #' @param ... Additional arguments passed on to \code{.f}.
 #' @return \code{map()} a list if \code{.x} is a list or a data frame
 #'   if \code{.x} is a data frame.

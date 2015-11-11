@@ -8,6 +8,7 @@
 #' \code{flatmap()} is adapted to functions returning a variable
 #' number of elements.
 #' @inheritParams map
+#' @inheritParams as_function
 #' @param .type A string indicating which type you expect the results
 #'   of \code{.f} should be. This can be any of the types returned by
 #'   \code{\link{typeof}()}, or "numeric" as a shorthand for either
