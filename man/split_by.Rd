@@ -24,7 +24,9 @@ sort_by(.x, .f, ...)
   you to create very compact anonymous functions of up to 3 variables.
 
   If a string, e.g. \code{"y"}, it is converted to an extractor function,
-  \code{function(x) x[["y"]]}.}
+  \code{function(x) x[["y"]]}. To index deeply into a nested list,
+  pass a character vector, \code{c("x", "y")} is equivalent to
+  \code{z[["x"]][["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
