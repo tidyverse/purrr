@@ -123,7 +123,7 @@ names2 <- function(x) {
 #' @param x Object
 #' @param name Attribute name
 #' @export
-#' @rdname get-attr
+#' @name get-attr
 #' @examples
 #' factor(1:3) %@% "levels"
 #' mtcars %@% "class"
