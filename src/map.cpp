@@ -16,6 +16,21 @@ bool is_vector(RObject x) {
   }
 }
 
+SEXP inline make_symbol(std::string x) {
+  return Rf_install(x.c_str());
+}
+SEXP inline make_call(SEXP x1) {
+  return Rf_lcons(x1, R_NilValue);
+}
+SEXP inline make_call(SEXP x1, SEXP x2) {
+  Shield<SEXP> tmp(make_call(x2));
+  return Rf_lcons(x1, tmp);
+}
+SEXP inline make_call(SEXP x1, SEXP x2, SEXP x3) {
+  Shield<SEXP> tmp(make_call(x2, x3));
+  return Rf_lcons(x1, tmp);
+}
+
 // [[Rcpp::export]]
 SEXP map_impl(Environment env, std::string x_name, std::string f_name) {
   RObject x(env.get(x_name));
@@ -27,11 +42,8 @@ SEXP map_impl(Environment env, std::string x_name, std::string f_name) {
   // actual values for f or x, because they may be long, which creates
   // bad tracebacks()
   Shield<SEXP>
-    X(Rf_install(x_name.c_str())),
-    f(Rf_install(f_name.c_str())),
-    i(Rf_install("i")),
-    Xi(Rf_lcons(R_Bracket2Symbol, Rf_lcons(X, Rf_lcons(i, R_NilValue)))),
-    f_call(Rf_lcons(f, Rf_lcons(Xi, Rf_lcons(R_DotsSymbol, R_NilValue))));
+    Xi(make_call(R_Bracket2Symbol, make_symbol(x_name), make_symbol("i"))),
+    f_call(make_call(make_symbol(f_name), Xi, R_DotsSymbol));
 
   List out(n);
   for (int i = 0; i < n; ++i) {
