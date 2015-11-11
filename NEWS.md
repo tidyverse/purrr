@@ -16,3 +16,6 @@
 
 * `as_function()`, which converts formuals etc to functions, is now
   exported (#123).
+
+* `list_along()` and `rep_along()` generalise the idea of `seq_along(). 
+  (#122).
