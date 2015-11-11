@@ -59,7 +59,9 @@
 #' # the broom package)
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  lapply(.x, .f, ...) %>% output_hook(.x)
+
+  res <- map_impl(environment(), ".x", ".f")
+  output_hook(res, .x)
 }
 
 #' @rdname map
