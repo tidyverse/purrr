@@ -156,3 +156,13 @@ rdunif <- function(n, b, a = 1) {
 
 # magrittr placeholder
 globalVariables(".")
+
+
+has_names <- function(x) {
+  nms <- names(x)
+  if (is.null(nms)) {
+    rep_along(x, FALSE)
+  } else {
+    !(is.na(nms) | nms == "")
+  }
+}

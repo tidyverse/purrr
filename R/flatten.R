@@ -16,9 +16,9 @@
 #' x %>% flatten(x)
 #'
 #' # You can use flatten in conjunction with map
-#' x %>% map(~ .x[1]) %>% flatten()
+#' x %>% map(1L) %>% flatten()
 #' # But it's better to use map_int etc.
-#' x %>% map_int(~ .x[1])
+#' x %>% map_int(1L)
 flatten <- function(.x, .recursive = FALSE, .unname = FALSE) {
   use_names <- TRUE
   if (.unname && .recursive) {
