@@ -118,6 +118,17 @@ names2 <- function(x) {
   }
 }
 
+#' Infix attribute accessor
+#'
+#' @param x Object
+#' @param name Attribute name
+#' @export
+#' @rdname get-attr
+#' @examples
+#' factor(1:3) %@% "levels"
+#' mtcars %@% "class"
+`%@%` <- function(x, name) attr(x, name)
+
 
 #' Generate random samples from a Bernoulli distribution
 #'

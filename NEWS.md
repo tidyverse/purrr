@@ -23,3 +23,5 @@
 * `%||%` is now exported (#109).
 
 * `update_list()` can now modify an element called `x` (#98).
+
+* New infix attribute accessor `%@%` (#69).
