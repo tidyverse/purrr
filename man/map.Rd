@@ -50,7 +50,7 @@ for \code{.f}, or a logical vector the same length as \code{.x}.}
   if \code{.x} is a data frame.
 
   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
-  vector, \code{map_dbl()}, a numeric vector, \code{map_chr()}, a character
+  vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
   vector.
 
   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
