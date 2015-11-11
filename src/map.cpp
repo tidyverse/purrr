@@ -41,7 +41,7 @@ SEXP call_loop(Environment env, SEXP call, int n, SEXPTYPE type) {
 
   for (int i = 0; i < n; ++i) {
     env.assign("i", i + 1);
-    SEXP res(Rf_eval(call, env));
+    SEXP res(Rcpp_eval(call, env));
     if (type != VECSXP && (Rf_length(res) != 1 || TYPEOF(res) != type))
       stop("Result %i is not a length 1 %s", i + 1, Rf_type2char(type));
 

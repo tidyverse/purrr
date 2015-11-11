@@ -210,7 +210,7 @@ SEXP by_slice_impl(const List& data, const SEXP fun, SEXP dots,
 
   for (int i = 0; i < results.size(); ++i) {
     shadow_env.assign("shadowed", results[i]);
-    results[i] = Rf_eval(lang_call, shadow_env);
+    results[i] = Rcpp_eval(lang_call, shadow_env);
   }
 
   return process_slices(results, data[slicers_names],
@@ -236,7 +236,7 @@ SEXP by_row_impl(const List& data, const SEXP fun, SEXP dots,
   for (int i = 0; i < n_rows; ++i) {
     SEXP row = visitors.subset(IntegerVector::create(i), classes);
     shadow_env.assign("shadowed", row);
-    results[i] = Rf_eval(lang_call, shadow_env);
+    results[i] = Rcpp_eval(lang_call, shadow_env);
   }
 
   return process_slices(results, data, data, include_labels, 1);
