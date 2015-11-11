@@ -20,7 +20,7 @@ list.}
 }
 \description{
 \code{array_branch()} and \code{array_tree()} enable arrays to be
-used with purrr's functionals by turning them into list. The
+used with purrr's functionals by turning them into lists. The
 details of the coercion are controlled by the \code{margin}
 argument. \code{array_tree()} creates an hierarchical list (a tree)
 that has as many levels as dimensions specified in \code{margin},
@@ -29,7 +29,7 @@ branch) along all mentioned dimensions.
 }
 \details{
 When no margin is specified, all dimensions are used by
-default. When \code{margin} is numeric vector of length zero, the
+default. When \code{margin} is a numeric vector of length zero, the
 whole array is wrapped in a list.
 }
 \examples{
