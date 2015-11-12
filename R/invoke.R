@@ -8,8 +8,7 @@
 #' @param .f For \code{invoke}, a function; for \code{invoke_map} a
 #'   list of functions.
 #' @param .x For \code{invoke}, an argument-list; for \code{invoke_map} a
-#'   list of argument-lists the same length as \code{.f}. Set to \code{NULL}
-#'   to use the same arguments to every invocation of the function.
+#'   list of argument-lists the same length as \code{.f} (or length 1).
 #' @param ... Additional arguments passed to each function.
 #' @inheritParams map
 #' @export
@@ -17,7 +16,7 @@
 #' # Invoke a function with a list of arguments
 #' invoke(runif, list(n = 10))
 #' # Invoke a function with named arguments
-#' invoke(runif, NULL, n = 10)
+#' invoke(runif, n = 10)
 #'
 #' # Combine the two:
 #' invoke(paste, list("01a", "01b"), sep = "-")
@@ -27,12 +26,15 @@
 #'
 #' # Invoke a list of functions, each with different arguments
 #' invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
-#' # Invoke a list of function, each with the same arguments
-#' invoke_map(list(runif, rnorm), NULL, n = 5)
+#' # Or with the same inputs:
+#' invoke_map(list(runif, rnorm), list(list(n = 5)))
+#' invoke_map(list(runif, rnorm), n = 5)
+#' # Or the same function with different inputs:
+#' invoke_map("runif", list(list(n = 5), list(n = 10)))
 #'
 #' # Or as a pipeline
 #' list(m1 = mean, m2 = median) %>%
-#'   invoke_map(NULL, rcauchy(100))
+#'   invoke_map(x = rcauchy(100))
 #'
 #' # If you have pairs of function name and arguments, it's natural
 #' # to store them in a data frame:
@@ -48,23 +50,14 @@
 #' df
 #' invoke_map(df$f, df$params)
 #' }
-invoke <- function(.f, .x, ...) {
-  if (is.null(.x)) {
-    .f(...)
-  } else {
-    stopifnot(is.list(.x))
-    do.call(.f, c(.x, list(...)))
-  }
+invoke <- function(.f, .x = NULL, ...) {
+  do.call(.f, c(.x, list(...)))
 }
 
 #' @rdname invoke
 #' @export
-invoke_map <- function(.f, .x, ...) {
-  if (is.null(.x)) {
-    lapply(.f, function(f) f(...))
-  } else {
-    set_names(map2(.f, .x, invoke, ...), names(.f))
-  }
+invoke_map <- function(.f, .x = list(NULL), ...) {
+  map2(.f, .x, invoke, ...)
 }
 
 #' @rdname invoke
