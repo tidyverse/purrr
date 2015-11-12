@@ -6,47 +6,6 @@
 
 using namespace Rcpp;
 
-// map_impl
-SEXP map_impl(Environment env, std::string x_name, std::string f_name);
-RcppExport SEXP purrr_map_impl(SEXP envSEXP, SEXP x_nameSEXP, SEXP f_nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< Environment >::type env(envSEXP);
-    Rcpp::traits::input_parameter< std::string >::type x_name(x_nameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type f_name(f_nameSEXP);
-    __result = Rcpp::wrap(map_impl(env, x_name, f_name));
-    return __result;
-END_RCPP
-}
-// vmap_impl
-SEXP vmap_impl(Environment env, std::string x_name, std::string f_name, std::string type);
-RcppExport SEXP purrr_vmap_impl(SEXP envSEXP, SEXP x_nameSEXP, SEXP f_nameSEXP, SEXP typeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< Environment >::type env(envSEXP);
-    Rcpp::traits::input_parameter< std::string >::type x_name(x_nameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type f_name(f_nameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type type(typeSEXP);
-    __result = Rcpp::wrap(vmap_impl(env, x_name, f_name, type));
-    return __result;
-END_RCPP
-}
-// map2_impl
-SEXP map2_impl(Environment env, std::string x_name, std::string y_name, std::string f_name);
-RcppExport SEXP purrr_map2_impl(SEXP envSEXP, SEXP x_nameSEXP, SEXP y_nameSEXP, SEXP f_nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< Environment >::type env(envSEXP);
-    Rcpp::traits::input_parameter< std::string >::type x_name(x_nameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type y_name(y_nameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type f_name(f_nameSEXP);
-    __result = Rcpp::wrap(map2_impl(env, x_name, y_name, f_name));
-    return __result;
-END_RCPP
-}
 // process_slices
 SEXP process_slices(List& results, const List& slicers, const List& labels, int include_labels, int row_id);
 RcppExport SEXP purrr_process_slices(SEXP resultsSEXP, SEXP slicersSEXP, SEXP labelsSEXP, SEXP include_labelsSEXP, SEXP row_idSEXP) {

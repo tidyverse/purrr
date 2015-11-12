@@ -57,10 +57,11 @@
 #'   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
+#' @useDynLib purrr map_impl
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
 
-  res <- map_impl(environment(), ".x", ".f")
+  res <- .Call(map_impl, environment(), ".x", ".f", "list")
   output_hook(res, .x)
 }
 
@@ -74,7 +75,7 @@ map_lgl <- function(.x, .p, ...) {
     .p
   } else {
     .p <- as_function(.p)
-    vmap_impl(environment(), ".x", ".p", "logical")
+    .Call(map_impl, environment(), ".x", ".p", "logical")
   }
 }
 
@@ -82,21 +83,21 @@ map_lgl <- function(.x, .p, ...) {
 #' @export
 map_chr <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  vmap_impl(environment(), ".x", ".f", "character")
+  .Call(map_impl, environment(), ".x", ".f", "character")
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  vmap_impl(environment(), ".x", ".f", "integer")
+  .Call(map_impl, environment(), ".x", ".f", "integer")
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ...) {
   .f <- as_function(.f)
-  vmap_impl(environment(), ".x", ".f", "double")
+  .Call(map_impl, environment(), ".x", ".f", "double")
 }
 
 #' @rdname map
@@ -152,9 +153,10 @@ walk <- function(.x, .f, ...) {
 #' by_cyl <- mtcars %>% split(.$cyl)
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
+#' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_function(.f)
-  res <- map2_impl(environment(), ".x", ".y", ".f")
+  res <- .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
   output_hook(res, .x)
 }
 
@@ -266,3 +268,4 @@ inv_which <- function(x, sel) {
     stop("unrecognised index type", call. = FALSE)
   }
 }
+
