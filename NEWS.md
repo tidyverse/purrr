@@ -27,3 +27,7 @@
 * New infix attribute accessor `%@%` (#69).
 
 * `rerun()` is correctly scoped (#95)
+
+* The map function now use custom C code, rather than relying on `lapply()`, 
+  `mapply()` etc. The performance characteristcs are very similar, but it
+  allows us greater control over the output (#118).

@@ -102,3 +102,73 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   return out;
 }
 
+SEXP map_n_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
+  const char* l_name = CHAR(Rf_asChar(l_name_));
+  SEXP l = Rf_install(l_name);
+  SEXP l_val = Rf_eval(l, env);
+
+  if (!Rf_isVectorList(l_val))
+    Rf_error("`.x` is not a list (%s)", Rf_type2char(TYPEOF(l_val)));
+
+  // Check all elements are lists and find maximum length
+  int m = Rf_length(l_val);
+  int n = 0;
+  for (int j = 0; j < m; ++j) {
+    SEXP j_val = VECTOR_ELT(l_val, j);
+    if (!Rf_isVector(j_val))
+      Rf_error("Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
+
+    int nj = Rf_length(j_val);
+    if (nj > n)
+      n = nj;
+  }
+
+  // Check length of all elements
+  for (int j = 0; j < m; ++j) {
+    SEXP j_val = VECTOR_ELT(l_val, j);
+    int nj = Rf_length(j_val);
+
+    if (nj != 1 && nj != n)
+      Rf_error("Element %i has length %i, not 1 or %i.", j + 1, nj, n);
+  }
+
+  SEXP l_names = Rf_getAttrib(l_val, R_NamesSymbol);
+  int has_names = !Rf_isNull(l_names);
+
+  const char* f_name = CHAR(Rf_asChar(f_name_));
+  SEXP f = Rf_install(f_name);
+  SEXP i = Rf_install("i");
+  SEXP one = PROTECT(ScalarInteger(1));
+
+  // Construct call like f(.x[[c(1, i)]], .x[[c(2, i)]], ...)
+  // We construct the call backwards because can only add to the front of a
+  // linked list. That makes PROTECTion tricky because we need to update it
+  // each time to point to the start of the linked list.
+
+  SEXP f_call = Rf_lang1(R_DotsSymbol);
+  PROTECT_INDEX fi;
+  PROTECT_WITH_INDEX(f_call, &fi);
+
+  for (int j = m - 1; j >= 0; --j) {
+    int nj = Rf_length(VECTOR_ELT(l_val, j));
+
+    // Construct call like .l[[c(j, i)]]
+    SEXP j_ = PROTECT(ScalarInteger(j + 1));
+    SEXP ji_ = PROTECT(Rf_lang3(Rf_install("c"), j_, nj == 1 ? one : i));
+    SEXP l_ji = PROTECT(Rf_lang3(R_Bracket2Symbol, l, ji_));
+
+    REPROTECT(f_call = LCONS(l_ji, f_call), fi);
+    if (has_names && CHAR(STRING_ELT(l_names, j))[0] != '\0')
+      SET_TAG(f_call, install(CHAR(STRING_ELT(l_names, j))));
+
+    UNPROTECT(3);
+  }
+
+  REPROTECT(f_call = LCONS(f, f_call), fi);
+
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type));
+
+  UNPROTECT(3);
+  return out;
+}

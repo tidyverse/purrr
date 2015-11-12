@@ -168,13 +168,10 @@ map3 <- function(.x, .y, .z, .f, ...) {
 
 #' @export
 #' @rdname map2
+#' @useDynLib purrr map_n_impl
 map_n <- function(.l, .f, ...) {
   .f <- as_function(.f)
-  args <- recycle_args(.l)
-  do.call("mapply", c(
-    FUN = list(quote(.f)), args, MoreArgs = quote(list(...)),
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
-  ))
+  .Call(map_n_impl, environment(), ".l", ".f", "list")
 }
 
 

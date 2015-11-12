@@ -30,15 +30,6 @@ test_that("map() returns a data frame when given one", {
   expect_is(out2, "data.frame")
 })
 
-test_that("map_n() is not vectorized over additional arguments (see #54)", {
-  f <- function(x, y, zs) zs
-  actual <- list(1:3, 1:3)
-  alleged1 <- map2(1:2, 1:2, f, zs = 1:3)
-  alleged2 <- map2(1:2, 1:2, f, 1:3)
-  expect_equal(actual, alleged1)
-  expect_equal(actual, alleged2)
-})
-
 test_that("flatmap() coerces appropriately", {
   return_var <- function(x, type) vector(type, rpois(1, 5))
 
