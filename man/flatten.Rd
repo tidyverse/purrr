@@ -4,14 +4,13 @@
 \alias{flatten}
 \title{Flatten a list of lists into a list.}
 \usage{
-flatten(.x, .recursive = FALSE, .unname = FALSE)
+flatten(.x)
 }
 \arguments{
 \item{.x}{A list of flatten}
-
-\item{.recursive}{Recursively flatten list components?}
-
-\item{.unname}{Remove names before flattening?}
+}
+\value{
+\code{flatten()} returns a list.
 }
 \description{
 This is a wrapper for \code{\link{unlist}()} that defaults to
@@ -25,7 +24,7 @@ names of all inner lists are also removed.
 }
 \examples{
 x <- rerun(10, sample(5))
-x \%>\% flatten(x)
+x \%>\% flatten()
 
 # You can use flatten in conjunction with map
 x \%>\% map(1L) \%>\% flatten()

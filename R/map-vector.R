@@ -24,18 +24,10 @@
 #'
 #' # You can also check that the results are of expected type
 #' \dontrun{
-#' c(mtcars) %>% flatmap(var_select, .type = "character")}
-#' 
-#' c(mtcars) %>% flatmap(var_select, .type = "numeric")
+#' c(mtcars) %>% flatmap(var_select)}
+#'
+#' c(mtcars) %>% flatmap(var_select)
 flatmap <- function(.x, .f, ..., .type) {
   out <- map(.x, .f = .f, ...)
-  if (!missing(.type)) {
-    if (!is_scalar_character(.type)) {
-      stop(".type must be a string")
-    }
-    if (!can_simplify(out, .type)) {
-      stop("Results do not conform to .type", call. = FALSE)
-    }
-  }
   flatten(out)
 }

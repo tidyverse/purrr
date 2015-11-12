@@ -29,16 +29,3 @@ test_that("map() returns a data frame when given one", {
   expect_is(out1, "data.frame")
   expect_is(out2, "data.frame")
 })
-
-test_that("flatmap() coerces appropriately", {
-  return_var <- function(x, type) vector(type, rpois(1, 5))
-
-  out_dbl <- flatmap(c(mtcars), return_var, "double")
-  expect_equal(typeof(out_dbl), "double")
-
-  out_chr <- flatmap(c(mtcars), return_var, "character", .type = "character")
-  expect_equal(typeof(out_chr), "character")
-
-  expect_error(flatmap(c(mtcars), return_var, "double", .type = "character"))
-  expect_error(flatmap(c(mtcars), return_var, "character", .type = "double"))
-})
