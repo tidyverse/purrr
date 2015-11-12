@@ -4,7 +4,7 @@
   to `map_call()` when `.x` is NULL, and hence `map_call()` has been
   deprecated. `invoke_map()` is a vectorised complement to `invoke()` (#125).
 
-* Experimental functions `maybe()`, `outputs()`, and `safe()` for working
+* Experimental functions `safely()`, `quielty()`, and `possibly()` for working
   with functions that have side-effecty outputs (e.g. printed output,
   messages, warnings, and errors) (#120).
 

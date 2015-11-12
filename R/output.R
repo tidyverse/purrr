@@ -1,8 +1,9 @@
-#' Capture side effects
+#' Capture side effects.
 #'
 #' These functions wrap functions so instead generating side effects through
 #' output, messages, warnings, and errors, they instead return enchanced
-#' output.
+#' output. They are all adverbs because they modify the action of a
+#' verb (a function).
 #'
 #' @inheritParams map
 #' @param quiet Hide errors (\code{TRUE}, the default), or display them
@@ -15,7 +16,7 @@
 #'   \code{messages} and \code{warnings}.
 #' @export
 #' @examples
-#' safe_log <- safe(log)
+#' safe_log <- safely(log)
 #' safe_log(10)
 #' safe_log("a")
 #'
@@ -25,29 +26,29 @@
 #'
 #' # This is a bit easier to work with if you supply a default value
 #' # of the same type and use the simplify argument to transpose():
-#' safe_log <- safe(log, otherwise = NA_real_)
+#' safe_log <- safely(log, otherwise = NA_real_)
 #' list("a", 10, 100) %>%
 #'   map(safe_log) %>%
 #'   transpose(.simplify = TRUE)
 #'
-#' # To replace errors with a default value, use maybe().
+#' # To replace errors with a default value, use possibly().
 #' list("a", 10, 100) %>%
-#'   map_dbl(maybe(log, NA_real_))
-safe <- function(.f, otherwise = NULL, quiet = TRUE) {
+#'   map_dbl(possibly(log, NA_real_))
+safely <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_function(.f)
   function(...) capture_error(.f(...), otherwise)
 }
 
 #' @export
-#' @rdname safe
-outputs <- function(.f) {
+#' @rdname safely
+quietly <- function(.f) {
   .f <- as_function(.f)
   function(...) capture_output(.f(...))
 }
 
 #' @export
-#' @rdname safe
-maybe <- function(.f, otherwise, quiet = TRUE) {
+#' @rdname safely
+possibly <- function(.f, otherwise, quiet = TRUE) {
   .f <- as_function(.f)
   force(otherwise)
 

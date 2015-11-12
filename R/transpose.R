@@ -24,9 +24,9 @@
 #' # Back to where we started
 #' x %>% transpose() %>% transpose() %>% str()
 #'
-#' # transpose() is useful in conjunction with safe()
+#' # transpose() is useful in conjunction with safely() & quietly()
 #' x <- list("a", 1, 2)
-#' y <- x %>% map(safe(log))
+#' y <- x %>% map(safely(log))
 #' y %>% str()
 #' y %>% transpose() %>% str()
 #'
