@@ -21,7 +21,7 @@ A new predicate function.
 Negate a predicate function.
 }
 \examples{
-x <- zip_n(list(x = 1:10, y = rbernoulli(10)))
+x <- transpose(list(x = 1:10, y = rbernoulli(10)))
 x \%>\% keep("y") \%>\% length()
 x \%>\% keep(negate("y")) \%>\% length()
 # Same as

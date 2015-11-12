@@ -49,7 +49,7 @@ random_group <- function(n, probs) {
 }
 partition <- function(df, n, probs) {
   replicate(n, split(df, random_group(nrow(df), probs)), FALSE) %>%
-    zip_n() %>%
+    transpose() %>%
     as_data_frame()
 }
 
@@ -103,7 +103,7 @@ mean(unlist(boot$diffs))
 
 ### List manipulation and creation
 
-* Zip together two or more lists with `zip_n()`.
+* Transpose a list with `transpose()`.
 
 * Create the cartesian product of the elements of several lists with
   `cross_n()` and `cross_d()`.
@@ -163,10 +163,11 @@ The goal is not to try and simulate Haskell in R: purrr does not implement curry
   For chains of transformations functions, `. %>% f() %>% g()` is
   equivalent to `function(.) . %>% f() %>% g()`.
 
-* R is weakly typed, so we can implement general `zip_n()`, rather than having
-  to specialise on the number of arguments. (That said I still provide `map2()`
-  and `map3()` since it's useful to clearly separate which arguments are
-  vectorised over).
+* R is weakly typed, so we can implement more general functions, rather than 
+  having to specialise on the number of arguments. (That said I still provide 
+  `map2()` and `map3()` since it's useful to clearly separate which arguments 
+  are vectorised over). The downside is that we need variants `map_int()`,
+  `map_dbl()`, etc since we don't know what `.f` will return.
 
 * R has named arguments, so instead of providing different functions for
   minor variations (e.g. `detect()` and `detectLast()`) I use a named

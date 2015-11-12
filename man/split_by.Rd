@@ -34,7 +34,7 @@ sort_by(.x, .f, ...)
 Split, order and sort lists by their components.
 }
 \examples{
-l1 <- zip_n(list(x = sample(10), y = 1:10))
+l1 <- transpose(list(x = sample(10), y = 1:10))
 l1
 l1 \%>\% order_by("x")
 l1 \%>\% sort_by("x")

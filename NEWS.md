@@ -31,3 +31,6 @@
 * The map function now use custom C code, rather than relying on `lapply()`, 
   `mapply()` etc. The performance characteristcs are very similar, but it
   allows us greater control over the output (#118).
+
+* `zip2()`, `zip3()`, and `zip_n()` have been replaced by `transpose()`.
+  It does the same thing but the name is better (#128).

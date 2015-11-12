@@ -89,8 +89,8 @@ for (i in seq_along(out))
   out[[i]] <- map(args, i) \%>\% invoke(paste, .)
 out
 
-# It's easier to zip and then use invoke_map()
-args \%>\% zip_n() \%>\% map_chr(~ invoke(paste, .))
+# It's easier to transpose and then use invoke_map()
+args \%>\% transpose() \%>\% map_chr(~ invoke(paste, .))
 
 # Unwanted combinations can be filtered out with a predicate function
 filter <- function(x, y) x >= y

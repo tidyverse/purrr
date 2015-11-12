@@ -50,14 +50,14 @@ safe_log("a")
 
 list("a", 10, 100) \%>\%
   map(safe_log) \%>\%
-  zip_n()
+  transpose()
 
 # This is a bit easier to work with if you supply a default value
-# of the same type and use the simplify argument to zip_n():
+# of the same type and use the simplify argument to transpose():
 safe_log <- safe(log, otherwise = NA_real_)
 list("a", 10, 100) \%>\%
   map(safe_log) \%>\%
-  zip_n(.simplify = TRUE)
+  transpose(.simplify = TRUE)
 
 # To replace errors with a default value, use maybe().
 list("a", 10, 100) \%>\%

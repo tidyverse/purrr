@@ -67,8 +67,8 @@
 #'   out[[i]] <- map(args, i) %>% invoke(paste, .)
 #' out
 #'
-#' # It's easier to zip and then use invoke_map()
-#' args %>% zip_n() %>% map_chr(~ invoke(paste, .))
+#' # It's easier to transpose and then use invoke_map()
+#' args %>% transpose() %>% map_chr(~ invoke(paste, .))
 #'
 #' # Unwanted combinations can be filtered out with a predicate function
 #' filter <- function(x, y) x >= y
@@ -145,6 +145,6 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @export
 cross_d <- function(.l, .filter = NULL) {
   cross_n(.l, .filter = .filter) %>%
-    zip_n(.simplify = TRUE) %>%
+    transpose(.simplify = TRUE) %>%
     dplyr::as_data_frame()
 }

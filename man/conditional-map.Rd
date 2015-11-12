@@ -50,9 +50,9 @@ mumeric vector of positions.
 }
 \examples{
 list(x = rbernoulli(100), y = 1:100) \%>\%
-  zip_n() \%>\%
+  transpose() \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
-  zip_n(.simplify = TRUE)
+  transpose(.simplify = TRUE)
 
 # Convert factors to characters
 iris \%>\%
