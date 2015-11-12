@@ -1,3 +1,4 @@
+#define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
 
@@ -32,8 +33,8 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type) {
 }
 
 SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
-  const char* x_name = CHAR(asChar(x_name_));
-  const char* f_name = CHAR(asChar(f_name_));
+  const char* x_name = CHAR(Rf_asChar(x_name_));
+  const char* f_name = CHAR(Rf_asChar(f_name_));
 
   SEXP x = Rf_install(x_name);
   SEXP f = Rf_install(f_name);
@@ -138,7 +139,7 @@ SEXP map_n_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   const char* f_name = CHAR(Rf_asChar(f_name_));
   SEXP f = Rf_install(f_name);
   SEXP i = Rf_install("i");
-  SEXP one = PROTECT(ScalarInteger(1));
+  SEXP one = PROTECT(Rf_ScalarInteger(1));
 
   // Construct call like f(.x[[c(1, i)]], .x[[c(2, i)]], ...)
   // We construct the call backwards because can only add to the front of a
@@ -153,18 +154,18 @@ SEXP map_n_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     int nj = Rf_length(VECTOR_ELT(l_val, j));
 
     // Construct call like .l[[c(j, i)]]
-    SEXP j_ = PROTECT(ScalarInteger(j + 1));
+    SEXP j_ = PROTECT(Rf_ScalarInteger(j + 1));
     SEXP ji_ = PROTECT(Rf_lang3(Rf_install("c"), j_, nj == 1 ? one : i));
     SEXP l_ji = PROTECT(Rf_lang3(R_Bracket2Symbol, l, ji_));
 
-    REPROTECT(f_call = LCONS(l_ji, f_call), fi);
+    REPROTECT(f_call = Rf_lcons(l_ji, f_call), fi);
     if (has_names && CHAR(STRING_ELT(l_names, j))[0] != '\0')
-      SET_TAG(f_call, install(CHAR(STRING_ELT(l_names, j))));
+      SET_TAG(f_call, Rf_install(CHAR(STRING_ELT(l_names, j))));
 
     UNPROTECT(3);
   }
 
-  REPROTECT(f_call = LCONS(f, f_call), fi);
+  REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
