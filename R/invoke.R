@@ -63,7 +63,7 @@ invoke_map <- function(.f, .x, ...) {
   if (is.null(.x)) {
     lapply(.f, function(f) do.call(f, list(quote(...))))
   } else {
-    set_names(map2(.f, .x, invoke), names(.f))
+    set_names(map2(.f, .x, invoke, ...), names(.f))
   }
 }
 
