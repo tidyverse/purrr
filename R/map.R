@@ -101,11 +101,13 @@ map_dbl <- function(.x, .f, ...) {
 }
 
 #' @rdname map
+#' @param .id If not \code{NULL} a variable with this name will be created
+#'   giving either the name or the index of the data frame.
 #' @export
-map_df <- function(.x, .f, ...) {
+map_df <- function(.x, .f, ..., .id = NULL) {
   .f <- as_function(.f)
   res <- map(.x, .f, ...)
-  dplyr::bind_rows(res)
+  dplyr::bind_rows(res, .id = .id)
 }
 
 
@@ -184,6 +186,16 @@ map2_chr <- function(.x, .y, .f, ...) {
   .f <- as_function(.f)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
 }
+
+#' @rdname map2
+#' @inheritParams map_df
+#' @export
+map2_df <- function(.x, .y, .f, ..., .id = NULL) {
+  .f <- as_function(.f)
+  res <- map2(.x, .y, .f, ...)
+  dplyr::bind_rows(res, .id = .id)
+}
+
 
 #' @export
 #' @rdname map2

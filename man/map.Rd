@@ -20,7 +20,7 @@ map_int(.x, .f, ...)
 
 map_dbl(.x, .f, ...)
 
-map_df(.x, .f, ...)
+map_df(.x, .f, ..., .id = NULL)
 
 walk(.x, .f, ...)
 }
@@ -44,6 +44,9 @@ walk(.x, .f, ...)
 
 \item{.p}{A predicate: either a function, in any of the ways possible
 for \code{.f}, or a logical vector the same length as \code{.x}.}
+
+\item{.id}{If not \code{NULL} a variable with this name will be created
+giving either the name or the index of the data frame.}
 }
 \value{
 \code{map()} a list if \code{.x} is a list or a data frame

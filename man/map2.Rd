@@ -4,6 +4,7 @@
 \alias{map2}
 \alias{map2_chr}
 \alias{map2_dbl}
+\alias{map2_df}
 \alias{map2_int}
 \alias{map2_lgl}
 \alias{map3}
@@ -22,6 +23,8 @@ map2_int(.x, .y, .f, ...)
 map2_dbl(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
+
+map2_df(.x, .y, .f, ..., .id = NULL)
 
 map3(.x, .y, .z, .f, ...)
 
@@ -43,6 +46,9 @@ and \code{walk_n}, the number of arguments must correspond to the
 number of elements of \code{.l}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
+
+\item{.id}{If not \code{NULL} a variable with this name will be created
+giving either the name or the index of the data frame.}
 
 \item{.l}{A list of lists to be mapped on simultaneously.}
 }
