@@ -162,6 +162,31 @@ map2 <- function(.x, .y, .f, ...) {
 
 #' @export
 #' @rdname map2
+map2_lgl <- function(.x, .y, .f, ...) {
+  .f <- as_function(.f)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "logical")
+}
+#' @export
+#' @rdname map2
+map2_int <- function(.x, .y, .f, ...) {
+  .f <- as_function(.f)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "integer")
+}
+#' @export
+#' @rdname map2
+map2_dbl <- function(.x, .y, .f, ...) {
+  .f <- as_function(.f)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "double")
+}
+#' @export
+#' @rdname map2
+map2_chr <- function(.x, .y, .f, ...) {
+  .f <- as_function(.f)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
+}
+
+#' @export
+#' @rdname map2
 map3 <- function(.x, .y, .z, .f, ...) {
   map_n(list(.x, .y, .z), .f, ...) %>% output_hook(.x)
 }
@@ -173,7 +198,6 @@ map_n <- function(.l, .f, ...) {
   .f <- as_function(.f)
   .Call(map_n_impl, environment(), ".l", ".f", "list")
 }
-
 
 #' @export
 #' @rdname map2

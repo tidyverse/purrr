@@ -2,6 +2,10 @@
 % Please edit documentation in R/map.R
 \name{map2}
 \alias{map2}
+\alias{map2_chr}
+\alias{map2_dbl}
+\alias{map2_int}
+\alias{map2_lgl}
 \alias{map3}
 \alias{map_n}
 \alias{walk2}
@@ -10,6 +14,14 @@
 \title{Map over multiple inputs simultaneously.}
 \usage{
 map2(.x, .y, .f, ...)
+
+map2_lgl(.x, .y, .f, ...)
+
+map2_int(.x, .y, .f, ...)
+
+map2_dbl(.x, .y, .f, ...)
+
+map2_chr(.x, .y, .f, ...)
 
 map3(.x, .y, .z, .f, ...)
 
