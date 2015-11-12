@@ -19,7 +19,7 @@
 #'
 #'   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
 #'   its side effects, but this makes it easier to combine in a pipe.
-#' @seealso \code{\link{map2}()} and \code{\link{map3}()} to map over multiple
+#' @seealso \code{\link{map2}()} and \code{\link{map_n}()} to map over multiple
 #'   inputs simulatenously
 #' @export
 #' @examples
@@ -129,15 +129,14 @@ walk <- function(.x, .f, ...) {
 #' should be supplied to every call come after the function name.
 #'
 #' \code{map_n()} and \code{walk_n()} take a single list \code{.l} and
-#' map over all its elements simultaneously. \code{map2()} and
-#' \code{map3()} return a data frame when \code{.x} is a data frame.
+#' map over all its elements simultaneously. \code{map2()} returns
+#' a data frame when \code{.x} is a data frame.
 #'
 #' @inheritParams map
-#' @param .f A function of two (for \code{map2} and \code{walk2}) or
-#' three (\code{map3} and \code{walk3}) arguments. For \code{map_n}
-#' and \code{walk_n}, the number of arguments must correspond to the
-#' number of elements of \code{.l}.
-#' @param .x,.y,.z Lists of the same length or of length 1. Only
+#' @param .f A function of two arguments. For \code{map_n}
+#'   and \code{walk_n}, the number of arguments must correspond to the
+#'   number of elements of \code{.l}.
+#' @param .x,.y Lists of the same length or of length 1. Only
 #' lists of length 1 are recycled.
 #' @param .l A list of lists to be mapped on simultaneously.
 #' @export
@@ -147,9 +146,6 @@ walk <- function(.x, .f, ...) {
 #' map2(x, y, ~ .x + .y)
 #' # Or just
 #' map2(x, y, `+`)
-#'
-#' z <- list(15, 20, 25)
-#' map3(x, y, z, ~ .x ^ .y + .z)
 #'
 #' # Split into pieces, fit model to each piece, then predict
 #' by_cyl <- mtcars %>% split(.$cyl)
@@ -199,7 +195,10 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
 
 #' @export
 #' @rdname map2
+#' @usage NULL
 map3 <- function(.x, .y, .z, .f, ...) {
+  warning("`map3(x, y, z)` is deprecated. Please use `map_n(list(x, y, z))` ",
+    "instead", call. = FALSE)
   map_n(list(.x, .y, .z), .f, ...) %>% output_hook(.x)
 }
 
@@ -219,8 +218,11 @@ walk2 <- function(.x, .y, .f, ...) {
 }
 
 #' @export
+#' @usage NULL
 #' @rdname map2
 walk3 <- function(.x, .y, .z, .f, ...) {
+  warning("`walk3(x, y, z)` is deprecated. Please use `walk_n(list(x, y, z))` ",
+    "instead", call. = FALSE)
   walk_n(list(.x, .y, .z), .f, ...)
   invisible(.x)
 }

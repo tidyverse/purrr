@@ -78,7 +78,7 @@ mean(unlist(boot$diffs))
 * Apply a function to each element: `map()` returns a list;
   `flatmap()` and `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()`
   return a vector; `walk()` invisibly returns original list, calling
-  the function for its side effects; `map2()` and `map3()` vectorise
+  the function for its side effects; `map2()` and `map_n()` vectorise
   over multiple inputs; `at_depth()` maps a function at a specified
   level of nested lists.
 
@@ -163,11 +163,8 @@ The goal is not to try and simulate Haskell in R: purrr does not implement curry
   For chains of transformations functions, `. %>% f() %>% g()` is
   equivalent to `function(.) . %>% f() %>% g()`.
 
-* R is weakly typed, so we can implement more general functions, rather than 
-  having to specialise on the number of arguments. (That said I still provide 
-  `map2()` and `map3()` since it's useful to clearly separate which arguments 
-  are vectorised over). The downside is that we need variants `map_int()`,
-  `map_dbl()`, etc since we don't know what `.f` will return.
+* R is weakly typed, we need variants `map_int()`, `map_dbl()`, etc since we 
+  don't know what `.f` will return.
 
 * R has named arguments, so instead of providing different functions for
   minor variations (e.g. `detect()` and `detectLast()`) I use a named

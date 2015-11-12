@@ -26,22 +26,17 @@ map2_chr(.x, .y, .f, ...)
 
 map2_df(.x, .y, .f, ..., .id = NULL)
 
-map3(.x, .y, .z, .f, ...)
-
 map_n(.l, .f, ...)
 
 walk2(.x, .y, .f, ...)
 
-walk3(.x, .y, .z, .f, ...)
-
 walk_n(.l, .f, ...)
 }
 \arguments{
-\item{.x, .y, .z}{Lists of the same length or of length 1. Only
+\item{.x, .y}{Lists of the same length or of length 1. Only
 lists of length 1 are recycled.}
 
-\item{.f}{A function of two (for \code{map2} and \code{walk2}) or
-three (\code{map3} and \code{walk3}) arguments. For \code{map_n}
+\item{.f}{A function of two arguments. For \code{map_n}
 and \code{walk_n}, the number of arguments must correspond to the
 number of elements of \code{.l}.}
 
@@ -59,8 +54,8 @@ should be supplied to every call come after the function name.
 }
 \details{
 \code{map_n()} and \code{walk_n()} take a single list \code{.l} and
-map over all its elements simultaneously. \code{map2()} and
-\code{map3()} return a data frame when \code{.x} is a data frame.
+map over all its elements simultaneously. \code{map2()} returns
+a data frame when \code{.x} is a data frame.
 }
 \examples{
 x <- list(1, 10, 100)
@@ -68,9 +63,6 @@ y <- list(1, 2, 3)
 map2(x, y, ~ .x + .y)
 # Or just
 map2(x, y, `+`)
-
-z <- list(15, 20, 25)
-map3(x, y, z, ~ .x ^ .y + .z)
 
 # Split into pieces, fit model to each piece, then predict
 by_cyl <- mtcars \%>\% split(.$cyl)

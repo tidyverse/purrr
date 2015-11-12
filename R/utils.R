@@ -42,8 +42,8 @@ update_list <- function(`_data`, ...) {
 #'   If a function, it is used as is.
 #'
 #'   If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
-#'   a three arguments, \code{.x} or \code{.}, \code{.y}, \code{.z}. This allows
-#'   you to create very compact anonymous functions of up to 3 variables.
+#'   two arguments, \code{.x} or \code{.} and \code{.y}. This allows
+#'   you to create very compact anonymous functions with two inputs.
 #'
 #'   If a string, e.g. \code{"y"}, it is converted to an extractor function,
 #'   \code{function(x) x[["y"]]}. To index deeply into a nested list,
@@ -63,7 +63,7 @@ as_function <- function(.f) {
     if (length(.f) != 2) {
       stop("Formula must be one sided", call. = FALSE)
     }
-    make_function(alist(.x = , .y = , .z = , . = .x), .f[[2]], environment(.f))
+    make_function(alist(.x = , .y = , . = .x), .f[[2]], environment(.f))
   } else if (is.character(.f) || is.numeric(.f)) {
     function(g) .subset2(g, .f)
   } else {
