@@ -47,9 +47,9 @@ c(mtcars) \%>\% flatmap(var_select)
 
 # You can also check that the results are of expected type
 \dontrun{
-c(mtcars) \%>\% flatmap(var_select, .type = "character")}
+c(mtcars) \%>\% flatmap(var_select)}
 
-c(mtcars) \%>\% flatmap(var_select, .type = "numeric")
+c(mtcars) \%>\% flatmap(var_select)
 }
 \seealso{
 \code{\link{map_lgl}()}, \code{\link{map_chr}()},
