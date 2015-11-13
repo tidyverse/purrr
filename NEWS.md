@@ -1,5 +1,12 @@
 # purrr 0.1.0.9000
 
+* `flatmap()` has been deprecated. Please use `map()` followed by the 
+  appropriate `flatten()`.
+
+* `flatten()` is now type-stable and always returns a list. To return a simpler
+  vector, use `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`, and 
+  `flatten_chr()`.
+
 * `map3()` and `walk3()` have been deprecated.
 
 * `invoke()` has been overhauled to be more useful: it now works similarly

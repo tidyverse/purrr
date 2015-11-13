@@ -1,33 +1,12 @@
 #' Map a function and flatten the result by one-level
 #'
-#' \code{flatmap()} is equivalent to \code{map()} followed by
-#' \code{flatten()}. You can also provide \code{.type} to check the
-#' resulting type conforms to you expectations.
+#' Deprecated: please use \code{map()} followed by \code{flatten()}.
 #'
-#' Compared to \code{\link{map_lgl}()}, \code{\link{map_chr}()}, etc,
-#' \code{flatmap()} is adapted to functions returning a variable
-#' number of elements.
-#' @inheritParams map
-#' @inheritParams as_function
-#' @param .type A string indicating which type you expect the results
-#'   of \code{.f} should be. This can be any of the types returned by
-#'   \code{\link{typeof}()}, or "numeric" as a shorthand for either
-#'   "double" or "integer".
 #' @export
-#' @seealso \code{\link{map_lgl}()}, \code{\link{map_chr}()},
-#'   \code{\link{map_dbl}()}, \code{\link{map_int}()}
-#' @examples
-#' # Sample a variable number of elements from each column and
-#' # concatenate the results
-#' var_select <- function(x) sample(x, size = rdunif(1, 5))
-#' c(mtcars) %>% flatmap(var_select)
-#'
-#' # You can also check that the results are of expected type
-#' \dontrun{
-#' c(mtcars) %>% flatmap(var_select)}
-#'
-#' c(mtcars) %>% flatmap(var_select)
+#' @keywords internal
 flatmap <- function(.x, .f, ..., .type) {
+  .Deprecate("`flatmap()` has been deprecated. Please use `map()` + `flatten()",
+    call. = FALSE)
   out <- map(.x, .f = .f, ...)
   flatten(out)
 }
