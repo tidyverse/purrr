@@ -5,7 +5,7 @@
 #' @export
 #' @keywords internal
 flatmap <- function(.x, .f, ..., .type) {
-  .Deprecate("`flatmap()` has been deprecated. Please use `map()` + `flatten()",
+  warning("`flatmap()` has been deprecated. Please use `map()` + `flatten()",
     call. = FALSE)
   out <- map(.x, .f = .f, ...)
   flatten(out)
