@@ -257,11 +257,6 @@ walk_n <- function(.l, .f, ...) {
 #' @return The same type of object as \code{.x}.
 #' @name conditional-map
 #' @examples
-#' list(x = rbernoulli(100), y = 1:100) %>%
-#'   transpose() %>%
-#'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   transpose(.simplify = TRUE)
-#'
 #' # Convert factors to characters
 #' iris %>%
 #'   map_if(is.factor, as.character) %>%
@@ -272,6 +267,12 @@ walk_n <- function(.l, .f, ...) {
 #'
 #' # Or with a vector of names:
 #' mtcars %>% map_at(c("cyl", "am"), as.character) %>% str()
+#'
+#' list(x = rbernoulli(100), y = 1:100) %>%
+#'   transpose() %>%
+#'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
+#'   transpose(.simplify = TRUE)
+#'
 NULL
 
 #' @rdname conditional-map

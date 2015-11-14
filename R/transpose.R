@@ -11,9 +11,10 @@
 #' transpose operation on a matrix. You can get back the original
 #' input by zipping it twice.
 #'
-#' @param .l A list of vectors to zip.
-#' @param .fields Fields to use when unzipping - defaults to the names
-#'   of the first sub-list.
+#' @param .l A list of vectors to zip. The first element is used as the
+#'   template; you'll get a warning if a sub-list is not the same length as
+#'   the first element. For efficiency, elements are matched by position, not
+#'   by name.
 #' @param .simplify If \code{TRUE}, lists containing atomic scalars of
 #'   the same type will be converted to a vector.
 #' @export
@@ -31,26 +32,13 @@
 #' y %>% transpose() %>% str()
 #'
 #' # The simplify argument reduces list to atomic vectors where possible
-#' x <- list(a = 1:5, b = 5:1)
+#' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 #' x %>% transpose()
 #' x %>% transpose(.simplify = TRUE)
-transpose <- function(.l, .fields = NULL, .simplify = FALSE) {
-  if (length(.l) == 0) return(list())
-
-  if (is.null(.fields)) {
-    if (is.null(names(.l[[1]]))) {
-      .fields <- seq_along(.l[[1]])
-    } else {
-      .fields <- stats::setNames(names(.l[[1]]), names(.l[[1]]))
-    }
-  } else {
-    if (is.character(.fields) && is.null(names(.fields))) {
-      names(.fields) <- .fields
-    }
-  }
-
-  out <- lapply(.fields, function(i) lapply(.l, .subset2, i))
-  if (.simplify) out <- lapply(out, simplify_if_possible)
+#' @useDynLib purrr transpose_impl
+transpose <- function(.l, .simplify = FALSE) {
+  out <- .Call(transpose_impl, .l)
+  if (.simplify) out <- map(out, simplify_if_possible)
   out
 }
 
@@ -71,7 +59,7 @@ zip2 <- function(.x, .y, .fields = NULL, .simplify = FALSE) {
     "`zip2(x, y)` is deprecated, please use `transpose(list(x, y))` instead.",
     call. = FALSE
   )
-  transpose(list(.x, .y), .fields = .fields, .simplify = .simplify)
+  transpose(list(.x, .y), .simplify = .simplify)
 }
 
 #' @rdname transpose
@@ -83,5 +71,5 @@ zip3 <- function(.x, .y, .z, .fields = NULL, .simplify = FALSE) {
     call. = FALSE
   )
 
-  transpose(list(.x, .y, .z), .fields = .fields, .simplify = .simplify)
+  transpose(list(.x, .y, .z), .simplify = .simplify)
 }

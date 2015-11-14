@@ -1,5 +1,7 @@
 # purrr 0.1.0.9000
 
+* `transpose()` loses the fields argument and gains a C implementation.
+
 * `flatmap()` has been deprecated. Please use `map()` followed by the 
   appropriate `flatten()`.
 
