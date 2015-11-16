@@ -4,7 +4,7 @@
 \alias{at_depth}
 \title{Map a function over lower levels of a nested list}
 \usage{
-at_depth(.x, .depth, .f, ...)
+at_depth(.x, .depth, .f, ..., .skip = FALSE)
 }
 \arguments{
 \item{.x}{A deep list}
@@ -25,6 +25,8 @@ at_depth(.x, .depth, .f, ...)
   \code{z[["x"]][["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
+
+\item{.skip}{Whether to skip branches that are too shallow.}
 }
 \description{
 \code{at_depth()} maps a function on lower levels of nested
@@ -78,5 +80,11 @@ l2 <- list(
 # elements of the objects at the second level. paste() is thus
 # effectively mapped at level 3.
 l2 \%>\% at_depth(2, map_n, paste, sep = " / ")
+
+# Here we have a list with one branch shorter than the other.
+l3 <- l2
+l3[[1]] <- c(1, 2)
+print(try(l3 \%>\% at_depth(3, map_n, paste, sep = " / "), silent = TRUE))
+l3 \%>\% at_depth(3, map_n, paste, sep = " / ", .skip = TRUE)
 }
 

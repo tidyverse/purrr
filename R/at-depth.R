@@ -13,6 +13,7 @@
 #' @inheritParams as_function
 #' @param .x A deep list
 #' @param .depth Level of \code{.x} to map on.
+#' @param .skip Whether to skip branches that are too shallow.
 #' @export
 #' @examples
 #' l1 <- list(
@@ -55,15 +56,26 @@
 #' # elements of the objects at the second level. paste() is thus
 #' # effectively mapped at level 3.
 #' l2 %>% at_depth(2, map_n, paste, sep = " / ")
-at_depth <- function(.x, .depth, .f, ...) {
+#' 
+#' # Here we have a list with one branch shorter than the other.
+#' l3 <- l2
+#' l3[[1]] <- c(1, 2)
+#' \dontrun{
+#' l3 %>% at_depth(3, map_n, paste, sep = " / ")
+#' }
+#' l3 %>% at_depth(3, map_n, paste, sep = " / ", .skip = TRUE)
+at_depth <- function(.x, .depth, .f, ..., .skip = FALSE) {
   .f <- as_function(.f)
 
-  recurse <- function(x, depth) {
+  recurse <- function(x, depth, skip) {
     if (depth > 1) {
       if (is.atomic(x)) {
-        stop("List not deep enough", call. = FALSE)
+        if (!skip) {
+          stop("List not deep enough", call. = FALSE)
+        } else x
+      } else {
+        lapply(x, recurse, depth = depth - 1, skip = skip)
       }
-      lapply(x, recurse, depth = depth - 1)
 
     } else {
       lapply(x, .f, ...) %>% output_hook(x)
@@ -73,7 +85,7 @@ at_depth <- function(.x, .depth, .f, ...) {
   if (.depth == 0) {
     .f(.x, ...)
   } else if (.depth > 0) {
-    recurse(.x, .depth)
+    recurse(.x, .depth, .skip)
   } else {
     stop(".depth cannot be negative", call. = FALSE)
   }
