@@ -14,9 +14,14 @@ test_that("length 1 elemetns are recycled", {
   expect_equal(out, list(c(1, 1), c(2, 1)))
 })
 
-test_that("names are preserved", {
+test_that(".f called with named arguments", {
   out <- map_n(list(x = 1, 2, y = 3), list)[[1]]
   expect_equal(names(out), c("x", "", "y"))
+})
+
+test_that("names are preserved", {
+  out <- map_n(list(c(x = 1, y = 2), 3:4), list)
+  expect_equal(names(out), c("x", "y"))
 })
 
 test_that("... are passed on", {

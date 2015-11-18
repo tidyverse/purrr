@@ -139,6 +139,9 @@ walk <- function(.x, .f, ...) {
 #' @param .x,.y Lists of the same length or of length 1. Only
 #' lists of length 1 are recycled.
 #' @param .l A list of lists to be mapped on simultaneously.
+#' @return An atomic vector, list, or data frame, depending on the suffix.
+#'   Atomic vectors and lists will be named if \code{.x} or the first
+#'   element of \code{.l} is named.
 #' @export
 #' @examples
 #' x <- list(1, 10, 100)

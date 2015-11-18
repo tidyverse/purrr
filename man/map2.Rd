@@ -47,6 +47,11 @@ giving either the name or the index of the data frame.}
 
 \item{.l}{A list of lists to be mapped on simultaneously.}
 }
+\value{
+An atomic vector, list, or data frame, depending on the suffix.
+  Atomic vectors and lists will be named if \code{.x} or the first
+  element of \code{.l} is named.
+}
 \description{
 These functions are designed in such a way that arguments to be
 vectorised over come before the function name, and arguments that

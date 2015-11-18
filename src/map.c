@@ -2,6 +2,17 @@
 #include <R.h>
 #include <Rinternals.h>
 
+void copy_names(SEXP from, SEXP to) {
+  if (Rf_length(from) != Rf_length(to))
+    return;
+
+  SEXP names = Rf_getAttrib(from, R_NamesSymbol);
+  if (Rf_isNull(names))
+    return;
+
+  Rf_setAttrib(to, R_NamesSymbol, names);
+}
+
 // call must involve i
 SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type) {
   // Create variable "i" and map to scalar integer
@@ -55,10 +66,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
-
-  SEXP names = Rf_getAttrib(x_val, R_NamesSymbol);
-  if(!Rf_isNull(names))
-    Rf_setAttrib(out, R_NamesSymbol, names);
+  copy_names(x_val, out);
 
   UNPROTECT(3);
 
@@ -96,10 +104,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
-
-  SEXP names = Rf_getAttrib(x_val, R_NamesSymbol);
-  if(!Rf_isNull(names))
-    Rf_setAttrib(out, R_NamesSymbol, names);
+  copy_names(x_val, out);
 
   UNPROTECT(5);
   return out;
@@ -171,6 +176,7 @@ SEXP map_n_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
+  copy_names(VECTOR_ELT(l_val, 0), out);
 
   UNPROTECT(3);
   return out;
