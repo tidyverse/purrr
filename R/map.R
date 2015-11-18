@@ -8,7 +8,7 @@
 #' a data frame by row-binding the individual elements.
 #'
 #' @inheritParams as_function
-#' @param .x A list or vector.
+#' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to \code{.f}.
 #' @return \code{map()} a list if \code{.x} is a list or a data frame
 #'   if \code{.x} is a data frame.

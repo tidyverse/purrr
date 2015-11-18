@@ -11,18 +11,19 @@ at_depth(.x, .depth, .f, ...)
 
 \item{.depth}{Level of \code{.x} to map on.}
 
-\item{.f}{A function, formula or string.
+\item{.f}{A function, formula, or atomic vector.
 
-  If a function, it is used as is.
+  If a \strong{function}, it is used as is.
 
-  If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
-  two arguments, \code{.x} or \code{.} and \code{.y}. This allows
-  you to create very compact anonymous functions with two inputs.
+  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
+  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+  allows you to create very compact anonymous functions with up to
+  two inputs.
 
-  If a string, e.g. \code{"y"}, it is converted to an extractor function,
-  \code{function(x) x[["y"]]}. To index deeply into a nested list,
-  pass a character vector, \code{c("x", "y")} is equivalent to
-  \code{z[["x"]][["y"]]}.}
+  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
+  is converted to an extractor function, \code{function(x) x[["y"]]}. To
+  index deeply into a nested list, use multiple values; \code{c("x", "y")}
+  is equivalent to \code{z[["x"]][["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
