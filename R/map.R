@@ -66,17 +66,10 @@ map <- function(.x, .f, ...) {
 }
 
 #' @rdname map
-#' @param .p A predicate: either a function, in any of the ways possible
-#'   for \code{.f}, or a logical vector the same length as \code{.x}.
 #' @export
-map_lgl <- function(.x, .p, ...) {
-  if (is.logical(.p)) {
-    stopifnot(length(.p) == length(.x))
-    .p
-  } else {
-    .p <- as_function(.p)
-    .Call(map_impl, environment(), ".x", ".p", "logical")
-  }
+map_lgl <- function(.x, .f, ...) {
+  .p <- as_function(.p)
+  .Call(map_impl, environment(), ".x", ".p", "logical")
 }
 
 #' @rdname map

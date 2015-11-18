@@ -12,7 +12,7 @@
 \usage{
 map(.x, .f, ...)
 
-map_lgl(.x, .p, ...)
+map_lgl(.x, .f, ...)
 
 map_chr(.x, .f, ...)
 
@@ -41,9 +41,6 @@ walk(.x, .f, ...)
   \code{z[["x"]][["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
-
-\item{.p}{A predicate: either a function, in any of the ways possible
-for \code{.f}, or a logical vector the same length as \code{.x}.}
 
 \item{.id}{If not \code{NULL} a variable with this name will be created
 giving either the name or the index of the data frame.}

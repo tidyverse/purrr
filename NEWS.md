@@ -1,5 +1,7 @@
 # purrr 0.1.0.9000
 
+* `map_lgl()` now has second argument `.f`, not `.p` (#134).
+
 * `map_n()` is now `pmap()` (parallel map) (#132). `pmap()` has output
   suffixed `lgl`, `int`, `dbl`, `chr`, and `df`.
 
