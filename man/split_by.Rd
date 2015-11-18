@@ -13,7 +13,7 @@ order_by(.x, .f, ...)
 sort_by(.x, .f, ...)
 }
 \arguments{
-\item{.x}{A list or vector.}
+\item{.x}{A list or atomic vector.}
 
 \item{.f}{A function, formula, or atomic vector.
 

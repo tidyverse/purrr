@@ -117,9 +117,13 @@ walk <- function(.x, .f, ...) {
 
 #' Map over multiple inputs simultaneously.
 #'
-#' These functions are designed in such a way that arguments to be
-#' vectorised over come before the function name, and arguments that
-#' should be supplied to every call come after the function name.
+#' These functions are variants of \code{map()} iterate over multiple
+#' arguments in parallel. \code{map2} is specialised for the two argument
+#' case; \code{pmap} allows you to provide any number of arguments in a
+#' list.
+#'
+#' Note that arguments to be vectorised over come before the \code{.f},
+#' and arguments that are supplied to every call come after \code{.f}.
 #'
 #' \code{pmap()} and \code{pwalk()} take a single list \code{.l} and
 #' map over all its elements in parallel.
@@ -176,16 +180,13 @@ map2_chr <- function(.x, .y, .f, ...) {
   .f <- as_function(.f)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
 }
-
 #' @rdname map2
-#' @inheritParams map_df
 #' @export
 map2_df <- function(.x, .y, .f, ..., .id = NULL) {
   .f <- as_function(.f)
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
-
 
 #' @export
 #' @rdname map2

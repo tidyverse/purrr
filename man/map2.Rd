@@ -82,11 +82,15 @@ An atomic vector, list, or data frame, depending on the suffix.
   element of \code{.l} is named.
 }
 \description{
-These functions are designed in such a way that arguments to be
-vectorised over come before the function name, and arguments that
-should be supplied to every call come after the function name.
+These functions are variants of \code{map()} iterate over multiple
+arguments in parallel. \code{map2} is specialised for the two argument
+case; \code{pmap} allows you to provide any number of arguments in a
+list.
 }
 \details{
+Note that arguments to be vectorised over come before the \code{.f},
+and arguments that are supplied to every call come after \code{.f}.
+
 \code{pmap()} and \code{pwalk()} take a single list \code{.l} and
 map over all its elements in parallel.
 }

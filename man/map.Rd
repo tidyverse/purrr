@@ -25,7 +25,7 @@ map_df(.x, .f, ..., .id = NULL)
 walk(.x, .f, ...)
 }
 \arguments{
-\item{.x}{A list or vector.}
+\item{.x}{A list or atomic vector.}
 
 \item{.f}{A function, formula, or atomic vector.
 

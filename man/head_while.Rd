@@ -10,7 +10,7 @@ head_while(.x, .p, ...)
 tail_while(.x, .p, ...)
 }
 \arguments{
-\item{.x}{A list or vector.}
+\item{.x}{A list or atomic vector.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.

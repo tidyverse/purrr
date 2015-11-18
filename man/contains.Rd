@@ -7,7 +7,7 @@
 contains(.x, .y)
 }
 \arguments{
-\item{.x}{A list or vector.}
+\item{.x}{A list or atomic vector.}
 
 \item{.y}{Object to test for}
 }

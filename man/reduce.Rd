@@ -10,7 +10,7 @@ reduce(.x, .f, ..., .init)
 reduce_right(.x, .f, ..., .init)
 }
 \arguments{
-\item{.x}{A list or vector.}
+\item{.x}{A list or atomic vector.}
 
 \item{.f}{A two-argument function.}
 
