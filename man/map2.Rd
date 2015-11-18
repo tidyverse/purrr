@@ -9,6 +9,7 @@
 \alias{map2_lgl}
 \alias{map3}
 \alias{map_n}
+\alias{pmap}
 \alias{walk2}
 \alias{walk3}
 \alias{walk_n}
@@ -26,26 +27,37 @@ map2_chr(.x, .y, .f, ...)
 
 map2_df(.x, .y, .f, ..., .id = NULL)
 
-map_n(.l, .f, ...)
+pmap(.l, .f, ...)
 
 walk2(.x, .y, .f, ...)
 
 walk_n(.l, .f, ...)
 }
 \arguments{
-\item{.x, .y}{Lists of the same length or of length 1. Only
-lists of length 1 are recycled.}
+\item{.x, .y}{Vectors of the same length. A vector of length 1 will
+be recycled.}
 
-\item{.f}{A function of two arguments. For \code{map_n}
-and \code{walk_n}, the number of arguments must correspond to the
-number of elements of \code{.l}.}
+\item{.f}{A function, formula or string.
+
+  If a function, it is used as is.
+
+  If a formula, e.g. \code{~ .x + 2}, it is converted to a function with
+  two arguments, \code{.x} or \code{.} and \code{.y}. This allows
+  you to create very compact anonymous functions with two inputs.
+
+  If a string, e.g. \code{"y"}, it is converted to an extractor function,
+  \code{function(x) x[["y"]]}. To index deeply into a nested list,
+  pass a character vector, \code{c("x", "y")} is equivalent to
+  \code{z[["x"]][["y"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
 \item{.id}{If not \code{NULL} a variable with this name will be created
 giving either the name or the index of the data frame.}
 
-\item{.l}{A list of lists to be mapped on simultaneously.}
+\item{.l}{A list of lists. The length of \code{.l} determines the
+number of arguments that \code{.f} will be called with. List
+names will be used if present.}
 }
 \value{
 An atomic vector, list, or data frame, depending on the suffix.
@@ -58,9 +70,8 @@ vectorised over come before the function name, and arguments that
 should be supplied to every call come after the function name.
 }
 \details{
-\code{map_n()} and \code{walk_n()} take a single list \code{.l} and
-map over all its elements simultaneously. \code{map2()} returns
-a data frame when \code{.x} is a data frame.
+\code{pmap()} and \code{pwalk()} take a single list \code{.l} and
+map over all its elements in parallel.
 }
 \examples{
 x <- list(1, 10, 100)

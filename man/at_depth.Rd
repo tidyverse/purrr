@@ -74,9 +74,9 @@ l2 <- list(
   )
 )
 
-# Here we ask map_n() to map paste() simultaneously over all
+# Here we ask pmap() to map paste() simultaneously over all
 # elements of the objects at the second level. paste() is thus
 # effectively mapped at level 3.
-l2 \%>\% at_depth(2, map_n, paste, sep = " / ")
+l2 \%>\% at_depth(2, pmap, paste, sep = " / ")
 }
 

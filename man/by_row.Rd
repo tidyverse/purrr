@@ -43,7 +43,7 @@ non-scalar atomic vector, a \code{.row} column is appended to
 identify the row number in the original data frame.
 
 \code{map_rows()} is intended to provide a version of
-\code{map_n()} that works better with data frames. The distinction
+\code{pmap()} that works better with data frames. The distinction
 between \code{by_row()} and \code{map_rows()} is that the former
 passes a data frame to \code{..f} while the latter maps the columns
 to its function call. This is essentially like using

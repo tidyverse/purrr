@@ -78,7 +78,7 @@ mean(unlist(boot$diffs))
 * Apply a function to each element: `map()` returns a list;
   `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` return a vector; 
   `walk()` invisibly returns original list, calling the function for its side 
-  effects; `map2()` and `map_n()` vectorise over multiple inputs; 
+  effects; `map2()` and `pmap()` vectorise over multiple inputs; 
   `at_depth()` maps a function at a specified level of nested lists.
 
 * Apply a function conditionally with `map_if()` (where a predicate

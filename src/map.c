@@ -110,7 +110,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   return out;
 }
 
-SEXP map_n_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
+SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   const char* l_name = CHAR(Rf_asChar(l_name_));
   SEXP l = Rf_install(l_name);
   SEXP l_val = Rf_eval(l, env);

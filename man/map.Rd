@@ -104,7 +104,7 @@ mtcars \%>\%
 # the broom package)
 }
 \seealso{
-\code{\link{map2}()} and \code{\link{map_n}()} to map over multiple
+\code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
   inputs simulatenously
 }
 

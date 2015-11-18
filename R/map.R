@@ -19,7 +19,7 @@
 #'
 #'   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
 #'   its side effects, but this makes it easier to combine in a pipe.
-#' @seealso \code{\link{map2}()} and \code{\link{map_n}()} to map over multiple
+#' @seealso \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
 #'   inputs simulatenously
 #' @export
 #' @examples
@@ -128,17 +128,15 @@ walk <- function(.x, .f, ...) {
 #' vectorised over come before the function name, and arguments that
 #' should be supplied to every call come after the function name.
 #'
-#' \code{map_n()} and \code{walk_n()} take a single list \code{.l} and
-#' map over all its elements simultaneously. \code{map2()} returns
-#' a data frame when \code{.x} is a data frame.
+#' \code{pmap()} and \code{pwalk()} take a single list \code{.l} and
+#' map over all its elements in parallel.
 #'
 #' @inheritParams map
-#' @param .f A function of two arguments. For \code{map_n}
-#'   and \code{walk_n}, the number of arguments must correspond to the
-#'   number of elements of \code{.l}.
-#' @param .x,.y Lists of the same length or of length 1. Only
-#' lists of length 1 are recycled.
-#' @param .l A list of lists to be mapped on simultaneously.
+#' @param .x,.y Vectors of the same length. A vector of length 1 will
+#'   be recycled.
+#' @param .l A list of lists. The length of \code{.l} determines the
+#'   number of arguments that \code{.f} will be called with. List
+#'   names will be used if present.
 #' @return An atomic vector, list, or data frame, depending on the suffix.
 #'   Atomic vectors and lists will be named if \code{.x} or the first
 #'   element of \code{.l} is named.
@@ -200,17 +198,26 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
 #' @rdname map2
 #' @usage NULL
 map3 <- function(.x, .y, .z, .f, ...) {
-  warning("`map3(x, y, z)` is deprecated. Please use `map_n(list(x, y, z))` ",
+  warning("`map3(x, y, z)` is deprecated. Please use `pmap(list(x, y, z))` ",
     "instead", call. = FALSE)
-  map_n(list(.x, .y, .z), .f, ...) %>% output_hook(.x)
+  pmap(list(.x, .y, .z), .f, ...) %>% output_hook(.x)
 }
 
 #' @export
 #' @rdname map2
-#' @useDynLib purrr map_n_impl
-map_n <- function(.l, .f, ...) {
+#' @useDynLib purrr pmap_impl
+pmap <- function(.l, .f, ...) {
   .f <- as_function(.f)
-  .Call(map_n_impl, environment(), ".l", ".f", "list")
+  .Call(pmap_impl, environment(), ".l", ".f", "list")
+}
+
+#' @export
+#' @usage NULL
+#' @rdname map2
+map_n <- function(...) {
+  warning("`map_n()` is deprecated; please use `pmap()` instead.",
+    call. = FALSE)
+  pmap(...)
 }
 
 #' @export

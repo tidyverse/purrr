@@ -123,9 +123,9 @@ lift_dv <- function (..f, ..., .unnamed = FALSE) {
 #' mtcars %>% by_row(lift_vl(mean))
 #'
 #' # In other situations we need the vector-valued function to take a
-#' # variable number of arguments as with map_n(). This is a job for
+#' # variable number of arguments as with pmap(). This is a job for
 #' # lift_vd():
-#' map_n(mtcars, lift_vd(mean))
+#' pmap(mtcars, lift_vd(mean))
 #'
 #' # lift_vd() will collect the arguments and concatenate them to a
 #' # vector before passing them to ..f. You can add a check to assert
@@ -182,11 +182,11 @@ lift_vd <- function(..f, ..., .type) {
 #' identical(out1, out2)
 #'
 #' # This kind of lifting is sometimes needed for function
-#' # composition. An example would be to use map_n() with a function
+#' # composition. An example would be to use pmap() with a function
 #' # that takes a list. In the following, we use some() on each row of
 #' # a data frame to check they each contain at least one element
 #' # satisfying a condition:
-#' mtcars %>% map_n(lift_ld(some, partial(`<`, 200)))
+#' mtcars %>% pmap(lift_ld(some, partial(`<`, 200)))
 #'
 #' # Default arguments for ..f can be specified in the call to
 #' # lift_ld()

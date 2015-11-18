@@ -89,7 +89,7 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' identify the row number in the original data frame.
 #'
 #' \code{map_rows()} is intended to provide a version of
-#' \code{map_n()} that works better with data frames. The distinction
+#' \code{pmap()} that works better with data frames. The distinction
 #' between \code{by_row()} and \code{map_rows()} is that the former
 #' passes a data frame to \code{..f} while the latter maps the columns
 #' to its function call. This is essentially like using
@@ -136,7 +136,7 @@ by_row <- function(.d, ..f, ..., .labels = TRUE) {
 #' @rdname by_row
 #' @export
 map_rows <- function(.d, .f, ..., .labels = TRUE) {
-  map_n(.d, .f, ...) %>% process_slices(.d, .d, .labels, TRUE)
+  pmap(.d, .f, ...) %>% process_slices(.d, .d, .labels, TRUE)
 }
 
 
