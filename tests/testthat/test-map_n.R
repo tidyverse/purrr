@@ -31,3 +31,12 @@ test_that("... are passed on", {
     list(x = 2, n = 1)
   ))
 })
+
+test_that("outputs are suffixes have correct type", {
+  x <- 1:3
+  expect_is(pmap_lgl(list(x), is.numeric), "logical")
+  expect_is(pmap_int(list(x), length), "integer")
+  expect_is(pmap_dbl(list(x), mean), "numeric")
+  expect_is(pmap_chr(list(x), paste), "character")
+  expect_is(pmap_df(list(x), as.data.frame), "data.frame")
+})

@@ -10,6 +10,11 @@
 \alias{map3}
 \alias{map_n}
 \alias{pmap}
+\alias{pmap_chr}
+\alias{pmap_dbl}
+\alias{pmap_df}
+\alias{pmap_int}
+\alias{pmap_lgl}
 \alias{walk2}
 \alias{walk3}
 \alias{walk_n}
@@ -28,6 +33,16 @@ map2_chr(.x, .y, .f, ...)
 map2_df(.x, .y, .f, ..., .id = NULL)
 
 pmap(.l, .f, ...)
+
+pmap_lgl(.l, .f, ...)
+
+pmap_int(.l, .f, ...)
+
+pmap_dbl(.l, .f, ...)
+
+pmap_chr(.l, .f, ...)
+
+pmap_df(.l, .f, ..., .id = NULL)
 
 walk2(.x, .y, .f, ...)
 

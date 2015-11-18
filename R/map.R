@@ -212,6 +212,39 @@ pmap <- function(.l, .f, ...) {
 }
 
 #' @export
+#' @rdname map2
+pmap_lgl <- function(.l, .f, ...) {
+  .f <- as_function(.f)
+  .Call(pmap_impl, environment(), ".l", ".f", "logical")
+}
+#' @export
+#' @rdname map2
+pmap_int <- function(.l, .f, ...) {
+  .f <- as_function(.f)
+  .Call(pmap_impl, environment(), ".l", ".f", "integer")
+}
+#' @export
+#' @rdname map2
+pmap_dbl <- function(.l, .f, ...) {
+  .f <- as_function(.f)
+  .Call(pmap_impl, environment(), ".l", ".f", "double")
+}
+#' @export
+#' @rdname map2
+pmap_chr <- function(.l, .f, ...) {
+  .f <- as_function(.f)
+  .Call(pmap_impl, environment(), ".l", ".f", "character")
+}
+#' @rdname map2
+#' @export
+pmap_df <- function(.l, .f, ..., .id = NULL) {
+  .f <- as_function(.f)
+  res <- map(.l, .f, ...)
+  dplyr::bind_rows(res, .id = .id)
+}
+
+
+#' @export
 #' @usage NULL
 #' @rdname map2
 map_n <- function(...) {

@@ -1,6 +1,7 @@
 # purrr 0.1.0.9000
 
-* `map_n()` is now `pmap()` (parallel map) (#132).
+* `map_n()` is now `pmap()` (parallel map) (#132). `pmap()` has output
+  suffixed `lgl`, `int`, `dbl`, `chr`, and `df`.
 
 * `transpose()` loses the fields argument and gains a C implementation.
 
