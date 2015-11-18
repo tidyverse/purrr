@@ -15,6 +15,7 @@
 \alias{pmap_df}
 \alias{pmap_int}
 \alias{pmap_lgl}
+\alias{pwalk}
 \alias{walk2}
 \alias{walk3}
 \alias{walk_n}
@@ -46,7 +47,7 @@ pmap_df(.l, .f, ..., .id = NULL)
 
 walk2(.x, .y, .f, ...)
 
-walk_n(.l, .f, ...)
+pwalk(.l, .f, ...)
 }
 \arguments{
 \item{.x, .y}{Vectors of the same length. A vector of length 1 will

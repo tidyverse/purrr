@@ -256,7 +256,7 @@ map_n <- function(...) {
 #' @export
 #' @rdname map2
 walk2 <- function(.x, .y, .f, ...) {
-  walk_n(list(.x, .y), .f, ...)
+  pwalk(list(.x, .y), .f, ...)
   invisible(.x)
 }
 
@@ -264,21 +264,30 @@ walk2 <- function(.x, .y, .f, ...) {
 #' @usage NULL
 #' @rdname map2
 walk3 <- function(.x, .y, .z, .f, ...) {
-  warning("`walk3(x, y, z)` is deprecated. Please use `walk_n(list(x, y, z))` ",
+  warning("`walk3(x, y, z)` is deprecated. Please use `pwalk(list(x, y, z))` ",
     "instead", call. = FALSE)
-  walk_n(list(.x, .y, .z), .f, ...)
+  pwalk(list(.x, .y, .z), .f, ...)
   invisible(.x)
 }
 
 #' @export
 #' @rdname map2
-walk_n <- function(.l, .f, ...) {
+pwalk <- function(.l, .f, ...) {
   .f <- as_function(.f)
   args_list <- recycle_args(.l) %>% transpose()
   for (args in args_list) {
     do.call(".f", c(args, list(...)))
   }
   invisible(.l)
+}
+
+#' @export
+#' @rdname map2
+#' @usage NULL
+walk_n <- function(...) {
+  warning("`walk_n()` is deprecated; please use `pwalk()` instead.",
+    call. = FALSE)
+  pwalk(...)
 }
 
 #' Modify elements conditionally
