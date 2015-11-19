@@ -90,10 +90,10 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
 
 #' Apply a function to each row of a data frame
 #'
-#' \code{by_row()} and \code{map_rows()} apply \code{..f} to each row
+#' \code{by_row()} and \code{invoke_rows()} apply \code{..f} to each row
 #' of \code{.d}. If \code{..f}'s output is not a data frame nor an
 #' atomic vector, a list-column is created. In all cases,
-#' \code{by_row()} and \code{map_rows()} create a data frame in tidy
+#' \code{by_row()} and \code{invoke_rows()} create a data frame in tidy
 #' format.
 #'
 #' By default, the whole row is appended to the result to serve as
@@ -102,13 +102,13 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
 #' non-scalar atomic vector, a \code{.row} column is appended to
 #' identify the row number in the original data frame.
 #'
-#' \code{map_rows()} is intended to provide a version of \code{pmap()}
+#' \code{invoke_rows()} is intended to provide a version of \code{pmap()}
 #' that works better with data frames. The distinction between
-#' \code{by_row()} and \code{map_rows()} is that the former passes a
+#' \code{by_row()} and \code{invoke_rows()} is that the former passes a
 #' data frame to \code{..f} while the latter maps the columns to its
 #' function call. This is essentially like using
 #' \code{\link{invoke}()} with each row. Another way to view this is
-#' that \code{map_rows()} is equivalent to using \code{by_row()} with
+#' that \code{invoke_rows()} is equivalent to using \code{by_row()} with
 #' a function lifted to accept dots (see \code{\link{lift}()}).
 #' @param .d A data frame.
 #' @param .f,..f A function to apply to each row. If \code{..f} does
@@ -120,7 +120,7 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
 #' @inheritParams by_slice
 #' @return A data frame.
 #' @seealso \code{\link{by_slice}()}
-#' @useDynLib purrr map_rows_impl
+#' @useDynLib purrr invoke_rows_impl
 #' @export
 #' @examples
 #' # ..f should be able to work with a list or a data frame. As it
@@ -131,11 +131,11 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
 #' # of the lift_xy() helpers:
 #' mtcars %>% by_row(lift_vl(mean))
 #'
-#' # To run a function with map_rows(), make sure it is variadic (that
+#' # To run a function with invoke_rows(), make sure it is variadic (that
 #' # it accepts dots) or that .f's signature is compatible with the
 #' # column names
-#' mtcars %>% map_rows(sum)
-#' mtcars %>% map_rows(lift_vd(mean))
+#' mtcars %>% invoke_rows(sum)
+#' mtcars %>% invoke_rows(lift_vd(mean))
 #'
 #' # To integrate the result as part of the data frame, use rows or
 #' # cols collation:
@@ -166,7 +166,7 @@ by_row <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE
 
 #' @rdname by_row
 #' @export
-map_rows <- function(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRUE) {
+invoke_rows <- function(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRUE) {
   if (!.collate %in% c("list", "rows", "cols")) {
     stop(".collate should be `list`, `cols` or `rows`", call. = FALSE)
   }
@@ -178,7 +178,7 @@ map_rows <- function(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRU
   .labels_cols <- .d
   .slicing_cols <- .d
 
-  .Call("map_rows_impl", environment(), ".d", ".f")
+  .Call("invoke_rows_impl", environment(), ".d", ".f")
 }
 
 

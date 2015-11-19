@@ -1,5 +1,7 @@
 # purrr 0.1.0.9000
 
+* `map_rows()` has been renamed to `invoke_rows()`.
+
 * The rows-based functionals gain a `.to` option to name the output
   column as well as a `.collate` argument. The latter allows to
   collate the output in lists (by default), on columns or on

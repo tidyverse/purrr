@@ -2,12 +2,12 @@
 % Please edit documentation in R/rows.R
 \name{by_row}
 \alias{by_row}
-\alias{map_rows}
+\alias{invoke_rows}
 \title{Apply a function to each row of a data frame}
 \usage{
 by_row(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE)
 
-map_rows(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRUE)
+invoke_rows(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRUE)
 }
 \arguments{
 \item{.d}{A data frame.}
@@ -37,10 +37,10 @@ number of columns between groups.}
 A data frame.
 }
 \description{
-\code{by_row()} and \code{map_rows()} apply \code{..f} to each row
+\code{by_row()} and \code{invoke_rows()} apply \code{..f} to each row
 of \code{.d}. If \code{..f}'s output is not a data frame nor an
 atomic vector, a list-column is created. In all cases,
-\code{by_row()} and \code{map_rows()} create a data frame in tidy
+\code{by_row()} and \code{invoke_rows()} create a data frame in tidy
 format.
 }
 \details{
@@ -50,13 +50,13 @@ addition, if \code{..f} returns a multi-rows data frame or a
 non-scalar atomic vector, a \code{.row} column is appended to
 identify the row number in the original data frame.
 
-\code{map_rows()} is intended to provide a version of \code{pmap()}
+\code{invoke_rows()} is intended to provide a version of \code{pmap()}
 that works better with data frames. The distinction between
-\code{by_row()} and \code{map_rows()} is that the former passes a
+\code{by_row()} and \code{invoke_rows()} is that the former passes a
 data frame to \code{..f} while the latter maps the columns to its
 function call. This is essentially like using
 \code{\link{invoke}()} with each row. Another way to view this is
-that \code{map_rows()} is equivalent to using \code{by_row()} with
+that \code{invoke_rows()} is equivalent to using \code{by_row()} with
 a function lifted to accept dots (see \code{\link{lift}()}).
 }
 \examples{
@@ -68,11 +68,11 @@ mtcars \%>\% by_row(sum)
 # of the lift_xy() helpers:
 mtcars \%>\% by_row(lift_vl(mean))
 
-# To run a function with map_rows(), make sure it is variadic (that
+# To run a function with invoke_rows(), make sure it is variadic (that
 # it accepts dots) or that .f's signature is compatible with the
 # column names
-mtcars \%>\% map_rows(sum)
-mtcars \%>\% map_rows(lift_vd(mean))
+mtcars \%>\% invoke_rows(sum)
+mtcars \%>\% invoke_rows(lift_vd(mean))
 
 # To integrate the result as part of the data frame, use rows or
 # cols collation:

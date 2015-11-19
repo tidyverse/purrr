@@ -524,7 +524,7 @@ extern "C" SEXP by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   return results;
 }
 
-extern "C" SEXP map_rows_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
+extern "C" SEXP invoke_rows_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   // Map in parallel over the rows of the data frame
   SEXP results = PROTECT(pmap_impl(env, d_name_, f_name_, Rf_mkChar("list")));
 

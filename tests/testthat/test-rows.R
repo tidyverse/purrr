@@ -23,15 +23,15 @@ test_that("output column is named according to .to", {
   output2 <- mtcars %>% by_row(~ list(NULL), .to = "my_col", .labels = FALSE)
   expect_equal(names(output2), "my_col")
 
-  output3 <- mtcars %>% map_rows(function(...) list(3), .collate = "list", .to = "my_col", .labels = FALSE)
+  output3 <- mtcars %>% invoke_rows(function(...) list(3), .collate = "list", .to = "my_col", .labels = FALSE)
   expect_equal(names(output3), "my_col")
 })
 
 test_that("empty", {
   empty <- function(...) numeric(0)
-  rows_collation <- map_rows(mtcars[1:2], empty, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], empty, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], empty, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], empty, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], empty, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], empty, .collate = "list")
 
   expect_equal(rows_collation$.out, numeric(0))
   expect_equal(cols_collation$.out, numeric(0))
@@ -44,9 +44,9 @@ test_that("empty", {
 
 test_that("all nulls", {
   all_nulls <- function(...) NULL
-  rows_collation <- map_rows(mtcars[1:2], all_nulls, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], all_nulls, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], all_nulls, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "list")
 
   expect_equal(rows_collation$.out, NULL)
   expect_equal(cols_collation$.out, NULL)
@@ -59,9 +59,9 @@ test_that("all nulls", {
 
 test_that("scalars", {
   scalars <- function(...) paste("a", ..1)
-  rows_collation <- map_rows(mtcars[1:2], scalars, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], scalars, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], scalars, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], scalars, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], scalars, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], scalars, .collate = "list")
 
   out <- paste("a", mtcars$mpg)
 
@@ -76,9 +76,9 @@ test_that("scalars", {
 
 test_that("scalars with some nulls", {
   scalar_nulls <- gen_alternatives(1L, NULL)
-  rows_collation <- map_rows(mtcars[1:2], scalar_nulls, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], scalar_nulls, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], scalar_nulls, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], scalar_nulls, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], scalar_nulls, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], scalar_nulls, .collate = "list")
 
   expect_equal(rows_collation$.out, rep(1, 16))
   expect_equal(cols_collation$.out, rep(1, 16))
@@ -91,9 +91,9 @@ test_that("scalars with some nulls", {
 
 test_that("vectors", {
   vectors <- function(...) paste(letters[1:2], c(...))
-  rows_collation <- map_rows(mtcars[1:2], vectors, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], vectors, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], vectors, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], vectors, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], vectors, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], vectors, .collate = "list")
 
   data <- dplyr::rowwise(mtcars[1:2])
   out <- dplyr::do(data, .out = paste(c("a", "b"), c(.$mpg, .$cyl)))[[1]]
@@ -112,9 +112,9 @@ test_that("vectors", {
 
 test_that("data frames", {
   dataframes <- function(...) df
-  rows_collation <- map_rows(mtcars[1:2], dataframes, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], dataframes, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], dataframes, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], dataframes, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], dataframes, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], dataframes, .collate = "list")
 
   expect_equal(rows_collation$.row, rep(1:32, each = 3))
   expect_equal(rows_collation[4:5], dplyr::bind_rows(rerun(32, df)))
@@ -129,9 +129,9 @@ test_that("data frames", {
 
 test_that("data frames with some nulls", {
   dataframes_nulls <- gen_alternatives(df, NULL)
-  rows_collation <- map_rows(mtcars[1:2], dataframes_nulls, .collate = "rows")
-  cols_collation <- map_rows(mtcars[1:2], dataframes_nulls, .collate = "cols")
-  list_collation <- map_rows(mtcars[1:2], dataframes_nulls, .collate = "list")
+  rows_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "rows")
+  cols_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "cols")
+  list_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "list")
 
   expect_equal(rows_collation[4:5], dplyr::bind_rows(rerun(16, df)))
   expect_equal(list_collation$.out, rep(list(NULL, df), 16))
@@ -143,20 +143,20 @@ test_that("data frames with some nulls", {
 
 test_that("objects", {
   objects <- function(...) function() {}
-  list_collation <- map_rows(mtcars[1:2], objects, .collate = "list")
+  list_collation <- invoke_rows(mtcars[1:2], objects, .collate = "list")
 
   expect_equal(list_collation$.out, rep(list(function() {}), 32))
   expect_equal(dim(list_collation), c(32, 3))
 
-  expect_error(map_rows(mtcars[1:2], objects, .collate = "rows"))
-  expect_error(map_rows(mtcars[1:2], objects, .collate = "cols"))
+  expect_error(invoke_rows(mtcars[1:2], objects, .collate = "rows"))
+  expect_error(invoke_rows(mtcars[1:2], objects, .collate = "cols"))
 })
 
 test_that("collation of ragged objects on cols fails", {
   ragged_dataframes <- gen_alternatives(df, rbind(df, df))
   ragged_vectors <- gen_alternatives(letters[1:2], rep(letters[1:2], 2))
-  expect_error(map_rows(mtcars[1:2], ragged_dataframes, .collate = "cols"))
-  expect_error(map_rows(mtcars[1:2], ragged_vectors, .collate = "cols"))
+  expect_error(invoke_rows(mtcars[1:2], ragged_dataframes, .collate = "cols"))
+  expect_error(invoke_rows(mtcars[1:2], ragged_vectors, .collate = "cols"))
 })
 
 test_that("by_slice() does not create .row column", {
