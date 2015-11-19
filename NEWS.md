@@ -1,5 +1,10 @@
 # purrr 0.1.0.9000
 
+* The rows-based functionals gain a `.to` option to name the output
+  column as well as a `.collate` argument. The latter allows to
+  collate the output in lists (by default), on columns or on
+  rows. This makes these functions more flexible and more predictable.
+
 * New `is_null()` type predicate.
 
 * `map_lgl()` now has second argument `.f`, not `.p` (#134).

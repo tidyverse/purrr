@@ -52,3 +52,20 @@ int is_function(int fun) {
 int is_function(const SEXP fun) {
   return is_function(TYPEOF(fun));
 }
+
+SEXP get_ij_elt(const SEXP x, int i, int j) {
+  return get_vector_elt(get_vector_elt(x, j), i);
+}
+
+int first_type(List& results) {
+  int type = 0, i = 0;
+  while (i < results.size() && type == 0) {
+    type = TYPEOF(results[i]);
+    ++i;
+  }
+  return type;
+}
+
+int sexp_type(SEXP x) {
+  return TYPEOF(x);
+}

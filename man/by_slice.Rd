@@ -4,7 +4,7 @@
 \alias{by_slice}
 \title{Apply a function to slices of a data frame}
 \usage{
-by_slice(.d, ..f, ..., .labels = TRUE)
+by_slice(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE)
 }
 \arguments{
 \item{.d}{A sliced data frame.}
@@ -16,6 +16,14 @@ should have the same number of rows within groups and the same
 number of columns between groups.}
 
 \item{...}{Further arguments passed to \code{..f}.}
+
+\item{.collate}{If "list", the results are returned as a list-
+column. Alternatively, if the results are data frames or atomic
+vectors, you can collate on "cols" or on "rows". Column collation
+require vector of equal length or data frames with same number of
+rows.}
+
+\item{.to}{Name of output column.}
 
 \item{.labels}{If \code{TRUE}, the returned data frame is prepended
 with the labels of the slices (the columns in \code{.d} used to
@@ -50,17 +58,20 @@ mtcars \%>\%
   by_slice(partial(lm, mpg ~ disp))
 
 # by_slice() is especially useful in combination with map().
-# Mutating and summarising operations can be used indistinctly.
+
+# To modify the contents of a data frame, use rows collation. Note
+# that unlike dplyr, Mutating and summarising operations can be
+# used indistinctly.
 
 # Mutating operation:
 mtcars \%>\%
   slice_rows(c("cyl", "am")) \%>\%
-  by_slice(map, ~ .x / sd(.x))
+  by_slice(map, ~ .x / sum(.x), .collate = "rows")
 
 # Summarising operation:
 mtcars \%>\%
   slice_rows(c("cyl", "am")) \%>\%
-  by_slice(map, mean)
+  by_slice(map, mean, .collate = "rows")
 
 # If you don't need the slicing variables as identifiers, switch
 # .labels to FALSE:

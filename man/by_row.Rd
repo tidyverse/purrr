@@ -5,14 +5,22 @@
 \alias{map_rows}
 \title{Apply a function to each row of a data frame}
 \usage{
-by_row(.d, ..f, ..., .labels = TRUE)
+by_row(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE)
 
-map_rows(.d, .f, ..., .labels = TRUE)
+map_rows(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRUE)
 }
 \arguments{
-\item{.d}{A sliced data frame.}
+\item{.d}{A data frame.}
 
 \item{...}{Further arguments passed to \code{..f}.}
+
+\item{.collate}{If "list", the results are returned as a list-
+column. Alternatively, if the results are data frames or atomic
+vectors, you can collate on "cols" or on "rows". Column collation
+require vector of equal length or data frames with same number of
+rows.}
+
+\item{.to}{Name of output column.}
 
 \item{.labels}{If \code{TRUE}, the returned data frame is prepended
 with the labels of the slices (the columns in \code{.d} used to
@@ -42,15 +50,14 @@ addition, if \code{..f} returns a multi-rows data frame or a
 non-scalar atomic vector, a \code{.row} column is appended to
 identify the row number in the original data frame.
 
-\code{map_rows()} is intended to provide a version of
-\code{pmap()} that works better with data frames. The distinction
-between \code{by_row()} and \code{map_rows()} is that the former
-passes a data frame to \code{..f} while the latter maps the columns
-to its function call. This is essentially like using
-\code{\link{invoke}()} with each row of a data frame. Another way
-to view this is that \code{map_rows()} is equivalent to using
-\code{by_row()} with a function lifted to accept dots (see
-\code{\link{lift}()}).
+\code{map_rows()} is intended to provide a version of \code{pmap()}
+that works better with data frames. The distinction between
+\code{by_row()} and \code{map_rows()} is that the former passes a
+data frame to \code{..f} while the latter maps the columns to its
+function call. This is essentially like using
+\code{\link{invoke}()} with each row. Another way to view this is
+that \code{map_rows()} is equivalent to using \code{by_row()} with
+a function lifted to accept dots (see \code{\link{lift}()}).
 }
 \examples{
 # ..f should be able to work with a list or a data frame. As it
@@ -62,9 +69,16 @@ mtcars \%>\% by_row(sum)
 mtcars \%>\% by_row(lift_vl(mean))
 
 # To run a function with map_rows(), make sure it is variadic (that
-# it accepts dots)
+# it accepts dots) or that .f's signature is compatible with the
+# column names
 mtcars \%>\% map_rows(sum)
 mtcars \%>\% map_rows(lift_vd(mean))
+
+# To integrate the result as part of the data frame, use rows or
+# cols collation:
+mtcars[1:2] \%>\% by_row(function(x) 1:5)
+mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "rows")
+mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "cols")
 }
 \seealso{
 \code{\link{by_slice}()}
