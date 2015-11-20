@@ -200,7 +200,7 @@ is_logical <- function(x) {
 #' @export
 #' @rdname type-predicates
 is_null <- function(x) {
-  typeof(x) == "null"
+  typeof(x) == "NULL"
 }
 
 #' Scalar type predicates
