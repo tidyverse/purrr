@@ -197,6 +197,12 @@ is_logical <- function(x) {
   typeof(x) == "logical"
 }
 
+#' @export
+#' @rdname type-predicates
+is_null <- function(x) {
+  typeof(x) == "null"
+}
+
 #' Scalar type predicates
 #'
 #' These predicates check for a given type and whether the vector is

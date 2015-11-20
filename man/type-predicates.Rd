@@ -7,6 +7,7 @@
 \alias{is_integer}
 \alias{is_list}
 \alias{is_logical}
+\alias{is_null}
 \alias{is_numeric}
 \alias{is_vector}
 \alias{type-predicates}
@@ -27,6 +28,8 @@ is_double(x)
 is_character(x)
 
 is_logical(x)
+
+is_null(x)
 }
 \arguments{
 \item{x}{object to be tested.}
