@@ -158,7 +158,7 @@ inline SlicesResults::SlicesResults(List results, Environment env)
   }
   
   if (collation_ != list && !(all_atomics || all_df || all_nulls)) {
-    Rf_error(".f must return either only data frames, or only objects for non-list collation");
+    stop(".f must return either only data frames, or only objects for non-list collation");
   }
 
   // For cols collation, check that all elements have compatible size
@@ -166,7 +166,7 @@ inline SlicesResults::SlicesResults(List results, Environment env)
     if (all_same_size)
       std::fill(results_sizes_.begin(), results_sizes_.end(), 1);
     else
-      Rf_error(".f should return equal length vectors or data frames for collating on `cols`");
+      stop(".f should return equal length vectors or data frames for collating on `cols`");
   }
 
   if (collation_ == list) {
@@ -237,7 +237,7 @@ inline void SlicesResults::add_labels(List& out) {
         REP_EACH_N(CPLXSXP);
         REP_EACH_N(RAWSXP);
         REP_EACH_N(VECSXP);
-      default: { Rf_error("internal error: unhandled vector type in REP"); }
+      default: { stop("internal error: unhandled vector type in REP"); }
       }
     }
   }
@@ -274,7 +274,7 @@ inline int SlicesResults::create_row_column(List& out) {
 template<>
 inline void SlicesResults::add_output<rows>(List& out) {
   if (results_type_ == objects) {
-    Rf_error("Cannot collate objects on rows");
+    stop("Cannot collate objects on rows");
   }
 
   switch (results_type_) {
@@ -399,14 +399,14 @@ inline void SlicesResults::add_colnames<rows>(List& out, std::string& output_col
       List i_result = results_[i];
       CharacterVector i_colnames = i_result.names();
       if (!R_compute_identical(first_colnames, i_colnames, 15)) {
-        Rf_error("Incompatible slice results (names do not match)");
+        stop("Incompatible slice results (names do not match)");
       }
     }
     std::copy(first_colnames.begin(), first_colnames.end(), out_names.begin() + offset);
     break;
   }
   case objects:
-    Rf_error("Internal error: rows collation of objects");
+    stop("Internal error: rows collation of objects");
     break;
   }
 }
@@ -441,7 +441,7 @@ inline void SlicesResults::add_colnames<cols>(List& out, std::string& output_col
     break;
   }
   default:
-    Rf_error("Internal error: cols collation of objects");
+    stop("Internal error: cols collation of objects");
     break;
   }
 }
@@ -492,7 +492,7 @@ SEXP subset_slices(const List data) {
   int n_slices = indices.size();
 
   if (indices.size() == 0) {
-    Rf_error("Internal error: data not grouped");
+    stop("Internal error: data not grouped");
   }
 
   CharacterVector classes = CharacterVector::create("tbl_df", "data.frame");
@@ -507,6 +507,7 @@ SEXP subset_slices(const List data) {
 }
 
 extern "C" SEXP by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
+  BEGIN_RCPP
   const char* d_name = CHAR(Rf_asChar(d_name_));
   SEXP d = Rf_install(d_name);
   SEXP d_val = Rf_eval(d, env);
@@ -522,9 +523,11 @@ extern "C" SEXP by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
 
   UNPROTECT(2);
   return results;
+  END_RCPP
 }
 
 extern "C" SEXP invoke_rows_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
+  BEGIN_RCPP
   // Map in parallel over the rows of the data frame
   SEXP results = PROTECT(pmap_impl(env, d_name_, f_name_, Rf_mkChar("list")));
 
@@ -533,4 +536,5 @@ extern "C" SEXP invoke_rows_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
 
   UNPROTECT(2);
   return results;
+  END_RCPP
 }
