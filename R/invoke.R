@@ -9,6 +9,9 @@
 #'   list of functions.
 #' @param .x For \code{invoke}, an argument-list; for \code{invoke_map} a
 #'   list of argument-lists the same length as \code{.f} (or length 1).
+#'   The default argument, \code{list(NULL)}, will be recycled to the
+#'   same length as \code{.f}, and will call each function with no
+#'   arguments (apart from any suppled in \code{...}.
 #' @param ... Additional arguments passed to each function.
 #' @inheritParams map
 #' @export
