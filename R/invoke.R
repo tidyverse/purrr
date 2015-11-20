@@ -59,6 +59,26 @@ invoke <- function(.f, .x = NULL, ...) {
 invoke_map <- function(.f, .x = list(NULL), ...) {
   map2(.f, .x, invoke, ...)
 }
+#' @rdname invoke
+#' @export
+invoke_map_lgl <- function(.f, .x = list(NULL), ...) {
+  map2_lgl(.f, .x, invoke, ...)
+}
+#' @rdname invoke
+#' @export
+invoke_map_int <- function(.f, .x = list(NULL), ...) {
+  map2_int(.f, .x, invoke, ...)
+}
+#' @rdname invoke
+#' @export
+invoke_map_dbl <- function(.f, .x = list(NULL), ...) {
+  map2_dbl(.f, .x, invoke, ...)
+}
+#' @rdname invoke
+#' @export
+invoke_map_chr <- function(.f, .x = list(NULL), ...) {
+  map2_chr(.f, .x, invoke, ...)
+}
 
 #' @rdname invoke
 #' @export

@@ -3,12 +3,24 @@
 \name{invoke}
 \alias{invoke}
 \alias{invoke_map}
+\alias{invoke_map_chr}
+\alias{invoke_map_dbl}
+\alias{invoke_map_int}
+\alias{invoke_map_lgl}
 \alias{map_call}
 \title{Invoke functions.}
 \usage{
 invoke(.f, .x = NULL, ...)
 
 invoke_map(.f, .x = list(NULL), ...)
+
+invoke_map_lgl(.f, .x = list(NULL), ...)
+
+invoke_map_int(.f, .x = list(NULL), ...)
+
+invoke_map_dbl(.f, .x = list(NULL), ...)
+
+invoke_map_chr(.f, .x = list(NULL), ...)
 }
 \arguments{
 \item{.f}{For \code{invoke}, a function; for \code{invoke_map} a
