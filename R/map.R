@@ -68,8 +68,8 @@ map <- function(.x, .f, ...) {
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ...) {
-  .p <- as_function(.p)
-  .Call(map_impl, environment(), ".x", ".p", "logical")
+  .f <- as_function(.f)
+  .Call(map_impl, environment(), ".x", ".f", "logical")
 }
 
 #' @rdname map
