@@ -2,9 +2,10 @@ context("rows")
 
 df <- mtcars[1:3, c("wt", "qsec")]
 df[[2]] <- as.character(df[[2]])
+grouped <- slice_rows(mtcars[1:2], "cyl")
 
 gen_alternatives <- function(first, alt) {
-  prev_alt <- FALSE
+  prev_alt <- TRUE
   function(...) {
     if (prev_alt) {
       out <- first
@@ -82,7 +83,7 @@ test_that("scalars with some nulls", {
 
   expect_equal(rows_collation$.out, rep(1, 16))
   expect_equal(cols_collation$.out, rep(1, 16))
-  expect_equal(list_collation$.out, rep(list(NULL, 1L), 16))
+  expect_equal(list_collation$.out, rep(list(1L, NULL), 16))
 
   expect_equal(dim(rows_collation), c(16, 3))
   expect_equal(dim(cols_collation), c(16, 3))
@@ -134,11 +135,35 @@ test_that("data frames with some nulls", {
   list_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "list")
 
   expect_equal(rows_collation[4:5], dplyr::bind_rows(rerun(16, df)))
-  expect_equal(list_collation$.out, rep(list(NULL, df), 16))
+  expect_equal(list_collation$.out, rep(list(df, NULL), 16))
 
   expect_equal(dim(rows_collation), c(48, 5))
   expect_equal(dim(cols_collation), c(16, 8))
   expect_equal(dim(list_collation), c(32, 3))
+})
+
+test_that("empty data frames", {
+  empty_dataframes <- function(...) df[0, ]
+  rows_collation_by_row <- invoke_rows(mtcars[1:2], empty_dataframes, .collate = "rows")
+  rows_collation_by_slice <- by_slice(grouped, empty_dataframes, .collate = "rows")
+
+  expect_equal(rows_collation_by_row[4:5], dplyr::tbl_df(df[0, ]))
+  expect_equal(rows_collation_by_slice[2:3], dplyr::tbl_df(df[0, ]))
+
+  expect_equal(dim(rows_collation_by_row), c(0, 5))
+  expect_equal(dim(rows_collation_by_slice), c(0, 3))
+})
+
+test_that("some empty data frames", {
+  some_empty_dataframes <- gen_alternatives(df, df[0, ])
+  rows_collation_by_row <- invoke_rows(mtcars[1:2], some_empty_dataframes, .collate = "rows")
+  rows_collation_by_slice <- by_slice(grouped, some_empty_dataframes, .collate = "rows")
+
+  expect_equal(rows_collation_by_row[4:5], dplyr::bind_rows(rerun(16, df)))
+  expect_equal(rows_collation_by_slice[2:3], dplyr::bind_rows(rerun(2, df)))
+
+  expect_equal(dim(rows_collation_by_row), c(48, 5))
+  expect_equal(dim(rows_collation_by_slice), c(6, 3))
 })
 
 test_that("objects", {
