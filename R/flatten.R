@@ -10,6 +10,7 @@
 #' @return \code{flatten()} returns a list, \code{flatten_lgl} a logical
 #'   vector, \code{flatten_int} an integer vector, \code{flatten_dbl} a
 #'   double vector, and \code{flatten_chr} a character vector.
+#' @inheritParams map
 #' @export
 #' @examples
 #' x <- rerun(2, sample(4))
@@ -48,4 +49,11 @@ flatten_dbl <- function(.x) {
 #' @rdname flatten
 flatten_chr <- function(.x) {
   .Call(vflatten_impl, .x, "character")
+}
+
+#' @export
+#' @rdname flatten
+flatten_df <- function(.x, .id = NULL) {
+  res <- .Call(flatten_impl, .x)
+  dplyr::bind_rows(res, .id = .id)
 }

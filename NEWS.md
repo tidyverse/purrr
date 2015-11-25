@@ -13,8 +13,8 @@
   appropriate `flatten()`.
 
 * `flatten()` is now type-stable and always returns a list. To return a simpler
-  vector, use `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`, and 
-  `flatten_chr()`.
+  vector, use `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`,
+  `flatten_chr()`, and `flatten_df()`.
 
 * `map3()` and `walk3()` have been deprecated.
 

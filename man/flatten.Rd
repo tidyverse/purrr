@@ -4,6 +4,7 @@
 \alias{flatten}
 \alias{flatten_chr}
 \alias{flatten_dbl}
+\alias{flatten_df}
 \alias{flatten_int}
 \alias{flatten_lgl}
 \title{Flatten a list of lists into a simple vector.}
@@ -17,11 +18,16 @@ flatten_int(.x)
 flatten_dbl(.x)
 
 flatten_chr(.x)
+
+flatten_df(.x, .id = NULL)
 }
 \arguments{
 \item{.x}{A list of flatten. The contents of the list can be anything for
 \code{flatten} (as a list is returned), but the contents must match the
 type for the other functions.}
+
+\item{.id}{If not \code{NULL} a variable with this name will be created
+giving either the name or the index of the data frame.}
 }
 \value{
 \code{flatten()} returns a list, \code{flatten_lgl} a logical
