@@ -75,7 +75,7 @@ prepend <- function(x, values, before = 1) {
 #'         only returns \code{TRUE} for floating point numbers.
 #' }
 #' @param x object to be tested.
-#' @seealso type-predicates scalar-type-predicates
+#' @seealso \link{type-predicates} \link{scalar-type-predicates}
 #' @name bare-type-predicates
 NULL
 
@@ -145,7 +145,7 @@ is_bare_logical <- function(x) {
 #'     are \code{TRUE}, not \code{FALSE}.
 #' }
 #' @param x object to be tested.
-#' @seealso bare-type-predicates scalar-type-predicates
+#' @seealso \link{bare-type-predicates} \link{scalar-type-predicates}
 #' @name type-predicates
 NULL
 
@@ -208,7 +208,7 @@ is_null <- function(x) {
 #' These predicates check for a given type and whether the vector is
 #' "scalar", that is, of length 1.
 #' @param x object to be tested.
-#' @seealso type-predicates bare-type-predicates
+#' @seealso \link{type-predicates} \link{bare-type-predicates}
 #' @name scalar-type-predicates
 NULL
 

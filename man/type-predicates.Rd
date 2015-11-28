@@ -52,6 +52,6 @@ Compare to base R functions:
 }
 }
 \seealso{
-bare-type-predicates scalar-type-predicates
+\link{bare-type-predicates} \link{scalar-type-predicates}
 }
 
