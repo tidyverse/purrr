@@ -69,3 +69,49 @@ int first_type(List& results) {
 int sexp_type(SEXP x) {
   return TYPEOF(x);
 }
+
+CharacterVector get_element_names(List& x, int i) {
+  RObject subset(x[i]);
+  return Rf_getAttrib(subset, R_NamesSymbol);
+}
+
+void check_dataframes_names_consistency(List& x) {
+  CharacterVector ref = get_element_names(x, 0);
+  int equi_named = 1;
+
+  for (int i = 0; i < x.size(); ++i) {
+    CharacterVector names = get_element_names(x, i);
+    equi_named *= std::equal(ref.begin(), ref.end(), names.begin());
+  }
+
+  if (!equi_named)
+    stop("data frames do not have consistent names");
+}
+
+
+std::vector<SEXPTYPE> get_element_types(List& x, int i) {
+  List subset(x[i]);
+  int n = subset.length();
+  std::vector<SEXPTYPE> types(n);
+
+  std::transform(subset.begin(), subset.end(), types.begin(), sexp_type);
+  return types;
+}
+
+void check_dataframes_types_consistency(List& x) {
+  std::vector<SEXPTYPE> ref = get_element_types(x, 0);
+  int equi_typed = 1;
+
+  for (int i = 0; i < x.size(); ++i) {
+    std::vector<SEXPTYPE> names = get_element_types(x, i);
+    equi_typed *= std::equal(ref.begin(), ref.end(), names.begin());
+  }
+
+  if (!equi_typed)
+    stop("data frames do not have consistent types");
+}
+
+void check_dataframes_consistency(List x) {
+  check_dataframes_names_consistency(x);
+  check_dataframes_types_consistency(x);
+}

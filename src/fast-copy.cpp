@@ -75,22 +75,22 @@ SEXP copy_elements(const RObject from, int offset_from,
   }
 
   switch (from.sexp_type()) {
-  case INTSXP:  DO_COPY(int, INTEGER);               
-  case REALSXP: DO_COPY(double, REAL);               
-  case STRSXP:                                       
+  case INTSXP:  DO_COPY(int, INTEGER);
+  case REALSXP: DO_COPY(double, REAL);
+  case STRSXP:
     for (int i = offset_to, j = 0; j < n; ++i, ++j) {
-      SET_STRING_ELT(to, i, STRING_ELT(from, j + offset_from));    
-    }                                                
-    return to;                                       
-    break;                                           
-  case LGLSXP:  DO_COPY(int, LOGICAL);               
-  case CPLXSXP: DO_COPY(Rcomplex, COMPLEX);          
-  case RAWSXP:  DO_COPY(Rbyte, RAW);                 
-  case VECSXP:  DO_COPY(SEXP, STRING_PTR);        
-  default:                                           
-    stop("Unsupported type", type2name(from));       
-    return R_NilValue;                               
-  }                                                  
+      SET_STRING_ELT(to, i, STRING_ELT(from, j + offset_from));
+    }
+    return to;
+    break;
+  case LGLSXP:  DO_COPY(int, LOGICAL);
+  case CPLXSXP: DO_COPY(Rcomplex, COMPLEX);
+  case RAWSXP:  DO_COPY(Rbyte, RAW);
+  case VECSXP:  DO_COPY(SEXP, STRING_PTR);
+  default:
+    stop("Unsupported type", type2name(from));
+    return R_NilValue;
+  }
 }
 
 

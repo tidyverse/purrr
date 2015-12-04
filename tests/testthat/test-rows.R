@@ -19,12 +19,11 @@ gen_alternatives <- function(first, alt) {
 
 test_that("output column is named according to .to", {
   output1 <- mtcars %>% slice_rows("cyl") %>% by_slice(~ list(NULL), .to = "my_col", .labels = FALSE)
-  expect_equal(names(output1), "my_col")
-
   output2 <- mtcars %>% by_row(~ list(NULL), .to = "my_col", .labels = FALSE)
-  expect_equal(names(output2), "my_col")
+  output3 <- mtcars %>% invoke_rows(function(...) list(NULL), .collate = "list", .to = "my_col", .labels = FALSE)
 
-  output3 <- mtcars %>% invoke_rows(function(...) list(3), .collate = "list", .to = "my_col", .labels = FALSE)
+  expect_equal(names(output1), "my_col")
+  expect_equal(names(output2), "my_col")
   expect_equal(names(output3), "my_col")
 })
 
@@ -43,18 +42,14 @@ test_that("empty", {
   expect_equal(dim(list_collation), c(32, 3))
 })
 
-test_that("all nulls", {
+test_that("all nulls fail, except with list-collation", {
   all_nulls <- function(...) NULL
-  rows_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "cols")
+
+  expect_error(invoke_rows(mtcars[1:2], all_nulls, .collate = "rows"))
+  expect_error(invoke_rows(mtcars[1:2], all_nulls, .collate = "cols"))
+
   list_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "list")
-
-  expect_equal(rows_collation$.out, NULL)
-  expect_equal(cols_collation$.out, NULL)
   expect_equal(list_collation$.out, vector("list", 32))
-
-  expect_equal(dim(rows_collation), c(0, 3))
-  expect_equal(dim(cols_collation), c(0, 3))
   expect_equal(dim(list_collation), c(32, 3))
 })
 
@@ -128,7 +123,7 @@ test_that("data frames", {
   expect_equal(dim(list_collation), c(32, 3))
 })
 
-test_that("data frames with some nulls", {
+test_that("data frames with some nulls/empty", {
   dataframes_nulls <- gen_alternatives(df, NULL)
   rows_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "rows")
   cols_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "cols")
@@ -164,6 +159,14 @@ test_that("some empty data frames", {
 
   expect_equal(dim(rows_collation_by_row), c(48, 5))
   expect_equal(dim(rows_collation_by_slice), c(6, 3))
+})
+
+test_that("unconsistent data frames fail", {
+  unconsistent_names <- gen_alternatives(df, set_names(df, 1:2))
+  unconsistent_types <- gen_alternatives(df, map(df, as.character))
+
+  expect_error(invoke_rows(mtcars[1:2], unconsistent_names, .collate = "rows"), "consistent names")
+  expect_error(invoke_rows(mtcars[1:2], unconsistent_types, .collate = "rows"), "consistent types")
 })
 
 test_that("objects", {
