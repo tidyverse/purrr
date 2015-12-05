@@ -102,14 +102,22 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
 #' non-scalar atomic vector, a \code{.row} column is appended to
 #' identify the row number in the original data frame.
 #'
-#' \code{invoke_rows()} is intended to provide a version of \code{pmap()}
-#' that works better with data frames. The distinction between
-#' \code{by_row()} and \code{invoke_rows()} is that the former passes a
-#' data frame to \code{..f} while the latter maps the columns to its
-#' function call. This is essentially like using
-#' \code{\link{invoke}()} with each row. Another way to view this is
-#' that \code{invoke_rows()} is equivalent to using \code{by_row()} with
-#' a function lifted to accept dots (see \code{\link{lift}()}).
+#' \code{invoke_rows()} is intended to provide a version of
+#' \code{pmap()} for data frames. Its default collation method is
+#' \code{"cols"}, which makes it equivalent to
+#' \code{\link[plyr]{mdply}()} from the plyr package. Note that
+#' \code{invoke_rows()} follows the signature pattern of the
+#' \code{invoke} family of functions and takes \code{.f} as its first
+#' argument.
+#'
+#' The distinction between \code{by_row()} and \code{invoke_rows()} is
+#' that the former passes a data frame to \code{..f} while the latter
+#' maps the columns to its function call. This is essentially like
+#' using \code{\link{invoke}()} with each row. Another way to view
+#' this is that \code{invoke_rows()} is equivalent to using
+#' \code{by_row()} with a function lifted to accept dots (see
+#' \code{\link{lift}()}).
+#'
 #' @param .d A data frame.
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
@@ -134,8 +142,15 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
 #' # To run a function with invoke_rows(), make sure it is variadic (that
 #' # it accepts dots) or that .f's signature is compatible with the
 #' # column names
-#' mtcars %>% invoke_rows(sum)
-#' mtcars %>% invoke_rows(lift_vd(mean))
+#' mtcars %>% invoke_rows(.f = sum)
+#' mtcars %>% invoke_rows(.f = lift_vd(mean))
+#'
+#' # invoke_rows() with cols collation is equivalent to plyr::mdply()
+#' p <- expand.grid(mean = 1:5, sd = seq(0, 1, length = 10))
+#' p %>% invoke_rows(.f = rnorm, n = 5)
+#' \dontrun{
+#' p %>% plyr::mdply(rnorm, n = 5) %>% dplyr::tbl_df()
+#' }
 #'
 #' # To integrate the result as part of the data frame, use rows or
 #' # cols collation:
@@ -166,7 +181,7 @@ by_row <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE
 
 #' @rdname by_row
 #' @export
-invoke_rows <- function(.d, .f, ..., .collate = "list", .to = ".out", .labels = TRUE) {
+invoke_rows <- function(.f, .d, ..., .collate = "cols", .to = ".out", .labels = TRUE) {
   if (!.collate %in% c("list", "rows", "cols")) {
     stop(".collate should be `list`, `cols` or `rows`", call. = FALSE)
   }

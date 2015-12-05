@@ -20,7 +20,7 @@ gen_alternatives <- function(first, alt) {
 test_that("output column is named according to .to", {
   output1 <- mtcars %>% slice_rows("cyl") %>% by_slice(~ list(NULL), .to = "my_col", .labels = FALSE)
   output2 <- mtcars %>% by_row(~ list(NULL), .to = "my_col", .labels = FALSE)
-  output3 <- mtcars %>% invoke_rows(function(...) list(NULL), .collate = "list", .to = "my_col", .labels = FALSE)
+  output3 <- mtcars %>% invoke_rows(.f = function(...) list(NULL), .collate = "list", .to = "my_col", .labels = FALSE)
 
   expect_equal(names(output1), "my_col")
   expect_equal(names(output2), "my_col")
@@ -29,9 +29,9 @@ test_that("output column is named according to .to", {
 
 test_that("empty", {
   empty <- function(...) numeric(0)
-  rows_collation <- invoke_rows(mtcars[1:2], empty, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], empty, .collate = "cols")
-  list_collation <- invoke_rows(mtcars[1:2], empty, .collate = "list")
+  rows_collation <- invoke_rows(empty, mtcars[1:2], .collate = "rows")
+  cols_collation <- invoke_rows(empty, mtcars[1:2], .collate = "cols")
+  list_collation <- invoke_rows(empty, mtcars[1:2], .collate = "list")
 
   expect_equal(rows_collation$.out, numeric(0))
   expect_equal(cols_collation$.out, numeric(0))
@@ -45,19 +45,19 @@ test_that("empty", {
 test_that("all nulls fail, except with list-collation", {
   all_nulls <- function(...) NULL
 
-  expect_error(invoke_rows(mtcars[1:2], all_nulls, .collate = "rows"))
-  expect_error(invoke_rows(mtcars[1:2], all_nulls, .collate = "cols"))
+  expect_error(invoke_rows(all_nulls, mtcars[1:2], .collate = "rows"))
+  expect_error(invoke_rows(all_nulls, mtcars[1:2], .collate = "cols"))
 
-  list_collation <- invoke_rows(mtcars[1:2], all_nulls, .collate = "list")
+  list_collation <- invoke_rows(all_nulls, mtcars[1:2], .collate = "list")
   expect_equal(list_collation$.out, vector("list", 32))
   expect_equal(dim(list_collation), c(32, 3))
 })
 
 test_that("scalars", {
   scalars <- function(...) paste("a", ..1)
-  rows_collation <- invoke_rows(mtcars[1:2], scalars, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], scalars, .collate = "cols")
-  list_collation <- invoke_rows(mtcars[1:2], scalars, .collate = "list")
+  rows_collation <- invoke_rows(scalars, mtcars[1:2], .collate = "rows")
+  cols_collation <- invoke_rows(scalars, mtcars[1:2], .collate = "cols")
+  list_collation <- invoke_rows(scalars, mtcars[1:2], .collate = "list")
 
   out <- paste("a", mtcars$mpg)
 
@@ -72,9 +72,9 @@ test_that("scalars", {
 
 test_that("scalars with some nulls", {
   scalar_nulls <- gen_alternatives(1L, NULL)
-  rows_collation <- invoke_rows(mtcars[1:2], scalar_nulls, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], scalar_nulls, .collate = "cols")
-  list_collation <- invoke_rows(mtcars[1:2], scalar_nulls, .collate = "list")
+  rows_collation <- invoke_rows(scalar_nulls, mtcars[1:2], .collate = "rows")
+  cols_collation <- invoke_rows(scalar_nulls, mtcars[1:2], .collate = "cols")
+  list_collation <- invoke_rows(scalar_nulls, mtcars[1:2], .collate = "list")
 
   expect_equal(rows_collation$.out, rep(1, 16))
   expect_equal(cols_collation$.out, rep(1, 16))
@@ -87,9 +87,9 @@ test_that("scalars with some nulls", {
 
 test_that("vectors", {
   vectors <- function(...) paste(letters[1:2], c(...))
-  rows_collation <- invoke_rows(mtcars[1:2], vectors, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], vectors, .collate = "cols")
-  list_collation <- invoke_rows(mtcars[1:2], vectors, .collate = "list")
+  rows_collation <- invoke_rows(vectors, mtcars[1:2], .collate = "rows")
+  cols_collation <- invoke_rows(vectors, mtcars[1:2], .collate = "cols")
+  list_collation <- invoke_rows(vectors, mtcars[1:2], .collate = "list")
 
   data <- dplyr::rowwise(mtcars[1:2])
   out <- dplyr::do(data, .out = paste(c("a", "b"), c(.$mpg, .$cyl)))[[1]]
@@ -108,9 +108,9 @@ test_that("vectors", {
 
 test_that("data frames", {
   dataframes <- function(...) df
-  rows_collation <- invoke_rows(mtcars[1:2], dataframes, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], dataframes, .collate = "cols")
-  list_collation <- invoke_rows(mtcars[1:2], dataframes, .collate = "list")
+  rows_collation <- invoke_rows(dataframes, mtcars[1:2], .collate = "rows")
+  cols_collation <- invoke_rows(dataframes, mtcars[1:2], .collate = "cols")
+  list_collation <- invoke_rows(dataframes, mtcars[1:2], .collate = "list")
 
   expect_equal(rows_collation$.row, rep(1:32, each = 3))
   expect_equal(rows_collation[4:5], dplyr::bind_rows(rerun(32, df)))
@@ -125,9 +125,9 @@ test_that("data frames", {
 
 test_that("data frames with some nulls/empty", {
   dataframes_nulls <- gen_alternatives(df, NULL)
-  rows_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "rows")
-  cols_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "cols")
-  list_collation <- invoke_rows(mtcars[1:2], dataframes_nulls, .collate = "list")
+  rows_collation <- invoke_rows(dataframes_nulls, mtcars[1:2], .collate = "rows")
+  cols_collation <- invoke_rows(dataframes_nulls, mtcars[1:2], .collate = "cols")
+  list_collation <- invoke_rows(dataframes_nulls, mtcars[1:2], .collate = "list")
 
   expect_equal(rows_collation[4:5], dplyr::bind_rows(rerun(16, df)))
   expect_equal(list_collation$.out, rep(list(df, NULL), 16))
@@ -139,7 +139,7 @@ test_that("data frames with some nulls/empty", {
 
 test_that("empty data frames", {
   empty_dataframes <- function(...) df[0, ]
-  rows_collation_by_row <- invoke_rows(mtcars[1:2], empty_dataframes, .collate = "rows")
+  rows_collation_by_row <- invoke_rows(empty_dataframes, mtcars[1:2], .collate = "rows")
   rows_collation_by_slice <- by_slice(grouped, empty_dataframes, .collate = "rows")
 
   expect_equal(rows_collation_by_row[4:5], dplyr::tbl_df(df[0, ]))
@@ -151,7 +151,7 @@ test_that("empty data frames", {
 
 test_that("some empty data frames", {
   some_empty_dataframes <- gen_alternatives(df, df[0, ])
-  rows_collation_by_row <- invoke_rows(mtcars[1:2], some_empty_dataframes, .collate = "rows")
+  rows_collation_by_row <- invoke_rows(some_empty_dataframes, mtcars[1:2], .collate = "rows")
   rows_collation_by_slice <- by_slice(grouped, some_empty_dataframes, .collate = "rows")
 
   expect_equal(rows_collation_by_row[4:5], dplyr::bind_rows(rerun(16, df)))
@@ -165,26 +165,26 @@ test_that("unconsistent data frames fail", {
   unconsistent_names <- gen_alternatives(df, set_names(df, 1:2))
   unconsistent_types <- gen_alternatives(df, map(df, as.character))
 
-  expect_error(invoke_rows(mtcars[1:2], unconsistent_names, .collate = "rows"), "consistent names")
-  expect_error(invoke_rows(mtcars[1:2], unconsistent_types, .collate = "rows"), "consistent types")
+  expect_error(invoke_rows(unconsistent_names, mtcars[1:2], .collate = "rows"), "consistent names")
+  expect_error(invoke_rows(unconsistent_types, mtcars[1:2], .collate = "rows"), "consistent types")
 })
 
 test_that("objects", {
   objects <- function(...) function() {}
-  list_collation <- invoke_rows(mtcars[1:2], objects, .collate = "list")
+  list_collation <- invoke_rows(objects, mtcars[1:2], .collate = "list")
 
   expect_equal(list_collation$.out, rep(list(function() {}), 32))
   expect_equal(dim(list_collation), c(32, 3))
 
-  expect_error(invoke_rows(mtcars[1:2], objects, .collate = "rows"))
-  expect_error(invoke_rows(mtcars[1:2], objects, .collate = "cols"))
+  expect_error(invoke_rows(objects, mtcars[1:2], .collate = "rows"))
+  expect_error(invoke_rows(objects, mtcars[1:2], .collate = "cols"))
 })
 
 test_that("collation of ragged objects on cols fails", {
   ragged_dataframes <- gen_alternatives(df, rbind(df, df))
   ragged_vectors <- gen_alternatives(letters[1:2], rep(letters[1:2], 2))
-  expect_error(invoke_rows(mtcars[1:2], ragged_dataframes, .collate = "cols"))
-  expect_error(invoke_rows(mtcars[1:2], ragged_vectors, .collate = "cols"))
+  expect_error(invoke_rows(ragged_dataframes, mtcars[1:2], .collate = "cols"))
+  expect_error(invoke_rows(ragged_vectors, mtcars[1:2], .collate = "cols"))
 })
 
 test_that("by_slice() does not create .row column", {
