@@ -187,6 +187,16 @@ test_that("collation of ragged objects on cols fails", {
   expect_error(invoke_rows(ragged_vectors, mtcars[1:2], .collate = "cols"))
 })
 
+test_that("by_slice() works with slicers of different types", {
+  df1 <- slice_rows(mtcars, "cyl")
+  df2 <- map_at(mtcars, "cyl", as.character) %>% slice_rows("cyl")
+  out1 <- by_slice(df1, map, mean)
+  out2 <- by_slice(df2, map, mean)
+  expect_identical(out1[-1], out2[-1])
+  expect_equal(typeof(out1$cyl), "double")
+  expect_equal(typeof(out2$cyl), "character")
+})
+
 test_that("by_slice() does not create .row column", {
   data <- slice_rows(mtcars[1:2], "cyl")
 
@@ -201,4 +211,11 @@ test_that("by_slice() does not create .row column", {
 
 test_that("by_slice() fails with ungrouped data frames", {
   expect_error(by_slice(mtcars, list))
+})
+
+test_that("map() works on sliced data frames", {
+  df <- slice_rows(mtcars, "cyl")
+  map_out <- map(df, ~ .x / max(.x))
+  by_slice_out <- by_slice(df, map, ~ .x / max(.x), .collate = "rows")
+  expect_equal(map_out, by_slice_out)
 })

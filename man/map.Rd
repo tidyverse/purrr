@@ -65,6 +65,13 @@ input. \code{map()} returns a list or a data frame; \code{map_lgl()},
 of the corresponding type (or die trying); \code{map_df()} returns
 a data frame by row-binding the individual elements.
 }
+\details{
+Note that \code{map()} understands data frames, including grouped
+data frames. It can be much faster than
+\code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
+columns. However, \code{map()}ll be slower for the more common case of many
+groups with functions that dplyr knows how to translate to C++.
+}
 \examples{
 1:10 \%>\%
   map(rnorm, n = 10) \%>\%
@@ -100,6 +107,14 @@ mtcars \%>\%
   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
+
+# map() supports grouped data frames as well:
+sliced_df <- mtcars[1:5] \%>\% slice_rows("cyl")
+sliced_df \%>\% map(~ .x / max(.x))
+
+# This is equivalent to the (slower) combination of by_slice() and
+# map() with 'rows' collation of results:
+sliced_df \%>\% by_slice(map, ~ .x / max(.x), .collate = "rows")
 }
 \seealso{
 \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple

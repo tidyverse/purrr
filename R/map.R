@@ -7,6 +7,12 @@
 #' of the corresponding type (or die trying); \code{map_df()} returns
 #' a data frame by row-binding the individual elements.
 #'
+#' Note that \code{map()} understands data frames, including grouped
+#' data frames. It can be much faster than
+#' \code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
+#' columns. However, \code{map()}ll be slower for the more common case of many
+#' groups with functions that dplyr knows how to translate to C++.
+#'
 #' @inheritParams as_function
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to \code{.f}.
@@ -57,12 +63,25 @@
 #'   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
-#' @useDynLib purrr map_impl
+#'
+#' # map() supports grouped data frames as well:
+#' sliced_df <- mtcars[1:5] %>% slice_rows("cyl")
+#' sliced_df %>% map(~ .x / max(.x))
+#'
+#' # This is equivalent to the (slower) combination of by_slice() and
+#' # map() with 'rows' collation of results:
+#' sliced_df %>% by_slice(map, ~ .x / max(.x), .collate = "rows")
+#' @useDynLib purrr map_impl map_by_slice_impl
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
 
-  res <- .Call(map_impl, environment(), ".x", ".f", "list")
-  output_hook(res, .x)
+  if (dplyr::is.grouped_df(.x)) {
+    set_sliced_env(.x, TRUE, "rows", "", environment(), ".x")
+    .Call("map_by_slice_impl", environment(), ".x", ".f")
+  } else {
+    res <- .Call(map_impl, environment(), ".x", ".f", "list")
+    output_hook(res, .x)
+  }
 }
 
 #' @rdname map

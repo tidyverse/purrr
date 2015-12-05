@@ -80,11 +80,21 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
     stop(".collate should be `list`, `rows` or `cols`", call. = FALSE)
   }
 
-  .unique_labels <- 1
-  .labels_cols <- attr(.d, "labels")
-  .slicing_cols <- .d[names(.labels_cols)]
-
+  set_sliced_env(.d, .labels, .collate, .to, environment(), ".d")
   .Call("by_slice_impl", environment(), ".d", "..f")
+}
+
+set_sliced_env <- function(df, labels, collate, to, env, x_name) {
+  env$.unique_labels <- TRUE
+  env$.labels <- labels;
+  env$.collate <- collate
+  env$.to <- to
+  env$.labels_cols <- attr(df, "labels")
+  env$.slicing_cols <- df[names(env$.labels_cols)]
+
+  indices <- attr(df, "indices")
+  env[[x_name]] <- df[!names(df) %in% names(env$.labels_cols)]
+  attr(env[[x_name]], "indices") <- indices
 }
 
 

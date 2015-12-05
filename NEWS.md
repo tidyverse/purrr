@@ -1,6 +1,10 @@
 # purrr 0.1.0.9000
 
-* `map_rows()` has been renamed to `invoke_rows()`.
+* `map()` now supports sliced data frames. It is a shortcut for the
+  combination of `x %>% by_slice(map, fun, .collate = "rows")`.
+
+* `map_rows()` has been renamed to `invoke_rows()`. It collates on
+  columns by default, which makes it equivalent to `plyr::mdply()`.
 
 * The rows-based functionals gain a `.to` option to name the output
   column as well as a `.collate` argument. The latter allows to
