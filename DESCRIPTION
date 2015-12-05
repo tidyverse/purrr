@@ -23,4 +23,4 @@ LinkingTo: Rcpp,
     BH
 URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1
