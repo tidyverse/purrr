@@ -9,15 +9,11 @@ namespace Slices {
 
 
 FormatterPtr Formatter::create(Results& results, Labels& labels, Settings& settings) {
-  Formatter* formatter;
-
   switch(settings.collation) {
-  case rows: formatter = new RowsFormatter(results, labels, settings); break;
-  case cols: formatter = new ColsFormatter(results, labels, settings); break;
-  case list: formatter = new ListFormatter(results, labels, settings); break;
+  case rows: return FormatterPtr(new RowsFormatter(results, labels, settings)); break;
+  case cols: return FormatterPtr(new ColsFormatter(results, labels, settings)); break;
+  case list: return FormatterPtr(new ListFormatter(results, labels, settings)); break;
   }
-
-  return FormatterPtr(formatter);
 };
 
 int Formatter::labels_size() {

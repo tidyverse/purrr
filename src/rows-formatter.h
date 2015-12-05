@@ -1,11 +1,13 @@
 #ifndef ROWSFORMATTER_H
 #define ROWSFORMATTER_H
 
+#include <boost/shared_ptr.hpp>
+
 namespace Slices {
 
 
 class Formatter;
-typedef std::unique_ptr<Formatter> FormatterPtr;
+typedef boost::shared_ptr<Formatter> FormatterPtr;
 
 class Formatter {
 protected:
