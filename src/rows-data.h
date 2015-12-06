@@ -21,6 +21,7 @@ enum CollationType {
 
 
 struct Settings {
+ public:
   CollationType collation;
   std::string output_colname;
   int include_labels;
@@ -30,6 +31,7 @@ struct Settings {
 
 
 struct Labels {
+ public:
   int are_unique;
   List slicing_cols;
 
@@ -39,13 +41,14 @@ struct Labels {
 
   Labels(Environment execution_env_);
 
-private:
+ private:
   List labels_;
   int n_labels_;
 };
 
 
 struct Results {
+ public:
   List results;
   int n_slices;
   SlicesType type;
@@ -59,7 +62,7 @@ struct Results {
   int size() { return n_slices; }
   Results(List raw_results_, int remove_empty_);
 
-private:
+ private:
   int all_nulls_;
 
   void determine_first_result_properties();

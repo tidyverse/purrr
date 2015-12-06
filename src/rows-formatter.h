@@ -10,7 +10,15 @@ class Formatter;
 typedef boost::shared_ptr<Formatter> FormatterPtr;
 
 class Formatter {
-protected:
+ public:
+  Formatter(Results& results, Labels& labels, Settings& settings)
+      : results_(results),
+        labels_(labels),
+        settings_(settings) { }
+  static FormatterPtr create(Results& results, Labels& labels, Settings& settings);
+  List output();
+
+ protected:
   Labels& labels_;
   Results& results_;
   Settings& settings_;
@@ -33,19 +41,17 @@ protected:
   virtual void add_output(List& out) = 0;
   void add_colnames(List& out);
   virtual CharacterVector& create_colnames(CharacterVector& out_names) = 0;
-
-public:
-  Formatter(Results& results, Labels& labels, Settings& settings)
-      : results_(results),
-        labels_(labels),
-        settings_(settings) { }
-
-  List output();
-  static FormatterPtr create(Results& results, Labels& labels, Settings& settings);
 };
 
 
 class RowsFormatter : public Formatter {
+ public:
+  RowsFormatter(Results& results, Labels& labels, Settings& settings)
+      : Formatter(results, labels, settings) {
+    check_nonlist_consistency();
+  }
+
+ private:
   int output_size();
   void add_output(List& out);
   void rows_bind_dataframes(List& out);
@@ -53,14 +59,17 @@ class RowsFormatter : public Formatter {
   void add_rows_binded_vectors_colnames(CharacterVector& out_names);
   void add_rows_binded_dataframes_colnames(CharacterVector& out_names);
   CharacterVector& create_colnames(CharacterVector& out_names);
-public:
-  RowsFormatter(Results& results, Labels& labels, Settings& settings)
-      : Formatter(results, labels, settings) {
-    check_nonlist_consistency();
-  }
 };
 
 class ColsFormatter : public Formatter {
+ public:
+  ColsFormatter(Results& results, Labels& labels, Settings& settings)
+      : Formatter(results, labels, settings) {
+    check_nonlist_consistency();
+    adjust_results_sizes();
+  }
+
+ private:
   void check_nonlist_consistency();
   void adjust_results_sizes();
   int output_size();
@@ -70,24 +79,20 @@ class ColsFormatter : public Formatter {
   void add_cols_binded_vectors_colnames(CharacterVector& out_names);
   void add_cols_binded_dataframes_colnames(CharacterVector& out_names);
   CharacterVector& create_colnames(CharacterVector& out_names);
-public:
-  ColsFormatter(Results& results, Labels& labels, Settings& settings)
-      : Formatter(results, labels, settings) {
-    check_nonlist_consistency();
-    adjust_results_sizes();
-  }
 };
 
 class ListFormatter : public Formatter {
-  void adjust_results_sizes();
-  int output_size();
-  CharacterVector& create_colnames(CharacterVector& out_names);
-  void add_output(List& out);
-public:
+ public:
   ListFormatter(Results& results, Labels& labels, Settings& settings)
       : Formatter(results, labels, settings) {
     adjust_results_sizes();
   }
+
+ private:
+  void adjust_results_sizes();
+  int output_size();
+  CharacterVector& create_colnames(CharacterVector& out_names);
+  void add_output(List& out);
 };
 
 
