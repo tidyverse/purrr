@@ -31,23 +31,20 @@ both functions keep the intermediate results.
 1:10 \%>\% accumulate_right(`*`)
 
 # From Haskell's scanl documentation
-1:10 \%>\% accumulate(max, .init = 5)
-
-# Can be used to floor and cap
-caps <- mtcars \%>\% map(~ quantile(.x, probs = c(.1, .9), names = FALSE))
-floor_cap <- mtcars \%>\% map2(caps, ~ accumulate(.x, max, .init = .y[1])) \%>\%
-  map2(caps, ~ accumulate(.x, min, .init = .y[2]))
+c(1:10) \%>\% accumulate(max, .init = 5)
 
 # Simulating stochastic processes with drift
 \dontrun{
 library(dplyr)
 library(ggplot2)
 
-rerun(5, rnorm(100)) \%>\% setNames(paste0("sim", 1:5)) \%>\%
-  map(~ accumulate(., function(.x, .y) .05 + .x + .y)) \%>\%
-  map(~ data.frame(value = .x, step = 1:100)) \%>\%
-  bind_rows(. , .id = "simulation") \%>\%
-  ggplot(., aes(x = step, y = value)) + geom_line(aes(color = simulation))
+rerun(5, rnorm(100)) \%>\%
+  set_names(paste0("sim", 1:5)) \%>\%
+  map(~ accumulate(., ~ .05 + .x + .y)) \%>\%
+  map_df(~ data_frame(value = .x, step = 1:100), .id = "simulation") \%>\%
+  ggplot(aes(x = step, y = value)) +
+    geom_line(aes(color = simulation)) +
+    ggtitle("Simulations of a random walk with drift")
 }
 }
 
