@@ -29,16 +29,15 @@
 #' list() %>% reduce(`+`)
 #' list() %>% reduce(`+`, .init = 0)
 reduce <- function(.x, .f, ..., .init) {
-  force(.f)
-  f <- function(x, y) .f(x, y, ...)
-
+  f <- as_function(.f)
   Reduce(f, .x, init = .init)
 }
 
 #' @export
 #' @rdname reduce
 reduce_right <- function(.x, .f, ..., .init) {
-  force(.f)
+  .f <- as_function(.f)
+
   # Note the order of arguments is switched
   f <- function(x, y) {
     .f(y, x, ...)
@@ -63,14 +62,6 @@ reduce_right <- function(.x, .f, ..., .init) {
 #' # From Haskell's scanl documentation
 #' 1:10 %>% accumulate(max, .init = 5)
 #'
-#' # Can be used to floor and cap
-#' caps <- mtcars %>%
-#'   map(~ quantile(.x, probs = c(.1, .9), names = FALSE))
-#'
-#' floor_cap <- mtcars %>%
-#'   map2(caps, ~ accumulate(.x, max, .init = .y[1])) %>%
-#'   map2(caps, ~ accumulate(.x, min, .init = .y[2]))
-#'
 #' # Simulating stochastic processes with drift
 #' \dontrun{
 #' library(dplyr)
@@ -78,23 +69,22 @@ reduce_right <- function(.x, .f, ..., .init) {
 #'
 #' rerun(5, rnorm(100)) %>%
 #'   set_names(paste0("sim", 1:5)) %>%
-#'   map(~ accumulate(., function(.x, .y) .05 + .x + .y)) %>%
+#'   map(~ accumulate(., ~ .05 + .x + .y)) %>%
 #'   map_df(~ data_frame(value = .x, step = 1:100), .id = "simulation") %>%
 #'   ggplot(aes(x = step, y = value)) +
 #'     geom_line(aes(color = simulation)) +
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 accumulate <- function(.x, .f, ..., .init) {
-  force(.f)
-  f <- function(x, y) .f(x, y, ...)
-
+  f <- as_function(.f)
   Reduce(f, .x, init = .init, accumulate = TRUE)
 }
 
 #' @export
 #' @rdname accumulate
 accumulate_right <- function(.x, .f, ..., .init) {
-  force(.f)
+  .f <- as_function(.f)
+
   # Note the order of arguments is switched
   f <- function(x, y) {
     .f(y, x, ...)
