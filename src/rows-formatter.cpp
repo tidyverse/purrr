@@ -305,19 +305,8 @@ CharacterVector& RowsFormatter::add_rows_binded_dataframes_colnames(CharacterVec
     out_names[labels_size()] = ".row";
   }
 
-  // If a data frame is returned in each slice, we need to check
-  // that they share a common structure. Here, we check that they
-  // have consistent column names
   List first_result = results_.get()[0];
   CharacterVector first_colnames = first_result.names();
-
-  for (int i = 0; i < results_.size(); ++i) {
-    List i_result = results_.get()[i];
-    CharacterVector i_colnames = i_result.names();
-    if (!R_compute_identical(first_colnames, i_colnames, 15)) {
-      stop("Incompatible slice results (names do not match)");
-    }
-  }
   std::copy(first_colnames.begin(), first_colnames.end(), out_names.begin() + offset);
 
   return out_names;
