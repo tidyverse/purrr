@@ -5,7 +5,7 @@
 #include "rows-data.h"
 #include "rows-formatter.h"
 
-namespace Slices {
+namespace rows {
 
 
 FormatterPtr Formatter::create(Results& results, Labels& labels, Settings& settings) {
@@ -68,19 +68,19 @@ void ListFormatter::adjust_results_sizes() {
 }
 
 void Formatter::determine_dimensions() {
-  determine_nrows();
-  determine_ncols();
+  n_rows_ = determine_nrows();
+  n_cols_ = determine_ncols();
 }
 
-void Formatter::determine_nrows() {
+int Formatter::determine_nrows() {
   if (settings_.collation == list)
-    n_rows_ = results_.n_slices;
+    return results_.n_slices;
   else
-    n_rows_ = sum(results_.sizes);
+    return sum(results_.sizes);
 }
 
-void Formatter::determine_ncols() {
-  n_cols_ = labels_size() + output_size();
+int Formatter::determine_ncols() {
+  return labels_size() + output_size();
 }
 
 int Formatter::should_include_rowid_column() {
@@ -133,7 +133,7 @@ int ListFormatter::output_size() {
   return 1;
 }
 
-void Formatter::add_labels(List& out) {
+List& Formatter::add_labels(List& out) {
   if (labels_size() > 0) {
 #define REP_EACH_N(R_TYPE)                        \
     case R_TYPE: {                                \
@@ -155,6 +155,8 @@ void Formatter::add_labels(List& out) {
       }
     }
   }
+
+  return out;
 }
 
 RObject Formatter::create_column(SEXPTYPE sexp_type) {
@@ -171,27 +173,30 @@ RObject Formatter::create_column(SEXPTYPE sexp_type) {
   return output_col;
 }
 
-int Formatter::create_rowid_column(List& out) {
+List& Formatter::maybe_create_rowid_column(List& out) {
   if (should_include_rowid_column()) {
     IntegerVector index = seq_each_n(results_.sizes);
     out[labels_size()] = index;
-    return 1;
-  } else {
-    return 0;
   }
+  return out;
 }
 
-void ListFormatter::add_output(List& out) {
+List& ListFormatter::add_output(List& out) {
   out[labels_size()] = results_.get();
+  return out;
 }
 
-void RowsFormatter::rows_bind_vectors(List& out) {
-  int offset = create_rowid_column(out);
-  out[labels_size() + offset] = create_column(results_.first_sexp_type);
+List& RowsFormatter::rows_bind_vectors(List& out) {
+  out = maybe_create_rowid_column(out);
+  int index = labels_size() + should_include_rowid_column();
+  out[index] = create_column(results_.first_sexp_type);
+  return out;
 }
 
-void RowsFormatter::rows_bind_dataframes(List& out) {
-  int offset = labels_size() + create_rowid_column(out);
+List& RowsFormatter::rows_bind_dataframes(List& out) {
+  out = maybe_create_rowid_column(out);
+  int offset = labels_size() + should_include_rowid_column();
+
   // Fill in each column
   for (int col = 0; col < (n_cols_ - offset); ++col) {
     int type = TYPEOF(get_ij_elt(results_.get(), col, 0));
@@ -202,26 +207,30 @@ void RowsFormatter::rows_bind_dataframes(List& out) {
     }
     out[col + offset] = vec;
   }
+
+  return out;
 }
 
-void RowsFormatter::add_output(List& out) {
+List& RowsFormatter::add_output(List& out) {
   switch (results_.type) {
   case nulls:
   case scalars:
     out[labels_size()] = create_column(results_.first_sexp_type);
     break;
   case vectors:
-    rows_bind_vectors(out);
+    out = rows_bind_vectors(out);
     break;
   case dataframes:
-    rows_bind_dataframes(out);
+    out = rows_bind_dataframes(out);
     break;
   default:
     break;
   }
+
+  return out;
 }
 
-void ColsFormatter::cols_bind_vectors(List& out) {
+List& ColsFormatter::cols_bind_vectors(List& out) {
   for (int i = 0, counter = 0; i < results_.first_size; ++i) {
     RObject out_i(Rf_allocVector(results_.first_sexp_type, n_rows_));
 
@@ -232,9 +241,11 @@ void ColsFormatter::cols_bind_vectors(List& out) {
     out[labels_size() + i] = out_i;
     counter = 0;
   }
+
+  return out;
 }
 
-void ColsFormatter::cols_bind_dataframes(List& out) {
+List& ColsFormatter::cols_bind_dataframes(List& out) {
   List first_result = results_.get()[0];
   int n_cols_results = first_result.size();
   int n_rows_results = Rf_length(first_result[0]);
@@ -253,9 +264,11 @@ void ColsFormatter::cols_bind_dataframes(List& out) {
       ++col_counter;
     }
   }
+
+  return out;
 }
 
-void ColsFormatter::add_output(List& out) {
+List& ColsFormatter::add_output(List& out) {
   switch (results_.type) {
   case nulls:
   case scalars:
@@ -270,19 +283,22 @@ void ColsFormatter::add_output(List& out) {
   default:
     break;
   }
+
+  return out;
 }
 
-void RowsFormatter::add_rows_binded_vectors_colnames(CharacterVector& out_names) {
+CharacterVector& RowsFormatter::add_rows_binded_vectors_colnames(CharacterVector& out_names) {
   int offset = labels_size();
   if (should_include_rowid_column()) {
     offset += 1;
     out_names[labels_size()] = ".row";
   }
   out_names[offset] = settings_.output_colname;
+
+  return out_names;
 }
 
-
-void RowsFormatter::add_rows_binded_dataframes_colnames(CharacterVector& out_names) {
+CharacterVector& RowsFormatter::add_rows_binded_dataframes_colnames(CharacterVector& out_names) {
   int offset = labels_size();
   if (!labels_.are_unique) {
     offset += 1;
@@ -303,16 +319,20 @@ void RowsFormatter::add_rows_binded_dataframes_colnames(CharacterVector& out_nam
     }
   }
   std::copy(first_colnames.begin(), first_colnames.end(), out_names.begin() + offset);
+
+  return out_names;
 }
 
 
-void Formatter::add_colnames(List& out) {
+List& Formatter::add_colnames(List& out) {
   CharacterVector out_names = no_init(n_cols_);
   if (labels_size() > 0) {
     CharacterVector slicing_cols_names = labels_.slicing_cols.names();
     std::copy(slicing_cols_names.begin(), slicing_cols_names.end(), out_names.begin());
   }
   out.names() = create_colnames(out_names);
+
+  return out;
 }
 
 CharacterVector& RowsFormatter::create_colnames(CharacterVector& out_names) {
@@ -322,25 +342,28 @@ CharacterVector& RowsFormatter::create_colnames(CharacterVector& out_names) {
     out_names[labels_size()] = settings_.output_colname;
     break;
   case vectors:
-    add_rows_binded_vectors_colnames(out_names);
+    out_names = add_rows_binded_vectors_colnames(out_names);
     break;
   case dataframes:
-    add_rows_binded_dataframes_colnames(out_names);
+    out_names = add_rows_binded_dataframes_colnames(out_names);
     break;
   default:
     break;
   }
+
   return out_names;
 }
 
-void ColsFormatter::add_cols_binded_vectors_colnames(CharacterVector& out_names) {
+CharacterVector& ColsFormatter::add_cols_binded_vectors_colnames(CharacterVector& out_names) {
   for (int i = 0; i < results_.first_size; ++i) {
     out_names[labels_size() + i] =
       settings_.output_colname + boost::lexical_cast<std::string>(i + 1);
   }
+
+  return out_names;
 }
 
-void ColsFormatter::add_cols_binded_dataframes_colnames(CharacterVector& out_names) {
+CharacterVector& ColsFormatter::add_cols_binded_dataframes_colnames(CharacterVector& out_names) {
   List first_result = results_.get()[0];
   int n_cols_results = first_result.size();
   int n_rows_results = Rf_length(first_result[0]);
@@ -353,6 +376,8 @@ void ColsFormatter::add_cols_binded_dataframes_colnames(CharacterVector& out_nam
       ++counter;
     }
   }
+
+  return out_names;
 }
 
 CharacterVector& ColsFormatter::create_colnames(CharacterVector& out_names) {
@@ -364,14 +389,15 @@ CharacterVector& ColsFormatter::create_colnames(CharacterVector& out_names) {
     out_names[labels_size()] = output_colname;
     break;
   case vectors:
-    add_cols_binded_vectors_colnames(out_names);
+    out_names = add_cols_binded_vectors_colnames(out_names);
     break;
   case dataframes:
-    add_cols_binded_dataframes_colnames(out_names);
+    out_names = add_cols_binded_dataframes_colnames(out_names);
     break;
   default:
     break;
   }
+
   return out_names;
 }
 
@@ -384,12 +410,12 @@ List Formatter::output() {
   determine_dimensions();
   List out = no_init(n_cols_);
 
-  add_output(out);
-  add_labels(out);
-  add_colnames(out);
+  out = add_output(out);
+  out = add_labels(out);
+  out = add_colnames(out);
 
   return as_data_frame(out);
 }
 
 
-} // namespace Slices
+} // namespace rows

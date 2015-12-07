@@ -4,7 +4,8 @@
 \alias{by_slice}
 \title{Apply a function to slices of a data frame}
 \usage{
-by_slice(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE)
+by_slice(.d, ..f, ..., .collate = c("list", "rows", "cols"), .to = ".out",
+  .labels = TRUE)
 }
 \arguments{
 \item{.d}{A sliced data frame.}

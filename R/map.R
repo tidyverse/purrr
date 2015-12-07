@@ -77,7 +77,7 @@ map <- function(.x, .f, ...) {
 
   if (dplyr::is.grouped_df(.x)) {
     set_sliced_env(.x, TRUE, "rows", "", environment(), ".x")
-    .Call("map_by_slice_impl", environment(), ".x", ".f")
+    .Call(map_by_slice_impl, environment(), ".x", ".f")
   } else {
     res <- .Call(map_impl, environment(), ".x", ".f", "list")
     output_hook(res, .x)

@@ -8,11 +8,11 @@ int is_atomic(int x);
 int is_function(const SEXP fun);
 int is_function(int fun);
 SEXP get_ij_elt(const SEXP slice, int i, int j);
-int first_type(Rcpp::List& results);
-int sexp_type(SEXP x);
-void check_dataframes_consistency(Rcpp::List x);
-void check_dataframes_names_consistency(Rcpp::List& x);
-void check_dataframes_types_consistency(Rcpp::List& x);
+int first_type(const Rcpp::List& results);
+int sexp_type(const SEXP x);
+void check_dataframes_consistency(const Rcpp::List x);
+void check_dataframes_names_consistency(const Rcpp::List& x);
+void check_dataframes_types_consistency(const Rcpp::List& x);
 
 // Predicates for iterator algorithms
 struct is_non_null : std::unary_function<SEXP, bool> {

@@ -7,19 +7,19 @@
 
 using namespace Rcpp;
 
-namespace Slices {
+namespace rows {
 
-List process_slices(List raw_results, Environment execution_env) {
-  Slices::Settings settings(execution_env);
+List process_slices(List raw_results, const Environment execution_env) {
+  rows::Settings settings(execution_env);
   int remove_empty = settings.collation != list;
 
-  Slices::Labels labels(execution_env);
-  Slices::Results results(raw_results, remove_empty);
+  rows::Labels labels(execution_env);
+  rows::Results results(raw_results, remove_empty);
 
   if (remove_empty)
     labels.remove(results.empty_index);
 
-  Slices::FormatterPtr formatter = Slices::Formatter::create(results, labels, settings);
+  rows::FormatterPtr formatter = rows::Formatter::create(results, labels, settings);
 
   return formatter->output();
 }
@@ -43,7 +43,7 @@ SEXP subset_slices(const List data) {
   return out;
 }
 
-} // namespace Slices
+} // namespace rows
 
 
 extern "C" SEXP by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
@@ -53,13 +53,13 @@ extern "C" SEXP by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   SEXP d_val = Rf_eval(d, env);
 
   // Replace x in env with a list of data frames, one for each group
-  Rf_defineVar(d, Slices::subset_slices(d_val), env);
+  Rf_defineVar(d, rows::subset_slices(d_val), env);
 
   // Map over that list
   SEXP results = PROTECT(map_impl(env, d_name_, f_name_, Rf_mkChar("list")));
 
   // Create the output data frame
-  results = PROTECT(Slices::process_slices(results, env));
+  results = PROTECT(rows::process_slices(results, env));
 
   UNPROTECT(2);
   return results;
@@ -72,7 +72,7 @@ extern "C" SEXP invoke_rows_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   SEXP results = PROTECT(pmap_impl(env, d_name_, f_name_, Rf_mkChar("list")));
 
   // Create the output data frame
-  results = PROTECT(Slices::process_slices(results, env));
+  results = PROTECT(rows::process_slices(results, env));
 
   UNPROTECT(2);
   return results;
@@ -86,7 +86,7 @@ extern "C" SEXP map_by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   SEXP d_val = Rf_eval(d, env);
 
   // Create list of data frames, one by slice
-  SEXP results = PROTECT(Slices::subset_slices(d_val));
+  SEXP results = PROTECT(rows::subset_slices(d_val));
 
   // Map over those lists
   for (int i = 0; i < Rf_length(results); ++i) {
@@ -97,7 +97,7 @@ extern "C" SEXP map_by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   }
 
   // Create the output data frame
-  results = PROTECT(Slices::process_slices(results, env));
+  results = PROTECT(rows::process_slices(results, env));
 
   UNPROTECT(2);
   return results;

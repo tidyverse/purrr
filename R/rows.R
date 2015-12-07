@@ -66,7 +66,8 @@
 #'   by_slice(partial(lm, mpg ~ disp), .labels = FALSE) %>%
 #'   flatten() %>%
 #'   map(coef)
-by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE) {
+by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
+                     .to = ".out", .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
   } else if (!is.function(..f)) {
@@ -76,12 +77,10 @@ by_slice <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TR
   if (!dplyr::is.grouped_df(.d)) {
     stop(".d must be a sliced data frame", call. = FALSE)
   }
-  if (!.collate %in% c("list", "rows", "cols")) {
-    stop(".collate should be `list`, `rows` or `cols`", call. = FALSE)
-  }
+  .collate <- match.arg(.collate)
 
   set_sliced_env(.d, .labels, .collate, .to, environment(), ".d")
-  .Call("by_slice_impl", environment(), ".d", "..f")
+  .Call(by_slice_impl, environment(), ".d", "..f")
 }
 
 set_sliced_env <- function(df, labels, collate, to, env, x_name) {
@@ -167,43 +166,40 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
 #' mtcars[1:2] %>% by_row(function(x) 1:5)
 #' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "rows")
 #' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "cols")
-by_row <- function(.d, ..f, ..., .collate = "list", .to = ".out", .labels = TRUE) {
+by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
+                   .to = ".out", .labels = TRUE) {
   if (inherits(..f, "formula")) {
     ..f <- as_function(..f)
   } else if (!is.function(..f)) {
     stop("..f should be a function or a formula", call. = FALSE)
   }
-
-  if (!.collate %in% c("list", "rows", "cols")) {
-    stop(".collate should be `list`, `cols` or `rows`", call. = FALSE)
-  }
   if (!is.data.frame(.d)) {
     stop(".d must be a data frame", call. = FALSE)
   }
+  .collate <- match.arg(.collate)
 
   attr(.d, "indices") <- as.list(seq_along(.d[[1]]))
   .unique_labels <- 0
   .labels_cols <- .d
   .slicing_cols <- .d
 
-  .Call("by_slice_impl", environment(), ".d", "..f")
+  .Call(by_slice_impl, environment(), ".d", "..f")
 }
 
 #' @rdname by_row
 #' @export
-invoke_rows <- function(.f, .d, ..., .collate = "cols", .to = ".out", .labels = TRUE) {
-  if (!.collate %in% c("list", "rows", "cols")) {
-    stop(".collate should be `list`, `cols` or `rows`", call. = FALSE)
-  }
+invoke_rows <- function(.f, .d, ..., .collate = c("cols", "rows", "list"),
+                        .to = ".out", .labels = TRUE) {
   if (!is.data.frame(.d)) {
     stop(".d must be a data frame", call. = FALSE)
   }
+  .collate <- match.arg(.collate)
 
   .unique_labels <- 0
   .labels_cols <- .d
   .slicing_cols <- .d
 
-  .Call("invoke_rows_impl", environment(), ".d", ".f")
+  .Call(invoke_rows_impl, environment(), ".d", ".f")
 }
 
 

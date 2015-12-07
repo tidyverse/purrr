@@ -3,10 +3,10 @@
 #include "utils.h"
 #include "rows-data.h"
 
-namespace Slices {
+namespace rows {
 
 
-CollationType hash_collate(std::string collate) {
+CollationType hash_collate(const std::string& collate) {
   if (collate == "rows")
     return rows;
   else if (collate == "cols")
@@ -29,7 +29,7 @@ Labels::Labels(Environment execution_env_)
       n_labels_(Rf_length(execution_env_[".labels_cols"])) {
 }
 
-void Labels::remove(std::vector<int>& index) {
+void Labels::remove(const std::vector<int>& index) {
   if (index.size()) {
     dplyr::DataFrameSubsetVisitors labels_visitors(labels_);
     labels_ = labels_visitors.subset(index, "data.frame");
@@ -118,4 +118,4 @@ void Results::determine_results_properties() {
 }
 
 
-} // namespace Slices
+} // namespace rows

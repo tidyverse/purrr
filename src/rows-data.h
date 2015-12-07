@@ -2,7 +2,7 @@
 #define ROWSDATA_H
 
 using namespace Rcpp;
-namespace Slices {
+namespace rows {
 
 
 enum SlicesType {
@@ -37,7 +37,7 @@ struct Labels {
 
   List get() const { return labels_; }
   int size() const { return n_labels_; }
-  void remove(std::vector<int>& index);
+  void remove(const std::vector<int>& index);
 
   Labels(Environment execution_env_);
 
@@ -75,6 +75,6 @@ struct Results {
 };
 
 
-} // namespace Slices
+} // namespace rows
 
 #endif
