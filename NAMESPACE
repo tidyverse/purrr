@@ -3,6 +3,8 @@
 export("%>%")
 export("%@%")
 export("%||%")
+export(accumulate)
+export(accumulate_right)
 export(array_branch)
 export(array_tree)
 export(as_function)
