@@ -20,7 +20,7 @@ test_that("names are preserved", {
 # typed flattens ----------------------------------------------------------
 
 test_that("error thrown when invalid input", {
-  expect_error(flatten_lgl(list(1)), "not a logical")
+  expect_error(flatten_lgl(list(1)), "from a double to a logical")
 })
 
 test_that("output is correct for simple examples", {

@@ -68,11 +68,13 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  // Determine output size
+  // Determine output size and type
   int n = 0;
   int has_names = 0;
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
+
+    ensure_can_coerce(TYPEOF(x_j), type, j);
 
     n += Rf_length(x_j);
     if (!has_names && !Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
