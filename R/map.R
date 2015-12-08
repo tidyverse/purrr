@@ -72,6 +72,16 @@ map_lgl <- function(.x, .f, ...) {
   .Call(map_impl, environment(), ".x", ".f", "logical")
 }
 
+# Internal version of map_lgl() that works with logical vectors
+probe <- function(.x, .p, ...) {
+  if (is_logical(.p)) {
+    stopifnot(length(.p) == length(.x))
+    .p
+  } else {
+    map_lgl(.x, .p, ...)
+  }
+}
+
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ...) {
@@ -324,7 +334,7 @@ NULL
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
-  sel <- map_lgl(.x, .p)
+  sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
