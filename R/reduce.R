@@ -54,7 +54,6 @@ reduce_right <- function(.x, .f, ..., .init) {
 #'
 #' @inheritParams reduce
 #' @export
-#'
 #' @examples
 #' 1:3 %>% accumulate(`+`)
 #' 1:10 %>% accumulate_right(`*`)

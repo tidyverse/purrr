@@ -18,10 +18,9 @@ Imports:
     lazyeval
 Suggests:
     testthat
-LinkingTo:
-    Rcpp,
+LinkingTo: Rcpp,
     dplyr,
     BH
 URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.0
