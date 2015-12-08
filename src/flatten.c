@@ -1,6 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include "vector.h"
 
 const char* objtype(SEXP x) {
   return Rf_type2char(TYPEOF(x));
@@ -67,13 +68,11 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  // Determine output size and check type
+  // Determine output size
   int n = 0;
   int has_names = 0;
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
-    if (TYPEOF(x_j) != type)
-      Rf_error("Element %i is not a %s (%s)", j + 1, Rf_type2char(type), objtype(x_j));
 
     n += Rf_length(x_j);
     if (!has_names && !Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
@@ -96,14 +95,8 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
     int has_names_j = !Rf_isNull(names_j);
 
     for (int k = 0; k < n_j; ++k, ++i) {
-      switch(type) {
-      case LGLSXP:   LOGICAL(out)[i] = LOGICAL(x_j)[k]; break;
-      case INTSXP:   INTEGER(out)[i] = INTEGER(x_j)[k]; break;
-      case REALSXP:  REAL(out)[i] = REAL(x_j)[k]; break;
-      case STRSXP:   SET_STRING_ELT(out, i, STRING_ELT(x_j, k)); break;
-      default:
-        Rf_error("Unsupported type at element %i (%s)", j + 1, objtype(x_j));
-      }
+      set_vector_value(out, j, x_j, k);
+
       if (has_names)
         SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
       if (i % 1000 == 0)

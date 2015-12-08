@@ -29,3 +29,14 @@ test_that("output is correct for simple examples", {
   expect_equal(flatten_int(list(1L, 2L)), c(1L, 2L))
   expect_equal(flatten_chr(list("a", "b")), c("a", "b"))
 })
+
+test_that("types automatically coerced upwards", {
+  expect_identical(flatten_int(list(FALSE, TRUE)), c(0L, 1L))
+
+  expect_identical(flatten_dbl(list(FALSE, TRUE)), c(0, 1))
+  expect_identical(flatten_dbl(list(1L, 2L)), c(1, 2))
+
+  expect_identical(flatten_chr(list(FALSE, TRUE)), c("F", "T"))
+  expect_identical(flatten_chr(list(1L, 2L)), c("1", "2"))
+  expect_identical(flatten_chr(list(1.5, 2.5)), c("1.5", "2.5"))
+})
