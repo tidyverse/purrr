@@ -20,7 +20,7 @@ void ensure_can_coerce(SEXPTYPE from, SEXPTYPE to, int i) {
   if (can_coerce(from, to))
     return;
 
-  Rf_error("Can't coerce element %i from a %s to a %s",
+  Rf_errorcall(R_NilValue, "Can't coerce element %i from a %s to a %s",
     i + 1, Rf_type2char(from), Rf_type2char(to));
 
 }
@@ -56,6 +56,6 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     }
     break;
   case VECSXP:  SET_VECTOR_ELT(to, i, from); break;
-  default:      Rf_error("Unsupported type %s", Rf_type2char(TYPEOF(to)));
+  default:      Rf_errorcall(R_NilValue, "Unsupported type %s", Rf_type2char(TYPEOF(to)));
   }
 }
