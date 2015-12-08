@@ -35,7 +35,7 @@
 * `as_function()`, which converts formuals etc to functions, is now
   exported (#123).
 
-* `list_along()` and `rep_along()` generalise the idea of `seq_along(). 
+* `list_along()` and `rep_along()` generalise the idea of `seq_along()`. 
   (#122).
 
 * `%||%` is now exported (#109).
@@ -52,3 +52,7 @@
 
 * `zip2()`, `zip3()`, and `zip_n()` have been replaced by `transpose()`.
   It does the same thing but the name is better (#128).
+  
+* `accumulate()` has been added to handle recursive folding. It is shortand
+  for `Reduce(f, .x, accumulate = TRUE)` and follows a similar syntax to 
+  `reduce()` (#145). A right-hand version `accumulate_right()` was also added.

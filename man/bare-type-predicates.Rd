@@ -46,6 +46,6 @@ example, a data frame is a list, but not a bare list.
 }
 }
 \seealso{
-type-predicates scalar-type-predicates
+\link{type-predicates} \link{scalar-type-predicates}
 }
 

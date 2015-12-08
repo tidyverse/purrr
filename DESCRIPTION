@@ -13,14 +13,15 @@ License: GPL-3 | file LICENSE
 LazyData: true
 Imports:
     magrittr (>= 1.5),
+    dplyr (>= 0.4.3),
     Rcpp,
     lazyeval
 Suggests:
-    testthat,
-    dplyr (>= 0.4)
-LinkingTo: Rcpp,
+    testthat
+LinkingTo:
+    Rcpp,
     dplyr,
     BH
 URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1
