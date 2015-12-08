@@ -29,14 +29,40 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type) {
     INTEGER(i_val)[0] = i + 1;
 
     SEXP res = Rf_eval(call, env);
-    if (type != VECSXP && (Rf_length(res) != 1 || TYPEOF(res) != type))
-      Rf_error("Result %i is not a length 1 %s", i + 1, Rf_type2char(type));
+    if (type != VECSXP && Rf_length(res) != 1)
+      Rf_error("Result %i is not a length 1 atomic vector", i + 1);
 
     switch(type) {
     case LGLSXP:
-    case INTSXP:  INTEGER(out)[i] = INTEGER(res)[0]; break;
-    case REALSXP: REAL(out)[i] = REAL(res)[0]; break;
-    case STRSXP:  SET_STRING_ELT(out, i, STRING_ELT(res, 0)); break;
+      switch(TYPEOF(res)) {
+      case LGLSXP: LOGICAL(out)[i] = LOGICAL(res)[0]; break;
+      default:     Rf_errorcall(R_NilValue, "Result %i is not a logical vector.", i + 1);
+      }
+      break;
+    case INTSXP:
+      switch(TYPEOF(res)) {
+      case LGLSXP: INTEGER(out)[i] = LOGICAL(res)[0]; break;
+      case INTSXP: INTEGER(out)[i] = INTEGER(res)[0]; break;
+      default:     Rf_error("Result %i is not a integer or logical vector.", i + 1);
+      }
+      break;
+    case REALSXP:
+      switch(TYPEOF(res)) {
+      case LGLSXP:  REAL(out)[i] = LOGICAL(res)[0]; break;
+      case INTSXP:  REAL(out)[i] = INTEGER(res)[0]; break;
+      case REALSXP: REAL(out)[i] = REAL(res)[0]; break;
+      default:      Rf_error("Result %i is not a integer or logical vector.", i + 1);
+      }
+      break;
+    case STRSXP:
+      switch(TYPEOF(res)) {
+      case LGLSXP:
+      case INTSXP:
+      case REALSXP: SET_STRING_ELT(out, i, Rf_asChar(res)); break;
+      case STRSXP:  SET_STRING_ELT(out, i, STRING_ELT(res, 0)); break;
+      default:      Rf_error("Result %i is not a integer or logical vector.", i + 1);
+      }
+      break;
     case VECSXP:  SET_VECTOR_ELT(out, i, res); break;
     default:      Rf_error("Unsupported type %s", Rf_type2char(type));
     }

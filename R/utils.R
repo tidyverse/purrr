@@ -73,6 +73,12 @@ as_function <- function(.f) {
   }
 }
 
+pluck <- function(i, default = NULL) {
+  function(x) {
+    x[[i]] %||% default
+  }
+}
+
 output_hook <- function(out, x) {
   if (is.data.frame(x)) {
     if (is.null(names(out))) {

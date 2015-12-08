@@ -52,7 +52,8 @@ giving either the name or the index of the data frame.}
 
   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
   vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
-  vector.
+  vector. The output of \code{.f} will be automatically typed upwards,
+  e.g. logical -> integer -> double -> character.
 
   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
   its side effects, but this makes it easier to combine in a pipe.
