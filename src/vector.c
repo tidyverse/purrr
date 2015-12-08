@@ -25,6 +25,14 @@ void ensure_can_coerce(SEXPTYPE from, SEXPTYPE to, int i) {
 
 }
 
+double logical_to_real(int x) {
+  return (x == NA_LOGICAL) ? NA_REAL : x;
+}
+double integer_to_real(int x) {
+  return (x == NA_INTEGER) ? NA_REAL : x;
+}
+
+
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
   ensure_can_coerce(TYPEOF(from), TYPEOF(to), i);
 
@@ -42,8 +50,8 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     break;
   case REALSXP:
     switch(TYPEOF(from)) {
-    case LGLSXP:  REAL(to)[i] = LOGICAL(from)[j]; break;
-    case INTSXP:  REAL(to)[i] = INTEGER(from)[j]; break;
+    case LGLSXP:  REAL(to)[i] = logical_to_real(LOGICAL(from)[j]); break;
+    case INTSXP:  REAL(to)[i] = integer_to_real(INTEGER(from)[j]); break;
     case REALSXP: REAL(to)[i] = REAL(from)[j]; break;
     }
     break;

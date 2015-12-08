@@ -40,3 +40,7 @@ test_that("types automatically coerced upwards", {
   expect_identical(map_chr(c(1L, 2L), identity), c("1", "2"))
   expect_identical(map_chr(c(1.5, 2.5), identity), c("1.5", "2.5"))
 })
+
+test_that("logical and integer NA become correct double NA", {
+  expect_identical(map_dbl(list(NA, NA_integer_), identity), c(NA_real_, NA_real_))
+})
