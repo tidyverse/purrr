@@ -162,7 +162,7 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
 #'
 #' # invoke_rows() with cols collation is equivalent to plyr::mdply()
 #' p <- expand.grid(mean = 1:5, sd = seq(0, 1, length = 10))
-#' p %>% invoke_rows(.f = rnorm, n = 5)
+#' p %>% invoke_rows(.f = rnorm, n = 5, .collate = "cols")
 #' \dontrun{
 #' p %>% plyr::mdply(rnorm, n = 5) %>% dplyr::tbl_df()
 #' }
@@ -190,7 +190,7 @@ by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
 
 #' @rdname by_row
 #' @export
-invoke_rows <- function(.f, .d, ..., .collate = c("cols", "rows", "list"),
+invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
                         .to = ".out", .labels = TRUE) {
   if (!is.data.frame(.d)) {
     stop(".d must be a data frame", call. = FALSE)

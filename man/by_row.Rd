@@ -8,7 +8,7 @@
 by_row(.d, ..f, ..., .collate = c("list", "rows", "cols"), .to = ".out",
   .labels = TRUE)
 
-invoke_rows(.f, .d, ..., .collate = c("cols", "rows", "list"), .to = ".out",
+invoke_rows(.f, .d, ..., .collate = c("list", "rows", "cols"), .to = ".out",
   .labels = TRUE)
 }
 \arguments{
@@ -85,7 +85,7 @@ mtcars \%>\% invoke_rows(.f = lift_vd(mean))
 
 # invoke_rows() with cols collation is equivalent to plyr::mdply()
 p <- expand.grid(mean = 1:5, sd = seq(0, 1, length = 10))
-p \%>\% invoke_rows(.f = rnorm, n = 5)
+p \%>\% invoke_rows(.f = rnorm, n = 5, .collate = "cols")
 \dontrun{
 p \%>\% plyr::mdply(rnorm, n = 5) \%>\% dplyr::tbl_df()
 }

@@ -3,8 +3,10 @@
 * `map()` now supports sliced data frames. It is a shortcut for the
   combination of `x %>% by_slice(map, fun, .collate = "rows")`.
 
-* `map_rows()` has been renamed to `invoke_rows()`. It collates on
-  columns by default, which makes it equivalent to `plyr::mdply()`.
+* `map_rows()` has been renamed to `invoke_rows()`. As other
+  rows-based functionals, it collates results inside lists by default,
+  but with column collation this function is equivalent to
+  `plyr::mdply()`.
 
 * The rows-based functionals gain a `.to` option to name the output
   column as well as a `.collate` argument. The latter allows to
