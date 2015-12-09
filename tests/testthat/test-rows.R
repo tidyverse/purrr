@@ -219,3 +219,8 @@ test_that("map() works on sliced data frames", {
   by_slice_out <- by_slice(df, map, ~ .x / max(.x), .collate = "rows")
   expect_equal(map_out, by_slice_out)
 })
+
+test_that("by_row() creates indices with c++ style indexing", {
+  out <- mtcars[1:5, 1:2] %>% by_row(~ .$cyl[1])
+  expect_equal(out$.out[[5]], 8)
+})

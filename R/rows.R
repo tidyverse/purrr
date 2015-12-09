@@ -180,7 +180,7 @@ by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   }
   .collate <- match.arg(.collate)
 
-  attr(.d, "indices") <- as.list(seq_along(.d[[1]]))
+  attr(.d, "indices") <- as.list(seq(0, length(.d[[1]]) - 1))
   .unique_labels <- 0
   .labels_cols <- .d
   .slicing_cols <- .d
