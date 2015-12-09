@@ -68,12 +68,7 @@
 #'   map(coef)
 by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
                      .to = ".out", .labels = TRUE) {
-  if (inherits(..f, "formula")) {
-    ..f <- as_function(..f)
-  } else if (!is.function(..f)) {
-    stop("..f should be a function or a formula", call. = FALSE)
-  }
-
+  ..f <- as_rows_function(..f)
   if (!dplyr::is.grouped_df(.d)) {
     stop(".d must be a sliced data frame", call. = FALSE)
   }
@@ -81,6 +76,17 @@ by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
 
   set_sliced_env(.d, .labels, .collate, .to, environment(), ".d")
   .Call(by_slice_impl, environment(), ".d", "..f")
+}
+
+# Prevents as_function() from transforming to a plucking function
+as_rows_function <- function(f, f_name = ".f") {
+  if (inherits(f, "formula")) {
+    as_function(f)
+  } else if (!is.function(f)) {
+    stop(f_name, " should be a function or a formula", call. = FALSE)
+  } else {
+    f
+  }
 }
 
 set_sliced_env <- function(df, labels, collate, to, env, x_name) {
@@ -168,11 +174,7 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
 #' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "cols")
 by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
                    .to = ".out", .labels = TRUE) {
-  if (inherits(..f, "formula")) {
-    ..f <- as_function(..f)
-  } else if (!is.function(..f)) {
-    stop("..f should be a function or a formula", call. = FALSE)
-  }
+  ..f <- as_rows_function(..f)
   if (!is.data.frame(.d)) {
     stop(".d must be a data frame", call. = FALSE)
   }
