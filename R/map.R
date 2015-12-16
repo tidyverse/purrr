@@ -328,7 +328,8 @@ walk_n <- function(...) {
 #' list(x = rbernoulli(100), y = 1:100) %>%
 #'   transpose() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   transpose(.simplify = TRUE)
+#'   transpose() %>%
+#'   simplify_all()
 #'
 NULL
 

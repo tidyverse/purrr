@@ -2,7 +2,9 @@
 #'
 #' \code{as_vector()} collapses a list of vectors into one vector. It
 #' checks that the type of each vector is consistent with
-#' \code{.type}.
+#' \code{.type}. If the list can not be simplified, it throws an error.
+#' \code{simplify} will simplify a vector if possible; \code{simplify_all}
+#' will apply \code{simplify} to every element of a list.
 #'
 #' \code{.type} can be a vector mold specifying both the type and the
 #' length of the vectors to be concatenated, such as \code{numeric(1)}
@@ -30,13 +32,30 @@
 #' # Note that unlike vapply(), as_vector() never adds dimension
 #' # attributes. So when you specify a vector mold of size > 1, you
 #' # always get a vector and not a matrix
-as_vector <- function(.x, .type) {
+as_vector <- function(.x, .type = NULL) {
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {
     stop("Cannot coerce .x to a vector", call. = FALSE)
   }
 }
+
+#' @export
+#' @rdname as_vector
+simplify <- function(.x, .type = NULL) {
+  if (can_simplify(.x, .type)) {
+    unlist(.x)
+  } else {
+    .x
+  }
+}
+
+#' @export
+#' @rdname as_vector
+simplify_all <- function(.x, .type = NULL) {
+  map(.x, simplify, .type = .type)
+}
+
 
 # Simplify a list of atomic vectors of the same type to a vector
 #
@@ -79,10 +98,6 @@ can_coerce <- function(x, type) {
   actual == type
 }
 
-simplify_if_possible <- function(x, type = NULL) {
-  if (!can_simplify(x, type)) return(x)
-  unlist(x)
-}
 
 # is a mold? As opposed to a string
 is_mold <- function(type) {

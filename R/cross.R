@@ -145,6 +145,7 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @export
 cross_d <- function(.l, .filter = NULL) {
   cross_n(.l, .filter = .filter) %>%
-    transpose(.simplify = TRUE) %>%
+    transpose() %>%
+    simplify_all() %>%
     dplyr::as_data_frame()
 }

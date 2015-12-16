@@ -8,6 +8,8 @@
   suffixed `lgl`, `int`, `dbl`, `chr`, and `df`.
 
 * `transpose()` loses the fields argument and gains a C implementation.
+  It also loses the `.simplify` argument; instead use the new `simplify_all()`
+  function.
 
 * `flatmap()` has been deprecated. Please use `map()` followed by the 
   appropriate `flatten()`.
