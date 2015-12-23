@@ -65,14 +65,15 @@ mtcars \%>\%
 # used indistinctly.
 
 # Mutating operation:
-mtcars \%>\%
-  slice_rows(c("cyl", "am")) \%>\%
-  by_slice(map, ~ .x / sum(.x), .collate = "rows")
+df <- mtcars \%>\% slice_rows(c("cyl", "am"))
+df \%>\% by_slice(dmap, ~ .x / sum(.x), .collate = "rows")
 
 # Summarising operation:
-mtcars \%>\%
-  slice_rows(c("cyl", "am")) \%>\%
-  by_slice(map, mean, .collate = "rows")
+df \%>\% by_slice(dmap, mean, .collate = "rows")
+
+# Note that mapping columns within slices is best handled by dmap():
+df \%>\% dmap(~ .x / sum(.x))
+df \%>\% dmap(mean)
 
 # If you don't need the slicing variables as identifiers, switch
 # .labels to FALSE:
@@ -83,6 +84,7 @@ mtcars \%>\%
   map(coef)
 }
 \seealso{
-\code{\link{by_row}()}, \code{\link{slice_rows}()}
+\code{\link{by_row}()}, \code{\link{slice_rows}()},
+  \code{\link{dmap}()}
 }
 

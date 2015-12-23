@@ -107,5 +107,5 @@ lmap_at <- function(.x, .at, .f, ...) {
     out[[i]] <- res
   }
 
-  flatten(out) %>% output_hook(.x)
+  flatten(out) %>% maybe_as_data_frame(.x)
 }

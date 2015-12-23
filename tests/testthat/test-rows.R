@@ -166,7 +166,7 @@ test_that("unconsistent data frames fail", {
   unconsistent_types <- gen_alternatives(df, map(df, as.character))
 
   expect_error(invoke_rows(unconsistent_names, mtcars[1:2], .collate = "rows"), "consistent names")
-  expect_error(invoke_rows(unconsistent_types, mtcars[1:2], .collate = "rows"), "consistent types")
+  expect_error(invoke_rows(unconsistent_types, mtcars[1:2], .collate = "rows"), "must return either data frames or vectors")
 })
 
 test_that("objects", {
@@ -189,7 +189,7 @@ test_that("collation of ragged objects on cols fails", {
 
 test_that("by_slice() works with slicers of different types", {
   df1 <- slice_rows(mtcars, "cyl")
-  df2 <- map_at(mtcars, "cyl", as.character) %>% slice_rows("cyl")
+  df2 <- dmap_at(mtcars, "cyl", as.character) %>% slice_rows("cyl")
   out1 <- by_slice(df1, map, mean)
   out2 <- by_slice(df2, map, mean)
   expect_identical(out1[-1], out2[-1])
@@ -213,14 +213,20 @@ test_that("by_slice() fails with ungrouped data frames", {
   expect_error(by_slice(mtcars, list))
 })
 
-test_that("map() works on sliced data frames", {
-  df <- slice_rows(mtcars, "cyl")
-  map_out <- map(df, ~ .x / max(.x))
-  by_slice_out <- by_slice(df, map, ~ .x / max(.x), .collate = "rows")
-  expect_equal(map_out, by_slice_out)
-})
-
 test_that("by_row() creates indices with c++ style indexing", {
   out <- mtcars[1:5, 1:2] %>% by_row(~ .$cyl[1])
   expect_equal(out$.out[[5]], 8)
 })
+
+test_that("by_slice() works with no columns to map", {
+  df <- mtcars["cyl"] %>% slice_rows("cyl")
+  res <- df %>% by_slice(list)
+  expect_equal(res, df)
+})
+
+test_that("by_row() and invoke_rows() work with no columns to map", {
+  res <- dplyr::data_frame() %>% invoke_rows(.f = c)
+  expect_equal(dim(res), c(0, 1))
+  expect_equal(dplyr::data_frame() %>% by_row(c), dplyr::data_frame())
+})
+

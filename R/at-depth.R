@@ -66,7 +66,7 @@ at_depth <- function(.x, .depth, .f, ...) {
       lapply(x, recurse, depth = depth - 1)
 
     } else {
-      lapply(x, .f, ...) %>% output_hook(x)
+      lapply(x, .f, ...)
     }
   }
 

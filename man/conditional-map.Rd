@@ -41,7 +41,7 @@ positions. Only those elements corresponding to \code{.at} will be
 modified.}
 }
 \value{
-The same type of object as \code{.x}.
+A list.
 }
 \description{
 \code{map_if()} maps a function over the elements of \code{.x}

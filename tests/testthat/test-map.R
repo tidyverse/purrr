@@ -20,12 +20,6 @@ test_that("0 length input gives 0 length output", {
   expect_equal(out, list())
 })
 
-test_that("map() returns a data frame when given one", {
-  df <- data.frame(a = c("a", "b"), b = c("a", "b"))
-
-  out1 <- map(df, as.character)
-  out2 <- map(df, `[[`, 1)
-
-  expect_is(out1, "data.frame")
-  expect_is(out2, "data.frame")
+test_that("map() always returns a list", {
+  expect_is(map(mtcars, mean), "list")
 })

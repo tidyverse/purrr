@@ -31,7 +31,8 @@
 #'   define the slices). They are recycled to match the output size in
 #'   each slice if necessary.
 #' @return A data frame.
-#' @seealso \code{\link{by_row}()}, \code{\link{slice_rows}()}
+#' @seealso \code{\link{by_row}()}, \code{\link{slice_rows}()},
+#'   \code{\link{dmap}()}
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib purrr by_slice_impl
 #' @export
@@ -50,14 +51,15 @@
 #' # used indistinctly.
 #'
 #' # Mutating operation:
-#' mtcars %>%
-#'   slice_rows(c("cyl", "am")) %>%
-#'   by_slice(map, ~ .x / sum(.x), .collate = "rows")
+#' df <- mtcars %>% slice_rows(c("cyl", "am"))
+#' df %>% by_slice(dmap, ~ .x / sum(.x), .collate = "rows")
 #'
 #' # Summarising operation:
-#' mtcars %>%
-#'   slice_rows(c("cyl", "am")) %>%
-#'   by_slice(map, mean, .collate = "rows")
+#' df %>% by_slice(dmap, mean, .collate = "rows")
+#'
+#' # Note that mapping columns within slices is best handled by dmap():
+#' df %>% dmap(~ .x / sum(.x))
+#' df %>% dmap(mean)
 #'
 #' # If you don't need the slicing variables as identifiers, switch
 #' # .labels to FALSE:
@@ -71,6 +73,9 @@ by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   ..f <- as_rows_function(..f)
   if (!dplyr::is.grouped_df(.d)) {
     stop(".d must be a sliced data frame", call. = FALSE)
+  }
+  if (length(.d) <= length(attr(.d, "labels"))) {
+    return(.d)
   }
   .collate <- match.arg(.collate)
 
@@ -178,9 +183,14 @@ by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   if (!is.data.frame(.d)) {
     stop(".d must be a data frame", call. = FALSE)
   }
+  if (nrow(.d) < 1) {
+    return(.d)
+  }
   .collate <- match.arg(.collate)
 
-  attr(.d, "indices") <- as.list(seq(0, length(.d[[1]]) - 1))
+  indices <- seq(0, nrow(.d) - 1) # cpp-style indexing
+  attr(.d, "indices") <- as.list(indices)
+
   .unique_labels <- 0
   .labels_cols <- .d
   .slicing_cols <- .d

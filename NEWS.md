@@ -1,7 +1,11 @@
 # purrr 0.1.0.9000
 
-* `map()` now supports sliced data frames. It is a shortcut for the
-  combination of `x %>% by_slice(map, fun, .collate = "rows")`.
+* `map()` now always returns a list. Data frame support has been moved
+  to `map_df()` and `dmap()`. The latter supports sliced data frames
+  as a shortcut for the combination of `by_slice()` and `dmap()`:
+  `x %>% by_slice(dmap, fun, .collate = "rows")`. The conditional
+  variants `dmap_at()` and `dmap_if()` also support sliced data frames
+  and will recycle scalar results to the slice size.
 
 * `map_rows()` has been renamed to `invoke_rows()`. As other
   rows-based functionals, it collates results inside lists by default,

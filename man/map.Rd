@@ -47,8 +47,7 @@ walk(.x, .f, ...)
 giving either the name or the index of the data frame.}
 }
 \value{
-\code{map()} a list if \code{.x} is a list or a data frame
-  if \code{.x} is a data frame.
+\code{map()} always returns a list.
 
   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
   vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
@@ -107,14 +106,6 @@ mtcars \%>\%
   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
-
-# map() supports grouped data frames as well:
-sliced_df <- mtcars[1:5] \%>\% slice_rows("cyl")
-sliced_df \%>\% map(~ .x / max(.x))
-
-# This is equivalent to the (slower) combination of by_slice() and
-# map() with 'rows' collation of results:
-sliced_df \%>\% by_slice(map, ~ .x / max(.x), .collate = "rows")
 }
 \seealso{
 \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
