@@ -97,7 +97,7 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
     int has_names_j = !Rf_isNull(names_j);
 
     for (int k = 0; k < n_j; ++k, ++i) {
-      set_vector_value(out, j, x_j, k);
+      set_vector_value(out, i, x_j, k);
 
       if (has_names)
         SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
