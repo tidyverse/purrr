@@ -13,11 +13,11 @@ License: GPL-3 | file LICENSE
 LazyData: true
 Imports:
     magrittr (>= 1.5),
+    dplyr (>= 0.4.3),
     Rcpp,
     lazyeval
 Suggests:
-    testthat,
-    dplyr (>= 0.4)
+    testthat
 LinkingTo: Rcpp,
     dplyr,
     BH

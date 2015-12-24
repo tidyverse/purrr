@@ -73,6 +73,12 @@ as_function <- function(.f) {
   }
 }
 
+pluck <- function(i, default = NULL) {
+  function(x) {
+    x[[i]] %||% default
+  }
+}
+
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
     dplyr::as_data_frame(out)

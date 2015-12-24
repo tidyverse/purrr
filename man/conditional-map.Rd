@@ -64,7 +64,8 @@ mtcars \%>\% map_at(c("cyl", "am"), as.character) \%>\% str()
 list(x = rbernoulli(100), y = 1:100) \%>\%
   transpose() \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
-  transpose(.simplify = TRUE)
+  transpose() \%>\%
+  simplify_all()
 
 }
 

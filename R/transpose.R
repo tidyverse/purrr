@@ -15,8 +15,6 @@
 #'   template; you'll get a warning if a sub-list is not the same length as
 #'   the first element. For efficiency, elements are matched by position, not
 #'   by name.
-#' @param .simplify If \code{TRUE}, lists containing atomic scalars of
-#'   the same type will be converted to a vector.
 #' @export
 #' @examples
 #' x <- rerun(5, x = runif(1), y = runif(5))
@@ -31,15 +29,13 @@
 #' y %>% str()
 #' y %>% transpose() %>% str()
 #'
-#' # The simplify argument reduces list to atomic vectors where possible
+#' # Use simplify_all() to reduce to atomic vectors where possible
 #' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 #' x %>% transpose()
-#' x %>% transpose(.simplify = TRUE)
+#' x %>% transpose() %>% simplify_all()
 #' @useDynLib purrr transpose_impl
-transpose <- function(.l, .simplify = FALSE) {
-  out <- .Call(transpose_impl, .l)
-  if (.simplify) out <- map(out, simplify_if_possible)
-  out
+transpose <- function(.l) {
+  .Call(transpose_impl, .l)
 }
 
 #' @rdname transpose
@@ -54,22 +50,22 @@ zip_n <- function(...) {
 #' @rdname transpose
 #' @export
 #' @usage NULL
-zip2 <- function(.x, .y, .fields = NULL, .simplify = FALSE) {
+zip2 <- function(.x, .y, .fields = NULL) {
   warning(
     "`zip2(x, y)` is deprecated, please use `transpose(list(x, y))` instead.",
     call. = FALSE
   )
-  transpose(list(.x, .y), .simplify = .simplify)
+  transpose(list(.x, .y))
 }
 
 #' @rdname transpose
 #' @export
 #' @usage NULL
-zip3 <- function(.x, .y, .z, .fields = NULL, .simplify = FALSE) {
+zip3 <- function(.x, .y, .z, .fields = NULL) {
   warning(
     "`zip2(x, y, z)` is deprecated, please use `transpose(list(x, y, z))` instead.",
     call. = FALSE
   )
 
-  transpose(list(.x, .y, .z), .simplify = .simplify)
+  transpose(list(.x, .y, .z))
 }

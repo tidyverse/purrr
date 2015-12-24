@@ -1,6 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include "vector.h"
 
 const char* objtype(SEXP x) {
   return Rf_type2char(TYPEOF(x));
@@ -8,7 +9,7 @@ const char* objtype(SEXP x) {
 
 SEXP flatten_impl(SEXP x) {
   if (TYPEOF(x) != VECSXP)
-    Rf_error("`.x` must be a list (%s)", objtype(x));
+    Rf_errorcall(R_NilValue, "`.x` must be a list (%s)", objtype(x));
   int m = Rf_length(x);
 
   // Determine output size and check type
@@ -17,7 +18,7 @@ SEXP flatten_impl(SEXP x) {
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
     if (!Rf_isVector(x_j))
-      Rf_error("Element %i is not a vector (%s)", j + 1, objtype(x_j));
+      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, objtype(x_j));
 
     n += Rf_length(x_j);
     if (!has_names && !Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
@@ -47,7 +48,7 @@ SEXP flatten_impl(SEXP x) {
       case STRSXP:   SET_VECTOR_ELT(out, i, Rf_ScalarString(STRING_ELT(x_j, k))); break;
       case VECSXP:   SET_VECTOR_ELT(out, i, VECTOR_ELT(x_j, k)); break;
       default:
-        Rf_error("Unsupported type at element %i (%s)", j + 1, objtype(x_j));
+        Rf_errorcall(R_NilValue, "Unsupported type at element %i (%s)", j + 1, objtype(x_j));
       }
       if (has_names)
         SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
@@ -62,18 +63,18 @@ SEXP flatten_impl(SEXP x) {
 
 SEXP vflatten_impl(SEXP x, SEXP type_) {
   if (TYPEOF(x) != VECSXP)
-    Rf_error("`.x` must be a list (%s)", objtype(x));
+    Rf_errorcall(R_NilValue, "`.x` must be a list (%s)", objtype(x));
   int m = Rf_length(x);
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  // Determine output size and check type
+  // Determine output size and type
   int n = 0;
   int has_names = 0;
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
-    if (TYPEOF(x_j) != type)
-      Rf_error("Element %i is not a %s (%s)", j + 1, Rf_type2char(type), objtype(x_j));
+
+    ensure_can_coerce(TYPEOF(x_j), type, j);
 
     n += Rf_length(x_j);
     if (!has_names && !Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
@@ -96,14 +97,8 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
     int has_names_j = !Rf_isNull(names_j);
 
     for (int k = 0; k < n_j; ++k, ++i) {
-      switch(type) {
-      case LGLSXP:   LOGICAL(out)[i] = LOGICAL(x_j)[k]; break;
-      case INTSXP:   INTEGER(out)[i] = INTEGER(x_j)[k]; break;
-      case REALSXP:  REAL(out)[i] = REAL(x_j)[k]; break;
-      case STRSXP:   SET_STRING_ELT(out, i, STRING_ELT(x_j, k)); break;
-      default:
-        Rf_error("Unsupported type at element %i (%s)", j + 1, objtype(x_j));
-      }
+      set_vector_value(out, i, x_j, k);
+
       if (has_names)
         SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
       if (i % 1000 == 0)

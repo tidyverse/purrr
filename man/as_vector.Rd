@@ -2,9 +2,15 @@
 % Please edit documentation in R/coercion.R
 \name{as_vector}
 \alias{as_vector}
+\alias{simplify}
+\alias{simplify_all}
 \title{Coerce a list to a vector}
 \usage{
-as_vector(.x, .type)
+as_vector(.x, .type = NULL)
+
+simplify(.x, .type = NULL)
+
+simplify_all(.x, .type = NULL)
 }
 \arguments{
 \item{.x}{A list of vectors}
@@ -17,7 +23,9 @@ input vectors. The latter can be any of the types returned by
 \description{
 \code{as_vector()} collapses a list of vectors into one vector. It
 checks that the type of each vector is consistent with
-\code{.type}.
+\code{.type}. If the list can not be simplified, it throws an error.
+\code{simplify} will simplify a vector if possible; \code{simplify_all}
+will apply \code{simplify} to every element of a list.
 }
 \details{
 \code{.type} can be a vector mold specifying both the type and the

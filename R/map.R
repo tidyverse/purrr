@@ -20,7 +20,8 @@
 #'
 #'   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
 #'   vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
-#'   vector.
+#'   vector. The output of \code{.f} will be automatically typed upwards,
+#'   e.g. logical -> integer -> double -> character.
 #'
 #'   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
 #'   its side effects, but this makes it easier to combine in a pipe.
@@ -73,6 +74,16 @@ map <- function(.x, .f, ...) {
 map_lgl <- function(.x, .f, ...) {
   .f <- as_function(.f)
   .Call(map_impl, environment(), ".x", ".f", "logical")
+}
+
+# Internal version of map_lgl() that works with logical vectors
+probe <- function(.x, .p, ...) {
+  if (is_logical(.p)) {
+    stopifnot(length(.p) == length(.x))
+    .p
+  } else {
+    map_lgl(.x, .p, ...)
+  }
 }
 
 #' @rdname map
@@ -319,7 +330,8 @@ walk_n <- function(...) {
 #' list(x = rbernoulli(100), y = 1:100) %>%
 #'   transpose() %>%
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   transpose(.simplify = TRUE)
+#'   transpose() %>%
+#'   simplify_all()
 #'
 NULL
 
@@ -327,7 +339,7 @@ NULL
 #' @export
 map_if <- function(.x, .p, .f, ...) {
   .x <- c(.x)
-  sel <- map_lgl(.x, .p)
+  sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }

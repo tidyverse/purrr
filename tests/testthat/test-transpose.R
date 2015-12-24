@@ -43,14 +43,3 @@ test_that("can transpose list of atomic vectors", {
   x <- list(list(TRUE, 1L, 1, "1"))
   expect_equal(transpose(x), list(list(TRUE), list(1L), list(1), list("1")))
 })
-
-# Simplification ----------------------------------------------------------
-
-test_that("scalars simplified to vector", {
-  expect_equal(transpose(list(list(1), list(2)), .simplify = TRUE), list(1:2))
-  expect_equal(transpose(list(list(1L), list(2)), .simplify = TRUE), list(1:2))
-})
-
-test_that("names preserved", {
-  expect_equal(transpose(list(list(x = 1), list(x = 2)), .simplify = TRUE), list(x = 1:2))
-})

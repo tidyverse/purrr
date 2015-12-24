@@ -7,16 +7,13 @@
 \alias{zip_n}
 \title{Transpose a list.}
 \usage{
-transpose(.l, .simplify = FALSE)
+transpose(.l)
 }
 \arguments{
 \item{.l}{A list of vectors to zip. The first element is used as the
 template; you'll get a warning if a sub-list is not the same length as
 the first element. For efficiency, elements are matched by position, not
 by name.}
-
-\item{.simplify}{If \code{TRUE}, lists containing atomic scalars of
-the same type will be converted to a vector.}
 }
 \description{
 Tranpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
@@ -44,9 +41,9 @@ y <- x \%>\% map(safely(log))
 y \%>\% str()
 y \%>\% transpose() \%>\% str()
 
-# The simplify argument reduces list to atomic vectors where possible
+# Use simplify_all() to reduce to atomic vectors where possible
 x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 x \%>\% transpose()
-x \%>\% transpose(.simplify = TRUE)
+x \%>\% transpose() \%>\% simplify_all()
 }
 

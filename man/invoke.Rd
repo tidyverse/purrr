@@ -64,6 +64,12 @@ invoke_map("runif", list(list(n = 5), list(n = 10)))
 list(m1 = mean, m2 = median) \%>\%
   invoke_map(x = rcauchy(100))
 
+# Note that you can also match by position by explicitly omitting `.x`.
+# This can be useful when the argument names of the functions are not
+# identical
+list(m1 = mean, m2 = median) \%>\%
+  invoke_map(, rcauchy(100))
+
 # If you have pairs of function name and arguments, it's natural
 # to store them in a data frame:
 if (requireNamespace("dplyr", quietly = TRUE)) {

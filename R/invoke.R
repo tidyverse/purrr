@@ -39,6 +39,12 @@
 #' list(m1 = mean, m2 = median) %>%
 #'   invoke_map(x = rcauchy(100))
 #'
+#' # Note that you can also match by position by explicitly omitting `.x`.
+#' # This can be useful when the argument names of the functions are not
+#' # identical
+#' list(m1 = mean, m2 = median) %>%
+#'   invoke_map(, rcauchy(100))
+#'
 #' # If you have pairs of function name and arguments, it's natural
 #' # to store them in a data frame:
 #' if (requireNamespace("dplyr", quietly = TRUE)) {
@@ -57,29 +63,42 @@ invoke <- function(.f, .x = NULL, ...) {
   do.call(.f, c(.x, list(...)))
 }
 
+as_invoke_function <- function(f) {
+  if (is.function(f)) {
+    list(f)
+  } else {
+    f
+  }
+}
+
 #' @rdname invoke
 #' @export
 invoke_map <- function(.f, .x = list(NULL), ...) {
+  .f <- as_invoke_function(.f)
   map2(.f, .x, invoke, ...)
 }
 #' @rdname invoke
 #' @export
 invoke_map_lgl <- function(.f, .x = list(NULL), ...) {
+  .f <- as_invoke_function(.f)
   map2_lgl(.f, .x, invoke, ...)
 }
 #' @rdname invoke
 #' @export
 invoke_map_int <- function(.f, .x = list(NULL), ...) {
+  .f <- as_invoke_function(.f)
   map2_int(.f, .x, invoke, ...)
 }
 #' @rdname invoke
 #' @export
 invoke_map_dbl <- function(.f, .x = list(NULL), ...) {
+  .f <- as_invoke_function(.f)
   map2_dbl(.f, .x, invoke, ...)
 }
 #' @rdname invoke
 #' @export
 invoke_map_chr <- function(.f, .x = list(NULL), ...) {
+  .f <- as_invoke_function(.f)
   map2_chr(.f, .x, invoke, ...)
 }
 

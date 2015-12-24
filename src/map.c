@@ -1,6 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include "vector.h"
 
 void copy_names(SEXP from, SEXP to) {
   if (Rf_length(from) != Rf_length(to))
@@ -29,18 +30,12 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type) {
     INTEGER(i_val)[0] = i + 1;
 
     SEXP res = Rf_eval(call, env);
-    if (type != VECSXP && (Rf_length(res) != 1 || TYPEOF(res) != type))
-      Rf_error("Result %i is not a length 1 %s", i + 1, Rf_type2char(type));
+    if (type != VECSXP && Rf_length(res) != 1)
+      Rf_errorcall(R_NilValue, "Result %i is not a length 1 atomic vector", i + 1);
 
-    switch(type) {
-    case LGLSXP:
-    case INTSXP:  INTEGER(out)[i] = INTEGER(res)[0]; break;
-    case REALSXP: REAL(out)[i] = REAL(res)[0]; break;
-    case STRSXP:  SET_STRING_ELT(out, i, STRING_ELT(res, 0)); break;
-    case VECSXP:  SET_VECTOR_ELT(out, i, res); break;
-    default:      Rf_error("Unsupported type %s", Rf_type2char(type));
-    }
+    set_vector_value(out, i, res, 0);
   }
+
   UNPROTECT(1);
   return out;
 }
@@ -55,7 +50,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
 
   SEXP x_val = Rf_eval(x, env);
   if (!Rf_isVector(x_val))
-    Rf_error("`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
+    Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
   int n = Rf_length(x_val);
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
@@ -85,14 +80,14 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
 
   SEXP x_val = Rf_eval(x, env);
   if (!Rf_isVector(x_val))
-    Rf_error("`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
+    Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
   SEXP y_val = Rf_eval(y, env);
   if (!Rf_isVector(y_val))
-    Rf_error("`.y` is not a vector (%s)", Rf_type2char(TYPEOF(y_val)));
+    Rf_errorcall(R_NilValue, "`.y` is not a vector (%s)", Rf_type2char(TYPEOF(y_val)));
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx != ny && !(nx == 1 || ny == 1)) {
-    Rf_error("`.x` (%i) and `.y` (%i) are different lengths", nx, ny);
+    Rf_errorcall(R_NilValue, "`.x` (%i) and `.y` (%i) are different lengths", nx, ny);
   }
   int n = (nx > ny) ? nx : ny;
 
@@ -116,7 +111,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   SEXP l_val = Rf_eval(l, env);
 
   if (!Rf_isVectorList(l_val))
-    Rf_error("`.x` is not a list (%s)", Rf_type2char(TYPEOF(l_val)));
+    Rf_errorcall(R_NilValue, "`.x` is not a list (%s)", Rf_type2char(TYPEOF(l_val)));
 
   // Check all elements are lists and find maximum length
   int m = Rf_length(l_val);
@@ -124,7 +119,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   for (int j = 0; j < m; ++j) {
     SEXP j_val = VECTOR_ELT(l_val, j);
     if (!Rf_isVector(j_val))
-      Rf_error("Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
+      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
 
     int nj = Rf_length(j_val);
     if (nj > n)
@@ -137,7 +132,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     int nj = Rf_length(j_val);
 
     if (nj != 1 && nj != n)
-      Rf_error("Element %i has length %i, not 1 or %i.", j + 1, nj, n);
+      Rf_errorcall(R_NilValue, "Element %i has length %i, not 1 or %i.", j + 1, nj, n);
   }
 
   SEXP l_names = Rf_getAttrib(l_val, R_NamesSymbol);

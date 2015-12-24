@@ -29,7 +29,8 @@
 #' safe_log <- safely(log, otherwise = NA_real_)
 #' list("a", 10, 100) %>%
 #'   map(safe_log) %>%
-#'   transpose(.simplify = TRUE)
+#'   transpose() %>%
+#'   simplify_all()
 #'
 #' # To replace errors with a default value, use possibly().
 #' list("a", 10, 100) %>%

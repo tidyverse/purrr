@@ -25,6 +25,8 @@
   suffixed `lgl`, `int`, `dbl`, `chr`, and `df`.
 
 * `transpose()` loses the fields argument and gains a C implementation.
+  It also loses the `.simplify` argument; instead use the new `simplify_all()`
+  function.
 
 * `flatmap()` has been deprecated. Please use `map()` followed by the 
   appropriate `flatten()`.
@@ -69,3 +71,7 @@
 
 * `zip2()`, `zip3()`, and `zip_n()` have been replaced by `transpose()`.
   It does the same thing but the name is better (#128).
+  
+* `accumulate()` has been added to handle recursive folding. It is shortand
+  for `Reduce(f, .x, accumulate = TRUE)` and follows a similar syntax to 
+  `reduce()` (#145). A right-hand version `accumulate_right()` was also added.

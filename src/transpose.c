@@ -4,7 +4,7 @@
 
 SEXP transpose_impl(SEXP x) {
   if (TYPEOF(x) != VECSXP)
-    Rf_error("`.l` is not a list (%s)", Rf_type2char(TYPEOF(x)));
+    Rf_errorcall(R_NilValue, "`.l` is not a list (%s)", Rf_type2char(TYPEOF(x)));
 
   int n = Rf_length(x);
   if (n == 0) {
@@ -14,7 +14,7 @@ SEXP transpose_impl(SEXP x) {
 
   SEXP x1 = VECTOR_ELT(x, 0);
   if (!Rf_isVector(x1))
-    Rf_error("Element 1 is not a vector (%s)", Rf_type2char(TYPEOF(x1)));
+    Rf_errorcall(R_NilValue, "Element 1 is not a vector (%s)", Rf_type2char(TYPEOF(x1)));
   int m = Rf_length(x1);
 
   // Create space for output
@@ -39,7 +39,7 @@ SEXP transpose_impl(SEXP x) {
   for (int i = 0; i < n; ++i) {
     SEXP xi = VECTOR_ELT(x, i);
     if (!Rf_isVector(xi))
-      Rf_error("Element %i is not a vector (%s)", i + 1, Rf_type2char(TYPEOF(x1)));
+      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", i + 1, Rf_type2char(TYPEOF(x1)));
 
     int mi = Rf_length(xi);
     if (mi != m) {
@@ -74,7 +74,7 @@ SEXP transpose_impl(SEXP x) {
       }
       break;
     default:
-      Rf_error("Unsupported type %s", Rf_type2char(TYPEOF(xi)));
+      Rf_errorcall(R_NilValue, "Unsupported type %s", Rf_type2char(TYPEOF(xi)));
     }
 
 
