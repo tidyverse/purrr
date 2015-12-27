@@ -79,11 +79,8 @@ pluck <- function(i, default = NULL) {
   }
 }
 
-output_hook <- function(out, x) {
+maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
-    if (is.null(names(out))) {
-      names(out) <- names(x)
-    }
     dplyr::as_data_frame(out)
   } else {
     out

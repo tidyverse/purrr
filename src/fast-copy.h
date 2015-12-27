@@ -1,10 +1,10 @@
 #ifndef FASTCOPY_H
 #define FASTCOPY_H
 
-#include <dplyr.h>
+using namespace Rcpp;
 
-SEXP rep_each_n(const SEXP x, const IntegerVector& times);
-SEXP seq_each_n(int length, const IntegerVector& times);
-SEXP copy_at_pos(const SEXP from, SEXP to, int pos);
+SEXP rep_each_n(const RObject x, const IntegerVector& times);
+SEXP copy_elements(const RObject from, int offset_from, RObject to, int offset_to, int n = 0);
+IntegerVector seq_each_n(const IntegerVector& times);
 
 #endif

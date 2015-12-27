@@ -7,11 +7,16 @@
 #' of the corresponding type (or die trying); \code{map_df()} returns
 #' a data frame by row-binding the individual elements.
 #'
+#' Note that \code{map()} understands data frames, including grouped
+#' data frames. It can be much faster than
+#' \code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
+#' columns. However, \code{map()}ll be slower for the more common case of many
+#' groups with functions that dplyr knows how to translate to C++.
+#'
 #' @inheritParams as_function
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to \code{.f}.
-#' @return \code{map()} a list if \code{.x} is a list or a data frame
-#'   if \code{.x} is a data frame.
+#' @return \code{map()} always returns a list.
 #'
 #'   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
 #'   vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
@@ -58,12 +63,10 @@
 #'   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
-#' @useDynLib purrr map_impl
+#' @useDynLib purrr map_impl map_by_slice_impl
 map <- function(.x, .f, ...) {
   .f <- as_function(.f)
-
-  res <- .Call(map_impl, environment(), ".x", ".f", "list")
-  output_hook(res, .x)
+  .Call(map_impl, environment(), ".x", ".f", "list")
 }
 
 #' @rdname map
@@ -163,8 +166,7 @@ walk <- function(.x, .f, ...) {
 #' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_function(.f)
-  res <- .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
-  output_hook(res, .x)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
 }
 
 #' @export
@@ -205,7 +207,7 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
 map3 <- function(.x, .y, .z, .f, ...) {
   warning("`map3(x, y, z)` is deprecated. Please use `pmap(list(x, y, z))` ",
     "instead", call. = FALSE)
-  pmap(list(.x, .y, .z), .f, ...) %>% output_hook(.x)
+  pmap(list(.x, .y, .z), .f, ...)
 }
 
 #' @export
@@ -311,7 +313,7 @@ walk_n <- function(...) {
 #' @param .at A character vector of names or a numeric vector of
 #'   positions. Only those elements corresponding to \code{.at} will be
 #'   modified.
-#' @return The same type of object as \code{.x}.
+#' @return A list.
 #' @name conditional-map
 #' @examples
 #' # Convert factors to characters
@@ -336,6 +338,7 @@ NULL
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
+  .x <- c(.x)
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
@@ -344,6 +347,7 @@ map_if <- function(.x, .p, .f, ...) {
 #' @rdname conditional-map
 #' @export
 map_at <- function(.x, .at, .f, ...) {
+  .x <- c(.x)
   sel <- inv_which(.x, .at)
   .x[sel] <- map(.x[sel], .f, ...)
   .x

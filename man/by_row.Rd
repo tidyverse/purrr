@@ -2,17 +2,27 @@
 % Please edit documentation in R/rows.R
 \name{by_row}
 \alias{by_row}
-\alias{map_rows}
+\alias{invoke_rows}
 \title{Apply a function to each row of a data frame}
 \usage{
-by_row(.d, ..f, ..., .labels = TRUE)
+by_row(.d, ..f, ..., .collate = c("list", "rows", "cols"), .to = ".out",
+  .labels = TRUE)
 
-map_rows(.d, .f, ..., .labels = TRUE)
+invoke_rows(.f, .d, ..., .collate = c("list", "rows", "cols"), .to = ".out",
+  .labels = TRUE)
 }
 \arguments{
-\item{.d}{A sliced data frame.}
+\item{.d}{A data frame.}
 
 \item{...}{Further arguments passed to \code{..f}.}
+
+\item{.collate}{If "list", the results are returned as a list-
+column. Alternatively, if the results are data frames or atomic
+vectors, you can collate on "cols" or on "rows". Column collation
+require vector of equal length or data frames with same number of
+rows.}
+
+\item{.to}{Name of output column.}
 
 \item{.labels}{If \code{TRUE}, the returned data frame is prepended
 with the labels of the slices (the columns in \code{.d} used to
@@ -29,10 +39,10 @@ number of columns between groups.}
 A data frame.
 }
 \description{
-\code{by_row()} and \code{map_rows()} apply \code{..f} to each row
+\code{by_row()} and \code{invoke_rows()} apply \code{..f} to each row
 of \code{.d}. If \code{..f}'s output is not a data frame nor an
 atomic vector, a list-column is created. In all cases,
-\code{by_row()} and \code{map_rows()} create a data frame in tidy
+\code{by_row()} and \code{invoke_rows()} create a data frame in tidy
 format.
 }
 \details{
@@ -42,13 +52,19 @@ addition, if \code{..f} returns a multi-rows data frame or a
 non-scalar atomic vector, a \code{.row} column is appended to
 identify the row number in the original data frame.
 
-\code{map_rows()} is intended to provide a version of
-\code{pmap()} that works better with data frames. The distinction
-between \code{by_row()} and \code{map_rows()} is that the former
-passes a data frame to \code{..f} while the latter maps the columns
-to its function call. This is essentially like using
-\code{\link{invoke}()} with each row of a data frame. Another way
-to view this is that \code{map_rows()} is equivalent to using
+\code{invoke_rows()} is intended to provide a version of
+\code{pmap()} for data frames. Its default collation method is
+\code{"cols"}, which makes it equivalent to
+\code{\link[plyr]{mdply}()} from the plyr package. Note that
+\code{invoke_rows()} follows the signature pattern of the
+\code{invoke} family of functions and takes \code{.f} as its first
+argument.
+
+The distinction between \code{by_row()} and \code{invoke_rows()} is
+that the former passes a data frame to \code{..f} while the latter
+maps the columns to its function call. This is essentially like
+using \code{\link{invoke}()} with each row. Another way to view
+this is that \code{invoke_rows()} is equivalent to using
 \code{by_row()} with a function lifted to accept dots (see
 \code{\link{lift}()}).
 }
@@ -61,10 +77,24 @@ mtcars \%>\% by_row(sum)
 # of the lift_xy() helpers:
 mtcars \%>\% by_row(lift_vl(mean))
 
-# To run a function with map_rows(), make sure it is variadic (that
-# it accepts dots)
-mtcars \%>\% map_rows(sum)
-mtcars \%>\% map_rows(lift_vd(mean))
+# To run a function with invoke_rows(), make sure it is variadic (that
+# it accepts dots) or that .f's signature is compatible with the
+# column names
+mtcars \%>\% invoke_rows(.f = sum)
+mtcars \%>\% invoke_rows(.f = lift_vd(mean))
+
+# invoke_rows() with cols collation is equivalent to plyr::mdply()
+p <- expand.grid(mean = 1:5, sd = seq(0, 1, length = 10))
+p \%>\% invoke_rows(.f = rnorm, n = 5, .collate = "cols")
+\dontrun{
+p \%>\% plyr::mdply(rnorm, n = 5) \%>\% dplyr::tbl_df()
+}
+
+# To integrate the result as part of the data frame, use rows or
+# cols collation:
+mtcars[1:2] \%>\% by_row(function(x) 1:5)
+mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "rows")
+mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "cols")
 }
 \seealso{
 \code{\link{by_slice}()}

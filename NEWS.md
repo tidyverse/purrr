@@ -1,5 +1,22 @@
 # purrr 0.1.0.9000
 
+* `map()` now always returns a list. Data frame support has been moved
+  to `map_df()` and `dmap()`. The latter supports sliced data frames
+  as a shortcut for the combination of `by_slice()` and `dmap()`:
+  `x %>% by_slice(dmap, fun, .collate = "rows")`. The conditional
+  variants `dmap_at()` and `dmap_if()` also support sliced data frames
+  and will recycle scalar results to the slice size.
+
+* `map_rows()` has been renamed to `invoke_rows()`. As other
+  rows-based functionals, it collates results inside lists by default,
+  but with column collation this function is equivalent to
+  `plyr::mdply()`.
+
+* The rows-based functionals gain a `.to` option to name the output
+  column as well as a `.collate` argument. The latter allows to
+  collate the output in lists (by default), on columns or on
+  rows. This makes these functions more flexible and more predictable.
+
 * New `is_null()` type predicate.
 
 * `map_lgl()` now has second argument `.f`, not `.p` (#134).

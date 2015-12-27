@@ -20,14 +20,21 @@
 #'   should have the same number of rows within groups and the same
 #'   number of columns between groups.
 #' @param ... Further arguments passed to \code{..f}.
+#' @param .collate If "list", the results are returned as a list-
+#'   column. Alternatively, if the results are data frames or atomic
+#'   vectors, you can collate on "cols" or on "rows". Column collation
+#'   require vector of equal length or data frames with same number of
+#'   rows.
+#' @param .to Name of output column.
 #' @param .labels If \code{TRUE}, the returned data frame is prepended
 #'   with the labels of the slices (the columns in \code{.d} used to
 #'   define the slices). They are recycled to match the output size in
 #'   each slice if necessary.
 #' @return A data frame.
-#' @seealso \code{\link{by_row}()}, \code{\link{slice_rows}()}
-#' @useDynLib purrr
+#' @seealso \code{\link{by_row}()}, \code{\link{slice_rows}()},
+#'   \code{\link{dmap}()}
 #' @importFrom Rcpp sourceCpp
+#' @useDynLib purrr by_slice_impl
 #' @export
 #' @examples
 #' # Here we fit a regression model inside each slice defined by the
@@ -38,17 +45,21 @@
 #'   by_slice(partial(lm, mpg ~ disp))
 #'
 #' # by_slice() is especially useful in combination with map().
-#' # Mutating and summarising operations can be used indistinctly.
+#'
+#' # To modify the contents of a data frame, use rows collation. Note
+#' # that unlike dplyr, Mutating and summarising operations can be
+#' # used indistinctly.
 #'
 #' # Mutating operation:
-#' mtcars %>%
-#'   slice_rows(c("cyl", "am")) %>%
-#'   by_slice(map, ~ .x / sd(.x))
+#' df <- mtcars %>% slice_rows(c("cyl", "am"))
+#' df %>% by_slice(dmap, ~ .x / sum(.x), .collate = "rows")
 #'
 #' # Summarising operation:
-#' mtcars %>%
-#'   slice_rows(c("cyl", "am")) %>%
-#'   by_slice(map, mean)
+#' df %>% by_slice(dmap, mean, .collate = "rows")
+#'
+#' # Note that mapping columns within slices is best handled by dmap():
+#' df %>% dmap(~ .x / sum(.x))
+#' df %>% dmap(mean)
 #'
 #' # If you don't need the slicing variables as identifiers, switch
 #' # .labels to FALSE:
@@ -57,29 +68,52 @@
 #'   by_slice(partial(lm, mpg ~ disp), .labels = FALSE) %>%
 #'   flatten() %>%
 #'   map(coef)
-by_slice <- function(.d, ..f, ..., .labels = TRUE) {
-  if (inherits(..f, "formula")) {
-    ..f <- as_function(..f)
-  } else if (!is.function(..f)) {
-    stop("..f should be a function or a formula", call. = FALSE)
-  }
-
+by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
+                     .to = ".out", .labels = TRUE) {
+  ..f <- as_rows_function(..f)
   if (!dplyr::is.grouped_df(.d)) {
-    ..f(.d, ...)
-  } else {
-    dots <- substitute(pairlist(...))
-    calling_env <- parent.frame()
-    by_slice_impl(.d, ..f, dots, .labels, calling_env)
+    stop(".d must be a sliced data frame", call. = FALSE)
   }
+  if (length(.d) <= length(attr(.d, "labels"))) {
+    return(.d)
+  }
+  .collate <- match.arg(.collate)
+
+  set_sliced_env(.d, .labels, .collate, .to, environment(), ".d")
+  .Call(by_slice_impl, environment(), ".d", "..f")
+}
+
+# Prevents as_function() from transforming to a plucking function
+as_rows_function <- function(f, f_name = ".f") {
+  if (inherits(f, "formula")) {
+    as_function(f)
+  } else if (!is.function(f)) {
+    stop(f_name, " should be a function or a formula", call. = FALSE)
+  } else {
+    f
+  }
+}
+
+set_sliced_env <- function(df, labels, collate, to, env, x_name) {
+  env$.unique_labels <- TRUE
+  env$.labels <- labels;
+  env$.collate <- collate
+  env$.to <- to
+  env$.labels_cols <- attr(df, "labels")
+  env$.slicing_cols <- df[names(env$.labels_cols)]
+
+  indices <- attr(df, "indices")
+  env[[x_name]] <- df[!names(df) %in% names(env$.labels_cols)]
+  attr(env[[x_name]], "indices") <- indices
 }
 
 
 #' Apply a function to each row of a data frame
 #'
-#' \code{by_row()} and \code{map_rows()} apply \code{..f} to each row
+#' \code{by_row()} and \code{invoke_rows()} apply \code{..f} to each row
 #' of \code{.d}. If \code{..f}'s output is not a data frame nor an
 #' atomic vector, a list-column is created. In all cases,
-#' \code{by_row()} and \code{map_rows()} create a data frame in tidy
+#' \code{by_row()} and \code{invoke_rows()} create a data frame in tidy
 #' format.
 #'
 #' By default, the whole row is appended to the result to serve as
@@ -88,15 +122,23 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' non-scalar atomic vector, a \code{.row} column is appended to
 #' identify the row number in the original data frame.
 #'
-#' \code{map_rows()} is intended to provide a version of
-#' \code{pmap()} that works better with data frames. The distinction
-#' between \code{by_row()} and \code{map_rows()} is that the former
-#' passes a data frame to \code{..f} while the latter maps the columns
-#' to its function call. This is essentially like using
-#' \code{\link{invoke}()} with each row of a data frame. Another way
-#' to view this is that \code{map_rows()} is equivalent to using
+#' \code{invoke_rows()} is intended to provide a version of
+#' \code{pmap()} for data frames. Its default collation method is
+#' \code{"cols"}, which makes it equivalent to
+#' \code{\link[plyr]{mdply}()} from the plyr package. Note that
+#' \code{invoke_rows()} follows the signature pattern of the
+#' \code{invoke} family of functions and takes \code{.f} as its first
+#' argument.
+#'
+#' The distinction between \code{by_row()} and \code{invoke_rows()} is
+#' that the former passes a data frame to \code{..f} while the latter
+#' maps the columns to its function call. This is essentially like
+#' using \code{\link{invoke}()} with each row. Another way to view
+#' this is that \code{invoke_rows()} is equivalent to using
 #' \code{by_row()} with a function lifted to accept dots (see
 #' \code{\link{lift}()}).
+#'
+#' @param .d A data frame.
 #' @param .f,..f A function to apply to each row. If \code{..f} does
 #'   not return a data frame or an atomic vector, a list-column is
 #'   created under the name \code{.out}. If it returns a data frame, it
@@ -106,7 +148,7 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' @inheritParams by_slice
 #' @return A data frame.
 #' @seealso \code{\link{by_slice}()}
-#' @useDynLib purrr
+#' @useDynLib purrr invoke_rows_impl
 #' @export
 #' @examples
 #' # ..f should be able to work with a list or a data frame. As it
@@ -117,26 +159,59 @@ by_slice <- function(.d, ..f, ..., .labels = TRUE) {
 #' # of the lift_xy() helpers:
 #' mtcars %>% by_row(lift_vl(mean))
 #'
-#' # To run a function with map_rows(), make sure it is variadic (that
-#' # it accepts dots)
-#' mtcars %>% map_rows(sum)
-#' mtcars %>% map_rows(lift_vd(mean))
-by_row <- function(.d, ..f, ..., .labels = TRUE) {
-  if (inherits(..f, "formula")) {
-    ..f <- as_function(..f)
-  } else if (!is.function(..f)) {
-    stop("..f should be a function or a formula", call. = FALSE)
+#' # To run a function with invoke_rows(), make sure it is variadic (that
+#' # it accepts dots) or that .f's signature is compatible with the
+#' # column names
+#' mtcars %>% invoke_rows(.f = sum)
+#' mtcars %>% invoke_rows(.f = lift_vd(mean))
+#'
+#' # invoke_rows() with cols collation is equivalent to plyr::mdply()
+#' p <- expand.grid(mean = 1:5, sd = seq(0, 1, length = 10))
+#' p %>% invoke_rows(.f = rnorm, n = 5, .collate = "cols")
+#' \dontrun{
+#' p %>% plyr::mdply(rnorm, n = 5) %>% dplyr::tbl_df()
+#' }
+#'
+#' # To integrate the result as part of the data frame, use rows or
+#' # cols collation:
+#' mtcars[1:2] %>% by_row(function(x) 1:5)
+#' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "rows")
+#' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "cols")
+by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
+                   .to = ".out", .labels = TRUE) {
+  ..f <- as_rows_function(..f)
+  if (!is.data.frame(.d)) {
+    stop(".d must be a data frame", call. = FALSE)
   }
+  if (nrow(.d) < 1) {
+    return(.d)
+  }
+  .collate <- match.arg(.collate)
 
-  dots <- substitute(list(...))
-  calling_env <- parent.frame()
-  by_row_impl(.d, ..f, dots, .labels, calling_env)
+  indices <- seq(0, nrow(.d) - 1) # cpp-style indexing
+  attr(.d, "indices") <- as.list(indices)
+
+  .unique_labels <- 0
+  .labels_cols <- .d
+  .slicing_cols <- .d
+
+  .Call(by_slice_impl, environment(), ".d", "..f")
 }
 
 #' @rdname by_row
 #' @export
-map_rows <- function(.d, .f, ..., .labels = TRUE) {
-  pmap(.d, .f, ...) %>% process_slices(.d, .d, .labels, TRUE)
+invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
+                        .to = ".out", .labels = TRUE) {
+  if (!is.data.frame(.d)) {
+    stop(".d must be a data frame", call. = FALSE)
+  }
+  .collate <- match.arg(.collate)
+
+  .unique_labels <- 0
+  .labels_cols <- .d
+  .slicing_cols <- .d
+
+  .Call(invoke_rows_impl, environment(), ".d", ".f")
 }
 
 

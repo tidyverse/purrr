@@ -18,9 +18,6 @@ test_that("map2 takes only names from x", {
   expect_equal(names(map2(x2, x1, `+`)), names(x2))
 })
 
-test_that("map2() return a data frame when given one", {
-  df <- data.frame(a = c("a", "b"), b = c("a", "b"))
-
-  out_map2 <- map2(df, names(df), function(x, y) paste(x, y))
-  expect_is(out_map2, "data.frame")
+test_that("map2 always returns a list", {
+  expect_is(map2(mtcars, 0, ~mtcars), "list")
 })

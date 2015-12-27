@@ -47,8 +47,7 @@ walk(.x, .f, ...)
 giving either the name or the index of the data frame.}
 }
 \value{
-\code{map()} a list if \code{.x} is a list or a data frame
-  if \code{.x} is a data frame.
+\code{map()} always returns a list.
 
   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
   vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
@@ -65,6 +64,13 @@ input. \code{map()} returns a list or a data frame; \code{map_lgl()},
 \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors
 of the corresponding type (or die trying); \code{map_df()} returns
 a data frame by row-binding the individual elements.
+}
+\details{
+Note that \code{map()} understands data frames, including grouped
+data frames. It can be much faster than
+\code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
+columns. However, \code{map()}ll be slower for the more common case of many
+groups with functions that dplyr knows how to translate to C++.
 }
 \examples{
 1:10 \%>\%
