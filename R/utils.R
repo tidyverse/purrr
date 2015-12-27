@@ -131,7 +131,7 @@ names2 <- function(x) {
 #' @examples
 #' factor(1:3) %@% "levels"
 #' mtcars %@% "class"
-`%@%` <- function(x, name) attr(x, name)
+`%@%` <- function(x, name) attr(x, name, exact = TRUE)
 
 
 #' Generate random samples from a Bernoulli distribution
