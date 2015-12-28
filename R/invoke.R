@@ -36,8 +36,8 @@
 #' invoke_map("runif", list(list(n = 5), list(n = 10)))
 #'
 #' # Or as a pipeline
-#' list(m1 = mean, m2 = median) %>%
-#'   invoke_map(x = rcauchy(100))
+#' list(m1 = mean, m2 = median) %>% invoke_map(x = rcauchy(100))
+#' list(m1 = mean, m2 = median) %>% invoke_map_dbl(x = rcauchy(100))
 #'
 #' # Note that you can also match by position by explicitly omitting `.x`.
 #' # This can be useful when the argument names of the functions are not
@@ -101,6 +101,14 @@ invoke_map_chr <- function(.f, .x = list(NULL), ...) {
   .f <- as_invoke_function(.f)
   map2_chr(.f, .x, invoke, ...)
 }
+
+#' @rdname invoke
+#' @export
+invoke_map_df <- function(.f, .x = list(NULL), ...) {
+  .f <- as_invoke_function(.f)
+  map2_df(.f, .x, invoke, ...)
+}
+
 
 #' @rdname invoke
 #' @export

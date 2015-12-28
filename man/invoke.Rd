@@ -5,6 +5,7 @@
 \alias{invoke_map}
 \alias{invoke_map_chr}
 \alias{invoke_map_dbl}
+\alias{invoke_map_df}
 \alias{invoke_map_int}
 \alias{invoke_map_lgl}
 \alias{map_call}
@@ -21,6 +22,8 @@ invoke_map_int(.f, .x = list(NULL), ...)
 invoke_map_dbl(.f, .x = list(NULL), ...)
 
 invoke_map_chr(.f, .x = list(NULL), ...)
+
+invoke_map_df(.f, .x = list(NULL), ...)
 }
 \arguments{
 \item{.f}{For \code{invoke}, a function; for \code{invoke_map} a
@@ -61,8 +64,8 @@ invoke_map(list(runif, rnorm), n = 5)
 invoke_map("runif", list(list(n = 5), list(n = 10)))
 
 # Or as a pipeline
-list(m1 = mean, m2 = median) \%>\%
-  invoke_map(x = rcauchy(100))
+list(m1 = mean, m2 = median) \%>\% invoke_map(x = rcauchy(100))
+list(m1 = mean, m2 = median) \%>\% invoke_map_dbl(x = rcauchy(100))
 
 # Note that you can also match by position by explicitly omitting `.x`.
 # This can be useful when the argument names of the functions are not

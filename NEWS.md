@@ -20,7 +20,9 @@
 
 * `invoke()` has been overhauled to be more useful: it now works similarly
   to `map_call()` when `.x` is NULL, and hence `map_call()` has been
-  deprecated. `invoke_map()` is a vectorised complement to `invoke()` (#125).
+  deprecated. `invoke_map()` is a vectorised complement to `invoke()` (#125),
+  and comes with typed variants `invoke_map_lgl()`, `invoke_map_int()`,
+  `invoke_map_dbl()`, `invoke_map_chr()`, and `invoke_map_df()`.
 
 * `transpose()` replaces `zip2()`, `zip3()`, and `zip_n()` (#128).
   The name more clearly reflects the intent (transposing the first and second
