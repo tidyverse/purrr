@@ -15,14 +15,24 @@ SEXP flatten_impl(SEXP x) {
   // Determine output size and check type
   int n = 0;
   int has_names = 0;
+  SEXP x_names = Rf_getAttrib(x, R_NamesSymbol);
+
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
     if (!Rf_isVector(x_j))
       Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, objtype(x_j));
 
     n += Rf_length(x_j);
-    if (!has_names && !Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
-      has_names = 1;
+    if (!has_names) {
+      if (!Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
+        // Sub-element is named
+        has_names = 1;
+      } else if (Rf_length(x_j) == 1 && !Rf_isNull(x_names)) {
+        // Element is a "scalar" and has name in parent
+        SEXP name = STRING_ELT(x_names, j);
+        if (name != NA_STRING && CHAR(name) != "")
+          has_names = 1;
+      }
     }
   }
 
@@ -50,12 +60,21 @@ SEXP flatten_impl(SEXP x) {
       default:
         Rf_errorcall(R_NilValue, "Unsupported type at element %i (%s)", j + 1, objtype(x_j));
       }
-      if (has_names)
-        SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
+      if (has_names) {
+        if (has_names_j) {
+          SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
+        } else if (n_j == 1) {
+          SET_STRING_ELT(names, i, !Rf_isNull(x_names) ? STRING_ELT(x_names, j) : Rf_mkChar(""));
+        }
+      }
       if (i % 1000 == 0)
         R_CheckUserInterrupt();
     }
+
+
   }
+
+
 
   UNPROTECT(1);
   return out;

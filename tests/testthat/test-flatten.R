@@ -15,6 +15,23 @@ test_that("each second level element becomes first level element", {
 
 test_that("names are preserved", {
   expect_equal(flatten(list(list(x = 1), list(y = 1))), list(x = 1, y = 1))
+  expect_equal(flatten(list(list(a = 1, b = 2), 3)), list(a = 1, b = 2, 3))
+})
+
+test_that("names of 'scalar' elements are preserved", {
+  out <- flatten(list(a = list(1), b = list(2)))
+  expect_equal(out, list(a = 1, b = 2))
+
+  out <- flatten(list(a = list(1), b = 2:3))
+  expect_equal(out, list(a = 1, 2, 3))
+
+  out <- flatten(list(list(a = 1, b = 2), c = 3))
+  expect_equal(out, list(a = 1, b = 2, c = 3))
+})
+
+test_that("child names beat parent names", {
+  out <- flatten(list(a = list(x = 1), b = list(y = 2)))
+  expect_equal(out, list(x = 1, y = 2))
 })
 
 # typed flattens ----------------------------------------------------------
