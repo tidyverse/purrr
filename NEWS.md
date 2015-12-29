@@ -1,5 +1,11 @@
 # purrr 0.2.2.9000
 
+* `cross_n()` has been renamed to `cross()`. The `_n` suffix was
+  removed for consistency with `pmap()` (originally called `map_n()`
+  at the start of the project) and `transpose()` (originally called
+  `zip_n()`). Similarly, `cross_d()` has been renamed to `cross_df()`
+  for consistency with `map_df()`.
+
 * Removed `LinkingTo:` dependency on `dplyr` (#247, @krlmlr).
 
 * Recursive index via `as_function()` now returns `missing` when first element
@@ -24,7 +30,7 @@
 * `as_function()` gains a `.null` argument that for character and numeric
   values allows you to specify what to return for null/absent elements (#110).
   This can be used with any map function, e.g. `map_int(x, 1, .null = NA)`
-  
+
 * `as_function()` is now generic.
 
 * New `is_function()` that returns `TRUE` only for regular functions.
