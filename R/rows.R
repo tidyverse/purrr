@@ -218,7 +218,7 @@ invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
 #' @usage NULL
 #' @rdname by_row
 map_rows <- function(.d, .f, ..., .labels = TRUE) {
-  warning("`map_rows()` is deprecated; please use `invoke_rows()` instead.",
+  message("`map_rows()` is deprecated; please use `invoke_rows()` instead.",
     call. = FALSE)
   invoke_rows(.f, .d, ..., .labels = .labels)
 }
