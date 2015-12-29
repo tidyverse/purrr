@@ -13,6 +13,12 @@ test_that("each second level element becomes first level element", {
   expect_equal(flatten(list(1, 2)), list(1, 2))
 })
 
+test_that("NULLs are silently dropped", {
+  expect_equal(flatten(list(NULL, NULL)), list())
+  expect_equal(flatten(list(NULL, 1)), list(1))
+  expect_equal(flatten(list(1, NULL)), list(1))
+})
+
 test_that("names are preserved", {
   expect_equal(flatten(list(list(x = 1), list(y = 1))), list(x = 1, y = 1))
   expect_equal(flatten(list(list(a = 1, b = 2), 3)), list(a = 1, b = 2, 3))

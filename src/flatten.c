@@ -19,7 +19,7 @@ SEXP flatten_impl(SEXP x) {
 
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
-    if (!Rf_isVector(x_j))
+    if (!Rf_isVector(x_j) && !Rf_isNull(x_j))
       Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, objtype(x_j));
 
     n += Rf_length(x_j);
@@ -70,8 +70,6 @@ SEXP flatten_impl(SEXP x) {
       if (i % 1000 == 0)
         R_CheckUserInterrupt();
     }
-
-
   }
 
 
