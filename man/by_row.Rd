@@ -3,6 +3,7 @@
 \name{by_row}
 \alias{by_row}
 \alias{invoke_rows}
+\alias{map_rows}
 \title{Apply a function to each row of a data frame}
 \usage{
 by_row(.d, ..f, ..., .collate = c("list", "rows", "cols"), .to = ".out",

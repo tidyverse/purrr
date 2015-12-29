@@ -214,6 +214,15 @@ invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
   .Call(invoke_rows_impl, environment(), ".d", ".f")
 }
 
+#' @export
+#' @usage NULL
+#' @rdname by_row
+map_rows <- function(.d, .f, ..., .labels = TRUE) {
+  warning("`map_rows()` is deprecated; please use `invoke_rows()` instead.",
+    call. = FALSE)
+  invoke_rows(.f, .d, ..., .labels = .labels)
+}
+
 
 #' Slice a data frame into groups of rows
 #'
