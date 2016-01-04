@@ -14,6 +14,9 @@ FormatterPtr Formatter::create(Results& results, Labels& labels, Settings& setti
   case cols: return FormatterPtr(new ColsFormatter(results, labels, settings)); break;
   case list: return FormatterPtr(new ListFormatter(results, labels, settings)); break;
   }
+
+  stop("Unsupported collation type.");
+  return FormatterPtr();
 };
 
 int Formatter::labels_size() {
