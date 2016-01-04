@@ -60,7 +60,14 @@ test_that("types automatically coerced upwards", {
   expect_identical(flatten_dbl(list(FALSE, TRUE)), c(0, 1))
   expect_identical(flatten_dbl(list(1L, 2L)), c(1, 2))
 
-  expect_identical(flatten_chr(list(FALSE, TRUE)), c("F", "T"))
+  expect_identical(flatten_chr(list(FALSE, TRUE)), c("FALSE", "TRUE"))
   expect_identical(flatten_chr(list(1L, 2L)), c("1", "2"))
-  expect_identical(flatten_chr(list(1.5, 2.5)), c("1.5", "2.5"))
+  expect_identical(flatten_chr(list(1.5, 2.5)), c("1.500000", "2.500000"))
+})
+
+test_that("coercing to character indexes correctly", {
+  expect_equal(flatten_chr(list(c(FALSE, TRUE))), c("FALSE", "TRUE"))
+  expect_equal(flatten_chr(list(c(1L, 2L))), c("1", "2"))
+  expect_equal(flatten_chr(list(c(1.5, 2.5))), c("1.500000", "2.500000"))
+  expect_equal(flatten_chr(list(c("a", "b"))), c("a", "b"))
 })

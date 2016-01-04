@@ -1,6 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include <stdio.h>
 
 int can_coerce(SEXPTYPE from, SEXPTYPE to) {
 
@@ -31,6 +32,37 @@ double logical_to_real(int x) {
 double integer_to_real(int x) {
   return (x == NA_INTEGER) ? NA_REAL : x;
 }
+SEXP logical_to_char(int x) {
+  if (x == NA_LOGICAL)
+    return NA_STRING;
+
+  return Rf_mkChar(x ? "TRUE" : "FALSE");
+}
+SEXP integer_to_char(int x) {
+  if (x == NA_INTEGER)
+    return NA_STRING;
+
+  char buf[100];
+  snprintf(buf, 100, "%d", x);
+  return Rf_mkChar(buf);
+}
+SEXP double_to_char(double x) {
+  if (!R_finite(x)) {
+    if (R_IsNA(x)) {
+      return NA_STRING;
+    } else if (R_IsNaN(x)) {
+      return Rf_mkChar("NaN");
+    } else if (x > 0) {
+      return Rf_mkChar("Inf");
+    } else {
+      return Rf_mkChar("-Inf");
+    }
+  }
+
+  char buf[100];
+  snprintf(buf, 100, "%f", x);
+  return Rf_mkChar(buf);
+}
 
 
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
@@ -57,10 +89,10 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     break;
   case STRSXP:
     switch(TYPEOF(from)) {
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP: SET_STRING_ELT(to, i, Rf_asChar(from)); break;
-    case STRSXP:  SET_STRING_ELT(to, i, STRING_ELT(from, 0)); break;
+    case LGLSXP:  SET_STRING_ELT(to, i, logical_to_char(LOGICAL(from)[j])); break;
+    case INTSXP:  SET_STRING_ELT(to, i, integer_to_char(INTEGER(from)[j])); break;
+    case REALSXP: SET_STRING_ELT(to, i, double_to_char(REAL(from)[j])); break;
+    case STRSXP:  SET_STRING_ELT(to, i, STRING_ELT(from, j)); break;
     }
     break;
   case VECSXP:  SET_VECTOR_ELT(to, i, from); break;
