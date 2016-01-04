@@ -10,13 +10,13 @@
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |tz       |America/Chicago              |
-|date     |2015-12-29                   |
+|date     |2016-01-04                   |
 
 ## Packages
 
 |package  |*  |version  |date       |source         |
 |:--------|:--|:--------|:----------|:--------------|
-|BH       |   |1.58.0-1 |2015-05-21 |CRAN (R 3.2.0) |
+|BH       |   |1.60.0-1 |2015-12-28 |CRAN (R 3.2.3) |
 |dplyr    |   |0.4.3    |2015-09-01 |CRAN (R 3.2.0) |
 |lazyeval |   |0.1.10   |2015-01-02 |CRAN (R 3.2.0) |
 |magrittr |   |1.5      |2014-11-22 |CRAN (R 3.2.0) |
