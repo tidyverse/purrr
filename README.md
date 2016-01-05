@@ -158,7 +158,7 @@ The goal is not to try and simulate Haskell in R: purrr does not implement curry
 * Instead of currying, we use `...` to pass in extra arguments.
 
 * Anonymous functions are verbose in R, so we provide two convenient shorthands.
-  For predicate functions, `~ .x + 1` is equivalent to `function(.x) .x + 1`.
+  For unary functions, `~ .x + 1` is equivalent to `function(.x) .x + 1`.
   For chains of transformations functions, `. %>% f() %>% g()` is
   equivalent to `function(.) . %>% f() %>% g()`.
 
