@@ -75,7 +75,7 @@ by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
     stop(".d must be a sliced data frame", call. = FALSE)
   }
   if (length(.d) <= length(attr(.d, "labels"))) {
-    return(.d)
+    stop("Mappable part of data frame is empty", call. = FALSE)
   }
   .collate <- match.arg(.collate)
 
@@ -179,13 +179,12 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
 #' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "cols")
 by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
                    .to = ".out", .labels = TRUE) {
-  ..f <- as_rows_function(..f)
-  if (!is.data.frame(.d)) {
-    stop(".d must be a data frame", call. = FALSE)
-  }
+  check_df_consistency(.d)
   if (nrow(.d) < 1) {
     return(.d)
   }
+
+  ..f <- as_rows_function(..f)
   .collate <- match.arg(.collate)
 
   indices <- seq(0, nrow(.d) - 1) # cpp-style indexing
@@ -198,13 +197,20 @@ by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   .Call(by_slice_impl, environment(), ".d", "..f")
 }
 
+check_df_consistency <- function(.d) {
+  if (!is.data.frame(.d)) {
+    stop(".d must be a data frame", call. = FALSE)
+  }
+  if (length(.d) == 0) {
+    stop("Data frame is empty", call. = FALSE)
+  }
+}
+
 #' @rdname by_row
 #' @export
 invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
                         .to = ".out", .labels = TRUE) {
-  if (!is.data.frame(.d)) {
-    stop(".d must be a data frame", call. = FALSE)
-  }
+  check_df_consistency(.d)
   .collate <- match.arg(.collate)
 
   .unique_labels <- 0
