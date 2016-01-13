@@ -17,7 +17,7 @@ FormatterPtr Formatter::create(Results& results, Labels& labels, Settings& setti
 
   stop("Unsupported collation type.");
   return FormatterPtr();
-};
+}
 
 int Formatter::labels_size() {
   if (settings_.include_labels)
@@ -91,7 +91,7 @@ int Formatter::should_include_rowid_column() {
 }
 
 int RowsFormatter::output_size() {
-  int size;
+  int size = -1;
 
   switch (results_.type) {
   case nulls:
@@ -112,7 +112,7 @@ int RowsFormatter::output_size() {
 }
 
 int ColsFormatter::output_size() {
-  int size;
+  int size = -1;
 
   switch (results_.type) {
   case nulls:

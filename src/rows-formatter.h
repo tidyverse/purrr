@@ -16,11 +16,12 @@ class Formatter {
         labels_(labels),
         settings_(settings) { }
   static FormatterPtr create(Results& results, Labels& labels, Settings& settings);
+  virtual ~Formatter() { }
   List output();
 
  protected:
-  Labels& labels_;
   Results& results_;
+  Labels& labels_;
   Settings& settings_;
 
   int n_rows_, n_cols_;

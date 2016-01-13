@@ -30,7 +30,7 @@ SEXP flatten_impl(SEXP x) {
       } else if (Rf_length(x_j) == 1 && !Rf_isNull(x_names)) {
         // Element is a "scalar" and has name in parent
         SEXP name = STRING_ELT(x_names, j);
-        if (name != NA_STRING && CHAR(name) != "")
+        if (name != NA_STRING && strcmp(CHAR(name), "") != 0)
           has_names = 1;
       }
     }
