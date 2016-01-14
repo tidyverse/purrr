@@ -31,7 +31,8 @@ Labels::Labels(Environment execution_env_)
 
 void Labels::remove(const std::vector<int>& index) {
   if (index.size()) {
-    dplyr::DataFrameSubsetVisitors labels_visitors(labels_);
+    List labels = labels_; // Workaround GCC -O2 crash
+    dplyr::DataFrameSubsetVisitors labels_visitors(labels);
     labels_ = labels_visitors.subset(index, "data.frame");
   }
 }
