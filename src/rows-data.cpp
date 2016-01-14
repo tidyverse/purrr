@@ -29,9 +29,23 @@ Labels::Labels(Environment execution_env_)
       n_labels_(Rf_length(execution_env_[".labels_cols"])) {
 }
 
-void Labels::remove(const std::vector<int>& index) {
-  if (index.size()) {
+void Labels::remove(const std::vector<int>& to_remove) {
+  if (to_remove.size()) {
     List labels = labels_; // Workaround GCC -O2 crash
+
+    int n = Rf_length(labels[0]);
+    std::vector<int> index(n - to_remove.size());
+
+    int i = 0;
+    int j = 0;
+    for (std::vector<int>::iterator it = index.begin(); it != index.end(); ++it) {
+      if (j == to_remove[i]) {
+        ++i;
+        ++j;
+      }
+      *it = j++;
+    }
+
     dplyr::DataFrameSubsetVisitors labels_visitors(labels);
     labels_ = labels_visitors.subset(index, "data.frame");
   }

@@ -90,6 +90,12 @@ test_that("scalars with some nulls", {
   expect_equal(rows_collation$.out, rep(1, 16))
 })
 
+test_that("labels are correctly subsetted", {
+  scalar_first_nulls <- gen_alternatives(NULL, 1L)
+  rows_collation <- invoke_rows(scalar_first_nulls, mtcars[1:2], .collate = "rows")
+  expect_equal(rows_collation[1:2], mtcars[seq(2, 32, 2), 1:2])
+})
+
 test_that("vectors", {
   vectors <- function(...) paste(letters[1:2], c(...))
   rows_collation <- invoke_rows(vectors, mtcars[1:2], .collate = "rows")
