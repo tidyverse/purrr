@@ -53,20 +53,15 @@ void Results::determine_first_result_properties() {
     first_sexp_type = NILSXP;
     first_size = 0;
   } else {
-    init_first_result_nonnull();
+    all_nulls_ = 0;
+    SEXP first_result = *first_it;
+    first_sexp_type = TYPEOF(*first_it);
+
+    if (Rf_inherits(first_result, "data.frame"))
+      first_size = Rf_length(get_vector_elt(first_result, 0));
+    else
+      first_size = Rf_length(first_result);
   }
-}
-
-void Results::init_first_result_nonnull() {
-  all_nulls_ = 0;
-
-  SEXP first_result = results[0];
-  first_sexp_type = TYPEOF(first_result);
-
-  if (Rf_inherits(first_result, "data.frame"))
-    first_size = Rf_length(get_vector_elt(first_result, 0));
-  else
-    first_size = Rf_length(first_result);
 }
 
 void Results::remove_empty_results() {

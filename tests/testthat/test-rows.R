@@ -83,6 +83,10 @@ test_that("scalars with some nulls", {
   expect_equal(dim(rows_collation), c(16, 3))
   expect_equal(dim(cols_collation), c(16, 3))
   expect_equal(dim(list_collation), c(32, 3))
+
+  scalar_first_null <- gen_alternatives(NULL, 1L)
+  rows_collation <- invoke_rows(scalar_nulls, mtcars[1:2], .collate = "rows")
+  expect_equal(rows_collation$.out, rep(1, 16))
 })
 
 test_that("vectors", {
