@@ -211,6 +211,17 @@ is_function <- function(x) {
   typeof(x) == "closure"
 }
 
+is_name <- function(x) {
+  typeof(x) == "name"
+}
+
+is_call <- function(x) {
+  typeof(x) == "language"
+}
+
+is_language <- function(x) {
+  is_call(x) || is_name(x) || is_atomic(x)
+}
 
 #' Scalar type predicates
 #'
