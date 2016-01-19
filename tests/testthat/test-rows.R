@@ -83,6 +83,17 @@ test_that("scalars with some nulls", {
   expect_equal(dim(rows_collation), c(16, 3))
   expect_equal(dim(cols_collation), c(16, 3))
   expect_equal(dim(list_collation), c(32, 3))
+
+  # Make sure properties are well inferred when first result is NULL
+  scalar_first_nulls <- gen_alternatives(NULL, 1L)
+  rows_collation <- invoke_rows(scalar_first_nulls, mtcars[1:2], .collate = "rows")
+  expect_equal(rows_collation$.out, rep(1, 16))
+})
+
+test_that("labels are correctly subsetted", {
+  scalar_first_nulls <- gen_alternatives(NULL, 1L)
+  rows_collation <- invoke_rows(scalar_first_nulls, mtcars[1:2], .collate = "rows")
+  expect_equal(rows_collation[1:2], mtcars[seq(2, 32, 2), 1:2])
 })
 
 test_that("vectors", {
@@ -218,15 +229,8 @@ test_that("by_row() creates indices with c++ style indexing", {
   expect_equal(out$.out[[5]], 8)
 })
 
-test_that("by_slice() works with no columns to map", {
-  df <- mtcars["cyl"] %>% slice_rows("cyl")
-  res <- df %>% by_slice(list)
-  expect_equal(res, df)
+test_that("error is thrown when no columns to map", {
+  expect_error(mtcars["cyl"] %>% slice_rows("cyl") %>% by_slice(list), "empty")
+  expect_error(dplyr::data_frame() %>% invoke_rows(.f = c), "empty")
+  expect_error(dplyr::data_frame() %>% by_row(c), "empty")
 })
-
-test_that("by_row() and invoke_rows() work with no columns to map", {
-  res <- dplyr::data_frame() %>% invoke_rows(.f = c)
-  expect_equal(dim(res), c(0, 1))
-  expect_equal(dplyr::data_frame() %>% by_row(c), dplyr::data_frame())
-})
-

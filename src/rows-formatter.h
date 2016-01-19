@@ -16,11 +16,12 @@ class Formatter {
         labels_(labels),
         settings_(settings) { }
   static FormatterPtr create(Results& results, Labels& labels, Settings& settings);
+  virtual ~Formatter() { }
   List output();
 
  protected:
-  Labels& labels_;
   Results& results_;
+  Labels& labels_;
   Settings& settings_;
 
   int n_rows_, n_cols_;
@@ -28,11 +29,10 @@ class Formatter {
 
   virtual void check_nonlist_consistency();
 
-  int determine_nrows();
-  int determine_ncols();
   void determine_dimensions();
-
-  int should_include_rowid_column();
+  int should_include_rowid_column() {
+    return !labels_.are_unique;
+  };
   List& maybe_create_rowid_column(List& out);
   List& add_labels(List& out);
   virtual int output_size() = 0;

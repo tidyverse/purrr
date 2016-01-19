@@ -66,7 +66,6 @@ struct Results {
   int all_nulls_;
 
   void determine_first_result_properties();
-  void init_first_result_nonnull();
   void determine_null_properties();
   void determine_results_properties();
 

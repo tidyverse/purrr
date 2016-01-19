@@ -17,7 +17,7 @@ FormatterPtr Formatter::create(Results& results, Labels& labels, Settings& setti
 
   stop("Unsupported collation type.");
   return FormatterPtr();
-};
+}
 
 int Formatter::labels_size() {
   if (settings_.include_labels)
@@ -71,65 +71,47 @@ void ListFormatter::adjust_results_sizes() {
 }
 
 void Formatter::determine_dimensions() {
-  n_rows_ = determine_nrows();
-  n_cols_ = determine_ncols();
-}
-
-int Formatter::determine_nrows() {
   if (settings_.collation == list)
-    return results_.n_slices;
+    n_rows_ = results_.n_slices;
   else
-    return sum(results_.sizes);
-}
+    n_rows_ = sum(results_.sizes);
 
-int Formatter::determine_ncols() {
-  return labels_size() + output_size();
-}
-
-int Formatter::should_include_rowid_column() {
-  return !labels_.are_unique;
+  n_cols_ = labels_size() + output_size();
 }
 
 int RowsFormatter::output_size() {
-  int size;
-
   switch (results_.type) {
   case nulls:
   case scalars:
-    size = 1;
+    return 1;
     break;
   case vectors:
-    size = 1 + should_include_rowid_column();
+    return 1 + should_include_rowid_column();
     break;
   case dataframes:
-    size = Rf_length(results_.get()[0]) + should_include_rowid_column();
+    return Rf_length(results_.get()[0]) + should_include_rowid_column();
     break;
   default:
-    break;
+    return -1;
   }
-
-  return size;
 }
 
 int ColsFormatter::output_size() {
-  int size;
-
   switch (results_.type) {
   case nulls:
   case scalars:
-    size = 1;
+    return 1;
     break;
   case vectors:
-    size = results_.first_size;
+    return results_.first_size;
     break;
   case dataframes:
-    size = results_.first_size * Rf_length(results_.get()[0]);
+    return results_.first_size * Rf_length(results_.get()[0]);
     break;
   default:
+    return -1;
     break;
   }
-
-  return size;
 }
 
 int ListFormatter::output_size() {

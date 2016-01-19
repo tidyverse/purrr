@@ -29,9 +29,24 @@ Labels::Labels(Environment execution_env_)
       n_labels_(Rf_length(execution_env_[".labels_cols"])) {
 }
 
-void Labels::remove(const std::vector<int>& index) {
-  if (index.size()) {
-    dplyr::DataFrameSubsetVisitors labels_visitors(labels_);
+void Labels::remove(const std::vector<int>& to_remove) {
+  if (to_remove.size()) {
+    List labels = labels_; // Workaround GCC -O2 crash
+
+    int n = Rf_length(labels[0]);
+    std::vector<int> index(n - to_remove.size());
+
+    int i = 0;
+    int j = 0;
+    for (std::vector<int>::iterator it = index.begin(); it != index.end(); ++it) {
+      if (j == to_remove[i]) {
+        ++i;
+        ++j;
+      }
+      *it = j++;
+    }
+
+    dplyr::DataFrameSubsetVisitors labels_visitors(labels);
     labels_ = labels_visitors.subset(index, "data.frame");
   }
 }
@@ -52,20 +67,15 @@ void Results::determine_first_result_properties() {
     first_sexp_type = NILSXP;
     first_size = 0;
   } else {
-    init_first_result_nonnull();
+    all_nulls_ = 0;
+    SEXP first_result = *first_it;
+    first_sexp_type = TYPEOF(*first_it);
+
+    if (Rf_inherits(first_result, "data.frame"))
+      first_size = Rf_length(get_vector_elt(first_result, 0));
+    else
+      first_size = Rf_length(first_result);
   }
-}
-
-void Results::init_first_result_nonnull() {
-  all_nulls_ = 0;
-
-  SEXP first_result = results[0];
-  first_sexp_type = TYPEOF(first_result);
-
-  if (Rf_inherits(first_result, "data.frame"))
-    first_size = Rf_length(get_vector_elt(first_result, 0));
-  else
-    first_size = Rf_length(first_result);
 }
 
 void Results::remove_empty_results() {
