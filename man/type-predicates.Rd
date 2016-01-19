@@ -4,6 +4,7 @@
 \alias{is_atomic}
 \alias{is_character}
 \alias{is_double}
+\alias{is_function}
 \alias{is_integer}
 \alias{is_list}
 \alias{is_logical}
@@ -30,6 +31,8 @@ is_character(x)
 is_logical(x)
 
 is_null(x)
+
+is_function(x)
 }
 \arguments{
 \item{x}{object to be tested.}
@@ -49,6 +52,8 @@ Compare to base R functions:
         checks for the presence of attributes (other than name).
   \item \code{is_numeric()} is not generic so, (e.g.) dates and date times
     are \code{TRUE}, not \code{FALSE}.
+  \item \code{is_function()} returns \code{TRUE} only for regular
+    functions, not special or primitive functions.
 }
 }
 \seealso{

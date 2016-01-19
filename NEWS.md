@@ -1,5 +1,7 @@
 # purrr 0.2.0.9000
 
+* New `is_function()` that returns `TRUE` only for regular functions.
+
 # purrr 0.2.0
 
 ## New functions
