@@ -2,9 +2,12 @@
 % Please edit documentation in R/utils.R
 \name{as_function}
 \alias{as_function}
+\alias{as_function.character}
 \title{Convert an object into a function.}
 \usage{
-as_function(.f)
+as_function(.f, ...)
+
+\method{as_function}{character}(.f, ..., .null)
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
@@ -19,15 +22,23 @@ as_function(.f)
   If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
   is converted to an extractor function, \code{function(x) x[["y"]]}. To
   index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}.}
+  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+  to set a default to use instead of \code{NULL} for absent components.}
+
+\item{...}{Additional arguments passed on to methods.}
+
+\item{.null}{Optional additional argument for character and numeric
+inputs.}
 }
 \description{
 \code{as_function} is the powerhouse behind the varied function
-specifications that purrr functions allow.
+specifications that purrr functions allow. This is an S3 generic so that
+other people can make \code{as_function} work with their own objects.
 }
 \examples{
 as_function(~ . + 1)
 as_function(1)
 as_function(c("a", "b", "c"))
+as_function(c("a", "b", "c"), .null = NA)
 }
 

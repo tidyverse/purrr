@@ -1,5 +1,11 @@
 # purrr 0.2.0.9000
 
+* `as_function()` gains a `.null` argument that for character and numeric
+  values allows you to specify what to return for null/absent elements (#110).
+  This can be used with any map function, e.g. `map_int(x, 1, .null = NA)`
+  
+* `as_function()` is now generic.
+
 * New `is_function()` that returns `TRUE` only for regular functions.
 
 # purrr 0.2.0

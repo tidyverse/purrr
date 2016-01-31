@@ -35,7 +35,8 @@ update_list <- function(`_data`, ...) {
 #' Convert an object into a function.
 #'
 #' \code{as_function} is the powerhouse behind the varied function
-#' specifications that purrr functions allow.
+#' specifications that purrr functions allow. This is an S3 generic so that
+#' other people can make \code{as_function} work with their own objects.
 #'
 #' @param .f A function, formula, or atomic vector.
 #'
@@ -49,35 +50,74 @@ update_list <- function(`_data`, ...) {
 #'   If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
 #'   is converted to an extractor function, \code{function(x) x[["y"]]}. To
 #'   index deeply into a nested list, use multiple values; \code{c("x", "y")}
-#'   is equivalent to \code{z[["x"]][["y"]]}.
+#'   is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+#'   to set a default to use instead of \code{NULL} for absent components.
+#' @param ... Additional arguments passed on to methods.
 #' @export
 #' @examples
 #' as_function(~ . + 1)
 #' as_function(1)
 #' as_function(c("a", "b", "c"))
-as_function <- function(.f) {
-  if (is.function(.f)) {
-    .f
-  } else if (inherits(.f, "formula")) {
-    .x <- NULL # hush R CMD check NOTE
+#' as_function(c("a", "b", "c"), .null = NA)
+as_function <- function(.f, ...) {
+  UseMethod("as_function")
+}
 
-    if (length(.f) != 2) {
-      stop("Formula must be one sided", call. = FALSE)
+#' @export
+as_function.function <- function(.f, ...) .f
+
+#' @export
+as_function.formula <- function(.f, ...) {
+  .x <- NULL # hush R CMD check NOTE
+
+  if (length(.f) != 2) {
+    stop("Formula must be one sided", call. = FALSE)
+  }
+  make_function(alist(.x = , .y = , . = .x), .f[[2]], environment(.f))
+}
+
+#' @export
+#' @rdname as_function
+#' @param .null Optional additional argument for character and numeric
+#'   inputs.
+as_function.character <- function(.f, ..., .null) {
+  idx <- .f
+  if (missing(.null)) {
+    function(g, ...) {
+      g[[idx]]
     }
-    make_function(alist(.x = , .y = , . = .x), .f[[2]], environment(.f))
-  } else if (is.character(.f) || is.numeric(.f)) {
-    function(g) .subset2(g, .f)
   } else {
-    stop("Don't know how to convert ", paste0(class(.f), collapse = "/"),
-      " into a function", call. = FALSE)
+    function(g, ...) {
+      g[[idx]] %||% .null
+    }
   }
 }
 
-pluck <- function(i, default = NULL) {
-  function(x) {
-    x[[i]] %||% default
+#' @export
+as_function.numeric <- function(.f, ..., .null) {
+  idx <- .f
+
+  if (missing(.null)) {
+    function(g, ...) {
+      g[[idx]]
+    }
+  } else {
+    function(g, ...) {
+      if (idx > length(g)) {
+        .null
+      } else {
+        g[[idx]]
+      }
+    }
   }
 }
+
+#' @export
+as_function.default <- function(.f, ...) {
+  stop("Don't know how to convert ", paste0(class(.f), collapse = "/"),
+       " into a function", call. = FALSE)
+}
+
 
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {

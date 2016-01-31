@@ -91,7 +91,7 @@ lmap_if <- function(.x, .p, .f, ...) {
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
   if (is_formula(.f)) {
-    .f <- as_function(.f)
+    .f <- as_function(.f, ...)
   }
   sel <- inv_which(.x, .at)
 

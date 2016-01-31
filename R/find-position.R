@@ -19,7 +19,7 @@
 #' 3:10 %>% detect(is_even, .right = TRUE)
 #' 3:10 %>% detect_index(is_even, .right = TRUE)
 detect <- function(.x, .p, ..., .right = FALSE) {
-  .p <- as_function(.p)
+  .p <- as_function(.p, ...)
 
   for (i in index(.x, .right)) {
     if (isTRUE(.p(.x[[i]], ...))) return(.x[[i]])
@@ -30,7 +30,7 @@ detect <- function(.x, .p, ..., .right = FALSE) {
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .p, ..., .right = FALSE) {
-  .p <- as_function(.p)
+  .p <- as_function(.p, ...)
 
   for (i in index(.x, .right)) {
     if (isTRUE(.p(.x[[i]], ...))) return(i)

@@ -56,7 +56,7 @@
 #' # effectively mapped at level 3.
 #' l2 %>% at_depth(2, pmap, paste, sep = " / ")
 at_depth <- function(.x, .depth, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
 
   recurse <- function(x, depth) {
     if (depth > 1) {

@@ -65,14 +65,14 @@
 #' # the broom package)
 #' @useDynLib purrr map_impl map_by_slice_impl
 map <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "logical")
 }
 
@@ -89,21 +89,21 @@ probe <- function(.x, .p, ...) {
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "character")
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "integer")
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "double")
 }
 
@@ -112,7 +112,7 @@ map_dbl <- function(.x, .f, ...) {
 #'   giving either the name or the index of the data frame.
 #' @export
 map_df <- function(.x, .f, ..., .id = NULL) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
@@ -121,7 +121,7 @@ map_df <- function(.x, .f, ..., .id = NULL) {
 #' @export
 #' @rdname map
 walk <- function(.x, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }
@@ -165,38 +165,38 @@ walk <- function(.x, .f, ...) {
 #' map2(mods, by_cyl, predict)
 #' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
 }
 
 #' @export
 #' @rdname map2
 map2_lgl <- function(.x, .y, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "logical")
 }
 #' @export
 #' @rdname map2
 map2_int <- function(.x, .y, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "integer")
 }
 #' @export
 #' @rdname map2
 map2_dbl <- function(.x, .y, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "double")
 }
 #' @export
 #' @rdname map2
 map2_chr <- function(.x, .y, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
 }
 #' @rdname map2
 #' @export
 map2_df <- function(.x, .y, .f, ..., .id = NULL) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
@@ -214,38 +214,38 @@ map3 <- function(.x, .y, .z, .f, ...) {
 #' @rdname map2
 #' @useDynLib purrr pmap_impl
 pmap <- function(.l, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(pmap_impl, environment(), ".l", ".f", "list")
 }
 
 #' @export
 #' @rdname map2
 pmap_lgl <- function(.l, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(pmap_impl, environment(), ".l", ".f", "logical")
 }
 #' @export
 #' @rdname map2
 pmap_int <- function(.l, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(pmap_impl, environment(), ".l", ".f", "integer")
 }
 #' @export
 #' @rdname map2
 pmap_dbl <- function(.l, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(pmap_impl, environment(), ".l", ".f", "double")
 }
 #' @export
 #' @rdname map2
 pmap_chr <- function(.l, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   .Call(pmap_impl, environment(), ".l", ".f", "character")
 }
 #' @rdname map2
 #' @export
 pmap_df <- function(.l, .f, ..., .id = NULL) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   res <- map(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
@@ -280,7 +280,7 @@ walk3 <- function(.x, .y, .z, .f, ...) {
 #' @export
 #' @rdname map2
 pwalk <- function(.l, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   args_list <- recycle_args(.l) %>% transpose()
   for (args in args_list) {
     do.call(".f", c(args, list(...)))

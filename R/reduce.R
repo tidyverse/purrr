@@ -29,14 +29,14 @@
 #' list() %>% reduce(`+`)
 #' list() %>% reduce(`+`, .init = 0)
 reduce <- function(.x, .f, ..., .init) {
-  f <- as_function(.f)
+  f <- as_function(.f, ...)
   Reduce(f, .x, init = .init)
 }
 
 #' @export
 #' @rdname reduce
 reduce_right <- function(.x, .f, ..., .init) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
 
   # Note the order of arguments is switched
   f <- function(x, y) {
@@ -75,14 +75,14 @@ reduce_right <- function(.x, .f, ..., .init) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 accumulate <- function(.x, .f, ..., .init) {
-  f <- as_function(.f)
+  f <- as_function(.f, ...)
   Reduce(f, .x, init = .init, accumulate = TRUE)
 }
 
 #' @export
 #' @rdname accumulate
 accumulate_right <- function(.x, .f, ..., .init) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
 
   # Note the order of arguments is switched
   f <- function(x, y) {

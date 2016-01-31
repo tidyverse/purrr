@@ -27,7 +27,8 @@ dmap_if(.d, .p, .f, ...)
   If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
   is converted to an extractor function, \code{function(x) x[["y"]]}. To
   index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}.}
+  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+  to set a default to use instead of \code{NULL} for absent components.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 

@@ -23,7 +23,7 @@
 #' # with 'rows' collation of results:
 #' sliced_df %>% by_slice(dmap, mean, .collate = "rows")
 dmap <- function(.d, .f, ...) {
-  .f <- as_function(.f)
+  .f <- as_function(.f, ...)
   if (dplyr::is.grouped_df(.d)) {
     sliced_dmap(.d, .f, ...)
   } else {
