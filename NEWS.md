@@ -1,4 +1,4 @@
-# purrr 0.2.0.9000
+# purrr 0.2.1
 
 * `as_function()` gains a `.null` argument that for character and numeric
   values allows you to specify what to return for null/absent elements (#110).
