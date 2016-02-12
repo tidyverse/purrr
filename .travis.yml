@@ -1,8 +1,5 @@
 language: r
-warnings_are_errors: true
-sudo: required
+cache: packages
 
-r_packages:
-  - covr
 after_success:
   - Rscript -e 'covr::codecov()'

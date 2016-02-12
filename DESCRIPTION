@@ -17,7 +17,8 @@ Imports:
     Rcpp,
     lazyeval
 Suggests:
-    testthat
+    testthat,
+    covr
 LinkingTo: Rcpp,
     dplyr,
     BH
