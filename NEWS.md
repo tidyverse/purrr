@@ -8,6 +8,8 @@
 
 * New `is_function()` that returns `TRUE` only for regular functions.
 
+* Fix crash on GCC triggered by `invoke_rows()`.
+
 # purrr 0.2.0
 
 ## New functions
