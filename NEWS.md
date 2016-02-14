@@ -1,3 +1,5 @@
+# purrr 0.2.1.9000
+
 # purrr 0.2.1
 
 * `as_function()` gains a `.null` argument that for character and numeric
