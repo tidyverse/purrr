@@ -246,7 +246,7 @@ pmap_chr <- function(.l, .f, ...) {
 #' @export
 pmap_df <- function(.l, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
-  res <- map(.l, .f, ...)
+  res <- pmap(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
 
