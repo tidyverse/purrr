@@ -15,7 +15,7 @@ set_names <- function(x, nm = x) {
   if (!is_vector(x)) {
     stop("`x` must be a vector", call. = FALSE)
   }
-  if (length(x) != length(x)) {
+  if (length(x) != length(nm)) {
     stop("`x` and `nm` must be the same length", call. = FALSE)
   }
 

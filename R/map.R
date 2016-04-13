@@ -10,7 +10,7 @@
 #' Note that \code{map()} understands data frames, including grouped
 #' data frames. It can be much faster than
 #' \code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
-#' columns. However, \code{map()}ll be slower for the more common case of many
+#' columns. However, \code{map()} will be slower for the more common case of many
 #' groups with functions that dplyr knows how to translate to C++.
 #'
 #' @inheritParams as_function
@@ -246,7 +246,7 @@ pmap_chr <- function(.l, .f, ...) {
 #' @export
 pmap_df <- function(.l, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
-  res <- map(.l, .f, ...)
+  res <- pmap(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
 
