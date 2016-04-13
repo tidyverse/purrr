@@ -7,7 +7,7 @@
 \usage{
 as_function(.f, ...)
 
-\method{as_function}{character}(.f, ..., .null)
+\method{as_function}{character}(.f, ..., .null = NULL)
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.

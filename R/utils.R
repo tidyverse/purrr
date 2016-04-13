@@ -76,41 +76,33 @@ as_function.formula <- function(.f, ...) {
   make_function(alist(.x = , .y = , . = .x), .f[[2]], environment(.f))
 }
 
+
+#' @useDynLib purrr extract_
+extract <- function(x, index, .null = NULL) {
+  .Call(extract_, x, index, .null)
+}
+
 #' @export
 #' @rdname as_function
 #' @param .null Optional additional argument for character and numeric
 #'   inputs.
-as_function.character <- function(.f, ..., .null) {
-  idx <- .f
-  if (missing(.null)) {
-    function(g, ...) {
-      g[[idx]]
-    }
-  } else {
-    function(g, ...) {
-      g[[idx]] %||% .null
-    }
-  }
+as_function.character <- function(.f, ..., .null = NULL) {
+  as_function(as.list(.f), ..., .null = .null)
 }
 
 #' @export
-as_function.numeric <- function(.f, ..., .null) {
-  idx <- .f
+as_function.numeric <- function(.f, ..., .null = NULL) {
+  as_function(as.list(.f), ..., .null = .null)
+}
 
-  if (missing(.null)) {
-    function(g, ...) {
-      g[[idx]]
-    }
-  } else {
-    function(g, ...) {
-      if (idx > length(g)) {
-        .null
-      } else {
-        g[[idx]]
-      }
-    }
+#' @export
+as_function.list <- function(.f, ..., .null = NULL) {
+  idx <- .f
+  function(g, ...) {
+    extract(g, idx, .null)
   }
 }
+
 
 #' @export
 as_function.default <- function(.f, ...) {
