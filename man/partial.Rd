@@ -43,7 +43,7 @@ if you weren't using \code{partial}.
 compact1 <- function(x) discard(x, is.null)
 
 # we can write:
-compact2 <- partial(discard, .f = is.null)
+compact2 <- partial(discard, .p = is.null)
 
 # and the generated source code is very similar to what we made by hand
 compact1
