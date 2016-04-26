@@ -1,4 +1,4 @@
-#' Apply a function to each element of a list.
+#' Apply a function to each element of a vector
 #'
 #' \code{map()} returns the transformed input; \code{walk()} calls
 #' \code{.f} for its side-effect and returns the original

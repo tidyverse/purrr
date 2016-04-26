@@ -8,7 +8,7 @@
 \alias{map_int}
 \alias{map_lgl}
 \alias{walk}
-\title{Apply a function to each element of a list.}
+\title{Apply a function to each element of a vector}
 \usage{
 map(.x, .f, ...)
 
@@ -70,7 +70,7 @@ a data frame by row-binding the individual elements.
 Note that \code{map()} understands data frames, including grouped
 data frames. It can be much faster than
 \code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
-columns. However, \code{map()}ll be slower for the more common case of many
+columns. However, \code{map()} will be slower for the more common case of many
 groups with functions that dplyr knows how to translate to C++.
 }
 \examples{
