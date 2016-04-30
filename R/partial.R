@@ -9,7 +9,7 @@
 #' There are many ways to implement partial function application in R.
 #' (see e.g. \code{dots} in \url{https://github.com/crowding/ptools} for another
 #' approach.)  This implementation is based on creating functions that are as
-#' similar as possible to the anonymous function that'd you'd create by hand,
+#' similar as possible to the anonymous functions that you'd create by hand,
 #' if you weren't using \code{partial}.
 #'
 #' @param ...f a function. For the output source to read well, this should be an
