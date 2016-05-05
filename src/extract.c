@@ -64,7 +64,7 @@ int find_offset(SEXP x, SEXP index, int i) {
 
 }
 
-SEXP extract_(SEXP x, SEXP index, SEXP missing) {
+SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   if (!Rf_isVector(x)) {
     Rf_errorcall(R_NilValue, "`x` must be a vector (not a %s)",
       Rf_type2char(TYPEOF(x)));
