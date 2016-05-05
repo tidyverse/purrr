@@ -4,6 +4,8 @@
    using either names or positions. They now always stop when encountering
    the first NULL (#173).
 
+* `accumulate` and `reduce` are now correctly passing extra arguments to the worker function
+
 # purrr 0.2.1
 
 * `as_function()` gains a `.null` argument that for character and numeric

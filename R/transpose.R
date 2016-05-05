@@ -9,7 +9,7 @@
 #'
 #' Note that \code{transpose()} is its own inverse, much like the
 #' transpose operation on a matrix. You can get back the original
-#' input by zipping it twice.
+#' input by transposing it twice.
 #'
 #' @param .l A list of vectors to zip. The first element is used as the
 #'   template; you'll get a warning if a sub-list is not the same length as
