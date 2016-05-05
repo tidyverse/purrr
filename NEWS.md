@@ -1,5 +1,9 @@
 # purrr 0.2.1.9000
 
+* `as_function()` now supports list arguments which allow recursive indexing
+   using either names or positions. They now always stop when encountering
+   the first NULL (#173).
+
 # purrr 0.2.1
 
 * `as_function()` gains a `.null` argument that for character and numeric
