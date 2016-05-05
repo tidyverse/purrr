@@ -1,5 +1,7 @@
 # purrr 0.2.1.9000
 
+* `accumulate` and `reduce` are now correctly passing extra arguments to the worker function
+
 # purrr 0.2.1
 
 * `as_function()` gains a `.null` argument that for character and numeric

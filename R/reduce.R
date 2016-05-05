@@ -29,7 +29,12 @@
 #' list() %>% reduce(`+`)
 #' list() %>% reduce(`+`, .init = 0)
 reduce <- function(.x, .f, ..., .init) {
-  f <- as_function(.f, ...)
+  .f <- as_function(.f, ...)
+
+  f <- function(x, y) {
+    .f(x, y, ...)
+  }
+
   Reduce(f, .x, init = .init)
 }
 
@@ -75,7 +80,12 @@ reduce_right <- function(.x, .f, ..., .init) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 accumulate <- function(.x, .f, ..., .init) {
-  f <- as_function(.f, ...)
+  .f <- as_function(.f, ...)
+
+  f <- function(x, y) {
+    .f(x, y, ...)
+  }
+
   Reduce(f, .x, init = .init, accumulate = TRUE)
 }
 
