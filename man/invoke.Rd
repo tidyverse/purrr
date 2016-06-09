@@ -11,19 +11,23 @@
 \alias{map_call}
 \title{Invoke functions.}
 \usage{
-invoke(.f, .x = NULL, ..., .env = parent.frame())
+invoke(.f, .x = NULL, ..., .env = expr_env(.f, parent.frame()))
 
-invoke_map(.f, .x = list(NULL), ..., .env = parent.frame())
+invoke_map(.f, .x = list(NULL), ..., .env = expr_env(.f, parent.frame()))
 
-invoke_map_lgl(.f, .x = list(NULL), ..., .env = parent.frame())
+invoke_map_lgl(.f, .x = list(NULL), ..., .env = expr_env(.f,
+  parent.frame()))
 
-invoke_map_int(.f, .x = list(NULL), ..., .env = parent.frame())
+invoke_map_int(.f, .x = list(NULL), ..., .env = expr_env(.f,
+  parent.frame()))
 
-invoke_map_dbl(.f, .x = list(NULL), ..., .env = parent.frame())
+invoke_map_dbl(.f, .x = list(NULL), ..., .env = expr_env(.f,
+  parent.frame()))
 
-invoke_map_chr(.f, .x = list(NULL), ..., .env = parent.frame())
+invoke_map_chr(.f, .x = list(NULL), ..., .env = expr_env(.f,
+  parent.frame()))
 
-invoke_map_df(.f, .x = list(NULL), ..., .env = parent.frame())
+invoke_map_df(.f, .x = list(NULL), ..., .env = expr_env(.f, parent.frame()))
 }
 \arguments{
 \item{.f}{For \code{invoke}, a function; for \code{invoke_map} a

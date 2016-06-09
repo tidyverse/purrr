@@ -24,3 +24,11 @@ test_that("invoke_map() evaluates expressions in the right environment", {
   shadowed_fun <- toupper
   expect_equal(invoke_map("shadowed_fun", list(quote(shadowed_object))), list(toupper(letters)))
 })
+
+test_that("invoke() follows promises to find the evaluation env", {
+  shadowed_object <- letters
+  shadowed_fun <- toupper
+  f <- function(x) purrr::invoke(x, list(quote(shadowed_object)))
+  environment(f) <- baseenv()
+  expect_equal(f("shadowed_fun"), toupper(letters))
+})
