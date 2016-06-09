@@ -13,4 +13,14 @@ test_that("invoke_map() works with bare function", {
   expect_identical(invoke_map_lgl(`&&`, data), c(TRUE, TRUE))
 })
 
+test_that("invoke() evaluates expressions in the right environment", {
+  shadowed_object <- letters
+  shadowed_fun <- toupper
+  expect_equal(invoke("shadowed_fun", list(quote(shadowed_object))), toupper(letters))
+})
 
+test_that("invoke_map() evaluates expressions in the right environment", {
+  shadowed_object <- letters
+  shadowed_fun <- toupper
+  expect_equal(invoke_map("shadowed_fun", list(quote(shadowed_object))), list(toupper(letters)))
+})

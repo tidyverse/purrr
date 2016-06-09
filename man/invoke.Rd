@@ -11,19 +11,19 @@
 \alias{map_call}
 \title{Invoke functions.}
 \usage{
-invoke(.f, .x = NULL, ...)
+invoke(.f, .x = NULL, ..., .env = parent.frame())
 
-invoke_map(.f, .x = list(NULL), ...)
+invoke_map(.f, .x = list(NULL), ..., .env = parent.frame())
 
-invoke_map_lgl(.f, .x = list(NULL), ...)
+invoke_map_lgl(.f, .x = list(NULL), ..., .env = parent.frame())
 
-invoke_map_int(.f, .x = list(NULL), ...)
+invoke_map_int(.f, .x = list(NULL), ..., .env = parent.frame())
 
-invoke_map_dbl(.f, .x = list(NULL), ...)
+invoke_map_dbl(.f, .x = list(NULL), ..., .env = parent.frame())
 
-invoke_map_chr(.f, .x = list(NULL), ...)
+invoke_map_chr(.f, .x = list(NULL), ..., .env = parent.frame())
 
-invoke_map_df(.f, .x = list(NULL), ...)
+invoke_map_df(.f, .x = list(NULL), ..., .env = parent.frame())
 }
 \arguments{
 \item{.f}{For \code{invoke}, a function; for \code{invoke_map} a
@@ -36,6 +36,11 @@ same length as \code{.f}, and will call each function with no
 arguments (apart from any suppled in \code{...}.}
 
 \item{...}{Additional arguments passed to each function.}
+
+\item{.env}{Environment in which \code{\link{do.call}()} should
+evaluate a constructed expression. This only matters if you pass
+as \code{.f} the name of a function rather than its value, or as
+\code{.x} symbols of objects rather than their values.}
 }
 \description{
 This pair of functions make it easier to combine a function and list

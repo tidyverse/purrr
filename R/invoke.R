@@ -13,6 +13,10 @@
 #'   same length as \code{.f}, and will call each function with no
 #'   arguments (apart from any suppled in \code{...}.
 #' @param ... Additional arguments passed to each function.
+#' @param .env Environment in which \code{\link{do.call}()} should
+#'   evaluate a constructed expression. This only matters if you pass
+#'   as \code{.f} the name of a function rather than its value, or as
+#'   \code{.x} symbols of objects rather than their values.
 #' @inheritParams map
 #' @export
 #' @examples
@@ -59,8 +63,9 @@
 #' df
 #' invoke_map(df$f, df$params)
 #' }
-invoke <- function(.f, .x = NULL, ...) {
-  do.call(.f, c(.x, list(...)))
+invoke <- function(.f, .x = NULL, ...,
+                   .env = parent.frame()) {
+  do.call(.f, c(.x, list(...)), envir = .env)
 }
 
 as_invoke_function <- function(f) {
@@ -73,40 +78,46 @@ as_invoke_function <- function(f) {
 
 #' @rdname invoke
 #' @export
-invoke_map <- function(.f, .x = list(NULL), ...) {
+invoke_map <- function(.f, .x = list(NULL), ...,
+                       .env = parent.frame()) {
   .f <- as_invoke_function(.f)
-  map2(.f, .x, invoke, ...)
+  map2(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
-invoke_map_lgl <- function(.f, .x = list(NULL), ...) {
+invoke_map_lgl <- function(.f, .x = list(NULL), ...,
+                       .env = parent.frame()) {
   .f <- as_invoke_function(.f)
-  map2_lgl(.f, .x, invoke, ...)
+  map2_lgl(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
-invoke_map_int <- function(.f, .x = list(NULL), ...) {
+invoke_map_int <- function(.f, .x = list(NULL), ...,
+                       .env = parent.frame()) {
   .f <- as_invoke_function(.f)
-  map2_int(.f, .x, invoke, ...)
+  map2_int(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
-invoke_map_dbl <- function(.f, .x = list(NULL), ...) {
+invoke_map_dbl <- function(.f, .x = list(NULL), ...,
+                       .env = parent.frame()) {
   .f <- as_invoke_function(.f)
-  map2_dbl(.f, .x, invoke, ...)
+  map2_dbl(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
-invoke_map_chr <- function(.f, .x = list(NULL), ...) {
+invoke_map_chr <- function(.f, .x = list(NULL), ...,
+                       .env = parent.frame()) {
   .f <- as_invoke_function(.f)
-  map2_chr(.f, .x, invoke, ...)
+  map2_chr(.f, .x, invoke, ..., .env = .env)
 }
 
 #' @rdname invoke
 #' @export
-invoke_map_df <- function(.f, .x = list(NULL), ...) {
+invoke_map_df <- function(.f, .x = list(NULL), ...,
+                       .env = parent.frame()) {
   .f <- as_invoke_function(.f)
-  map2_df(.f, .x, invoke, ...)
+  map2_df(.f, .x, invoke, ..., .env = .env)
 }
 
 
