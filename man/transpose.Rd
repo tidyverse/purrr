@@ -26,7 +26,7 @@ If you had a list of length n where each component had values \code{a} and
 \details{
 Note that \code{transpose()} is its own inverse, much like the
 transpose operation on a matrix. You can get back the original
-input by zipping it twice.
+input by transposing it twice.
 }
 \examples{
 x <- rerun(5, x = runif(1), y = runif(5))

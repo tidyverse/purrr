@@ -14,7 +14,7 @@ when(., ...)
 named arguments will define additional values.}
 }
 \value{
-the value resulting from the action of the first valid
+The value resulting from the action of the first valid
   match/condition is returned. If no matches are found, and no default is
   given, NULL will be returned.
 
