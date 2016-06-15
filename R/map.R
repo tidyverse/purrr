@@ -155,6 +155,8 @@ walk <- function(.x, .f, ...) {
 #' @examples
 #' x <- list(1, 10, 100)
 #' y <- list(1, 2, 3)
+#' z <- list(5, 50, 500)
+#'
 #' map2(x, y, ~ .x + .y)
 #' # Or just
 #' map2(x, y, `+`)
@@ -163,6 +165,16 @@ walk <- function(.x, .f, ...) {
 #' by_cyl <- mtcars %>% split(.$cyl)
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
+#'
+#' pmap(list(x, y, z), sum)
+#'
+#' # Matching arguments by position
+#' pmap(list(x, y, z), function(a, b ,c) a / (b + c))
+#'
+#' # Matching arguments by name
+#' l <- list(a = x, b = y, c = z)
+#' pmap(l, function(c, b, a) a / (b + c))
+#'
 #' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_function(.f, ...)
