@@ -1,5 +1,7 @@
 # purrr 0.2.1.9000
 
+* Fix for dev tibble support.
+
 * `as_function()` now supports list arguments which allow recursive indexing
    using either names or positions. They now always stop when encountering
    the first NULL (#173).

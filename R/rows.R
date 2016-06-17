@@ -100,7 +100,7 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
   env$.collate <- collate
   env$.to <- to
   env$.labels_cols <- attr(df, "labels")
-  env$.slicing_cols <- df[names(env$.labels_cols)]
+  env$.slicing_cols <- df[names(env$.labels_cols) %||% character(0)]
 
   indices <- attr(df, "indices")
   env[[x_name]] <- df[!names(df) %in% names(env$.labels_cols)]
