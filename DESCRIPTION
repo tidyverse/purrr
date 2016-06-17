@@ -1,6 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.2.1.9000
+Version: 0.2.2
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
     person("Lionel", "Henry", , "lionel.hry@gmail.com", "ctb"),
@@ -15,7 +15,7 @@ Imports:
     magrittr (>= 1.5),
     dplyr (>= 0.4.3),
     Rcpp,
-    lazyeval (>= 0.1.10.9000)
+    lazyeval (>= 0.2.0)
 Suggests:
     testthat,
     covr
@@ -25,4 +25,3 @@ LinkingTo: Rcpp,
 URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
 RoxygenNote: 5.0.1
-Remotes: hadley/lazyeval

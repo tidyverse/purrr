@@ -1,4 +1,4 @@
-# purrr 0.2.1.9000
+# purrr 0.2.2
 
 * Fix for dev tibble support.
 
@@ -6,7 +6,8 @@
    using either names or positions. They now always stop when encountering
    the first NULL (#173).
 
-* `accumulate` and `reduce` are now correctly passing extra arguments to the worker function
+* `accumulate` and `reduce` correctly pass extra arguments to the
+   worker function.
 
 # purrr 0.2.1
 

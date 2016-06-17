@@ -9,7 +9,7 @@
 
 ## Reverse dependencies
 
-* I have run R CMD check on the 1 downstream dependencies.
-  (Summary at https://github.com/hadley/purrr/tree/master/revdep). 
+I have run R CMD check on the 12 downstream dependencies.
+(Summary at https://github.com/hadley/purrr/tree/master/revdep). 
   
-* There were no problems.
+There were no problems.
