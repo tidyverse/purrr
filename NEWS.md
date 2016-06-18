@@ -1,3 +1,5 @@
+# purrr 0.2.2.9000
+
 # purrr 0.2.2
 
 * Fix for dev tibble support.
