@@ -34,17 +34,20 @@ possibly(.f, otherwise, quiet = TRUE)
 as they occur?}
 }
 \value{
-\code{safe}: a list with components \code{result} and \code{error}.
-  One value is always \code{NULL}
+\code{safely}: wrapped function instead returns a list with
+  components \code{result} and \code{error}. One value is always \code{NULL}.
 
-\code{outputs}: a list with components \code{result}, \code{output},
-  \code{messages} and \code{warnings}.
+  \code{quietly}: wrapped function instead returns a list with components
+  \code{result}, \code{output}, \code{messages} and \code{warnings}.
+
+  \code{possibly}: wrapped function uses a default value (\code{otherwise})
+  whenever an error occurs.
 }
 \description{
-These functions wrap functions so instead generating side effects through
-output, messages, warnings, and errors, they instead return enchanced
-output. They are all adverbs because they modify the action of a
-verb (a function).
+These functions wrap functions so that instead of generating side effects
+through printed output, messages, warnings, and errors, they return enchanced
+output. They are all adverbs because they modify the action of a verb (a
+function).
 }
 \examples{
 safe_log <- safely(log)
