@@ -187,8 +187,7 @@ rbernoulli <- function(n, p = 0.5) {
 #' @examples
 #' table(rdunif(1e3, 10))
 rdunif <- function(n, b, a = 1) {
-  vec <- a:b
-  sample(vec, n, replace = TRUE)
+  sample(b - a + 1, n, replace = TRUE) + a - 1
 }
 
 # magrittr placeholder
