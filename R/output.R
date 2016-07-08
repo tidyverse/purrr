@@ -1,6 +1,6 @@
 #' Capture side effects.
 #'
-#' These functions wrap functions so instead generating side effects through
+#' These functions wrap functions so instead of generating side effects through
 #' output, messages, warnings, and errors, they instead return enchanced
 #' output. They are all adverbs because they modify the action of a
 #' verb (a function).
