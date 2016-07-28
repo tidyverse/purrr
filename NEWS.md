@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* Recursive index via `as_function()` now returns `missing` when first element
+  is `NULL`
+
 # purrr 0.2.2
 
 * Fix for dev tibble support.
