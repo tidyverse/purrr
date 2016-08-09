@@ -11,6 +11,7 @@
 #' with only the objects required prevents this from happening.
 #' @examples
 #' env <- create_env(list(iris_new_env = iris))
+#' @export
 create_env <- function(.vars, hash = TRUE,
                        parent = globalenv(), size = 29L){
   if(is.null(names(.vars))){
