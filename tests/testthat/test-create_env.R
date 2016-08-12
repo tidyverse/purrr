@@ -26,8 +26,6 @@ test_that("in_new_env solves the saveSize problem", {
   }
 
   obj <- tmp_fun()
-  object.size(obj)
-  # 48008
   out <- saveSize(obj)
-  out %>% expect_less_than(60000)
+  out %>% expect_lt(60000)
 })
