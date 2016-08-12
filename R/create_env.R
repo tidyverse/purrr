@@ -24,3 +24,28 @@ create_env <- function(.vars, hash = TRUE,
   })
   env
 }
+
+#' @title Return a function that evaluates in a new environment.
+#' @description Returns a function that creates an environment,
+#' exports its parameters to it, and evaluates the function in the new environment.
+#' The parent is .GlobalEnv.
+#' @param .f The function to evaluate.
+#' @return A function that evaluates in a new environment with every call.
+#' @details When calling several functions outside of .GlobalEnv, the entire calling
+#' environment is retained with the object. This can lead to unnecessary information being
+#' retained in memory when moving from a parallel cluster or
+#' saved to disk. Calling a function in an environment
+#' with only the objects required prevents this from happening.
+#' @examples
+#' in_new_env(lm)(Sepal.Length ~ Sepal.Width, data = iris)
+#' @export
+in_new_env <- function(.f){
+  function(...) {
+    params <- list(...)
+    env <- new.env(parent = globalenv())
+    params <- lapply(params, function(x) {if (inherits(x,"formula")) {environment(x)<-env}; x})
+    assign(".params.", params, envir = env)
+    env$.f <- .f
+    evalq(do.call(".f", .params.), envir=env)
+  }
+}
