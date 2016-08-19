@@ -71,9 +71,11 @@ partial_dmap <- function(.d, .sel, .f, ...) {
 
 dmap_recycle <- function(res, d) {
   if (dplyr::is.grouped_df(d)) {
-    res <- dmap_recycle_sliced(res, d)
-  } else {
-    dmap_check_unsliced(res, d)
+    return(dmap_recycle_sliced(res, d))
+  }
+
+  if (!nrow(res) %in% c(0, 1, nrow(d))) {
+    stop("dmap() only recycles vectors of length 1", call. = TRUE)
   }
 
   res
@@ -92,10 +94,4 @@ dmap_recycle_sliced <- function(res, d) {
   }
 
   stop("dmap() only recycles vectors of length 1")
-}
-
-dmap_check_unsliced <- function(res, d) {
-  if (!nrow(res) %in% c(1, nrow(d))) {
-    stop("dmap() only recycles vectors of length 1")
-  }
 }
