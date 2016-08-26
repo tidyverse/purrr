@@ -350,7 +350,7 @@ NULL
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
-  .x <- c(.x)
+  .x <- unclass(.x)
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
