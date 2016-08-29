@@ -11,6 +11,15 @@ test_that(".null replaces absent values", {
   expect_equal(map_dbl(x, "b", .null = NA), c(2, NA, NA))
 })
 
+test_that(".null replaces actual NULL values", {
+  x <- list(
+    list(a = 1),
+    list(a = NULL)
+  )
+
+  expect_equal(map_dbl(x, "a", .null = NA), c(1, NA))
+})
+
 
 # extract -----------------------------------------------------------------
 
