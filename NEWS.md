@@ -3,6 +3,9 @@
 * Recursive index via `as_function()` now returns `missing` when first element
   is `NULL`
 
+* When indexing elements (e.g. `map(x, "field")`), `NULL` values are
+  replaced with `.null` (#231).
+
 # purrr 0.2.2
 
 * Fix for dev tibble support.
