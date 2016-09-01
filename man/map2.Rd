@@ -118,5 +118,30 @@ pmap(list(x, y, z), function(a, b ,c) a / (b + c))
 l <- list(a = x, b = y, c = z)
 pmap(l, function(c, b, a) a / (b + c))
 
+# Vectorizing a function over multiple arguments
+df <- data.frame(
+  x = c("apple", "banana", "cherry"),
+  pattern = c("p", "n", "h"),
+  replacement = c("x", "f", "q"),
+  stringsAsFactors = FALSE
+  )
+pmap(df, gsub)
+pmap_chr(df, gsub)
+
+## Use `...` to absorb unused components of input list .l
+df <- data.frame(
+  x = 1:3 + 0.1,
+  y = 3:1 - 0.1,
+  z = letters[1:3]
+)
+plus <- function(x, y) x + y
+\dontrun{
+## this won't work
+pmap(df, plus)
+}
+## but this will
+plus2 <- function(x, y, ...) x + y
+pmap_dbl(df, plus2)
+
 }
 
