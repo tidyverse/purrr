@@ -314,7 +314,7 @@ walk_n <- function(...) {
 #' \code{map_if()} maps a function over the elements of \code{.x}
 #' satisfying a predicate. \code{map_at()} is similar but will modify
 #' the elements corresponding to a character vector of names or a
-#' mumeric vector of positions.
+#' numeric vector of positions.
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
 #'   predicate function, or a logical vector of the same length as \code{.x}.
@@ -350,7 +350,7 @@ NULL
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
-  .x <- c(.x)
+  .x <- unclass(.x)
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
