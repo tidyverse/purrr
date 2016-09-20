@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include <dplyr.h>
 #include "map.h"
 #include "utils.h"
 #include "rows-data.h"
