@@ -37,7 +37,8 @@ sliced_dmap <- function(.d, .f, ...) {
     .d
   } else {
     set_sliced_env(.d, TRUE, "rows", "", environment(), ".d")
-    .Call(map_by_slice_impl, environment(), ".d", ".f")
+    slices <- subset_slices(.d)
+    .Call(map_by_slice_impl, environment(), ".d", ".f", slices)
   }
 }
 
