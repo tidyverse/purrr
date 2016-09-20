@@ -80,7 +80,9 @@ by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   .collate <- match.arg(.collate)
 
   set_sliced_env(.d, .labels, .collate, .to, environment(), ".d")
-  .Call(by_slice_impl, environment(), ".d", "..f")
+  env <- environment()
+  env$.d <- subset_slices(.d)
+  .Call(by_slice_impl, env, ".d", "..f")
 }
 
 # Prevents as_function() from transforming to a plucking function
@@ -194,7 +196,15 @@ by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   .labels_cols <- .d
   .slicing_cols <- .d
 
-  .Call(by_slice_impl, environment(), ".d", "..f")
+  env <- environment()
+  env$.d <- subset_slices(.d)
+  .Call(by_slice_impl, env, ".d", "..f")
+}
+
+subset_slices <- function(data) {
+  indices <- lapply(attr(data, "indices"), `+`, 1L)
+  as_data_frame <- dplyr::as_data_frame
+  lapply(indices, function(x) as_data_frame(data[x, ]))
 }
 
 check_df_consistency <- function(.d) {
