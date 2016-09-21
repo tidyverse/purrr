@@ -1,5 +1,7 @@
 # purrr 0.2.2.9000
 
+* Removed `LinkingTo:` dependency on `dplyr` (#247, @krlmlr).
+
 * Recursive index via `as_function()` now returns `missing` when first element
   is `NULL`
 
