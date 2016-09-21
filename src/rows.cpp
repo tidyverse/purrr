@@ -28,7 +28,6 @@ List process_slices(List raw_results, const Environment execution_env) {
 
 extern "C" SEXP by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_) {
   BEGIN_RCPP
-  const char* d_name = CHAR(Rf_asChar(d_name_));
 
   // Map over that list
   SEXP results = PROTECT(map_impl(env, d_name_, f_name_, Rf_mkChar("list")));
@@ -58,7 +57,6 @@ extern "C" SEXP map_by_slice_impl(SEXP env, SEXP d_name_, SEXP f_name_, SEXP sli
   BEGIN_RCPP
   const char* d_name = CHAR(Rf_asChar(d_name_));
   SEXP d = Rf_install(d_name);
-  SEXP d_val = Rf_eval(d, env);
 
   // Map over those lists
   for (int i = 0; i < Rf_length(slices); ++i) {
