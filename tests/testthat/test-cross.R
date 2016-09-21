@@ -3,7 +3,7 @@ context("cross")
 test_that("long format corresponds to expand.grid output", {
   x <- list(a = 1:3, b = 4:9)
 
-  out1 <- cross_d(x)
+  out1 <- cross_df(x)
   out2 <- expand.grid(x, KEEP.OUT.ATTRS = FALSE) %>% dplyr::as_data_frame()
 
   expect_equal(out1, out2)
@@ -16,6 +16,6 @@ test_that("filtering works", {
 })
 
 test_that("works with empty input", {
-  expect_equal(cross_n(list()), list())
-  expect_equal(cross_n(NULL), NULL)
+  expect_equal(cross(list()), list())
+  expect_equal(cross(NULL), NULL)
 })
