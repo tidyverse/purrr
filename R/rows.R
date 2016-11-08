@@ -269,7 +269,7 @@ slice_rows <- function(.d, .cols = NULL) {
   }
   stopifnot(is.character(.cols))
 
-  dplyr::group_by_(.d, .dots = .cols)
+  dplyr::group_by_(.d, .dots = lapply(.cols, as.name))
 }
 
 #' @rdname slice_rows
