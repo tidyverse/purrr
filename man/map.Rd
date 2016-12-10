@@ -2,11 +2,11 @@
 % Please edit documentation in R/map.R
 \name{map}
 \alias{map}
+\alias{map_lgl}
 \alias{map_chr}
+\alias{map_int}
 \alias{map_dbl}
 \alias{map_df}
-\alias{map_int}
-\alias{map_lgl}
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
@@ -31,21 +31,28 @@ walk(.x, .f, ...)
 
   If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function
+  with one or two arguments, \code{.x} or \code{.x} and \code{.y},
+  respectively. This allows you to create very compact anonymous functions
+  with up to two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+  If \strong{character} or \strong{integer vector}, it is converted to an
+  extractor function, e.g. \code{"y"} becomes \code{function(x) x[["y"]]}. To
+  index deeply into a nested list, use multiple values; \code{c("x", "y")} is
+  equivalent to \code{z[["x"]][["y"]]}. You can also use \code{.null} to
+  provide a default to use instead of \code{NULL} for absent components.
+
+  If a mixed \strong{list} of character and integer, it is also converted to
+  a recursive extractor function, e.g. \code{list(i, "foo")} is equivalent
+  to \code{z[[i]][["foo"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
 \item{.id}{If not \code{NULL} a variable with this name will be created
 giving either the name or the index of the data frame.}
+
+\item{.null}{Optional argument when \code{.f} is a vector extractor. Used as
+default value when requested item does not exist or is \code{NULL}.}
 }
 \value{
 \code{map()} always returns a list.
@@ -86,6 +93,26 @@ groups with functions that dplyr knows how to translate to C++.
 1:10 \%>\%
   map(~ rnorm(10, .x))
 
+# Extract by name or position
+# .null specifies value for elements that are missing or NULL
+list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L)) \%>\%
+  map("a", .null = "who knows?")
+list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L)) \%>\%
+  map_int("b", .null = NA)
+
+# numeric or character vectors index into a list level-wise
+l <- list(list(num = 1:3, letters[1:3]),
+          list(num = 101:103, letters[4:6]))
+l \%>\% map(c(2, 2))
+
+# use a list to build an extractor that mixes numeric indices and names
+l \%>\% map(list("num", 3))
+l \%>\% map_int(list("num", 3))
+
+# .null works with list extractors too
+l[[3]] <- list(NULL)
+l \%>\% map_int(list("num", 1), .null = NA)
+
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2
 mtcars \%>\%
@@ -111,6 +138,7 @@ mtcars \%>\%
 }
 \seealso{
 \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
-  inputs simulatenously
+  inputs simultaneously. \code{\link{as_function}()} for passing additional
+  arguments to \code{.f} via \code{...}, such as \code{.null} when \code{.f}
+  is a character or integer extractor.
 }
-

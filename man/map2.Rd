@@ -2,22 +2,22 @@
 % Please edit documentation in R/map.R
 \name{map2}
 \alias{map2}
-\alias{map2_chr}
-\alias{map2_dbl}
-\alias{map2_df}
-\alias{map2_int}
 \alias{map2_lgl}
+\alias{map2_int}
+\alias{map2_dbl}
+\alias{map2_chr}
+\alias{map2_df}
 \alias{map3}
-\alias{map_n}
 \alias{pmap}
-\alias{pmap_chr}
-\alias{pmap_dbl}
-\alias{pmap_df}
-\alias{pmap_int}
 \alias{pmap_lgl}
-\alias{pwalk}
+\alias{pmap_int}
+\alias{pmap_dbl}
+\alias{pmap_chr}
+\alias{pmap_df}
+\alias{map_n}
 \alias{walk2}
 \alias{walk3}
+\alias{pwalk}
 \alias{walk_n}
 \title{Map over multiple inputs simultaneously.}
 \usage{
@@ -57,16 +57,20 @@ be recycled.}
 
   If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function
+  with one or two arguments, \code{.x} or \code{.x} and \code{.y},
+  respectively. This allows you to create very compact anonymous functions
+  with up to two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+  If \strong{character} or \strong{integer vector}, it is converted to an
+  extractor function, e.g. \code{"y"} becomes \code{function(x) x[["y"]]}. To
+  index deeply into a nested list, use multiple values; \code{c("x", "y")} is
+  equivalent to \code{z[["x"]][["y"]]}. You can also use \code{.null} to
+  provide a default to use instead of \code{NULL} for absent components.
+
+  If a mixed \strong{list} of character and integer, it is also converted to
+  a recursive extractor function, e.g. \code{list(i, "foo")} is equivalent
+  to \code{z[[i]][["foo"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -144,4 +148,3 @@ plus2 <- function(x, y, ...) x + y
 pmap_dbl(df, plus2)
 
 }
-

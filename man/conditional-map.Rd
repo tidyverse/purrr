@@ -2,8 +2,8 @@
 % Please edit documentation in R/map.R
 \name{conditional-map}
 \alias{conditional-map}
-\alias{map_at}
 \alias{map_if}
+\alias{map_at}
 \title{Modify elements conditionally}
 \usage{
 map_if(.x, .p, .f, ...)
@@ -24,16 +24,20 @@ inner lists. Only those elements where \code{.p} evaluates to
 
   If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function
+  with one or two arguments, \code{.x} or \code{.x} and \code{.y},
+  respectively. This allows you to create very compact anonymous functions
+  with up to two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+  If \strong{character} or \strong{integer vector}, it is converted to an
+  extractor function, e.g. \code{"y"} becomes \code{function(x) x[["y"]]}. To
+  index deeply into a nested list, use multiple values; \code{c("x", "y")} is
+  equivalent to \code{z[["x"]][["y"]]}. You can also use \code{.null} to
+  provide a default to use instead of \code{NULL} for absent components.
+
+  If a mixed \strong{list} of character and integer, it is also converted to
+  a recursive extractor function, e.g. \code{list(i, "foo")} is equivalent
+  to \code{z[[i]][["foo"]]}.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -69,4 +73,3 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   simplify_all()
 
 }
-
