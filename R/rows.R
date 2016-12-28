@@ -70,6 +70,8 @@
 #'   map(coef)
 by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
                      .to = ".out", .labels = TRUE) {
+  message("by_slice() is deprecated. Please use the new colwise family in dplyr.\n",
+    "E.g., summarise_all(), mutate_all(), etc.")
   ..f <- as_rows_function(..f)
   if (!dplyr::is.grouped_df(.d)) {
     stop(".d must be a sliced data frame", call. = FALSE)
@@ -80,7 +82,9 @@ by_slice <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   .collate <- match.arg(.collate)
 
   set_sliced_env(.d, .labels, .collate, .to, environment(), ".d")
-  .Call(by_slice_impl, environment(), ".d", "..f")
+  env <- environment()
+  env$.d <- subset_slices(.d)
+  .Call(by_slice_impl, env, ".d", "..f")
 }
 
 # Prevents as_function() from transforming to a plucking function
@@ -179,6 +183,8 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
 #' mtcars[1:2] %>% by_row(function(x) 1:5, .collate = "cols")
 by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
                    .to = ".out", .labels = TRUE) {
+  message("`by_row()` is deprecated; please use a combination of:\n",
+    "tidyr::nest(); dplyr::mutate(); purrr::map()")
   check_df_consistency(.d)
   if (nrow(.d) < 1) {
     return(.d)
@@ -194,7 +200,15 @@ by_row <- function(.d, ..f, ..., .collate = c("list", "rows", "cols"),
   .labels_cols <- .d
   .slicing_cols <- .d
 
-  .Call(by_slice_impl, environment(), ".d", "..f")
+  env <- environment()
+  env$.d <- subset_slices(.d)
+  .Call(by_slice_impl, env, ".d", "..f")
+}
+
+subset_slices <- function(data) {
+  indices <- lapply(attr(data, "indices"), `+`, 1L)
+  as_data_frame <- dplyr::as_data_frame
+  lapply(indices, function(x) as_data_frame(data[x, ]))
 }
 
 check_df_consistency <- function(.d) {
@@ -210,6 +224,7 @@ check_df_consistency <- function(.d) {
 #' @export
 invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
                         .to = ".out", .labels = TRUE) {
+  message("`invoke_rows()` is deprecated; please use `pmap()` instead.")
   check_df_consistency(.d)
   .collate <- match.arg(.collate)
 
@@ -224,8 +239,7 @@ invoke_rows <- function(.f, .d, ..., .collate = c("list", "rows", "cols"),
 #' @usage NULL
 #' @rdname by_row
 map_rows <- function(.d, .f, ..., .labels = TRUE) {
-  message("`map_rows()` is deprecated; please use `invoke_rows()` instead.",
-    call. = FALSE)
+  message("`map_rows()` is deprecated; please use `pmap()` instead.")
   invoke_rows(.f, .d, ..., .labels = .labels)
 }
 
@@ -245,6 +259,7 @@ map_rows <- function(.d, .f, ..., .labels = TRUE) {
 #' @seealso \code{\link{by_slice}()} and \code{\link[dplyr]{group_by}()}
 #' @export
 slice_rows <- function(.d, .cols = NULL) {
+  message("`slice_rows()` is deprecated; please use `dplyr::group_by()` instead.")
   stopifnot(is.data.frame(.d))
   if (is.null(.cols)) {
     return(unslice(.d))
@@ -254,11 +269,12 @@ slice_rows <- function(.d, .cols = NULL) {
   }
   stopifnot(is.character(.cols))
 
-  dplyr::group_by_(.d, .dots = .cols)
+  dplyr::group_by_(.d, .dots = lapply(.cols, as.name))
 }
 
 #' @rdname slice_rows
 #' @export
 unslice <- function(.d) {
+  message("`unslice()` is deprecated; please use `dplyr::ungroup()` instead.")
   dplyr::group_by_(.d, .dots = list())
 }

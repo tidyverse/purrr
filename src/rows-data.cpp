@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include <dplyr.h>
 #include "utils.h"
 #include "rows-data.h"
 
@@ -30,25 +29,19 @@ Labels::Labels(Environment execution_env_)
 }
 
 void Labels::remove(const std::vector<int>& to_remove) {
-  if (to_remove.size()) {
-    List labels = labels_; // Workaround GCC -O2 crash
+  if (!to_remove.size())
+    return;
 
-    int n = Rf_length(labels[0]);
-    std::vector<int> index(n - to_remove.size());
+  // http://stackoverflow.com/a/22833346/946850
+  static Function subset("[.data.frame");
 
-    int i = 0;
-    int j = 0;
-    for (std::vector<int>::iterator it = index.begin(); it != index.end(); ++it) {
-      if (j == to_remove[i]) {
-        ++i;
-        ++j;
-      }
-      *it = j++;
-    }
-
-    dplyr::DataFrameSubsetVisitors labels_visitors(labels);
-    labels_ = labels_visitors.subset(index, "data.frame");
+  IntegerVector to_remove_neg = no_init(to_remove.size());
+  for (size_t i = 0; i < to_remove.size(); ++i) {
+    to_remove_neg[i] = -to_remove[i] - 1;
   }
+
+  List labels = labels_; // Workaround GCC -O2 crash
+  labels_ = subset(labels, to_remove_neg, R_MissingArg);
 }
 
 Results::Results(List raw_results_, int remove_empty_)

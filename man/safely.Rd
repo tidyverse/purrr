@@ -45,7 +45,7 @@ as they occur?}
 }
 \description{
 These functions wrap functions so that instead of generating side effects
-through printed output, messages, warnings, and errors, they return enchanced
+through printed output, messages, warnings, and errors, they return enhanced
 output. They are all adverbs because they modify the action of a verb (a
 function).
 }

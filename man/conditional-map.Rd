@@ -48,7 +48,7 @@ A list.
 \code{map_if()} maps a function over the elements of \code{.x}
 satisfying a predicate. \code{map_at()} is similar but will modify
 the elements corresponding to a character vector of names or a
-mumeric vector of positions.
+numeric vector of positions.
 }
 \examples{
 # Convert factors to characters

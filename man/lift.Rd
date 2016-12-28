@@ -148,12 +148,12 @@ lift_vd(tolower, .type = character(1))("this", "is", "ok")
 
 ### Lifting from list(...) to c(...) or ...
 
-# cross_n() normally takes a list of elements and returns their
+# cross() normally takes a list of elements and returns their
 # cartesian product. By lifting it you can supply the arguments as
 # if it was a function taking dots:
-cross <- lift_ld(cross_n)
-out1 <- cross_n(list(a = 1:2, b = c("a", "b", "c")))
-out2 <- cross(a = 1:2, b = c("a", "b", "c"))
+cross_dots <- lift_ld(cross)
+out1 <- cross(list(a = 1:2, b = c("a", "b", "c")))
+out2 <- cross_dots(a = 1:2, b = c("a", "b", "c"))
 identical(out1, out2)
 
 # This kind of lifting is sometimes needed for function
@@ -165,7 +165,7 @@ mtcars \%>\% pmap(lift_ld(some, partial(`<`, 200)))
 
 # Default arguments for ..f can be specified in the call to
 # lift_ld()
-lift_ld(cross_n, .filter = `==`)(1:3, 1:3) \%>\% str()
+lift_ld(cross, .filter = `==`)(1:3, 1:3) \%>\% str()
 
 
 # Here is another function taking a list and that we can update to

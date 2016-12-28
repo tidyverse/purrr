@@ -23,6 +23,8 @@
 #' # with 'rows' collation of results:
 #' sliced_df %>% by_slice(dmap, mean, .collate = "rows")
 dmap <- function(.d, .f, ...) {
+  message("dmap() is deprecated. Please use the new colwise family in dplyr.\n",
+    "E.g., summarise_all(), mutate_all(), etc.")
   .f <- as_function(.f, ...)
   if (dplyr::is.grouped_df(.d)) {
     sliced_dmap(.d, .f, ...)
@@ -37,7 +39,8 @@ sliced_dmap <- function(.d, .f, ...) {
     .d
   } else {
     set_sliced_env(.d, TRUE, "rows", "", environment(), ".d")
-    .Call(map_by_slice_impl, environment(), ".d", ".f")
+    slices <- subset_slices(.d)
+    .Call(map_by_slice_impl, environment(), ".d", ".f", slices)
   }
 }
 
@@ -45,6 +48,8 @@ sliced_dmap <- function(.d, .f, ...) {
 #' @rdname dmap
 #' @export
 dmap_at <- function(.d, .at, .f, ...) {
+  message("dmap_at() is deprecated. Please use the new colwise family in dplyr.\n",
+    "E.g., summarise_at(), mutate_at(), etc.")
   sel <- inv_which(.d, .at)
   partial_dmap(.d, sel, .f, ...)
 }
@@ -52,6 +57,8 @@ dmap_at <- function(.d, .at, .f, ...) {
 #' @rdname dmap
 #' @export
 dmap_if <- function(.d, .p, .f, ...) {
+  message("dmap_if() is deprecated. Please use the new colwise family in dplyr.\n",
+    "E.g., summarise_if(), mutate_if(), etc.")
   sel <- map_lgl(.d, .p)
   partial_dmap(.d, sel, .f, ...)
 }
@@ -71,9 +78,11 @@ partial_dmap <- function(.d, .sel, .f, ...) {
 
 dmap_recycle <- function(res, d) {
   if (dplyr::is.grouped_df(d)) {
-    res <- dmap_recycle_sliced(res, d)
-  } else {
-    dmap_check_unsliced(res, d)
+    return(dmap_recycle_sliced(res, d))
+  }
+
+  if (!nrow(res) %in% c(0, 1, nrow(d))) {
+    stop("dmap() only recycles vectors of length 1", call. = TRUE)
   }
 
   res
@@ -92,10 +101,4 @@ dmap_recycle_sliced <- function(res, d) {
   }
 
   stop("dmap() only recycles vectors of length 1")
-}
-
-dmap_check_unsliced <- function(res, d) {
-  if (!nrow(res) %in% c(1, nrow(d))) {
-    stop("dmap() only recycles vectors of length 1")
-  }
 }

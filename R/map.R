@@ -155,6 +155,8 @@ walk <- function(.x, .f, ...) {
 #' @examples
 #' x <- list(1, 10, 100)
 #' y <- list(1, 2, 3)
+#' z <- list(5, 50, 500)
+#'
 #' map2(x, y, ~ .x + .y)
 #' # Or just
 #' map2(x, y, `+`)
@@ -163,6 +165,41 @@ walk <- function(.x, .f, ...) {
 #' by_cyl <- mtcars %>% split(.$cyl)
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
+#'
+#' pmap(list(x, y, z), sum)
+#'
+#' # Matching arguments by position
+#' pmap(list(x, y, z), function(a, b ,c) a / (b + c))
+#'
+#' # Matching arguments by name
+#' l <- list(a = x, b = y, c = z)
+#' pmap(l, function(c, b, a) a / (b + c))
+#'
+#' # Vectorizing a function over multiple arguments
+#' df <- data.frame(
+#'   x = c("apple", "banana", "cherry"),
+#'   pattern = c("p", "n", "h"),
+#'   replacement = c("x", "f", "q"),
+#'   stringsAsFactors = FALSE
+#'   )
+#' pmap(df, gsub)
+#' pmap_chr(df, gsub)
+#'
+#' ## Use `...` to absorb unused components of input list .l
+#' df <- data.frame(
+#'   x = 1:3 + 0.1,
+#'   y = 3:1 - 0.1,
+#'   z = letters[1:3]
+#' )
+#' plus <- function(x, y) x + y
+#' \dontrun{
+#' ## this won't work
+#' pmap(df, plus)
+#' }
+#' ## but this will
+#' plus2 <- function(x, y, ...) x + y
+#' pmap_dbl(df, plus2)
+#'
 #' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_function(.f, ...)
@@ -302,7 +339,7 @@ walk_n <- function(...) {
 #' \code{map_if()} maps a function over the elements of \code{.x}
 #' satisfying a predicate. \code{map_at()} is similar but will modify
 #' the elements corresponding to a character vector of names or a
-#' mumeric vector of positions.
+#' numeric vector of positions.
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
 #'   predicate function, or a logical vector of the same length as \code{.x}.
@@ -338,7 +375,7 @@ NULL
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
-  .x <- c(.x)
+  .x <- unclass(.x)
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x

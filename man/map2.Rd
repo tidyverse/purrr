@@ -98,6 +98,8 @@ map over all its elements in parallel.
 \examples{
 x <- list(1, 10, 100)
 y <- list(1, 2, 3)
+z <- list(5, 50, 500)
+
 map2(x, y, ~ .x + .y)
 # Or just
 map2(x, y, `+`)
@@ -106,5 +108,40 @@ map2(x, y, `+`)
 by_cyl <- mtcars \%>\% split(.$cyl)
 mods <- by_cyl \%>\% map(~ lm(mpg ~ wt, data = .))
 map2(mods, by_cyl, predict)
+
+pmap(list(x, y, z), sum)
+
+# Matching arguments by position
+pmap(list(x, y, z), function(a, b ,c) a / (b + c))
+
+# Matching arguments by name
+l <- list(a = x, b = y, c = z)
+pmap(l, function(c, b, a) a / (b + c))
+
+# Vectorizing a function over multiple arguments
+df <- data.frame(
+  x = c("apple", "banana", "cherry"),
+  pattern = c("p", "n", "h"),
+  replacement = c("x", "f", "q"),
+  stringsAsFactors = FALSE
+  )
+pmap(df, gsub)
+pmap_chr(df, gsub)
+
+## Use `...` to absorb unused components of input list .l
+df <- data.frame(
+  x = 1:3 + 0.1,
+  y = 3:1 - 0.1,
+  z = letters[1:3]
+)
+plus <- function(x, y) x + y
+\dontrun{
+## this won't work
+pmap(df, plus)
+}
+## but this will
+plus2 <- function(x, y, ...) x + y
+pmap_dbl(df, plus2)
+
 }
 

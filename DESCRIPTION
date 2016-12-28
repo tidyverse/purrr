@@ -15,13 +15,13 @@ Imports:
     magrittr (>= 1.5),
     dplyr (>= 0.4.3),
     Rcpp,
-    lazyeval (>= 0.2.0)
+    lazyeval (>= 0.2.0.9000)
 Suggests:
     testthat,
     covr
 LinkingTo: Rcpp,
-    dplyr,
     BH
 URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
 RoxygenNote: 5.0.1
+Remotes: hadley/lazyeval
