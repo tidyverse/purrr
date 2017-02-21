@@ -293,8 +293,28 @@ is_empty <- function(x) length(x) == 0
 #' Is a formula?
 #'
 #' @inheritParams is_empty
+#' @param has_lhs If \code{TRUE}, tests that the formula
+#'   is two-sided. If \code{FALSE}, tests that the
+#'   formula is one sided. If \code{NULL} or \code{NA},
+#'   does not test for the sidedness of the formula.
 #' @export
 #' @examples
 #' x <- disp ~ am
 #' is_formula(x)
-is_formula <- function(x) inherits(x, "formula")
+#' is_formula(x, has_lhs = TRUE)
+#' is_formula(x, has_lhs = FALSE)
+#' y <- ~ am
+#' is_formula(y)
+#' is_formula(y, has_lhs = TRUE)
+#' is_formula(y, has_lhs = FALSE)
+is_formula <- function(x, has_lhs = NULL) {
+  f <- inherits(x, "formula")
+  if (f && !is.null(has_lhs) && !is.na(has_lhs)) {
+    f <- if (has_lhs) {
+      length(x) == 3
+    } else {
+      length(x) == 2
+    }
+  }
+  f
+}
