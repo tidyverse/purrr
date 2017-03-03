@@ -10,6 +10,8 @@
 #' @inheritParams as_function
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to \code{.f}.
+#' @param .null Optional argument when \code{.f} is a vector extractor. Used as
+#'   default value when requested item does not exist or is \code{NULL}.
 #' @return \code{map()} always returns a list.
 #'
 #'   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
@@ -20,7 +22,9 @@
 #'   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
 #'   its side effects, but this makes it easier to combine in a pipe.
 #' @seealso \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
-#'   inputs simulatenously
+#'   inputs simultaneously. \code{\link{as_function}()} for passing additional
+#'   arguments to \code{.f} via \code{...}, such as \code{.null} when \code{.f}
+#'   is a character or integer extractor.
 #' @export
 #' @examples
 #' 1:10 %>%
@@ -34,6 +38,26 @@
 #' # Or a formula
 #' 1:10 %>%
 #'   map(~ rnorm(10, .x))
+#'
+#' # Extract by name or position
+#' # .null specifies value for elements that are missing or NULL
+#' list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L)) %>%
+#'   map("a", .null = "who knows?")
+#' list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L)) %>%
+#'   map_int("b", .null = NA)
+#'
+#' # numeric or character vectors index into a list level-wise
+#' l <- list(list(num = 1:3, letters[1:3]),
+#'           list(num = 101:103, letters[4:6]))
+#' l %>% map(c(2, 2))
+#'
+#' # use a list to build an extractor that mixes numeric indices and names
+#' l %>% map(list("num", 3))
+#' l %>% map_int(list("num", 3))
+#'
+#' # .null works with list extractors too
+#' l[[3]] <- list(NULL)
+#' l %>% map_int(list("num", 1), .null = NA)
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2

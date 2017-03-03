@@ -42,17 +42,24 @@ update_list <- function(`_data`, ...) {
 #'
 #'   If a \strong{function}, it is used as is.
 #'
-#'   If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-#'   function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-#'   allows you to create very compact anonymous functions with up to
-#'   two inputs.
+#'   If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function
+#'   with one or two arguments, \code{.x} or \code{.x} and \code{.y},
+#'   respectively. This allows you to create very compact anonymous functions
+#'   with up to two inputs.
 #'
-#'   If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-#'   is converted to an extractor function, \code{function(x) x[["y"]]}. To
-#'   index deeply into a nested list, use multiple values; \code{c("x", "y")}
-#'   is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-#'   to set a default to use instead of \code{NULL} for absent components.
-#' @param ... Additional arguments passed on to methods.
+#'   If \strong{character} or \strong{integer vector}, it is converted to an
+#'   extractor function, e.g. \code{"y"} becomes \code{function(x) x[["y"]]}. To
+#'   index deeply into a nested list, use multiple values; \code{c("x", "y")} is
+#'   equivalent to \code{z[["x"]][["y"]]}. You can also use \code{.null} to
+#'   provide a default to use instead of \code{NULL} for absent components.
+#'
+#'   If a mixed \strong{list} of character and integer, it is also converted to
+#'   a recursive extractor function, e.g. \code{list(i, "foo")} is equivalent
+#'   to \code{z[[i]][["foo"]]}.
+#'
+#' @param ... Additional arguments passed on to methods and fixed, common
+#'   arguments to \code{.f}.
+#'
 #' @export
 #' @examples
 #' as_function(~ . + 1)
@@ -84,8 +91,9 @@ extract <- function(x, index, .null = NULL) {
 
 #' @export
 #' @rdname as_function
-#' @param .null Optional additional argument for character and numeric
-#'   inputs.
+#' @param .null Optional argument for extractor inputs, i.e. character, numeric,
+#'   or list. Used as default value when requested item does not exist or is
+#'   \code{NULL}.
 as_function.character <- function(.f, ..., .null = NULL) {
   as_function(as.list(.f), ..., .null = .null)
 }
