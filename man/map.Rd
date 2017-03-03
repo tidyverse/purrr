@@ -66,13 +66,6 @@ input. \code{map()} returns a list or a data frame; \code{map_lgl()},
 of the corresponding type (or die trying); \code{map_df()} returns
 a data frame by row-binding the individual elements.
 }
-\details{
-Note that \code{map()} understands data frames, including grouped
-data frames. It can be much faster than
-\code{\link[dplyr:summarise_each]{mutate_each()}} when your data frame has many
-columns. However, \code{map()} will be slower for the more common case of many
-groups with functions that dplyr knows how to translate to C++.
-}
 \examples{
 1:10 \%>\%
   map(rnorm, n = 10) \%>\%
