@@ -2,7 +2,7 @@ context("rows")
 
 df <- mtcars[1:3, c("wt", "qsec")]
 df[[2]] <- as.character(df[[2]])
-grouped <- slice_rows(mtcars[1:2], "cyl")
+suppressWarnings(grouped <- slice_rows(mtcars[1:2], "cyl"))
 
 gen_alternatives <- function(first, alt) {
   prev_alt <- TRUE
