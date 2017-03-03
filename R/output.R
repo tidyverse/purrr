@@ -1,19 +1,24 @@
 #' Capture side effects.
 #'
-#' These functions wrap functions so instead of generating side effects through
-#' output, messages, warnings, and errors, they instead return enchanced
-#' output. They are all adverbs because they modify the action of a
-#' verb (a function).
+#' These functions wrap functions so that instead of generating side effects
+#' through printed output, messages, warnings, and errors, they return enhanced
+#' output. They are all adverbs because they modify the action of a verb (a
+#' function).
 #'
 #' @inheritParams map
 #' @param quiet Hide errors (\code{TRUE}, the default), or display them
 #'   as they occur?
 #' @param otherwise Default value to use when an error occurs.
-#' @return \code{safe}: a list with components \code{result} and \code{error}.
-#'   One value is always \code{NULL}
 #'
-#' \code{outputs}: a list with components \code{result}, \code{output},
-#'   \code{messages} and \code{warnings}.
+#' @return \code{safely}: wrapped function instead returns a list with
+#'   components \code{result} and \code{error}. One value is always \code{NULL}.
+#'
+#'   \code{quietly}: wrapped function instead returns a list with components
+#'   \code{result}, \code{output}, \code{messages} and \code{warnings}.
+#'
+#'   \code{possibly}: wrapped function uses a default value (\code{otherwise})
+#'   whenever an error occurs.
+#'
 #' @export
 #' @examples
 #' safe_log <- safely(log)
