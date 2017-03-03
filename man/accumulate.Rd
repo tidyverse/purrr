@@ -12,7 +12,8 @@ accumulate_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A two-argument function.}
+\item{.f}{A two-argument function. .x is the accumulating value.
+.y is the value in the list.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -32,6 +33,13 @@ both functions keep the intermediate results.
 
 # From Haskell's scanl documentation
 1:10 \%>\% accumulate(max, .init = 5)
+
+# Understanding the arguments .x and .y when .f
+# is a lambda function
+# .x is the accumulating value
+1:10 \%>\% accumulate(~ .x)
+# .y is element in the list
+1:10 \%>\% accumulate(~ .y)
 
 # Simulating stochastic processes with drift
 \dontrun{

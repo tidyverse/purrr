@@ -12,7 +12,8 @@ reduce_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A two-argument function.}
+\item{.f}{A two-argument function. .x is the accumulating value.
+.y is the value in the list.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 

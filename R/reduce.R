@@ -4,7 +4,8 @@
 #' the right.
 #'
 #' @inheritParams map
-#' @param .f A two-argument function.
+#' @param .f A two-argument function. .x is the accumulating value.
+#'   .y is the value in the list.
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using \code{x[[1]]}. This is useful if
 #'   you want to ensure that \code{reduce} returns the correct value when
@@ -65,6 +66,13 @@ reduce_right <- function(.x, .f, ..., .init) {
 #'
 #' # From Haskell's scanl documentation
 #' 1:10 %>% accumulate(max, .init = 5)
+#'
+#' # Understanding the arguments .x and .y when .f
+#' # is a lambda function
+#' # .x is the accumulating value
+#' 1:10 %>% accumulate(~ .x)
+#' # .y is element in the list
+#' 1:10 %>% accumulate(~ .y)
 #'
 #' # Simulating stochastic processes with drift
 #' \dontrun{
