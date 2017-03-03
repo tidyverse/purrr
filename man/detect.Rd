@@ -43,4 +43,3 @@ is_even <- function(x) x \%\% 2 == 0
 3:10 \%>\% detect(is_even, .right = TRUE)
 3:10 \%>\% detect_index(is_even, .right = TRUE)
 }
-

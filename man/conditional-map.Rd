@@ -2,8 +2,8 @@
 % Please edit documentation in R/map.R
 \name{conditional-map}
 \alias{conditional-map}
-\alias{map_at}
 \alias{map_if}
+\alias{map_at}
 \title{Modify elements conditionally}
 \usage{
 map_if(.x, .p, .f, ...)
@@ -69,4 +69,3 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   simplify_all()
 
 }
-

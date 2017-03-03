@@ -29,4 +29,3 @@ attributes.
 \seealso{
 \code{\link{by_slice}()} and \code{\link[dplyr]{group_by}()}
 }
-

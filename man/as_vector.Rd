@@ -49,4 +49,3 @@ list(1:2, 3:4, 5:6) \%>\% as_vector(integer(2))
 # attributes. So when you specify a vector mold of size > 1, you
 # always get a vector and not a matrix
 }
-

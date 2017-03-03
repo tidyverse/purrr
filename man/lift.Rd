@@ -2,12 +2,13 @@
 % Please edit documentation in R/composition.R
 \name{lift}
 \alias{lift}
+\alias{lift}
 \alias{lift_dl}
 \alias{lift_dv}
+\alias{lift_vl}
+\alias{lift_vd}
 \alias{lift_ld}
 \alias{lift_lv}
-\alias{lift_vd}
-\alias{lift_vl}
 \title{Lift the domain of a function}
 \usage{
 lift(..f, ..., .unnamed = FALSE)
@@ -88,6 +89,7 @@ the inverse operations of \code{lift_dl()} and \code{lift_dv()}.
 an atomic vector. The details of this coercion can be controlled
 with \code{.type}.
 }
+
 \examples{
 ### Lifting from ... to list(...) or c(...)
 
@@ -183,4 +185,3 @@ letters \%>\% lift_lv(glue)()  # succeeds
 \seealso{
 \code{\link{invoke}()}
 }
-

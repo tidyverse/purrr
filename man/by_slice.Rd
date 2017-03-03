@@ -87,4 +87,3 @@ mtcars \%>\%
 \code{\link{by_row}()}, \code{\link{slice_rows}()},
   \code{\link{dmap}()}
 }
-

@@ -29,4 +29,3 @@ x \%>\% append("a")
 x \%>\% prepend("a")
 x \%>\% prepend(list("a", "b"), before = 3)
 }
-

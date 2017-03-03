@@ -17,4 +17,3 @@ Generate random samples from a discrete uniform distribution
 \examples{
 table(rdunif(1e3, 10))
 }
-

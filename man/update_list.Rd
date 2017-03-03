@@ -20,4 +20,3 @@ x <- list(x = 1:10, y = 4)
 update_list(x, z = 10)
 update_list(x, z = ~ x + y)
 }
-

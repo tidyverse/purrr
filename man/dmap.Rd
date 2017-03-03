@@ -64,4 +64,3 @@ sliced_df \%>\% dmap(~ .x / max(.x))
 # with 'rows' collation of results:
 sliced_df \%>\% by_slice(dmap, mean, .collate = "rows")
 }
-

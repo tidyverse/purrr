@@ -100,4 +100,3 @@ mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "cols")
 \seealso{
 \code{\link{by_slice}()}
 }
-

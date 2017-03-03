@@ -2,11 +2,11 @@
 % Please edit documentation in R/flatten.R
 \name{flatten}
 \alias{flatten}
-\alias{flatten_chr}
-\alias{flatten_dbl}
-\alias{flatten_df}
-\alias{flatten_int}
 \alias{flatten_lgl}
+\alias{flatten_int}
+\alias{flatten_dbl}
+\alias{flatten_chr}
+\alias{flatten_df}
 \title{Flatten a list of lists into a simple vector.}
 \usage{
 flatten(.x)
@@ -50,4 +50,3 @@ x \%>\% map(1L) \%>\% flatten_int()
 # But it's more efficient to use the typed map instead.
 x \%>\% map_int(1L)
 }
-
