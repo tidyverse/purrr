@@ -47,10 +47,15 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXP x = Rf_install(x_name);
   SEXP f = Rf_install(f_name);
   SEXP i = Rf_install("i");
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = Rf_eval(x, env);
-  if (!Rf_isVector(x_val))
+
+  if (Rf_isNull(x_val)) {
+    return Rf_allocVector(type, 0);
+  } else if (!Rf_isVector(x_val)) {
     Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
+  }
   int n = Rf_length(x_val);
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
@@ -59,7 +64,6 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
   SEXP f_call = PROTECT(Rf_lang3(f, Xi, R_DotsSymbol));
 
-  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
   copy_names(x_val, out);
 
@@ -77,11 +81,17 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP y = Rf_install(y_name);
   SEXP f = Rf_install(f_name);
   SEXP i = Rf_install("i");
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = Rf_eval(x, env);
+  SEXP y_val = Rf_eval(y, env);
+
+  if (Rf_isNull(x_val) || Rf_isNull(y_val)) {
+    return Rf_allocVector(type, 0);
+  }
+
   if (!Rf_isVector(x_val))
     Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
-  SEXP y_val = Rf_eval(y, env);
   if (!Rf_isVector(y_val))
     Rf_errorcall(R_NilValue, "`.y` is not a vector (%s)", Rf_type2char(TYPEOF(y_val)));
 
@@ -97,7 +107,6 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP Yi = PROTECT(Rf_lang3(R_Bracket2Symbol, y, ny == 1 ? one : i));
   SEXP f_call = PROTECT(Rf_lang4(f, Xi, Yi, R_DotsSymbol));
 
-  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
   copy_names(x_val, out);
 
@@ -118,10 +127,16 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   int n = 0;
   for (int j = 0; j < m; ++j) {
     SEXP j_val = VECTOR_ELT(l_val, j);
-    if (!Rf_isVector(j_val))
-      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
 
-    int nj = Rf_length(j_val);
+    int nj;
+    if (Rf_isNull(j_val)) {
+      nj = 0;
+    } else if (Rf_isVector(j_val)) {
+      nj = Rf_length(j_val);
+    } else {
+      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
+    }
+
     if (nj > n)
       n = nj;
   }

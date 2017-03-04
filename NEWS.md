@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `map()`, `map2()`, and `pmap()` (as well as all output type variants)
+  treat NULL the same way as an empty vector (#199).
+
 * All data-frame based mappers have been deprecated in favour of new
   functions and idioms in the tidyverse.
 

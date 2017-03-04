@@ -9,6 +9,11 @@ test_that("elements must be same length", {
   expect_error(pmap(list(1:2, 1:3), identity), "has length 2")
 })
 
+test_that("handles length 0 input", {
+  expect_equal(pmap(list(list(), list(), list()), ~ 1), list())
+  expect_equal(pmap(list(NULL, NULL, NULL), ~ 1), list())
+})
+
 test_that("length 1 elemetns are recycled", {
   out <- pmap(list(1:2, 1), c)
   expect_equal(out, list(c(1, 1), c(2, 1)))

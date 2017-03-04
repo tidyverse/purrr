@@ -16,8 +16,11 @@ test_that("fails on non-vectors", {
 })
 
 test_that("0 length input gives 0 length output", {
-  out <- map(list(), identity)
-  expect_equal(out, list())
+  out1 <- map(list(), identity)
+  expect_equal(out1, list())
+
+  out2 <- map(NULL, identity)
+  expect_equal(out2, list())
 })
 
 test_that("map() always returns a list", {

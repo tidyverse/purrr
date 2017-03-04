@@ -10,6 +10,14 @@ test_that("map2 vectorised inputs of length 1", {
   expect_equal(map2(1, 1:2, `+`), list(2, 3))
 })
 
+test_that("0 length input gives 0 length output", {
+  out1 <- map2(list(), list(), ~ 1)
+  expect_equal(out1, list())
+
+  out2 <- map2(NULL, NULL, ~ 1)
+  expect_equal(out2, list())
+})
+
 test_that("map2 takes only names from x", {
   x1 <- 1:3
   x2 <- set_names(x1)
