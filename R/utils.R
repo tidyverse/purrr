@@ -186,12 +186,15 @@ rbernoulli <- function(n, p = 0.5) {
 #' @export
 #' @examples
 #' table(rdunif(1e3, 10))
+#' table(rdunif(1e3, 10, -5))
 rdunif <- function(n, b, a = 1) {
   stopifnot(is.numeric(a), length(a) == 1)
   stopifnot(is.numeric(b), length(b) == 1)
-  stopifnot(a <= b)
 
-  sample(b - a + 1, n, replace = TRUE) + a - 1
+  a1 <- min(a, b)
+  b1 <- max(a, b)
+
+  sample(b1 - a1 + 1, n, replace = TRUE) + a1 - 1
 }
 
 # magrittr placeholder
