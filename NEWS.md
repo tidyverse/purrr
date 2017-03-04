@@ -23,6 +23,8 @@
       this list-column. Typically you will want to apply a function on
       each element (nested data frame) of this list-column with
       `purrr::map()`.
+    * `compact` can now be used to eliminate empty elements of output for 
+       arbitrary functions, not only `identity`
 
 * `cross_n()` has been renamed to `cross()`. The `_n` suffix was
   removed for consistency with `pmap()` (originally called `map_n()`
