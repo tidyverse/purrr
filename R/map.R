@@ -1,21 +1,24 @@
 #' Apply a function to each element of a vector
 #'
-#' `map()` returns the transformed input; `walk()` calls
-#' `.f` for its side-effect and returns the original
-#' input. `map()` returns a list or a data frame; `map_lgl()`,
-#' `map_int()`, `map_dbl()` and `map_chr()` return vectors
-#' of the corresponding type (or die trying); `map_df()` returns
-#' a data frame by row-binding the individual elements.
+#' @description
+#' The map function transform the input, returning a vector the same length
+#' as the input. `map()` returns a list or a data frame; `map_lgl()`,
+#' `map_int()`, `map_dbl()` and `map_chr()` return vectors of the
+#' corresponding type (or die trying); `map_df()` returns a data frame by
+#' row-binding the individual elements.
+#'
+#' `walk()` calls `.f` for its side-effect and returns the input `.x`.
 #'
 #' @inheritParams as_function
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to `.f`.
-#' @return `map()` always returns a list.
+#' @return `map()` always returns a list the same length as `.x`.
 #'
 #'   `map_lgl()` returns a logical vector, `map_int()` an integer
 #'   vector, `map_dbl()`, a double vector, `map_chr()`, a character
 #'   vector. The output of `.f` will be automatically typed upwards,
-#'   e.g. logical -> integer -> double -> character.
+#'   e.g. logical -> integer -> double -> character. The output
+#'   is always the same length as the input.
 #'
 #'   `walk()` (invisibly) the input `.x`. It's called primarily for
 #'   its side effects, but this makes it easier to combine in a pipe.

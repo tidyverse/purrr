@@ -48,23 +48,25 @@ to set a default to use instead of \code{NULL} for absent components.}
 giving either the name or the index of the data frame.}
 }
 \value{
-\code{map()} always returns a list.
+\code{map()} always returns a list the same length as \code{.x}.
 
 \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
 vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
 vector. The output of \code{.f} will be automatically typed upwards,
-e.g. logical -> integer -> double -> character.
+e.g. logical -> integer -> double -> character. The output
+is always the same length as the input.
 
 \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
 its side effects, but this makes it easier to combine in a pipe.
 }
 \description{
-\code{map()} returns the transformed input; \code{walk()} calls
-\code{.f} for its side-effect and returns the original
-input. \code{map()} returns a list or a data frame; \code{map_lgl()},
-\code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors
-of the corresponding type (or die trying); \code{map_df()} returns
-a data frame by row-binding the individual elements.
+The map function transform the input, returning a vector the same length
+as the input. \code{map()} returns a list or a data frame; \code{map_lgl()},
+\code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors of the
+corresponding type (or die trying); \code{map_df()} returns a data frame by
+row-binding the individual elements.
+
+\code{walk()} calls \code{.f} for its side-effect and returns the input \code{.x}.
 }
 \examples{
 1:10 \%>\%
