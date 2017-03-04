@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `set_names()` can now take a function to tranform the names programmatically.
+  (#276).
+
 * `rdunif()` checks its inputs for validity (#211).
 
 * `map2()` and `pmap()` (and all output type variants) now return a output

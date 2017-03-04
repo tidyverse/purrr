@@ -9,7 +9,10 @@ set_names(x, nm = x)
 \arguments{
 \item{x}{Vector to name}
 
-\item{nm}{Vector of names, the same length as \code{x}}
+\item{nm}{Vector of names, the same length as \code{x}.
+
+If \code{x} already has names, you can provide a function or formula
+to transform the existing names.}
 }
 \description{
 This is a snake case wrapper for \code{\link[stats:setNames]{stats::setNames()}}, with
@@ -20,4 +23,8 @@ set_names(1:4, c("a", "b", "c", "d"))
 
 # If the second argument is ommitted a vector is named with itself
 set_names(letters[1:5])
+
+# If the object already has names you can supply a function
+# to transform them
+set_names(head(mtcars), toupper)
 }
