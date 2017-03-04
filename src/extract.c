@@ -103,8 +103,5 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
     }
   }
 
-  if (TYPEOF(x) == NILSXP)
-    return missing;
-  else
-    return x;
+  return (Rf_length(x) > 0) ? x : missing;
 }

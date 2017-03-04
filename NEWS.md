@@ -33,7 +33,7 @@
 * Removed `LinkingTo:` dependency on `dplyr` (#247, @krlmlr).
 
 * Recursive index via `as_function()` now returns `missing` when first element
-  is `NULL`
+  is `NULL`, or when the element has length 0 (#254).
 
 * When indexing elements (e.g. `map(x, "field")`), `NULL` values are
   replaced with `.null` (#231).

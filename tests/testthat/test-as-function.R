@@ -11,13 +11,13 @@ test_that(".null replaces absent values", {
   expect_equal(map_dbl(x, "b", .null = NA), c(2, NA, NA))
 })
 
-test_that(".null replaces actual NULL values", {
+test_that(".null replaces elements with length 0", {
   x <- list(
     list(a = 1),
-    list(a = NULL)
+    list(a = NULL),
+    list(a = numeric())
   )
-
-  expect_equal(map_dbl(x, "a", .null = NA), c(1, NA))
+  expect_equal(map_dbl(x, "a", .null = NA), c(1, NA, NA))
 })
 
 
