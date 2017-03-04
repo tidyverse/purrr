@@ -209,3 +209,5 @@ has_names <- function(x) {
     !(is.na(nms) | nms == "")
   }
 }
+
+isFALSE <- function(x) identical(x, FALSE)

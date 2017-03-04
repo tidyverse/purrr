@@ -15,7 +15,9 @@
 every <- function(.x, .p, ...) {
   .p <- as_function(.p, ...)
   for (i in seq_along(.x)) {
-    if (!isTRUE(.p(.x[[i]], ...))) return(FALSE)
+    val <- .p(.x[[i]], ...)
+    if (isFALSE(val)) return(FALSE)
+    if (anyNA(val)) return(NA)
   }
   TRUE
 }
@@ -25,7 +27,9 @@ every <- function(.x, .p, ...) {
 some <- function(.x, .p, ...) {
   .p <- as_function(.p, ...)
   for (i in seq_along(.x)) {
-    if (isTRUE(.p(.x[[i]], ...))) return(TRUE)
+    val <- .p(.x[[i]], ...)
+    if (isTRUE(val)) return(TRUE)
+    if (anyNA(val)) return(NA)
   }
   FALSE
 }

@@ -1,6 +1,8 @@
 # purrr 0.2.2.9000
 
-* `set_names()` can now take a function to tranform the names programmatically.
+* `every()` and `some()` now return `NA` if present in the output (#174).
+
+* `set_names()` can now take a function to tranform the names programmatically
   (#276).
 
 * `rdunif()` checks its inputs for validity (#211).
