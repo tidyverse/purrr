@@ -9,6 +9,8 @@ int find_offset(SEXP x, SEXP index, int i) {
     Rf_errorcall(R_NilValue, "Index %i is not a length 1 vector", i + 1);
 
   int n = Rf_length(x);
+  if (n == 0)
+    return -1;
 
   if (TYPEOF(index) == INTSXP) {
     int val = INTEGER(index)[0];
@@ -64,18 +66,30 @@ int find_offset(SEXP x, SEXP index, int i) {
 
 }
 
+SEXP extract_vector_impl(SEXP x, SEXP index_i, int i) {
+  int offset = find_offset(x, index_i, i);
+  if (offset < 0)
+    return R_NilValue;
+
+  switch(TYPEOF(x)) {
+  case LGLSXP:  return Rf_ScalarLogical(LOGICAL(x)[offset]);
+  case INTSXP:  return Rf_ScalarInteger(INTEGER(x)[offset]);
+  case REALSXP: return Rf_ScalarReal(REAL(x)[offset]);
+  case STRSXP:  return Rf_ScalarString(STRING_ELT(x, offset));
+  case VECSXP:  return VECTOR_ELT(x, offset);
+  default:
+    Rf_errorcall(R_NilValue,
+      "Don't know how to index object of type %s at level %i",
+      Rf_type2char(TYPEOF(x)), i + 1
+    );
+  }
+
+  return R_NilValue;
+}
+
 SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
-  if (Rf_isNull(x)) {
-    return missing;
-  }
-
-  if (!Rf_isVector(x)) {
-    Rf_errorcall(R_NilValue, "`x` must be a vector (not a %s)",
-      Rf_type2char(TYPEOF(x)));
-  }
-
   if (TYPEOF(index) != VECSXP) {
-    Rf_errorcall(R_NilValue, "`index` must be a vector (not a %s)",
+    Rf_errorcall(R_NilValue, "`index` must be a list (not a %s)",
       Rf_type2char(TYPEOF(index)));
   }
 
@@ -84,24 +98,17 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   for (int i = 0; i < n; ++i) {
     SEXP index_i = VECTOR_ELT(index, i);
 
-    int offset = find_offset(x, index_i, i);
-    if (offset < 0)
+    if (Rf_isNull(x)) {
       return missing;
-
-    switch(TYPEOF(x)) {
-    case NILSXP:  return missing;
-    case LGLSXP:  x = Rf_ScalarLogical(LOGICAL(x)[offset]); break;
-    case INTSXP:  x = Rf_ScalarInteger(INTEGER(x)[offset]); break;
-    case REALSXP: x = Rf_ScalarReal(REAL(x)[offset]); break;
-    case STRSXP:  x = Rf_ScalarString(STRING_ELT(x, offset)); break;
-    case VECSXP:  x = VECTOR_ELT(x, offset); break;
-    default:
+    } else if (Rf_isVector(x)) {
+      x = extract_vector_impl(x, index_i, i);
+    } else {
       Rf_errorcall(R_NilValue,
-        "Don't know how to index object of type %s at level %i",
-        Rf_type2char(TYPEOF(x)), i + 1
+        "Don't know how to extract from a %s", Rf_type2char(TYPEOF(x))
       );
     }
   }
 
-  return (Rf_length(x) > 0) ? x : missing;
+  return (Rf_length(x) == 0) ? missing : x;
 }
+
