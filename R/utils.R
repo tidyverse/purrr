@@ -187,6 +187,10 @@ rbernoulli <- function(n, p = 0.5) {
 #' @examples
 #' table(rdunif(1e3, 10))
 rdunif <- function(n, b, a = 1) {
+  stopifnot(is.numeric(a), length(a) == 1)
+  stopifnot(is.numeric(b), length(b) == 1)
+  stopifnot(a <= b)
+
   sample(b - a + 1, n, replace = TRUE) + a - 1
 }
 

@@ -1,5 +1,7 @@
 # purrr 0.2.2.9000
 
+* `rdunif()` checks its inputs for validity (#211).
+
 * `map2()` and `pmap()` (and all output type variants) now return a output
   of length 0 if any input is of length 0.
 
