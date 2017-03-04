@@ -40,7 +40,7 @@
 
 * Recursive index via `as_function()` now returns `missing` when first element
   is `NULL`, or when the element has length 0 (#254). Recursive indexing
-  can now recurse through environments (#200).
+  can now recurse through environments (#213) and S4 objects (#200).
 
 * When indexing elements (e.g. `map(x, "field")`), `NULL` values are
   replaced with `.null` (#231).

@@ -103,6 +103,19 @@ SEXP extract_env(SEXP x, SEXP index_i, int i) {
 }
 
 
+SEXP extract_attr(SEXP x, SEXP index_i, int i) {
+  if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
+    Rf_errorcall(R_NilValue, "Index %i is not a string", i + 1);
+  }
+
+  SEXP index = STRING_ELT(index_i, 0);
+  if (index == NA_STRING)
+    return R_NilValue;
+
+  SEXP sym = Rf_installChar(index);
+  return Rf_getAttrib(x, sym);
+}
+
 SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   if (TYPEOF(index) != VECSXP) {
     Rf_errorcall(R_NilValue, "`index` must be a list (not a %s)",
@@ -120,6 +133,8 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
       x = extract_vector(x, index_i, i);
     } else if (Rf_isEnvironment(x)) {
       x = extract_env(x, index_i, i);
+    } else if (Rf_isS4(x)) {
+      x = extract_attr(x, index_i, 1);
     } else {
       Rf_errorcall(R_NilValue,
         "Don't know how to extract from a %s", Rf_type2char(TYPEOF(x))

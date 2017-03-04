@@ -55,3 +55,22 @@ test_that("extracts by name", {
 
   expect_equal(extract(env, list("x")), 10)
 })
+
+
+# S4 ----------------------------------------------------------------------
+
+newA <- methods::setClass("A", list(a = "numeric", b = "numeric"))
+A <- newA(a = 1, b = 10)
+
+test_that("extract errors with invalid indices", {
+  expect_error(extract(A, list(1)), "not a string")
+  expect_error(extract(A, list(letters)), "not a string")
+})
+
+test_that("extract returns missing with missing index", {
+  expect_equal(extract(A, list(NA_character_)), NULL)
+})
+
+test_that("extracts by name", {
+  expect_equal(extract(A, list("a")), 1)
+})
