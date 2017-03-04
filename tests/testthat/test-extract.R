@@ -36,3 +36,22 @@ test_that("special values never matches", {
   expect_null(extract(x, list(NaN)))
   expect_null(extract(x, list(Inf)))
 })
+
+
+# environments ------------------------------------------------------------
+
+test_that("extract errors with invalid indices", {
+  expect_error(extract(environment(), list(1)), "not a string")
+  expect_error(extract(environment(), list(letters)), "not a string")
+})
+
+test_that("extract returns missing with missing index", {
+  expect_equal(extract(environment(), list(NA_character_)), NULL)
+})
+
+test_that("extracts by name", {
+  env <- new.env(parent = emptyenv())
+  env$x <- 10
+
+  expect_equal(extract(env, list("x")), 10)
+})

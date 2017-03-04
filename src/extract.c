@@ -66,7 +66,7 @@ int find_offset(SEXP x, SEXP index, int i) {
 
 }
 
-SEXP extract_vector_impl(SEXP x, SEXP index_i, int i) {
+SEXP extract_vector(SEXP x, SEXP index_i, int i) {
   int offset = find_offset(x, index_i, i);
   if (offset < 0)
     return R_NilValue;
@@ -87,6 +87,22 @@ SEXP extract_vector_impl(SEXP x, SEXP index_i, int i) {
   return R_NilValue;
 }
 
+SEXP extract_env(SEXP x, SEXP index_i, int i) {
+  if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
+    Rf_errorcall(R_NilValue, "Index %i is not a string", i + 1);
+  }
+
+  SEXP index = STRING_ELT(index_i, 0);
+  if (index == NA_STRING)
+    return R_NilValue;
+
+  SEXP sym = Rf_installChar(index);
+  SEXP out = Rf_findVarInFrame3(x, sym, TRUE);
+
+  return (out == R_UnboundValue) ? R_NilValue : out;
+}
+
+
 SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   if (TYPEOF(index) != VECSXP) {
     Rf_errorcall(R_NilValue, "`index` must be a list (not a %s)",
@@ -101,7 +117,9 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
     if (Rf_isNull(x)) {
       return missing;
     } else if (Rf_isVector(x)) {
-      x = extract_vector_impl(x, index_i, i);
+      x = extract_vector(x, index_i, i);
+    } else if (Rf_isEnvironment(x)) {
+      x = extract_env(x, index_i, i);
     } else {
       Rf_errorcall(R_NilValue,
         "Don't know how to extract from a %s", Rf_type2char(TYPEOF(x))
