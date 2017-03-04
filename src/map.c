@@ -86,16 +86,15 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP x_val = Rf_eval(x, env);
   SEXP y_val = Rf_eval(y, env);
 
-  if (Rf_isNull(x_val) || Rf_isNull(y_val)) {
-    return Rf_allocVector(type, 0);
-  }
-
-  if (!Rf_isVector(x_val))
+  if (!Rf_isVector(x_val) && !Rf_isNull(x_val))
     Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
-  if (!Rf_isVector(y_val))
+  if (!Rf_isVector(y_val) && !Rf_isNull(y_val))
     Rf_errorcall(R_NilValue, "`.y` is not a vector (%s)", Rf_type2char(TYPEOF(y_val)));
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
+  if (nx == 0 || ny == 0) {
+    return Rf_allocVector(type, 0);
+  }
   if (nx != ny && !(nx == 1 || ny == 1)) {
     Rf_errorcall(R_NilValue, "`.x` (%i) and `.y` (%i) are different lengths", nx, ny);
   }
@@ -118,6 +117,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   const char* l_name = CHAR(Rf_asChar(l_name_));
   SEXP l = Rf_install(l_name);
   SEXP l_val = Rf_eval(l, env);
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val))
     Rf_errorcall(R_NilValue, "`.x` is not a list (%s)", Rf_type2char(TYPEOF(l_val)));
@@ -128,17 +128,18 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   for (int j = 0; j < m; ++j) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
-    int nj;
-    if (Rf_isNull(j_val)) {
-      nj = 0;
-    } else if (Rf_isVector(j_val)) {
-      nj = Rf_length(j_val);
-    } else {
+    if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
       Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
     }
 
-    if (nj > n)
+    int nj = Rf_length(j_val);
+
+    if (nj == 0) {
+      return Rf_allocVector(type, 0);
+    } else if (nj > n) {
       n = nj;
+    }
+
   }
 
   // Check length of all elements
@@ -184,7 +185,6 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
 
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
-  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
   SEXP out = PROTECT(call_loop(env, f_call, n, type));
   copy_names(VECTOR_ELT(l_val, 0), out);
 

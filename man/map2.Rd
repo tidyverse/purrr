@@ -81,19 +81,19 @@ names will be used if present.}
 An atomic vector, list, or data frame, depending on the suffix.
 Atomic vectors and lists will be named if \code{.x} or the first
 element of \code{.l} is named.
+
+If all input is length 0, the output will be length 0. If any
+input is length 1, it will be recycled to the length of the longest.
 }
 \description{
 These functions are variants of \code{map()} iterate over multiple
-arguments in parallel. \code{map2} is specialised for the two argument
-case; \code{pmap} allows you to provide any number of arguments in a
-list.
+arguments in parallel. \code{map2()} and \code{walk2()} are specialised for the two
+argument case; \code{pmap()} and \code{pwalk()} allow you to provide any number of
+arguments in a list.
 }
 \details{
 Note that arguments to be vectorised over come before the \code{.f},
 and arguments that are supplied to every call come after \code{.f}.
-
-\code{pmap()} and \code{pwalk()} take a single list \code{.l} and
-map over all its elements in parallel.
 }
 \examples{
 x <- list(1, 10, 100)

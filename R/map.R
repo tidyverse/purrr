@@ -129,15 +129,12 @@ walk <- function(.x, .f, ...) {
 #' Map over multiple inputs simultaneously.
 #'
 #' These functions are variants of `map()` iterate over multiple
-#' arguments in parallel. `map2` is specialised for the two argument
-#' case; `pmap` allows you to provide any number of arguments in a
-#' list.
+#' arguments in parallel. `map2()` and `walk2()` are specialised for the two
+#' argument case; `pmap()` and `pwalk()` allow you to provide any number of
+#' arguments in a list.
 #'
 #' Note that arguments to be vectorised over come before the `.f`,
 #' and arguments that are supplied to every call come after `.f`.
-#'
-#' `pmap()` and `pwalk()` take a single list `.l` and
-#' map over all its elements in parallel.
 #'
 #' @inheritParams map
 #' @param .x,.y Vectors of the same length. A vector of length 1 will
@@ -148,6 +145,9 @@ walk <- function(.x, .f, ...) {
 #' @return An atomic vector, list, or data frame, depending on the suffix.
 #'   Atomic vectors and lists will be named if `.x` or the first
 #'   element of `.l` is named.
+#'
+#'   If all input is length 0, the output will be length 0. If any
+#'   input is length 1, it will be recycled to the length of the longest.
 #' @export
 #' @examples
 #' x <- list(1, 10, 100)
