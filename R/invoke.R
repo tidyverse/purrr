@@ -1,22 +1,22 @@
 #' Invoke functions.
 #'
 #' This pair of functions make it easier to combine a function and list
-#' of parameters to get a result. \code{invoke} is a wrapper around
-#' \code{do.call} that makes it easy to use in a pipe. \code{invoke_map}
+#' of parameters to get a result. `invoke` is a wrapper around
+#' `do.call` that makes it easy to use in a pipe. `invoke_map`
 #' makes it easier to call lists of functions with lists of parameters.
 #'
-#' @param .f For \code{invoke}, a function; for \code{invoke_map} a
+#' @param .f For `invoke`, a function; for `invoke_map` a
 #'   list of functions.
-#' @param .x For \code{invoke}, an argument-list; for \code{invoke_map} a
-#'   list of argument-lists the same length as \code{.f} (or length 1).
-#'   The default argument, \code{list(NULL)}, will be recycled to the
-#'   same length as \code{.f}, and will call each function with no
-#'   arguments (apart from any suppled in \code{...}.
+#' @param .x For `invoke`, an argument-list; for `invoke_map` a
+#'   list of argument-lists the same length as `.f` (or length 1).
+#'   The default argument, `list(NULL)`, will be recycled to the
+#'   same length as `.f`, and will call each function with no
+#'   arguments (apart from any suppled in `...`.
 #' @param ... Additional arguments passed to each function.
-#' @param .env Environment in which \code{\link{do.call}()} should
+#' @param .env Environment in which [do.call()] should
 #'   evaluate a constructed expression. This only matters if you pass
-#'   as \code{.f} the name of a function rather than its value, or as
-#'   \code{.x} symbols of objects rather than their values.
+#'   as `.f` the name of a function rather than its value, or as
+#'   `.x` symbols of objects rather than their values.
 #' @inheritParams map
 #' @export
 #' @examples

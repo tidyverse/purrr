@@ -33,8 +33,8 @@ splice <- function(...) {
 
 #' Prepend a vector
 #'
-#' This is a companion to \code{\link{append}()} to help merging two
-#' lists or atomic vectors. \code{prepend()} is a clearer semantic
+#' This is a companion to [append()] to help merging two
+#' lists or atomic vectors. `prepend()` is a clearer semantic
 #' signal than `c()` that a vector is to be merged at the beginning of
 #' another, especially in a pipe chain.
 #'
@@ -63,16 +63,16 @@ prepend <- function(x, values, before = 1) {
 
 #' Bare type predicates
 #'
-#' These predicates check for a given type but only return \code{TRUE}
+#' These predicates check for a given type but only return `TRUE`
 #' for bare R objects. Bare objects have no class attributes. For
 #' example, a data frame is a list, but not a bare list.
 #'
 #' \itemize{
-#'   \item Like \code{\link{is_atomic}()} and unlike base R
-#'         \code{is.atomic()}, \code{is_bare_atomic()} does not return
-#'         \code{TRUE} for \code{NULL}.
-#'   \item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
-#'         only returns \code{TRUE} for floating point numbers.
+#'   \item Like [is_atomic()] and unlike base R
+#'         `is.atomic()`, `is_bare_atomic()` does not return
+#'         `TRUE` for `NULL`.
+#'   \item Unlike base R `is.numeric()`, `is_bare_double()`
+#'         only returns `TRUE` for floating point numbers.
 #' }
 #' @param x object to be tested.
 #' @seealso \link{type-predicates} \link{scalar-type-predicates}
@@ -131,19 +131,19 @@ is_bare_logical <- function(x) {
 #' Type predicates
 #'
 #' These type predicates aim to make type testing in R more
-#' consistent. They are wrappers around \code{\link{typeof}}, so
+#' consistent. They are wrappers around [typeof()], so
 #' operate at a level beneath S3/S4 etc.
 #'
 #' Compare to base R functions:
 #' \itemize{
-#'   \item Unlike \code{is.atomic()}, \code{is_atomic()} does not
-#'      return \code{TRUE} for \code{NULL}.
-#'   \item Unlike \code{is.vector()}, \code{is_vector()} test if an
-#'         object is an atomic vector or a list. \code{is.vector}
+#'   \item Unlike `is.atomic()`, `is_atomic()` does not
+#'      return `TRUE` for `NULL`.
+#'   \item Unlike `is.vector()`, `is_vector()` test if an
+#'         object is an atomic vector or a list. `is.vector`
 #'         checks for the presence of attributes (other than name).
-#'   \item \code{is_numeric()} is not generic so, (e.g.) dates and date times
-#'     are \code{TRUE}, not \code{FALSE}.
-#'   \item \code{is_function()} returns \code{TRUE} only for regular
+#'   \item `is_numeric()` is not generic so, (e.g.) dates and date times
+#'     are `TRUE`, not `FALSE`.
+#'   \item `is_function()` returns `TRUE` only for regular
 #'     functions, not special or primitive functions.
 #' }
 #' @param x object to be tested.

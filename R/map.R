@@ -1,25 +1,25 @@
 #' Apply a function to each element of a vector
 #'
-#' \code{map()} returns the transformed input; \code{walk()} calls
-#' \code{.f} for its side-effect and returns the original
-#' input. \code{map()} returns a list or a data frame; \code{map_lgl()},
-#' \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors
-#' of the corresponding type (or die trying); \code{map_df()} returns
+#' `map()` returns the transformed input; `walk()` calls
+#' `.f` for its side-effect and returns the original
+#' input. `map()` returns a list or a data frame; `map_lgl()`,
+#' `map_int()`, `map_dbl()` and `map_chr()` return vectors
+#' of the corresponding type (or die trying); `map_df()` returns
 #' a data frame by row-binding the individual elements.
 #'
 #' @inheritParams as_function
 #' @param .x A list or atomic vector.
-#' @param ... Additional arguments passed on to \code{.f}.
-#' @return \code{map()} always returns a list.
+#' @param ... Additional arguments passed on to `.f`.
+#' @return `map()` always returns a list.
 #'
-#'   \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
-#'   vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
-#'   vector. The output of \code{.f} will be automatically typed upwards,
+#'   `map_lgl()` returns a logical vector, `map_int()` an integer
+#'   vector, `map_dbl()`, a double vector, `map_chr()`, a character
+#'   vector. The output of `.f` will be automatically typed upwards,
 #'   e.g. logical -> integer -> double -> character.
 #'
-#'   \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
+#'   `walk()` (invisibly) the input `.x`. It's called primarily for
 #'   its side effects, but this makes it easier to combine in a pipe.
-#' @seealso \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
+#' @seealso [map2()] and [pmap()] to map over multiple
 #'   inputs simulatenously
 #' @export
 #' @examples
@@ -102,7 +102,7 @@ map_dbl <- function(.x, .f, ...) {
 }
 
 #' @rdname map
-#' @param .id If not \code{NULL} a variable with this name will be created
+#' @param .id If not `NULL` a variable with this name will be created
 #'   giving either the name or the index of the data frame.
 #' @export
 map_df <- function(.x, .f, ..., .id = NULL) {
@@ -125,26 +125,26 @@ walk <- function(.x, .f, ...) {
 
 #' Map over multiple inputs simultaneously.
 #'
-#' These functions are variants of \code{map()} iterate over multiple
-#' arguments in parallel. \code{map2} is specialised for the two argument
-#' case; \code{pmap} allows you to provide any number of arguments in a
+#' These functions are variants of `map()` iterate over multiple
+#' arguments in parallel. `map2` is specialised for the two argument
+#' case; `pmap` allows you to provide any number of arguments in a
 #' list.
 #'
-#' Note that arguments to be vectorised over come before the \code{.f},
-#' and arguments that are supplied to every call come after \code{.f}.
+#' Note that arguments to be vectorised over come before the `.f`,
+#' and arguments that are supplied to every call come after `.f`.
 #'
-#' \code{pmap()} and \code{pwalk()} take a single list \code{.l} and
+#' `pmap()` and `pwalk()` take a single list `.l` and
 #' map over all its elements in parallel.
 #'
 #' @inheritParams map
 #' @param .x,.y Vectors of the same length. A vector of length 1 will
 #'   be recycled.
-#' @param .l A list of lists. The length of \code{.l} determines the
-#'   number of arguments that \code{.f} will be called with. List
+#' @param .l A list of lists. The length of `.l` determines the
+#'   number of arguments that `.f` will be called with. List
 #'   names will be used if present.
 #' @return An atomic vector, list, or data frame, depending on the suffix.
-#'   Atomic vectors and lists will be named if \code{.x} or the first
-#'   element of \code{.l} is named.
+#'   Atomic vectors and lists will be named if `.x` or the first
+#'   element of `.l` is named.
 #' @export
 #' @examples
 #' x <- list(1, 10, 100)
@@ -330,19 +330,19 @@ walk_n <- function(...) {
 
 #' Modify elements conditionally
 #'
-#' \code{map_if()} maps a function over the elements of \code{.x}
-#' satisfying a predicate. \code{map_at()} is similar but will modify
+#' `map_if()` maps a function over the elements of `.x`
+#' satisfying a predicate. `map_at()` is similar but will modify
 #' the elements corresponding to a character vector of names or a
 #' numeric vector of positions.
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
-#'   predicate function, or a logical vector of the same length as \code{.x}.
-#'   Alternatively, if the elements of \code{.x} are themselves lists of
+#'   predicate function, or a logical vector of the same length as `.x`.
+#'   Alternatively, if the elements of `.x` are themselves lists of
 #'   objects, a string indicating the name of a logical element in the
-#'   inner lists. Only those elements where \code{.p} evaluates to
-#'   \code{TRUE} will be modified.
+#'   inner lists. Only those elements where `.p` evaluates to
+#'   `TRUE` will be modified.
 #' @param .at A character vector of names or a numeric vector of
-#'   positions. Only those elements corresponding to \code{.at} will be
+#'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
 #' @return A list.
 #' @name conditional-map

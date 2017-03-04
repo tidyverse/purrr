@@ -1,7 +1,7 @@
 #' Match/validate a set of conditions for an object and continue with the action
 #' associated with the first valid match.
 #'
-#' \code{when} is a flavour of pattern matching (or an if-else abstraction) in
+#' `when` is a flavour of pattern matching (or an if-else abstraction) in
 #' which a value is matched against a sequence of condition-action sets. When a
 #' valid match/condition is found the action is executed and the result of the
 #' action is returned.
@@ -17,16 +17,16 @@
 # @details condition-action sets are written as formulas with conditions as
 #   left-hand sides and actions as right-hand sides. A formula with only a
 #   right-hand will be treated as a condition which is always satisfied. For
-#   such a default case one can also omit the \code{~} symbol, but note that its
+#   such a default case one can also omit the `~` symbol, but note that its
 #   value will then be evaluated. Any named argument will be made available in
 #   all conditions and actions, which is useful in avoiding repeated temporary
 #   computations or temporary assignments.
 #
-#' Validity of the conditions are tested with \code{isTRUE}, or equivalently
-#' with \code{identical(condition, TRUE)}.
+#' Validity of the conditions are tested with `isTRUE`, or equivalently
+#' with `identical(condition, TRUE)`.
 #' In other words conditions resulting in more than one logical will never
 #' be valid. Note that the input value is always treated as a single object,
-#' as opposed to the \code{ifelse} function.
+#' as opposed to the `ifelse` function.
 #'
 #' @examples
 #' 1:10 %>%

@@ -1,21 +1,21 @@
 #' Coerce a list to a vector
 #'
-#' \code{as_vector()} collapses a list of vectors into one vector. It
+#' `as_vector()` collapses a list of vectors into one vector. It
 #' checks that the type of each vector is consistent with
-#' \code{.type}. If the list can not be simplified, it throws an error.
-#' \code{simplify} will simplify a vector if possible; \code{simplify_all}
-#' will apply \code{simplify} to every element of a list.
+#' `.type`. If the list can not be simplified, it throws an error.
+#' `simplify` will simplify a vector if possible; `simplify_all`
+#' will apply `simplify` to every element of a list.
 #'
-#' \code{.type} can be a vector mold specifying both the type and the
-#' length of the vectors to be concatenated, such as \code{numeric(1)}
-#' or \code{integer(4)}. Alternatively, it can be a string describing
+#' `.type` can be a vector mold specifying both the type and the
+#' length of the vectors to be concatenated, such as `numeric(1)`
+#' or `integer(4)`. Alternatively, it can be a string describing
 #' the type, one of: "logical", "integer", "double", "complex",
 #' "character" or "raw".
 #'
 #' @param .x A list of vectors
 #' @param .type A vector mold or a string describing the type of the
 #'   input vectors. The latter can be any of the types returned by
-#'   \code{\link{typeof}()}, or "numeric" as a shorthand for either
+#'   [typeof()], or "numeric" as a shorthand for either
 #'   "double" or "integer".
 #' @export
 #' @examples

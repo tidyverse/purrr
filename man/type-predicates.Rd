@@ -39,21 +39,21 @@ is_function(x)
 }
 \description{
 These type predicates aim to make type testing in R more
-consistent. They are wrappers around \code{\link{typeof}}, so
+consistent. They are wrappers around \code{\link[=typeof]{typeof()}}, so
 operate at a level beneath S3/S4 etc.
 }
 \details{
 Compare to base R functions:
 \itemize{
-  \item Unlike \code{is.atomic()}, \code{is_atomic()} does not
-     return \code{TRUE} for \code{NULL}.
-  \item Unlike \code{is.vector()}, \code{is_vector()} test if an
-        object is an atomic vector or a list. \code{is.vector}
-        checks for the presence of attributes (other than name).
-  \item \code{is_numeric()} is not generic so, (e.g.) dates and date times
-    are \code{TRUE}, not \code{FALSE}.
-  \item \code{is_function()} returns \code{TRUE} only for regular
-    functions, not special or primitive functions.
+\item Unlike \code{is.atomic()}, \code{is_atomic()} does not
+return \code{TRUE} for \code{NULL}.
+\item Unlike \code{is.vector()}, \code{is_vector()} test if an
+object is an atomic vector or a list. \code{is.vector}
+checks for the presence of attributes (other than name).
+\item \code{is_numeric()} is not generic so, (e.g.) dates and date times
+are \code{TRUE}, not \code{FALSE}.
+\item \code{is_function()} returns \code{TRUE} only for regular
+functions, not special or primitive functions.
 }
 }
 \seealso{

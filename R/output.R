@@ -6,17 +6,17 @@
 #' function).
 #'
 #' @inheritParams map
-#' @param quiet Hide errors (\code{TRUE}, the default), or display them
+#' @param quiet Hide errors (`TRUE`, the default), or display them
 #'   as they occur?
 #' @param otherwise Default value to use when an error occurs.
 #'
-#' @return \code{safely}: wrapped function instead returns a list with
-#'   components \code{result} and \code{error}. One value is always \code{NULL}.
+#' @return `safely`: wrapped function instead returns a list with
+#'   components `result` and `error`. One value is always `NULL`.
 #'
-#'   \code{quietly}: wrapped function instead returns a list with components
-#'   \code{result}, \code{output}, \code{messages} and \code{warnings}.
+#'   `quietly`: wrapped function instead returns a list with components
+#'   `result`, `output`, `messages` and `warnings`.
 #'
-#'   \code{possibly}: wrapped function uses a default value (\code{otherwise})
+#'   `possibly`: wrapped function uses a default value (`otherwise`)
 #'   whenever an error occurs.
 #'
 #' @export

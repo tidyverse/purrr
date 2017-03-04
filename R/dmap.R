@@ -1,9 +1,9 @@
 #' Map over the columns of a data frame
 #'
-#' \code{dmap()} is just like \code{\link{map}()} but always returns a
+#' `dmap()` is just like [map()] but always returns a
 #' data frame. In addition, it handles grouped or sliced data frames.
 #'
-#' \code{dmap_at()} and \code{dmap_if()} recycle length 1 vectors to
+#' `dmap_at()` and `dmap_if()` recycle length 1 vectors to
 #' the group sizes.
 #' @inheritParams map
 #' @inheritParams as_function

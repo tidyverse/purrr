@@ -31,7 +31,7 @@ wrapper that removes all elements that are \code{NULL}.
 \details{
 These are usually called \code{select} or \code{filter} and \code{reject} or
 \code{drop}, but those names are already taken. \code{keep} is similar to
-\code{\link{Filter}} but the argument order is more convenient, and the
+\code{\link[=Filter]{Filter()}} but the argument order is more convenient, and the
 evaluation of \code{.f} is stricter.
 }
 \examples{

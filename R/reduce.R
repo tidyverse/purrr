@@ -1,6 +1,6 @@
 #' Reduce a list to a single value by iteratively applying a binary function.
 #'
-#' \code{reduce} combines from the left, \code{reduce_right} combines from
+#' `reduce` combines from the left, `reduce_right` combines from
 #' the right.
 #'
 #' @inheritParams map
@@ -8,8 +8,8 @@
 #'   .y is the value in the list.
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using \code{x[[1]]}. This is useful if
-#'   you want to ensure that \code{reduce} returns the correct value when
-#'   \code{.x} is \code{\link{is_empty}()}.
+#'   you want to ensure that `reduce` returns the correct value when
+#'   `.x` is [is_empty()].
 #' @export
 #' @examples
 #' 1:3 %>% reduce(`+`)
@@ -54,8 +54,8 @@ reduce_right <- function(.x, .f, ..., .init) {
 
 #' Accumulate recursive folds across a list
 #'
-#' \code{accumulate} applies a function recursively over a list from the left, while
-#' \code{accumulate_right} applies the function from the right. Unlike \code{reduce}
+#' `accumulate` applies a function recursively over a list from the left, while
+#' `accumulate_right` applies the function from the right. Unlike `reduce`
 #' both functions keep the intermediate results.
 #'
 #' @inheritParams reduce

@@ -5,12 +5,12 @@
 #'
 #' @param .n Number of times to run expressions
 #' @param ... Expressions to re-run.
-#' @return A list of length \code{.n}. Each element of \code{...} will be
-#'   re-run once for each \code{.n}. It
+#' @return A list of length `.n`. Each element of `...` will be
+#'   re-run once for each `.n`. It
 #'
 #'   There is one special case: if there's a single unnamed input, the second
-#'   level list will be dropped. In this case, \code{rerun(n, x)} behaves like
-#'   \code{replicate(n, x, simplify = FALSE)}.
+#'   level list will be dropped. In this case, `rerun(n, x)` behaves like
+#'   `replicate(n, x, simplify = FALSE)`.
 #' @export
 #' @examples
 #' 10 %>% rerun(rnorm(5))

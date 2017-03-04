@@ -13,18 +13,18 @@ at_depth(.x, .depth, .f, ...)
 
 \item{.f}{A function, formula, or atomic vector.
 
-  If a \strong{function}, it is used as is.
+If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
+function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+allows you to create very compact anonymous functions with up to
+two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
+is converted to an extractor function, \code{function(x) x[["y"]]}. To
+index deeply into a nested list, use multiple values; \code{c("x", "y")}
+is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+to set a default to use instead of \code{NULL} for absent components.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
@@ -34,9 +34,9 @@ lists. In essence, \code{at_depth()} is a recursive map.
 }
 \details{
 \itemize{
- \item \code{x \%>\% at_depth(0, fun)} is equivalent to \code{fun(x)}.
- \item \code{x \%>\% at_depth(1, fun)} is equivalent to \code{map(x, fun)}.
- \item \code{x \%>\% at_depth(2, fun)} is equivalent to \code{map(x, . \%>\% map(fun))}.
+\item \code{x \%>\% at_depth(0, fun)} is equivalent to \code{fun(x)}.
+\item \code{x \%>\% at_depth(1, fun)} is equivalent to \code{map(x, fun)}.
+\item \code{x \%>\% at_depth(2, fun)} is equivalent to \code{map(x, . \%>\% map(fun))}.
 }
 }
 \examples{

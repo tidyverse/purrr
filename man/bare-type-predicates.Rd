@@ -38,11 +38,11 @@ example, a data frame is a list, but not a bare list.
 }
 \details{
 \itemize{
-  \item Like \code{\link{is_atomic}()} and unlike base R
-        \code{is.atomic()}, \code{is_bare_atomic()} does not return
-        \code{TRUE} for \code{NULL}.
-  \item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
-        only returns \code{TRUE} for floating point numbers.
+\item Like \code{\link[=is_atomic]{is_atomic()}} and unlike base R
+\code{is.atomic()}, \code{is_bare_atomic()} does not return
+\code{TRUE} for \code{NULL}.
+\item Unlike base R \code{is.numeric()}, \code{is_bare_double()}
+only returns \code{TRUE} for floating point numbers.
 }
 }
 \seealso{

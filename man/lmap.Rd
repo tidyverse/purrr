@@ -32,7 +32,7 @@ modified.}
 }
 \value{
 If \code{.x} is a list, a list. If \code{.x} is a data
-  frame, a data frame.
+frame, a data frame.
 }
 \description{
 \code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to
@@ -105,6 +105,6 @@ iris \%>\% lmap_if(is.factor, disjoin)
 mtcars \%>\% lmap_at(c("cyl", "vs", "am"), disjoin)
 }
 \seealso{
-\code{\link{map_at}()}, \code{\link{map_if}()} and
-  \code{\link{map}()}
+\code{\link[=map_at]{map_at()}}, \code{\link[=map_if]{map_if()}} and
+\code{\link[=map]{map()}}
 }

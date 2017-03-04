@@ -37,7 +37,7 @@ arguments (apart from any suppled in \code{...}.}
 
 \item{...}{Additional arguments passed to each function.}
 
-\item{.env}{Environment in which \code{\link{do.call}()} should
+\item{.env}{Environment in which \code{\link[=do.call]{do.call()}} should
 evaluate a constructed expression. This only matters if you pass
 as \code{.f} the name of a function rather than its value, or as
 \code{.x} symbols of objects rather than their values.}

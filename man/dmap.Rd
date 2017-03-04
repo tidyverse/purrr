@@ -17,18 +17,18 @@ dmap_if(.d, .p, .f, ...)
 
 \item{.f}{A function, formula, or atomic vector.
 
-  If a \strong{function}, it is used as is.
+If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
+function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+allows you to create very compact anonymous functions with up to
+two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
+is converted to an extractor function, \code{function(x) x[["y"]]}. To
+index deeply into a nested list, use multiple values; \code{c("x", "y")}
+is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+to set a default to use instead of \code{NULL} for absent components.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -44,7 +44,7 @@ inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 }
 \description{
-\code{dmap()} is just like \code{\link{map}()} but always returns a
+\code{dmap()} is just like \code{\link[=map]{map()}} but always returns a
 data frame. In addition, it handles grouped or sliced data frames.
 }
 \details{

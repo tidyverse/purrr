@@ -27,9 +27,9 @@ of the vector and moves towards the beginning.}
 }
 \value{
 \code{detect} the value of the first item that matches the
- predicate; \code{detect_index} the position of the matching item.
- If not found, \code{detect} returns \code{NULL} and \code{detect_index}
- returns 0.
+predicate; \code{detect_index} the position of the matching item.
+If not found, \code{detect} returns \code{NULL} and \code{detect_index}
+returns 0.
 }
 \description{
 Find the value or position of the first match.

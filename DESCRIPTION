@@ -25,3 +25,4 @@ URL: https://github.com/hadley/purrr
 BugReports: https://github.com/hadley/purrr/issues
 RoxygenNote: 6.0.1
 Remotes: hadley/lazyeval
+Roxygen: list(markdown = TRUE)

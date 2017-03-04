@@ -1,38 +1,38 @@
 #' Apply a function to slices of a data frame
 #'
-#' \code{by_slice()} applies \code{..f} on each group of a data
-#' frame. Groups should be set with \code{slice_rows()} or
-#' \code{\link[dplyr]{group_by}()}.
+#' `by_slice()` applies `..f` on each group of a data
+#' frame. Groups should be set with `slice_rows()` or
+#' [dplyr::group_by()].
 #'
-#' \code{by_slice()} provides equivalent functionality to dplyr's
-#' \code{\link[dplyr]{do}()} function. In combination with
-#' \code{map()}, \code{by_slice()} is equivalent to
-#' \code{\link[dplyr]{summarise_each}()} and
-#' \code{\link[dplyr]{mutate_each}()}. The distinction between
+#' `by_slice()` provides equivalent functionality to dplyr's
+#' [dplyr::do()] function. In combination with
+#' `map()`, `by_slice()` is equivalent to
+#' [dplyr::summarise_each()] and
+#' [dplyr::mutate_each()]. The distinction between
 #' mutating and summarising operations is not as important as in dplyr
 #' because we do not act on the columns separately. The only
 #' constraint is that the mapped function must return the same number
 #' of rows for each variable mapped on.
 #' @param .d A sliced data frame.
-#' @param ..f A function to apply to each slice. If \code{..f} does
+#' @param ..f A function to apply to each slice. If `..f` does
 #'   not return a data frame or an atomic vector, a list-column is
-#'   created under the name \code{.out}. If it returns a data frame, it
+#'   created under the name `.out`. If it returns a data frame, it
 #'   should have the same number of rows within groups and the same
 #'   number of columns between groups.
-#' @param ... Further arguments passed to \code{..f}.
+#' @param ... Further arguments passed to `..f`.
 #' @param .collate If "list", the results are returned as a list-
 #'   column. Alternatively, if the results are data frames or atomic
 #'   vectors, you can collate on "cols" or on "rows". Column collation
 #'   require vector of equal length or data frames with same number of
 #'   rows.
 #' @param .to Name of output column.
-#' @param .labels If \code{TRUE}, the returned data frame is prepended
-#'   with the labels of the slices (the columns in \code{.d} used to
+#' @param .labels If `TRUE`, the returned data frame is prepended
+#'   with the labels of the slices (the columns in `.d` used to
 #'   define the slices). They are recycled to match the output size in
 #'   each slice if necessary.
 #' @return A data frame.
-#' @seealso \code{\link{by_row}()}, \code{\link{slice_rows}()},
-#'   \code{\link{dmap}()}
+#' @seealso [by_row()], [slice_rows()],
+#'   [dmap()]
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib purrr by_slice_impl
 #' @export
@@ -114,44 +114,44 @@ set_sliced_env <- function(df, labels, collate, to, env, x_name) {
 
 #' Apply a function to each row of a data frame
 #'
-#' \code{by_row()} and \code{invoke_rows()} apply \code{..f} to each row
-#' of \code{.d}. If \code{..f}'s output is not a data frame nor an
+#' `by_row()` and `invoke_rows()` apply `..f` to each row
+#' of `.d`. If `..f`'s output is not a data frame nor an
 #' atomic vector, a list-column is created. In all cases,
-#' \code{by_row()} and \code{invoke_rows()} create a data frame in tidy
+#' `by_row()` and `invoke_rows()` create a data frame in tidy
 #' format.
 #'
 #' By default, the whole row is appended to the result to serve as
-#' identifier (set \code{.labels} to \code{FALSE} to prevent this). In
-#' addition, if \code{..f} returns a multi-rows data frame or a
-#' non-scalar atomic vector, a \code{.row} column is appended to
+#' identifier (set `.labels` to `FALSE` to prevent this). In
+#' addition, if `..f` returns a multi-rows data frame or a
+#' non-scalar atomic vector, a `.row` column is appended to
 #' identify the row number in the original data frame.
 #'
-#' \code{invoke_rows()} is intended to provide a version of
-#' \code{pmap()} for data frames. Its default collation method is
-#' \code{"cols"}, which makes it equivalent to
-#' \code{\link[plyr]{mdply}()} from the plyr package. Note that
-#' \code{invoke_rows()} follows the signature pattern of the
-#' \code{invoke} family of functions and takes \code{.f} as its first
+#' `invoke_rows()` is intended to provide a version of
+#' `pmap()` for data frames. Its default collation method is
+#' `"cols"`, which makes it equivalent to
+#' [plyr::mdply()] from the plyr package. Note that
+#' `invoke_rows()` follows the signature pattern of the
+#' `invoke` family of functions and takes `.f` as its first
 #' argument.
 #'
-#' The distinction between \code{by_row()} and \code{invoke_rows()} is
-#' that the former passes a data frame to \code{..f} while the latter
+#' The distinction between `by_row()` and `invoke_rows()` is
+#' that the former passes a data frame to `..f` while the latter
 #' maps the columns to its function call. This is essentially like
-#' using \code{\link{invoke}()} with each row. Another way to view
-#' this is that \code{invoke_rows()} is equivalent to using
-#' \code{by_row()} with a function lifted to accept dots (see
-#' \code{\link{lift}()}).
+#' using [invoke()] with each row. Another way to view
+#' this is that `invoke_rows()` is equivalent to using
+#' `by_row()` with a function lifted to accept dots (see
+#' [lift()]).
 #'
 #' @param .d A data frame.
-#' @param .f,..f A function to apply to each row. If \code{..f} does
+#' @param .f,..f A function to apply to each row. If `..f` does
 #'   not return a data frame or an atomic vector, a list-column is
-#'   created under the name \code{.out}. If it returns a data frame, it
+#'   created under the name `.out`. If it returns a data frame, it
 #'   should have the same number of rows within groups and the same
 #'   number of columns between groups.
-#' @param ... Further arguments passed to \code{..f}.
+#' @param ... Further arguments passed to `..f`.
 #' @inheritParams by_slice
 #' @return A data frame.
-#' @seealso \code{\link{by_slice}()}
+#' @seealso [by_slice()]
 #' @useDynLib purrr invoke_rows_impl
 #' @export
 #' @examples
@@ -246,17 +246,17 @@ map_rows <- function(.d, .f, ..., .labels = TRUE) {
 
 #' Slice a data frame into groups of rows
 #'
-#' \code{slice_rows()} is equivalent to dplyr's
-#' \code{\link[dplyr]{group_by}()} command but it takes a vector of
+#' `slice_rows()` is equivalent to dplyr's
+#' [dplyr::group_by()] command but it takes a vector of
 #' column names or positions instead of capturing column names with
-#' special evaluation. \code{unslice()} removes the slicing
+#' special evaluation. `unslice()` removes the slicing
 #' attributes.
 #' @param .d A data frame to slice or unslice.
 #' @param .cols A character vector of column names or a numeric vector
-#'   of column positions. If \code{NULL}, the slicing attributes are
+#'   of column positions. If `NULL`, the slicing attributes are
 #'   removed.
 #' @return A sliced or unsliced data frame.
-#' @seealso \code{\link{by_slice}()} and \code{\link[dplyr]{group_by}()}
+#' @seealso [by_slice()] and [dplyr::group_by()]
 #' @export
 slice_rows <- function(.d, .cols = NULL) {
   message("`slice_rows()` is deprecated; please use `dplyr::group_by()` instead.")

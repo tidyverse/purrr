@@ -12,7 +12,7 @@ NULL
 #' Modify a list
 #'
 #' @param _data A list.
-#' @param ... New values of a list. Use \code{NULL} to remove values.
+#' @param ... New values of a list. Use `NULL` to remove values.
 #'   Use a formula to evaluate in the context of the list values.
 #' @export
 #' @examples
@@ -34,24 +34,24 @@ update_list <- function(`_data`, ...) {
 
 #' Convert an object into a function.
 #'
-#' \code{as_function} is the powerhouse behind the varied function
+#' `as_function` is the powerhouse behind the varied function
 #' specifications that purrr functions allow. This is an S3 generic so that
-#' other people can make \code{as_function} work with their own objects.
+#' other people can make `as_function` work with their own objects.
 #'
 #' @param .f A function, formula, or atomic vector.
 #'
-#'   If a \strong{function}, it is used as is.
+#'   If a __function__, it is used as is.
 #'
-#'   If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-#'   function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+#'   If a __formula__, e.g. `~ .x + 2`, it is converted to a
+#'   function with two arguments, `.x` or `.` and `.y`. This
 #'   allows you to create very compact anonymous functions with up to
 #'   two inputs.
 #'
-#'   If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
+#'   If __character__ or __integer vector__, e.g. `"y"`, it
 #'   is converted to an extractor function, \code{function(x) x[["y"]]}. To
-#'   index deeply into a nested list, use multiple values; \code{c("x", "y")}
-#'   is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-#'   to set a default to use instead of \code{NULL} for absent components.
+#'   index deeply into a nested list, use multiple values; `c("x", "y")`
+#'   is equivalent to \code{z[["x"]][["y"]]}. You can also set `.null`
+#'   to set a default to use instead of `NULL` for absent components.
 #' @param ... Additional arguments passed on to methods.
 #' @export
 #' @examples
@@ -133,14 +133,14 @@ names2 <- function(x) {
   names(x) %||% rep("", length(x))
 }
 
-#' Default value for \code{NULL}.
+#' Default value for `NULL`.
 #'
-#' This infix function makes it easy to replace \code{NULL}s with a
-#' default value. It's inspired by the way that Ruby's or operation (\code{||})
+#' This infix function makes it easy to replace `NULL`s with a
+#' default value. It's inspired by the way that Ruby's or operation (`||`)
 #' works.
 #'
-#' @param x,y If \code{x} is NULL, will return \code{y}; otherwise returns
-#'   \code{x}.
+#' @param x,y If `x` is NULL, will return `y`; otherwise returns
+#'   `x`.
 #' @export
 #' @name null-default
 #' @examples
@@ -169,7 +169,7 @@ names2 <- function(x) {
 #' Generate random samples from a Bernoulli distribution
 #'
 #' @param n Number of samples
-#' @param p Probability of getting \code{TRUE}
+#' @param p Probability of getting `TRUE`
 #' @return A logical vector
 #' @export
 #' @examples

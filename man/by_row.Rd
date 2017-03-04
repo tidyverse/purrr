@@ -56,7 +56,7 @@ identify the row number in the original data frame.
 \code{invoke_rows()} is intended to provide a version of
 \code{pmap()} for data frames. Its default collation method is
 \code{"cols"}, which makes it equivalent to
-\code{\link[plyr]{mdply}()} from the plyr package. Note that
+\code{\link[plyr:mdply]{plyr::mdply()}} from the plyr package. Note that
 \code{invoke_rows()} follows the signature pattern of the
 \code{invoke} family of functions and takes \code{.f} as its first
 argument.
@@ -64,10 +64,10 @@ argument.
 The distinction between \code{by_row()} and \code{invoke_rows()} is
 that the former passes a data frame to \code{..f} while the latter
 maps the columns to its function call. This is essentially like
-using \code{\link{invoke}()} with each row. Another way to view
+using \code{\link[=invoke]{invoke()}} with each row. Another way to view
 this is that \code{invoke_rows()} is equivalent to using
 \code{by_row()} with a function lifted to accept dots (see
-\code{\link{lift}()}).
+\code{\link[=lift]{lift()}}).
 }
 \examples{
 # ..f should be able to work with a list or a data frame. As it
@@ -98,5 +98,5 @@ mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "rows")
 mtcars[1:2] \%>\% by_row(function(x) 1:5, .collate = "cols")
 }
 \seealso{
-\code{\link{by_slice}()}
+\code{\link[=by_slice]{by_slice()}}
 }

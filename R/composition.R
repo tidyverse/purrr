@@ -1,36 +1,36 @@
 #' Lift the domain of a function
 #'
-#' \code{lift_xy()} is a composition helper. It helps you compose
+#' `lift_xy()` is a composition helper. It helps you compose
 #' functions by lifting their domain from a kind of input to another
 #' kind. The domain can be changed from and to a list (l), a vector
-#' (v) and dots (d). For example, \code{lift_ld(fun)} transforms a
+#' (v) and dots (d). For example, `lift_ld(fun)` transforms a
 #' function taking a list to a function taking dots.
 #'
-#' The most important of those helpers is probably \code{lift_dl()}
+#' The most important of those helpers is probably `lift_dl()`
 #' because it allows you to transform a regular function to one that
 #' takes a list. This is often essential for composition with purrr
 #' functional tools. Since this is such a common function,
-#' \code{lift()} is provided as an alias for that operation.
+#' `lift()` is provided as an alias for that operation.
 #'
 #' @inheritParams as_vector
 #' @param ..f A function to lift.
-#' @param ... Default arguments for \code{..f}. These will be
+#' @param ... Default arguments for `..f`. These will be
 #'   evaluated only once, when the lifting factory is called.
 #' @name lift
-#' @seealso \code{\link{invoke}()}
+#' @seealso [invoke()]
 NULL
 
 #' @rdname lift
-#' @section from ... to \code{list(...)} or \code{c(...)}:
+#' @section from ... to `list(...)` or `c(...)`:
 #'   Here dots should be taken here in a figurative way. The lifted
 #'   functions does not need to take dots per se. The function is
-#'   simply wrapped a function in \code{\link{do.call}()}, so instead
+#'   simply wrapped a function in [do.call()], so instead
 #'   of taking multiple arguments, it takes a single named list or
 #'   vector which will be interpreted as its arguments.  This is
 #'   particularly useful when you want to pass a row of a data frame
 #'   or a list to a function and don't want to manually pull it apart
 #'   in your function.
-#' @param .unnamed If \code{TRUE}, \code{ld} or \code{lv} will not
+#' @param .unnamed If `TRUE`, `ld` or `lv` will not
 #'   name the parameters in the lifted function signature. This
 #'   prevents matching of arguments by name and match by position
 #'   instead.
@@ -100,14 +100,14 @@ lift_dv <- function (..f, ..., .unnamed = FALSE) {
 }
 
 #' @rdname lift
-#' @section from \code{c(...)} to \code{list(...)} or \code{...}:
+#' @section from `c(...)` to `list(...)` or `...`:
 #'   These factories allow a function taking a vector to take a list
 #'   or dots instead. The lifted function internally transforms its
 #'   inputs back to an atomic vector. purrr does not obey the usual R
-#'   casting rules (e.g., \code{c(1, "2")} produces a character
+#'   casting rules (e.g., `c(1, "2")` produces a character
 #'   vector) and will produce an error if the types are not
 #'   compatible. Additionally, you can enforce a particular vector
-#'   type by supplying \code{.type}.
+#'   type by supplying `.type`.
 #' @export
 #' @examples
 #' #
@@ -157,14 +157,14 @@ lift_vd <- function(..f, ..., .type) {
 
 #' @rdname lift
 #' @section from list(...) to c(...) or ...:
-#' \code{lift_ld()} turns a function that takes a list into a
-#' function that takes dots. \code{lift_vd()} does the same with a
+#' `lift_ld()` turns a function that takes a list into a
+#' function that takes dots. `lift_vd()` does the same with a
 #' function that takes an atomic vector. These factory functions are
-#' the inverse operations of \code{lift_dl()} and \code{lift_dv()}.
+#' the inverse operations of `lift_dl()` and `lift_dv()`.
 #'
-#' \code{lift_vd()} internally coerces the inputs of \code{..f} to
+#' `lift_vd()` internally coerces the inputs of `..f` to
 #' an atomic vector. The details of this coercion can be controlled
-#' with \code{.type}.
+#' with `.type`.
 #'
 #' @export
 #' @examples

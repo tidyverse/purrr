@@ -1,30 +1,30 @@
 #' Apply a function to list-elements of a list
 #'
-#' \code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to
-#' \code{map()}, \code{map_at()} and \code{map_if()}, with the
+#' `lmap()`, `lmap_at()` and `lmap_if()` are similar to
+#' `map()`, `map_at()` and `map_if()`, with the
 #' difference that they operate exclusively on functions that take
 #' \emph{and} return a list (or data frame). Thus, instead of mapping
 #' the elements of a list (as in \code{.x[[i]]}), they apply a
-#' function \code{.f} to each subset of size 1 of that list (as in
-#' \code{.x[i]}). We call those those elements `list-elements').
+#' function `.f` to each subset of size 1 of that list (as in
+#' `.x[i]`). We call those those elements `list-elements').
 #'
-#' Mapping the list-elements \code{.x[i]} has several advantages. It
+#' Mapping the list-elements `.x[i]` has several advantages. It
 #' makes it possible to work with functions that exclusively take a
-#' list or data frame. It enables \code{.f} to access the attributes
+#' list or data frame. It enables `.f` to access the attributes
 #' of the encapsulating list, like the name of the components it
-#' receives. It also enables \code{.f} to return a larger list than
-#' the list-element of size 1 it got as input. Conversely, \code{.f}
+#' receives. It also enables `.f` to return a larger list than
+#' the list-element of size 1 it got as input. Conversely, `.f`
 #' can also return empty lists. In these cases, the output list is
-#' reshaped with a different size than the input list \code{.x}.
+#' reshaped with a different size than the input list `.x`.
 #' @param .x A list or data frame.
 #' @param .f A function that takes and returns a list or data frame.
 #' @inheritParams map_if
 #' @inheritParams map_at
 #' @inheritParams map
-#' @return If \code{.x} is a list, a list. If \code{.x} is a data
+#' @return If `.x` is a list, a list. If `.x` is a data
 #'   frame, a data frame.
-#' @seealso \code{\link{map_at}()}, \code{\link{map_if}()} and
-#'   \code{\link{map}()}
+#' @seealso [map_at()], [map_if()] and
+#'   [map()]
 #' @export
 #' @examples
 #' # Let's write a function that returns a larger list or an empty list

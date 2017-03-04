@@ -29,18 +29,18 @@ walk(.x, .f, ...)
 
 \item{.f}{A function, formula, or atomic vector.
 
-  If a \strong{function}, it is used as is.
+If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
+function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+allows you to create very compact anonymous functions with up to
+two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
+is converted to an extractor function, \code{function(x) x[["y"]]}. To
+index deeply into a nested list, use multiple values; \code{c("x", "y")}
+is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+to set a default to use instead of \code{NULL} for absent components.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -50,13 +50,13 @@ giving either the name or the index of the data frame.}
 \value{
 \code{map()} always returns a list.
 
-  \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
-  vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
-  vector. The output of \code{.f} will be automatically typed upwards,
-  e.g. logical -> integer -> double -> character.
+\code{map_lgl()} returns a logical vector, \code{map_int()} an integer
+vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
+vector. The output of \code{.f} will be automatically typed upwards,
+e.g. logical -> integer -> double -> character.
 
-  \code{walk()} (invisibly) the input \code{.x}. It's called primarily for
-  its side effects, but this makes it easier to combine in a pipe.
+\code{walk()} (invisibly) the input \code{.x}. It's called primarily for
+its side effects, but this makes it easier to combine in a pipe.
 }
 \description{
 \code{map()} returns the transformed input; \code{walk()} calls
@@ -103,6 +103,6 @@ mtcars \%>\%
 # the broom package)
 }
 \seealso{
-\code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
-  inputs simulatenously
+\code{\link[=map2]{map2()}} and \code{\link[=pmap]{pmap()}} to map over multiple
+inputs simulatenously
 }

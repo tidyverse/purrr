@@ -2,12 +2,12 @@
 #'
 #' @inheritParams every
 #' @inheritParams map
-#' @param .right If \code{FALSE}, the default, starts at the beginnging
-#'   of the vector and move towards the end; if \code{TRUE}, starts at the end
+#' @param .right If `FALSE`, the default, starts at the beginnging
+#'   of the vector and move towards the end; if `TRUE`, starts at the end
 #'   of the vector and moves towards the beginning.
-#' @return \code{detect} the value of the first item that matches the
-#'  predicate; \code{detect_index} the position of the matching item.
-#'  If not found, \code{detect} returns \code{NULL} and \code{detect_index}
+#' @return `detect` the value of the first item that matches the
+#'  predicate; `detect_index` the position of the matching item.
+#'  If not found, `detect` returns `NULL` and `detect_index`
 #'  returns 0.
 #' @export
 #' @examples

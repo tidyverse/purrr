@@ -20,7 +20,7 @@ accumulate_right(.x, .f, ..., .init)
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns the correct value when
-\code{.x} is \code{\link{is_empty}()}.}
+\code{.x} is \code{\link[=is_empty]{is_empty()}}.}
 }
 \description{
 \code{accumulate} applies a function recursively over a list from the left, while

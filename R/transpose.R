@@ -2,12 +2,12 @@
 #'
 #' Tranpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 #' list of pairs, or a list of pairs into pair of lists. For example,
-#' If you had a list of length n where each component had values \code{a} and
-#' \code{b}, \code{transpose()} would make a list with elements \code{a} and
-#' \code{b} that contained lists of length n. It's called transpose because
+#' If you had a list of length n where each component had values `a` and
+#' `b`, `transpose()` would make a list with elements `a` and
+#' `b` that contained lists of length n. It's called transpose because
 #' \code{x[[1]][[2]]} is equivalent to \code{transpose(x)[[2]][[1]]}.
 #'
-#' Note that \code{transpose()} is its own inverse, much like the
+#' Note that `transpose()` is its own inverse, much like the
 #' transpose operation on a matrix. You can get back the original
 #' input by transposing it twice.
 #'

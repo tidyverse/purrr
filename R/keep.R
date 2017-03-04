@@ -1,15 +1,15 @@
 #' Keep or discard elements using a predicate function.
 #'
-#' \code{keep} and \code{discard} are opposites. \code{compact} is a handy
-#' wrapper that removes all elements that are \code{NULL}.
+#' `keep` and `discard` are opposites. `compact` is a handy
+#' wrapper that removes all elements that are `NULL`.
 #'
-#' These are usually called \code{select} or \code{filter} and \code{reject} or
-#' \code{drop}, but those names are already taken. \code{keep} is similar to
-#' \code{\link{Filter}} but the argument order is more convenient, and the
-#' evaluation of \code{.f} is stricter.
+#' These are usually called `select` or `filter` and `reject` or
+#' `drop`, but those names are already taken. `keep` is similar to
+#' [Filter()] but the argument order is more convenient, and the
+#' evaluation of `.f` is stricter.
 #'
 #' @param .x A list or vector.
-#' @param ... Additional arguments passed on to \code{.p}.
+#' @param ... Additional arguments passed on to `.p`.
 #' @inheritParams map_if
 #' @export
 #' @examples

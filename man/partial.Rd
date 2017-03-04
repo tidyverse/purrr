@@ -13,7 +13,7 @@ be a named function.}
 \item{...}{named arguments to \code{...f} that should be partially applied.}
 
 \item{.env}{the environment of the created function. Defaults to
-\code{\link{parent.frame}} and you should rarely need to modify this.}
+\code{\link[=parent.frame]{parent.frame()}} and you should rarely need to modify this.}
 
 \item{.lazy}{If \code{TRUE} arguments evaluated lazily, if \code{FALSE},
 evaluated when \code{partial} is called.}

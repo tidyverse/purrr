@@ -21,11 +21,11 @@ A sliced or unsliced data frame.
 }
 \description{
 \code{slice_rows()} is equivalent to dplyr's
-\code{\link[dplyr]{group_by}()} command but it takes a vector of
+\code{\link[dplyr:group_by]{dplyr::group_by()}} command but it takes a vector of
 column names or positions instead of capturing column names with
 special evaluation. \code{unslice()} removes the slicing
 attributes.
 }
 \seealso{
-\code{\link{by_slice}()} and \code{\link[dplyr]{group_by}()}
+\code{\link[=by_slice]{by_slice()}} and \code{\link[dplyr:group_by]{dplyr::group_by()}}
 }

@@ -31,12 +31,12 @@ giving either the name or the index of the data frame.}
 }
 \value{
 \code{flatten()} returns a list, \code{flatten_lgl} a logical
-  vector, \code{flatten_int} an integer vector, \code{flatten_dbl} a
-  double vector, and \code{flatten_chr} a character vector.
+vector, \code{flatten_int} an integer vector, \code{flatten_dbl} a
+double vector, and \code{flatten_chr} a character vector.
 }
 \description{
 These functions remove a level hierarchy from a list. They are similar to
-\code{\link{unlist}}, only ever remove a single layer of hierarchy, and
+\code{\link[=unlist]{unlist()}}, only ever remove a single layer of hierarchy, and
 are type-stable so you always know what the type of the output is.
 }
 \examples{

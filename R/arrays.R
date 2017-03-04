@@ -1,20 +1,20 @@
 #' Coerce array to list
 #'
-#' \code{array_branch()} and \code{array_tree()} enable arrays to be
+#' `array_branch()` and `array_tree()` enable arrays to be
 #' used with purrr's functionals by turning them into lists. The
-#' details of the coercion are controlled by the \code{margin}
-#' argument. \code{array_tree()} creates an hierarchical list (a tree)
-#' that has as many levels as dimensions specified in \code{margin},
-#' while \code{array_branch()} creates a flat list (by analogy, a
+#' details of the coercion are controlled by the `margin`
+#' argument. `array_tree()` creates an hierarchical list (a tree)
+#' that has as many levels as dimensions specified in `margin`,
+#' while `array_branch()` creates a flat list (by analogy, a
 #' branch) along all mentioned dimensions.
 #'
 #' When no margin is specified, all dimensions are used by
-#' default. When \code{margin} is a numeric vector of length zero, the
+#' default. When `margin` is a numeric vector of length zero, the
 #' whole array is wrapped in a list.
 #' @param array An array to coerce into a list.
 #' @param margin A numeric vector indicating the positions of the
-#'   indices to be to be enlisted. If \code{NULL}, a full margin is
-#'   used. If \code{numeric(0)}, the array as a whole is wrapped in a
+#'   indices to be to be enlisted. If `NULL`, a full margin is
+#'   used. If `numeric(0)`, the array as a whole is wrapped in a
 #'   list.
 #' @name array-coercion
 #' @export

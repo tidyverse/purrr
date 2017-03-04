@@ -17,9 +17,9 @@ prepend(x, values, before = 1)
 A merged vector.
 }
 \description{
-This is a companion to \code{\link{append}()} to help merging two
+This is a companion to \code{\link[=append]{append()}} to help merging two
 lists or atomic vectors. \code{prepend()} is a clearer semantic
-signal than `c()` that a vector is to be merged at the beginning of
+signal than \code{c()} that a vector is to be merged at the beginning of
 another, especially in a pipe chain.
 }
 \examples{

@@ -28,11 +28,11 @@ arguments as the number of variables to be combined.}
 }
 \value{
 \code{cross2()}, \code{cross3()} and \code{cross()}
-  always return a list. \code{cross_df()} always returns a data
-  frame. \code{cross()} returns a list where each element is one
-  combination so that the list can be directly mapped
-  over. \code{cross_df()} returns a data frame where each row is one
-  combination.
+always return a list. \code{cross_df()} always returns a data
+frame. \code{cross()} returns a list where each element is one
+combination so that the list can be directly mapped
+over. \code{cross_df()} returns a data frame where each row is one
+combination.
 }
 \description{
 \code{cross2()} returns the product set of the elements of
@@ -111,5 +111,5 @@ seq_len(3) \%>\%
   cross(.filter = `==`)
 }
 \seealso{
-\code{\link{expand.grid}()}
+\code{\link[=expand.grid]{expand.grid()}}
 }

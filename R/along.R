@@ -1,8 +1,8 @@
 #' Helper to create vectors with matching length.
 #'
-#' These functions take the idea of \code{\link{seq_along}} and generalise
-#' it to creating lists (\code{list_along}) and repeating values
-#' (\code{rep_along}).
+#' These functions take the idea of [seq_along()] and generalise
+#' it to creating lists (`list_along`) and repeating values
+#' (`rep_along`).
 #'
 #' @param x A vector.
 #' @param y Values to repeat.

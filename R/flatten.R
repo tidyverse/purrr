@@ -1,15 +1,15 @@
 #' Flatten a list of lists into a simple vector.
 #'
 #' These functions remove a level hierarchy from a list. They are similar to
-#' \code{\link{unlist}}, only ever remove a single layer of hierarchy, and
+#' [unlist()], only ever remove a single layer of hierarchy, and
 #' are type-stable so you always know what the type of the output is.
 #'
 #' @param .x A list of flatten. The contents of the list can be anything for
-#'   \code{flatten} (as a list is returned), but the contents must match the
+#'   `flatten` (as a list is returned), but the contents must match the
 #'   type for the other functions.
-#' @return \code{flatten()} returns a list, \code{flatten_lgl} a logical
-#'   vector, \code{flatten_int} an integer vector, \code{flatten_dbl} a
-#'   double vector, and \code{flatten_chr} a character vector.
+#' @return `flatten()` returns a list, `flatten_lgl` a logical
+#'   vector, `flatten_int` an integer vector, `flatten_dbl` a
+#'   double vector, and `flatten_chr` a character vector.
 #' @inheritParams map
 #' @export
 #' @examples

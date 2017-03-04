@@ -2,7 +2,7 @@
 #'
 #' @inheritParams map_if
 #' @inheritParams map
-#' @return Either \code{TRUE} or \code{FALSE}.
+#' @return Either `TRUE` or `FALSE`.
 #' @export
 #' @examples
 #' x <- list(0, 1, TRUE)

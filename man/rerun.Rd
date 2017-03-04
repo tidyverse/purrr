@@ -13,11 +13,11 @@ rerun(.n, ...)
 }
 \value{
 A list of length \code{.n}. Each element of \code{...} will be
-  re-run once for each \code{.n}. It
+re-run once for each \code{.n}. It
 
-  There is one special case: if there's a single unnamed input, the second
-  level list will be dropped. In this case, \code{rerun(n, x)} behaves like
-  \code{replicate(n, x, simplify = FALSE)}.
+There is one special case: if there's a single unnamed input, the second
+level list will be dropped. In this case, \code{rerun(n, x)} behaves like
+\code{replicate(n, x, simplify = FALSE)}.
 }
 \description{
 This is a convenient way of generating sample data. It works similarly to

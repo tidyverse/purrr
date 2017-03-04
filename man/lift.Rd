@@ -38,7 +38,7 @@ instead.}
 
 \item{.type}{A vector mold or a string describing the type of the
 input vectors. The latter can be any of the types returned by
-\code{\link{typeof}()}, or "numeric" as a shorthand for either
+\code{\link[=typeof]{typeof()}}, or "numeric" as a shorthand for either
 "double" or "integer".}
 }
 \description{
@@ -57,25 +57,25 @@ functional tools. Since this is such a common function,
 }
 \section{from ... to \code{list(...)} or \code{c(...)}}{
 
-  Here dots should be taken here in a figurative way. The lifted
-  functions does not need to take dots per se. The function is
-  simply wrapped a function in \code{\link{do.call}()}, so instead
-  of taking multiple arguments, it takes a single named list or
-  vector which will be interpreted as its arguments.  This is
-  particularly useful when you want to pass a row of a data frame
-  or a list to a function and don't want to manually pull it apart
-  in your function.
+Here dots should be taken here in a figurative way. The lifted
+functions does not need to take dots per se. The function is
+simply wrapped a function in \code{\link[=do.call]{do.call()}}, so instead
+of taking multiple arguments, it takes a single named list or
+vector which will be interpreted as its arguments.  This is
+particularly useful when you want to pass a row of a data frame
+or a list to a function and don't want to manually pull it apart
+in your function.
 }
 
 \section{from \code{c(...)} to \code{list(...)} or \code{...}}{
 
-  These factories allow a function taking a vector to take a list
-  or dots instead. The lifted function internally transforms its
-  inputs back to an atomic vector. purrr does not obey the usual R
-  casting rules (e.g., \code{c(1, "2")} produces a character
-  vector) and will produce an error if the types are not
-  compatible. Additionally, you can enforce a particular vector
-  type by supplying \code{.type}.
+These factories allow a function taking a vector to take a list
+or dots instead. The lifted function internally transforms its
+inputs back to an atomic vector. purrr does not obey the usual R
+casting rules (e.g., \code{c(1, "2")} produces a character
+vector) and will produce an error if the types are not
+compatible. Additionally, you can enforce a particular vector
+type by supplying \code{.type}.
 }
 
 \section{from list(...) to c(...) or ...}{
@@ -183,5 +183,5 @@ letters \%>\% glue()           # fails because glue() expects a list}
 letters \%>\% lift_lv(glue)()  # succeeds
 }
 \seealso{
-\code{\link{invoke}()}
+\code{\link[=invoke]{invoke()}}
 }

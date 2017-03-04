@@ -15,18 +15,18 @@ possibly(.f, otherwise, quiet = TRUE)
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
 
-  If a \strong{function}, it is used as is.
+If a \strong{function}, it is used as is.
 
-  If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-  function with two arguments, \code{.x} or \code{.} and \code{.y}. This
-  allows you to create very compact anonymous functions with up to
-  two inputs.
+If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
+function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+allows you to create very compact anonymous functions with up to
+two inputs.
 
-  If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-  is converted to an extractor function, \code{function(x) x[["y"]]}. To
-  index deeply into a nested list, use multiple values; \code{c("x", "y")}
-  is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-  to set a default to use instead of \code{NULL} for absent components.}
+If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
+is converted to an extractor function, \code{function(x) x[["y"]]}. To
+index deeply into a nested list, use multiple values; \code{c("x", "y")}
+is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
+to set a default to use instead of \code{NULL} for absent components.}
 
 \item{otherwise}{Default value to use when an error occurs.}
 
@@ -35,13 +35,13 @@ as they occur?}
 }
 \value{
 \code{safely}: wrapped function instead returns a list with
-  components \code{result} and \code{error}. One value is always \code{NULL}.
+components \code{result} and \code{error}. One value is always \code{NULL}.
 
-  \code{quietly}: wrapped function instead returns a list with components
-  \code{result}, \code{output}, \code{messages} and \code{warnings}.
+\code{quietly}: wrapped function instead returns a list with components
+\code{result}, \code{output}, \code{messages} and \code{warnings}.
 
-  \code{possibly}: wrapped function uses a default value (\code{otherwise})
-  whenever an error occurs.
+\code{possibly}: wrapped function uses a default value (\code{otherwise})
+whenever an error occurs.
 }
 \description{
 These functions wrap functions so that instead of generating side effects

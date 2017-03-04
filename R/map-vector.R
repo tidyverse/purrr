@@ -1,6 +1,6 @@
 #' Map a function and flatten the result by one-level
 #'
-#' Deprecated: please use \code{map()} followed by \code{flatten()}.
+#' Deprecated: please use `map()` followed by `flatten()`.
 #'
 #' @export
 #' @keywords internal

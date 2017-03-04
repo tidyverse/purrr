@@ -1,10 +1,10 @@
 #' Set names in a vector
 #'
-#' This is a snake case wrapper for \code{\link[stats]{setNames}}, with
+#' This is a snake case wrapper for [stats::setNames()], with
 #' tweaked defaults, and stricter argument checking.
 #'
 #' @param x Vector to name
-#' @param nm Vector of names, the same length as \code{x}
+#' @param nm Vector of names, the same length as `x`
 #' @export
 #' @examples
 #' set_names(1:4, c("a", "b", "c", "d"))
