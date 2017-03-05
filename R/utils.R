@@ -32,41 +32,51 @@ update_list <- function(`_data`, ...) {
   utils::modifyList(`_data`, new_values)
 }
 
-#' Convert an object into a function.
+#' Convert an object into a function
 #'
 #' `as_function` is the powerhouse behind the varied function
-#' specifications that purrr functions allow. This is an S3 generic so that
-#' other people can make `as_function` work with their own objects.
+#' specifications that most purrr functions allow. It is an S3 generic.
 #'
 #' @param .f A function, formula, or atomic vector.
 #'
 #'   If a __function__, it is used as is.
 #'
 #'   If a __formula__, e.g. `~ .x + 2`, it is converted to a
-#'   function with two arguments, `.x` or `.` and `.y`. This
+#'   function with one or two arguments, `.x` or `.`, and `.y`. This
 #'   allows you to create very compact anonymous functions with up to
 #'   two inputs.
 #'
-#'   If __character__ or __integer vector__, e.g. `"y"`, it
-#'   is converted to an extractor function, \code{function(x) x[["y"]]}. To
-#'   index deeply into a nested list, use multiple values; `c("x", "y")`
-#'   is equivalent to \code{z[["x"]][["y"]]}. You can also set `.null`
-#'   to set a default to use instead of `NULL` for absent components.
+#'   If __character vector__, __numeric vector__, or __list__, it
+#'   is converted to an extractor function. Character vectors index by name
+#'   and numeric vectors index by position; use a list to index by position
+#'   and name at different levels. If a component is not present, the
+#'   value of `.null` will be returned.
+#' @param .null Optional additional argument for extractor functions
+#'   (i.e. when `.f` is character, integer, or list). Returned when
+#'   value does not exist or is `NULL`.
 #' @param ... Additional arguments passed on to methods.
 #' @export
 #' @examples
 #' as_function(~ . + 1)
 #' as_function(1)
+#'
 #' as_function(c("a", "b", "c"))
+#' # Equivalent to function(x) x[["a"]][["b"]][["c"]]
+#'
+#' as_function(list(1, "a", 2))
+#' # Equivalent to function(x) x[[1]][["a"]][[2]]
+#'
 #' as_function(c("a", "b", "c"), .null = NA)
 as_function <- function(.f, ...) {
   UseMethod("as_function")
 }
 
 #' @export
+#' @rdname as_function
 as_function.function <- function(.f, ...) .f
 
 #' @export
+#' @rdname as_function
 as_function.formula <- function(.f, ...) {
   .x <- NULL # hush R CMD check NOTE
 
@@ -84,25 +94,24 @@ extract <- function(x, index, .null = NULL) {
 
 #' @export
 #' @rdname as_function
-#' @param .null Optional additional argument for character and numeric
-#'   inputs.
 as_function.character <- function(.f, ..., .null = NULL) {
   as_function(as.list(.f), ..., .null = .null)
 }
 
 #' @export
+#' @rdname as_function
 as_function.numeric <- function(.f, ..., .null = NULL) {
   as_function(as.list(.f), ..., .null = .null)
 }
 
 #' @export
+#' @rdname as_function
 as_function.list <- function(.f, ..., .null = NULL) {
   idx <- .f
   function(g, ...) {
     extract(g, idx, .null)
   }
 }
-
 
 #' @export
 as_function.default <- function(.f, ...) {

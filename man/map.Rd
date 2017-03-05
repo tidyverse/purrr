@@ -32,15 +32,15 @@ walk(.x, .f, ...)
 If a \strong{function}, it is used as is.
 
 If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+function with one or two arguments, \code{.x} or \code{.}, and \code{.y}. This
 allows you to create very compact anonymous functions with up to
 two inputs.
 
-If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-is converted to an extractor function, \code{function(x) x[["y"]]}. To
-index deeply into a nested list, use multiple values; \code{c("x", "y")}
-is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-to set a default to use instead of \code{NULL} for absent components.}
+If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
+is converted to an extractor function. Character vectors index by name
+and numeric vectors index by position; use a list to index by position
+and name at different levels. If a component is not present, the
+value of \code{.null} will be returned.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
@@ -80,6 +80,26 @@ row-binding the individual elements.
 # Or a formula
 1:10 \%>\%
   map(~ rnorm(10, .x))
+
+# Extract by name or position
+# .null specifies value for elements that are missing or NULL
+l1 <- list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L))
+l1 \%>\% map("a", .null = "???")
+l1 \%>\% map_int("b", .null = NA)
+l1 \%>\% map_int(2, .null = NA)
+
+# Supply multiple values to index deeply into a list
+l2 <- list(
+  list(num = 1:3,     letters[1:3]),
+  list(num = 101:103, letters[4:6]),
+  list()
+)
+l2 \%>\% map(c(2, 2))
+
+# Use a list to build an extractor that mixes numeric indices and names,
+# and .null to provide a default value if the element does not exist
+l2 \%>\% map(list("num", 3))
+l2 \%>\% map_int(list("num", 3), .null = NA)
 
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2

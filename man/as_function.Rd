@@ -2,12 +2,24 @@
 % Please edit documentation in R/utils.R
 \name{as_function}
 \alias{as_function}
+\alias{as_function.function}
+\alias{as_function.formula}
 \alias{as_function.character}
-\title{Convert an object into a function.}
+\alias{as_function.numeric}
+\alias{as_function.list}
+\title{Convert an object into a function}
 \usage{
 as_function(.f, ...)
 
+\method{as_function}{function}(.f, ...)
+
+\method{as_function}{formula}(.f, ...)
+
 \method{as_function}{character}(.f, ..., .null = NULL)
+
+\method{as_function}{numeric}(.f, ..., .null = NULL)
+
+\method{as_function}{list}(.f, ..., .null = NULL)
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
@@ -15,29 +27,35 @@ as_function(.f, ...)
 If a \strong{function}, it is used as is.
 
 If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a
-function with two arguments, \code{.x} or \code{.} and \code{.y}. This
+function with one or two arguments, \code{.x} or \code{.}, and \code{.y}. This
 allows you to create very compact anonymous functions with up to
 two inputs.
 
-If \strong{character} or \strong{integer vector}, e.g. \code{"y"}, it
-is converted to an extractor function, \code{function(x) x[["y"]]}. To
-index deeply into a nested list, use multiple values; \code{c("x", "y")}
-is equivalent to \code{z[["x"]][["y"]]}. You can also set \code{.null}
-to set a default to use instead of \code{NULL} for absent components.}
+If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
+is converted to an extractor function. Character vectors index by name
+and numeric vectors index by position; use a list to index by position
+and name at different levels. If a component is not present, the
+value of \code{.null} will be returned.}
 
 \item{...}{Additional arguments passed on to methods.}
 
-\item{.null}{Optional additional argument for character and numeric
-inputs.}
+\item{.null}{Optional additional argument for extractor functions
+(i.e. when \code{.f} is character, integer, or list). Returned when
+value does not exist or is \code{NULL}.}
 }
 \description{
 \code{as_function} is the powerhouse behind the varied function
-specifications that purrr functions allow. This is an S3 generic so that
-other people can make \code{as_function} work with their own objects.
+specifications that most purrr functions allow. It is an S3 generic.
 }
 \examples{
 as_function(~ . + 1)
 as_function(1)
+
 as_function(c("a", "b", "c"))
+# Equivalent to function(x) x[["a"]][["b"]][["c"]]
+
+as_function(list(1, "a", 2))
+# Equivalent to function(x) x[[1]][["a"]][[2]]
+
 as_function(c("a", "b", "c"), .null = NA)
 }
