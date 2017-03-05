@@ -75,7 +75,6 @@ map2 <- function(.x, .y, .f, ...) {
   .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
 }
-
 #' @export
 #' @rdname map2
 map2_lgl <- function(.x, .y, .f, ...) {
@@ -107,12 +106,22 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
+#' @export
+#' @rdname map2
+walk2 <- function(.x, .y, .f, ...) {
+  pwalk(list(.x, .y), .f, ...)
+  invisible(.x)
+}
 
 #' @export
 #' @rdname map2
 #' @useDynLib purrr pmap_impl
 pmap <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
   .Call(pmap_impl, environment(), ".l", ".f", "list")
 }
 
@@ -120,40 +129,49 @@ pmap <- function(.l, .f, ...) {
 #' @rdname map2
 pmap_lgl <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
   .Call(pmap_impl, environment(), ".l", ".f", "logical")
 }
 #' @export
 #' @rdname map2
 pmap_int <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
   .Call(pmap_impl, environment(), ".l", ".f", "integer")
 }
 #' @export
 #' @rdname map2
 pmap_dbl <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
   .Call(pmap_impl, environment(), ".l", ".f", "double")
 }
 #' @export
 #' @rdname map2
 pmap_chr <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
   .Call(pmap_impl, environment(), ".l", ".f", "character")
 }
+
 #' @rdname map2
 #' @export
 pmap_df <- function(.l, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
   res <- pmap(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
-}
-
-
-#' @export
-#' @rdname map2
-walk2 <- function(.x, .y, .f, ...) {
-  pwalk(list(.x, .y), .f, ...)
-  invisible(.x)
 }
 
 #' @export

@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `pmap()` coerces data frames to lists to avoid the expensive `[.data.frame`
+  which provides security that's unneeded here (#220).
+
 * `invoke()` uses a more robust approach to generate the argument list (#249)
 
 * `map_if()` and `map_at()` now modify their input in-place (#169).
