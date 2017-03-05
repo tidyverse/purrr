@@ -58,7 +58,7 @@ invoke(runif, n = 10)
 invoke(paste, list("01a", "01b"), sep = "-")
 # That's more natural as part of a pipeline:
 list("01a", "01b") \%>\%
-  invoke(paste, ., sep = ".")
+  invoke(paste, ., sep = "-")
 
 # Invoke a list of functions, each with different arguments
 invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
