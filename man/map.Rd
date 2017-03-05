@@ -127,4 +127,8 @@ mtcars \%>\%
 \seealso{
 \code{\link[=map2]{map2()}} and \code{\link[=pmap]{pmap()}} to map over multiple
 inputs simulatenously
+
+Other map variants: \code{\link{conditional-map}},
+  \code{\link{invoke}}, \code{\link{lmap}},
+  \code{\link{map2}}
 }

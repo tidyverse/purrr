@@ -21,6 +21,7 @@
 #'   If all input is length 0, the output will be length 0. If any
 #'   input is length 1, it will be recycled to the length of the longest.
 #' @export
+#' @family map variants
 #' @examples
 #' x <- list(1, 10, 100)
 #' y <- list(1, 2, 3)

@@ -19,6 +19,7 @@
 #'   `.x` symbols of objects rather than their values.
 #' @inheritParams map
 #' @export
+#' @family map variants
 #' @examples
 #' # Invoke a function with a list of arguments
 #' invoke(runif, list(n = 10))

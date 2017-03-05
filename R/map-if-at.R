@@ -16,6 +16,7 @@
 #'   modified.
 #' @return A list.
 #' @name conditional-map
+#' @family map variants
 #' @examples
 #' # Convert factors to characters
 #' iris %>%

@@ -140,3 +140,8 @@ plus2 <- function(x, y, ...) x + y
 pmap_dbl(df, plus2)
 
 }
+\seealso{
+Other map variants: \code{\link{conditional-map}},
+  \code{\link{invoke}}, \code{\link{lmap}},
+  \code{\link{map}}
+}

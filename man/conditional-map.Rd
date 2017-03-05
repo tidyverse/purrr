@@ -69,3 +69,7 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   simplify_all()
 
 }
+\seealso{
+Other map variants: \code{\link{invoke}},
+  \code{\link{lmap}}, \code{\link{map2}}, \code{\link{map}}
+}

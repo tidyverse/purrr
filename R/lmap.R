@@ -23,8 +23,7 @@
 #' @inheritParams map
 #' @return If `.x` is a list, a list. If `.x` is a data
 #'   frame, a data frame.
-#' @seealso [map_at()], [map_if()] and
-#'   [map()]
+#' @family map variants
 #' @export
 #' @examples
 #' # Let's write a function that returns a larger list or an empty list

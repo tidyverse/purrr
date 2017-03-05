@@ -25,6 +25,7 @@
 #' @seealso [map2()] and [pmap()] to map over multiple
 #'   inputs simulatenously
 #' @export
+#' @family map variants
 #' @examples
 #' 1:10 %>%
 #'   map(rnorm, n = 10) %>%

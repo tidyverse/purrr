@@ -105,6 +105,7 @@ iris \%>\% lmap_if(is.factor, disjoin)
 mtcars \%>\% lmap_at(c("cyl", "vs", "am"), disjoin)
 }
 \seealso{
-\code{\link[=map_at]{map_at()}}, \code{\link[=map_if]{map_if()}} and
-\code{\link[=map]{map()}}
+Other map variants: \code{\link{conditional-map}},
+  \code{\link{invoke}}, \code{\link{map2}},
+  \code{\link{map}}
 }
