@@ -257,15 +257,6 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
 
 #' @export
 #' @rdname map2
-#' @usage NULL
-map3 <- function(.x, .y, .z, .f, ...) {
-  warning("`map3(x, y, z)` is deprecated. Please use `pmap(list(x, y, z))` ",
-    "instead", call. = FALSE)
-  pmap(list(.x, .y, .z), .f, ...)
-}
-
-#' @export
-#' @rdname map2
 #' @useDynLib purrr pmap_impl
 pmap <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
@@ -306,28 +297,9 @@ pmap_df <- function(.l, .f, ..., .id = NULL) {
 
 
 #' @export
-#' @usage NULL
-#' @rdname map2
-map_n <- function(...) {
-  warning("`map_n()` is deprecated; please use `pmap()` instead.",
-    call. = FALSE)
-  pmap(...)
-}
-
-#' @export
 #' @rdname map2
 walk2 <- function(.x, .y, .f, ...) {
   pwalk(list(.x, .y), .f, ...)
-  invisible(.x)
-}
-
-#' @export
-#' @usage NULL
-#' @rdname map2
-walk3 <- function(.x, .y, .z, .f, ...) {
-  warning("`walk3(x, y, z)` is deprecated. Please use `pwalk(list(x, y, z))` ",
-    "instead", call. = FALSE)
-  pwalk(list(.x, .y, .z), .f, ...)
   invisible(.x)
 }
 
@@ -340,15 +312,6 @@ pwalk <- function(.l, .f, ...) {
     do.call(".f", c(args, list(...)))
   }
   invisible(.l)
-}
-
-#' @export
-#' @rdname map2
-#' @usage NULL
-walk_n <- function(...) {
-  warning("`walk_n()` is deprecated; please use `pwalk()` instead.",
-    call. = FALSE)
-  pwalk(...)
 }
 
 #' Modify elements conditionally

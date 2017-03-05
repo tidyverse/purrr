@@ -7,18 +7,14 @@
 \alias{map2_dbl}
 \alias{map2_chr}
 \alias{map2_df}
-\alias{map3}
 \alias{pmap}
 \alias{pmap_lgl}
 \alias{pmap_int}
 \alias{pmap_dbl}
 \alias{pmap_chr}
 \alias{pmap_df}
-\alias{map_n}
 \alias{walk2}
-\alias{walk3}
 \alias{pwalk}
-\alias{walk_n}
 \title{Map over multiple inputs simultaneously.}
 \usage{
 map2(.x, .y, .f, ...)

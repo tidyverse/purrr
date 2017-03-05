@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* Deprecated functions `map3()`, `map_n()`, `walk3()`, and `walk_n()` have
+  been removed.
+
 * `every()` and `some()` now return `NA` if present in the output (#174).
 
 * `set_names()` can now take a function to tranform the names programmatically
