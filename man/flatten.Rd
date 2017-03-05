@@ -30,9 +30,9 @@ type for the other functions.}
 giving either the name or the index of the data frame.}
 }
 \value{
-\code{flatten()} returns a list, \code{flatten_lgl} a logical
-vector, \code{flatten_int} an integer vector, \code{flatten_dbl} a
-double vector, and \code{flatten_chr} a character vector.
+\code{flatten()} returns a list, \code{flatten_lgl()} a logical
+vector, \code{flatten_int()} an integer vector, \code{flatten_dbl()} a
+double vector, and \code{flatten_chr()} a character vector.
 }
 \description{
 These functions remove a level hierarchy from a list. They are similar to

@@ -9,6 +9,9 @@ compose(...)
 \arguments{
 \item{...}{n functions to apply in order from right to left.}
 }
+\value{
+A function
+}
 \description{
 Compose multiple functions
 }

@@ -8,6 +8,7 @@
 #'
 #'   If `x` already has names, you can provide a function or formula
 #'   to transform the existing names.
+#' @return `.x` with the names attribute set.
 #' @export
 #' @examples
 #' set_names(1:4, c("a", "b", "c", "d"))

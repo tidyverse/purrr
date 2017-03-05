@@ -12,18 +12,15 @@
 #' @inheritParams as_function
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to `.f`.
-#' @return `map()` always returns a list the same length as `.x`.
+#' @return All functions return a vector the same length as `.x`.
 #'
-#'   `map_lgl()` returns a logical vector, `map_int()` an integer
-#'   vector, `map_dbl()`, a double vector, `map_chr()`, a character
+#'   `map()` returns a list, `map_lgl()` a logical vector, `map_int()` an
+#'   integer vector, `map_dbl()` a double vector, and `map_chr()` a character
 #'   vector. The output of `.f` will be automatically typed upwards,
-#'   e.g. logical -> integer -> double -> character. The output
-#'   is always the same length as the input.
+#'   e.g. logical -> integer -> double -> character.
 #'
-#'   `walk()` (invisibly) the input `.x`. It's called primarily for
-#'   its side effects, but this makes it easier to combine in a pipe.
-#' @seealso [map2()] and [pmap()] to map over multiple
-#'   inputs simulatenously
+#'   `walk()` returns the input `.x` (invisibly). This makes it easy to
+#'   use in pipe.
 #' @export
 #' @family map variants
 #' @examples

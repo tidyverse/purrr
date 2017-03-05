@@ -6,7 +6,7 @@
 #' and the position of an element.
 #'
 #' @inheritParams map
-#' @return `map()` always returns a list the same length as `.x`.
+#' @return A vector the same length as `.x`.
 #' @export
 #' @family map variants
 #' @examples

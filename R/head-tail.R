@@ -2,6 +2,7 @@
 #'
 #' @inheritParams map_if
 #' @inheritParams map
+#' @return A vector the same type as `.x`.
 #' @export
 #' @examples
 #' pos <- function(x) x >= 0

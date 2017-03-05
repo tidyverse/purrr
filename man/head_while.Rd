@@ -21,6 +21,9 @@ inner lists. Only those elements where \code{.p} evaluates to
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
+\value{
+A vector the same type as \code{.x}.
+}
 \description{
 Find head/tail that all satisfies a predicate.
 }

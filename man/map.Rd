@@ -48,16 +48,15 @@ value of \code{.null} will be returned.}
 giving either the name or the index of the data frame.}
 }
 \value{
-\code{map()} always returns a list the same length as \code{.x}.
+All functions return a vector the same length as \code{.x}.
 
-\code{map_lgl()} returns a logical vector, \code{map_int()} an integer
-vector, \code{map_dbl()}, a double vector, \code{map_chr()}, a character
+\code{map()} returns a list, \code{map_lgl()} a logical vector, \code{map_int()} an
+integer vector, \code{map_dbl()} a double vector, and \code{map_chr()} a character
 vector. The output of \code{.f} will be automatically typed upwards,
-e.g. logical -> integer -> double -> character. The output
-is always the same length as the input.
+e.g. logical -> integer -> double -> character.
 
-\code{walk()} (invisibly) the input \code{.x}. It's called primarily for
-its side effects, but this makes it easier to combine in a pipe.
+\code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
+use in pipe.
 }
 \description{
 The map function transform the input, returning a vector the same length
@@ -125,9 +124,6 @@ mtcars \%>\%
 # the broom package)
 }
 \seealso{
-\code{\link[=map2]{map2()}} and \code{\link[=pmap]{pmap()}} to map over multiple
-inputs simulatenously
-
 Other map variants: \code{\link{conditional-map}},
   \code{\link{imap}}, \code{\link{invoke}},
   \code{\link{lmap}}, \code{\link{map2}}

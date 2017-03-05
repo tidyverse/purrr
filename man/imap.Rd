@@ -48,7 +48,7 @@ value of \code{.null} will be returned.}
 giving either the name or the index of the data frame.}
 }
 \value{
-\code{map()} always returns a list the same length as \code{.x}.
+A vector the same length as \code{.x}.
 }
 \description{
 \code{imap_xxx(x, ...)}, an indexed map, is short hand for

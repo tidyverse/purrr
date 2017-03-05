@@ -6,6 +6,7 @@
 #'
 #' @param x A vector.
 #' @param y Values to repeat.
+#' @return An vectors the same length as `.x`.
 #' @examples
 #' x <- 1:5
 #' rep_along(x, 1:2)

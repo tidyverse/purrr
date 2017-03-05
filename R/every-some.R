@@ -2,7 +2,7 @@
 #'
 #' @inheritParams map_if
 #' @inheritParams map
-#' @return Either `TRUE` or `FALSE`.
+#' @return A logical vector of length 1.
 #' @export
 #' @examples
 #' x <- list(0, 1, TRUE)

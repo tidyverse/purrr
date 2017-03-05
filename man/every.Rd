@@ -22,7 +22,7 @@ inner lists. Only those elements where \code{.p} evaluates to
 \item{...}{Additional arguments passed on to \code{.f}.}
 }
 \value{
-Either \code{TRUE} or \code{FALSE}.
+A logical vector of length 1.
 }
 \description{
 Do every or some elements of a list satisfy a predicate?

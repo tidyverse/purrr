@@ -16,6 +16,7 @@
 #' @param ..f A function to lift.
 #' @param ... Default arguments for `..f`. These will be
 #'   evaluated only once, when the lifting factory is called.
+#' @return A function.
 #' @name lift
 #' @seealso [invoke()]
 NULL

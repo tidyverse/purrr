@@ -41,6 +41,9 @@ input vectors. The latter can be any of the types returned by
 \code{\link[=typeof]{typeof()}}, or "numeric" as a shorthand for either
 "double" or "integer".}
 }
+\value{
+A function.
+}
 \description{
 \code{lift_xy()} is a composition helper. It helps you compose
 functions by lifting their domain from a kind of input to another

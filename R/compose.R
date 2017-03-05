@@ -1,6 +1,7 @@
 #' Compose multiple functions
 #'
 #' @param ... n functions to apply in order from right to left.
+#' @return A function
 #' @export
 #' @examples
 #' not_null <- compose(`!`, is.null)

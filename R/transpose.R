@@ -15,6 +15,7 @@
 #'   template; you'll get a warning if a sub-list is not the same length as
 #'   the first element. For efficiency, elements are matched by position, not
 #'   by name.
+#' @return A list with indexing transposed compared to `.l`.
 #' @export
 #' @examples
 #' x <- rerun(5, x = runif(1), y = runif(5))

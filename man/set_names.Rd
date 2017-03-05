@@ -14,6 +14,9 @@ set_names(x, nm = x)
 If \code{x} already has names, you can provide a function or formula
 to transform the existing names.}
 }
+\value{
+\code{.x} with the names attribute set.
+}
 \description{
 This is a snake case wrapper for \code{\link[stats:setNames]{stats::setNames()}}, with
 tweaked defaults, and stricter argument checking.

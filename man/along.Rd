@@ -15,6 +15,9 @@ rep_along(x, y)
 
 \item{y}{Values to repeat.}
 }
+\value{
+An vectors the same length as \code{.x}.
+}
 \description{
 These functions take the idea of \code{\link[=seq_along]{seq_along()}} and generalise
 it to creating lists (\code{list_along}) and repeating values

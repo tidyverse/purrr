@@ -15,6 +15,9 @@ template; you'll get a warning if a sub-list is not the same length as
 the first element. For efficiency, elements are matched by position, not
 by name.}
 }
+\value{
+A list with indexing transposed compared to \code{.l}.
+}
 \description{
 Tranpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 list of pairs, or a list of pairs into pair of lists. For example,

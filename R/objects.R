@@ -2,7 +2,9 @@
 #'
 #' This splices all arguments into a list. Non-list objects and lists
 #' with a S3 class are encapsulated in a list before concatenation.
+#'
 #' @param ... Objects to concatenate.
+#' @return A list.
 #' @export
 #' @examples
 #' inputs <- list(arg1 = "a", arg2 = "b")

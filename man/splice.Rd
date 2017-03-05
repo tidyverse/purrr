@@ -9,6 +9,9 @@ splice(...)
 \arguments{
 \item{...}{Objects to concatenate.}
 }
+\value{
+A list.
+}
 \description{
 This splices all arguments into a list. Non-list objects and lists
 with a S3 class are encapsulated in a list before concatenation.

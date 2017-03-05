@@ -7,9 +7,9 @@
 #' @param .x A list of flatten. The contents of the list can be anything for
 #'   `flatten` (as a list is returned), but the contents must match the
 #'   type for the other functions.
-#' @return `flatten()` returns a list, `flatten_lgl` a logical
-#'   vector, `flatten_int` an integer vector, `flatten_dbl` a
-#'   double vector, and `flatten_chr` a character vector.
+#' @return `flatten()` returns a list, `flatten_lgl()` a logical
+#'   vector, `flatten_int()` an integer vector, `flatten_dbl()` a
+#'   double vector, and `flatten_chr()` a character vector.
 #' @inheritParams map
 #' @export
 #' @examples
