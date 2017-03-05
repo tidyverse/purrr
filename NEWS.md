@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* New `depth()` computes the depth (i.e. the number of levels of indexing)
+  or a vector (#243).
+
 * A new family of "indexed" map functions, `imap()`, `imap_lgl()` etc, 
   provide a short-hand for `map2(x, names(x))` or `map2(x, seq_along(x))`
   (#240).
