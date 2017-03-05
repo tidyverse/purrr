@@ -4,6 +4,8 @@
 \alias{as_function}
 \alias{as_function.function}
 \alias{as_function.formula}
+\alias{get_attr}
+\alias{as_function.attr}
 \alias{as_function.character}
 \alias{as_function.numeric}
 \alias{as_function.list}
@@ -14,6 +16,10 @@ as_function(.f, ...)
 \method{as_function}{function}(.f, ...)
 
 \method{as_function}{formula}(.f, ...)
+
+get_attr(x)
+
+\method{as_function}{attr}(.f, ..., .null = NULL)
 
 \method{as_function}{character}(.f, ..., .null = NULL)
 
@@ -34,10 +40,13 @@ two inputs.
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. If a component is not present, the
-value of \code{.null} will be returned.}
+and name at different levels. Within a list, wrap strings in \code{get_attr()}
+to extract named attributes If a component is not present, the value of
+\code{.null} will be returned.}
 
 \item{...}{Additional arguments passed on to methods.}
+
+\item{x}{A string}
 
 \item{.null}{Optional additional argument for extractor functions
 (i.e. when \code{.f} is character, integer, or list). Returned when
@@ -56,6 +65,9 @@ as_function(c("a", "b", "c"))
 
 as_function(list(1, "a", 2))
 # Equivalent to function(x) x[[1]][["a"]][[2]]
+
+as_function(list(1, get_attr("a")))
+# Equivalent to function(x) attr(x[[1]], "a")
 
 as_function(c("a", "b", "c"), .null = NA)
 }

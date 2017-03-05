@@ -127,19 +127,24 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   for (int i = 0; i < n; ++i) {
     SEXP index_i = VECTOR_ELT(index, i);
 
-    if (Rf_isNull(x)) {
-      return missing;
-    } else if (Rf_isVector(x)) {
-      x = extract_vector(x, index_i, i);
-    } else if (Rf_isEnvironment(x)) {
-      x = extract_env(x, index_i, i);
-    } else if (Rf_isS4(x)) {
-      x = extract_attr(x, index_i, 1);
+    if (Rf_inherits(index_i, "attr")) {
+      x = extract_attr(x, index_i, i);
     } else {
-      Rf_errorcall(R_NilValue,
-        "Don't know how to extract from a %s", Rf_type2char(TYPEOF(x))
-      );
+      if (Rf_isNull(x)) {
+        return missing;
+      } else if (Rf_isVector(x)) {
+        x = extract_vector(x, index_i, i);
+      } else if (Rf_isEnvironment(x)) {
+        x = extract_env(x, index_i, i);
+      } else if (Rf_isS4(x)) {
+        x = extract_attr(x, index_i, i);
+      } else {
+        Rf_errorcall(R_NilValue,
+          "Don't know how to extract from a %s", Rf_type2char(TYPEOF(x))
+        );
+      }
     }
+
   }
 
   return (Rf_length(x) == 0) ? missing : x;

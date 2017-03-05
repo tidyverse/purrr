@@ -49,8 +49,9 @@ update_list <- function(`_data`, ...) {
 #'   If __character vector__, __numeric vector__, or __list__, it
 #'   is converted to an extractor function. Character vectors index by name
 #'   and numeric vectors index by position; use a list to index by position
-#'   and name at different levels. If a component is not present, the
-#'   value of `.null` will be returned.
+#'   and name at different levels. Within a list, wrap strings in `get_attr()`
+#'   to extract named attributes If a component is not present, the value of
+#'   `.null` will be returned.
 #' @param .null Optional additional argument for extractor functions
 #'   (i.e. when `.f` is character, integer, or list). Returned when
 #'   value does not exist or is `NULL`.
@@ -65,6 +66,9 @@ update_list <- function(`_data`, ...) {
 #'
 #' as_function(list(1, "a", 2))
 #' # Equivalent to function(x) x[[1]][["a"]][[2]]
+#'
+#' as_function(list(1, get_attr("a")))
+#' # Equivalent to function(x) attr(x[[1]], "a")
 #'
 #' as_function(c("a", "b", "c"), .null = NA)
 as_function <- function(.f, ...) {
@@ -86,10 +90,23 @@ as_function.formula <- function(.f, ...) {
   make_function(alist(.x = , .y = , . = .x), .f[[2]], environment(.f))
 }
 
-
 #' @useDynLib purrr extract_impl
 extract <- function(x, index, .null = NULL) {
   .Call(extract_impl, x, index, .null)
+}
+
+#' @export
+#' @rdname as_function
+#' @param x A string
+get_attr <- function(x) {
+  stopifnot(is.character(x))
+  structure(x, class = "attr")
+}
+
+#' @export
+#' @rdname as_function
+as_function.attr <- function(.f, ..., .null = NULL) {
+  as_function(map(.f, get_attr), ..., .null = .null)
 }
 
 #' @export

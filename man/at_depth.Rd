@@ -23,8 +23,9 @@ two inputs.
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. If a component is not present, the
-value of \code{.null} will be returned.}
+and name at different levels. Within a list, wrap strings in \code{get_attr()}
+to extract named attributes If a component is not present, the value of
+\code{.null} will be returned.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 }

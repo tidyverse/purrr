@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `get_attr()` makes it possible to extract values from attributes within
+  `as_funtion()`.
+
 * `pmap()` coerces data frames to lists to avoid the expensive `[.data.frame`
   which provides security that's unneeded here (#220).
 

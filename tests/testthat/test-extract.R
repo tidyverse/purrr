@@ -38,6 +38,23 @@ test_that("special values never matches", {
 })
 
 
+# attributes --------------------------------------------------------------
+
+test_that("can extract attributes", {
+  x <- structure(
+    list(
+      structure(
+        list(),
+        x = 1
+      )
+    ),
+    y = 2
+  )
+
+  expect_equal(extract(x, list(get_attr("y"))), 2)
+  expect_equal(extract(x, list(1, get_attr("x"))), 1)
+})
+
 # environments ------------------------------------------------------------
 
 test_that("extract errors with invalid indices", {
