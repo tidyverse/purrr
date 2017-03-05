@@ -1,3 +1,12 @@
+# purrr 0.2.2.1
+
+* All data-frame based mappers have been deprecated in favour of new
+  functions and idioms in the tidyverse. `dmap()`, `dmap_at()`, `dmap_if()`,
+  `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and
+  `unslice()` have been moved to purrrlyr. This is a bit of an aggresive
+  change but it allows us to make the dependencies much lighter.
+
+
 # purrr 0.2.2
 
 * Fix for dev tibble support.
@@ -14,7 +23,7 @@
 * `as_function()` gains a `.null` argument that for character and numeric
   values allows you to specify what to return for null/absent elements (#110).
   This can be used with any map function, e.g. `map_int(x, 1, .null = NA)`
-  
+
 * `as_function()` is now generic.
 
 * New `is_function()` that returns `TRUE` only for regular functions.
