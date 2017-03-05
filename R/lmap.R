@@ -68,7 +68,7 @@
 #'   })
 #'
 #'   names(out) <- paste(name, levels(x), sep = sep)
-#'   dplyr::as_data_frame(out)
+#'   tibble::as_tibble(out)
 #' }
 #'
 #' # Now, we are ready to map disjoin() on each categorical variable of a

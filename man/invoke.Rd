@@ -79,9 +79,9 @@ list(m1 = mean, m2 = median) \%>\%
   invoke_map(, rcauchy(100))
 
 # If you have pairs of function name and arguments, it's natural
-# to store them in a data frame:
-if (requireNamespace("dplyr", quietly = TRUE)) {
-df <- dplyr::data_frame(
+# to store them in a data frame. Here we use a tibble because
+# it has better support for list-columns
+df <- tibble::tibble(
   f = c("runif", "rpois", "rnorm"),
   params = list(
     list(n = 10),
@@ -91,7 +91,6 @@ df <- dplyr::data_frame(
 )
 df
 invoke_map(df$f, df$params)
-}
 }
 \seealso{
 Other map variants: \code{\link{conditional-map}},

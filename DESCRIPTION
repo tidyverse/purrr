@@ -15,7 +15,8 @@ Imports:
     magrittr (>= 1.5),
     dplyr (>= 0.4.3),
     Rcpp,
-    lazyeval (>= 0.2.0.9000)
+    lazyeval (>= 0.2.0.9000),
+    tibble
 Suggests:
     testthat,
     covr

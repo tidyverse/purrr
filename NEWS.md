@@ -47,7 +47,7 @@
 
     * Inovking a function row by row with the columns of a data frame
       as arguments should be done with `pmap()` followed by
-      `dplyr::as_dataframe()` instead of `map_rows()`.
+      `tibble::as_tibble()` instead of `map_rows()`.
 
     * Mapping rowwise slices of a data frame with `by_row()` is
       deprecated in favour of a combination of tidyverse functions.

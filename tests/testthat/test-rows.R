@@ -231,6 +231,6 @@ test_that("by_row() creates indices with c++ style indexing", {
 
 test_that("error is thrown when no columns to map", {
   expect_error(mtcars["cyl"] %>% slice_rows("cyl") %>% by_slice(list), "empty")
-  expect_error(dplyr::data_frame() %>% invoke_rows(.f = c), "empty")
-  expect_error(dplyr::data_frame() %>% by_row(c), "empty")
+  expect_error(tibble::tibble() %>% invoke_rows(.f = c), "empty")
+  expect_error(tibble::tibble() %>% by_row(c), "empty")
 })

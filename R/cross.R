@@ -147,7 +147,7 @@ cross_df <- function(.l, .filter = NULL) {
   cross(.l, .filter = .filter) %>%
     transpose() %>%
     simplify_all() %>%
-    dplyr::as_data_frame()
+    tibble::as_tibble()
 }
 
 #' @export

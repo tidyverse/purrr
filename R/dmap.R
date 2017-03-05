@@ -30,7 +30,7 @@ dmap <- function(.d, .f, ...) {
     sliced_dmap(.d, .f, ...)
   } else {
     res <- .Call(map_impl, environment(), ".d", ".f", "list")
-    dplyr::as_data_frame(res)
+    tibble::as_tibble(res)
   }
 }
 

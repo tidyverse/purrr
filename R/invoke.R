@@ -51,9 +51,9 @@
 #'   invoke_map(, rcauchy(100))
 #'
 #' # If you have pairs of function name and arguments, it's natural
-#' # to store them in a data frame:
-#' if (requireNamespace("dplyr", quietly = TRUE)) {
-#' df <- dplyr::data_frame(
+#' # to store them in a data frame. Here we use a tibble because
+#' # it has better support for list-columns
+#' df <- tibble::tibble(
 #'   f = c("runif", "rpois", "rnorm"),
 #'   params = list(
 #'     list(n = 10),
@@ -63,7 +63,6 @@
 #' )
 #' df
 #' invoke_map(df$f, df$params)
-#' }
 invoke <- function(.f, .x = NULL, ..., .env = NULL) {
   .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
 
