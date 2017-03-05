@@ -14,8 +14,8 @@
   provide a short-hand for `map2(x, names(x))` or `map2(x, seq_along(x))`
   (#240).
 
-* Deprecated functions `map3()`, `map_n()`, `walk3()`, and `walk_n()` have
-  been removed.
+* Deprecated functions `flatmap()`, `map3()`, `map_n()`, `walk3()`, and 
+  `walk_n()` have been removed.
 
 * `every()` and `some()` now return `NA` if present in the output (#174).
 
