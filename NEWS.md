@@ -1,5 +1,9 @@
 # purrr 0.2.2.9000
 
+* A new family of "indexed" map functions, `imap()`, `imap_lgl()` etc, 
+  provide a short-hand for `map2(x, names(x))` or `map2(x, seq_along(x))`
+  (#240).
+
 * Deprecated functions `map3()`, `map_n()`, `walk3()`, and `walk_n()` have
   been removed.
 

@@ -129,6 +129,6 @@ mtcars \%>\%
 inputs simulatenously
 
 Other map variants: \code{\link{conditional-map}},
-  \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}
+  \code{\link{imap}}, \code{\link{invoke}},
+  \code{\link{lmap}}, \code{\link{map2}}
 }

@@ -70,6 +70,7 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
 
 }
 \seealso{
-Other map variants: \code{\link{invoke}},
-  \code{\link{lmap}}, \code{\link{map2}}, \code{\link{map}}
+Other map variants: \code{\link{imap}},
+  \code{\link{invoke}}, \code{\link{lmap}},
+  \code{\link{map2}}, \code{\link{map}}
 }
