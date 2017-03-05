@@ -42,13 +42,14 @@ positions. Only those elements corresponding to \code{.at} will be
 modified.}
 }
 \value{
-A list.
+An object the same class as \code{.x}
 }
 \description{
 \code{map_if()} maps a function over the elements of \code{.x}
 satisfying a predicate. \code{map_at()} is similar but will modify
 the elements corresponding to a character vector of names or a
-numeric vector of positions.
+numeric vector of positions. These modify the input data structure;
+it's your responsibility to ensure that the transformation is valid.
 }
 \examples{
 # Convert factors to characters
@@ -67,7 +68,6 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
   transpose() \%>\%
   simplify_all()
-
 }
 \seealso{
 Other map variants: \code{\link{imap}},

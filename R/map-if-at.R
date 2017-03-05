@@ -3,7 +3,9 @@
 #' `map_if()` maps a function over the elements of `.x`
 #' satisfying a predicate. `map_at()` is similar but will modify
 #' the elements corresponding to a character vector of names or a
-#' numeric vector of positions.
+#' numeric vector of positions. These modify the input data structure;
+#' it's your responsibility to ensure that the transformation is valid.
+#'
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
 #'   predicate function, or a logical vector of the same length as `.x`.
@@ -14,7 +16,7 @@
 #' @param .at A character vector of names or a numeric vector of
 #'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
-#' @return A list.
+#' @return An object the same class as `.x`
 #' @name conditional-map
 #' @family map variants
 #' @examples
@@ -34,13 +36,11 @@
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   transpose() %>%
 #'   simplify_all()
-#'
 NULL
 
 #' @rdname conditional-map
 #' @export
 map_if <- function(.x, .p, .f, ...) {
-  .x <- unclass(.x)
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
@@ -49,7 +49,6 @@ map_if <- function(.x, .p, .f, ...) {
 #' @rdname conditional-map
 #' @export
 map_at <- function(.x, .at, .f, ...) {
-  .x <- c(.x)
   sel <- inv_which(.x, .at)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
