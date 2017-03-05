@@ -1,5 +1,7 @@
 # purrr 0.2.2.9000
 
+* `invoke()` uses a more robust approach to generate the argument list (#249)
+
 * `map_if()` and `map_at()` now modify their input in-place (#169).
 
 * New `depth()` computes the depth (i.e. the number of levels of indexing)

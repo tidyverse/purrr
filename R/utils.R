@@ -220,3 +220,5 @@ has_names <- function(x) {
 }
 
 isFALSE <- function(x) identical(x, FALSE)
+
+ndots <- function(...) nargs()

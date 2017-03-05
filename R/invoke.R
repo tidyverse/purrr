@@ -30,7 +30,7 @@
 #' invoke(paste, list("01a", "01b"), sep = "-")
 #' # That's more natural as part of a pipeline:
 #' list("01a", "01b") %>%
-#'   invoke(paste, ., sep = ".")
+#'   invoke(paste, ., sep = "-")
 #'
 #' # Invoke a list of functions, each with different arguments
 #' invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
@@ -66,7 +66,9 @@
 #' }
 invoke <- function(.f, .x = NULL, ..., .env = NULL) {
   .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
-  do.call(.f, c(.x, list(...)), envir = .env)
+
+  args <- c(as.list(.x), list(...))
+  do.call(.f, args, envir = .env)
 }
 
 as_invoke_function <- function(f) {
