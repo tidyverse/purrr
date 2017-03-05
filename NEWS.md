@@ -34,28 +34,10 @@
   treat NULL the same way as an empty vector (#199).
 
 * All data-frame based mappers have been deprecated in favour of new
-  functions and idioms in the tidyverse.
-
-    * Mapping a function to each column of a data frame should now be
-      handled with the colwise mutating and summarising operations in
-      dplyr instead of `dmap()`. These are the verbs with suffix
-      `_all()`, `_at()` and `_if()`, such as `mutate_all()` or
-      `summarise_if()`. Note that this means the output of `.f` should
-      conform to the requirements of dplyr operations: same length as
-      the input for mutating operations, and length 1 for summarising
-      operations.
-
-    * Inovking a function row by row with the columns of a data frame
-      as arguments should be done with `pmap()` followed by
-      `tibble::as_tibble()` instead of `map_rows()`.
-
-    * Mapping rowwise slices of a data frame with `by_row()` is
-      deprecated in favour of a combination of tidyverse functions.
-      First use `tidyr::nest()` to create a list-column containing
-      groupwise data frames. Then use `dplyr::mutate()` to operate on
-      this list-column. Typically you will want to apply a function on
-      each element (nested data frame) of this list-column with
-      `purrr::map()`.
+  functions and idioms in the tidyverse. `dmap()`, `dmap_at()`, `dmap_if()`,
+  `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and
+  `unslice()` have been moved to purrrlyr. This is a bit of an aggresive
+  change but it allows us to make the dependencies much lighter.
 
 * `cross_n()` has been renamed to `cross()`. The `_n` suffix was
   removed for consistency with `pmap()` (originally called `map_n()`

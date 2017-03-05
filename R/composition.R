@@ -116,13 +116,6 @@ lift_dv <- function (..f, ..., .unnamed = FALSE) {
 #'
 #' ### Lifting from c(...) to list(...) or ...
 #'
-#' # Some functions such as mean() take an atomic vector. It is often
-#' # useful to transform them to functions taking a list. In the
-#' # following example, we lift mean() to apply it to each row of a
-#' # data frame. This works because a row is essentially a list of
-#' # length-1 vectors:
-#' mtcars %>% by_row(lift_vl(mean))
-#'
 #' # In other situations we need the vector-valued function to take a
 #' # variable number of arguments as with pmap(). This is a job for
 #' # lift_vd():
