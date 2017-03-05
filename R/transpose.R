@@ -13,8 +13,10 @@
 #'
 #' @param .l A list of vectors to zip. The first element is used as the
 #'   template; you'll get a warning if a sub-list is not the same length as
-#'   the first element. For efficiency, elements are matched by position, not
-#'   by name.
+#'   the first element.
+#' @param .names For efficiency, `transpose()` usually inspects the
+#'   first component of `.l` to determine the structure. Use `.names`
+#'   if you want to override this default.
 #' @return A list with indexing transposed compared to `.l`.
 #' @export
 #' @examples
@@ -35,8 +37,8 @@
 #' x %>% transpose()
 #' x %>% transpose() %>% simplify_all()
 #' @useDynLib purrr transpose_impl
-transpose <- function(.l) {
-  .Call(transpose_impl, .l)
+transpose <- function(.l, .names = NULL) {
+  .Call(transpose_impl, .l, .names)
 }
 
 #' @rdname transpose

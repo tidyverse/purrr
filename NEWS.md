@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `transpose()` now matches by name if available (#164). You can 
+  override the default choice with the new `.names` argument.
+
 * `get_attr()` makes it possible to extract values from attributes within
   `as_funtion()`.
 

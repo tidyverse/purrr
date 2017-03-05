@@ -43,3 +43,59 @@ test_that("can transpose list of atomic vectors", {
   x <- list(list(TRUE, 1L, 1, "1"))
   expect_equal(transpose(x), list(list(TRUE), list(1L), list(1), list("1")))
 })
+
+
+# Named based matching ----------------------------------------------------
+
+test_that("can override default names", {
+  x <- list(
+    list(x = 1),
+    list(y = 2, x = 1)
+  )
+  tx <- transpose(x, c("x", "y"))
+
+  expect_equal(tx, list(
+    x = list(1, 1),
+    y = list(NULL, 2)
+  ))
+})
+
+test_that("if present, names are used", {
+  x <- list(
+    list(x = 1, y = 2),
+    list(y = 2, x = 1)
+  )
+  tx <- transpose(x)
+
+  expect_equal(tx$x, list(1, 1))
+  expect_equal(tx$y, list(2, 2))
+})
+
+test_that("if missing elements, filled with NULL", {
+  x <- list(
+    list(x = 1, y = 2),
+    list(x = 1)
+  )
+  tx <- transpose(x)
+  expect_equal(tx$y, list(2, NULL))
+})
+
+# Position based matching -------------------------------------------------
+
+test_that("warning if too short", {
+  x <- list(
+    list(1, 2),
+    list(1)
+  )
+  expect_warning(tx <- transpose(x), "has length 1 not 2")
+  expect_equal(tx, list(list(1, 1), list(2, NULL)))
+})
+
+test_that("warning if too long", {
+  x <- list(
+    list(1),
+    list(1, 2)
+  )
+  expect_warning(tx <- transpose(x), "has length 2 not 1")
+  expect_equal(tx, list(list(1, 1)))
+})

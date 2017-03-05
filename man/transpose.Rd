@@ -7,13 +7,16 @@
 \alias{zip3}
 \title{Transpose a list.}
 \usage{
-transpose(.l)
+transpose(.l, .names = NULL)
 }
 \arguments{
 \item{.l}{A list of vectors to zip. The first element is used as the
 template; you'll get a warning if a sub-list is not the same length as
-the first element. For efficiency, elements are matched by position, not
-by name.}
+the first element.}
+
+\item{.names}{For efficiency, \code{transpose()} usually inspects the
+first component of \code{.l} to determine the structure. Use \code{.names}
+if you want to override this default.}
 }
 \value{
 A list with indexing transposed compared to \code{.l}.
