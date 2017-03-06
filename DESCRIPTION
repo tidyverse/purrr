@@ -9,18 +9,19 @@ Authors@R: c(
 Description: Make your pure functions purr with the 'purrr' package. This
     package completes R's functional programming tools with missing features
     present in other programming languages.
+URL: https://github.com/hadley/purrr
+BugReports: https://github.com/hadley/purrr/issues
 License: GPL-3 | file LICENSE
 LazyData: true
 Imports:
     magrittr (>= 1.5),
-    lazyeval (>= 0.2.0.9000),
-    tibble
+    tibble,
+    rlang
 Suggests:
     covr,
     dplyr (>= 0.4.3),
     testthat,
-URL: https://github.com/hadley/purrr
-BugReports: https://github.com/hadley/purrr/issues
+Remotes: 
+    hadley/rlang
 RoxygenNote: 6.0.1
-Remotes: hadley/lazyeval
 Roxygen: list(markdown = TRUE)

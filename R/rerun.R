@@ -18,7 +18,7 @@
 #'   rerun(x = rnorm(5), y = rnorm(5)) %>%
 #'   map_dbl(~ cor(.x$x, .x$y))
 rerun <- function(.n, ...) {
-  dots <- lazyeval::lazy_dots(...)
+  dots <- rlang::tidy_quotes(...)
 
   # Special case: if single unnamed argument, insert directly into the output
   # rather than wrapping in a list.
@@ -28,7 +28,7 @@ rerun <- function(.n, ...) {
 
   out <- vector("list", .n)
   for (i in seq_len(.n)) {
-    out[[i]] <- lazyeval::lazy_eval(dots)
+    out[[i]] <- rlang::tidy_eval(dots)
   }
   out
 }

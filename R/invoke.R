@@ -64,7 +64,7 @@
 #' df
 #' invoke_map(df$f, df$params)
 invoke <- function(.f, .x = NULL, ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
 
   args <- c(as.list(.x), list(...))
   do.call(.f, args, envir = .env)
@@ -81,35 +81,35 @@ as_invoke_function <- function(f) {
 #' @rdname invoke
 #' @export
 invoke_map <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
 invoke_map_lgl <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_lgl(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
 invoke_map_int <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_int(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
 invoke_map_dbl <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_dbl(.f, .x, invoke, ..., .env = .env)
 }
 #' @rdname invoke
 #' @export
 invoke_map_chr <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_chr(.f, .x, invoke, ..., .env = .env)
 }
@@ -117,7 +117,7 @@ invoke_map_chr <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_df <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  .env <- .env %||% lazyeval::expr_env(.f, parent.frame())
+  .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_df(.f, .x, invoke, ..., .env = .env)
 }

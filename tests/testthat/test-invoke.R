@@ -4,20 +4,19 @@ context("invoke")
 # invoke ------------------------------------------------------------------
 
 test_that("invoke() evaluates expressions in the right environment", {
-  shadowed_object <- letters
-  shadowed_fun <- toupper
-  expect_equal(invoke("shadowed_fun", quote(shadowed_object)), toupper(letters))
+  x <- letters
+  f <- toupper
+  expect_equal(invoke("f", quote(x)), toupper(letters))
 })
 
 test_that("invoke() follows promises to find the evaluation env", {
-  shadowed_object <- letters
-  shadowed_fun <- toupper
-  f1 <- function(x) {
-    f2 <- function(x) purrr::invoke(x, quote(shadowed_object))
-    f2(x)
+  x <- letters
+  f <- toupper
+  f1 <- function(y) {
+    f2 <- function(z) purrr::invoke(z, quote(x))
+    f2(y)
   }
-  environment(f1) <- baseenv()
-  expect_equal(f1("shadowed_fun"), toupper(letters))
+  expect_equal(f1("f"), toupper(letters))
 })
 
 # invoke_map --------------------------------------------------------------
