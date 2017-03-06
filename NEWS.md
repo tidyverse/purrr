@@ -3,7 +3,8 @@
 * New `modify()` is shorthand for `x[] <- map(x, f)`.
 
 * `map_at()` and `map_if()` have been deprecated. Please use `modify_at()` 
-  and `modify_if()` instead (#292).
+  and `modify_if()` instead (#292). `at_depth()` has been deprecated;
+  please use `modify_depth()` instead.
 
 * `invoke()` no longer uses lazyeval to figure out which enviroment a 
   character `f` comes from.

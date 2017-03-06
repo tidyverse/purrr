@@ -1,9 +1,9 @@
 #' Modify elements "in-place"
 #'
 #' `modify()` is a short-cut for `x[] <- map(x, .f)`. `modify_if()` only modifies
-#' the elements of `.x` that satisfy a predicate. `map_at()` is similar but
-#' will modify the elements corresponding to a character vector of names or a
-#' numeric vector of positions.
+#' the elements of `.x` that satisfy a predicate. `map_at()` only modifies
+#' elements given by names or positions. `modify_depth()` only modifies
+#' elements at a given level of a nested data structure.
 #'
 #' These modify the input data structure; it's your responsibility to ensure
 #' that the transformation produces a valid output. For example, if you're
@@ -19,8 +19,13 @@
 #' @param .at A character vector of names or a numeric vector of
 #'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
+#' @param .depth Level of `.x` to map on.
+#'  * `modify_depth(x, 0, fun)` is equivalent to `fun(x)`
+#'  * `modify_depth(x, 1, fun)` is equivalent to `map(x, fun)`
+#'  * `modify_depth(x, 2, fun)` is equivalent to `map(x, ~ map(., fun))`
 #' @return An object the same class as `.x`
 #' @family map variants
+#' @export
 #' @examples
 #' # Convert factors to characters
 #' iris %>%
@@ -38,9 +43,38 @@
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   transpose() %>%
 #'   simplify_all()
+#'
+#' # Modify at specified depth ---------------------------
+#' l1 <- list(
+#'   obj1 = list(
+#'     prop1 = list(param1 = 1:2, param2 = 3:4),
+#'     prop2 = list(param1 = 5:6, param2 = 7:8)
+#'   ),
+#'   obj2 = list(
+#'     prop1 = list(param1 = 9:10, param2 = 11:12),
+#'     prop2 = list(param1 = 12:14, param2 = 15:17)
+#'   )
+#' )
+#'
+#' # In the above list, "obj" is level 1, "prop" is level 2 and "param"
+#' # is level 3. To apply sum() on all params, we map it at depth 3:
+#' l1 %>% modify_depth(3, sum) %>% str()
+#'
+#' # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
+#' l1 %>% modify(c("prop1", "param2")) %>% str()
+#'
+#' # But what if we want to pluck all param2 elements? Then we need to
+#' # act at a lower level:
+#' l1 %>% modify_depth(2, "param2") %>% str()
+#'
+#' # modify_depth() can be with other purrr functions to make them operate at
+#' # a lower level. Here we ask pmap() to map paste() simultaneously over all
+#' # elements of the objects at the second level. paste() is effectively
+#' # mapped at level 3.
+#' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
 modify <- function(.x, .f, ...) {
-  x[] <- map(.x, .f, ...)
-  x
+  .x[] <- map(.x, .f, ...)
+  .x
 }
 
 #' @rdname modify
@@ -57,6 +91,33 @@ modify_at <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
+}
+
+#' @export
+#' @rdname modify
+modify_depth <- function(.x, .depth, .f, ...) {
+  .f <- as_function(.f, ...)
+
+  recurse <- function(x, depth) {
+    if (depth > 1) {
+      if (is.atomic(x)) {
+        stop("List not deep enough", call. = FALSE)
+      }
+      x[] <- map(x, recurse, depth = depth - 1)
+      x
+    } else {
+      x[] <- map(x, .f, ...)
+      x
+    }
+  }
+
+  if (.depth == 0) {
+    .f(.x, ...)
+  } else if (.depth > 0) {
+    recurse(.x, .depth)
+  } else {
+    stop(".depth cannot be negative", call. = FALSE)
+  }
 }
 
 #' @export
@@ -79,6 +140,18 @@ map_at <- function(.x, .at, .f, ...) {
     call. = FALSE
   )
   modify_at(.x, .at, .f, ...)
+}
+
+
+#' @export
+#' @usage NULL
+#' @rdname modify
+at_depth <- function(.x, .depth, .f, ...) {
+  warning(
+    "at_depth() is deprecated, please use `modify_depth()` instead",
+    call. = FALSE
+  )
+  modify_depth(.x, .depth, .f, ...)
 }
 
 # Internal version of map_lgl() that works with logical vectors

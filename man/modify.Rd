@@ -4,8 +4,10 @@
 \alias{modify}
 \alias{modify_if}
 \alias{modify_at}
+\alias{modify_depth}
 \alias{map_if}
 \alias{map_at}
+\alias{at_depth}
 \title{Modify elements "in-place"}
 \usage{
 modify(.x, .f, ...)
@@ -13,6 +15,8 @@ modify(.x, .f, ...)
 modify_if(.x, .p, .f, ...)
 
 modify_at(.x, .at, .f, ...)
+
+modify_depth(.x, .depth, .f, ...)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -45,15 +49,22 @@ inner lists. Only those elements where \code{.p} evaluates to
 \item{.at}{A character vector of names or a numeric vector of
 positions. Only those elements corresponding to \code{.at} will be
 modified.}
+
+\item{.depth}{Level of \code{.x} to map on.
+\itemize{
+\item \code{modify_depth(x, 0, fun)} is equivalent to \code{fun(x)}
+\item \code{modify_depth(x, 1, fun)} is equivalent to \code{map(x, fun)}
+\item \code{modify_depth(x, 2, fun)} is equivalent to \code{map(x, ~ map(., fun))}
+}}
 }
 \value{
 An object the same class as \code{.x}
 }
 \description{
 \code{modify()} is a short-cut for \code{x[] <- map(x, .f)}. \code{modify_if()} only modifies
-the elements of \code{.x} that satisfy a predicate. \code{map_at()} is similar but
-will modify the elements corresponding to a character vector of names or a
-numeric vector of positions.
+the elements of \code{.x} that satisfy a predicate. \code{map_at()} only modifies
+elements given by names or positions. \code{modify_depth()} only modifies
+elements at a given level of a nested data structure.
 }
 \details{
 These modify the input data structure; it's your responsibility to ensure
@@ -77,6 +88,35 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   map_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
   transpose() \%>\%
   simplify_all()
+
+# Modify at specified depth ---------------------------
+l1 <- list(
+  obj1 = list(
+    prop1 = list(param1 = 1:2, param2 = 3:4),
+    prop2 = list(param1 = 5:6, param2 = 7:8)
+  ),
+  obj2 = list(
+    prop1 = list(param1 = 9:10, param2 = 11:12),
+    prop2 = list(param1 = 12:14, param2 = 15:17)
+  )
+)
+
+# In the above list, "obj" is level 1, "prop" is level 2 and "param"
+# is level 3. To apply sum() on all params, we map it at depth 3:
+l1 \%>\% modify_depth(3, sum) \%>\% str()
+
+# modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
+l1 \%>\% modify(c("prop1", "param2")) \%>\% str()
+
+# But what if we want to pluck all param2 elements? Then we need to
+# act at a lower level:
+l1 \%>\% modify_depth(2, "param2") \%>\% str()
+
+# modify_depth() can be with other purrr functions to make them operate at
+# a lower level. Here we ask pmap() to map paste() simultaneously over all
+# elements of the objects at the second level. paste() is effectively
+# mapped at level 3.
+l1 \%>\% modify_depth(2, ~ pmap(., paste, sep = " / ")) \%>\% str()
 }
 \seealso{
 Other map variants: \code{\link{imap}},
