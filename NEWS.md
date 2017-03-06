@@ -39,7 +39,7 @@
 * All data-frame based mappers have been deprecated in favour of new
   functions and idioms in the tidyverse. `dmap()`, `dmap_at()`, `dmap_if()`,
   `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and
-  `unslice()` have been moved to purrrlyr. This is a bit of an aggresive
+  `unslice()` have been moved to purrrlyr. This is a bit of an aggressive
   change but it allows us to make the dependencies much lighter.
 
 * `cross_n()` has been renamed to `cross()`. The `_n` suffix was
