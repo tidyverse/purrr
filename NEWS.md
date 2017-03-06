@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `invoke()` no longer uses lazyeval to figure out which enviroment a 
+  character `f` comes from.
+
 * `transpose()` now matches by name if available (#164). You can 
   override the default choice with the new `.names` argument.
 
