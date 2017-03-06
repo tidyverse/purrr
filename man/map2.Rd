@@ -142,7 +142,7 @@ pmap_dbl(df, plus2)
 
 }
 \seealso{
-Other map variants: \code{\link{conditional-map}},
-  \code{\link{imap}}, \code{\link{invoke}},
-  \code{\link{lmap}}, \code{\link{map}}
+Other map variants: \code{\link{imap}},
+  \code{\link{invoke}}, \code{\link{lmap}},
+  \code{\link{map}}, \code{\link{modify}}
 }

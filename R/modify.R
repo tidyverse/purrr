@@ -1,10 +1,13 @@
-#' Modify elements conditionally
+#' Modify elements "in-place"
 #'
-#' `map_if()` maps a function over the elements of `.x`
-#' satisfying a predicate. `map_at()` is similar but will modify
-#' the elements corresponding to a character vector of names or a
-#' numeric vector of positions. These modify the input data structure;
-#' it's your responsibility to ensure that the transformation is valid.
+#' `modify()` is a short-cut for `x[] <- map(x, .f)`. `modify_if()` only modifies
+#' the elements of `.x` that satisfy a predicate. `map_at()` is similar but
+#' will modify the elements corresponding to a character vector of names or a
+#' numeric vector of positions.
+#'
+#' These modify the input data structure; it's your responsibility to ensure
+#' that the transformation produces a valid output. For example, if you're
+#' modifying a data frame, `.f` must preserve the length of the input.
 #'
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
@@ -17,7 +20,6 @@
 #'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
 #' @return An object the same class as `.x`
-#' @name conditional-map
 #' @family map variants
 #' @examples
 #' # Convert factors to characters
@@ -36,22 +38,47 @@
 #'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   transpose() %>%
 #'   simplify_all()
-NULL
+modify <- function(.x, .f, ...) {
+  x[] <- map(.x, .f, ...)
+  x
+}
 
-#' @rdname conditional-map
+#' @rdname modify
 #' @export
-map_if <- function(.x, .p, .f, ...) {
+modify_if <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
 
-#' @rdname conditional-map
+#' @rdname modify
 #' @export
-map_at <- function(.x, .at, .f, ...) {
+modify_at <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
+}
+
+#' @export
+#' @usage NULL
+#' @rdname modify
+map_if <- function(.x, .p, .f, ...) {
+  warning(
+    "map_if() is deprecated, please use `modify_if()` instead",
+    call. = FALSE
+  )
+  modify_if(.x, .p, .f, ...)
+}
+
+#' @export
+#' @usage NULL
+#' @rdname modify
+map_at <- function(.x, .at, .f, ...) {
+  warning(
+    "map_at() is deprecated, please use `modify_at()` instead",
+    call. = FALSE
+  )
+  modify_at(.x, .at, .f, ...)
 }
 
 # Internal version of map_lgl() that works with logical vectors

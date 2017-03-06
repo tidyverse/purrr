@@ -125,7 +125,7 @@ mtcars \%>\%
 # the broom package)
 }
 \seealso{
-Other map variants: \code{\link{conditional-map}},
-  \code{\link{imap}}, \code{\link{invoke}},
-  \code{\link{lmap}}, \code{\link{map2}}
+Other map variants: \code{\link{imap}},
+  \code{\link{invoke}}, \code{\link{lmap}},
+  \code{\link{map2}}, \code{\link{modify}}
 }

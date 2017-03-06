@@ -93,7 +93,7 @@ df
 invoke_map(df$f, df$params)
 }
 \seealso{
-Other map variants: \code{\link{conditional-map}},
-  \code{\link{imap}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map}}
+Other map variants: \code{\link{imap}}, \code{\link{lmap}},
+  \code{\link{map2}}, \code{\link{map}},
+  \code{\link{modify}}
 }

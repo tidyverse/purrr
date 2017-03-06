@@ -64,7 +64,7 @@ imap_chr(sample(10), ~ paste0(.y, ": ", .x))
 iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\\n", sep = ""))
 }
 \seealso{
-Other map variants: \code{\link{conditional-map}},
-  \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map}}
+Other map variants: \code{\link{invoke}},
+  \code{\link{lmap}}, \code{\link{map2}},
+  \code{\link{map}}, \code{\link{modify}}
 }
