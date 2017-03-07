@@ -20,9 +20,9 @@
 #'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
 #' @param .depth Level of `.x` to map on.
-#'  * `modify_depth(x, 0, fun)` is equivalent to `fun(x)`
-#'  * `modify_depth(x, 1, fun)` is equivalent to `map(x, fun)`
-#'  * `modify_depth(x, 2, fun)` is equivalent to `map(x, ~ map(., fun))`
+#'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
+#'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
+#'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
 #' @return An object the same class as `.x`
 #' @family map variants
 #' @export
@@ -96,28 +96,28 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @export
 #' @rdname modify
 modify_depth <- function(.x, .depth, .f, ...) {
+  stopifnot(is.numeric(.depth), length(.depth) == 1)
+
   .f <- as_function(.f, ...)
+  modify_depth_rec(.x, .depth, .f, ...)
+}
 
-  recurse <- function(x, depth) {
-    if (depth > 1) {
-      if (is.atomic(x)) {
-        stop("List not deep enough", call. = FALSE)
-      }
-      x[] <- map(x, recurse, depth = depth - 1)
-      x
-    } else {
-      x[] <- map(x, .f, ...)
-      x
-    }
-  }
-
+modify_depth_rec <- function(.x, .depth, .f, ...) {
   if (.depth == 0) {
-    .f(.x, ...)
-  } else if (.depth > 0) {
-    recurse(.x, .depth)
+    .x[] <- .f(.x, ...)
+  } else if (.depth == 1) {
+    if (!is.list(.x)) {
+      stop("List not deep enough", call. = FALSE)
+    }
+    .x[] <- map(.x, .f, ...)
+  } else if (.depth > 1) {
+    .x[] <- map(.x, function(x) {
+      modify_depth_rec(x, .depth - 1, .f, ...)
+    })
   } else {
-    stop(".depth cannot be negative", call. = FALSE)
+    stop("Invalid `depth`", call. = FALSE)
   }
+  .x
 }
 
 #' @export

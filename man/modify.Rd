@@ -52,9 +52,9 @@ modified.}
 
 \item{.depth}{Level of \code{.x} to map on.
 \itemize{
-\item \code{modify_depth(x, 0, fun)} is equivalent to \code{fun(x)}
-\item \code{modify_depth(x, 1, fun)} is equivalent to \code{map(x, fun)}
-\item \code{modify_depth(x, 2, fun)} is equivalent to \code{map(x, ~ map(., fun))}
+\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] <- fun(x)}
+\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x[] <- map(x, fun)}
+\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x[] <- map(x, ~ map(., fun))}
 }}
 }
 \value{
