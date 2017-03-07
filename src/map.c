@@ -1,7 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
-#include "vector.h"
+#include "coerce.h"
 
 void copy_names(SEXP from, SEXP to) {
   if (Rf_length(from) != Rf_length(to))

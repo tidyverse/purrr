@@ -1,7 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
-#include "vector.h"
+#include "coerce.h"
 #include <string.h>
 
 int find_offset(SEXP x, SEXP index, int i) {

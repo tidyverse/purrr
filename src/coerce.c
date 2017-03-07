@@ -3,29 +3,6 @@
 #include <Rinternals.h>
 #include <stdio.h>
 
-int can_coerce(SEXPTYPE from, SEXPTYPE to) {
-
-  switch(to) {
-  case LGLSXP:  return from == LGLSXP;
-  case INTSXP:  return from == LGLSXP || from == INTSXP;
-  case REALSXP: return from == LGLSXP || from == INTSXP || from == REALSXP;
-  case STRSXP:  return from == LGLSXP || from == INTSXP || from == REALSXP || from == STRSXP;
-  case VECSXP:  return 1;
-  }
-
-  return 0;
-}
-
-void ensure_can_coerce(SEXPTYPE from, SEXPTYPE to, int i) {
-
-  if (can_coerce(from, to))
-    return;
-
-  Rf_errorcall(R_NilValue, "Can't coerce element %i from a %s to a %s",
-    i + 1, Rf_type2char(from), Rf_type2char(to));
-
-}
-
 double logical_to_real(int x) {
   return (x == NA_LOGICAL) ? NA_REAL : x;
 }
@@ -64,20 +41,24 @@ SEXP double_to_char(double x) {
   return Rf_mkChar(buf);
 }
 
+void cant_coerce(SEXP from, SEXP to, int i) {
+  Rf_errorcall(R_NilValue, "Can't coerce element %i from a %s to a %s",
+    i + 1, Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
+}
 
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
-  ensure_can_coerce(TYPEOF(from), TYPEOF(to), i);
-
   switch(TYPEOF(to)) {
   case LGLSXP:
     switch(TYPEOF(from)) {
     case LGLSXP: LOGICAL(to)[i] = LOGICAL(from)[j]; break;
+    default: cant_coerce(from, to, i);
     }
     break;
   case INTSXP:
     switch(TYPEOF(from)) {
     case LGLSXP: INTEGER(to)[i] = LOGICAL(from)[j]; break;
     case INTSXP: INTEGER(to)[i] = INTEGER(from)[j]; break;
+    default: cant_coerce(from, to, i);
     }
     break;
   case REALSXP:
@@ -85,6 +66,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     case LGLSXP:  REAL(to)[i] = logical_to_real(LOGICAL(from)[j]); break;
     case INTSXP:  REAL(to)[i] = integer_to_real(INTEGER(from)[j]); break;
     case REALSXP: REAL(to)[i] = REAL(from)[j]; break;
+    default: cant_coerce(from, to, i);
     }
     break;
   case STRSXP:
@@ -93,9 +75,27 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     case INTSXP:  SET_STRING_ELT(to, i, integer_to_char(INTEGER(from)[j])); break;
     case REALSXP: SET_STRING_ELT(to, i, double_to_char(REAL(from)[j])); break;
     case STRSXP:  SET_STRING_ELT(to, i, STRING_ELT(from, j)); break;
+    default: cant_coerce(from, to, i);
     }
     break;
-  case VECSXP:  SET_VECTOR_ELT(to, i, from); break;
-  default:      Rf_errorcall(R_NilValue, "Unsupported type %s", Rf_type2char(TYPEOF(to)));
+  case VECSXP:
+    SET_VECTOR_ELT(to, i, from);
+    break;
+  default: cant_coerce(from, to, i);
   }
+}
+
+
+SEXP coerce_impl(SEXP x, SEXP type_) {
+  int n = Rf_length(x);
+
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
+  SEXP out = PROTECT(Rf_allocVector(type, n));
+
+  for (int i = 0; i < n; ++i) {
+    set_vector_value(out, i, x, i);
+  }
+
+  UNPROTECT(1);
+  return out;
 }

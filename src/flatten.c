@@ -1,7 +1,7 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
-#include "vector.h"
+#include "coerce.h"
 
 const char* objtype(SEXP x) {
   return Rf_type2char(TYPEOF(x));
@@ -90,8 +90,6 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
   int has_names = 0;
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
-
-    ensure_can_coerce(TYPEOF(x_j), type, j);
 
     n += Rf_length(x_j);
     if (!has_names && !Rf_isNull(Rf_getAttrib(x_j, R_NamesSymbol))) {
