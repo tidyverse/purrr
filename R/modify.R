@@ -19,10 +19,12 @@
 #' @param .at A character vector of names or a numeric vector of
 #'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
-#' @param .depth Level of `.x` to map on.
-#'  * `modify_depth(x, 0, fun)` is equivalent to `fun(x)`
-#'  * `modify_depth(x, 1, fun)` is equivalent to `map(x, fun)`
-#'  * `modify_depth(x, 2, fun)` is equivalent to `map(x, ~ map(., fun))`
+#' @param .depth Level of `.x` to map on. Use a negative value to count up
+#'  from the lowest level of the list.
+#'
+#'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
+#'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
+#'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
 #' @return An object the same class as `.x`
 #' @family map variants
 #' @export
@@ -95,29 +97,41 @@ modify_at <- function(.x, .at, .f, ...) {
 
 #' @export
 #' @rdname modify
-modify_depth <- function(.x, .depth, .f, ...) {
-  .f <- as_function(.f, ...)
+#' @param .ragged If `TRUE`, will apply to leaves, even if they're not
+#'   at depth `.depth`. If `FALSE`, will throw an error if there are
+#'   no elements at depth `.depth`.
+modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
+  stopifnot(is.numeric(.depth), length(.depth) == 1)
 
-  recurse <- function(x, depth) {
-    if (depth > 1) {
-      if (is.atomic(x)) {
+  if (.depth < 0) {
+    .depth <- depth(.x) + .depth
+  }
+
+  .f <- as_function(.f, ...)
+  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged)
+}
+
+modify_depth_rec <- function(.x, .depth, .f, ..., .ragged = FALSE) {
+  if (.depth == 0) {
+    .x[] <- .f(.x, ...)
+  } else if (.depth == 1) {
+    if (!is.list(.x)) {
+      if (.ragged) {
+        .x[] <- .f(.x, ...)
+      } else {
         stop("List not deep enough", call. = FALSE)
       }
-      x[] <- map(x, recurse, depth = depth - 1)
-      x
     } else {
-      x[] <- map(x, .f, ...)
-      x
+      .x[] <- map(.x, .f, ...)
     }
-  }
-
-  if (.depth == 0) {
-    .f(.x, ...)
-  } else if (.depth > 0) {
-    recurse(.x, .depth)
+  } else if (.depth > 1) {
+    .x[] <- map(.x, function(x) {
+      modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged)
+    })
   } else {
-    stop(".depth cannot be negative", call. = FALSE)
+    stop("Invalid `depth`", call. = FALSE)
   }
+  .x
 }
 
 #' @export

@@ -16,7 +16,7 @@ modify_if(.x, .p, .f, ...)
 
 modify_at(.x, .at, .f, ...)
 
-modify_depth(.x, .depth, .f, ...)
+modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -50,12 +50,17 @@ inner lists. Only those elements where \code{.p} evaluates to
 positions. Only those elements corresponding to \code{.at} will be
 modified.}
 
-\item{.depth}{Level of \code{.x} to map on.
+\item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
+from the lowest level of the list.
 \itemize{
-\item \code{modify_depth(x, 0, fun)} is equivalent to \code{fun(x)}
-\item \code{modify_depth(x, 1, fun)} is equivalent to \code{map(x, fun)}
-\item \code{modify_depth(x, 2, fun)} is equivalent to \code{map(x, ~ map(., fun))}
+\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] <- fun(x)}
+\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x[] <- map(x, fun)}
+\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x[] <- map(x, ~ map(., fun))}
 }}
+
+\item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
+at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
+no elements at depth \code{.depth}.}
 }
 \value{
 An object the same class as \code{.x}

@@ -1,6 +1,10 @@
 # purrr 0.2.2.9000
 
+
 * `safely()` now uses the `quiet` option (#296).
+
+* `modify_depth()` gains new `.ragged` argument, and negative depths are 
+  now computed relative to the deepest component of the list (#236).
 
 * New `modify()` is shorthand for `x[] <- map(x, f)`.
 

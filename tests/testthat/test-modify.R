@@ -16,9 +16,30 @@ test_that("modify_if/modify_at return same type as input", {
   expect_equal(df2b, exp)
 })
 
+
+# modify_depth ------------------------------------------------------------
+
 test_that("modify_depth modifies values at specified depth", {
   x1 <- list(list(list(1)))
-  x2 <- list(list(list(2)))
 
-  expect_equal(modify_depth(x1, 3, ~ . + 1), x2)
+  expect_equal(modify_depth(x1, 0, length), list(1))
+  expect_equal(modify_depth(x1, 1, length), list(1))
+  expect_equal(modify_depth(x1, 2, length), list(list(1)))
+  expect_equal(modify_depth(x1, 3, length), list(list(list(1))))
+  expect_equal(modify_depth(x1, -1, length), list(list(list(1))))
+  expect_error(modify_depth(x1, 4, length), "List not deep enough")
+})
+
+test_that(".ragged = TRUE operates on leaves", {
+  x1 <- list(
+    list(1),
+    list(list(2))
+  )
+  x2 <- list(
+    list(2),
+    list(list(3))
+  )
+
+  expect_equal(modify_depth(x1, 3, ~ . + 1, .ragged = TRUE), x2)
+  expect_equal(modify_depth(x1, -1, ~ . + 1, .ragged = TRUE), x2)
 })
