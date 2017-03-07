@@ -4,10 +4,15 @@
 \alias{is_formula}
 \title{Is a formula?}
 \usage{
-is_formula(x)
+is_formula(x, has_lhs = NULL)
 }
 \arguments{
 \item{x}{object to test}
+
+\item{has_lhs}{If \code{TRUE}, tests that the formula
+is two-sided. If \code{FALSE}, tests that the
+formula is one sided. If \code{NULL} or \code{NA},
+does not test for the sidedness of the formula.}
 }
 \description{
 Is a formula?
@@ -15,4 +20,10 @@ Is a formula?
 \examples{
 x <- disp ~ am
 is_formula(x)
+is_formula(x, has_lhs = TRUE)
+is_formula(x, has_lhs = FALSE)
+y <- ~ am
+is_formula(y)
+is_formula(y, has_lhs = TRUE)
+is_formula(y, has_lhs = FALSE)
 }
