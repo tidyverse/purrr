@@ -83,7 +83,7 @@ when <- function(., ...)
   {
     if (is_formula[i]) {
       action <- length(dots[[i]])
-      if (action == 2 || isTRUE(eval(dots[[i]][[2]], env, env))) {
+      if (action == 2 || is_true(eval(dots[[i]][[2]], env, env))) {
         result <- eval(dots[[i]][[action]], env, env)
         break
       }

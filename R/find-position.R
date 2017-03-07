@@ -22,7 +22,7 @@ detect <- function(.x, .p, ..., .right = FALSE) {
   .p <- as_function(.p, ...)
 
   for (i in index(.x, .right)) {
-    if (isTRUE(.p(.x[[i]], ...))) return(.x[[i]])
+    if (is_true(.p(.x[[i]], ...))) return(.x[[i]])
   }
   NULL
 }
@@ -33,7 +33,7 @@ detect_index <- function(.x, .p, ..., .right = FALSE) {
   .p <- as_function(.p, ...)
 
   for (i in index(.x, .right)) {
-    if (isTRUE(.p(.x[[i]], ...))) return(i)
+    if (is_true(.p(.x[[i]], ...))) return(i)
   }
   0
 }
