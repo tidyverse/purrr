@@ -19,7 +19,9 @@
 #' @param .at A character vector of names or a numeric vector of
 #'   positions. Only those elements corresponding to `.at` will be
 #'   modified.
-#' @param .depth Level of `.x` to map on.
+#' @param .depth Level of `.x` to map on. Use a negative value to count up
+#'  from the lowest level of the list.
+#'
 #'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
 #'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
 #'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
@@ -95,24 +97,36 @@ modify_at <- function(.x, .at, .f, ...) {
 
 #' @export
 #' @rdname modify
-modify_depth <- function(.x, .depth, .f, ...) {
+#' @param .ragged If `TRUE`, will apply to leaves, even if they're not
+#'   at depth `.depth`. If `FALSE`, will throw an error if there are
+#'   no elements at depth `.depth`.
+modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   stopifnot(is.numeric(.depth), length(.depth) == 1)
 
+  if (.depth < 0) {
+    .depth <- depth(.x) + .depth
+  }
+
   .f <- as_function(.f, ...)
-  modify_depth_rec(.x, .depth, .f, ...)
+  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged)
 }
 
-modify_depth_rec <- function(.x, .depth, .f, ...) {
+modify_depth_rec <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   if (.depth == 0) {
     .x[] <- .f(.x, ...)
   } else if (.depth == 1) {
     if (!is.list(.x)) {
-      stop("List not deep enough", call. = FALSE)
+      if (.ragged) {
+        .x[] <- .f(.x, ...)
+      } else {
+        stop("List not deep enough", call. = FALSE)
+      }
+    } else {
+      .x[] <- map(.x, .f, ...)
     }
-    .x[] <- map(.x, .f, ...)
   } else if (.depth > 1) {
     .x[] <- map(.x, function(x) {
-      modify_depth_rec(x, .depth - 1, .f, ...)
+      modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged)
     })
   } else {
     stop("Invalid `depth`", call. = FALSE)

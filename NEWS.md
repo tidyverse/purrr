@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `modify_depth()` gains new `.ragged` argument, and negative depths are 
+  now computed relative to the deepest component of the list (#236).
+
 * New `modify()` is shorthand for `x[] <- map(x, f)`.
 
 * `map_at()` and `map_if()` have been deprecated. Please use `modify_at()` 

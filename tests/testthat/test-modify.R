@@ -26,5 +26,20 @@ test_that("modify_depth modifies values at specified depth", {
   expect_equal(modify_depth(x1, 1, length), list(1))
   expect_equal(modify_depth(x1, 2, length), list(list(1)))
   expect_equal(modify_depth(x1, 3, length), list(list(list(1))))
+  expect_equal(modify_depth(x1, -1, length), list(list(list(1))))
   expect_error(modify_depth(x1, 4, length), "List not deep enough")
+})
+
+test_that(".ragged = TRUE operates on leaves", {
+  x1 <- list(
+    list(1),
+    list(list(2))
+  )
+  x2 <- list(
+    list(2),
+    list(list(3))
+  )
+
+  expect_equal(modify_depth(x1, 3, ~ . + 1, .ragged = TRUE), x2)
+  expect_equal(modify_depth(x1, -1, ~ . + 1, .ragged = TRUE), x2)
 })
