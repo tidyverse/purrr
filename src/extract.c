@@ -5,8 +5,9 @@
 #include <string.h>
 
 int find_offset(SEXP x, SEXP index, int i) {
-  if (!Rf_isVector(index) || Rf_length(index) != 1)
-    Rf_errorcall(R_NilValue, "Index %i is not a length 1 vector", i + 1);
+  if (Rf_length(index) > 1) {
+    Rf_errorcall(R_NilValue, "Index %i must have length 1", i + 1);
+  }
 
   int n = Rf_length(x);
   if (n == 0)
@@ -56,14 +57,12 @@ int find_offset(SEXP x, SEXP index, int i) {
 
     }
     return -1;
-
   } else {
-    Rf_errorcall(R_NilValue,
-      "Don't know how to index with object of type %s at level %i",
-      Rf_type2char(TYPEOF(index)), i + 1
+    Rf_errorcall(
+      R_NilValue,
+      "Index %i must be a character or numeric vector", i + 1
     );
   }
-
 }
 
 SEXP extract_vector(SEXP x, SEXP index_i, int i) {

@@ -1,14 +1,27 @@
 context("extract")
 
+test_that("index must be a list", {
+  expect_error(extract(1:10, 1), "must be a list")
+})
+
+test_that("contents must be a vector", {
+  expect_error(extract(quote(x), list(1)), "Don't know how to extract")
+})
 
 # extract vector --------------------------------------------------------------
 
 test_that("can extract by position", {
   x <- list("a", 1, c(TRUE, FALSE))
 
+  # double
   expect_identical(extract(x, list(1)), x[[1]])
   expect_identical(extract(x, list(2)), x[[2]])
   expect_identical(extract(x, list(3)), x[[3]])
+
+  # integer
+  expect_identical(extract(x, list(1L)), x[[1]])
+  expect_identical(extract(x, list(2L)), x[[2]])
+  expect_identical(extract(x, list(3L)), x[[3]])
 })
 
 test_that("can extract by name", {
@@ -19,13 +32,26 @@ test_that("can extract by name", {
   expect_identical(extract(x, list("c")), x[["c"]])
 })
 
+test_that("can extract from atomic vectors", {
+  expect_identical(extract(TRUE, list(1)), TRUE)
+  expect_identical(extract(1L, list(1)), 1L)
+  expect_identical(extract(1, list(1)), 1)
+  expect_identical(extract("a", list(1)), "a")
+})
+
 test_that("can extract by name and position", {
   x <- list(a = list(list(b = 1)))
   expect_equal(extract(x, list("a", 1, "b")), 1)
 })
 
-test_that("special values never matches", {
-  x <- list(1, 2, 3)
+
+test_that("require length 1 vectors", {
+  expect_error(extract(1, list(letters)), "must have length 1")
+  expect_error(extract(1, list(TRUE)), "must be a character or numeric")
+})
+
+test_that("special indexes never match", {
+  x <- list(a = 1, b = 2, c = 3)
 
   expect_null(extract(x, list(NA_character_)))
   expect_null(extract(x, list("")))
@@ -35,8 +61,31 @@ test_that("special values never matches", {
   expect_null(extract(x, list(NA_real_)))
   expect_null(extract(x, list(NaN)))
   expect_null(extract(x, list(Inf)))
+  expect_null(extract(x, list(-Inf)))
 })
 
+test_that("special values return NULL", {
+  # unnamed input
+  expect_null(extract(list(1, 2), list("a")))
+
+  # zero length input
+  expect_null(extract(integer(), list(1)))
+
+  # past end
+  expect_null(extract(1:4, list(10)))
+  expect_null(extract(1:4, list(10L)))
+})
+
+test_that("handles weird names", {
+  x <- list(1, 2, 3, 4, 5)
+  names(x) <- c("a", "a", NA, "", "b")
+
+  expect_equal(extract(x, list("a")), 1)
+  expect_equal(extract(x, list("b")), 5)
+
+  expect_null(extract(x, list("")))
+  expect_null(extract(x, list(NA_character_)))
+})
 
 # attributes --------------------------------------------------------------
 
