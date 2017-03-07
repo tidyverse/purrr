@@ -41,3 +41,12 @@ test_that("types automatically coerced upwards", {
 test_that("logical and integer NA become correct double NA", {
   expect_identical(map_dbl(list(NA, NA_integer_), identity), c(NA_real_, NA_real_))
 })
+
+
+test_that("map forces arguments in same way as base R", {
+  f_map <- map(1:2, function(i) function(x) x + i)
+  f_base <- lapply(1:2, function(i) function(x) x + i)
+
+  expect_equal(f_map[[1]](0), f_base[[1]](0))
+  expect_equal(f_map[[2]](0), f_base[[2]](0))
+})

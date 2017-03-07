@@ -1,5 +1,6 @@
 #define R_NO_REMAP
 #include <R.h>
+#include <Rversion.h>
 #include <Rinternals.h>
 #include "coerce.h"
 
@@ -15,7 +16,7 @@ void copy_names(SEXP from, SEXP to) {
 }
 
 // call must involve i
-SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type) {
+SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
   // Create variable "i" and map to scalar integer
   SEXP i_val = PROTECT(Rf_ScalarInteger(1));
   SEXP i = Rf_install("i");
@@ -29,7 +30,11 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type) {
 
     INTEGER(i_val)[0] = i + 1;
 
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 2, 3)
+    SEXP res = R_forceAndCall(call, force_args, env);
+#else
     SEXP res = Rf_eval(call, env);
+#endif
     if (type != VECSXP && Rf_length(res) != 1)
       Rf_errorcall(R_NilValue, "Result %i is not a length 1 atomic vector", i + 1);
 
@@ -64,7 +69,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
   SEXP f_call = PROTECT(Rf_lang3(f, Xi, R_DotsSymbol));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type, 1));
   copy_names(x_val, out);
 
   UNPROTECT(3);
@@ -106,7 +111,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP Yi = PROTECT(Rf_lang3(R_Bracket2Symbol, y, ny == 1 ? one : i));
   SEXP f_call = PROTECT(Rf_lang4(f, Xi, Yi, R_DotsSymbol));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type, 2));
   copy_names(x_val, out);
 
   UNPROTECT(5);
@@ -185,7 +190,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
 
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type, m));
   copy_names(VECTOR_ELT(l_val, 0), out);
 
   UNPROTECT(3);

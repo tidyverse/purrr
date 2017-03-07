@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* All `map()` functions now force arguments in the same way that base R
+  does for apply functions (#191).
+
 * The data frame suffix `_df` has been (soft) deprecated in favour of 
   `_dfr` to more clearly indicate that it's a row bind. All variants now 
   also have a `_dfc` for column binding (#167). (These will not be terribly
