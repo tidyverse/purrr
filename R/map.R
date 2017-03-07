@@ -4,8 +4,9 @@
 #' The map function transform the input, returning a vector the same length
 #' as the input. `map()` returns a list or a data frame; `map_lgl()`,
 #' `map_int()`, `map_dbl()` and `map_chr()` return vectors of the
-#' corresponding type (or die trying); `map_df()` returns a data frame by
-#' row-binding the individual elements.
+#' corresponding type (or die trying); `map_dfr()` and `map_dfc()` return
+#' data frames created by row-binding and column-binding respectively.
+#' They require dplyr to be installed.
 #'
 #' `walk()` calls `.f` for its side-effect and returns the input `.x`.
 #'
@@ -116,12 +117,24 @@ map_dbl <- function(.x, .f, ...) {
 #' @param .id If not `NULL` a variable with this name will be created
 #'   giving either the name or the index of the data frame.
 #' @export
-map_df <- function(.x, .f, ..., .id = NULL) {
+map_dfr <- function(.x, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
 
+#' @rdname map
+#' @export
+#' @usage NULL
+map_df <- map_dfr
+
+#' @rdname map
+#' @export
+map_dfc <- function(.x, .f, ...) {
+  .f <- as_function(.f, ...)
+  res <- map(.x, .f, ...)
+  dplyr::bind_cols(res)
+}
 
 #' @export
 #' @rdname map

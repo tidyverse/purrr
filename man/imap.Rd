@@ -6,7 +6,8 @@
 \alias{imap_chr}
 \alias{imap_int}
 \alias{imap_dbl}
-\alias{imap_df}
+\alias{imap_dfr}
+\alias{imap_dfc}
 \alias{iwalk}
 \title{Apply a function to each element of a vector, and its index}
 \usage{
@@ -20,7 +21,9 @@ imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
 
-imap_df(.x, .f, ..., .id = NULL)
+imap_dfr(.x, .f, ..., .id = NULL)
+
+imap_dfc(.x, .f, ..., .id = NULL)
 
 iwalk(.x, .f, ...)
 }

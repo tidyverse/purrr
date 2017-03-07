@@ -101,11 +101,22 @@ map2_chr <- function(.x, .y, .f, ...) {
 }
 #' @rdname map2
 #' @export
-map2_df <- function(.x, .y, .f, ..., .id = NULL) {
+map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
+#' @rdname map2
+#' @export
+map2_dfc <- function(.x, .y, .f, ...) {
+  .f <- as_function(.f, ...)
+  res <- map2(.x, .y, .f, ...)
+  dplyr::bind_cols(res)
+}
+#' @rdname map2
+#' @export
+#' @usage NULL
+map2_df <- map2_dfr
 #' @export
 #' @rdname map2
 walk2 <- function(.x, .y, .f, ...) {
@@ -168,11 +179,24 @@ pmap_chr <- function(.l, .f, ...) {
 
 #' @rdname map2
 #' @export
-pmap_df <- function(.l, .f, ..., .id = NULL) {
+pmap_dfr <- function(.l, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
   res <- pmap(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
+
+#' @rdname map2
+#' @export
+pmap_dfc <- function(.l, .f, ...) {
+  .f <- as_function(.f, ...)
+  res <- pmap(.l, .f, ...)
+  dplyr::bind_cols(res)
+}
+
+#' @rdname map2
+#' @export
+#' @usage NULL
+pmap_df <- pmap_dfr
 
 #' @export
 #' @rdname map2

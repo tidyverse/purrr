@@ -116,11 +116,22 @@ invoke_map_chr <- function(.f, .x = list(NULL), ..., .env = NULL) {
 
 #' @rdname invoke
 #' @export
-invoke_map_df <- function(.f, .x = list(NULL), ..., .env = NULL) {
+invoke_map_dfr <- function(.f, .x = list(NULL), ..., .env = NULL) {
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
-  map2_df(.f, .x, invoke, ..., .env = .env)
+  map2_dfr(.f, .x, invoke, ..., .env = .env)
 }
+#' @rdname invoke
+#' @export
+invoke_map_dfc <- function(.f, .x = list(NULL), ..., .env = NULL) {
+  .env <- .env %||% parent.frame()
+  .f <- as_invoke_function(.f)
+  map2_dfc(.f, .x, invoke, ..., .env = .env)
+}
+#' @rdname invoke
+#' @export
+#' @usage NULL
+invoke_map_df <- invoke_map_dfr
 
 
 #' @rdname invoke

@@ -49,9 +49,16 @@ imap_dbl <- function(.x, .f, ...) {
 
 #' @rdname imap
 #' @export
-imap_df <- function(.x, .f, ..., .id = NULL) {
+imap_dfr <- function(.x, .f, ..., .id = NULL) {
   .f <- as_function(.f, ...)
-  map2_df(.x, vec_index(.x), .f, ...)
+  map2_dfr(.x, vec_index(.x), .f, ...)
+}
+
+#' @rdname imap
+#' @export
+imap_dfc <- function(.x, .f, ..., .id = NULL) {
+  .f <- as_function(.f, ...)
+  map2_dfc(.x, vec_index(.x), .f, ...)
 }
 
 #' @export

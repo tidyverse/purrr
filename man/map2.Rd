@@ -6,6 +6,8 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
+\alias{map2_dfr}
+\alias{map2_dfc}
 \alias{map2_df}
 \alias{walk2}
 \alias{pmap}
@@ -13,6 +15,8 @@
 \alias{pmap_int}
 \alias{pmap_dbl}
 \alias{pmap_chr}
+\alias{pmap_dfr}
+\alias{pmap_dfc}
 \alias{pmap_df}
 \alias{pwalk}
 \title{Map over multiple inputs simultaneously.}
@@ -27,7 +31,9 @@ map2_dbl(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
 
-map2_df(.x, .y, .f, ..., .id = NULL)
+map2_dfr(.x, .y, .f, ..., .id = NULL)
+
+map2_dfc(.x, .y, .f, ...)
 
 walk2(.x, .y, .f, ...)
 
@@ -41,7 +47,9 @@ pmap_dbl(.l, .f, ...)
 
 pmap_chr(.l, .f, ...)
 
-pmap_df(.l, .f, ..., .id = NULL)
+pmap_dfr(.l, .f, ..., .id = NULL)
+
+pmap_dfc(.l, .f, ...)
 
 pwalk(.l, .f, ...)
 }

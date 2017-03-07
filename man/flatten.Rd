@@ -6,6 +6,8 @@
 \alias{flatten_int}
 \alias{flatten_dbl}
 \alias{flatten_chr}
+\alias{flatten_dfr}
+\alias{flatten_dfc}
 \alias{flatten_df}
 \title{Flatten a list of lists into a simple vector.}
 \usage{
@@ -19,7 +21,9 @@ flatten_dbl(.x)
 
 flatten_chr(.x)
 
-flatten_df(.x, .id = NULL)
+flatten_dfr(.x, .id = NULL)
+
+flatten_dfc(.x)
 }
 \arguments{
 \item{.x}{A list of flatten. The contents of the list can be anything for

@@ -7,6 +7,8 @@
 \alias{invoke_map_int}
 \alias{invoke_map_dbl}
 \alias{invoke_map_chr}
+\alias{invoke_map_dfr}
+\alias{invoke_map_dfc}
 \alias{invoke_map_df}
 \alias{map_call}
 \title{Invoke functions.}
@@ -23,7 +25,9 @@ invoke_map_dbl(.f, .x = list(NULL), ..., .env = NULL)
 
 invoke_map_chr(.f, .x = list(NULL), ..., .env = NULL)
 
-invoke_map_df(.f, .x = list(NULL), ..., .env = NULL)
+invoke_map_dfr(.f, .x = list(NULL), ..., .env = NULL)
+
+invoke_map_dfc(.f, .x = list(NULL), ..., .env = NULL)
 }
 \arguments{
 \item{.f}{For \code{invoke}, a function; for \code{invoke_map} a

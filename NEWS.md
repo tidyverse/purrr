@@ -1,5 +1,11 @@
 # purrr 0.2.2.9000
 
+* The data frame suffix `_df` has been (soft) deprecated in favour of 
+  `_dfr` to more clearly indicate that it's a row bind. All variants now 
+  also have a `_dfc` for column binding (#167). (These will not be terribly
+  useful until `dplyr::bind_rows()`/`dplyr::bind_cols()` have better
+  semantics)
+
 * All predicate functions are re-exported from rlang (#124).
 
 * `is_numeric()` and `is_scalar_numeric()` are deprecated because they
