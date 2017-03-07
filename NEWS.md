@@ -1,5 +1,7 @@
 # purrr 0.2.2.9000
 
+* `safely()` now uses the `quiet` option (#296).
+
 * New `modify()` is shorthand for `x[] <- map(x, f)`.
 
 * `map_at()` and `map_if()` have been deprecated. Please use `modify_at()` 
