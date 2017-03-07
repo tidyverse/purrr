@@ -2,21 +2,6 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP transpose_index(SEXP table, SEXP index, int n) {
-  // Special case if either lacks names
-  if (Rf_isNull(index) || Rf_isNull(table)) {
-    SEXP out = Rf_allocVector(INTSXP, n);
-    int* pOut = INTEGER(out);
-
-    for (int i = 0; i < n; ++i) {
-      pOut[i] = i + 1;
-    }
-    return out;
-  } else {
-    return Rf_match(table, index, -1);
-  }
-}
-
 SEXP transpose_impl(SEXP x, SEXP names_template) {
   if (TYPEOF(x) != VECSXP)
     Rf_errorcall(R_NilValue, "`.l` is not a list (%s)", Rf_type2char(TYPEOF(x)));

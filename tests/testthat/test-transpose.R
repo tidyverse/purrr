@@ -39,11 +39,21 @@ test_that("warns if element too long", {
   expect_equal(out, list(list(1, 1), list(2, 2)))
 })
 
-test_that("can transpose list of atomic vectors", {
+test_that("can transpose list of lists of  atomic vectors", {
   x <- list(list(TRUE, 1L, 1, "1"))
   expect_equal(transpose(x), list(list(TRUE), list(1L), list(1), list("1")))
 })
 
+test_that("can transpose lists of atomic vectors", {
+  expect_equal(transpose(list(TRUE, FALSE)), list(list(TRUE, FALSE)))
+  expect_equal(transpose(list(1L, 2L)), list(list(1L, 2L)))
+  expect_equal(transpose(list(1, 2)), list(list(1, 2)))
+  expect_equal(transpose(list("a", "b")), list(list("a", "b")))
+})
+
+test_that("can't transpose expressions", {
+  expect_error(transpose(list(expression(a))), "Unsupported type")
+})
 
 # Named based matching ----------------------------------------------------
 
