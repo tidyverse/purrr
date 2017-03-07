@@ -42,7 +42,7 @@
 #'   map_dbl(possibly(log, NA_real_))
 safely <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_function(.f)
-  function(...) capture_error(.f(...), otherwise)
+  function(...) capture_error(.f(...), otherwise, quiet)
 }
 
 #' @export
