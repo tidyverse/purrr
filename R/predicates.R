@@ -1,237 +1,101 @@
-#' Bare type predicates
+#' Test is an object is integer or double
 #'
-#' These predicates check for a given type but only return `TRUE`
-#' for bare R objects. Bare objects have no class attributes. For
-#' example, a data frame is a list, but not a bare list.
+#' Numeric is used in three different ways in base R:
+#' * as an alias for double (as in [as.numeric()])
+#' * to mean either integer or double (as in [mode()])
+#' * for something representible as numeric (as in [as.numeric()])
+#' This function tests for the second, which is often not what you want
+#' so these functions are deprecated.
 #'
-#' \itemize{
-#'   \item Like [is_atomic()] and unlike base R
-#'         `is.atomic()`, `is_bare_atomic()` does not return
-#'         `TRUE` for `NULL`.
-#'   \item Unlike base R `is.numeric()`, `is_bare_double()`
-#'         only returns `TRUE` for floating point numbers.
-#' }
-#' @param x object to be tested.
-#' @seealso \link{type-predicates} \link{scalar-type-predicates}
-#' @name bare-type-predicates
-NULL
-
 #' @export
-#' @rdname bare-type-predicates
-is_bare_list <- function(x) {
-  !is.object(x) && is_list(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_atomic <- function(x) {
-  !is.object(x) && is_atomic(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_vector <- function(x) {
-  is_bare_atomic(x) || is_bare_list(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_double <- function(x) {
-  !is.object(x) && is_double(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_integer <- function(x) {
-  !is.object(x) && is_integer(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_numeric <- function(x) {
-  !is.object(x) && is_numeric(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_character <- function(x) {
-  !is.object(x) && is_character(x)
-}
-
-#' @export
-#' @rdname bare-type-predicates
-is_bare_logical <- function(x) {
-  !is.object(x) && is_logical(x)
-}
-
-
-#' Type predicates
-#'
-#' These type predicates aim to make type testing in R more
-#' consistent. They are wrappers around [typeof()], so
-#' operate at a level beneath S3/S4 etc.
-#'
-#' Compare to base R functions:
-#' \itemize{
-#'   \item Unlike `is.atomic()`, `is_atomic()` does not
-#'      return `TRUE` for `NULL`.
-#'   \item Unlike `is.vector()`, `is_vector()` test if an
-#'         object is an atomic vector or a list. `is.vector`
-#'         checks for the presence of attributes (other than name).
-#'   \item `is_numeric()` is not generic so, (e.g.) dates and date times
-#'     are `TRUE`, not `FALSE`.
-#'   \item `is_function()` returns `TRUE` only for regular
-#'     functions, not special or primitive functions.
-#' }
-#' @param x object to be tested.
-#' @seealso \link{bare-type-predicates} \link{scalar-type-predicates}
-#' @name type-predicates
-NULL
-
-#' @export
-#' @rdname type-predicates
-is_list <- function(x) {
-  typeof(x) == "list"
-}
-
-#' @export
-#' @rdname type-predicates
-is_atomic <- function(x) {
-  typeof(x) %in% c("logical", "integer", "double", "complex", "character", "raw")
-}
-
-#' @export
-#' @rdname type-predicates
-is_vector <- function(x) {
-  is_atomic(x) || is.list(x)
-}
-
-#' @export
-#' @rdname type-predicates
+#' @keywords internal
 is_numeric <- function(x) {
-  typeof(x) %in% c("integer", "double")
+  warning("Deprecated", call. = FALSE)
+  is_integer(x) || is_double(x)
 }
 
 #' @export
-#' @rdname type-predicates
-is_integer <- function(x) {
-  typeof(x) == "integer"
-}
-
-#' @export
-#' @rdname type-predicates
-is_double <- function(x) {
-  typeof(x) == "double"
-}
-
-#' @export
-#' @rdname type-predicates
-is_character <- function(x) {
-  typeof(x) == "character"
-}
-
-#' @export
-#' @rdname type-predicates
-is_logical <- function(x) {
-  typeof(x) == "logical"
-}
-
-#' @export
-#' @rdname type-predicates
-is_null <- function(x) {
-  typeof(x) == "NULL"
-}
-
-#' @export
-#' @rdname type-predicates
-is_function <- function(x) {
-  typeof(x) == "closure"
-}
-
-is_name <- function(x) {
-  typeof(x) == "name"
-}
-
-is_call <- function(x) {
-  typeof(x) == "language"
-}
-
-is_language <- function(x) {
-  is_call(x) || is_name(x) || is_atomic(x)
-}
-
-#' Scalar type predicates
-#'
-#' These predicates check for a given type and whether the vector is
-#' "scalar", that is, of length 1.
-#' @param x object to be tested.
-#' @seealso \link{type-predicates} \link{bare-type-predicates}
-#' @name scalar-type-predicates
-NULL
-
-#' @export
-#' @rdname scalar-type-predicates
-is_scalar_list <- function(x) {
-  is_list(x) && length(x) == 1
-}
-
-#' @export
-#' @rdname scalar-type-predicates
-is_scalar_atomic <- function(x) {
-  is_atomic(x) && length(x) == 1
-}
-
-#' @export
-#' @rdname scalar-type-predicates
-is_scalar_vector <- function(x) {
-  is_vector(x) && length(x) == 1
-}
-
-#' @export
-#' @rdname scalar-type-predicates
+#' @rdname is_numeric
 is_scalar_numeric <- function(x) {
-  is_numeric(x) && length(x) == 1
+  warning("Deprecated", call. = FALSE)
+  is_scalar_integer(x) || is_scalar_double(x)
 }
 
-#' @export
-#' @rdname scalar-type-predicates
-is_scalar_integer <- function(x) {
-  is_integer(x) && length(x) == 1
-}
+# Re-exports from purrr ---------------------------------------------------
 
 #' @export
-#' @rdname scalar-type-predicates
-is_scalar_double <- function(x) {
-  is_double(x) && length(x) == 1
-}
+rlang::is_bare_list
 
 #' @export
-#' @rdname scalar-type-predicates
-is_scalar_character <- function(x) {
-  is_character(x) && length(x) == 1
-}
+rlang::is_bare_atomic
 
 #' @export
-#' @rdname scalar-type-predicates
-is_scalar_logical <- function(x) {
-  is_logical(x) && length(x) == 1
-}
+rlang::is_bare_vector
 
-#' Is a vector/list empty?
-#'
-#' @param x object to test
 #' @export
-#' @examples
-#' is_empty(NULL)
-#' is_empty(list())
-#' is_empty(list(NULL))
-is_empty <- function(x) length(x) == 0
+rlang::is_bare_double
 
-#' Is a formula?
-#'
-#' @inheritParams is_empty
 #' @export
-#' @examples
-#' x <- disp ~ am
-#' is_formula(x)
-is_formula <- function(x) inherits(x, "formula")
+rlang::is_bare_integer
+
+#' @export
+rlang::is_bare_numeric
+
+#' @export
+rlang::is_bare_character
+
+#' @export
+rlang::is_bare_logical
+
+#' @export
+rlang::is_list
+
+#' @export
+rlang::is_atomic
+
+#' @export
+rlang::is_vector
+
+#' @export
+rlang::is_integer
+
+#' @export
+rlang::is_double
+
+#' @export
+rlang::is_character
+
+#' @export
+rlang::is_logical
+
+#' @export
+rlang::is_null
+
+#' @export
+rlang::is_function
+
+#' @export
+rlang::is_scalar_list
+
+#' @export
+rlang::is_scalar_atomic
+
+#' @export
+rlang::is_scalar_vector
+
+#' @export
+rlang::is_scalar_double
+
+#' @export
+rlang::is_scalar_character
+
+#' @export
+rlang::is_scalar_logical
+
+#' @export
+rlang::is_empty
+
+#' @export
+rlang::is_formula
+
+

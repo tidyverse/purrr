@@ -1,5 +1,9 @@
 # purrr 0.2.2.9000
 
+* All predicate functions are re-exported from rlang (#124).
+
+* `is_numeric()` and `is_scalar_numeric()` are deprecated because they
+  don't test for what you might naively expect.
 
 * `safely()` now uses the `quiet` option (#296).
 
