@@ -32,7 +32,7 @@ is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
 and name at different levels. Within a list, wrap strings in \code{get_attr()}
 to extract named attributes. If a component is not present, the value of
-\code{.null} will be returned.}
+\code{.default} will be returned.}
 
 \item{otherwise}{Default value to use when an error occurs.}
 

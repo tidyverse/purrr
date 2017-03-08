@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `.null` argument to `as_function()` has been renamed to `.default` to 
+  better reflect its intent (#298).
+
 * `as_function()` now generates a better argument list so you can refer to
   arguments by position like `..1` and `..2`. This makes it possible to use
   the formula shorthand for functions that need more arguments (#289).

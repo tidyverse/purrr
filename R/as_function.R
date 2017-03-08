@@ -22,10 +22,11 @@
 #'   and numeric vectors index by position; use a list to index by position
 #'   and name at different levels. Within a list, wrap strings in `get_attr()`
 #'   to extract named attributes. If a component is not present, the value of
-#'   `.null` will be returned.
-#' @param .null Optional additional argument for extractor functions
+#'   `.default` will be returned.
+#' @param .default,.null Optional additional argument for extractor functions
 #'   (i.e. when `.f` is character, integer, or list). Returned when
-#'   value does not exist or is `NULL`.
+#'   value is absent (does not exist) or empty (has length 0).
+#'   `.null` is deprecated; please use `.default` instead.
 #' @param ... Additional arguments passed on to methods.
 #' @export
 #' @examples
@@ -61,9 +62,12 @@ as_function.formula <- function(.f, ...) {
 }
 
 #' @useDynLib purrr extract_impl
-extract <- function(x, index, .null = NULL) {
-  .Call(extract_impl, x, index, .null)
+extract <- function(x, index, default = NULL) {
+  .Call(extract_impl, x, index, default)
 }
+
+
+# Vectors -----------------------------------------------------------------
 
 #' @export
 #' @rdname as_function
@@ -75,30 +79,51 @@ get_attr <- function(x) {
 
 #' @export
 #' @rdname as_function
-as_function.attr <- function(.f, ..., .null = NULL) {
-  as_function(map(.f, get_attr), ..., .null = .null)
+as_function.attr <- function(.f, ..., .null, .default = NULL) {
+  .default <- find_extract_default(.null, .default)
+  extractor(map(.f, get_attr), .default)
 }
 
 #' @export
 #' @rdname as_function
-as_function.character <- function(.f, ..., .null = NULL) {
-  as_function(as.list(.f), ..., .null = .null)
+as_function.character <- function(.f, ..., .null, .default = NULL) {
+  .default <- find_extract_default(.null, .default)
+  extractor(as.list(.f), .default)
 }
 
 #' @export
 #' @rdname as_function
-as_function.numeric <- function(.f, ..., .null = NULL) {
-  as_function(as.list(.f), ..., .null = .null)
+as_function.numeric <- function(.f, ..., .null, .default = NULL) {
+  .default <- find_extract_default(.null, .default)
+  extractor(as.list(.f), .default)
 }
 
 #' @export
 #' @rdname as_function
-as_function.list <- function(.f, ..., .null = NULL) {
-  idx <- .f
-  function(g, ...) {
-    extract(g, idx, .null)
+as_function.list <- function(.f, ..., .null, .default = NULL) {
+  .default <- find_extract_default(.null, .default)
+  extractor(.f, .default)
+}
+
+find_extract_default <- function(.null, .default) {
+  if (!missing(.null)) {
+    warning("`.null` is deprecated; please use `.default` instead", call. = FALSE)
+    .null
+  } else {
+    .default
   }
 }
+
+extractor <- function(i, default) {
+  stopifnot(is.list(i))
+
+  tidy_interp(function(x, ...) {
+    extract(x, !!(i), default = !!(default))
+  })
+}
+
+
+# Default -----------------------------------------------------------------
 
 #' @export
 as_function.default <- function(.f, ...) {

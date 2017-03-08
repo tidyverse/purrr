@@ -19,13 +19,13 @@ as_function(.f, ...)
 
 get_attr(x)
 
-\method{as_function}{attr}(.f, ..., .null = NULL)
+\method{as_function}{attr}(.f, ..., .null, .default = NULL)
 
-\method{as_function}{character}(.f, ..., .null = NULL)
+\method{as_function}{character}(.f, ..., .null, .default = NULL)
 
-\method{as_function}{numeric}(.f, ..., .null = NULL)
+\method{as_function}{numeric}(.f, ..., .null, .default = NULL)
 
-\method{as_function}{list}(.f, ..., .null = NULL)
+\method{as_function}{list}(.f, ..., .null, .default = NULL)
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
@@ -47,15 +47,16 @@ is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
 and name at different levels. Within a list, wrap strings in \code{get_attr()}
 to extract named attributes. If a component is not present, the value of
-\code{.null} will be returned.}
+\code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to methods.}
 
 \item{x}{A string}
 
-\item{.null}{Optional additional argument for extractor functions
+\item{.default, .null}{Optional additional argument for extractor functions
 (i.e. when \code{.f} is character, integer, or list). Returned when
-value does not exist or is \code{NULL}.}
+value is absent (does not exist) or empty (has length 0).
+\code{.null} is deprecated; please use \code{.default} instead.}
 }
 \description{
 \code{as_function} is the powerhouse behind the varied function
