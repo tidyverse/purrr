@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* `reduce()` now throws an error if `.x` is empty and `.init` is not 
+  supplied.
+
 * New `modify_list()` extends `stats::modifyList()` to replace by position
   if the list is not named. `update_list()` uses `modify_list()` (#201).
 

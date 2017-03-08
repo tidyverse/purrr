@@ -12,15 +12,16 @@ accumulate_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A two-argument function. .x is the accumulating value.
-.y is the value in the list.}
+\item{.f}{A two-argument function. The function will be passed the
+accumulated value as the first argument and the "next" value as the
+second argument.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{x[[1]]}. This is useful if
-you want to ensure that \code{reduce} returns the correct value when
-\code{.x} is \code{\link[=is_empty]{is_empty()}}.}
+you want to ensure that \code{reduce} returns a correct value when \code{.x}
+is empty. If missing, and \code{x} is empty, will throw an error.}
 }
 \description{
 \code{accumulate} applies a function recursively over a list from the left, while

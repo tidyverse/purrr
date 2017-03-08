@@ -12,36 +12,33 @@ reduce_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A two-argument function. .x is the accumulating value.
-.y is the value in the list.}
+\item{.f}{A two-argument function. The function will be passed the
+accumulated value as the first argument and the "next" value as the
+second argument.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{x[[1]]}. This is useful if
-you want to ensure that \code{reduce} returns the correct value when
-\code{.x} is \code{\link[=is_empty]{is_empty()}}.}
+you want to ensure that \code{reduce} returns a correct value when \code{.x}
+is empty. If missing, and \code{x} is empty, will throw an error.}
 }
 \description{
-\code{reduce} combines from the left, \code{reduce_right} combines from
+\code{reduce()} combines from the left, \code{reduce_right()} combines from
 the right.
 }
 \examples{
 1:3 \%>\% reduce(`+`)
 1:10 \%>\% reduce(`*`)
 
-5 \%>\%
-  replicate(sample(10, 5), simplify = FALSE) \%>\%
-  reduce(intersect)
+samples <- rerun(2, sample(10, 5))
+samples
+reduce(samples, union)
+reduce(samples, intersect)
 
 x <- list(c(0, 1), c(2, 3), c(4, 5))
 x \%>\% reduce(c)
 x \%>\% reduce_right(c)
 # Equivalent to:
 x \%>\% rev() \%>\% reduce(c)
-
-# Use init when you want reduce to return a consistent type when
-# given an empty lists
-list() \%>\% reduce(`+`)
-list() \%>\% reduce(`+`, .init = 0)
 }
