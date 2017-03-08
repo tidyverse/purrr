@@ -8,16 +8,20 @@
 #'
 #'   If a __function__, it is used as is.
 #'
-#'   If a __formula__, e.g. `~ .x + 2`, it is converted to a
-#'   function with one or two arguments, `.x` or `.`, and `.y`. This
-#'   allows you to create very compact anonymous functions with up to
-#'   two inputs.
+#'   If a __formula__, e.g. `~ .x + 2`, it is converted to a function. There
+#'   are three ways to refer to the arguments:
+#'
+#'   * For a single argument function, use `.`
+#'   * For a two argument function, use `.x` and `.y`
+#'   * For more arguments, use `..1`, `..2`, `..3` etc
+#'
+#'   This syntax allows you to create very compact anonymous functions.
 #'
 #'   If __character vector__, __numeric vector__, or __list__, it
 #'   is converted to an extractor function. Character vectors index by name
 #'   and numeric vectors index by position; use a list to index by position
 #'   and name at different levels. Within a list, wrap strings in `get_attr()`
-#'   to extract named attributes If a component is not present, the value of
+#'   to extract named attributes. If a component is not present, the value of
 #'   `.null` will be returned.
 #' @param .null Optional additional argument for extractor functions
 #'   (i.e. when `.f` is character, integer, or list). Returned when
@@ -49,12 +53,11 @@ as_function.function <- function(.f, ...) .f
 #' @export
 #' @rdname as_function
 as_function.formula <- function(.f, ...) {
-  .x <- NULL # hush R CMD check NOTE
-
   if (length(.f) != 2) {
     stop("Formula must be one sided", call. = FALSE)
   }
-  make_function(alist(.x = , .y = , . = .x), .f[[2]], environment(.f))
+  args <- alist(... = ..., .x = ..1, .y = ..2, . = ..1)
+  new_fn(args, f_rhs(.f), f_env(.f))
 }
 
 #' @useDynLib purrr extract_impl

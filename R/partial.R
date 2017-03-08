@@ -77,18 +77,10 @@ partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRU
   }
 
   args <- list("..." = quote(expr = ))
-  make_function(args, fcall, .env)
+  new_fn(args, fcall, .env)
 }
 
 make_call <- function(f, ..., .args = list()) {
   if (is.character(f)) f <- as.name(f)
   as.call(c(f, ..., .args))
-}
-
-make_function <- function(args, body, env = parent.frame()) {
-  args <- as.pairlist(args)
-  stopifnot(is.call(body) || is.name(body) || is.atomic(body))
-  env <- as.environment(env)
-
-  eval(call("function", args, body), env)
 }
