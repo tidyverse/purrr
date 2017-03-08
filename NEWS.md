@@ -1,5 +1,8 @@
 # purrr 0.2.2.9000
 
+* New `modify_list()` extends `stats::modifyList()` to replace by position
+  if the list is not named. `update_list()` uses `modify_list()` (#201).
+
 * `order_by()`, `sort_by()` and `split_by()` have been removed. `order_by()`
   conflicted with `dplyr::order_by()` and the complete family doesn't feel that
   useful. Use tibbles instead (#217).
