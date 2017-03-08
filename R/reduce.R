@@ -1,12 +1,22 @@
 #' Reduce a list to a single value by iteratively applying a binary function.
 #'
 #' `reduce()` combines from the left, `reduce_right()` combines from
-#' the right.
+#' the right. `reduce(list(x1, x2, x3), f)` is equivalent to
+#' `f(f(x1, x2), x3)`; `reduce_right(list(x1, x2, x3), f)` is equivalent to
+#' `f(f(x3, x2), x1)`.
 #'
 #' @inheritParams map
-#' @param .f A two-argument function. The function will be passed the
-#'   accumulated value as the first argument and the "next" value as the
-#'   second argument.
+#' @param .y For `reduce2()`, an additional argument that is passed to
+#'   `.f`. If `init` is not set, `.y` should be 1 element shorter than
+#'   `.x`.
+#' @param .f For `reduce()`, a 2-argument function. The function will be
+#'   passed the accumulated value as the first argument and the "next" value
+#'   as the second argument.
+#'
+#'   For `reduce2()`, a 3-argument function. The function will be passed the
+#'   accumulated value as the first argument, the next value of `.x` as the
+#'   second argument, and the next value of `.y` as the third argument.
+#'
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using \code{x[[1]]}. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
@@ -15,6 +25,10 @@
 #' @examples
 #' 1:3 %>% reduce(`+`)
 #' 1:10 %>% reduce(`*`)
+#'
+#' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+#' letters[1:4] %>% reduce(paste2)
+#' letters[1:4] %>% reduce2(c("-", ".", "-"), paste2)
 #'
 #' samples <- rerun(2, sample(10, 5))
 #' samples
@@ -35,6 +49,39 @@ reduce <- function(.x, .f, ..., .init) {
 reduce_right <- function(.x, .f, ..., .init) {
   reduce_impl(.x, .f, ..., .init = .init, .left = FALSE)
 }
+
+#' @export
+#' @rdname reduce
+reduce2 <- function(.x, .y, .f, ..., .init) {
+  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
+}
+
+#' @export
+#' @rdname reduce
+reduce2_right <- function(.x, .y, .f, ..., .init) {
+  reduce2_impl(.x, .f, .y, ..., .init = .init, .left = FALSE)
+}
+
+reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
+  out <- reduce_init(.x, .init, left = .left)
+  x_idx <- reduce_index(.x, .init, left = .left)
+  y_idx <- reduce_index(.y, NULL, left = .left)
+
+  if (length(x_idx) != length(y_idx)) {
+    stop("`.y` does not have length ", length(x_idx))
+  }
+
+  .f <- as_function(.f, ...)
+  for (i in seq_along(x_idx)) {
+    x_i <- x_idx[[i]]
+    y_i <- y_idx[[i]]
+
+    out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
+  }
+
+  out
+}
+
 
 reduce_impl <- function(.x, .f, ..., .init, .left = TRUE) {
   out <- reduce_init(.x, .init, left = .left)

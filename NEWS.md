@@ -1,5 +1,9 @@
 # purrr 0.2.2.9000
 
+* New `reduce2()` and `reduce2_right()` make it possible to reduce with a
+  3 argument function where the first argument is the accumulated value, the
+  second argument is `.x`, and the third argument is `.y` (#163).
+
 * `reduce()` now throws an error if `.x` is empty and `.init` is not 
   supplied.
 

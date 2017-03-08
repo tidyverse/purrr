@@ -32,3 +32,15 @@ test_that("accumulate passes arguments to function", {
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
   expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
 })
+
+
+# reduce2 -----------------------------------------------------------------
+
+test_that("basic application works", {
+  paste2 <- function(x, y, sep) paste(x, y, sep = sep)
+
+  x <- c("a", "b", "c")
+  expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
+  expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
+})
+

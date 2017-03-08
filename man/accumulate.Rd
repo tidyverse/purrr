@@ -12,9 +12,13 @@ accumulate_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A two-argument function. The function will be passed the
-accumulated value as the first argument and the "next" value as the
-second argument.}
+\item{.f}{For \code{reduce()}, a 2-argument function. The function will be
+passed the accumulated value as the first argument and the "next" value
+as the second argument.
+
+For \code{reduce2()}, a 3-argument function. The function will be passed the
+accumulated value as the first argument, the next value of \code{.x} as the
+second argument, and the next value of \code{.y} as the third argument.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
