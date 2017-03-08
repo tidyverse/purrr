@@ -1,5 +1,12 @@
 # purrr 0.2.2.9000
 
+* `order_by()`, `sort_by()` and `split_by()` have been removed. `order_by()`
+  conflicted with `dplyr::order_by()` and the complete family doesn't feel that
+  useful. Use tibbles instead (#217).
+  
+* `contains()` has been renamed to `has_element()` to avoid conflicts with
+  dplyr (#217).
+
 * All `map()` functions now force arguments in the same way that base R
   does for apply functions (#191).
 

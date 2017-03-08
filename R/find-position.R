@@ -52,8 +52,8 @@ index <- function(x, right = FALSE) {
 #' @export
 #' @examples
 #' x <- list(1:10, 5, 9.9)
-#' x %>% contains(1:10)
-#' x %>% contains(3)
-contains <- function(.x, .y) {
+#' x %>% has_element(1:10)
+#' x %>% has_element(3)
+has_element <- function(.x, .y) {
   some(.x, identical, .y)
 }

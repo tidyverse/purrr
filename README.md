@@ -95,10 +95,7 @@ mean(unlist(boot$diffs))
 * Reduce a list to a single value by iteratively applying a binary
   function: `reduce()` and `reduce_right()`.
 
-* Figure out if a list contains an object: `contains()`.
-
-* Order, sort and split a list based on its components with `split_by()`,
-  `order_by()` and `sort_by()`.
+* Figure out if a list contains an object: `has_element()`.
 
 ### List manipulation and creation
 
