@@ -8,30 +8,6 @@
 #' @usage lhs \%>\% rhs
 NULL
 
-
-#' Modify a list
-#'
-#' @param _data A list.
-#' @param ... New values of a list. Use `NULL` to remove values.
-#'   Use a formula to evaluate in the context of the list values.
-#' @export
-#' @examples
-#' x <- list(x = 1:10, y = 4)
-#' update_list(x, z = 10)
-#' update_list(x, z = ~ x + y)
-update_list <- function(`_data`, ...) {
-  new_values <- list(...)
-
-  is_formula <- map_lgl(new_values, ~inherits(., "formula"))
-
-  new_values[is_formula] <- lapply(new_values[is_formula], function(f) {
-    stopifnot(length(f) == 2)
-    eval(f[[2]], `_data`, environment(f))
-  })
-
-  utils::modifyList(`_data`, new_values)
-}
-
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
     tibble::as_tibble(out)
