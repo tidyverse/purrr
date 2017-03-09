@@ -10,6 +10,12 @@
 #' # Same as
 #' x %>% discard("y") %>% length()
 negate <- function(.p) {
-  .p <- as_mapper(.p)
-  function(...) !.p(...)
+  p <- tidy_capture(.p)
+
+  if (is.function(.p)) {
+    tidy_interp(function(...) !UQE(p)(...))
+  } else {
+    .p <- as_mapper(.p)
+    function(...) !.p(...)
+  }
 }
