@@ -1,4 +1,4 @@
-context("as_function")
+context("as_mapper")
 
 
 # formulas ----------------------------------------------------------------

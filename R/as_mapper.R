@@ -1,7 +1,7 @@
 
-#' Convert an object into a function
+#' Convert an object into a mapper function
 #'
-#' `as_function` is the powerhouse behind the varied function
+#' `as_mapper` is the powerhouse behind the varied function
 #' specifications that most purrr functions allow. It is an S3 generic.
 #'
 #' @param .f A function, formula, or atomic vector.
@@ -30,30 +30,41 @@
 #' @param ... Additional arguments passed on to methods.
 #' @export
 #' @examples
-#' as_function(~ . + 1)
-#' as_function(1)
+#' as_mapper(~ . + 1)
+#' as_mapper(1)
 #'
-#' as_function(c("a", "b", "c"))
+#' as_mapper(c("a", "b", "c"))
 #' # Equivalent to function(x) x[["a"]][["b"]][["c"]]
 #'
-#' as_function(list(1, "a", 2))
+#' as_mapper(list(1, "a", 2))
 #' # Equivalent to function(x) x[[1]][["a"]][[2]]
 #'
-#' as_function(list(1, get_attr("a")))
+#' as_mapper(list(1, get_attr("a")))
 #' # Equivalent to function(x) attr(x[[1]], "a")
 #'
-#' as_function(c("a", "b", "c"), .null = NA)
-as_function <- function(.f, ...) {
-  UseMethod("as_function")
+#' as_mapper(c("a", "b", "c"), .null = NA)
+as_mapper <- function(.f, ...) {
+  UseMethod("as_mapper")
 }
 
 #' @export
-#' @rdname as_function
-as_function.function <- function(.f, ...) .f
+#' @rdname as_mapper
+#' @usage NULL
+as_function <- function(...) {
+  warning(
+    "`as_function()` is deprecated; please use `as_mapper()` instead",
+    call. = FALSE
+  )
+  as_mapper(...)
+}
 
 #' @export
-#' @rdname as_function
-as_function.formula <- function(.f, ...) {
+#' @rdname as_mapper
+as_mapper.function <- function(.f, ...) .f
+
+#' @export
+#' @rdname as_mapper
+as_mapper.formula <- function(.f, ...) {
   if (length(.f) != 2) {
     stop("Formula must be one sided", call. = FALSE)
   }
@@ -70,7 +81,7 @@ extract <- function(x, index, default = NULL) {
 # Vectors -----------------------------------------------------------------
 
 #' @export
-#' @rdname as_function
+#' @rdname as_mapper
 #' @param x A string
 get_attr <- function(x) {
   stopifnot(is.character(x))
@@ -78,29 +89,29 @@ get_attr <- function(x) {
 }
 
 #' @export
-#' @rdname as_function
-as_function.attr <- function(.f, ..., .null, .default = NULL) {
+#' @rdname as_mapper
+as_mapper.attr <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
   extractor(map(.f, get_attr), .default)
 }
 
 #' @export
-#' @rdname as_function
-as_function.character <- function(.f, ..., .null, .default = NULL) {
+#' @rdname as_mapper
+as_mapper.character <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
   extractor(as.list(.f), .default)
 }
 
 #' @export
-#' @rdname as_function
-as_function.numeric <- function(.f, ..., .null, .default = NULL) {
+#' @rdname as_mapper
+as_mapper.numeric <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
   extractor(as.list(.f), .default)
 }
 
 #' @export
-#' @rdname as_function
-as_function.list <- function(.f, ..., .null, .default = NULL) {
+#' @rdname as_mapper
+as_mapper.list <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
   extractor(.f, .default)
 }
@@ -126,7 +137,7 @@ extractor <- function(i, default) {
 # Default -----------------------------------------------------------------
 
 #' @export
-as_function.default <- function(.f, ...) {
+as_mapper.default <- function(.f, ...) {
   stop("Don't know how to convert ", paste0(class(.f), collapse = "/"),
        " into a function", call. = FALSE)
 }

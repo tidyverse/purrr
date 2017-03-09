@@ -10,7 +10,7 @@
 #'
 #' `walk()` calls `.f` for its side-effect and returns the input `.x`.
 #'
-#' @inheritParams as_function
+#' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to `.f`.
 #' @return All functions return a vector the same length as `.x`.
@@ -81,35 +81,35 @@
 #' # the broom package)
 #' @useDynLib purrr map_impl
 map <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "logical")
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "character")
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "integer")
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "double")
 }
 
@@ -118,7 +118,7 @@ map_dbl <- function(.x, .f, ...) {
 #'   giving either the name or the index of the data frame.
 #' @export
 map_dfr <- function(.x, .f, ..., .id = NULL) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_rows(res, .id = .id)
 }
@@ -131,7 +131,7 @@ map_df <- map_dfr
 #' @rdname map
 #' @export
 map_dfc <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_cols(res)
 }
@@ -139,7 +139,7 @@ map_dfc <- function(.x, .f, ...) {
 #' @export
 #' @rdname map
 walk <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   for (i in seq_along(.x)) {
     .f(.x[[i]], ...)
   }

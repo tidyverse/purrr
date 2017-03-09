@@ -71,7 +71,7 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
     stop("`.y` does not have length ", length(x_idx))
   }
 
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   for (i in seq_along(x_idx)) {
     x_i <- x_idx[[i]]
     y_i <- y_idx[[i]]
@@ -87,7 +87,7 @@ reduce_impl <- function(.x, .f, ..., .init, .left = TRUE) {
   out <- reduce_init(.x, .init, left = .left)
   idx <- reduce_index(.x, .init, left = .left)
 
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   for (i in idx) {
     out <- .f(out, .x[[i]], ...)
   }
@@ -171,7 +171,7 @@ seq_len2 <- function(start, end) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 accumulate <- function(.x, .f, ..., .init) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
 
   f <- function(x, y) {
     .f(x, y, ...)
@@ -183,7 +183,7 @@ accumulate <- function(.x, .f, ..., .init) {
 #' @export
 #' @rdname accumulate
 accumulate_right <- function(.x, .f, ..., .init) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
 
   # Note the order of arguments is switched
   f <- function(x, y) {

@@ -15,56 +15,56 @@
 #' imap_chr(sample(10), ~ paste0(.y, ": ", .x))
 #' iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = ""))
 imap <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2(.x, vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_lgl <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2_lgl(.x, vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_chr <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2_chr(.x, vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_int <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2_int(.x, vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_dbl <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2_dbl(.x, vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_dfr <- function(.x, .f, ..., .id = NULL) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2_dfr(.x, vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_dfc <- function(.x, .f, ..., .id = NULL) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   map2_dfc(.x, vec_index(.x), .f, ...)
 }
 
 #' @export
 #' @rdname imap
 iwalk <- function(.x, .f, ...) {
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   walk2(.x, vec_index(.x), .f, ...)
 }
 

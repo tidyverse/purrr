@@ -10,6 +10,6 @@
 #' # Same as
 #' x %>% discard("y") %>% length()
 negate <- function(.p) {
-  .p <- as_function(.p)
+  .p <- as_mapper(.p)
   function(...) !.p(...)
 }

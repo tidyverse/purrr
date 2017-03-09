@@ -107,7 +107,7 @@ modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
     .depth <- depth(.x) + .depth
   }
 
-  .f <- as_function(.f, ...)
+  .f <- as_mapper(.f, ...)
   modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged)
 }
 

@@ -41,21 +41,21 @@
 #' list("a", 10, 100) %>%
 #'   map_dbl(possibly(log, NA_real_))
 safely <- function(.f, otherwise = NULL, quiet = TRUE) {
-  .f <- as_function(.f)
+  .f <- as_mapper(.f)
   function(...) capture_error(.f(...), otherwise, quiet)
 }
 
 #' @export
 #' @rdname safely
 quietly <- function(.f) {
-  .f <- as_function(.f)
+  .f <- as_mapper(.f)
   function(...) capture_output(.f(...))
 }
 
 #' @export
 #' @rdname safely
 possibly <- function(.f, otherwise, quiet = TRUE) {
-  .f <- as_function(.f)
+  .f <- as_mapper(.f)
   force(otherwise)
 
   function(...) {

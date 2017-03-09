@@ -91,7 +91,7 @@ cross <- function(.l, .filter = NULL) {
   }
 
   if (!is.null(.filter)) {
-    .filter <- as_function(.filter)
+    .filter <- as_mapper(.filter)
   }
 
   n <- length(.l)

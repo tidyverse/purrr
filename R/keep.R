@@ -43,6 +43,6 @@ discard <- function(.x, .p, ...) {
 #' @export
 #' @rdname keep
 compact <- function(.x, .p = identity) {
-  .f <- as_function(.p)
+  .f <- as_mapper(.p)
   .x %>% discard(function(x) is_empty(.p(x)))
 }

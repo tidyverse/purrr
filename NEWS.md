@@ -1,5 +1,7 @@
 # purrr 0.2.2.9000
 
+* `as_function()` is now `as_mapper()` (#298)
+
 * `.null` argument to `as_function()` has been renamed to `.default` to 
   better reflect its intent (#298).
 

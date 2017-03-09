@@ -25,7 +25,7 @@ set_names <- function(x, nm = x) {
   }
 
   if (is.function(nm) || is_formula(nm)) {
-    nm <- as_function(nm)
+    nm <- as_mapper(nm)
     nm <- nm(names2(x))
   }
 
