@@ -14,8 +14,10 @@
 * `reduce()` now throws an error if `.x` is empty and `.init` is not 
   supplied.
 
-* New `modify_list()` extends `stats::modifyList()` to replace by position
-  if the list is not named. `update_list()` uses `modify_list()` (#201).
+* `update_list()` has been renamed to `list_update()`.
+
+* New `list_modify()` extends `stats::modifyList()` to replace by position
+  if the list is not named. `list_update()` uses `list_modify()` (#201).
 
 * `order_by()`, `sort_by()` and `split_by()` have been removed. `order_by()`
   conflicted with `dplyr::order_by()` and the complete family doesn't feel that
