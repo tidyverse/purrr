@@ -68,11 +68,21 @@ as_mapper.formula <- function(.f, ...) {
   if (length(.f) != 2) {
     stop("Formula must be one sided", call. = FALSE)
   }
-  args <- alist(... = ..., .x = ..1, .y = ..2, . = ..1)
-  new_fn(args, f_rhs(.f), f_env(.f))
+  new_fn(f_mapper_args(), f_rhs(.f), f_env(.f))
 }
 
+f_mapper_args <- function() {
+  list(... = arg_missing(), .x = quote(..1), .y = quote(..2), . = quote(..1))
+}
+
+#' Extract an element from a vector or environment
+#'
+#' @param x A vector or environment
+#' @param index A list indexing into the object
+#' @param default Value to use if target is empty or absent.
+#' @keywords internal
 #' @useDynLib purrr extract_impl
+#' @export
 extract <- function(x, index, default = NULL) {
   .Call(extract_impl, x, index, default)
 }
