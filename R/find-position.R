@@ -35,7 +35,7 @@ detect_index <- function(.x, .p, ..., .right = FALSE) {
   for (i in index(.x, .right)) {
     if (is_true(.p(.x[[i]], ...))) return(i)
   }
-  0
+  0L
 }
 
 index <- function(x, right = FALSE) {
