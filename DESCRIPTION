@@ -4,11 +4,9 @@ Version: 0.2.2.9000
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
     person("Lionel", "Henry", , "lionel.hry@gmail.com", "ctb"),
-    person("RStudio", role = "cph")
+    person("RStudio", role = c("cph", "fnd"))
     )
-Description: Make your pure functions purr with the 'purrr' package. This
-    package completes R's functional programming tools with missing features
-    present in other programming languages.
+Description: A complete and consistent functional programming toolkit for R.
 URL: https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 License: GPL-3 | file LICENSE
