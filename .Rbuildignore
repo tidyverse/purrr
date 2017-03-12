@@ -6,3 +6,4 @@
 ^codecov\.yml$
 ^README\.Rmd$
 ^README-.*\.png$
+^logo\.png$

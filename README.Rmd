@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# purrr
+# purrr <img src="logo.png" align="right" />
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
 [![Build Status](https://travis-ci.org/tidyverse/purrr.svg?branch=master)](https://travis-ci.org/tidyverse/purrr)
