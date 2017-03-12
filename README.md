@@ -10,15 +10,14 @@ purrr enhances R's functional programming (FP) toolkit by providing a complete a
 Installation
 ------------
 
-Get the released version from CRAN:
-
 ``` r
+# The easiest way to get purrr is to install the whole tidyverse:
+install.packages("tidyverse")
+
+# Alternatively, install just purrr:
 install.packages("purrr")
-```
 
-Or the development version from GitHub:
-
-``` r
+# Or the the development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("tidyverse/purrr")
 ```
