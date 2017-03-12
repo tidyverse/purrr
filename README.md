@@ -1,180 +1,130 @@
-# purrr
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
-[![Build Status](https://travis-ci.org/hadley/purrr.svg?branch=master)](https://travis-ci.org/hadley/purrr)
-[![Coverage Status](https://img.shields.io/codecov/c/github/hadley/purrr/master.svg)](https://codecov.io/github/hadley/purrr?branch=master)
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+purrr
+=====
 
-Purrr makes your pure functions purr by completing R's functional programming tools with important features from other languages, in the style of the JS packages [underscore.js](http://underscorejs.org), [lodash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/).
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr) [![Build Status](https://travis-ci.org/hadley/purrr.svg?branch=master)](https://travis-ci.org/hadley/purrr) [![Coverage Status](https://img.shields.io/codecov/c/github/hadley/purrr/master.svg)](https://codecov.io/github/hadley/purrr?branch=master)
 
-## Installation
+purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. If you've never heard of FP before, the best place to start is the family of `map()` functions which allow you to replace many for loops with code that is both more succinct and easier to read.
+
+Installation
+------------
 
 Get the released version from CRAN:
 
-```R
+``` r
 install.packages("purrr")
 ```
 
-Or the development version from github with:
+Or the development version from GitHub:
 
-```R
+``` r
 # install.packages("devtools")
 devtools::install_github("hadley/purrr")
 ```
 
-## Examples
+Examples
+--------
 
 The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2.
 
-```R
+``` r
 library(purrr)
 
 mtcars %>%
-  split(.$cyl) %>%
+  split(.$cyl) %>% # from base R
   map(~ lm(mpg ~ wt, data = .)) %>%
   map(summary) %>%
   map_dbl("r.squared")
+#>         4         6         8 
+#> 0.5086326 0.4645102 0.4229655
 ```
 
-Note the three types of input to `map()`: a function, a formula (converted to an anonymous function), or a string (used to extract named components).
+This example illustrates some of the advantages of purrr functions over the equivalents in base R:
 
-The following more complicated example shows how you might generate 100 random test-training splits, fit a model to each training split then evaluate based on the test split:
+-   The first argument is always the data, so purrr works naturally with the pipe.
 
-```R
-library(dplyr)
-random_group <- function(n, probs) {
-  probs <- probs / sum(probs)
-  g <- findInterval(seq(0, 1, length = n), c(0, cumsum(probs)),
-    rightmost.closed = TRUE)
-  names(probs)[sample(g)]
-}
-partition <- function(df, n, probs) {
-  replicate(n, split(df, random_group(nrow(df), probs)), FALSE) %>%
-    transpose() %>%
-    as_data_frame()
-}
+-   All purrr functions are type-stable. They always return the advertised output type (`map()` returns lists; `map_dbl()` returns double vectors), or they throw an errror.
 
-msd <- function(x, y) sqrt(mean((x - y) ^ 2))
+-   All `map()` functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).
 
-# Generate 100 random test-training splits
-boot <- partition(mtcars, 100, c(training = 0.8, test = 0.2))
-boot
-
-boot <- boot %>% mutate(
-  # Fit the models
-  models = map(training, ~ lm(mpg ~ wt, data = .)),
-  # Make predictions on test data
-  preds = map2(models, test, predict),
-  diffs = map2(preds, test %>% map("mpg"), msd)
-)
-
-# Evaluate mean-squared difference between predicted and actual
-mean(unlist(boot$diffs))
-```
-
-## API
+API
+---
 
 ### Transformation
 
-* Apply a function to each element: `map()` returns a list;
-  `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` return a vector; 
-  `walk()` invisibly returns original list, calling the function for its side 
-  effects; `map2()` and `pmap()` vectorise over multiple inputs; 
-  `at_depth()` maps a function at a specified level of nested lists.
+-   Apply a function to each element: `map()` returns a list; `map_lgl()`/`map_int()`/`map_dbl()`/`map_chr()` return a vector; `walk()` invisibly returns original list, calling the function for its side effects; `map2()` and `pmap()` vectorise over multiple inputs;
 
-* Apply a function conditionally with `map_if()` (where a predicate
-  returns `TRUE`) and `map_at()` (at specific locations).
+-   Modify a data structure with `modify()`, at a certain depth with `modify_depth()`, where a predicate is true with `modify_if()`, or at specified locations with `modify_at()`.
 
-* Apply a function to slices of a data frame with `by_slice()`, or to
-  each row with `by_row()` or `map_rows()`.
+-   Reduce a list to a single value by iteratively applying a binary function: `reduce()` and `reduce_right()`.
 
-* Apply a function to list-elements of a list with `lmap()`,
-  `lmap_if()` and `lmap_at()`. Compared to traditional mapping, the
-  function is applied to `x[i]` instead of `x[[i]]`, preserving the
-  surrounding list and attributes.
-
-* Reduce a list to a single value by iteratively applying a binary
-  function: `reduce()` and `reduce_right()`.
-
-* Figure out if a list contains an object: `has_element()`.
+-   Figure out if a list contains an object: `has_element()`.
 
 ### List manipulation and creation
 
-* Transpose a list with `transpose()`.
+-   Transpose a list with `transpose()`.
 
-* Create the cartesian product of the elements of several lists with
-  `cross_n()` and `cross_d()`.
+-   Create the cartesian product of the elements of several lists with `cross()` or `cross_df()`.
 
-* Flatten a list with `flatten()`.
-
-* Splice lists and other objects with `splice()`.
+-   Flatten a list with `flatten()`, `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`, and `flatten_chr()`.
 
 ### Predicate functions
 
 (A predicate function is a function that either returns `TRUE` or `FALSE`)
 
-* `keep()` or `discard()` elements that satisfy the predicate..
+-   `keep()` or `discard()` elements that satisfy the predicate..
 
-* Does `every()` element or `some()` elements satisfy the predicate?
+-   Does `every()` element or `some()` elements satisfy the predicate?
 
-* Find the value (`detect()`) and index (`detect_index()`) of the first element
-  that satisfies the predicate.
+-   Find the value (`detect()`) and index (`detect_index()`) of the first element that satisfies the predicate.
 
-* Find the head/tail that satisfies a predicate: `head_while()`, `tail_while()`.
+-   Find the head/tail that satisfies a predicate: `head_while()`, `tail_while()`.
 
 ### Lists of functions
 
-* `invoke()` every function in a list with given arguments and returns
-  a list, `invoke_lgl()`/`invoke_int()`/`invoke_dbl()`/`invoke_chr()` returns 
-  vectors.
+-   `invoke()` every function in a list with given arguments and returns a list, `invoke_lgl()`/`invoke_int()`/`invoke_dbl()`/`invoke_chr()` returns vectors.
+
+-   `invoke_map()` every function in a list with different arguments for each call.
 
 ### Function operators
 
-* Fill in function arguments with `partial()`.
+-   Fill in function arguments with `partial()`.
 
-* Change the way your function takes input with `lift()` and the
-  `lift_xy()` family of composition helpers.
+-   Change the way your function takes input with `lift()` and the `lift_xy()` family of composition helpers.
 
-* Compose multiple functions into a single function with `compose()`.
+-   Compose multiple functions into a single function with `compose()`.
 
-* Negate a predicate funtion with `negate()`.
+-   Negate a predicate funtion with `negate()`.
 
 ### Objects coercion
 
-* Convert an array or matrix to a list with `array_tree()` and
-  `array_branch()`.
+-   Convert an array or matrix to a list with `array_tree()` and `array_branch()`.
 
-* Convert a list to a vector with `as_vector()`.
+-   Convert a list to a vector with `as_vector()`.
 
-## Philosophy
+Philosophy
+----------
 
 The goal is not to try and simulate Haskell in R: purrr does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.
 
-* Instead of point free style, use the pipe, `%>%`, to write code that can be
-  read from left to right.
+-   Instead of point free style, use the pipe, `%>%`, to write code that can be read from left to right.
 
-* Instead of currying, we use `...` to pass in extra arguments.
+-   Instead of currying, we use `...` to pass in extra arguments.
 
-* Anonymous functions are verbose in R, so we provide two convenient shorthands.
-  For unary functions, `~ .x + 1` is equivalent to `function(.x) .x + 1`.
-  For chains of transformations functions, `. %>% f() %>% g()` is
-  equivalent to `function(.) . %>% f() %>% g()`.
+-   Anonymous functions are verbose in R, so we provide two convenient shorthands. For unary functions, `~ .x + 1` is equivalent to `function(.x) .x + 1`. For chains of transformations functions, `. %>% f() %>% g()` is equivalent to `function(.) . %>% f() %>% g()`.
 
-* R is weakly typed, we need variants `map_int()`, `map_dbl()`, etc since we 
-  don't know what `.f` will return.
+-   R is weakly typed, we need variants `map_int()`, `map_dbl()`, etc since we don't know what `.f` will return.
 
-* R has named arguments, so instead of providing different functions for
-  minor variations (e.g. `detect()` and `detectLast()`) I use a named
-  argument, `.first`. Type-stable functions are easy to reason about so
-  additional arguments will never change the type of the output.
+-   R has named arguments, so instead of providing different functions for minor variations (e.g. `detect()` and `detectLast()`) I use a named argument, `.right`. Type-stable functions are easy to reason about so additional arguments will never change the type of the output.
 
-## Related work
+Related work
+------------
 
-* [rlist](http://renkun.me/rlist/), another R package to support working
-  with lists. Similar goals but somewhat different philosophy.
+-   [rlist](http://renkun.me/rlist/), another R package to support working with lists. Similar goals but somewhat different philosophy.
 
-* List operations defined in the Haskell [prelude][haskell]
+-   Functional programming librarys for javascript: [underscore.js](http://underscorejs.org), [lodash](https://lodash.com) and [lazy.js](http://danieltao.com/lazy.js/).
 
-* Scala's [list methods][scala].
+-   List operations defined in the Haskell [prelude](http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11)
 
-[scala]:http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.List
-[haskell]:http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11
+-   Scala's [list methods](http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.List).

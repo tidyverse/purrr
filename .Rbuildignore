@@ -4,3 +4,5 @@
 ^cran-comments\.md$
 ^revdep$
 ^codecov\.yml$
+^README\.Rmd$
+^README-.*\.png$
