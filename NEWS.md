@@ -1,27 +1,10 @@
 # purrr 0.2.2.9000
 
-* `compact()` now works with standard mapper conventions (#282).
+## purrr and dplyr
 
-* `as_function()` is now `as_mapper()` (#298)
+purrr no longer depends on dplyr, lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages. This means that data-frame based mappers (`dmap()`, `dmap_at()`, `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and `unslice()`) have been moved to a new package, purrrlyr. This is a bit of an aggressive change but it needed to be done, and in this case I think it's better to rip the band aid off quickly.
 
-* `.null` argument to `as_function()` has been renamed to `.default` to 
-  better reflect its intent (#298).
-
-* `as_function()` now generates a better argument list so you can refer to
-  arguments by position like `..1` and `..2`. This makes it possible to use
-  the formula shorthand for functions that need more arguments (#289).
-
-* New `reduce2()` and `reduce2_right()` make it possible to reduce with a
-  3 argument function where the first argument is the accumulated value, the
-  second argument is `.x`, and the third argument is `.y` (#163).
-
-* `reduce()` now throws an error if `.x` is empty and `.init` is not 
-  supplied.
-
-* `update_list()` has been renamed to `list_update()`.
-
-* New `list_modify()` extends `stats::modifyList()` to replace by position
-  if the list is not named. `list_update()` uses `list_modify()` (#201).
+There have also been two changes to eliminate name conflicts between purrr and dplyr:
 
 * `order_by()`, `sort_by()` and `split_by()` have been removed. `order_by()`
   conflicted with `dplyr::order_by()` and the complete family doesn't feel that
@@ -30,75 +13,75 @@
 * `contains()` has been renamed to `has_element()` to avoid conflicts with
   dplyr (#217).
 
-* All `map()` functions now force arguments in the same way that base R
-  does for apply functions (#191).
+## Map helpers
 
-* The data frame suffix `_df` has been (soft) deprecated in favour of 
-  `_dfr` to more clearly indicate that it's a row bind. All variants now 
-  also have a `_dfc` for column binding (#167). (These will not be terribly
-  useful until `dplyr::bind_rows()`/`dplyr::bind_cols()` have better
-  semantics)
+* `as_function()` is now `as_mapper()` because it is a tranformation that
+  makes sense primarily for mapping functions, not in general (#298).
+  `.null` has been renamed to `.default` to better reflect its intent (#298).
+  `.default` is returned whenever an element is absent or empty (#231, #254).
+  
+* Recursive indexing can now extract objects out of environments (#213) and 
+  S4 objects (#200), as well as lists.
 
-* All predicate functions are re-exported from rlang (#124).
+* `get_attr()` makes it possible to extract from attributes
+  like `map(list(iris, mtcars), get_attr("row.names"))`.
+  
+* The argument list for formula-functions has been tweaked so that you can
+  refer to arguments by position with `..1`, `..2`, and so on. This makes it 
+  possible to use the formula shorthand for functions with more than two 
+  arguments (#289).
 
-* `is_numeric()` and `is_scalar_numeric()` are deprecated because they
-  don't test for what you might naively expect.
+## Map functions
 
-* `safely()` now uses the `quiet` option (#296).
+* All map functions now treat `NULL` the same way as an empty vector (#199), 
+  and return an empty vector if any input is an empty vector.
 
-* `modify_depth()` gains new `.ragged` argument, and negative depths are 
-  now computed relative to the deepest component of the list (#236).
-
-* New `modify()` is shorthand for `x[] <- map(x, f)`.
-
-* `map_at()` and `map_if()` have been deprecated. Please use `modify_at()` 
-  and `modify_if()` instead (#292). `at_depth()` has been deprecated;
-  please use `modify_depth()` instead.
-
-* `invoke()` no longer uses lazyeval to figure out which enviroment a 
-  character `f` comes from.
-
-* `transpose()` now matches by name if available (#164). You can 
-  override the default choice with the new `.names` argument.
-
-* `get_attr()` makes it possible to extract values from attributes within
-  `as_funtion()`.
-
-* `pmap()` coerces data frames to lists to avoid the expensive `[.data.frame`
-  which provides security that's unneeded here (#220).
-
-* `invoke()` uses a more robust approach to generate the argument list (#249)
-
-* `map_if()` and `map_at()` now modify their input in-place (#169).
-
-* New `depth()` computes the depth (i.e. the number of levels of indexing)
-  or a vector (#243).
+* All `map()` functions now force their arguments in the same way that base R
+  does for `lapply()` (#191). This makes `map()` etc easier to use when
+  generating functions.
 
 * A new family of "indexed" map functions, `imap()`, `imap_lgl()` etc, 
   provide a short-hand for `map2(x, names(x))` or `map2(x, seq_along(x))`
   (#240).
 
-* Deprecated functions `flatmap()`, `map3()`, `map_n()`, `walk3()`, and 
-  `walk_n()` have been removed.
+* The data frame suffix `_df` has been (soft) deprecated in favour of 
+  `_dfr` to more clearly indicate that it's a row-bind. All variants now 
+  also have a `_dfc` for column binding (#167). (These will not be terribly
+  useful until `dplyr::bind_rows()`/`dplyr::bind_cols()` have better
+  semantics for vectors.)
 
-* `every()` and `some()` now return `NA` if present in the output (#174).
+## Modify functions
 
-* `set_names()` can now take a function to tranform the names programmatically
-  (#276).
+`map()` always returns a list, regardless of the input type. A new `modify()` family returns the same output of the type as the input `.x`. They rely on the semantics of `[<-` so `modify()` is shorthand for `x[] <- map(x, f)`.
 
-* `rdunif()` checks its inputs for validity (#211).
+* `modify_if()` and `modify_at()` replace the now deprecated `map_at()` and 
+  `map_if()` (#169, #292). If you want the previous behaviour, just coerce 
+  `.x` to a list. `at_depth()` has been renamed to `modify_depth()`.
 
-* `map2()` and `pmap()` (and all output type variants) now return a output
-  of length 0 if any input is of length 0.
+* `modify_depth()` gains new `.ragged` argument, and negative depths are 
+  now computed relative to the deepest component of the list (#236).
 
-* `map()`, `map2()`, and `pmap()` (as well as all output type variants)
-  treat NULL the same way as an empty vector (#199).
+* `map_at()` and `map_if()` have been deprecated. Please use `modify_at()` 
+  and `modify_if()` instead . 
 
-* All data-frame based mappers have been deprecated in favour of new
-  functions and idioms in the tidyverse. `dmap()`, `dmap_at()`, `dmap_if()`,
-  `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and
-  `unslice()` have been moved to purrrlyr. This is a bit of an aggressive
-  change but it allows us to make the dependencies much lighter.
+## New functions
+
+* `depth()` computes the depth (i.e. the number of levels of indexing)
+  or a vector (#243).
+
+* `reduce2()` and `reduce2_right()` make it possible to reduce with a
+  3 argument function where the first argument is the accumulated value, the
+  second argument is `.x`, and the third argument is `.y` (#163).
+
+* `list_modify()` extends `stats::modifyList()` to replace by position
+  if the list is not named. `list_update()` uses `list_modify()` (#201).
+  `update_list()` has been renamed to `list_update()`.
+
+## Minor improvements and bug fixes
+
+* All predicate functions are re-exported from rlang (#124).
+
+* `compact()` now works with standard mapper conventions (#282).
 
 * `cross_n()` has been renamed to `cross()`. The `_n` suffix was
   removed for consistency with `pmap()` (originally called `map_n()`
@@ -106,14 +89,33 @@
   `zip_n()`). Similarly, `cross_d()` has been renamed to `cross_df()`
   for consistency with `map_df()`.
 
-* Removed `LinkingTo:` dependency on `dplyr` (#247, @krlmlr).
+* `every()` and `some()` now return `NA` if present in the output (#174).
 
-* Recursive index via `as_function()` now returns `missing` when first element
-  is `NULL`, or when the element has length 0 (#254). Recursive indexing
-  can now recurse through environments (#213) and S4 objects (#200).
+* `invoke()` uses a more robust approach to generate the argument list (#249)
+  It no longer uses lazyeval to figure out which enviroment a character `f` 
+  comes from.
 
-* When indexing elements (e.g. `map(x, "field")`), `NULL` values are
-  replaced with `.null` (#231).
+* `is_numeric()` and `is_scalar_numeric()` are deprecated because they
+  don't test for what you might naively expect.
+
+* `reduce()` now throws an error if `.x` is empty and `.init` is not 
+  supplied.
+
+* Deprecated functions `flatmap()`, `map3()`, `map_n()`, `walk3()`, and 
+  `walk_n()` have been removed.
+
+* `pmap()` coerces data frames to lists to avoid the expensive `[.data.frame`
+  which provides security that is unneeded here (#220).
+
+* `rdunif()` checks its inputs for validity (#211).
+
+* `set_names()` can now take a function to tranform the names programmatically
+  (#276).
+
+* `safely()` now actually uses the `quiet` argument (#296).
+
+* `transpose()` now matches by name if available (#164). You can 
+  override the default choice with the new `.names` argument.
 
 # purrr 0.2.2
 
