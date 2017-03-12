@@ -1,2 +1,3 @@
+#' @keywords internal
 #' @import rlang
-NULL
+"_PACKAGE"
