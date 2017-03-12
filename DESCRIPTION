@@ -9,8 +9,8 @@ Authors@R: c(
 Description: Make your pure functions purr with the 'purrr' package. This
     package completes R's functional programming tools with missing features
     present in other programming languages.
-URL: https://github.com/hadley/purrr
-BugReports: https://github.com/hadley/purrr/issues
+URL: https://github.com/tidyverse/purrr
+BugReports: https://github.com/tidyverse/purrr/issues
 License: GPL-3 | file LICENSE
 LazyData: true
 Imports:

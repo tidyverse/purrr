@@ -3,7 +3,7 @@
 purrr
 =====
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr) [![Build Status](https://travis-ci.org/hadley/purrr.svg?branch=master)](https://travis-ci.org/hadley/purrr) [![Coverage Status](https://img.shields.io/codecov/c/github/hadley/purrr/master.svg)](https://codecov.io/github/hadley/purrr?branch=master)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr) [![Build Status](https://travis-ci.org/tidyverse/purrr.svg?branch=master)](https://travis-ci.org/tidyverse/purrr) [![Coverage Status](https://img.shields.io/codecov/c/github/tidyverse/purrr/master.svg)](https://codecov.io/github/tidyverse/purrr?branch=master)
 
 purrr enhances R's functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. If you've never heard of FP before, the best place to start is the family of `map()` functions which allow you to replace many for loops with code that is both more succinct and easier to read.
 

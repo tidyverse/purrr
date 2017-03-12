@@ -10,6 +10,6 @@
 ## Reverse dependencies
 
 I have run R CMD check on the 12 downstream dependencies.
-(Summary at https://github.com/hadley/purrr/tree/master/revdep). 
+(Summary at https://github.com/tidyverse/purrr/tree/master/revdep). 
   
 There were no problems.
