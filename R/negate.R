@@ -23,13 +23,9 @@ transform_expr <- function(quo_f, trans, default) {
 
   f <- tidy_eval(quo_f)
   if (is.function(f)) {
-    if (is_primitive(f)) {
-      args <- list(... = arg_missing())
-      call_args <- list(quote(...))
-    } else {
-      args <- formals(f)
-      call_args <- map(names(args), as_symbol)
-    }
+    args <- fn_fmls(f)
+    call_args <- map(names(args), as_symbol)
+
     body <- lang_interp(UQE(quo_f)(UQS(call_args)))
   } else if (is_formula(f)) {
     args <- f_mapper_args()
