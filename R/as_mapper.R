@@ -2,7 +2,9 @@
 #' Convert an object into a mapper function
 #'
 #' `as_mapper` is the powerhouse behind the varied function
-#' specifications that most purrr functions allow. It is an S3 generic.
+#' specifications that most purrr functions allow. It is an S3
+#' generic. The default method forwards its arguments to
+#' [rlang::as_function()].
 #'
 #' @param .f A function, formula, or atomic vector.
 #'
@@ -52,37 +54,10 @@ as_mapper <- function(.f, ...) {
 #' @usage NULL
 as_function <- function(...) {
   warning(
-    "`as_function()` is deprecated; please use `as_mapper()` instead",
+    "`as_function()` is deprecated; please use `as_mapper()` or `rlang::as_function()` instead",
     call. = FALSE
   )
   as_mapper(...)
-}
-
-#' @export
-#' @rdname as_mapper
-as_mapper.function <- function(.f, ...) {
-  if (is_primitive(.f)) {
-    args <- symbols(fn_fmls_names(.f))
-    args <- set_names(args)
-    names(args)[(names(args) == "...")] <- ""
-    prim_call <- lang(prim_name(.f), .args = args)
-    new_fn(fn_fmls(.f), prim_call, base_env())
-  } else {
-    .f
-  }
-}
-
-#' @export
-#' @rdname as_mapper
-as_mapper.formula <- function(.f, ...) {
-  if (length(.f) != 2) {
-    stop("Formula must be one sided", call. = FALSE)
-  }
-  new_fn(f_mapper_args(), f_rhs(.f), f_env(.f))
-}
-
-f_mapper_args <- function() {
-  list(... = arg_missing(), .x = quote(..1), .y = quote(..2), . = quote(..1))
 }
 
 #' Extract an element from a vector or environment
@@ -158,6 +133,5 @@ extractor <- function(i, default) {
 
 #' @export
 as_mapper.default <- function(.f, ...) {
-  stop("Don't know how to convert ", paste0(class(.f), collapse = "/"),
-       " into a function", call. = FALSE)
+  rlang::as_function(.f, ...)
 }

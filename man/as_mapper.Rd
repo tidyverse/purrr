@@ -3,8 +3,6 @@
 \name{as_mapper}
 \alias{as_mapper}
 \alias{as_function}
-\alias{as_mapper.function}
-\alias{as_mapper.formula}
 \alias{get_attr}
 \alias{as_mapper.attr}
 \alias{as_mapper.character}
@@ -13,10 +11,6 @@
 \title{Convert an object into a mapper function}
 \usage{
 as_mapper(.f, ...)
-
-\method{as_mapper}{function}(.f, ...)
-
-\method{as_mapper}{formula}(.f, ...)
 
 get_attr(x)
 
@@ -61,7 +55,9 @@ value is absent (does not exist) or empty (has length 0).
 }
 \description{
 \code{as_mapper} is the powerhouse behind the varied function
-specifications that most purrr functions allow. It is an S3 generic.
+specifications that most purrr functions allow. It is an S3
+generic. The default method forwards its arguments to
+\code{\link[rlang:as_function]{rlang::as_function()}}.
 }
 \examples{
 as_mapper(~ . + 1)
