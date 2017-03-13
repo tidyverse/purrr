@@ -60,7 +60,14 @@ as_function <- function(...) {
 
 #' @export
 #' @rdname as_mapper
-as_mapper.function <- function(.f, ...) .f
+as_mapper.function <- function(.f, ...) {
+  if (is_primitive(.f)) {
+    prim_call <- lang(prim_name(.f), .args = symbols(fn_fmls_names(.f)))
+    new_fn(fn_fmls(.f), prim_call, base_env())
+  } else {
+    .f
+  }
+}
 
 #' @export
 #' @rdname as_mapper
