@@ -40,3 +40,10 @@ test_that(".default replaces elements with length 0", {
   expect_equal(map_dbl(x, "a", .default = NA), c(1, NA, NA))
 })
 
+
+# primitive functions --------------------------------------------------
+
+test_that("primitive functions are wrapped", {
+  expect_identical(as_mapper(`-`)(e2 = 10, e1 = 5), -5)
+  expect_identical(as_mapper(`c`)(1, 3, 5), c(1, 3, 5))
+})

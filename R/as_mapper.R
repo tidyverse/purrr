@@ -62,7 +62,10 @@ as_function <- function(...) {
 #' @rdname as_mapper
 as_mapper.function <- function(.f, ...) {
   if (is_primitive(.f)) {
-    prim_call <- lang(prim_name(.f), .args = symbols(fn_fmls_names(.f)))
+    args <- symbols(fn_fmls_names(.f))
+    args <- set_names(args)
+    names(args)[(names(args) == "...")] <- ""
+    prim_call <- lang(prim_name(.f), .args = args)
     new_fn(fn_fmls(.f), prim_call, base_env())
   } else {
     .f
