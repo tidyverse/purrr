@@ -4,7 +4,7 @@
 \alias{partial}
 \title{Partial apply a function, filling in some arguments.}
 \usage{
-partial(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE)
+partial(...f, ..., .env = parent.frame(), .lazy = TRUE, .first)
 }
 \arguments{
 \item{...f}{a function. For the output source to read well, this should be an
@@ -69,4 +69,12 @@ my_long_variable <- 1:10
 plot2 <- partial(plot, my_long_variable)
 plot2()
 plot2(runif(10), type = "l")
+
+# It also works with primitive functions:
+minus1 <- partial(`-`, e1 = 10)
+minus2 <- partial(`-`, e2 = 10)
+minus1(3)
+minus2(3)
+
+map(1:5, partial(`-`, e2 = 10))
 }
