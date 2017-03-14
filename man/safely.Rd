@@ -4,6 +4,7 @@
 \alias{safely}
 \alias{quietly}
 \alias{possibly}
+\alias{auto_browse}
 \title{Capture side effects.}
 \usage{
 safely(.f, otherwise = NULL, quiet = TRUE)
@@ -11,6 +12,8 @@ safely(.f, otherwise = NULL, quiet = TRUE)
 quietly(.f)
 
 possibly(.f, otherwise, quiet = TRUE)
+
+auto_browse(.f)
 }
 \arguments{
 \item{.f}{A function, formula, or atomic vector.
@@ -75,4 +78,22 @@ list("a", 10, 100) \%>\%
 # To replace errors with a default value, use possibly().
 list("a", 10, 100) \%>\%
   map_dbl(possibly(log, NA_real_))
+
+# For interactive usage, auto_browse() is useful because it automatically
+# starts a browser() in the right place.
+f <- function(x) {
+  y <- 20
+  if (x > 5) {
+    stop("!")
+  } else {
+    x
+  }
+}
+if (interactive()) {
+  map(1:6, auto_browse(f))
+}
+
+# It doesn't make sense to use auto_browse with primitive functions,
+# because they are implemented in C so there's no useful environment
+# for you to interact with.
 }

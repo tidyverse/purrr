@@ -40,6 +40,24 @@
 #' # To replace errors with a default value, use possibly().
 #' list("a", 10, 100) %>%
 #'   map_dbl(possibly(log, NA_real_))
+#'
+#' # For interactive usage, auto_browse() is useful because it automatically
+#' # starts a browser() in the right place.
+#' f <- function(x) {
+#'   y <- 20
+#'   if (x > 5) {
+#'     stop("!")
+#'   } else {
+#'     x
+#'   }
+#' }
+#' if (interactive()) {
+#'   map(1:6, auto_browse(f))
+#' }
+#'
+#' # It doesn't make sense to use auto_browse with primitive functions,
+#' # because they are implemented in C so there's no useful environment
+#' # for you to interact with.
 safely <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_mapper(.f)
   function(...) capture_error(.f(...), otherwise, quiet)
@@ -69,6 +87,45 @@ possibly <- function(.f, otherwise, quiet = TRUE) {
   }
 }
 
+#' @export
+#' @rdname safely
+auto_browse <- function(.f) {
+  if (is_primitive(.f)) {
+    abort("Can not auto_browse() primitive functions")
+  }
+
+  function(...) {
+    withCallingHandlers(
+      .f(...),
+      error = function(e) {
+        # 1: h(simpleError(msg, call))
+        # 2: .handleSimpleError(function (e)  <...>
+        # 3: stop(...)
+        frame <- eval_frame(4)
+        browse_in_frame(frame)
+      },
+      warning = function(e) {
+        if (getOption("warn") >= 2) {
+          frame <- eval_frame(7)
+          browse_in_frame(frame)
+        }
+      }
+    )
+  }
+}
+
+browse_in_frame <- function(frame) {
+  if (.Platform$GUI == "ESS") {
+    # Workaround ESS issue
+    with_env(frame$env, on.exit({
+      browser()
+      NULL
+    }))
+    return_from(frame)
+  } else {
+    expr_eval(quote(browser()), env = frame$env)
+  }
+}
 
 capture_error <- function(code, otherwise = NULL, quiet = TRUE) {
   tryCatch(

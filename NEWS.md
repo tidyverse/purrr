@@ -66,6 +66,9 @@ There have also been two changes to eliminate name conflicts between purrr and d
 
 ## New functions
 
+* `auto_browse(f)` returns a new function that automatically calls `browser()` 
+  if `f` throws an error (#281).
+
 * `depth()` computes the depth (i.e. the number of levels of indexing)
   or a vector (#243).
 
