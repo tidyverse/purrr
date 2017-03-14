@@ -42,7 +42,7 @@
 #'   map_dbl(possibly(log, NA_real_))
 #'
 #' # For interactive usage, auto_browse() is useful because it automatically
-#' # starts a browesr() in the right place.
+#' # starts a browser() in the right place.
 #' f <- function(x) {
 #'   y <- 20
 #'   if (x > 5) {
@@ -51,10 +51,13 @@
 #'     x
 #'   }
 #' }
-#' map(1:6, auto_browse(f))
+#' if (interactive()) {
+#'   map(1:6, auto_browse(f))
+#' }
 #'
-#' # Unfortunately you can't use it with primitive functions like log.
-#'
+#' # It doesn't make sense to use auto_browse with primitive functions,
+#' # because they are implemented in C so there's no useful environment
+#' # for you to interact with.
 safely <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_mapper(.f)
   function(...) capture_error(.f(...), otherwise, quiet)
@@ -86,14 +89,14 @@ possibly <- function(.f, otherwise, quiet = TRUE) {
 
 #' @export
 #' @rdname safely
-auto_browse <- function(f) {
-  if (is_primitive(f)) {
+auto_browse <- function(.f) {
+  if (is_primitive(.f)) {
     abort("Can not auto_browse() primitive functions")
   }
 
   function(...) {
     withCallingHandlers(
-      f(...),
+      .f(...),
       error = function(e) {
         # 1: h(simpleError(msg, call))
         # 2: .handleSimpleError(function (e)  <...>
@@ -102,7 +105,7 @@ auto_browse <- function(f) {
         browse_in_frame(frame)
       },
       warning = function(e) {
-        if (!identical(getOption("warn"), 2)) {
+        if (getOption("warn") >= 2) {
           frame <- eval_frame(7)
           browse_in_frame(frame)
         }
@@ -120,7 +123,7 @@ browse_in_frame <- function(frame) {
     }))
     return_from(frame)
   } else {
-    eval(quote(browser()), envir = frame$env)
+    expr_eval(quote(browser()), env = frame$env)
   }
 }
 
