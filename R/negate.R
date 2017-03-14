@@ -17,9 +17,9 @@
 negate <- function(.p, .default = FALSE) {
   .p <- as_mapper(.p)
 
-  body(.p) <- tidy_interp(quote({
+  body(.p) <- tidy_quote_expr({
     ! ( !! body(.p) )
-  }))
+  })
 
   .p
 }
