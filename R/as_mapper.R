@@ -123,9 +123,9 @@ find_extract_default <- function(.null, .default) {
 extractor <- function(i, default) {
   stopifnot(is.list(i))
 
-  tidy_interp(function(x, ...) {
+  tidy_interp(function(x, ...)
     extract(x, !!(i), default = !!(default))
-  })
+  )
 }
 
 
