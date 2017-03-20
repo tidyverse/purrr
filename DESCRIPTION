@@ -7,7 +7,7 @@ Authors@R: c(
     person("RStudio", role = c("cph", "fnd"))
     )
 Description: A complete and consistent functional programming toolkit for R.
-URL: https://github.com/tidyverse/purrr
+URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 License: GPL-3 | file LICENSE
 LazyData: true
