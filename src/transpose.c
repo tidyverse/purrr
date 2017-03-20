@@ -46,7 +46,13 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
     // find mapping between names and index. Use -1 to indicate not found
     SEXP names_i = Rf_getAttrib(xi, R_NamesSymbol);
     SEXP index;
-    if (Rf_isNull(names_i)) {
+    if (!Rf_isNull(names2) && !Rf_isNull(names_i)) {
+      index = PROTECT(Rf_match(names_i, names2, 0));
+      // Rf_match returns 1-based index; convert to 0-based for C
+      for (int i = 0; i < m; ++i) {
+        INTEGER(index)[i] = INTEGER(index)[i] - 1;
+      }
+    } else {
       index = PROTECT(Rf_allocVector(INTSXP, m));
       int mi = Rf_length(xi);
 
@@ -56,12 +62,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
       for (int i = 0; i < m; ++i) {
         INTEGER(index)[i] = (i < mi) ? i : -1;
       }
-    } else {
-      index = PROTECT(Rf_match(names_i, names2, 0));
-      // Rf_match returns 1-based index; convert to 0-based for C
-      for (int i = 0; i < m; ++i) {
-        INTEGER(index)[i] = INTEGER(index)[i] - 1;
-      }
+
     }
     int* pIndex = INTEGER(index);
 
