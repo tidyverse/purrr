@@ -55,6 +55,9 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
+  <a href="../articles/index.html">Articles</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
         <li>
@@ -136,20 +139,20 @@ if you weren't using <code>partial</code>.</p>
 
 <span class='co'># and the generated source code is very similar to what we made by hand</span>
 <span class='no'>compact1</span></div><div class='output co'>#&gt; function(x) discard(x, is.null)
-#&gt; &lt;environment: 0x10d1b64d8&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
+#&gt; &lt;environment: 0x106853ae8&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
 #&gt; discard(.p = is.null, ...)
-#&gt; &lt;environment: 0x10d1b64d8&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x106853ae8&gt;</div><div class='input'>
 <span class='co'># Note that the evaluation occurs "lazily" so that arguments will be</span>
 <span class='co'># repeatedly evaluated</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>rpois</span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
 <span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
 #&gt; runif(n = rpois(1, 5), ...)
-#&gt; &lt;environment: 0x10d1b64d8&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.17635011 0.11075900 0.93834241 0.84647114 0.57114358 0.67909341 0.08932224</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2269574 0.4481785 0.1612276 0.1761117 0.1982281 0.3576113 0.1813332</div><div class='input'>
+#&gt; &lt;environment: 0x106853ae8&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.17635011 0.11075900 0.93834241 0.84647114 0.57114358 0.67909341 0.08932224</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2269574 0.4481785 0.1612276 0.1761117 0.1982281 0.3576113 0.1813332</div><div class='input'>
 <span class='co'># You can override this by saying .lazy = FALSE</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>rpois</span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
 #&gt; runif(n = 5L, ...)
-#&gt; &lt;environment: 0x10d1b64d8&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.659083010 0.660253409 0.002400788 0.993446034 0.627489231</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.01463034 0.20517822 0.66307666 0.46374403 0.36034816</div><div class='input'>
+#&gt; &lt;environment: 0x106853ae8&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.659083010 0.660253409 0.002400788 0.993446034 0.627489231</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.01463034 0.20517822 0.66307666 0.46374403 0.36034816</div><div class='input'>
 <span class='co'># This also means that partial works fine with functions that do</span>
 <span class='co'># non-standard evaluation</span>
 <span class='no'>my_long_variable</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>

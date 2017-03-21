@@ -19,7 +19,10 @@ Suggests:
     covr,
     dplyr (>= 0.4.3),
     testthat,
-Remotes: 
+    knitr,
+    rmarkdown
+Remotes:
     hadley/rlang
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr

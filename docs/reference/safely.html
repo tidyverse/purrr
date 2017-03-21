@@ -55,6 +55,9 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
+  <a href="../articles/index.html">Articles</a>
+</li>
+<li>
   <a href="../news/index.html">News</a>
 </li>
         <li>
@@ -209,7 +212,7 @@ whenever an error occurs.</p>
 }
 <span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
   <span class='fu'><a href='map.html'>map</a></span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='fu'>auto_browse</span>(<span class='no'>f</span>))
-}</div><div class='output co'>#&gt; Called from: expr_eval(quote(browser()), env = frame$env)</div><div class='output co'>#&gt; <span class='error'>Error in .f(...): !</span></div><div class='input'>
+}</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): could not find function "eval_frame"</span></div><div class='input'>
 <span class='co'># It doesn't make sense to use auto_browse with primitive functions,</span>
 <span class='co'># because they are implemented in C so there's no useful environment</span>
 <span class='co'># for you to interact with.</span></div></pre>

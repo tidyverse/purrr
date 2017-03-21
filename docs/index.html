@@ -36,6 +36,9 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
+  <a href="articles/index.html">Articles</a>
+</li>
+<li>
   <a href="news/index.html">News</a>
 </li>
         <li>
@@ -102,28 +105,6 @@ mtcars %&gt;%
 <li><p>All <code><a href="reference/map.html">map()</a></code> functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).</p></li>
 </ul>
 </div>
-<div id="philosophy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#philosophy" class="anchor"></a>Philosophy</h2>
-<p>The goal is not to try and simulate Haskell in R: purrr does not implement currying or destructuring binds or pattern matching. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R.</p>
-<ul>
-<li><p>Instead of point free style, use the pipe, <code>%&gt;%</code>, to write code that can be read from left to right.</p></li>
-<li><p>Instead of currying, we use <code>...</code> to pass in extra arguments.</p></li>
-<li><p>Anonymous functions are verbose in R, so we provide two convenient shorthands. For unary functions, <code>~ .x + 1</code> is equivalent to <code>function(.x) .x + 1</code>. For chains of transformations functions, <code><a href="reference/pipe.html">. %&gt;% f() %&gt;% g()</a></code> is equivalent to <code>function(.) . %&gt;% f() %&gt;% g()</code>.</p></li>
-<li><p>R is weakly typed, we need variants <code><a href="reference/map.html">map_int()</a></code>, <code><a href="reference/map.html">map_dbl()</a></code>, etc since we don’t know what <code>.f</code> will return.</p></li>
-<li><p>R has named arguments, so instead of providing different functions for minor variations (e.g. <code><a href="reference/detect.html">detect()</a></code> and <code>detectLast()</code>) I use a named argument, <code>.right</code>. Type-stable functions are easy to reason about so additional arguments will never change the type of the output.</p></li>
-</ul>
-</div>
-<div id="related-work" class="section level2">
-<h2 class="hasAnchor">
-<a href="#related-work" class="anchor"></a>Related work</h2>
-<ul>
-<li><p><a href="http://renkun.me/rlist/">rlist</a>, another R package to support working with lists. Similar goals but somewhat different philosophy.</p></li>
-<li><p>Functional programming librarys for javascript: <a href="http://underscorejs.org">underscore.js</a>, <a href="https://lodash.com">lodash</a> and <a href="http://danieltao.com/lazy.js/">lazy.js</a>.</p></li>
-<li><p>List operations defined in the Haskell <a href="http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11">prelude</a></p></li>
-<li><p>Scala’s <a href="http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.List">list methods</a>.</p></li>
-</ul>
-</div>
 </div>
 </div>
   </div>
@@ -131,8 +112,6 @@ mtcars %&gt;%
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=purrr">https://​cran.r-project.org/​package=purrr</a>
-</li>
 <li>Browse source code at <br><a href="https://github.com/tidyverse/purrr">https://​github.com/​tidyverse/​purrr</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/tidyverse/purrr/issues">https://​github.com/​tidyverse/​purrr/​issues</a>
