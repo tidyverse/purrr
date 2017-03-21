@@ -89,23 +89,34 @@
       <tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-transformation" class="hasAnchor"><a href="#section-transformation" class="anchor"></a>Transformation</h2>
-            <p class="section-desc"></p>
+            <h2 id="section-map-family" class="hasAnchor"><a href="#section-map-family" class="anchor"></a>Map family</h2>
+            <p class="section-desc">
+<p>The <code><a href="../reference/map.html">map(.x, .f)</a></code> functions transforms each element of the vector <code>.x</code> with the function <code>.f</code>, returning a vector defined by the suffix (<code>_lgl</code>, <code>_chr()</code> etc). <code><a href="../reference/map.html">walk()</a></code> is a variant for functions called primarily for their side-effects; it returns <code>.x</code> invisibly.</p>
+<p>As well as functions, <code>.f</code>, can take numbers and characters (used as a shorthand for <code>[[</code>), and formulas (used as a succint function definition). See details in <code><a href="../reference/as_mapper.html">as_mapper()</a></code></p>
+</p>
           </th>
         </tr>
         <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="invoke.html">invoke</a></code> <code><a href="invoke.html">invoke_map</a></code> <code><a href="invoke.html">invoke_map_lgl</a></code> <code><a href="invoke.html">invoke_map_int</a></code> <code><a href="invoke.html">invoke_map_dbl</a></code> <code><a href="invoke.html">invoke_map_chr</a></code> <code><a href="invoke.html">invoke_map_dfr</a></code> <code><a href="invoke.html">invoke_map_dfc</a></code> <code><a href="invoke.html">invoke_map_df</a></code> <code><a href="invoke.html">map_call</a></code> </p>
-          </td>
-          <td><p>Invoke functions.</p></td>
-        </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="map.html">map</a></code> <code><a href="map.html">map_lgl</a></code> <code><a href="map.html">map_chr</a></code> <code><a href="map.html">map_int</a></code> <code><a href="map.html">map_dbl</a></code> <code><a href="map.html">map_dfr</a></code> <code><a href="map.html">map_df</a></code> <code><a href="map.html">map_dfc</a></code> <code><a href="map.html">walk</a></code> </p>
           </td>
           <td><p>Apply a function to each element of a vector</p></td>
         </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="as_mapper.html">as_mapper</a></code> <code><a href="as_mapper.html">as_function</a></code> <code><a href="as_mapper.html">get_attr</a></code> <code><a href="as_mapper.html">as_mapper.attr</a></code> <code><a href="as_mapper.html">as_mapper.character</a></code> <code><a href="as_mapper.html">as_mapper.numeric</a></code> <code><a href="as_mapper.html">as_mapper.list</a></code> </p>
+          </td>
+          <td><p>Convert an object into a mapper function</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-map-variants" class="hasAnchor"><a href="#section-map-variants" class="anchor"></a>Map variants</h2>
+            <p class="section-desc"><p>A rich set of variants builds on the basic idea of <code><a href="../reference/map.html">map()</a></code>: <code><a href="../reference/modify.html">modify()</a></code> modifies “in place”, returning a vector the same type as <code>.x</code>; <code><a href="../reference/map2.html">map2()</a></code> iterates over two vectors in parallel; <code><a href="../reference/map2.html">pmap()</a></code> (parallel map) iterates over a list of vectors; <code><a href="../reference/imap.html">imap()</a></code> (index map) is a shortcut for the common pattern <code><a href="../reference/map2.html">map2(x, names(x))</a></code>; <code><a href="../reference/invoke.html">invoke()</a></code> calls each function in a list.</p></p>
+          </th>
+        </tr>
+        <tr>
           <!--  -->
           <td>
             <p><code><a href="map2.html">map2</a></code> <code><a href="map2.html">map2_lgl</a></code> <code><a href="map2.html">map2_int</a></code> <code><a href="map2.html">map2_dbl</a></code> <code><a href="map2.html">map2_chr</a></code> <code><a href="map2.html">map2_dfr</a></code> <code><a href="map2.html">map2_dfc</a></code> <code><a href="map2.html">map2_df</a></code> <code><a href="map2.html">walk2</a></code> <code><a href="map2.html">pmap</a></code> <code><a href="map2.html">pmap_lgl</a></code> <code><a href="map2.html">pmap_int</a></code> <code><a href="map2.html">pmap_dbl</a></code> <code><a href="map2.html">pmap_chr</a></code> <code><a href="map2.html">pmap_dfr</a></code> <code><a href="map2.html">pmap_dfc</a></code> <code><a href="map2.html">pmap_df</a></code> <code><a href="map2.html">pwalk</a></code> </p>
@@ -132,15 +143,53 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="as_mapper.html">as_mapper</a></code> <code><a href="as_mapper.html">as_function</a></code> <code><a href="as_mapper.html">get_attr</a></code> <code><a href="as_mapper.html">as_mapper.attr</a></code> <code><a href="as_mapper.html">as_mapper.character</a></code> <code><a href="as_mapper.html">as_mapper.numeric</a></code> <code><a href="as_mapper.html">as_mapper.list</a></code> </p>
+            <p><code><a href="invoke.html">invoke</a></code> <code><a href="invoke.html">invoke_map</a></code> <code><a href="invoke.html">invoke_map_lgl</a></code> <code><a href="invoke.html">invoke_map_int</a></code> <code><a href="invoke.html">invoke_map_dbl</a></code> <code><a href="invoke.html">invoke_map_chr</a></code> <code><a href="invoke.html">invoke_map_dfr</a></code> <code><a href="invoke.html">invoke_map_dfc</a></code> <code><a href="invoke.html">invoke_map_df</a></code> <code><a href="invoke.html">map_call</a></code> </p>
           </td>
-          <td><p>Convert an object into a mapper function</p></td>
+          <td><p>Invoke functions.</p></td>
         </tr>
       </tbody><tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-list" class="hasAnchor"><a href="#section-list" class="anchor"></a>List</h2>
-            <p class="section-desc"></p>
+            <h2 id="section-predicate-functionals" class="hasAnchor"><a href="#section-predicate-functionals" class="anchor"></a>Predicate functionals</h2>
+            <p class="section-desc"><p>A predicate function is a function that either returns <code>TRUE</code> or <code>FALSE</code>. The predicate functionals take a vector and a predicate function and do something useful.</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="detect.html">detect</a></code> <code><a href="detect.html">detect_index</a></code> </p>
+          </td>
+          <td><p>Find the value or position of the first match.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="every.html">every</a></code> <code><a href="every.html">some</a></code> </p>
+          </td>
+          <td><p>Do every or some elements of a list satisfy a predicate?</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="head_while.html">head_while</a></code> <code><a href="head_while.html">tail_while</a></code> </p>
+          </td>
+          <td><p>Find head/tail that all satisfies a predicate.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="keep.html">keep</a></code> <code><a href="keep.html">discard</a></code> <code><a href="keep.html">compact</a></code> </p>
+          </td>
+          <td><p>Keep or discard elements using a predicate function.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="negate.html">negate</a></code> </p>
+          </td>
+          <td><p>Negate a predicate function.</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-other-vector-transforms" class="hasAnchor"><a href="#section-other-vector-transforms" class="anchor"></a>Other vector transforms</h2>
+            <p class="section-desc"><p>A grab bag of useful tools for manipulating vectors.</p></p>
           </th>
         </tr>
         <tr>
@@ -189,46 +238,8 @@
       </tbody><tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-predicates" class="hasAnchor"><a href="#section-predicates" class="anchor"></a>Predicates</h2>
-            <p class="section-desc"><p>A predicate function is a function that either returns <code>TRUE</code> or <code>FALSE</code></p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="detect.html">detect</a></code> <code><a href="detect.html">detect_index</a></code> </p>
-          </td>
-          <td><p>Find the value or position of the first match.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="every.html">every</a></code> <code><a href="every.html">some</a></code> </p>
-          </td>
-          <td><p>Do every or some elements of a list satisfy a predicate?</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="head_while.html">head_while</a></code> <code><a href="head_while.html">tail_while</a></code> </p>
-          </td>
-          <td><p>Find head/tail that all satisfies a predicate.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="keep.html">keep</a></code> <code><a href="keep.html">discard</a></code> <code><a href="keep.html">compact</a></code> </p>
-          </td>
-          <td><p>Keep or discard elements using a predicate function.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="negate.html">negate</a></code> </p>
-          </td>
-          <td><p>Negate a predicate function.</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-function-operators" class="hasAnchor"><a href="#section-function-operators" class="anchor"></a>Function operators</h2>
-            <p class="section-desc"></p>
+            <h2 id="section-adverbs" class="hasAnchor"><a href="#section-adverbs" class="anchor"></a>Adverbs</h2>
+            <p class="section-desc"><p>Adverbs modify the action of a function; taking a function as input and returning a function with modified action as output.</p></p>
           </th>
         </tr>
         <tr>
@@ -338,10 +349,11 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-transformation">Transformation</a></li>
-      <li><a href="#section-list">List</a></li>
-      <li><a href="#section-predicates">Predicates</a></li>
-      <li><a href="#section-function-operators">Function operators</a></li>
+      <li><a href="#section-map-family">Map family</a></li>
+      <li><a href="#section-map-variants">Map variants</a></li>
+      <li><a href="#section-predicate-functionals">Predicate functionals</a></li>
+      <li><a href="#section-other-vector-transforms">Other vector transforms</a></li>
+      <li><a href="#section-adverbs">Adverbs</a></li>
       <li><a href="#section-misc">Misc</a></li>
     </ul>
   </div>

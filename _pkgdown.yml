@@ -10,16 +10,50 @@ home:
     href: http://r4ds.had.co.nz/iteration.html
 
 reference:
-- title: Transformation
+- title: Map family
+  desc: |
+    The `map(.x, .f)` functions transforms each element of the vector `.x` with
+    the function `.f`, returning a vector defined by the suffix (`_lgl`,
+    `_chr()` etc). `walk()` is a variant for functions called primarily for
+    their side-effects; it returns `.x` invisibly.
+
+    As well as functions, `.f`, can take numbers and characters (used as a
+    shorthand for `[[`), and formulas (used as a succint function definition).
+    See details in `as_mapper()`
   contents:
-  - starts_with("map")
-  - starts_with("invoke")
-  - starts_with("imap")
-  - starts_with("lmap")
-  - starts_with("modify")
+  - map
   - as_mapper
 
-- title: List
+- title: Map variants
+  desc: >
+    A rich set of variants builds on the basic idea of `map()`:
+    `modify()` modifies "in place", returning a vector the same type as `.x`;
+    `map2()` iterates over two vectors in parallel;
+    `pmap()` (parallel map) iterates over a list of vectors;
+    `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`;
+    `invoke()` calls each function in a list.
+  contents:
+  - map2
+  - starts_with("modify")
+  - starts_with("imap")
+  - starts_with("lmap")
+  - starts_with("invoke")
+
+- title: Predicate functionals
+  desc: >
+    A predicate function is a function that either returns `TRUE` or `FALSE`.
+    The predicate functionals take a vector and a predicate function and do
+    something useful.
+  contents:
+  - detect
+  - every
+  - head_while
+  - keep
+  - negate
+
+- title: Other vector transforms
+  desc: >
+    A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
   - cross
@@ -29,17 +63,10 @@ reference:
   - splice
   - transpose
 
-- title: Predicates
+- title: Adverbs
   desc: >
-    A predicate function is a function that either returns `TRUE` or `FALSE`
-  contents:
-  - detect
-  - every
-  - head_while
-  - keep
-  - negate
-
-- title: Function operators
+    Adverbs modify the action of a function; taking a function as input and
+    returning a function with modified action as output.
   contents:
   - compose
   - lift
