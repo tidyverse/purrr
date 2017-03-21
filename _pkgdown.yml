@@ -47,9 +47,11 @@ reference:
   contents:
   - detect
   - every
+  - has_element
   - head_while
   - keep
   - negate
+  - prepend
 
 - title: Other vector transforms
   desc: >
@@ -80,8 +82,6 @@ reference:
   - array_tree
   - as_vector
   - depth
-  - has_element
-  - prepend
   - rbernoulli
   - rdunif
   - rerun
