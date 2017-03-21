@@ -82,10 +82,10 @@
 <span class="co"># install.packages("devtools")</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"tidyverse/purrr"</span>)</code></pre></div>
 </div>
-<div id="examples" class="section level2">
+<div id="usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h2>
-<p>The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2.</p>
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, compute the summarse, then extract the R<sup>2</sup>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(purrr)
 
 mtcars %&gt;%
@@ -101,10 +101,6 @@ mtcars %&gt;%
 <li><p>All purrr functions are type-stable. They always return the advertised output type (<code><a href="reference/map.html">map()</a></code> returns lists; <code><a href="reference/map.html">map_dbl()</a></code> returns double vectors), or they throw an errror.</p></li>
 <li><p>All <code><a href="reference/map.html">map()</a></code> functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).</p></li>
 </ul>
-</div>
-<div id="api" class="section level2">
-<h2 class="hasAnchor">
-<a href="#api" class="anchor"></a>API</h2>
 </div>
 <div id="philosophy" class="section level2">
 <h2 class="hasAnchor">

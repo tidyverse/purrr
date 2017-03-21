@@ -25,10 +25,10 @@ install.packages("purrr")
 devtools::install_github("tidyverse/purrr")
 ```
 
-Examples
---------
+Usage
+-----
 
-The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, summarise and extract R^2.
+The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, compute the summarse, then extract the R<sup>2</sup>.
 
 ``` r
 library(purrr)
@@ -49,9 +49,6 @@ This example illustrates some of the advantages of purrr functions over the equi
 -   All purrr functions are type-stable. They always return the advertised output type (`map()` returns lists; `map_dbl()` returns double vectors), or they throw an errror.
 
 -   All `map()` functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).
-
-API
----
 
 Philosophy
 ----------
