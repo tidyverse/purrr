@@ -8,3 +8,54 @@ home:
   links:
   - text: Learn more
     href: http://r4ds.had.co.nz/iteration.html
+
+reference:
+- title: Transformation
+  contents:
+  - starts_with("map")
+  - starts_with("invoke")
+  - starts_with("imap")
+  - starts_with("lmap")
+  - starts_with("modify")
+  - as_mapper
+
+- title: List
+  contents:
+  - accumulate
+  - cross
+  - flatten
+  - list_modify
+  - reduce
+  - splice
+  - transpose
+
+- title: Predicates
+  desc: >
+    A predicate function is a function that either returns `TRUE` or `FALSE`
+  contents:
+  - detect
+  - every
+  - head_while
+  - keep
+  - negate
+
+- title: Function operators
+  contents:
+  - compose
+  - lift
+  - negate
+  - partial
+  - safely
+
+- title: Misc
+  contents:
+  - "`%||%`"
+  - array_tree
+  - as_vector
+  - depth
+  - has_element
+  - prepend
+  - rbernoulli
+  - rdunif
+  - rerun
+  - set_names

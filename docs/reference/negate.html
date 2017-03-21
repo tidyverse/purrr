@@ -114,7 +114,7 @@ value is absent (does not exist) or empty (has length 0).
 #&gt; {
 #&gt;     !(extract(x, list("x"), default = NULL))
 #&gt; }
-#&gt; &lt;environment: 0x10f3c0c08&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
+#&gt; &lt;environment: 0x10e5d2110&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
 #&gt; {
 #&gt;     !(is.null(x = x))
 #&gt; }
@@ -122,7 +122,7 @@ value is absent (does not exist) or empty (has length 0).
 #&gt; {
 #&gt;     !(.x &gt; 0)
 #&gt; }
-#&gt; &lt;environment: 0x10f493148&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x10f8c7d18&gt;</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'>list</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div></pre>

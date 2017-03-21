@@ -11,6 +11,7 @@ A complete and consistent functional programming toolkit for R.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{http://purrr.tidyverse.org}
   \item \url{https://github.com/tidyverse/purrr}
   \item Report bugs at \url{https://github.com/tidyverse/purrr/issues}
 }

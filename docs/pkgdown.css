@@ -101,25 +101,22 @@ pre img {
 */
 
 
-/* For reference topics listing ------- */
+/* Reference index & topics ----------------------------------------------- */
 
-.section {
-  margin-bottom: 24px;
-}
+.ref-index th {font-weight: normal;}
+.ref-index h2 {font-size: 20px;}
 
-.topic p {
-  font-size: 16px;
-  margin-bottom: 0;
-}
+.ref-index td {vertical-align: top;}
+.ref-index .alias {width: 40%;}
+.ref-index .title {width: 60%;}
 
-.topic ul {
-  padding-top: 0;
-  list-style-type: square;
-}
+.ref-index .alias {width: 40%;}
+.ref-index .title {width: 60%;}
 
-.topic li a {
-  color: inherit;
-}
+.ref-arguments th {text-align: right; padding-right: 10px;}
+.ref-arguments th, .ref-arguments td {vertical-align: top;}
+.ref-arguments .name {width: 20%;}
+.ref-arguments .desc {width: 80%;}
 
 /* For the rstudio footer ------- */
 

@@ -105,62 +105,6 @@ mtcars %&gt;%
 <div id="api" class="section level2">
 <h2 class="hasAnchor">
 <a href="#api" class="anchor"></a>API</h2>
-<div id="transformation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#transformation" class="anchor"></a>Transformation</h3>
-<ul>
-<li><p>Apply a function to each element: <code><a href="reference/map.html">map()</a></code> returns a list; <code><a href="reference/map.html">map_lgl()</a></code>/<code><a href="reference/map.html">map_int()</a></code>/<code><a href="reference/map.html">map_dbl()</a></code>/<code><a href="reference/map.html">map_chr()</a></code> return a vector; <code><a href="reference/map.html">walk()</a></code> invisibly returns original list, calling the function for its side effects; <code><a href="reference/map2.html">map2()</a></code> and <code><a href="reference/map2.html">pmap()</a></code> vectorise over multiple inputs;</p></li>
-<li><p>Modify a data structure with <code><a href="reference/modify.html">modify()</a></code>, at a certain depth with <code><a href="reference/modify.html">modify_depth()</a></code>, where a predicate is true with <code><a href="reference/modify.html">modify_if()</a></code>, or at specified locations with <code><a href="reference/modify.html">modify_at()</a></code>.</p></li>
-<li><p>Reduce a list to a single value by iteratively applying a binary function: <code><a href="reference/reduce.html">reduce()</a></code> and <code><a href="reference/reduce.html">reduce_right()</a></code>.</p></li>
-<li><p>Figure out if a list contains an object: <code><a href="reference/has_element.html">has_element()</a></code>.</p></li>
-</ul>
-</div>
-<div id="list-manipulation-and-creation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#list-manipulation-and-creation" class="anchor"></a>List manipulation and creation</h3>
-<ul>
-<li><p>Transpose a list with <code><a href="reference/transpose.html">transpose()</a></code>.</p></li>
-<li><p>Create the cartesian product of the elements of several lists with <code><a href="reference/cross.html">cross()</a></code> or <code><a href="reference/cross.html">cross_df()</a></code>.</p></li>
-<li><p>Flatten a list with <code><a href="reference/flatten.html">flatten()</a></code>, <code><a href="reference/flatten.html">flatten_lgl()</a></code>, <code><a href="reference/flatten.html">flatten_int()</a></code>, <code><a href="reference/flatten.html">flatten_dbl()</a></code>, and <code><a href="reference/flatten.html">flatten_chr()</a></code>.</p></li>
-</ul>
-</div>
-<div id="predicate-functions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#predicate-functions" class="anchor"></a>Predicate functions</h3>
-<p>(A predicate function is a function that either returns <code>TRUE</code> or <code>FALSE</code>)</p>
-<ul>
-<li><p><code><a href="reference/keep.html">keep()</a></code> or <code><a href="reference/keep.html">discard()</a></code> elements that satisfy the predicate..</p></li>
-<li><p>Does <code><a href="reference/every.html">every()</a></code> element or <code><a href="reference/every.html">some()</a></code> elements satisfy the predicate?</p></li>
-<li><p>Find the value (<code><a href="reference/detect.html">detect()</a></code>) and index (<code><a href="reference/detect.html">detect_index()</a></code>) of the first element that satisfies the predicate.</p></li>
-<li><p>Find the head/tail that satisfies a predicate: <code><a href="reference/head_while.html">head_while()</a></code>, <code><a href="reference/head_while.html">tail_while()</a></code>.</p></li>
-</ul>
-</div>
-<div id="lists-of-functions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lists-of-functions" class="anchor"></a>Lists of functions</h3>
-<ul>
-<li><p><code><a href="reference/invoke.html">invoke()</a></code> every function in a list with given arguments and returns a list, <code>invoke_lgl()</code>/<code>invoke_int()</code>/<code>invoke_dbl()</code>/<code>invoke_chr()</code> returns vectors.</p></li>
-<li><p><code><a href="reference/invoke.html">invoke_map()</a></code> every function in a list with different arguments for each call.</p></li>
-</ul>
-</div>
-<div id="function-operators" class="section level3">
-<h3 class="hasAnchor">
-<a href="#function-operators" class="anchor"></a>Function operators</h3>
-<ul>
-<li><p>Fill in function arguments with <code><a href="reference/partial.html">partial()</a></code>.</p></li>
-<li><p>Change the way your function takes input with <code><a href="reference/lift.html">lift()</a></code> and the <code>lift_xy()</code> family of composition helpers.</p></li>
-<li><p>Compose multiple functions into a single function with <code><a href="reference/compose.html">compose()</a></code>.</p></li>
-<li><p>Negate a predicate funtion with <code><a href="reference/negate.html">negate()</a></code>.</p></li>
-</ul>
-</div>
-<div id="objects-coercion" class="section level3">
-<h3 class="hasAnchor">
-<a href="#objects-coercion" class="anchor"></a>Objects coercion</h3>
-<ul>
-<li><p>Convert an array or matrix to a list with <code><a href="reference/array-coercion.html">array_tree()</a></code> and <code><a href="reference/array-coercion.html">array_branch()</a></code>.</p></li>
-<li><p>Convert a list to a vector with <code><a href="reference/as_vector.html">as_vector()</a></code>.</p></li>
-</ul>
-</div>
 </div>
 <div id="philosophy" class="section level2">
 <h2 class="hasAnchor">

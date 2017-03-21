@@ -9,7 +9,7 @@
 #' @param .   the value to match agaist
 #' @param ... formulas; each containing a condition as LHS and an action as RHS.
 #'   named arguments will define additional values.
-#'
+#' @keywords internal
 #' @return The value resulting from the action of the first valid
 #'   match/condition is returned. If no matches are found, and no default is
 #'   given, NULL will be returned.

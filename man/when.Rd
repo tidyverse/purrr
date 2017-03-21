@@ -58,3 +58,4 @@ iris \%>\%
   when(nrow(.) < 10 ~ .,
        ~ stop("Expected fewer than 10 rows."))
 }
+\keyword{internal}
