@@ -101,12 +101,12 @@ auto_browse <- function(.f) {
         # 1: h(simpleError(msg, call))
         # 2: .handleSimpleError(function (e)  <...>
         # 3: stop(...)
-        frame <- eval_frame(4)
+        frame <- ctxt_frame(4)
         browse_in_frame(frame)
       },
       warning = function(e) {
         if (getOption("warn") >= 2) {
-          frame <- eval_frame(7)
+          frame <- ctxt_frame(7)
           browse_in_frame(frame)
         }
       }
