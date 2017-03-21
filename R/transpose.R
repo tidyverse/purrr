@@ -40,35 +40,3 @@
 transpose <- function(.l, .names = NULL) {
   .Call(transpose_impl, .l, .names)
 }
-
-#' @rdname transpose
-#' @export
-#' @usage NULL
-zip_n <- function(...) {
-  warning("`zip_n()` is deprecated; please use `transpose()` instead.",
-    call. = FALSE)
-  transpose(...)
-}
-
-#' @rdname transpose
-#' @export
-#' @usage NULL
-zip2 <- function(.x, .y, .fields = NULL) {
-  warning(
-    "`zip2(x, y)` is deprecated, please use `transpose(list(x, y))` instead.",
-    call. = FALSE
-  )
-  transpose(list(.x, .y))
-}
-
-#' @rdname transpose
-#' @export
-#' @usage NULL
-zip3 <- function(.x, .y, .z, .fields = NULL) {
-  warning(
-    "`zip2(x, y, z)` is deprecated, please use `transpose(list(x, y, z))` instead.",
-    call. = FALSE
-  )
-
-  transpose(list(.x, .y, .z))
-}

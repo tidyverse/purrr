@@ -2,9 +2,6 @@
 % Please edit documentation in R/transpose.R
 \name{transpose}
 \alias{transpose}
-\alias{zip_n}
-\alias{zip2}
-\alias{zip3}
 \title{Transpose a list.}
 \usage{
 transpose(.l, .names = NULL)

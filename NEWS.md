@@ -104,8 +104,8 @@ There have also been two changes to eliminate name conflicts between purrr and d
 * `reduce()` now throws an error if `.x` is empty and `.init` is not 
   supplied.
 
-* Deprecated functions `flatmap()`, `map3()`, `map_n()`, `walk3()`, and 
-  `walk_n()` have been removed.
+* Deprecated functions `flatmap()`, `map3()`, `map_n()`, `walk3()`,
+  `walk_n()`, `zip2()`, `zip3()`, `zip_n()` have been removed.
 
 * `pmap()` coerces data frames to lists to avoid the expensive `[.data.frame`
   which provides security that is unneeded here (#220).
