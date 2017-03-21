@@ -49,38 +49,74 @@
 #' f()
 #' f()
 #'
-#' # This also means that partial works fine with functions that do
-#' # non-standard evaluation
-#' my_long_variable <- 1:10
-#' plot2 <- partial(plot, my_long_variable)
-#' plot2()
-#' plot2(runif(10), type = "l")
-partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE) {
-  stopifnot(is.function(...f))
+#' # FIXME: failing
+#' # # This also means that partial works fine with functions that do
+#' # # non-standard evaluation
+#' # my_long_variable <- 1:10
+#' # plot2 <- partial(plot, my_long_variable)
+#' # plot2()
+#' # plot2(runif(10), type = "l")
+#'
+#' # It also works with primitive functions:
+#' minus1 <- partial(`-`, e1 = 10)
+#' minus2 <- partial(`-`, e2 = 10)
+#' minus1(3)
+#' minus2(3)
+#'
+#' map(1:5, partial(`-`, e2 = 10))
+partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE, .first) {
+  if (!missing(.first)) {
+    warn("`.first` is deprecated and has no longer any effect")
+  }
 
+  ...f <- rlang::as_function(...f)
+
+  # FIXME: Is it good UI that splicing syntax changes with `.lazy` value?
   if (.lazy) {
-    fcall <- substitute(...f(...))
+    dots <- tidy_quotes(...)
+    dots <- map(dots, lang, .fn = quote(rlang::tidy_eval))
   } else {
-    fcall <- make_call(substitute(...f), .args = list(...))
+    dots <- dots_list(...)
   }
 
-  # Pass on ... from parent function
-  n <- length(fcall)
-  if (!.first && n > 1) {
-    tmp <- fcall[1]
-    tmp[[2]] <- quote(...)
-    tmp[seq(3, n + 1)] <- fcall[seq(2, n)]
-    names(tmp)[seq(3, n + 1)] <- names2(fcall)[seq(2, n)]
-    fcall <- tmp
-  } else {
-    fcall[[n + 1]] <- quote(...)
-  }
+  dots <- args_match(dots, ...f)
 
-  args <- list("..." = quote(expr = ))
-  new_fn(args, fcall, .env)
+  body(...f) <- tidy_quote_expr({
+    !!! imap(dots, function(x, n) lang("<-", symbol(n), x))
+
+    NULL # FIXME: This NULL is a workaround for a bug in tidy_interp()
+
+    !!! body(...f)
+  })
+
+  # Remove arguments
+  dots <- map(dots, function(...) NULL)
+  fmls <- node_modify(fn_fmls(...f), spliced(dots))
+  formals(...f) <- fmls
+
+  ...f
 }
 
-make_call <- function(f, ..., .args = list()) {
-  if (is.character(f)) f <- as.name(f)
-  as.call(c(f, ..., .args))
+args_match <- function(args, fn) {
+  fmls <- fn_fmls(fn)
+
+  # Anything after dots is not relevant for positional args
+  dots_pos <- match("...", names(fmls))
+  if (!is_na(dots_pos)) {
+    fmls <- fmls[seq_len(dots_pos)]
+  }
+
+  # Remove formals and actuals with same name
+  matched <- names(fmls) %in% names(args)
+  fmls <- fmls[!matched]
+
+  # Match to remaining formals
+  unmatched <- !have_names(args)
+  n_unmatched <- sum(unmatched)
+  if (n_unmatched > length(fmls) && !is_na(dots_pos)) {
+    abort("too many arguments")
+  }
+  names(args)[unmatched] <- names(fmls[seq_len(n_unmatched)])
+
+  args
 }
