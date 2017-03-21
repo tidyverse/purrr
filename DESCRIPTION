@@ -14,7 +14,7 @@ LazyData: true
 Imports:
     magrittr (>= 1.5),
     tibble,
-    rlang
+    rlang (>= 0.0.0.9001)
 Suggests:
     covr,
     dplyr (>= 0.4.3),

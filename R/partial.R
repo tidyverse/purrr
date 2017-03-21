@@ -77,7 +77,7 @@ partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRU
   }
 
   args <- list("..." = quote(expr = ))
-  new_fn(args, fcall, .env)
+  new_function(args, fcall, .env)
 }
 
 make_call <- function(f, ..., .args = list()) {

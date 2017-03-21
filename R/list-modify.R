@@ -74,7 +74,7 @@ list_update <- function(`_x`, ...) {
   y <- list(...)
 
   needs_eval <- map_lgl(y, is_quosure)
-  y[needs_eval] <- tidy_eval(y[needs_eval], `_x`)
+  y[needs_eval] <- rlang::eval_tidy(y[needs_eval], `_x`)
 
   list_modify(`_x`, y)
 }

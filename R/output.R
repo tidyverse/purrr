@@ -123,7 +123,7 @@ browse_in_frame <- function(frame) {
     }))
     return_from(frame)
   } else {
-    expr_eval(quote(browser()), env = frame$env)
+    eval_bare(quote(browser()), env = frame$env)
   }
 }
 
