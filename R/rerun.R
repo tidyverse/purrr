@@ -18,7 +18,7 @@
 #'   rerun(x = rnorm(5), y = rnorm(5)) %>%
 #'   map_dbl(~ cor(.x$x, .x$y))
 rerun <- function(.n, ...) {
-  dots <- quosures(...)
+  dots <- quos(...)
 
   # Special case: if single unnamed argument, insert directly into the output
   # rather than wrapping in a list.
