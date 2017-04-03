@@ -48,6 +48,8 @@ test_that("Additional arguments are ignored", {
 # primitive functions --------------------------------------------------
 
 test_that("primitive functions are wrapped", {
+  skip("until we use rlang::as_closure()")
+  # See https://github.com/hadley/rlang/issues/75
   expect_identical(as_mapper(`-`)(e2 = 10, e1 = 5), -5)
   expect_identical(as_mapper(`c`)(1, 3, 5), c(1, 3, 5))
 })
