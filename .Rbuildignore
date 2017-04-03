@@ -9,3 +9,5 @@
 ^logo\.png$
 ^_pkgdown\.yml$
 ^docs$
+^\.dir-locals.el
+^src/\.dir-locals.el
