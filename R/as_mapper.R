@@ -133,5 +133,5 @@ extractor <- function(i, default) {
 
 #' @export
 as_mapper.default <- function(.f, ...) {
-  rlang::as_function(.f, ...)
+  rlang::as_function(.f)
 }

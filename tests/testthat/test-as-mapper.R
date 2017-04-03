@@ -40,6 +40,10 @@ test_that(".default replaces elements with length 0", {
   expect_equal(map_dbl(x, "a", .default = NA), c(1, NA, NA))
 })
 
+test_that("Additional arguments are ignored", {
+  expect_equal(as_mapper(function() NULL, foo = "bar", foobar), function() NULL)
+})
+
 
 # primitive functions --------------------------------------------------
 
