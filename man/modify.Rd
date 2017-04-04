@@ -72,7 +72,7 @@ An object the same class as \code{.x}
 }
 \description{
 \code{modify()} is a short-cut for \code{x[] <- map(x, .f)}. \code{modify_if()} only modifies
-the elements of \code{.x} that satisfy a predicate. \code{map_at()} only modifies
+the elements of \code{.x} that satisfy a predicate. \code{modify_at()} only modifies
 elements given by names or positions. \code{modify_depth()} only modifies
 elements at a given level of a nested data structure.
 }

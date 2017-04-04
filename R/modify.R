@@ -1,7 +1,7 @@
 #' Modify elements "in-place"
 #'
 #' `modify()` is a short-cut for `x[] <- map(x, .f)`. `modify_if()` only modifies
-#' the elements of `.x` that satisfy a predicate. `map_at()` only modifies
+#' the elements of `.x` that satisfy a predicate. `modify_at()` only modifies
 #' elements given by names or positions. `modify_depth()` only modifies
 #' elements at a given level of a nested data structure.
 #'
