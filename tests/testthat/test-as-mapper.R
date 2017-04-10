@@ -16,9 +16,9 @@ test_that("can refer to second arg in two ways", {
 
 # vectors --------------------------------------------------------------
 
-test_that(".null generates warning", {
-  expect_warning(map(1, 2, .null = NA), "`.null` is deprecated")
-})
+# test_that(".null generates warning", {
+#   expect_warning(map(1, 2, .null = NA), "`.null` is deprecated")
+# })
 
 test_that(".default replaces absent values", {
   x <- list(
