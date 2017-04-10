@@ -113,7 +113,7 @@ as_mapper.list <- function(.f, ..., .null, .default = NULL) {
 
 find_extract_default <- function(.null, .default) {
   if (!missing(.null)) {
-    warning("`.null` is deprecated; please use `.default` instead", call. = FALSE)
+    # warning("`.null` is deprecated; please use `.default` instead", call. = FALSE)
     .null
   } else {
     .default
