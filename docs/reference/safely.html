@@ -87,7 +87,7 @@ output. They are all adverbs because they modify the action of a verb (a
 function).</p>
     
 
-    <pre><span class='fu'>safely</span>(<span class='no'>.f</span>, <span class='kw'>otherwise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>safely</span>(<span class='no'>.f</span>, <span class='kw'>otherwise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>quietly</span>(<span class='no'>.f</span>)
 
@@ -151,7 +151,7 @@ whenever an error occurs.</p>
 #&gt; NULL
 #&gt; 
 #&gt; $error
-#&gt; &lt;simpleError in log(x = x, base = base): non-numeric argument to mathematical function&gt;
+#&gt; &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
 #&gt; </div><div class='input'>
 <span class='fu'>list</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>safe_log</span>) <span class='kw'>%&gt;%</span>
@@ -168,7 +168,7 @@ whenever an error occurs.</p>
 #&gt; 
 #&gt; $error
 #&gt; $error[[1]]
-#&gt; &lt;simpleError in log(x = x, base = base): non-numeric argument to mathematical function&gt;
+#&gt; &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
 #&gt; 
 #&gt; $error[[2]]
 #&gt; NULL
@@ -188,7 +188,7 @@ whenever an error occurs.</p>
 #&gt; 
 #&gt; $error
 #&gt; $error[[1]]
-#&gt; &lt;simpleError in log(x = x, base = base): non-numeric argument to mathematical function&gt;
+#&gt; &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
 #&gt; 
 #&gt; $error[[2]]
 #&gt; NULL
@@ -212,7 +212,7 @@ whenever an error occurs.</p>
 }
 <span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
   <span class='fu'><a href='map.html'>map</a></span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='fu'>auto_browse</span>(<span class='no'>f</span>))
-}</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): could not find function "eval_frame"</span></div><div class='input'>
+}</div><div class='output co'>#&gt; Called from: eval_bare(quote(browser()), env = frame$env)</div><div class='output co'>#&gt; <span class='error'>Error in .f(...): !</span></div><div class='input'>
 <span class='co'># It doesn't make sense to use auto_browse with primitive functions,</span>
 <span class='co'># because they are implemented in C so there's no useful environment</span>
 <span class='co'># for you to interact with.</span></div></pre>

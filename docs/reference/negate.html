@@ -84,7 +84,7 @@
     <p>Negate a predicate function.</p>
     
 
-    <pre><span class='fu'>negate</span>(<span class='no'>.p</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>negate</span>(<span class='no'>.p</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -117,15 +117,12 @@ value is absent (does not exist) or empty (has length 0).
 #&gt; {
 #&gt;     !(extract(x, list("x"), default = NULL))
 #&gt; }
-#&gt; &lt;environment: 0x10bc36d50&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
-#&gt; {
-#&gt;     !(is.null(x = x))
-#&gt; }
-#&gt; &lt;environment: base&gt;</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
+#&gt; &lt;environment: 0x10f8bc5f0&gt;</div><div class='input'><span class='co'># negate(is.null) # FIXME: uncomment when we switch to as_closure()</span>
+<span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; {
 #&gt;     !(.x &gt; 0)
 #&gt; }
-#&gt; &lt;environment: 0x10bcb1e30&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x10948bfc0&gt;</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'>list</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div></pre>

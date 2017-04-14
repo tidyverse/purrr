@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set names in a vector — set_names • purrr</title>
+<title>Articles • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-vignette-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -74,65 +74,20 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header">
-    <h1>Set names in a vector</h1>
+      <div class="page-header">
+  <h1>Vignette reference <small>version&nbsp;0.2.2.9000</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="other-langs.html">Functional programming in other languages</a></li>
+      </ul>
     </div>
-
-    
-    <p>This is a snake case wrapper for <code><a href='http://www.rdocumentation.org/packages/stats/topics/setNames'>stats::setNames()</a></code>, with
-tweaked defaults, and stricter argument checking.</p>
-    
-
-    <pre class="usage"><span class='fu'>set_names</span>(<span class='no'>x</span>, <span class='kw'>nm</span> <span class='kw'>=</span> <span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>Vector to name</p></td>
-    </tr>
-    <tr>
-      <th>nm</th>
-      <td><p>Vector of names, the same length as <code>x</code>.</p>
-<p>If <code>x</code> already has names, you can provide a function or formula
-to transform the existing names.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>.x</code> with the names attribute set.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>set_names</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span>))</div><div class='output co'>#&gt; a b c d 
-#&gt; 1 2 3 4 </div><div class='input'>
-<span class='co'># If the second argument is ommitted a vector is named with itself</span>
-<span class='fu'>set_names</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt;   a   b   c   d   e 
-#&gt; "a" "b" "c" "d" "e" </div><div class='input'>
-<span class='co'># Alternatively you can supply a function</span>
-<span class='fu'>set_names</span>(<span class='fl'>1</span>:<span class='fl'>10</span>, ~ <span class='no'>letters</span>[<span class='fu'>seq_along</span>(<span class='no'>.</span>)])</div><div class='output co'>#&gt;  a  b  c  d  e  f  g  h  i  j 
-#&gt;  1  2  3  4  5  6  7  8  9 10 </div><div class='input'><span class='fu'>set_names</span>(<span class='fu'>head</span>(<span class='no'>mtcars</span>), <span class='no'>toupper</span>)</div><div class='output co'>#&gt;                    MPG CYL DISP  HP DRAT    WT  QSEC VS AM GEAR CARB
-#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-#&gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
   </div>
 </div>
 

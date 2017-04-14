@@ -87,7 +87,7 @@ argument case; <code>pmap()</code> and <code>pwalk()</code> allow you to provide
 arguments in a list.</p>
     
 
-    <pre><span class='fu'>map2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>map2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>map2_lgl</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
@@ -286,10 +286,9 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
   <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>]
 )
 <span class='no'>plus</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> + <span class='no'>y</span>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># ## this won't work</span>
-<span class='co'># pmap(df, plus)</span>
-<span class='co'>## ---------------------------------------------</span>
+<span class='fu'>not_run</span>({
+  <span class='co'>## this won't work  pmap(df, plus)</span>
+})
 <span class='co'>## but this will</span>
 <span class='no'>plus2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>) <span class='no'>x</span> + <span class='no'>y</span>
 <span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>plus2</span>)</div><div class='output co'>#&gt; [1] 4 4 4</div><div class='input'>

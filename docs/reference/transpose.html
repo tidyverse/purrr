@@ -89,7 +89,7 @@ If you had a list of length n where each component had values <code>a</code> and
 <code>x[[1]][[2]]</code> is equivalent to <code>transpose(x)[[2]][[1]]</code>.</p>
     
 
-    <pre><span class='fu'>transpose</span>(<span class='no'>.l</span>, <span class='kw'>.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>transpose</span>(<span class='no'>.l</span>, <span class='kw'>.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -173,7 +173,7 @@ input by transposing it twice.</p>
 #&gt;   ..$ result: NULL
 #&gt;   ..$ error :List of 2
 #&gt;   .. ..$ message: chr "non-numeric argument to mathematical function"
-#&gt;   .. ..$ call   : language log(x = x, base = base)
+#&gt;   .. ..$ call   : language .f(...)
 #&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
 #&gt;  $ :List of 2
 #&gt;   ..$ result: num 0
@@ -188,7 +188,7 @@ input by transposing it twice.</p>
 #&gt;  $ error :List of 3
 #&gt;   ..$ :List of 2
 #&gt;   .. ..$ message: chr "non-numeric argument to mathematical function"
-#&gt;   .. ..$ call   : language log(x = x, base = base)
+#&gt;   .. ..$ call   : language .f(...)
 #&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
 #&gt;   ..$ : NULL
 #&gt;   ..$ : NULL</div><div class='input'>

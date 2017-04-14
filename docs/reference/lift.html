@@ -88,7 +88,7 @@ kind. The domain can be changed from and to a list (l), a vector
 function taking a list to a function taking dots.</p>
     
 
-    <pre><span class='fu'>lift</span>(<span class='no'>..f</span>, <span class='no'>...</span>, <span class='kw'>.unnamed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>lift</span>(<span class='no'>..f</span>, <span class='no'>...</span>, <span class='kw'>.unnamed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>lift_dl</span>(<span class='no'>..f</span>, <span class='no'>...</span>, <span class='kw'>.unnamed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
@@ -455,9 +455,9 @@ with <code>.type</code>.</p>
   <span class='no'>l</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='invoke.html'>invoke</a></span>(<span class='no'>paste</span>, <span class='no'>.</span>)
 }
 
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># letters %&gt;% glue()           # fails because glue() expects a list</span>
-<span class='co'>## ---------------------------------------------</span>
+<span class='fu'>not_run</span>({
+  <span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>glue</span>()           <span class='co'># fails because glue() expects a list</span>
+})
 
 <span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>lift_lv</span>(<span class='no'>glue</span>)()  <span class='co'># succeeds</span></div><div class='output co'>#&gt; [1] "a b c d e f g h i j k l m n o p q r s t u v w x y z"</div></pre>
   </div>
