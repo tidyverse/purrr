@@ -8,6 +8,10 @@ test_that("quosures are evaluated", {
   expect_equal(list_update(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
 })
 
+test_that("any symbolic argument is evaluated", {
+  expect_equal(list_update(list(x = 1), y = quote(x + 1)), list(x = 1, y = 2))
+})
+
 
 # list_modify -------------------------------------------------------------
 
