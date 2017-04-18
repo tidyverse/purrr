@@ -43,7 +43,7 @@ str(list_update(x, z = 5))
 str(list_update(x, z = list(a = 1:5)))
 str(list_update(x, z = NULL))
 
-# In list_update() you can also use formulas to compute new values
-list_update(x, z1 = ~ z[1])
-list_update(x, z = ~ x + y)
+# In list_update() you can also use quosures to compute new values
+list_update(x, z1 = rlang::quo(z[1]))
+list_update(x, z = rlang::quo(x + y))
 }

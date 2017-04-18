@@ -5,7 +5,7 @@ test_that("can modify element called x", {
 })
 
 test_that("quosures are evaluated", {
-  expect_equal(list_update(list(x = 1), y = ~ x + 1), list(x = 1, y = 2))
+  expect_equal(list_update(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
 })
 
 
