@@ -71,7 +71,8 @@ list_modify <- function(x, y) {
 #' @export
 #' @rdname  list_modify
 list_update <- function(`_x`, ...) {
-  y <- modify_if(list(...), is_symbolic, eval_tidy, `_x`)
+  y <- dots_list(...)
+  y <- modify_if(y, is_symbolic, eval_tidy, data = `_x`)
   list_modify(`_x`, y)
 }
 
