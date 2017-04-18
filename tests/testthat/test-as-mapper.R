@@ -51,3 +51,8 @@ test_that("primitive functions are wrapped", {
   expect_identical(as_mapper(`-`)(.y = 10, .x = 5), -5)
   expect_identical(as_mapper(`c`)(1, 3, 5), c(1, 3, 5))
 })
+
+test_that("syntactic primitives are wrapped", {
+  expect_identical(as_mapper(`[[`)(mtcars, "cyl"), mtcars$cyl)
+  expect_identical(as_mapper(`$`)(mtcars, cyl), mtcars$cyl)
+})
