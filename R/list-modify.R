@@ -29,9 +29,9 @@
 #' str(list_update(x, z = list(a = 1:5)))
 #' str(list_update(x, z = NULL))
 #'
-#' # In list_update() you can also use formulas to compute new values
-#' list_update(x, z1 = ~ z[1])
-#' list_update(x, z = ~ x + y)
+#' # In list_update() you can also use quosures to compute new values
+#' list_update(x, z1 = rlang::quo(z[1]))
+#' list_update(x, z = rlang::quo(x + y))
 list_modify <- function(x, y) {
   stopifnot(is.list(x), is.list(y))
 
@@ -71,11 +71,8 @@ list_modify <- function(x, y) {
 #' @export
 #' @rdname  list_modify
 list_update <- function(`_x`, ...) {
-  y <- list(...)
-
-  needs_eval <- map_lgl(y, is_quosure)
-  y[needs_eval] <- rlang::eval_tidy(y[needs_eval], `_x`)
-
+  y <- dots_list(...)
+  y <- modify_if(y, is_symbolic, eval_tidy, data = `_x`)
   list_modify(`_x`, y)
 }
 
