@@ -14,7 +14,8 @@ LazyData: true
 Imports:
     magrittr (>= 1.5),
     Rcpp,
-    lazyeval (>= 0.2.0)
+    lazyeval (>= 0.2.0),
+    tibble
 Suggests:
     testthat,
     covr,

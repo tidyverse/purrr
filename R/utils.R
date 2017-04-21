@@ -113,7 +113,7 @@ as_function.default <- function(.f, ...) {
 
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
-    dplyr::as_data_frame(out)
+    tibble::as_tibble(out)
   } else {
     out
   }
