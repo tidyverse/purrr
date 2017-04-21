@@ -21,4 +21,3 @@ Generate random samples from a Bernoulli distribution
 rbernoulli(10)
 rbernoulli(100, 0.1)
 }
-

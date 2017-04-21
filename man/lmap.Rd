@@ -2,8 +2,8 @@
 % Please edit documentation in R/lmap.R
 \name{lmap}
 \alias{lmap}
-\alias{lmap_at}
 \alias{lmap_if}
+\alias{lmap_at}
 \title{Apply a function to list-elements of a list}
 \usage{
 lmap(.x, .f, ...)
@@ -108,4 +108,3 @@ mtcars \%>\% lmap_at(c("cyl", "vs", "am"), disjoin)
 \code{\link{map_at}()}, \code{\link{map_if}()} and
   \code{\link{map}()}
 }
-

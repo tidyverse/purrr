@@ -36,4 +36,3 @@ y <- list(0:10, 5.5)
 y \%>\% every(is.numeric)
 y \%>\% every(is.integer)
 }
-

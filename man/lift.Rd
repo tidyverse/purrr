@@ -2,12 +2,13 @@
 % Please edit documentation in R/composition.R
 \name{lift}
 \alias{lift}
+\alias{lift}
 \alias{lift_dl}
 \alias{lift_dv}
+\alias{lift_vl}
+\alias{lift_vd}
 \alias{lift_ld}
 \alias{lift_lv}
-\alias{lift_vd}
-\alias{lift_vl}
 \title{Lift the domain of a function}
 \usage{
 lift(..f, ..., .unnamed = FALSE)
@@ -88,6 +89,7 @@ the inverse operations of \code{lift_dl()} and \code{lift_dv()}.
 an atomic vector. The details of this coercion can be controlled
 with \code{.type}.
 }
+
 \examples{
 ### Lifting from ... to list(...) or c(...)
 
@@ -126,13 +128,6 @@ mtcars[c(1, 2)] \%>\% lifted_identical()
 
 
 ### Lifting from c(...) to list(...) or ...
-
-# Some functions such as mean() take an atomic vector. It is often
-# useful to transform them to functions taking a list. In the
-# following example, we lift mean() to apply it to each row of a
-# data frame. This works because a row is essentially a list of
-# length-1 vectors:
-mtcars \%>\% by_row(lift_vl(mean))
 
 # In other situations we need the vector-valued function to take a
 # variable number of arguments as with pmap(). This is a job for
@@ -183,4 +178,3 @@ letters \%>\% lift_lv(glue)()  # succeeds
 \seealso{
 \code{\link{invoke}()}
 }
-

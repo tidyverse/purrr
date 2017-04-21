@@ -10,4 +10,3 @@ flatmap(.x, .f, ..., .type)
 Deprecated: please use \code{map()} followed by \code{flatten()}.
 }
 \keyword{internal}
-

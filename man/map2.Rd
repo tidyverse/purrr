@@ -2,22 +2,22 @@
 % Please edit documentation in R/map.R
 \name{map2}
 \alias{map2}
-\alias{map2_chr}
-\alias{map2_dbl}
-\alias{map2_df}
-\alias{map2_int}
 \alias{map2_lgl}
+\alias{map2_int}
+\alias{map2_dbl}
+\alias{map2_chr}
+\alias{map2_df}
 \alias{map3}
-\alias{map_n}
 \alias{pmap}
-\alias{pmap_chr}
-\alias{pmap_dbl}
-\alias{pmap_df}
-\alias{pmap_int}
 \alias{pmap_lgl}
-\alias{pwalk}
+\alias{pmap_int}
+\alias{pmap_dbl}
+\alias{pmap_chr}
+\alias{pmap_df}
+\alias{map_n}
 \alias{walk2}
 \alias{walk3}
+\alias{pwalk}
 \alias{walk_n}
 \title{Map over multiple inputs simultaneously.}
 \usage{
@@ -107,4 +107,3 @@ by_cyl <- mtcars \%>\% split(.$cyl)
 mods <- by_cyl \%>\% map(~ lm(mpg ~ wt, data = .))
 map2(mods, by_cyl, predict)
 }
-

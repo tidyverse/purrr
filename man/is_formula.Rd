@@ -16,4 +16,3 @@ Is a formula?
 x <- disp ~ am
 is_formula(x)
 }
-

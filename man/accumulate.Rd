@@ -47,4 +47,3 @@ rerun(5, rnorm(100)) \%>\%
     ggtitle("Simulations of a random walk with drift")
 }
 }
-

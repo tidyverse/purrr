@@ -2,11 +2,11 @@
 % Please edit documentation in R/map.R
 \name{map}
 \alias{map}
+\alias{map_lgl}
 \alias{map_chr}
+\alias{map_int}
 \alias{map_dbl}
 \alias{map_df}
-\alias{map_int}
-\alias{map_lgl}
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
@@ -113,4 +113,3 @@ mtcars \%>\%
 \code{\link{map2}()} and \code{\link{pmap}()} to map over multiple
   inputs simulatenously
 }
-
