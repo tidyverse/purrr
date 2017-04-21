@@ -1,10 +1,13 @@
 # purrr 0.2.2.1
 
-* All data-frame based mappers have been deprecated in favour of new
-  functions and idioms in the tidyverse. `dmap()`, `dmap_at()`, `dmap_if()`,
-  `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and
-  `unslice()` have been moved to purrrlyr. This is a bit of an aggresive
-  change but it allows us to make the dependencies much lighter.
+This is a compatibility release with dplyr 0.6.0.
+
+* All data-frame based mappers have been removed in favour of new
+  functions and idioms in the tidyverse. `dmap()`, `dmap_at()`,
+  `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`,
+  `by_slice()`, `by_row()`, and `unslice()` have been moved to
+  purrrlyr. This is a bit of an aggresive change but it allows us to
+  make the dependencies much lighter.
 
 
 # purrr 0.2.2
