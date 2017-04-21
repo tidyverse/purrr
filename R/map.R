@@ -112,6 +112,10 @@ map_dbl <- function(.x, .f, ...) {
 #'   giving either the name or the index of the data frame.
 #' @export
 map_df <- function(.x, .f, ..., .id = NULL) {
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop("`map_df()` requires dplyr", call. = FALSE)
+  }
+
   .f <- as_function(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_rows(res, .id = .id)
@@ -196,6 +200,10 @@ map2_chr <- function(.x, .y, .f, ...) {
 #' @rdname map2
 #' @export
 map2_df <- function(.x, .y, .f, ..., .id = NULL) {
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop("`map2_df()` requires dplyr", call. = FALSE)
+  }
+
   .f <- as_function(.f, ...)
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_rows(res, .id = .id)
@@ -245,6 +253,10 @@ pmap_chr <- function(.l, .f, ...) {
 #' @rdname map2
 #' @export
 pmap_df <- function(.l, .f, ..., .id = NULL) {
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    stop("`pmap_df()` requires dplyr", call. = FALSE)
+  }
+
   .f <- as_function(.f, ...)
   res <- pmap(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
