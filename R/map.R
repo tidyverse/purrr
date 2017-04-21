@@ -118,6 +118,10 @@ map_dbl <- function(.x, .f, ...) {
 #'   giving either the name or the index of the data frame.
 #' @export
 map_dfr <- function(.x, .f, ..., .id = NULL) {
+  if (!is_installed("dplyr")) {
+    abort("`map_df()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_rows(res, .id = .id)
@@ -131,6 +135,10 @@ map_df <- map_dfr
 #' @rdname map
 #' @export
 map_dfc <- function(.x, .f, ...) {
+  if (!is_installed("dplyr")) {
+    abort("`map_dfc()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_cols(res)

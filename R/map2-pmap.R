@@ -101,6 +101,10 @@ map2_chr <- function(.x, .y, .f, ...) {
 #' @rdname map2
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
+  if (!is_installed("dplyr")) {
+    abort("`map2_dfr()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_rows(res, .id = .id)
@@ -108,6 +112,10 @@ map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
 #' @rdname map2
 #' @export
 map2_dfc <- function(.x, .y, .f, ...) {
+  if (!is_installed("dplyr")) {
+    abort("`map2_dfc()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- map2(.x, .y, .f, ...)
   dplyr::bind_cols(res)
@@ -178,6 +186,10 @@ pmap_chr <- function(.l, .f, ...) {
 #' @rdname map2
 #' @export
 pmap_dfr <- function(.l, .f, ..., .id = NULL) {
+  if (!is_installed("dplyr")) {
+    abort("`pmap_dfr()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- pmap(.l, .f, ...)
   dplyr::bind_rows(res, .id = .id)
@@ -186,6 +198,10 @@ pmap_dfr <- function(.l, .f, ..., .id = NULL) {
 #' @rdname map2
 #' @export
 pmap_dfc <- function(.l, .f, ...) {
+  if (!is_installed("dplyr")) {
+    abort("`pmap_dfc()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- pmap(.l, .f, ...)
   dplyr::bind_cols(res)
