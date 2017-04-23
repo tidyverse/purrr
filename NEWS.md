@@ -30,6 +30,10 @@ There have also been two changes to eliminate name conflicts between purrr and d
   refer to arguments by position with `..1`, `..2`, and so on. This makes it 
   possible to use the formula shorthand for functions with more than two 
   arguments (#289).
+  
+* `possibly()`, `safely()` and friends no longer capture interrupts: this 
+  means that you can now terminate a mapper using one of these with
+  Escape or Ctrl + C (#314)
 
 ## Map functions
 

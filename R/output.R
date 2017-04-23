@@ -82,6 +82,9 @@ possibly <- function(.f, otherwise, quiet = TRUE) {
         if (!quiet)
           message("Error: ", e$message)
         otherwise
+      },
+      interrupt = function(e) {
+        stop("Terminated by user", call. = FALSE)
       }
     )
   }
@@ -109,6 +112,9 @@ auto_browse <- function(.f) {
           frame <- ctxt_frame(7)
           browse_in_frame(frame)
         }
+      },
+      interrupt = function(e) {
+        stop("Terminated by user", call. = FALSE)
       }
     )
   }
@@ -135,6 +141,9 @@ capture_error <- function(code, otherwise = NULL, quiet = TRUE) {
         message("Error: ", e$message)
 
       list(result = otherwise, error = e)
+    },
+    interrupt = function(e) {
+      stop("Terminated by user", call. = FALSE)
     }
   )
 }
