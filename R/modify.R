@@ -1,13 +1,14 @@
-#' Modify elements "in-place"
+#' Modify elements selectively
 #'
-#' `modify()` is a short-cut for `x[] <- map(x, .f)`. `modify_if()` only modifies
-#' the elements of `.x` that satisfy a predicate. `modify_at()` only modifies
-#' elements given by names or positions. `modify_depth()` only modifies
-#' elements at a given level of a nested data structure.
+#' `modify()` is a short-cut for `x[] <- map(x, .f); return(x)`. `modify_if()`
+#' only modifies the elements of `x` that satisfy a predicate and leaves the
+#' others unchanged. `modify_at()` only modifies elements given by names or
+#' positions. `modify_depth()` only modifies elements at a given level of a
+#' nested data structure.
 #'
-#' These modify the input data structure; it's your responsibility to ensure
-#' that the transformation produces a valid output. For example, if you're
-#' modifying a data frame, `.f` must preserve the length of the input.
+#' These can alter the structure of the input; it's your responsibility to
+#' ensure that the transformation produces a valid output. For example, if
+#' you're modifying a data frame, `.f` must preserve the length of the input.
 #'
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
@@ -31,18 +32,18 @@
 #' @examples
 #' # Convert factors to characters
 #' iris %>%
-#'   map_if(is.factor, as.character) %>%
+#'   modify_if(is.factor, as.character) %>%
 #'   str()
 #'
 #' # Specify which columns to map with a numeric vector of positions:
-#' mtcars %>% map_at(c(1, 4, 5), as.character) %>% str()
+#' mtcars %>% modify_at(c(1, 4, 5), as.character) %>% str()
 #'
 #' # Or with a vector of names:
-#' mtcars %>% map_at(c("cyl", "am"), as.character) %>% str()
+#' mtcars %>% modify_at(c("cyl", "am"), as.character) %>% str()
 #'
 #' list(x = rbernoulli(100), y = 1:100) %>%
 #'   transpose() %>%
-#'   map_if("x", ~ update_list(., y = ~ y * 100)) %>%
+#'   modify_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   transpose() %>%
 #'   simplify_all()
 #'
