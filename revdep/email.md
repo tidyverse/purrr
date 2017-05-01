@@ -1,18 +1,25 @@
 Hi,
 
 This is an automated email to let you know about the release of
-{{{my_package }}}, which will be submitted to CRAN in the near future
-(on {{{ date }}}).
+{{{my_package }}}, which will be submitted to CRAN next Monday 8th
+May. We apologise for the short notice. This release has been
+necessary to make purrr compatible with the next dplyr release
+(0.6.0).
 
-This release removes all dataframe mappers. They have been moved to
-the purrrlyr package. This allows us to substantially reduce the
-dependencies of purrr by moving dplyr to suggested packages rather
-than imported packages.
+This new version features only one change: all dataframe mappers have
+been moved from purrr to the purrrlyr package. We opted for this
+somewhat drastic solution because it allows us to substantially reduce
+the dependencies of purrr by moving dplyr to suggested packages rather
+than imported packages. By the same token, this should considerably
+reduce your package dependencies if you're not using dplyr.
 
-One common problem that I saw in the revdep checks is that `map_df()`
-will now issue an error if you haven't mentioned dplyr in the
-`Imports:` field. That's because purrr does not require this package
-anymore.
+It should be straightforward to adapt your package to this change. If
+you've been using one of the removed functions (such as `dmap()`),
+just import these functions from the new `purrrlyr` package that is
+now on CRAN. If you've been using `map_df()`, a function that relies
+on `dplyr::bind_rows()`, you simply need to add dplyr to the
+`Imports:` field. It is now necessary to be explicit about the dplyr
+dependency because purrr does not require dplyr anymore.
 
 Since the master branch is under development, we are putting this
 point release together in the following branch:
