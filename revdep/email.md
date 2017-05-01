@@ -48,7 +48,7 @@ To get the development version of {{{ my_package }}} so you can run
 the checks yourself, you can run:
 
     # install.packages("devtools")
-    devtools::install_github("{{my_github}}")
+    devtools::install_github("tidyverse/purrr", ref = "release-0.2.2.1")
 
 {{/you_have_problems}}
 {{^you_have_problems}}
