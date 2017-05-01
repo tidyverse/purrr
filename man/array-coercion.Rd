@@ -59,4 +59,3 @@ array_tree(x) \%>\% str()
 # margin argument:
 array_tree(x, c(3, 1)) \%>\% str()
 }
-

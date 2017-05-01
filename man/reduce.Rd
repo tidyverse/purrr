@@ -44,4 +44,3 @@ x \%>\% rev() \%>\% reduce(c)
 list() \%>\% reduce(`+`)
 list() \%>\% reduce(`+`, .init = 0)
 }
-

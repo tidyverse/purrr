@@ -3,11 +3,11 @@
 \name{invoke}
 \alias{invoke}
 \alias{invoke_map}
-\alias{invoke_map_chr}
-\alias{invoke_map_dbl}
-\alias{invoke_map_df}
-\alias{invoke_map_int}
 \alias{invoke_map_lgl}
+\alias{invoke_map_int}
+\alias{invoke_map_dbl}
+\alias{invoke_map_chr}
+\alias{invoke_map_df}
 \alias{map_call}
 \title{Invoke functions.}
 \usage{
@@ -93,4 +93,3 @@ df
 invoke_map(df$f, df$params)
 }
 }
-

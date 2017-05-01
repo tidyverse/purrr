@@ -33,4 +33,3 @@ big <- function(x) x > 100
 head_while(0:10, big)
 tail_while(0:10, big)
 }
-

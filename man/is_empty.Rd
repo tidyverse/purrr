@@ -17,4 +17,3 @@ is_empty(NULL)
 is_empty(list())
 is_empty(list(NULL))
 }
-

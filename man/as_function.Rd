@@ -41,4 +41,3 @@ as_function(1)
 as_function(c("a", "b", "c"))
 as_function(c("a", "b", "c"), .null = NA)
 }
-

@@ -2,9 +2,9 @@
 % Please edit documentation in R/transpose.R
 \name{transpose}
 \alias{transpose}
+\alias{zip_n}
 \alias{zip2}
 \alias{zip3}
-\alias{zip_n}
 \title{Transpose a list.}
 \usage{
 transpose(.l)
@@ -46,4 +46,3 @@ x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 x \%>\% transpose()
 x \%>\% transpose() \%>\% simplify_all()
 }
-

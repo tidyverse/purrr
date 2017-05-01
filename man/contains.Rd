@@ -19,4 +19,3 @@ x <- list(1:10, 5, 9.9)
 x \%>\% contains(1:10)
 x \%>\% contains(3)
 }
-

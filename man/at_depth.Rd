@@ -81,4 +81,3 @@ l2 <- list(
 # effectively mapped at level 3.
 l2 \%>\% at_depth(2, pmap, paste, sep = " / ")
 }
-

@@ -37,6 +37,7 @@ approach.)  This implementation is based on creating functions that are as
 similar as possible to the anonymous functions that you'd create by hand,
 if you weren't using \code{partial}.
 }
+
 \examples{
 # Partial is designed to replace the use of anonymous functions for
 # filling in function arguments. Instead of:
@@ -69,4 +70,3 @@ plot2 <- partial(plot, my_long_variable)
 plot2()
 plot2(runif(10), type = "l")
 }
-

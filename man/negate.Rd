@@ -27,4 +27,3 @@ x \%>\% keep(negate("y")) \%>\% length()
 # Same as
 x \%>\% discard("y") \%>\% length()
 }
-
