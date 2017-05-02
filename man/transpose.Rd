@@ -21,7 +21,7 @@ A list with indexing transposed compared to \code{.l}.
 \description{
 Tranpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 list of pairs, or a list of pairs into pair of lists. For example,
-If you had a list of length n where each component had values \code{a} and
+if you had a list of length n where each component had values \code{a} and
 \code{b}, \code{transpose()} would make a list with elements \code{a} and
 \code{b} that contained lists of length n. It's called transpose because
 \code{x[[1]][[2]]} is equivalent to \code{transpose(x)[[2]][[1]]}.
@@ -48,4 +48,14 @@ y \%>\% transpose() \%>\% str()
 x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 x \%>\% transpose()
 x \%>\% transpose() \%>\% simplify_all()
+
+# Provide explicit component names to prevent loss of those that don't
+# appear in first component
+ll <- list(
+  list(x = 1, y = "one"),
+  list(z = "deux", x = 2)
+)
+ll \%>\% transpose()
+nms <- ll \%>\% map(names) \%>\% reduce(union) \%>\% unique()
+ll \%>\% transpose(.names = nms)
 }
