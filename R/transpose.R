@@ -44,7 +44,7 @@
 #'   list(z = "deux", x = 2)
 #' )
 #' ll %>% transpose()
-#' nms <- ll %>% map(names) %>% reduce(union) %>% unique()
+#' nms <- ll %>% map(names) %>% reduce(union)
 #' ll %>% transpose(.names = nms)
 #' @useDynLib purrr transpose_impl
 transpose <- function(.l, .names = NULL) {
