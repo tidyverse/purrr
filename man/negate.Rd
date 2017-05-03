@@ -27,7 +27,7 @@ Negate a predicate function.
 }
 \examples{
 negate("x")
-# negate(is.null) # FIXME: uncomment when we switch to as_closure()
+negate(is.null)
 negate(~ .x > 0)
 
 x <- transpose(list(x = 1:10, y = rbernoulli(10)))
