@@ -70,7 +70,6 @@
 #' plus2 <- function(x, y, ...) x + y
 #' pmap_dbl(df, plus2)
 #'
-#' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
@@ -126,7 +125,6 @@ walk2 <- function(.x, .y, .f, ...) {
 
 #' @export
 #' @rdname map2
-#' @useDynLib purrr pmap_impl
 pmap <- function(.l, .f, ...) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {

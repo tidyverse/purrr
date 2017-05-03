@@ -1,6 +1,5 @@
 # Used internally by map and flatten.
 # Exposed here for testing
-#' @useDynLib purrr coerce_impl
 coerce <- function(x, type) {
   .Call(coerce_impl, x, type)
 }

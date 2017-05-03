@@ -66,7 +66,6 @@ as_function <- function(...) {
 #' @param index A list indexing into the object
 #' @param default Value to use if target is empty or absent.
 #' @keywords internal
-#' @useDynLib purrr extract_impl
 #' @export
 extract <- function(x, index, default = NULL) {
   .Call(extract_impl, x, index, default)

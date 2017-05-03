@@ -46,7 +46,6 @@
 #' ll %>% transpose()
 #' nms <- ll %>% map(names) %>% reduce(union)
 #' ll %>% transpose(.names = nms)
-#' @useDynLib purrr transpose_impl
 transpose <- function(.l, .names = NULL) {
   .Call(transpose_impl, .l, .names)
 }
