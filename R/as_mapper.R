@@ -60,14 +60,17 @@ as_function <- function(...) {
   as_mapper(...)
 }
 
-#' Extract an element from a vector or environment
+#' Isolate a single an element from a vector or environment
+#'
+#' This is a generalise form of `[[` which allows you to index by
+#' name, position, or attribute.
 #'
 #' @param x A vector or environment
 #' @param index A list indexing into the object
 #' @param default Value to use if target is empty or absent.
 #' @keywords internal
 #' @export
-extract <- function(x, index, default = NULL) {
+isolate <- function(x, index, default = NULL) {
   .Call(extract_impl, x, index, default)
 }
 
@@ -86,28 +89,28 @@ get_attr <- function(x) {
 #' @rdname as_mapper
 as_mapper.attr <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
-  extractor(map(.f, get_attr), .default)
+  isolator(map(.f, get_attr), .default)
 }
 
 #' @export
 #' @rdname as_mapper
 as_mapper.character <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
-  extractor(as.list(.f), .default)
+  isolator(as.list(.f), .default)
 }
 
 #' @export
 #' @rdname as_mapper
 as_mapper.numeric <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
-  extractor(as.list(.f), .default)
+  isolator(as.list(.f), .default)
 }
 
 #' @export
 #' @rdname as_mapper
 as_mapper.list <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
-  extractor(.f, .default)
+  isolator(.f, .default)
 }
 
 find_extract_default <- function(.null, .default) {
@@ -119,11 +122,11 @@ find_extract_default <- function(.null, .default) {
   }
 }
 
-extractor <- function(i, default) {
+isolator <- function(i, default) {
   stopifnot(is.list(i))
 
   expr_interp(function(x, ...)
-    extract(x, !!(i), default = !!(default))
+    isolate(x, !!(i), default = !!(default))
   )
 }
 
