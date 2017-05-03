@@ -2,7 +2,7 @@
 
 ## purrr and dplyr
 
-purrr no longer depends on dplyr, lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages. This means that data-frame based mappers (`dmap()`, `dmap_at()`, `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and `unslice()`) have been moved to a new package, purrrlyr. This is a bit of an aggressive change but it needed to be done, and in this case I think it's better to rip the band aid off quickly.
+purrr no longer depends on dplyr, lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages. This means that data-frame based mappers (`dmap()`, `dmap_at()`, `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and `unslice()`) have   been moved to a new package, purrrlyr. This is a bit of an aggressive change but it needed to be done, and in this case I think it's better to rip the band aid off quickly.
 
 There have also been two changes to eliminate name conflicts between purrr and dplyr:
 
@@ -117,7 +117,8 @@ There have also been two changes to eliminate name conflicts between purrr and d
 * `rdunif()` checks its inputs for validity (#211).
 
 * `set_names()` can now take a function to tranform the names programmatically
-  (#276).
+  (#276), and you can supply names in `...` to reduce typing even more 
+  more (#316).
 
 * `safely()` now actually uses the `quiet` argument (#296).
 

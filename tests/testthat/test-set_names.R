@@ -7,6 +7,14 @@ test_that("inputs must be valid", {
   expect_error(set_names(x, letters[1:4]), "same length")
 })
 
+test_that("can supply vector or ...", {
+  x <- 1:2
+
+  expect_named(set_names(x, c("a", "b")), c("a", "b"))
+  expect_named(set_names(x, "a", "b"), c("a", "b"))
+})
+
+
 test_that("can supply function/formula to rename", {
   x <- c(a = 1, b = 2)
 
