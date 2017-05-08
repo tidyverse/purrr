@@ -63,7 +63,6 @@
 #'   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
-#' @useDynLib purrr map_impl
 map <- function(.x, .f, ...) {
   .f <- as_function(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
@@ -167,7 +166,6 @@ walk <- function(.x, .f, ...) {
 #' by_cyl <- mtcars %>% split(.$cyl)
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
-#' @useDynLib purrr map2_impl
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_function(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
@@ -220,7 +218,6 @@ map3 <- function(.x, .y, .z, .f, ...) {
 
 #' @export
 #' @rdname map2
-#' @useDynLib purrr pmap_impl
 pmap <- function(.l, .f, ...) {
   .f <- as_function(.f, ...)
   .Call(pmap_impl, environment(), ".l", ".f", "list")

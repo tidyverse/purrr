@@ -22,7 +22,6 @@
 #' x %>% map(1L) %>% flatten_int()
 #' # But it's more efficient to use the typed map instead.
 #' x %>% map_int(1L)
-#' @useDynLib purrr flatten_impl vflatten_impl
 flatten <- function(.x) {
   .Call(flatten_impl, .x)
 }

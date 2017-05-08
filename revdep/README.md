@@ -4,29 +4,29 @@
 
 |setting  |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.3.2 (2016-10-31) |
-|system   |x86_64, darwin13.4.0         |
+|version  |R version 3.4.0 (2017-04-21) |
+|system   |x86_64, darwin15.6.0         |
 |ui       |X11                          |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |tz       |Europe/Brussels              |
-|date     |2017-04-21                   |
+|date     |2017-05-08                   |
 
 ## Packages
 
 |package  |*  |version |date       |source                          |
 |:--------|:--|:-------|:----------|:-------------------------------|
-|covr     |   |2.2.2   |2017-01-05 |CRAN (R 3.3.2)                  |
-|dplyr    |   |0.5.0   |2016-06-24 |CRAN (R 3.3.0)                  |
-|lazyeval |   |0.2.0   |2016-06-12 |CRAN (R 3.3.0)                  |
-|magrittr |   |1.5     |2014-11-22 |CRAN (R 3.3.0)                  |
-|purrr    |   |0.2.2.1 |2017-04-21 |local (hadley/lowliner@7029495) |
-|Rcpp     |   |0.12.10 |2017-03-19 |CRAN (R 3.3.2)                  |
-|testthat |   |1.0.2   |2016-04-23 |CRAN (R 3.3.0)                  |
-|tibble   |   |1.3.0   |2017-04-01 |CRAN (R 3.3.2)                  |
+|covr     |   |2.2.2   |2017-01-05 |cran (@2.2.2)                   |
+|dplyr    |   |0.5.0   |2016-06-24 |cran (@0.5.0)                   |
+|lazyeval |   |0.2.0   |2016-06-12 |cran (@0.2.0)                   |
+|magrittr |   |1.5     |2014-11-22 |cran (@1.5)                     |
+|purrr    |   |0.2.2.1 |2017-05-08 |local (hadley/lowliner@261462f) |
+|Rcpp     |   |0.12.10 |2017-03-19 |cran (@0.12.10)                 |
+|testthat |   |1.0.2   |2016-04-23 |cran (@1.0.2)                   |
+|tibble   |   |1.3.0   |2017-04-01 |cran (@1.3.0)                   |
 
 # Check results
-85 packages
+94 packages
 
 ## anomalyDetection (0.1.1)
 Maintainer: Bradley Boehmke <bradleyboehmke@gmail.com>  
@@ -50,24 +50,24 @@ Bug reports: https://github.com/cole-brokamp/automagic/issues
 Maintainer: David Robinson <admiral.david@gmail.com>  
 Bug reports: http://github.com/tidyverse/broom/issues
 
-0 errors | 1 warning  | 0 notes
+1 error  | 0 warnings | 0 notes
 
 ```
-checking Rd cross-references ... WARNING
-Missing link or links in documentation object 'cch_tidiers.Rd':
-  ‘cch’
-
-Missing link or links in documentation object 'coxph_tidiers.Rd':
-  ‘predict.coxph’ ‘residuals.coxph’
-
-Missing link or links in documentation object 'pyears_tidiers.Rd':
-  ‘pyears’
-
-Missing link or links in documentation object 'survfit_tidiers.Rd':
-  ‘print.survfit’
-
-See section 'Cross-references' in the 'Writing R Extensions' manual.
-
+checking tests ... ERROR
+  Running ‘test-all.R’ [24s/26s]
+Running the tests in ‘tests/test-all.R’ failed.
+Complete output:
+  > library(testthat)
+  > test_check("broom")
+  Loading required package: broom
+  Loading required namespace: gam
+  error occurred during calling the sampler; sampling not done
+  Error in check_stanfit(stanfit) : 
+    Invalid stanfit object produced please report bug
+  Calls: test_check ... eval -> stan_glmer -> stan_glm.fit -> check_stanfit
+  testthat results ================================================================
+  OK: 451 SKIPPED: 0 FAILED: 0
+  Execution halted
 ```
 
 ## bsplus (0.1.0)
@@ -85,6 +85,11 @@ Bug reports: https://github.com/hrbrmstr/cdcfluview/issues
 ## censys (0.1.0)
 Maintainer: Bob Rudis <brudis@rapid7.com>  
 Bug reports: https://github.com/hrbrmstr/censys/issues
+
+0 errors | 0 warnings | 0 notes
+
+## congressbr (0.1.0)
+Maintainer: Robert Myles McDonnell <robertmylesmcdonnell@gmail.com>
 
 0 errors | 0 warnings | 0 notes
 
@@ -110,11 +115,17 @@ Maintainer: Bob Rudis <bob@rudis.net>
 
 0 errors | 0 warnings | 0 notes
 
-## d3r (0.6.3)
+## d3r (0.6.4)
 Maintainer: Kent Russell <kent.russell@timelyportfolio.com>  
 Bug reports: https://github.com/timelyportfolio/d3r/issues
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note 
+
+```
+checking package dependencies ... NOTE
+Packages which this enhances but not available for checking:
+  ‘partykit’ ‘treemap’
+```
 
 ## doctr (0.2.0)
 Maintainer: Caio Lente <me@ctlente.com>
@@ -166,7 +177,12 @@ Bug reports: https://github.com/hrbrmstr/epidata/issues
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>  
 Bug reports: https://github.com/strengejacke/esc/issues
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note 
+
+```
+checking Rd cross-references ... NOTE
+Package unavailable to check Rd xrefs: ‘metafor’
+```
 
 ## estatapi (0.3.0)
 Maintainer: Hiroaki Yutani <yutani.ini@gmail.com>  
@@ -194,37 +210,30 @@ Bug reports: https://www.github.com/rorynolan/autothresholdr/issues
 ## fbar (0.1.23)
 Maintainer: Max Conway <conway.max1@gmail.com>
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note 
+
+```
+checking package dependencies ... NOTE
+Packages suggested but not available for checking:
+  ‘Rglpk’ ‘ROI.plugin.glpk’
+```
 
 ## flextable (0.1.0)
 Maintainer: David Gohel <david.gohel@ardata.fr>
 
 0 errors | 0 warnings | 0 notes
 
-## fuzzr (0.2.0)
+## fourierin (0.2.1)
+Maintainer: Guillermo Basulto-Elias <guillermobasulto@gmail.com>  
+Bug reports: https://github.com/gbasulto/fourierin/issues
+
+0 errors | 0 warnings | 0 notes
+
+## fuzzr (0.2.1)
 Maintainer: Matthew Lincoln <matthew.d.lincoln@gmail.com>  
 Bug reports: https://github.com/mdlincoln/fuzzr/issues
 
-1 error  | 0 warnings | 0 notes
-
-```
-checking tests ... ERROR
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-  
-  Type 'demo()' for some demos, 'help()' for on-line help, or
-  'help.start()' for an HTML browser interface to help.
-  Type 'q()' to quit R.
-  
-  > library(testthat)
-  > library(fuzzr)
-  > 
-  > test_check("fuzzr")
-  Error: `map_df()` requires dplyr
-  testthat results ================================================================
-  OK: 28 SKIPPED: 0 FAILED: 0
-  Execution halted
-```
+0 errors | 0 warnings | 0 notes
 
 ## fuzzyjoin (0.1.2)
 Maintainer: David Robinson <drobinson@stackoverflow.com>
@@ -254,8 +263,11 @@ Error: `map_df()` requires dplyr
 Execution halted
 
 checking tests ... ERROR
+  Running ‘testthat.R’
 Running the tests in ‘tests/testthat.R’ failed.
 Last 13 lines of output:
+  > library(gdns)
+  > 
   > test_check("gdns")
   1. Error: we can do something (@test-gdns.R#7) ---------------------------------
   `map_df()` requires dplyr
@@ -277,6 +289,12 @@ Bug reports: http://github.com/ropenscilabs/geoparser/issues
 
 0 errors | 0 warnings | 0 notes
 
+## ggeffects (0.1.0)
+Maintainer: Daniel Lüdecke <d.luedecke@uke.de>  
+Bug reports: https://github.com/strengejacke/ggeffects/issues
+
+0 errors | 0 warnings | 0 notes
+
 ## gglogo (0.1.3)
 Maintainer: Eric Hare <erichare@iastate.edu>  
 Bug reports: https://github.com/heike/gglogo/issues
@@ -294,45 +312,23 @@ Maintainer: Lionel Henry <lionel@rstudio.com>
 
 0 errors | 0 warnings | 0 notes
 
-## giphyr (0.1.0)
+## giphyr (0.1.1)
 Maintainer: Hao Zhu <haozhu233@gmail.com>  
 Bug reports: https://github.com/haozhu233/giphyr/issues
 
-1 error  | 0 warnings | 0 notes
+0 errors | 0 warnings | 0 notes
 
-```
-checking examples ... ERROR
-Running examples in ‘giphyr-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: gif_search
-> ### Title: Search GIFs by key words throught giphy API
-> ### Aliases: gif_search
-> 
-> ### ** Examples
-> 
-> gif_search("cat")
-Error: `map_df()` requires dplyr
-Execution halted
-```
-
-## gitlabr (0.7)
+## gitlabr (0.9)
 Maintainer: Jirka Lewandowski <jirka.lewandowski@wzb.eu>  
-Bug reports: http://gitlab.points-of-interest.cc/points-of-interest/gitlabr/issues/
+Bug reports: https://gitlab.points-of-interest.cc/points-of-interest/gitlabr/issues/
 
 0 errors | 0 warnings | 0 notes
 
-## googlesheets (0.2.1)
-Maintainer: Jennifer Bryan <jenny@stat.ubc.ca>  
+## googlesheets (0.2.2)
+Maintainer: Jennifer Bryan <jenny@rstudio.com>  
 Bug reports: https://github.com/jennybc/googlesheets/issues
 
-0 errors | 0 warnings | 1 note 
-
-```
-checking dependencies in R code ... NOTE
-Missing or unexported object: ‘purrr::dmap’
-```
+0 errors | 0 warnings | 0 notes
 
 ## grattan (1.4.1.2)
 Maintainer: Hugh Parsonage <hugh.parsonage@gmail.com>  
@@ -359,8 +355,10 @@ Bug reports: http://github.com/ropenscilabs/gutenbergr/issues
 
 ```
 checking tests ... ERROR
+  Running ‘testthat.R’ [13s/24s]
 Running the tests in ‘tests/testthat.R’ failed.
 Last 13 lines of output:
+  > library(testthat)
   > library(gutenbergr)
   > 
   > test_check("gutenbergr")
@@ -412,43 +410,19 @@ Maintainer: Frederick Solt <frederick-solt@uiowa.edu>
 
 0 errors | 0 warnings | 0 notes
 
-## imager (0.40.1)
+## imager (0.40.2)
 Maintainer: Simon Barthelme <simon.barthelme@gipsa-lab.fr>  
 Bug reports: https://github.com/dahtah/imager/issues
 
-0 errors | 1 warning  | 1 note 
+1 error  | 0 warnings | 1 note 
 
 ```
-checking whether package ‘imager’ can be installed ... WARNING
-Found the following significant warnings:
-  ../inst/include/CImg.h:224:5: warning: 'long long' is a C++11 extension [-Wc++11-long-long]
-  ../inst/include/CImg.h:14876:29: warning: multiple unsequenced modifications to 'ptrs' [-Wunsequenced]
-  ../inst/include/CImg.h:15055:19: warning: multiple unsequenced modifications to 'ptrs' [-Wunsequenced]
-  ../inst/include/CImg.h:25383:23: warning: unsequenced modification and access to 'right' [-Wunsequenced]
-  ../inst/include/CImg.h:32971:35: warning: unsequenced modification and access to '_n2x' [-Wunsequenced]
-  ../inst/include/CImg.h:32971:35: warning: multiple unsequenced modifications to '_n3x' [-Wunsequenced]
-  ../inst/include/CImg.h:32971:35: warning: unsequenced modification and access to '_n1x' [-Wunsequenced]
-  ../inst/include/CImg.h:32991:40: warning: unsequenced modification and access to '_n2x' [-Wunsequenced]
-... 13 lines ...
-  ../inst/include/CImg.h:35471:17: warning: unsequenced modification and access to '_n1x' [-Wunsequenced]
-  ../inst/include/CImg.h:35483:17: warning: unsequenced modification and access to '_n2x' [-Wunsequenced]
-  ../inst/include/CImg.h:35483:17: warning: multiple unsequenced modifications to '_n3x' [-Wunsequenced]
-  ../inst/include/CImg.h:35483:17: warning: unsequenced modification and access to '_n1x' [-Wunsequenced]
-  ../inst/include/CImg.h:48268:18: warning: unsequenced modification and access to 'err' [-Wunsequenced]
-  ../inst/include/CImg.h:48276:18: warning: unsequenced modification and access to 'err' [-Wunsequenced]
-  ../inst/include/CImg.h:48286:22: warning: unsequenced modification and access to 'err' [-Wunsequenced]
-  ../inst/include/CImg.h:48470:18: warning: unsequenced modification and access to 'err' [-Wunsequenced]
-  ../inst/include/CImg.h:48478:18: warning: unsequenced modification and access to 'err' [-Wunsequenced]
-  ../inst/include/CImg.h:48487:20: warning: unsequenced modification and access to 'err' [-Wunsequenced]
-See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/imager.Rcheck/00install.out’ for details.
+checking whether package ‘imager’ can be installed ... ERROR
+Installation failed.
+See ‘/Users/lionel/Dropbox/R/hadley/lowliner/revdep/checks/imager.Rcheck/00install.out’ for details.
 
-checking installed package size ... NOTE
-  installed size is 12.8Mb
-  sub-directories of 1Mb or more:
-    data      1.4Mb
-    doc       4.2Mb
-    include   2.8Mb
-    libs      2.9Mb
+checking package dependencies ... NOTE
+Package which this enhances but not available for checking: ‘spatstat’
 ```
 
 ## ImputeRobust (1.1-2)
@@ -456,7 +430,7 @@ Maintainer: Daniel Salfran <daniel.salfran@uni-hamburg.de>
 
 0 errors | 0 warnings | 0 notes
 
-## inferr (0.1.0)
+## inferr (0.1.1)
 Maintainer: Aravind Hebbali <hebbali.aravind@gmail.com>  
 Bug reports: https://github.com/rsquaredacademy/inferr/issues
 
@@ -513,7 +487,18 @@ Maintainer: Bob Rudis <bob@rud.is>
 Maintainer: Ping-Yang Chen <pychen.ping@gmail.com>  
 Bug reports: https://github.com/PingYangChen/milr/issues
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note 
+
+```
+checking compiled code ... NOTE
+File ‘milr/libs/milr.so’:
+  Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’
+
+It is good practice to register native routines and to disable symbol
+search.
+
+See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+```
 
 ## modelr (0.1.0)
 Maintainer: Hadley Wickham <hadley@rstudio.com>  
@@ -532,7 +517,7 @@ Bug reports: https://github.com/kcha193/normalr/issues
 
 0 errors | 0 warnings | 0 notes
 
-## officer (0.1.1)
+## officer (0.1.3)
 Maintainer: David Gohel <david.gohel@ardata.fr>  
 Bug reports: https://github.com/davidgohel/officer/issues
 
@@ -554,11 +539,16 @@ Maintainer: Marco Blume <marco.blume@pinnaclesports.com>
 
 0 errors | 0 warnings | 0 notes
 
-## plotly (4.5.6)
+## plotly (4.6.0)
 Maintainer: Carson Sievert <cpsievert1@gmail.com>  
 Bug reports: https://github.com/ropensci/plotly/issues
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note 
+
+```
+checking package dependencies ... NOTE
+Packages suggested but not available for checking: ‘RSelenium’ ‘IRdisplay’
+```
 
 ## pollen (0.52.00)
 Maintainer: Jakub Nowosad <nowosad.jakub@gmail.com>  
@@ -571,6 +561,60 @@ Maintainer: Jeffrey B. Arnold <jeffrey.arnold@gmail.com>
 Bug reports: https://github.com/rOpenGov/pollstR/issues
 
 0 errors | 0 warnings | 0 notes
+
+## purrrlyr (0.0.1)
+Maintainer: Hadley Wickham <hadley@rstudio.com>  
+Bug reports: https://github.com/hadley/purrrlyr/issues
+
+2 errors | 0 warnings | 1 note 
+
+```
+checking examples ... ERROR
+Running examples in ‘purrrlyr-Ex.R’ failed
+The error most likely occurred in:
+
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: by_slice
+> ### Title: Apply a function to slices of a data frame
+> ### Aliases: by_slice
+> 
+> ### ** Examples
+... 15 lines ...
+> # by_slice() is especially useful in combination with map().
+> 
+> # To modify the contents of a data frame, use rows collation. Note
+> # that unlike dplyr, Mutating and summarising operations can be
+> # used indistinctly.
+> 
+> # Mutating operation:
+> df <- mtcars %>% slice_rows(c("cyl", "am"))
+> df %>% by_slice(dmap, ~ .x / sum(.x), .collate = "rows")
+Error: 'as_mapper' is not an exported object from 'namespace:purrr'
+Execution halted
+
+checking tests ... ERROR
+  Running ‘testthat.R’
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+         call. = FALSE, domain = NA)
+  
+  testthat results ================================================================
+  OK: 69 SKIPPED: 0 FAILED: 8
+  1. Error: dmap() returns a data frame (@test-dmap.R#4) 
+  2. Error: dmap() works with sliced data frames (@test-dmap.R#9) 
+  3. Error: dmap() works with no columns to map (@test-dmap.R#15) 
+  4. Error: dmap() recycles only vectors of length 1 (@test-dmap.R#20) 
+  5. Error: conditional sliced mapping recycles within groups (@test-dmap.R#26) 
+  6. Error: output column is named according to .to (@test-rows.R#21) 
+  7. Error: by_slice() works with slicers of different types (@test-rows.R#203) 
+  8. Error: by_row() creates indices with c++ style indexing (@test-rows.R#228) 
+  
+  Error: testthat unit tests failed
+  Execution halted
+
+checking dependencies in R code ... NOTE
+Missing or unexported object: ‘purrr::as_mapper’
+```
 
 ## qiitr (0.1.0)
 Maintainer: Hiroaki Yutani <yutani.ini@gmail.com>  
@@ -594,9 +638,15 @@ Maintainer: Yang Cao <yiluheihei@gmail.com>
 
 0 errors | 0 warnings | 0 notes
 
-## rnoaa (0.6.6)
+## rnoaa (0.7.0)
 Maintainer: Scott Chamberlain <myrmecocystus@gmail.com>  
 Bug reports: https://github.com/ropensci/rnoaa/issues
+
+0 errors | 0 warnings | 0 notes
+
+## rtypeform (0.3.0)
+Maintainer: Colin Gillespie <csgillespie@gmail.com>  
+Bug reports: https://github.com/csgillespie/rtypeform/issues
 
 0 errors | 0 warnings | 0 notes
 
@@ -634,18 +684,24 @@ checking Rd cross-references ... NOTE
 Package unavailable to check Rd xrefs: ‘piecewiseSEM’
 ```
 
+## spup (0.1-0)
+Maintainer: Kasia Sawicka <kasia.sawicka@wur.nl>
+
+0 errors | 0 warnings | 0 notes
+
 ## starmie (0.1.2)
 Maintainer: Stuart Lee <lee.s@wehi.edu.au>  
 Bug reports: https://github.com/sa-lee/starmie/issues
 
-0 errors | 0 warnings | 1 note 
+1 error  | 0 warnings | 0 notes
 
 ```
-checking installed package size ... NOTE
-  installed size is  6.9Mb
-  sub-directories of 1Mb or more:
-    doc       1.1Mb
-    extdata   4.9Mb
+checking package dependencies ... ERROR
+Packages required but not available:
+  ‘iterpc’ ‘combinat’ ‘label.switching’ ‘proxy’ ‘MCL’ ‘ggdendro’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
 ```
 
 ## survutils (1.0.0)
@@ -654,30 +710,22 @@ Bug reports: https://github.com/tinyheero/survutils/issues
 
 0 errors | 0 warnings | 0 notes
 
-## tidyquant (0.5.0)
+## tatoo (1.0.5)
+Maintainer: Stefan Fleck <stefan.b.fleck@gmail.com>
+
+0 errors | 0 warnings | 0 notes
+
+## tensorr (0.1.0)
+Maintainer: Robert Zamora <zamora.rr@gmail.com>  
+Bug reports: https://github.com/zamorarr/tensorr/issues
+
+0 errors | 0 warnings | 0 notes
+
+## tidyquant (0.5.1)
 Maintainer: Matt Dancho <mdancho@business-science.io>  
 Bug reports: https://github.com/business-science/tidyquant/issues
 
-1 error  | 0 warnings | 0 notes
-
-```
-checking tests ... ERROR
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-  
-   This  behavior  will be  phased out in 0.5-0  when the call  will
-   default to use auto.assign=FALSE. getOption("getSymbols.env") and 
-   getOptions("getSymbols.auto.assign") are now checked for alternate defaults
-  
-   This message is shown once per session and may be disabled by setting 
-   options("getSymbols.warning4.0"=FALSE). See ?getSymbols for more details.
-  Error in names(coredata(x)) <- value : 
-    'names' attribute [1] must be the same length as the vector [0]
-  Calls: test_check ... tq_get_base -> tq_get_util_1 -> names<- -> names<-.zoo
-  testthat results ================================================================
-  OK: 41 SKIPPED: 1 FAILED: 0
-  Execution halted
-```
+0 errors | 0 warnings | 0 notes
 
 ## tidyRSS (1.0.1)
 Maintainer: Robert Myles McDonnell <robertmylesmcdonnell@gmail.com>  
@@ -718,8 +766,11 @@ Error: object 'inaugCorpus' not found
 Execution halted
 
 checking tests ... ERROR
+  Running ‘testthat.R’ [14s/15s]
 Running the tests in ‘tests/testthat.R’ failed.
 Last 13 lines of output:
+  5: eval(expr, pf)
+  6: quanteda::dfm(quanteda::inaugCorpus)
   7: quanteda::inaugCorpus
   8: getExportedValue(pkg, name)
   9: stop(gettextf("'%s' is not an exported object from 'namespace:%s'", name, getNamespaceName(ns)), 
@@ -764,7 +815,7 @@ Bug reports: https://github.com/tidyverse/tidyverse/issues
 
 0 errors | 0 warnings | 0 notes
 
-## timekit (0.1.0)
+## timekit (0.2.0)
 Maintainer: Matt Dancho <mdancho@business-science.io>  
 Bug reports: https://github.com/business-science/timekit/issues
 
@@ -781,7 +832,7 @@ Bug reports: https://github.com/hrbrmstr/uaparserjs/issues
 
 0 errors | 0 warnings | 0 notes
 
-## unpivotr (0.1.0)
+## unpivotr (0.1.1)
 Maintainer: Duncan Garmonsway <nacnudus@gmail.com>  
 Bug reports: https://github.com/nacnudus/unpivotr/issues
 
@@ -793,7 +844,7 @@ Bug reports: https://github.com/egnha/valaddin/issues
 
 0 errors | 0 warnings | 0 notes
 
-## valr (0.1.2)
+## valr (0.2.0)
 Maintainer: Jay Hesselberth <jay.hesselberth@gmail.com>  
 Bug reports: https://github.com/rnabioco/valr/issues
 
@@ -802,7 +853,18 @@ Bug reports: https://github.com/rnabioco/valr/issues
 ## vdiffr (0.1.1)
 Maintainer: Lionel Henry <lionel@rstudio.com>
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note 
+
+```
+checking compiled code ... NOTE
+File ‘vdiffr/libs/vdiffr.so’:
+  Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’
+
+It is good practice to register native routines and to disable symbol
+search.
+
+See ‘Writing portable packages’ in the ‘Writing R Extensions’ manual.
+```
 
 ## wand (0.2.0)
 Maintainer: Bob Rudis <bob@rud.is>  
@@ -813,7 +875,7 @@ Bug reports: https://github.com/hrbrmstr/wand/issues
 ```
 checking whether package ‘wand’ can be installed ... ERROR
 Installation failed.
-See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/wand.Rcheck/00install.out’ for details.
+See ‘/Users/lionel/Dropbox/R/hadley/lowliner/revdep/checks/wand.Rcheck/00install.out’ for details.
 ```
 
 ## widgetframe (0.1.0)
@@ -825,6 +887,12 @@ Bug reports: https://github.com/bhaskarvk/widgetframe/issues
 ## zeallot (0.0.3)
 Maintainer: Nathan Teetor <nathanteetor@gmail.com>  
 Bug reports: https://github.com/nteetor/zeallot/issues
+
+0 errors | 0 warnings | 0 notes
+
+## zeligverse (0.1.0)
+Maintainer: Christopher Gandrud <zelig.zee@gmail.com>  
+Bug reports: https://github.com/IQSS/zeligverse/issues
 
 0 errors | 0 warnings | 0 notes
 

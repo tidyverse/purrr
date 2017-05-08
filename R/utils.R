@@ -77,7 +77,6 @@ as_function.formula <- function(.f, ...) {
 }
 
 
-#' @useDynLib purrr extract_impl
 extract <- function(x, index, .null = NULL) {
   .Call(extract_impl, x, index, .null)
 }

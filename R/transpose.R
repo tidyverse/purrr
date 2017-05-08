@@ -33,7 +33,6 @@
 #' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 #' x %>% transpose()
 #' x %>% transpose() %>% simplify_all()
-#' @useDynLib purrr transpose_impl
 transpose <- function(.l) {
   .Call(transpose_impl, .l)
 }
