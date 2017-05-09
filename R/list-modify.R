@@ -1,7 +1,11 @@
 #' Modify a list
 #'
-#' `list_modify()` recursively modifies a list, matching elements either by
-#' name or position. `list_update()` is a helper optimised for interactively
+#' `list_modify()` and `list_merge()` recursively combine two lists, matching
+#' elements either by name or position. If an sub-element is present in
+#' both lists `list_modify()` takes the value from `y`, and `list_merge()`
+#' concatenates the values together.
+#'
+#' `list_update()` is a helper optimised for interactively
 #' modifying an existing list: you can use a formula (a quosure) to replace
 #' using existing values.
 #'
@@ -22,6 +26,9 @@
 #' # Remove values
 #' str(list_modify(x, list(z = NULL)))
 #'
+#' # Combine values
+#' str(list_merge(x, list(x = 11, z = list(a = 2:5, c = 3))))
+#'
 #' # list_update is useful for interactive tweaking, because it
 #' # uses ... instead of a separate list
 #' str(list_update(x, a = 1))
@@ -33,11 +40,21 @@
 #' list_update(x, z1 = rlang::quo(z[1]))
 #' list_update(x, z = rlang::quo(x + y))
 list_modify <- function(x, y) {
+  list_recurse(x, y, function(x, y) y)
+}
+
+#' @export
+#' @rdname list_modify
+list_merge <- function(x, y) {
+  list_recurse(x, y, c)
+}
+
+list_recurse <- function(x, y, base_case) {
   stopifnot(is.list(x), is.list(y))
 
-  if (length(x) == 0) {
+  if (is_empty(x)) {
     return(y)
-  } else if (length(y) == 0) {
+  } else if (is_empty(y)) {
     return(x)
   }
 
@@ -47,17 +64,17 @@ list_modify <- function(x, y) {
   if (is.null(x_names) && is.null(y_names)) {
     for (i in rev(seq_along(y))) {
       if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]])) {
-        x[[i]] <- list_modify(x[[i]], y[[i]])
+        x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
       } else {
-        x[[i]] <- y[[i]]
+        x[[i]] <- base_case(x[[i]], y[[i]])
       }
     }
   } else if (!is.null(x_names) && !is.null(y_names)) {
     for (nm in y_names) {
       if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[nm]])) {
-        x[[nm]] <- list_modify(x[[nm]], y[[nm]])
+        x[[nm]] <- list_recurse(x[[nm]], y[[nm]], base_case)
       } else {
-        x[[nm]] <- y[[nm]]
+        x[[nm]] <- base_case(x[[nm]], y[[nm]])
       }
     }
   } else {
@@ -66,7 +83,6 @@ list_modify <- function(x, y) {
 
   x
 }
-
 
 #' @export
 #' @rdname  list_modify

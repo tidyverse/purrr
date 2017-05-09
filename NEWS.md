@@ -82,7 +82,9 @@ There have also been two changes to eliminate name conflicts between purrr and d
 
 * `list_modify()` extends `stats::modifyList()` to replace by position
   if the list is not named. `list_update()` uses `list_modify()` (#201).
-  `update_list()` has been renamed to `list_update()`.
+  `update_list()` has been renamed to `list_update()`. `list_merge()` 
+  operates similarly to `list_modify()` but combines instead of replacing 
+  (#322).
 
 ## Minor improvements and bug fixes
 
