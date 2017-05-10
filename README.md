@@ -1,6 +1,6 @@
 # purrr
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/purrr)](https://cran.r-project.org/package=purrr)
 [![Build Status](https://travis-ci.org/hadley/purrr.png?branch=master)](https://travis-ci.org/hadley/purrr)
 [![Coverage Status](https://img.shields.io/codecov/c/github/hadley/purrr/master.svg)](https://codecov.io/github/hadley/purrr?branch=master)
 
