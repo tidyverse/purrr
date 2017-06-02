@@ -56,3 +56,15 @@ test_that("syntactic primitives are wrapped", {
   expect_identical(as_mapper(`[[`)(mtcars, "cyl"), mtcars$cyl)
   expect_identical(as_mapper(`$`)(mtcars, cyl), mtcars$cyl)
 })
+
+
+# lists and attributes ----------------------------------------------------
+
+test_that("lists are wrapped", {
+  expect_identical(as_mapper(list("mpg", 5))(mtcars), mtcars[["mpg"]][[5]])
+})
+
+test_that("attributes are wrapped", {
+  expect_identical(as_mapper(list(get_attr("row.names")))(mtcars),
+                   row.names(mtcars))
+})
