@@ -6,8 +6,6 @@ test_that("list_along works", {
 })
 
 test_that("rep_along works", {
-  x1 <- 1:5
-  x2 <- 6:10
-  y <- 1:3
-  expect_identical(rep_along(x1, y), rep_along(x2, y))
+  expect_equal(rep_along(c("c", "b", "a"), 1:3),
+               rep_along(c("d", "f", "e"), 1:3))
 })
