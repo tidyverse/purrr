@@ -61,10 +61,14 @@ test_that("syntactic primitives are wrapped", {
 # lists and attributes ----------------------------------------------------
 
 test_that("lists are wrapped", {
-  expect_identical(as_mapper(list("mpg", 5))(mtcars), mtcars[["mpg"]][[5]])
+  mapper_list <- as_mapper(list("mpg", 5))(mtcars)
+  base_list <- mtcars[["mpg"]][[5]]
+  expect_identical(mapper_list, base_list)
 })
 
 test_that("attributes are wrapped", {
-  expect_identical(as_mapper(list(get_attr("row.names")))(mtcars),
-                   row.names(mtcars))
+  expect_identical(
+    as_mapper(list(get_attr("row.names")))(mtcars),
+    row.names(mtcars)
+  )
 })
