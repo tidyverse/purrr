@@ -1,5 +1,9 @@
 context("utils")
 
+test_that("%@% is an infix attribute accessor", {
+  expect_identical(mtcars %@% "names", attr(mtcars, "names"))
+})
+
 test_that("rbernoulli is a special case of rbinom", {
   set.seed(1)
   x <- rbernoulli(10)

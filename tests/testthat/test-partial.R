@@ -19,3 +19,10 @@ test_that("partial() works with no partialised arguments", {
   expect_identical(actual, alleged1)
   expect_identical(actual, alleged2)
 })
+
+test_that("lazy evaluation means arguments aren't repeatedly evaluated", {
+  f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+  .n <- 100
+  v <- map_int(rerun(.n, f()), length)
+  expect_true(table(v) == .n)
+})

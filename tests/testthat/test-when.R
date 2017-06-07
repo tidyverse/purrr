@@ -58,3 +58,7 @@ test_that("default values work without a formula", {
   expect_equivalent(x, head(iris, 10))
 
 })
+
+test_that("error when named arguments have no matching conditions", {
+  expect_error(1:5 %>% when(a = sum(.) < 5 ~ 3))
+})
