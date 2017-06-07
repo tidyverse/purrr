@@ -8,7 +8,7 @@ associated with the first valid match.}
 when(., ...)
 }
 \arguments{
-\item{.}{the value to match agaist}
+\item{.}{the value to match against}
 
 \item{...}{formulas; each containing a condition as LHS and an action as RHS.
 named arguments will define additional values.}

@@ -1,6 +1,6 @@
 #' Transpose a list.
 #'
-#' Tranpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
+#' Transpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 #' list of pairs, or a list of pairs into pair of lists. For example,
 #' if you had a list of length n where each component had values `a` and
 #' `b`, `transpose()` would make a list with elements `a` and
