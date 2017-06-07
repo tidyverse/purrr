@@ -192,4 +192,3 @@ inv_which <- function(x, sel) {
     stop("unrecognised index type", call. = FALSE)
   }
 }
-

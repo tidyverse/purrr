@@ -97,5 +97,3 @@ rlang::is_empty
 
 #' @export
 rlang::is_formula
-
-

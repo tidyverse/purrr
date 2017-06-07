@@ -70,7 +70,7 @@ NULL
 #' lifted_identical <- lift_dl(identical, .unnamed = TRUE)
 #' mtcars[c(1, 1)] %>% lifted_identical()
 #' mtcars[c(1, 2)] %>% lifted_identical()
-lift <- function (..f, ..., .unnamed = FALSE) {
+lift <- function(..f, ..., .unnamed = FALSE) {
   force(..f)
   defaults <- list(...)
   function(.x = list(), ...) {
@@ -87,7 +87,7 @@ lift_dl <- lift
 
 #' @rdname lift
 #' @export
-lift_dv <- function (..f, ..., .unnamed = FALSE) {
+lift_dv <- function(..f, ..., .unnamed = FALSE) {
   force(..f)
   defaults <- list(...)
 

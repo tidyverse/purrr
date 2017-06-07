@@ -43,4 +43,3 @@ test_that("basic application works", {
   expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
 })
-

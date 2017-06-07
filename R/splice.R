@@ -28,4 +28,3 @@ splice_if <- function(.x, .p) {
 
   flatten(out)
 }
-

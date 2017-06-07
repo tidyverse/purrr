@@ -16,4 +16,3 @@ test_that("rerun uses scope of expression", {
 
   expect_equal(f(10)[[1]]$x, 1:10)
 })
-
