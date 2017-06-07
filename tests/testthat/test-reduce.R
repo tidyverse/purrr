@@ -52,5 +52,6 @@ test_that("reduce2_right works if lengths match", {
 })
 
 test_that("reduce returns original input if it was length one", {
+  x <- list(c(0, 1), c(2, 3), c(4, 5))
   expect_equal(reduce(x[1], paste), x[[1]])
 })
