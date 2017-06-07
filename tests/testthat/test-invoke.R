@@ -33,14 +33,17 @@ test_that("invoke_map() works with bare function", {
   expect_identical(invoke_map_int(`+`, data), c(3L, 7L))
   expect_identical(invoke_map_lgl(`&&`, data), c(TRUE, TRUE))
 
-  expect_identical(set_names(c(`+`, `-`), c("a", "b")) %>% invoke_map_dfr(data),
-                   set_names(c(`+`, `-`), c("a", "b")) %>% invoke_map_dfc(data))
+  ops <- set_names(c(`+`, `-`), c("a", "b"))
+  expect_identical(invoke_map_dfr(ops, data), invoke_map_dfc(ops, data))
 })
 
 test_that("invoke_map() evaluates expressions in the right environment", {
   shadowed_object <- letters
   shadowed_fun <- toupper
-  expect_equal(invoke_map("shadowed_fun", list(quote(shadowed_object))), list(toupper(letters)))
+  expect_equal(
+    invoke_map("shadowed_fun", list(quote(shadowed_object))),
+    list(toupper(letters))
+  )
 })
 
 test_that("invoke_maps doesn't rely on c() returning list", {

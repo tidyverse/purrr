@@ -1,13 +1,14 @@
 context("composition")
 
 test_that("lift_dl and lift_ld are inverses of each other", {
-  expect_identical(sum %>%
-                     lift_dl(.unnamed = TRUE) %>%
-                     invoke(list(3, NA, 4, na.rm = TRUE)),
-                   sum %>%
-                     lift_dl() %>%
-                     lift_ld() %>%
-                     invoke(3, NA, 4, na.rm = TRUE)
+  expect_identical(
+    sum %>%
+      lift_dl(.unnamed = TRUE) %>%
+      invoke(list(3, NA, 4, na.rm = TRUE)),
+    sum %>%
+      lift_dl() %>%
+      lift_ld() %>%
+      invoke(3, NA, 4, na.rm = TRUE)
   )
 })
 

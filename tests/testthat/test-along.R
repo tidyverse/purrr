@@ -6,6 +6,8 @@ test_that("list_along works", {
 })
 
 test_that("rep_along works", {
-  expect_equal(rep_along(c("c", "b", "a"), 1:3),
-               rep_along(c("d", "f", "e"), 1:3))
+  expect_equal(
+    rep_along(c("c", "b", "a"), 1:3),
+    rep_along(c("d", "f", "e"), 1:3)
+  )
 })
