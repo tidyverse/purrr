@@ -45,11 +45,23 @@ test_that("logical and integer NA become correct double NA", {
   )
 })
 
-
 test_that("map forces arguments in same way as base R", {
   f_map <- map(1:2, function(i) function(x) x + i)
   f_base <- lapply(1:2, function(i) function(x) x + i)
 
   expect_equal(f_map[[1]](0), f_base[[1]](0))
   expect_equal(f_map[[2]](0), f_base[[2]](0))
+})
+
+test_that("row and column binding work", {
+  mtcar_mod <- mtcars %>%
+    split(.$cyl) %>%
+    map(~ lm(mpg ~ wt, data = .x))
+  f_coef <- function(x) as.data.frame(t(as.matrix(coef(x))))
+  expect_length(mtcar_mod %>% map_dfr(f_coef), 2)
+  expect_length(mtcar_mod %>% map_dfc(f_coef), 6)
+})
+
+test_that("walk is used for side-effects", {
+  expect_output(walk(1:3, str))
 })

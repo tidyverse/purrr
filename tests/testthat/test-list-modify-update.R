@@ -71,3 +71,8 @@ test_that("list_merge concatenates without needing names", {
   l2 <- list(11, 5, list(2:5, 3))
   expect_length(list_merge(l1, l2), 3)
 })
+
+test_that("list_merge returns the non-empty list", {
+  expect_equal(list_merge(list(3), list()), list(3))
+  expect_equal(list_merge(list(), list(2)), list(2))
+})
