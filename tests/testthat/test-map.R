@@ -39,7 +39,10 @@ test_that("types automatically coerced upwards", {
 })
 
 test_that("logical and integer NA become correct double NA", {
-  expect_identical(map_dbl(list(NA, NA_integer_), identity), c(NA_real_, NA_real_))
+  expect_identical(
+    map_dbl(list(NA, NA_integer_), identity),
+    c(NA_real_, NA_real_)
+  )
 })
 
 

@@ -18,5 +18,8 @@ test_that("recycles single values and preserves longer ones", {
 
 test_that("will not recycle non-vectors", {
   args <- list(1:12,  identity)
-  expect_error(purrr:::recycle_args(args), "replicate an object of type 'closure'")
+  expect_error(
+    purrr:::recycle_args(args),
+    "replicate an object of type 'closure'"
+  )
 })

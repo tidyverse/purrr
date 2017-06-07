@@ -7,7 +7,8 @@ test_that("dots are correctly placed in the signature", {
 
   # Also tests that argument names are not eaten when .dots_first = TRUE
   dots_first_actual <- call("runif", quote(...), n = call("rpois", 1, 5))
-  dots_first_alleged <- partial(runif, n = rpois(1, 5), .first = FALSE) %>% body()
+  dots_first_alleged <- partial(runif, n = rpois(1, 5), .first = FALSE) %>%
+    body()
   expect_identical(dots_first_actual, dots_first_alleged)
 })
 
