@@ -68,7 +68,7 @@ test_that("lists are wrapped", {
 
 test_that("attributes are wrapped", {
   expect_identical(
-    as_mapper(list(get_attr("row.names")))(mtcars),
+    as_mapper(get_attr("row.names"))(mtcars),
     row.names(mtcars)
   )
 })
