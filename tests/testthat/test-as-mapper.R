@@ -72,3 +72,8 @@ test_that("attributes are wrapped", {
     row.names(mtcars)
   )
 })
+
+test_that("raw and complex types aren't supported for indexing", {
+  expect_error(as_mapper(1)(raw(2)))
+  expect_error(as_mapper(1)(complex(2)))
+})
