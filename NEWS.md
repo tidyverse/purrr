@@ -141,6 +141,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `insistently(f)` modifies a function, `f`, so that it is repeatedly
+  called until it succeeds (@richierocks, @ijlyttle).
+
 * `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` now
   terminate early when the function returns a value wrapped in a
   `done()` (#253). When an empty `done()` is returned, the

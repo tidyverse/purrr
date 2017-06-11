@@ -9,7 +9,6 @@
 #' @param quiet Hide errors (`TRUE`, the default), or display them
 #'   as they occur?
 #' @param otherwise Default value to use when an error occurs.
-#'
 #' @return `safely`: wrapped function instead returns a list with
 #'   components `result` and `error`. If an error occurred, `error` is
 #'   an `error` object and `result` has a default value (`otherwise`).
@@ -20,7 +19,6 @@
 #'
 #'   `possibly`: wrapped function uses a default value (`otherwise`)
 #'   whenever an error occurs.
-#'
 #' @export
 #' @examples
 #' safe_log <- safely(log)
