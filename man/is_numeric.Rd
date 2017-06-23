@@ -14,7 +14,7 @@ Numeric is used in three different ways in base R:
 \itemize{
 \item as an alias for double (as in \code{\link[=as.numeric]{as.numeric()}})
 \item to mean either integer or double (as in \code{\link[=mode]{mode()}})
-\item for something representible as numeric (as in \code{\link[=as.numeric]{as.numeric()}})
+\item for something representable as numeric (as in \code{\link[=as.numeric]{as.numeric()}})
 This function tests for the second, which is often not what you want
 so these functions are deprecated.
 }

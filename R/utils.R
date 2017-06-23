@@ -63,7 +63,7 @@ names2 <- function(x) {
 `%@%` <- function(x, name) attr(x, name, exact = TRUE)
 
 
-#' Generate random samples from a Bernoulli distribution
+#' Generate random sample from a Bernoulli distribution
 #'
 #' @param n Number of samples
 #' @param p Probability of getting `TRUE`
@@ -73,10 +73,10 @@ names2 <- function(x) {
 #' rbernoulli(10)
 #' rbernoulli(100, 0.1)
 rbernoulli <- function(n, p = 0.5) {
-  sample(c(TRUE, FALSE), n, replace = TRUE, prob = c(p, 1 - p))
+  stats::runif(n) > (1 - p)
 }
 
-#' Generate random samples from a discrete uniform distribution
+#' Generate random sample from a discrete uniform distribution
 #'
 #' @param n Number of samples to draw.
 #' @param a,b Range of the distribution (inclusive).

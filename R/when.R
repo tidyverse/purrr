@@ -6,7 +6,7 @@
 #' valid match/condition is found the action is executed and the result of the
 #' action is returned.
 #'
-#' @param .   the value to match agaist
+#' @param .   the value to match against
 #' @param ... formulas; each containing a condition as LHS and an action as RHS.
 #'   named arguments will define additional values.
 #' @keywords internal

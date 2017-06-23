@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{rdunif}
 \alias{rdunif}
-\title{Generate random samples from a discrete uniform distribution}
+\title{Generate random sample from a discrete uniform distribution}
 \usage{
 rdunif(n, b, a = 1)
 }
@@ -12,7 +12,7 @@ rdunif(n, b, a = 1)
 \item{a, b}{Range of the distribution (inclusive).}
 }
 \description{
-Generate random samples from a discrete uniform distribution
+Generate random sample from a discrete uniform distribution
 }
 \examples{
 table(rdunif(1e3, 10))

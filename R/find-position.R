@@ -2,7 +2,7 @@
 #'
 #' @inheritParams every
 #' @inheritParams map
-#' @param .right If `FALSE`, the default, starts at the beginnging
+#' @param .right If `FALSE`, the default, starts at the beginning
 #'   of the vector and move towards the end; if `TRUE`, starts at the end
 #'   of the vector and moves towards the beginning.
 #' @return `detect` the value of the first item that matches the

@@ -21,7 +21,7 @@ inner lists. Only those elements where \code{.p} evaluates to
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
-\item{.right}{If \code{FALSE}, the default, starts at the beginnging
+\item{.right}{If \code{FALSE}, the default, starts at the beginning
 of the vector and move towards the end; if \code{TRUE}, starts at the end
 of the vector and moves towards the beginning.}
 }

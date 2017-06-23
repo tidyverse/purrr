@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{rbernoulli}
 \alias{rbernoulli}
-\title{Generate random samples from a Bernoulli distribution}
+\title{Generate random sample from a Bernoulli distribution}
 \usage{
 rbernoulli(n, p = 0.5)
 }
@@ -15,7 +15,7 @@ rbernoulli(n, p = 0.5)
 A logical vector
 }
 \description{
-Generate random samples from a Bernoulli distribution
+Generate random sample from a Bernoulli distribution
 }
 \examples{
 rbernoulli(10)
