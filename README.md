@@ -28,7 +28,7 @@ devtools::install_github("tidyverse/purrr")
 Usage
 -----
 
-The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, compute the summarse, then extract the R<sup>2</sup>.
+The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, compute the summary, then extract the R<sup>2</sup>.
 
 ``` r
 library(purrr)
