@@ -1,8 +1,8 @@
 # purrr 0.2.2.9000
 
-## purrr and dplyr
+## Dependencies
 
-purrr no longer depends on dplyr, lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages. This means that data-frame based mappers (`dmap()`, `dmap_at()`, `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`, `by_slice()`, `by_row()`, and `unslice()`) have   been moved to a new package, purrrlyr. This is a bit of an aggressive change but it needed to be done, and in this case I think it's better to rip the band aid off quickly.
+purrr no longer depends on lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages.
 
 There have also been two changes to eliminate name conflicts between purrr and dplyr:
 
@@ -126,6 +126,17 @@ There have also been two changes to eliminate name conflicts between purrr and d
 
 * `transpose()` now matches by name if available (#164). You can 
   override the default choice with the new `.names` argument.
+
+# purrr 0.2.2.1
+
+This is a compatibility release with dplyr 0.6.0.
+
+* All data-frame based mappers have been removed in favour of new
+  functions and idioms in the tidyverse. `dmap()`, `dmap_at()`,
+  `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`,
+  `by_slice()`, `by_row()`, and `unslice()` have been moved to
+  purrrlyr. This is a bit of an aggresive change but it allows us to
+  make the dependencies much lighter.
 
 # purrr 0.2.2
 
