@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-purrr no longer depends on lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages.
+purrr no longer depends on lazyeval or Rcpp (or dplyr, as of the previous version). This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages.
 
 There have also been two changes to eliminate name conflicts between purrr and dplyr:
 
@@ -88,6 +88,8 @@ There have also been two changes to eliminate name conflicts between purrr and d
 
 ## Minor improvements and bug fixes
 
+* Thanks to @dchiu911, the unit test coverage of purrr is now much greater.
+
 * All predicate functions are re-exported from rlang (#124).
 
 * `compact()` now works with standard mapper conventions (#282).
@@ -98,7 +100,7 @@ There have also been two changes to eliminate name conflicts between purrr and d
   `zip_n()`). Similarly, `cross_d()` has been renamed to `cross_df()`
   for consistency with `map_df()`.
 
-* `every()` and `some()` now return `NA` if present in the output (#174).
+* `every()` and `some()` now return `NA` if present in the input (#174).
 
 * `invoke()` uses a more robust approach to generate the argument list (#249)
   It no longer uses lazyeval to figure out which enviroment a character `f` 
