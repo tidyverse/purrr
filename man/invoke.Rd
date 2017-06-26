@@ -37,7 +37,7 @@ list of functions.}
 list of argument-lists the same length as \code{.f} (or length 1).
 The default argument, \code{list(NULL)}, will be recycled to the
 same length as \code{.f}, and will call each function with no
-arguments (apart from any suppled in \code{...}.}
+arguments (apart from any supplied in \code{...}.}
 
 \item{...}{Additional arguments passed to each function.}
 

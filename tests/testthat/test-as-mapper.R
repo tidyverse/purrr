@@ -56,3 +56,24 @@ test_that("syntactic primitives are wrapped", {
   expect_identical(as_mapper(`[[`)(mtcars, "cyl"), mtcars$cyl)
   expect_identical(as_mapper(`$`)(mtcars, cyl), mtcars$cyl)
 })
+
+
+# lists and attributes ----------------------------------------------------
+
+test_that("lists are wrapped", {
+  mapper_list <- as_mapper(list("mpg", 5))(mtcars)
+  base_list <- mtcars[["mpg"]][[5]]
+  expect_identical(mapper_list, base_list)
+})
+
+test_that("attributes are wrapped", {
+  expect_identical(
+    as_mapper(get_attr("row.names"))(mtcars),
+    row.names(mtcars)
+  )
+})
+
+test_that("raw and complex types aren't supported for indexing", {
+  expect_error(as_mapper(1)(raw(2)))
+  expect_error(as_mapper(1)(complex(2)))
+})

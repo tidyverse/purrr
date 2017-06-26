@@ -52,3 +52,27 @@ test_that("lists are replaced recursively", {
   )
 })
 
+
+# list_merge --------------------------------------------------------------
+
+test_that("list_merge concatenates values from two lists", {
+  l1 <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
+  l2 <- list(x = 11, z = list(a = 2:5, c = 3))
+  l <- list_merge(l1, l2)
+  expect_equal(l$x, c(l1$x, l2$x))
+  expect_equal(l$y, c(l1$y, l2$y))
+  expect_equal(l$z$a, c(l1$z$a, l2$z$a))
+  expect_equal(l$z$b, c(l1$z$b, l2$z$b))
+  expect_equal(l$z$c, c(l1$z$c, l2$z$c))
+})
+
+test_that("list_merge concatenates without needing names", {
+  l1 <- list(1:10, 4, list(1, 2))
+  l2 <- list(11, 5, list(2:5, 3))
+  expect_length(list_merge(l1, l2), 3)
+})
+
+test_that("list_merge returns the non-empty list", {
+  expect_equal(list_merge(list(3), list()), list(3))
+  expect_equal(list_merge(list(), list(2)), list(2))
+})

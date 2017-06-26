@@ -16,4 +16,3 @@ test_that("splice() produces correctly named lists", {
   out2 <- splice(inputs, arg = list(arg3 = 1, arg4 = 2))
   expect_named(out2, c("arg1", "arg2", "arg3", "arg4"))
 })
-

@@ -6,7 +6,7 @@ test_that("when chooses the correct action", {
     1:5 %>%
     when(
       sum(.) <=  50 ~ sum(.),
-      sum(.) <= 100 ~ sum(.)/2,
+      sum(.) <= 100 ~ sum(.) / 2,
       ~ 0
     )
 
@@ -16,17 +16,17 @@ test_that("when chooses the correct action", {
     1:10 %>%
     when(
       sum(.) <=  50 ~ sum(.),
-      sum(.) <= 100 ~ sum(.)/2,
+      sum(.) <= 100 ~ sum(.) / 2,
       ~ 0
     )
 
-  expect_equal(y, sum(1:10)/2)
+  expect_equal(y, sum(1:10) / 2)
 
   z <-
     1:100 %>%
     when(
       sum(.) <=  50 ~ sum(.),
-      sum(.) <= 100 ~ sum(.)/2,
+      sum(.) <= 100 ~ sum(.) / 2,
       ~ 0
     )
 
@@ -37,13 +37,13 @@ test_that("named arguments work with when", {
   x <-
     1:10 %>%
     when(
-      sum(.) <=   x ~ sum(.)*x,
-      sum(.) <= 2*x ~ sum(.)*x/2,
+      sum(.) <=     x ~ sum(.) * x,
+      sum(.) <= 2 * x ~ sum(.) * x / 2,
       ~ 0,
       x = 60
     )
 
-  expect_equal(x, sum(1:10)*60)
+  expect_equal(x, sum(1:10) * 60)
 })
 
 test_that("default values work without a formula", {
@@ -57,4 +57,8 @@ test_that("default values work without a formula", {
 
   expect_equivalent(x, head(iris, 10))
 
+})
+
+test_that("error when named arguments have no matching conditions", {
+  expect_error(1:5 %>% when(a = sum(.) < 5 ~ 3))
 })

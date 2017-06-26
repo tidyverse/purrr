@@ -69,3 +69,10 @@ test_that("preserves inner names", {
   )
 })
 
+
+# data frame flatten ------------------------------------------------------
+
+test_that("can flatten to a data frame with named lists", {
+  expect_is(flatten_dfr(list(c(a = 1), c(b = 2))), "data.frame")
+  expect_error(flatten_dfc(list(1)))
+})

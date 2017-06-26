@@ -96,4 +96,3 @@ list_update <- function(`_x`, ...) {
 #' @usage NULL
 #' @rdname list_modify
 update_list <- list_update
-

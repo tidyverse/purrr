@@ -56,8 +56,7 @@
 #'   when(nrow(.) < 10 ~ .,
 #'        ~ stop("Expected fewer than 10 rows."))
 #' @export
-when <- function(., ...)
-{
+when <- function(., ...) {
   dots   <- list(...)
   names  <- names(dots)
   named  <- if (is.null(names)) rep(FALSE, length(dots)) else names != ""
@@ -79,8 +78,7 @@ when <- function(., ...)
       env[[names[i]]] <- dots[[i]]
 
   result <- NULL
-  for (i in which(!named))
-  {
+  for (i in which(!named)) {
     if (is_formula[i]) {
       action <- length(dots[[i]])
       if (action == 2 || is_true(eval(dots[[i]][[2]], env, env))) {

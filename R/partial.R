@@ -55,7 +55,8 @@
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
-partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE) {
+partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE,
+                    .first = TRUE) {
   stopifnot(is.function(...f))
 
   if (.lazy) {

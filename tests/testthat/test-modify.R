@@ -16,6 +16,16 @@ test_that("modify_if/modify_at return same type as input", {
   expect_equal(df2b, exp)
 })
 
+test_that("modify_at requires a named object", {
+  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
+  expect_error(modify_at(unname(df1), "x", toupper))
+})
+
+test_that("modify_at operates on character and numeric indexing", {
+  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
+  expect_error(modify_at(df1, TRUE, toupper))
+})
+
 
 # modify_depth ------------------------------------------------------------
 
@@ -28,6 +38,7 @@ test_that("modify_depth modifies values at specified depth", {
   expect_equal(modify_depth(x1, 3, length), list(list(list(1))))
   expect_equal(modify_depth(x1, -1, length), list(list(list(1))))
   expect_error(modify_depth(x1, 4, length), "List not deep enough")
+  expect_error(modify_depth(x1, -5, length), "Invalid `depth`")
 })
 
 test_that(".ragged = TRUE operates on leaves", {

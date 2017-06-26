@@ -22,6 +22,10 @@ test_that("depth of nested is depth of deepest element + 1", {
   )
 
   depths <- map_int(x, depth)
-  expect_equal(depths, c(0,1, 2))
+  expect_equal(depths, c(0, 1, 2))
   expect_equal(depth(x), max(depths) + 1)
+})
+
+test_that("depth throws an error if input is not a vector", {
+  expect_error(depth(as.formula(y ~ x)))
 })

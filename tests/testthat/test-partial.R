@@ -7,7 +7,8 @@ test_that("dots are correctly placed in the signature", {
 
   # Also tests that argument names are not eaten when .dots_first = TRUE
   dots_first_actual <- call("runif", quote(...), n = call("rpois", 1, 5))
-  dots_first_alleged <- partial(runif, n = rpois(1, 5), .first = FALSE) %>% body()
+  dots_first_alleged <- partial(runif, n = rpois(1, 5), .first = FALSE) %>%
+    body()
   expect_identical(dots_first_actual, dots_first_alleged)
 })
 
@@ -17,4 +18,11 @@ test_that("partial() works with no partialised arguments", {
   alleged2 <- partial(runif, .first = FALSE) %>% body()
   expect_identical(actual, alleged1)
   expect_identical(actual, alleged2)
+})
+
+test_that("lazy evaluation means arguments aren't repeatedly evaluated", {
+  f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+  .n <- 100
+  v <- map_int(rerun(.n, f()), length)
+  expect_true(table(v) == .n)
 })
