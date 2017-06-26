@@ -1,8 +1,10 @@
-#' Set names in a vector
+#' @title Set names in a vector
 #'
+#' @details
 #' This is a snake case wrapper for [stats::setNames()], with
 #' tweaked defaults, and stricter argument checking.
 #'
+#' @usage set_names(x, nm = x, ...)
 #' @param x Vector to name
 #' @param nm,... Vector of names, the same length as `x`.
 #'
@@ -29,26 +31,5 @@
 #' # Alternatively you can supply a function
 #' set_names(1:10, ~ letters[seq_along(.)])
 #' set_names(head(mtcars), toupper)
-set_names <- function(x, nm = NULL, ...) {
-  if (!is_vector(x)) {
-    stop("`x` must be a vector", call. = FALSE)
-  }
-
-  if (is.function(nm) || is_formula(nm)) {
-    nm <- as_mapper(nm)
-    nm <- nm(names2(x))
-  } else {
-    if (is.null(nm) && ndots(...) == 0) {
-      nm <- as.character(x)
-    } else {
-      nm <- c(nm, ...)
-    }
-  }
-
-  if (!is.character(nm) || length(x) != length(nm)) {
-    abort("`nm` must be a character vector same length as `x`")
-  }
-
-  names(x) <- nm
-  x
-}
+#' @name set_names
+rlang::set_names

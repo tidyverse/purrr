@@ -9,7 +9,7 @@ There have also been two changes to eliminate name conflicts between purrr and d
 * `order_by()`, `sort_by()` and `split_by()` have been removed. `order_by()`
   conflicted with `dplyr::order_by()` and the complete family doesn't feel that
   useful. Use tibbles instead (#217).
-  
+   
 * `contains()` has been renamed to `has_element()` to avoid conflicts with
   dplyr (#217).
 
@@ -120,7 +120,7 @@ There have also been two changes to eliminate name conflicts between purrr and d
 
 * `set_names()` can now take a function to tranform the names programmatically
   (#276), and you can supply names in `...` to reduce typing even more 
-  more (#316).
+  more (#316). `set_names()` is now powered by `rlang::set_names()`.
 
 * `safely()` now actually uses the `quiet` argument (#296).
 
