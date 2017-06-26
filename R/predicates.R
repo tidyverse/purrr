@@ -93,6 +93,9 @@ rlang::is_scalar_character
 rlang::is_scalar_logical
 
 #' @export
+rlang::is_scalar_integer
+
+#' @export
 rlang::is_empty
 
 #' @export

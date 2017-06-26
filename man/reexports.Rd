@@ -49,6 +49,8 @@
 \alias{reexports}
 \alias{is_scalar_logical}
 \alias{reexports}
+\alias{is_scalar_integer}
+\alias{reexports}
 \alias{is_empty}
 \alias{reexports}
 \alias{is_formula}
@@ -59,6 +61,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{rlang}{\code{\link[rlang]{is_bare_list}}, \code{\link[rlang]{is_bare_atomic}}, \code{\link[rlang]{is_bare_vector}}, \code{\link[rlang]{is_bare_double}}, \code{\link[rlang]{is_bare_integer}}, \code{\link[rlang]{is_bare_numeric}}, \code{\link[rlang]{is_bare_character}}, \code{\link[rlang]{is_bare_logical}}, \code{\link[rlang]{is_list}}, \code{\link[rlang]{is_atomic}}, \code{\link[rlang]{is_vector}}, \code{\link[rlang]{is_integer}}, \code{\link[rlang]{is_double}}, \code{\link[rlang]{is_character}}, \code{\link[rlang]{is_logical}}, \code{\link[rlang]{is_null}}, \code{\link[rlang]{is_function}}, \code{\link[rlang]{is_scalar_list}}, \code{\link[rlang]{is_scalar_atomic}}, \code{\link[rlang]{is_scalar_vector}}, \code{\link[rlang]{is_scalar_double}}, \code{\link[rlang]{is_scalar_character}}, \code{\link[rlang]{is_scalar_logical}}, \code{\link[rlang]{is_empty}}, \code{\link[rlang]{is_formula}}}
+  \item{rlang}{\code{\link[rlang]{is_bare_list}}, \code{\link[rlang]{is_bare_atomic}}, \code{\link[rlang]{is_bare_vector}}, \code{\link[rlang]{is_bare_double}}, \code{\link[rlang]{is_bare_integer}}, \code{\link[rlang]{is_bare_numeric}}, \code{\link[rlang]{is_bare_character}}, \code{\link[rlang]{is_bare_logical}}, \code{\link[rlang]{is_list}}, \code{\link[rlang]{is_atomic}}, \code{\link[rlang]{is_vector}}, \code{\link[rlang]{is_integer}}, \code{\link[rlang]{is_double}}, \code{\link[rlang]{is_character}}, \code{\link[rlang]{is_logical}}, \code{\link[rlang]{is_null}}, \code{\link[rlang]{is_function}}, \code{\link[rlang]{is_scalar_list}}, \code{\link[rlang]{is_scalar_atomic}}, \code{\link[rlang]{is_scalar_vector}}, \code{\link[rlang]{is_scalar_double}}, \code{\link[rlang]{is_scalar_character}}, \code{\link[rlang]{is_scalar_logical}}, \code{\link[rlang]{is_scalar_integer}}, \code{\link[rlang]{is_empty}}, \code{\link[rlang]{is_formula}}}
 }}
 
