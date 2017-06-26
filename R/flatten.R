@@ -10,6 +10,10 @@
 #' @return `flatten()` returns a list, `flatten_lgl()` a logical
 #'   vector, `flatten_int()` an integer vector, `flatten_dbl()` a
 #'   double vector, and `flatten_chr()` a character vector.
+#'
+#'   `flatten_dfr()` and `flatten_dfc()` return data frames created by
+#'   row-binding and column-binding respectively. They require dplyr to
+#'   be installed.
 #' @inheritParams map
 #' @export
 #' @examples

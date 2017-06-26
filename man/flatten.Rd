@@ -37,6 +37,10 @@ giving either the name or the index of the data frame.}
 \code{flatten()} returns a list, \code{flatten_lgl()} a logical
 vector, \code{flatten_int()} an integer vector, \code{flatten_dbl()} a
 double vector, and \code{flatten_chr()} a character vector.
+
+\code{flatten_dfr()} and \code{flatten_dfc()} return data frames created by
+row-binding and column-binding respectively. They require dplyr to
+be installed.
 }
 \description{
 These functions remove a level hierarchy from a list. They are similar to

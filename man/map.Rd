@@ -72,9 +72,10 @@ use in pipe.
 The map function transform the input, returning a vector the same length
 as the input. \code{map()} returns a list or a data frame; \code{map_lgl()},
 \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors of the
-corresponding type (or die trying); \code{map_dfr()} and \code{map_dfc()} return
-data frames created by row-binding and column-binding respectively.
-They require dplyr to be installed.
+corresponding type (or die trying).
+
+\code{map_dfr()} and \code{map_dfc()} return data frames created by row-binding and
+column-binding respectively. They require dplyr to be installed.
 
 \code{walk()} calls \code{.f} for its side-effect and returns the input \code{.x}.
 }
