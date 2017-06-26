@@ -139,7 +139,7 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
         x = extract_attr(x, index_i, i);
       } else {
         Rf_errorcall(R_NilValue,
-          "Don't know how to isolate from a %s", Rf_type2char(TYPEOF(x))
+          "Don't know how to pluck from a %s", Rf_type2char(TYPEOF(x))
         );
       }
     }
