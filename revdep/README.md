@@ -24,8 +24,7 @@
 
 # Revdeps
 
-## Broken
-6 packages
+## Broken (6)
 
 |package                            |version |error  |warning |note |
 |:----------------------------------|:-------|:------|:-------|:----|
@@ -36,8 +35,7 @@
 |[tidyquant](problems.md#tidyquant) |0.5.1   |__+1__ |__+1__  |1    |
 |[valaddin](problems.md#valaddin)   |0.1.0   |       |__+1__  |     |
 
-## All
-121 packages
+## All (121)
 
 |package                            |version |error  |warning |note |
 |:----------------------------------|:-------|:------|:-------|:----|
