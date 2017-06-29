@@ -1,6 +1,9 @@
 # modelr
 
 Version: 0.1.0
+
+## Newly broken
+
 *   checking examples ... ERROR
     ```
     Running examples in ‘modelr-Ex.R’ failed
@@ -18,6 +21,8 @@ Version: 0.1.0
     Execution halted
     ```
 
+## In both
+
 *   checking dependencies in R code ... NOTE
     ```
     Namespace in Imports field not imported from: ‘broom’
@@ -32,6 +37,9 @@ Version: 0.1.0
 # modeval
 
 Version: 0.1.3
+
+## Newly broken
+
 *   checking re-building of vignette outputs ... WARNING
     ```
     Error in re-building vignettes:
@@ -48,6 +56,9 @@ Version: 0.1.3
 # phylopath
 
 Version: 0.2.3
+
+## Newly broken
+
 *   checking examples ... ERROR
     ```
     Running examples in ‘phylopath-Ex.R’ failed
@@ -88,6 +99,9 @@ Version: 0.2.3
 # pollen
 
 Version: 0.52.00
+
+## Newly broken
+
 *   checking examples ... ERROR
     ```
     Running examples in ‘pollen-Ex.R’ failed
@@ -122,6 +136,9 @@ Version: 0.52.00
 # tidyquant
 
 Version: 0.5.1
+
+## Newly broken
+
 *   checking examples ... ERROR
     ```
     ...
@@ -174,6 +191,8 @@ Version: 0.5.1
     Execution halted
     ```
 
+## In both
+
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
@@ -184,6 +203,9 @@ Version: 0.5.1
 # valaddin
 
 Version: 0.1.0
+
+## Newly broken
+
 *   checking Rd cross-references ... WARNING
     ```
     Missing link or links in documentation object 'bare-type-checkers.Rd':
