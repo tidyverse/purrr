@@ -1,5 +1,6 @@
-# modelr (0.1.0)
+# modelr
 
+Version: 0.1.0
 *   checking examples ... ERROR
     ```
     Running examples in ‘modelr-Ex.R’ failed
@@ -28,8 +29,9 @@
     Packages unavailable to check Rd xrefs: ‘lme4’, ‘rstanarm’
     ```
 
-# modeval (0.1.3)
+# modeval
 
+Version: 0.1.3
 *   checking re-building of vignette outputs ... WARNING
     ```
     Error in re-building vignettes:
@@ -43,8 +45,9 @@
     Execution halted
     ```
 
-# phylopath (0.2.3)
+# phylopath
 
+Version: 0.2.3
 *   checking examples ... ERROR
     ```
     Running examples in ‘phylopath-Ex.R’ failed
@@ -82,8 +85,9 @@
     Execution halted
     ```
 
-# pollen (0.52.00)
+# pollen
 
+Version: 0.52.00
 *   checking examples ... ERROR
     ```
     Running examples in ‘pollen-Ex.R’ failed
@@ -115,8 +119,9 @@
     Execution halted
     ```
 
-# tidyquant (0.5.1)
+# tidyquant
 
+Version: 0.5.1
 *   checking examples ... ERROR
     ```
     ...
@@ -176,8 +181,9 @@
       All declared Imports should be used.
     ```
 
-# valaddin (0.1.0)
+# valaddin
 
+Version: 0.1.0
 *   checking Rd cross-references ... WARNING
     ```
     Missing link or links in documentation object 'bare-type-checkers.Rd':
