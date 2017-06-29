@@ -24,11 +24,14 @@ rerun <- function(.n, ...) {
   # rather than wrapping in a list.
   if (length(dots) == 1 && !has_names(dots)) {
     dots <- dots[[1]]
+    eval_dots <- eval_tidy
+  } else {
+    eval_dots <- function(x) lapply(x, eval_tidy)
   }
 
   out <- vector("list", .n)
   for (i in seq_len(.n)) {
-    out[[i]] <- eval_tidy(dots)
+    out[[i]] <- eval_dots(dots)
   }
   out
 }
