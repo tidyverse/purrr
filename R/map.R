@@ -114,6 +114,13 @@ map_dbl <- function(.x, .f, ...) {
 }
 
 #' @rdname map
+#' @export
+map_raw <- function(.x, .f, ...) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_impl, environment(), ".x", ".f", "raw")
+}
+
+#' @rdname map
 #' @param .id If not `NULL` a variable with this name will be created
 #'   giving either the name or the index of the data frame.
 #' @export

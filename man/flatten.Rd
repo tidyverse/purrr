@@ -6,6 +6,7 @@
 \alias{flatten_int}
 \alias{flatten_dbl}
 \alias{flatten_chr}
+\alias{flatten_raw}
 \alias{flatten_dfr}
 \alias{flatten_dfc}
 \alias{flatten_df}
@@ -20,6 +21,8 @@ flatten_int(.x)
 flatten_dbl(.x)
 
 flatten_chr(.x)
+
+flatten_raw(.x)
 
 flatten_dfr(.x, .id = NULL)
 

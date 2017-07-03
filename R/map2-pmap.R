@@ -94,6 +94,12 @@ map2_dbl <- function(.x, .y, .f, ...) {
 }
 #' @export
 #' @rdname map2
+map2_raw <- function(.x, .y, .f, ...) {
+  .f <- as_mapper(.f, ...)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw")
+}
+#' @export
+#' @rdname map2
 map2_chr <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
@@ -163,6 +169,16 @@ pmap_dbl <- function(.l, .f, ...) {
   }
 
   .Call(pmap_impl, environment(), ".l", ".f", "double")
+}
+#' @export
+#' @rdname map2
+pmap_raw <- function(.l, .f, ...) {
+  .f <- as_mapper(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
+  .Call(pmap_impl, environment(), ".l", ".f", "raw")
 }
 #' @export
 #' @rdname map2

@@ -48,6 +48,12 @@ void cant_coerce(SEXP from, SEXP to, int i) {
 
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
   switch(TYPEOF(to)) {
+  case RAWSXP:
+    switch(TYPEOF(from)) {
+    case RAWSXP: RAW(to)[i] = RAW(from)[j]; break;
+    default: cant_coerce(from, to, i);
+    }
+    break ;
   case LGLSXP:
     switch(TYPEOF(from)) {
     case LGLSXP: LOGICAL(to)[i] = LOGICAL(from)[j]; break;
