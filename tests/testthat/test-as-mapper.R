@@ -73,7 +73,10 @@ test_that("attributes are wrapped", {
   )
 })
 
+test_that("raw vectors are supported for indexing", {
+  expect_equal( as_mapper(1)(raw(2)), raw(1) )
+})
+
 test_that("raw and complex types aren't supported for indexing", {
-  expect_error(as_mapper(1)(raw(2)))
   expect_error(as_mapper(1)(complex(2)))
 })

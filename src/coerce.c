@@ -63,6 +63,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
   case INTSXP:
     switch(TYPEOF(from)) {
     case LGLSXP: INTEGER(to)[i] = LOGICAL(from)[j]; break;
+    case RAWSXP: INTEGER(to)[i] = RAW(from)[j]; break ;
     case INTSXP: INTEGER(to)[i] = INTEGER(from)[j]; break;
     default: cant_coerce(from, to, i);
     }
@@ -71,6 +72,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     switch(TYPEOF(from)) {
     case LGLSXP:  REAL(to)[i] = logical_to_real(LOGICAL(from)[j]); break;
     case INTSXP:  REAL(to)[i] = integer_to_real(INTEGER(from)[j]); break;
+    case RAWSXP:  REAL(to)[i] = RAW(from)[j]; break ;
     case REALSXP: REAL(to)[i] = REAL(from)[j]; break;
     default: cant_coerce(from, to, i);
     }

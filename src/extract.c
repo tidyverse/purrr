@@ -71,6 +71,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i) {
     return R_NilValue;
 
   switch(TYPEOF(x)) {
+  case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
   case LGLSXP:  return Rf_ScalarLogical(LOGICAL(x)[offset]);
   case INTSXP:  return Rf_ScalarInteger(INTEGER(x)[offset]);
   case REALSXP: return Rf_ScalarReal(REAL(x)[offset]);
