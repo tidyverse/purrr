@@ -14,7 +14,7 @@ pluck(x, index, default = NULL)
 \item{default}{Value to use if target is empty or absent.}
 }
 \description{
-This is a generalise form of \code{[[} which allows you to index by
+This is a generalised form of \code{[[} which allows you to index by
 name, position, or attribute.
 }
 \keyword{internal}

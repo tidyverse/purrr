@@ -62,7 +62,7 @@ as_function <- function(...) {
 
 #' Pluck out a single an element from a vector or environment
 #'
-#' This is a generalise form of `[[` which allows you to index by
+#' This is a generalised form of `[[` which allows you to index by
 #' name, position, or attribute.
 #'
 #' @param x A vector or environment
