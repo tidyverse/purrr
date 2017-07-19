@@ -63,10 +63,13 @@ purrr and dplyr:
 
 ## Modify functions
 
-`map()` always returns a list, regardless of the input type. A new
-`modify()` family returns the same output of the type as the input
-`.x`. They rely on the semantics of `[<-` so `modify()` is shorthand
-for `x[] <- map(x, f)`.
+A new `modify()` family returns the same output of the type as the
+input `.x`. This is in contrast to the `map()` family which always
+returns a list, regardless of the input type.
+
+The modify functions are S3 generics. However their default methods
+should be sufficient for most classes since they rely on the semantics
+of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
 
 * `at_depth()` has been renamed to `modify_depth()`.
 

@@ -2,19 +2,31 @@
 % Please edit documentation in R/modify.R
 \name{modify}
 \alias{modify}
+\alias{modify.default}
 \alias{modify_if}
+\alias{modify_if.default}
 \alias{modify_at}
+\alias{modify_at.default}
 \alias{modify_depth}
+\alias{modify_depth.default}
 \alias{at_depth}
 \title{Modify elements selectively}
 \usage{
 modify(.x, .f, ...)
 
+\method{modify}{default}(.x, .f, ...)
+
 modify_if(.x, .p, .f, ...)
+
+\method{modify_if}{default}(.x, .p, .f, ...)
 
 modify_at(.x, .at, .f, ...)
 
+\method{modify_at}{default}(.x, .at, .f, ...)
+
 modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
+
+\method{modify_depth}{default}(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -76,10 +88,23 @@ positions. \code{modify_depth()} only modifies elements at a given level of a
 nested data structure.
 }
 \details{
-These can alter the structure of the input; it's your responsibility to
-ensure that the transformation produces a valid output. For example, if
-you're modifying a data frame, \code{.f} must preserve the length of the input.
+Since the transformation can alter the structure of the input; it's
+your responsibility to ensure that the transformation produces a
+valid output. For example, if you're modifying a data frame, \code{.f}
+must preserve the length of the input.
 }
+\section{Genericity}{
+
+
+All these functions are S3 generic. However, the default method is
+sufficient in many cases. It should be suitable for any data type
+that implements the subset-assignment method \code{[<-}.
+
+In some cases it may make sense to provide a custom implementation
+with a method suited to your S3 class. For example, a \code{grouped_df}
+method might take into account the grouped nature of a data frame.
+}
+
 \examples{
 # Convert factors to characters
 iris \%>\%
