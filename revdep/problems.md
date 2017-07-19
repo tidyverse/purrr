@@ -21,6 +21,28 @@ Version: 0.1.0
     Execution halted
     ```
 
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+         })
+      9: reduce_impl(.x, .f, ..., .init = .init, .left = TRUE)
+      10: reduce_init(.x, .init, left = .left)
+      11: stop("`.x` is empty, and no `.init` supplied", call. = FALSE)
+      
+      testthat results ================================================================
+      OK: 6 SKIPPED: 0 FAILED: 5
+      1. Error: add_predictors() combines predictors (@test-formulas.R#5) 
+      2. Error: add_predictors() combines with fun (@test-formulas.R#9) 
+      3. Error: add_predictors() handles lhss (@test-formulas.R#13) 
+      4. Error: merge_formula() handles lhss (@test-formulas.R#18) 
+      5. Error: formulas() combines the lhs (@test-formulas.R#47) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
 ## In both
 
 *   checking dependencies in R code ... NOTE
@@ -53,47 +75,13 @@ Version: 0.1.3
     Execution halted
     ```
 
-# phylopath
+## Newly fixed
 
-Version: 0.2.3
-
-## Newly broken
-
-*   checking examples ... ERROR
+*   checking whether package ‘modeval’ can be installed ... WARNING
     ```
-    Running examples in ‘phylopath-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: average
-    > ### Title: Extract and average the best supported models from a
-    > ###   phylogenetic path analysis.
-    > ### Aliases: average
-    > 
-    > ### ** Examples
-    > 
-    >   candidates <- list(A = DAG(LS ~ BM, NL ~ BM, DD ~ NL + LS),
-    +                      C = DAG(LS ~ BM, NL ~ LS + BM, DD ~ NL))
-    >   p <- phylo_path(candidates, rhino, rhino_tree)
-    Error: Fitting the following model:
-        DD ~ NL + LS + BM 
-    produced this error:
-        Error in nlme::gls(..., correlation = cor_fun(par, .x)): 
-    model must be a formula of the form "resp ~ pred"
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 85-87 (intro_to_phylopath.Rmd) 
-    Error: processing vignette 'intro_to_phylopath.Rmd' failed with diagnostics:
-    Fitting the following model:
-        DD ~ NL + BM 
-    produced this error:
-        Error in nlme::gls(..., correlation = cor_fun(par, .x)): 
-    model must be a formula of the form "resp ~ pred"
-    Execution halted
+    Found the following significant warnings:
+      Warning: Installed Rcpp (0.12.12) different from Rcpp used to build dplyr (0.12.11).
+    See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/modeval/old/modeval.Rcheck/00install.out’ for details.
     ```
 
 # pollen
@@ -133,71 +121,41 @@ Version: 0.52.00
     Execution halted
     ```
 
-# tidyquant
+## Newly fixed
 
-Version: 0.5.1
+*   checking whether package ‘pollen’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: Installed Rcpp (0.12.12) different from Rcpp used to build dplyr (0.12.11).
+    See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/pollen/old/pollen.Rcheck/00install.out’ for details.
+    ```
+
+# tatoo
+
+Version: 1.0.6
 
 ## Newly broken
 
-*   checking examples ... ERROR
+*   checking tests ...
     ```
-    ...
-     Removing FB.
-    Warning: x = 'NFLX', get = 'stock.prices': Error in charToDate(x): character string is not in a standard unambiguous format
-     Removing NFLX.
-    Warning in value[[3L]](cond) : Returning as nested data frame.
-    > 
-    > # Plot for stocks
-    > a <- stocks %>%
-    +     ggplot(aes(date, adjusted, color = symbol)) +
-    +     geom_line() +
-    +     labs(title = "Multi stock example",
-    +          xlab = "Date",
-    +          ylab = "Adjusted Close")
-    > 
-    > # Plot with tidyquant theme and colors
-    > a +
-    +     theme_tq() +
-    +     scale_color_tq()
-    Don't know how to automatically pick scale for object of type function. Defaulting to continuous.
-    Error in FUN(X[[i]], ...) : object 'adjusted' not found
-    Calls: <Anonymous> ... by_layer -> f -> <Anonymous> -> f -> lapply -> FUN -> FUN
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    ...
-    setdiff():     lubridate, base
-    union():       lubridate, base
-    
-    Attaching package: 'tidyquant'
-    
-    The following object is masked from 'package:dplyr':
-    
-        as_tibble
-    
-    The following object is masked from 'package:tibble':
-    
-        as_tibble
-    
-    Getting data...
-    
-    Getting data...
-    
-    Quitting from lines 366-369 (TQ01-core-functions-in-tidyquant.Rmd) 
-    Error: processing vignette 'TQ01-core-functions-in-tidyquant.Rmd' failed with diagnostics:
-    Evaluation error: character string is not in a standard unambiguous format.
-    Execution halted
-    ```
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘broom’ ‘devtools’
-      All declared Imports should be used.
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      tres2 <- stack_table_list(list(t_mash_1, t_comp_3, t_df1), meta = t_meta_verbose) produced warnings.
+      
+      
+      3. Failure: Tagged_table constructors work (@test_Tagged_table.R#37) -----------
+      tres <- stack_table(t_df1, t_df2, meta = t_meta_simple) produced warnings.
+      
+      
+      testthat results ================================================================
+      OK: 116 SKIPPED: 0 FAILED: 3
+      1. Failure: Stacked_table works as expected (@test_Stacked_table.R#11) 
+      2. Failure: Stacked_table works as expected (@test_Stacked_table.R#19) 
+      3. Failure: Tagged_table constructors work (@test_Tagged_table.R#37) 
+      
+      Error: testthat unit tests failed
+      Execution halted
     ```
 
 # valaddin
@@ -205,6 +163,28 @@ Version: 0.5.1
 Version: 0.1.0
 
 ## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      1. Failure: error raised when .f is not a closure (@test-firmly.R#12) ----------
+      firmly(f) did not throw an error.
+      
+      
+      2. Failure: error raised when .f not a closure (@test-loosely.R#10) ------------
+      loosely(f) did not throw an error.
+      
+      
+      testthat results ================================================================
+      OK: 3695 SKIPPED: 0 FAILED: 2
+      1. Failure: error raised when .f is not a closure (@test-firmly.R#12) 
+      2. Failure: error raised when .f not a closure (@test-loosely.R#10) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
 
 *   checking Rd cross-references ... WARNING
     ```
@@ -221,5 +201,14 @@ Version: 0.1.0
       ‘[purrr:type-predicates]{Type predicates}’
     
     See section 'Cross-references' in the 'Writing R Extensions' manual.
+    ```
+
+## Newly fixed
+
+*   checking whether package ‘valaddin’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: Installed Rcpp (0.12.12) different from Rcpp used to build dplyr (0.12.11).
+    See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/valaddin/old/valaddin.Rcheck/00install.out’ for details.
     ```
 
