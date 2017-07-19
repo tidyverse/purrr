@@ -12,8 +12,8 @@
 #' similar as possible to the anonymous functions that you'd create by hand,
 #' if you weren't using `partial`.
 #'
-#' @param ...f a function. For the output source to read well, this should be an
-#'   be a named function.
+#' @param ...f a function. For the output source to read well, this should be a
+#'   named function.
 #' @param ... named arguments to `...f` that should be partially applied.
 #' @param .env the environment of the created function. Defaults to
 #'   [parent.frame()] and you should rarely need to modify this.
