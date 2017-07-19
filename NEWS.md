@@ -68,15 +68,10 @@ purrr and dplyr:
 `.x`. They rely on the semantics of `[<-` so `modify()` is shorthand
 for `x[] <- map(x, f)`.
 
-* `modify_if()` and `modify_at()` replace the now deprecated `map_at()` and
-  `map_if()` (#169, #292). If you want the previous behaviour, just coerce
-  `.x` to a list. `at_depth()` has been renamed to `modify_depth()`.
+* `at_depth()` has been renamed to `modify_depth()`.
 
 * `modify_depth()` gains new `.ragged` argument, and negative depths are
   now computed relative to the deepest component of the list (#236).
-
-* `map_at()` and `map_if()` have been deprecated. Please use `modify_at()`
-  and `modify_if()` instead .
 
 
 ## New functions

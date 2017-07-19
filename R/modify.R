@@ -11,15 +11,6 @@
 #' you're modifying a data frame, `.f` must preserve the length of the input.
 #'
 #' @inheritParams map
-#' @param .p A single predicate function, a formula describing such a
-#'   predicate function, or a logical vector of the same length as `.x`.
-#'   Alternatively, if the elements of `.x` are themselves lists of
-#'   objects, a string indicating the name of a logical element in the
-#'   inner lists. Only those elements where `.p` evaluates to
-#'   `TRUE` will be modified.
-#' @param .at A character vector of names or a numeric vector of
-#'   positions. Only those elements corresponding to `.at` will be
-#'   modified.
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'  from the lowest level of the list.
 #'
@@ -134,29 +125,6 @@ modify_depth_rec <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   }
   .x
 }
-
-#' @export
-#' @usage NULL
-#' @rdname modify
-map_if <- function(.x, .p, .f, ...) {
-  warning(
-    "map_if() is deprecated, please use `modify_if()` instead",
-    call. = FALSE
-  )
-  modify_if(.x, .p, .f, ...)
-}
-
-#' @export
-#' @usage NULL
-#' @rdname modify
-map_at <- function(.x, .at, .f, ...) {
-  warning(
-    "map_at() is deprecated, please use `modify_at()` instead",
-    call. = FALSE
-  )
-  modify_at(.x, .at, .f, ...)
-}
-
 
 #' @export
 #' @usage NULL
