@@ -9,10 +9,10 @@
 #' modifying an existing list: you can use a formula (a quosure) to replace
 #' using existing values.
 #'
-#' @param _x,x List to modify
+#' @param .x List to modify.
+#' @param .y Replacement list.
 #' @param ... New values of a list. Use `NULL` to remove values.
 #'   Use a formula to evaluate in the context of the list values.
-#' @param y Replacement list
 #' @export
 #' @examples
 #' x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
@@ -39,14 +39,13 @@
 #' # In list_update() you can also use quosures to compute new values
 #' list_update(x, z1 = rlang::quo(z[1]))
 #' list_update(x, z = rlang::quo(x + y))
-list_modify <- function(x, y) {
-  list_recurse(x, y, function(x, y) y)
+list_modify <- function(.x, .y) {
+  list_recurse(.x, .y, function(x, y) y)
 }
-
 #' @export
 #' @rdname list_modify
-list_merge <- function(x, y) {
-  list_recurse(x, y, c)
+list_merge <- function(.x, .y) {
+  list_recurse(.x, .y, c)
 }
 
 list_recurse <- function(x, y, base_case) {
@@ -86,10 +85,10 @@ list_recurse <- function(x, y, base_case) {
 
 #' @export
 #' @rdname  list_modify
-list_update <- function(`_x`, ...) {
+list_update <- function(.x, ...) {
   y <- dots_list(...)
-  y <- modify_if(y, is_symbolic, eval_tidy, data = `_x`)
-  list_modify(`_x`, y)
+  y <- modify_if(y, is_symbolic, eval_tidy, data = .x)
+  list_modify(.x, y)
 }
 
 #' @export

@@ -7,16 +7,16 @@
 \alias{update_list}
 \title{Modify a list}
 \usage{
-list_modify(x, y)
+list_modify(.x, .y)
 
-list_merge(x, y)
+list_merge(.x, .y)
 
-list_update(`_x`, ...)
+list_update(.x, ...)
 }
 \arguments{
-\item{y}{Replacement list}
+\item{.x}{List to modify.}
 
-\item{_x, x}{List to modify}
+\item{.y}{Replacement list.}
 
 \item{...}{New values of a list. Use \code{NULL} to remove values.
 Use a formula to evaluate in the context of the list values.}
