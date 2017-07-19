@@ -5,8 +5,6 @@
 \alias{modify_if}
 \alias{modify_at}
 \alias{modify_depth}
-\alias{map_if}
-\alias{map_at}
 \alias{at_depth}
 \title{Modify elements selectively}
 \usage{
