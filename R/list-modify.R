@@ -47,6 +47,13 @@ list_modify <- function(.x, .y) {
 list_merge <- function(.x, .y) {
   list_recurse(.x, .y, c)
 }
+#' @export
+#' @rdname  list_modify
+list_update <- function(.x, ...) {
+  dots <- dots_list(...)
+  dots <- modify_if(dots, is_symbolic, eval_tidy, data = .x)
+  list_recurse(.x, dots, function(x, y) y)
+}
 
 list_recurse <- function(x, y, base_case) {
   stopifnot(is.list(x), is.list(y))
@@ -81,14 +88,6 @@ list_recurse <- function(x, y, base_case) {
   }
 
   x
-}
-
-#' @export
-#' @rdname  list_modify
-list_update <- function(.x, ...) {
-  y <- dots_list(...)
-  y <- modify_if(y, is_symbolic, eval_tidy, data = .x)
-  list_modify(.x, y)
 }
 
 #' @export
