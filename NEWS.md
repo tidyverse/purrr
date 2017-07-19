@@ -139,6 +139,10 @@ of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
 * `transpose()` now matches by name if available (#164). You can
   override the default choice with the new `.names` argument.
 
+* The function argument of `detect()` and `detect_index()` have been
+  renamed from `.p` to `.f`. This is because they have mapper
+  semantics rather than predicate semantics.
+
 
 # purrr 0.2.2.1
 

@@ -5,12 +5,39 @@
 \alias{detect_index}
 \title{Find the value or position of the first match.}
 \usage{
-detect(.x, .p, ..., .right = FALSE)
+detect(.x, .f, ..., .right = FALSE, .p)
 
-detect_index(.x, .p, ..., .right = FALSE)
+detect_index(.x, .f, ..., .right = FALSE, .p)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
+
+\item{.f}{A function, formula, or atomic vector.
+
+If a \strong{function}, it is used as is.
+
+If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
+are three ways to refer to the arguments:
+\itemize{
+\item For a single argument function, use \code{.}
+\item For a two argument function, use \code{.x} and \code{.y}
+\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
+}
+
+This syntax allows you to create very compact anonymous functions.
+
+If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
+is converted to an extractor function. Character vectors index by name
+and numeric vectors index by position; use a list to index by position
+and name at different levels. Within a list, wrap strings in \code{get_attr()}
+to extract named attributes. If a component is not present, the value of
+\code{.default} will be returned.}
+
+\item{...}{Additional arguments passed on to \code{.f}.}
+
+\item{.right}{If \code{FALSE}, the default, starts at the beginning
+of the vector and move towards the end; if \code{TRUE}, starts at the end
+of the vector and moves towards the beginning.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -18,12 +45,6 @@ Alternatively, if the elements of \code{.x} are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
-
-\item{...}{Additional arguments passed on to \code{.f}.}
-
-\item{.right}{If \code{FALSE}, the default, starts at the beginning
-of the vector and move towards the end; if \code{TRUE}, starts at the end
-of the vector and moves towards the beginning.}
 }
 \value{
 \code{detect} the value of the first item that matches the
@@ -42,4 +63,16 @@ is_even <- function(x) x \%\% 2 == 0
 
 3:10 \%>\% detect(is_even, .right = TRUE)
 3:10 \%>\% detect_index(is_even, .right = TRUE)
+
+
+# Since `.f` is passed to as_mapper(), you can supply a
+# lambda-formula or a pluck object:
+x <- list(
+  list(1, foo = FALSE),
+  list(2, foo = TRUE),
+  list(3, foo = TRUE)
+)
+
+detect(x, "foo")
+detect_index(x, "foo")
 }

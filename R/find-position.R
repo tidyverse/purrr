@@ -18,22 +18,42 @@
 #'
 #' 3:10 %>% detect(is_even, .right = TRUE)
 #' 3:10 %>% detect_index(is_even, .right = TRUE)
-detect <- function(.x, .p, ..., .right = FALSE) {
-  .p <- as_mapper(.p, ...)
+#'
+#'
+#' # Since `.f` is passed to as_mapper(), you can supply a
+#' # lambda-formula or a pluck object:
+#' x <- list(
+#'   list(1, foo = FALSE),
+#'   list(2, foo = TRUE),
+#'   list(3, foo = TRUE)
+#' )
+#'
+#' detect(x, "foo")
+#' detect_index(x, "foo")
+detect <- function(.x, .f, ..., .right = FALSE, .p) {
+  if (!missing(.p)) {
+    warn("`.p` has been renamed to `.f`", "purrr_2.2.3")
+    .f <- .p
+  }
+  .f <- as_mapper(.f, ...)
 
   for (i in index(.x, .right)) {
-    if (is_true(.p(.x[[i]], ...))) return(.x[[i]])
+    if (is_true(.f(.x[[i]], ...))) return(.x[[i]])
   }
   NULL
 }
 
 #' @export
 #' @rdname detect
-detect_index <- function(.x, .p, ..., .right = FALSE) {
-  .p <- as_mapper(.p, ...)
+detect_index <- function(.x, .f, ..., .right = FALSE, .p) {
+  if (!missing(.p)) {
+    warn("`.p` has been renamed to `.f`", "purrr_2.2.3")
+    .f <- .p
+  }
+  .f <- as_mapper(.f, ...)
 
   for (i in index(.x, .right)) {
-    if (is_true(.p(.x[[i]], ...))) return(i)
+    if (is_true(.f(.x[[i]], ...))) return(i)
   }
   0L
 }
