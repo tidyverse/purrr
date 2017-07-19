@@ -105,7 +105,7 @@ modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   stopifnot(is.numeric(.depth), length(.depth) == 1)
 
   if (.depth < 0) {
-    .depth <- depth(.x) + .depth
+    .depth <- vec_depth(.x) + .depth
   }
 
   .f <- as_mapper(.f, ...)

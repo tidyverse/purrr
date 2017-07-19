@@ -84,7 +84,7 @@ for `x[] <- map(x, f)`.
 * `auto_browse(f)` returns a new function that automatically calls `browser()`
   if `f` throws an error (#281).
 
-* `depth()` computes the depth (i.e. the number of levels of indexing)
+* `vec_depth()` computes the depth (i.e. the number of levels of indexing)
   or a vector (#243).
 
 * `reduce2()` and `reduce2_right()` make it possible to reduce with a
