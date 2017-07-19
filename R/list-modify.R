@@ -1,12 +1,16 @@
 #' Modify a list
 #'
+#' @description
+#'
 #' `list_modify()` and `list_merge()` recursively combine two lists, matching
 #' elements either by name or position. If an sub-element is present in
 #' both lists `list_modify()` takes the value from `y`, and `list_merge()`
 #' concatenates the values together.
 #'
-#' `list_update()` handles quosures that can refer to values existing
-#' within the input list.
+#' `update_list()` handles formulas and quosures that can refer to
+#' values existing within the input list. Note that this function
+#' might be deprecated in the future in favour of a `dplyr::mutate()`
+#' method for lists.
 #'
 #' @param .x List to modify.
 #' @param ... New values of a list. Use `NULL` to remove values.
@@ -34,9 +38,11 @@
 #' l <- list(new = 1, y = NULL, z = 5)
 #' str(list_modify(x, !!! l))
 #'
-#' # In list_update() you can also use quosures to compute new values
-#' list_update(x, z1 = rlang::quo(z[[1]]))
-#' list_update(x, z = rlang::quo(x + y))
+#' # In update_list() you can also use quosures and formulas to
+#' # compute new values. This function is likely to be deprecated in
+#' # the future
+#' update_list(x, z1 = ~z[[1]])
+#' update_list(x, z = rlang::quo(x + y))
 list_modify <- function(.x, ...) {
   dots <- dots_list(...)
   list_recurse(.x, dots, function(x, y) y)
@@ -46,20 +52,6 @@ list_modify <- function(.x, ...) {
 list_merge <- function(.x, ...) {
   dots <- dots_list(...)
   list_recurse(.x, dots, c)
-}
-#' @export
-#' @rdname  list_modify
-list_update <- function(.x, ...) {
-  dots <- dots_list(...)
-
-  formulas <- map_lgl(dots, is_bare_formula, lhs = FALSE, scoped = TRUE)
-  if (any(formulas)) {
-    warn("Formulas are deprecated, please use quosures", "purrr-2.2.3")
-    dots <- map_if(dots, formulas, as_quosure)
-  }
-
-  dots <- map_if(dots, is_quosure, eval_tidy, data = .x)
-  list_recurse(.x, dots, function(x, y) y)
 }
 
 list_recurse <- function(x, y, base_case) {
@@ -97,7 +89,15 @@ list_recurse <- function(x, y, base_case) {
   x
 }
 
+#' @rdname list_modify
 #' @export
 #' @usage NULL
-#' @rdname list_modify
-update_list <- list_update
+update_list <- function(.x, ...) {
+  dots <- dots_list(...)
+
+  formulas <- map_lgl(dots, is_bare_formula, lhs = FALSE, scoped = TRUE)
+  dots <- map_if(dots, formulas, as_quosure)
+  dots <- map_if(dots, is_quosure, eval_tidy, data = .x)
+
+  list_recurse(.x, dots, function(x, y) y)
+}

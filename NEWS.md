@@ -90,10 +90,13 @@ of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
   second argument is `.x`, and the third argument is `.y` (#163).
 
 * `list_modify()` extends `stats::modifyList()` to replace by position
-  if the list is not named. `list_update()` uses `list_modify()` (#201).
-  `update_list()` has been renamed to `list_update()`. `list_merge()`
-  operates similarly to `list_modify()` but combines instead of replacing
-  (#322).
+  if the list is not named.(#201). `list_merge()` operates similarly
+  to `list_modify()` but combines instead of replacing (#322).
+
+* The legacy function `update_list()` is basically a version of
+  `list_modify` that evaluates formulas within the list. It is likely
+  to be deprecated in the future in favour of a tidyeval interface
+  such as a list method for `dplyr::mutate()`.
 
 
 ## Minor improvements and bug fixes

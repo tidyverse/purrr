@@ -3,15 +3,12 @@
 \name{list_modify}
 \alias{list_modify}
 \alias{list_merge}
-\alias{list_update}
 \alias{update_list}
 \title{Modify a list}
 \usage{
 list_modify(.x, ...)
 
 list_merge(.x, ...)
-
-list_update(.x, ...)
 }
 \arguments{
 \item{.x}{List to modify.}
@@ -25,10 +22,11 @@ These dots have \link[rlang:dots_list]{splicing semantics}.}
 elements either by name or position. If an sub-element is present in
 both lists \code{list_modify()} takes the value from \code{y}, and \code{list_merge()}
 concatenates the values together.
-}
-\details{
-\code{list_update()} handles quosures that can refer to values existing
-within the input list.
+
+\code{update_list()} handles formulas and quosures that can refer to
+values existing within the input list. Note that this function
+might be deprecated in the future in favour of a \code{dplyr::mutate()}
+method for lists.
 }
 \examples{
 x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
@@ -51,7 +49,9 @@ str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 l <- list(new = 1, y = NULL, z = 5)
 str(list_modify(x, !!! l))
 
-# In list_update() you can also use quosures to compute new values
-list_update(x, z1 = rlang::quo(z[[1]]))
-list_update(x, z = rlang::quo(x + y))
+# In update_list() you can also use quosures and formulas to
+# compute new values. This function is likely to be deprecated in
+# the future
+update_list(x, z1 = ~z[[1]])
+update_list(x, z = rlang::quo(x + y))
 }

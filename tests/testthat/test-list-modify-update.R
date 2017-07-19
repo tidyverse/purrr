@@ -1,19 +1,4 @@
-context("list_update")
-
-test_that("can modify element called x", {
-  expect_equal(list_update(list(), x = 1), list(x = 1))
-})
-
-test_that("quosures are evaluated", {
-  expect_equal(list_update(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
-})
-
-test_that("formulas give a warning", {
-  expect_warning(regex = "please use quosures",
-    expect_equal(list_update(list(x = 1), y = ~x + 1), list(x = 1, y = 2))
-  )
-})
-
+context("list_modify")
 
 # list_modify -------------------------------------------------------------
 
@@ -77,4 +62,16 @@ test_that("list_merge concatenates without needing names", {
 test_that("list_merge returns the non-empty list", {
   expect_equal(list_merge(list(3)), list(3))
   expect_equal(list_merge(list(), 2), set_names(list(2), ""))
+})
+
+
+# update_list ------------------------------------------------------------
+
+test_that("can modify element called x", {
+  expect_equal(update_list(list(), x = 1), list(x = 1))
+})
+
+test_that("quosures and formulas are evaluated", {
+  expect_identical(update_list(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
+  expect_identical(update_list(list(x = 1), y = ~x + 1), list(x = 1, y = 2))
 })
