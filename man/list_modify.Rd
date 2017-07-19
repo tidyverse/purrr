@@ -7,19 +7,18 @@
 \alias{update_list}
 \title{Modify a list}
 \usage{
-list_modify(.x, .y)
+list_modify(.x, ...)
 
-list_merge(.x, .y)
+list_merge(.x, ...)
 
 list_update(.x, ...)
 }
 \arguments{
 \item{.x}{List to modify.}
 
-\item{.y}{Replacement list.}
-
 \item{...}{New values of a list. Use \code{NULL} to remove values.
-Use a formula to evaluate in the context of the list values.}
+Use a formula to evaluate in the context of the list values.
+These dots have \link[rlang:dots_list]{splicing semantics}.}
 }
 \description{
 \code{list_modify()} and \code{list_merge()} recursively combine two lists, matching
@@ -37,24 +36,23 @@ x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
 str(x)
 
 # Update values
-str(list_modify(x, list(a = 1)))
+str(list_modify(x, a = 1))
 # Replace values
-str(list_modify(x, list(z = 5)))
-str(list_modify(x, list(z = list(a = 1:5))))
+str(list_modify(x, z = 5))
+str(list_modify(x, z = list(a = 1:5)))
 # Remove values
-str(list_modify(x, list(z = NULL)))
+str(list_modify(x, z = NULL))
 
 # Combine values
-str(list_merge(x, list(x = 11, z = list(a = 2:5, c = 3))))
+str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 
-# list_update is useful for interactive tweaking, because it
-# uses ... instead of a separate list
-str(list_update(x, a = 1))
-str(list_update(x, z = 5))
-str(list_update(x, z = list(a = 1:5)))
-str(list_update(x, z = NULL))
+
+# All these functions take dots with splicing. Use !!! or UQS() to
+# splice a list of arguments:
+l <- list(new = 1, y = NULL, z = 5)
+str(list_modify(x, !!! l))
 
 # In list_update() you can also use quosures to compute new values
-list_update(x, z1 = rlang::quo(z[1]))
+list_update(x, z1 = rlang::quo(z[[1]]))
 list_update(x, z = rlang::quo(x + y))
 }

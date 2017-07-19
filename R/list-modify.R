@@ -10,48 +10,49 @@
 #' using existing values.
 #'
 #' @param .x List to modify.
-#' @param .y Replacement list.
 #' @param ... New values of a list. Use `NULL` to remove values.
 #'   Use a formula to evaluate in the context of the list values.
+#'   These dots have [splicing semantics][rlang::dots_list].
 #' @export
 #' @examples
 #' x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
 #' str(x)
 #'
 #' # Update values
-#' str(list_modify(x, list(a = 1)))
+#' str(list_modify(x, a = 1))
 #' # Replace values
-#' str(list_modify(x, list(z = 5)))
-#' str(list_modify(x, list(z = list(a = 1:5))))
+#' str(list_modify(x, z = 5))
+#' str(list_modify(x, z = list(a = 1:5)))
 #' # Remove values
-#' str(list_modify(x, list(z = NULL)))
+#' str(list_modify(x, z = NULL))
 #'
 #' # Combine values
-#' str(list_merge(x, list(x = 11, z = list(a = 2:5, c = 3))))
+#' str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 #'
-#' # list_update is useful for interactive tweaking, because it
-#' # uses ... instead of a separate list
-#' str(list_update(x, a = 1))
-#' str(list_update(x, z = 5))
-#' str(list_update(x, z = list(a = 1:5)))
-#' str(list_update(x, z = NULL))
+#'
+#' # All these functions take dots with splicing. Use !!! or UQS() to
+#' # splice a list of arguments:
+#' l <- list(new = 1, y = NULL, z = 5)
+#' str(list_modify(x, !!! l))
 #'
 #' # In list_update() you can also use quosures to compute new values
-#' list_update(x, z1 = rlang::quo(z[1]))
+#' list_update(x, z1 = rlang::quo(z[[1]]))
 #' list_update(x, z = rlang::quo(x + y))
-list_modify <- function(.x, .y) {
-  list_recurse(.x, .y, function(x, y) y)
+list_modify <- function(.x, ...) {
+  dots <- dots_list(...)
+  list_recurse(.x, dots, function(x, y) y)
 }
 #' @export
 #' @rdname list_modify
-list_merge <- function(.x, .y) {
-  list_recurse(.x, .y, c)
+list_merge <- function(.x, ...) {
+  dots <- dots_list(...)
+  list_recurse(.x, dots, c)
 }
 #' @export
 #' @rdname  list_modify
 list_update <- function(.x, ...) {
   dots <- dots_list(...)
-  dots <- modify_if(dots, is_symbolic, eval_tidy, data = .x)
+  dots <- map_if(dots, is_symbolic, eval_tidy, data = .x)
   list_recurse(.x, dots, function(x, y) y)
 }
 
@@ -67,7 +68,7 @@ list_recurse <- function(x, y, base_case) {
   x_names <- names(x)
   y_names <- names(y)
 
-  if (is.null(x_names) && is.null(y_names)) {
+  if (!is_names(x_names) && !is_names(y_names)) {
     for (i in rev(seq_along(y))) {
       if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]])) {
         x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
@@ -75,7 +76,7 @@ list_recurse <- function(x, y, base_case) {
         x[[i]] <- base_case(x[[i]], y[[i]])
       }
     }
-  } else if (!is.null(x_names) && !is.null(y_names)) {
+  } else if (is_names(x_names) && is_names(y_names)) {
     for (nm in y_names) {
       if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[nm]])) {
         x[[nm]] <- list_recurse(x[[nm]], y[[nm]], base_case)
