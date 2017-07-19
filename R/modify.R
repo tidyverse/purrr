@@ -6,9 +6,21 @@
 #' positions. `modify_depth()` only modifies elements at a given level of a
 #' nested data structure.
 #'
-#' These can alter the structure of the input; it's your responsibility to
-#' ensure that the transformation produces a valid output. For example, if
-#' you're modifying a data frame, `.f` must preserve the length of the input.
+#' Since the transformation can alter the structure of the input; it's
+#' your responsibility to ensure that the transformation produces a
+#' valid output. For example, if you're modifying a data frame, `.f`
+#' must preserve the length of the input.
+#'
+#'
+#' @section Genericity:
+#'
+#' All these functions are S3 generic. However, the default method is
+#' sufficient in many cases. It should be suitable for any data type
+#' that implements the subset-assignment method `[<-`.
+#'
+#' In some cases it may make sense to provide a custom implementation
+#' with a method suited to your S3 class. For example, a `grouped_df`
+#' method might take into account the grouped nature of a data frame.
 #'
 #' @inheritParams map
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
@@ -67,6 +79,11 @@
 #' # mapped at level 3.
 #' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
 modify <- function(.x, .f, ...) {
+  UseMethod("modify")
+}
+#' @rdname modify
+#' @export
+modify.default <- function(.x, .f, ...) {
   .x[] <- map(.x, .f, ...)
   .x
 }
@@ -74,6 +91,11 @@ modify <- function(.x, .f, ...) {
 #' @rdname modify
 #' @export
 modify_if <- function(.x, .p, .f, ...) {
+  UseMethod("modify_if")
+}
+#' @rdname modify
+#' @export
+modify_if.default <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
@@ -82,18 +104,28 @@ modify_if <- function(.x, .p, .f, ...) {
 #' @rdname modify
 #' @export
 modify_at <- function(.x, .at, .f, ...) {
+  UseMethod("modify_at")
+}
+#' @rdname modify
+#' @export
+modify_at.default <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
 
-#' @export
 #' @rdname modify
+#' @export
 #' @param .ragged If `TRUE`, will apply to leaves, even if they're not
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
 modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  stopifnot(is.numeric(.depth), length(.depth) == 1)
+  UseMethod("modify_depth")
+}
+#' @rdname modify
+#' @export
+modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
+  stopifnot(is_integerish(.depth, n = 1))
 
   if (.depth < 0) {
     .depth <- vec_depth(.x) + .depth
