@@ -5,9 +5,8 @@
 #' both lists `list_modify()` takes the value from `y`, and `list_merge()`
 #' concatenates the values together.
 #'
-#' `list_update()` is a helper optimised for interactively
-#' modifying an existing list: you can use a formula (a quosure) to replace
-#' using existing values.
+#' `list_update()` handles quosures that can refer to values existing
+#' within the input list.
 #'
 #' @param .x List to modify.
 #' @param ... New values of a list. Use `NULL` to remove values.
@@ -52,7 +51,14 @@ list_merge <- function(.x, ...) {
 #' @rdname  list_modify
 list_update <- function(.x, ...) {
   dots <- dots_list(...)
-  dots <- map_if(dots, is_symbolic, eval_tidy, data = .x)
+
+  formulas <- map_lgl(dots, is_bare_formula, lhs = FALSE, scoped = TRUE)
+  if (any(formulas)) {
+    warn("Formulas are deprecated, please use quosures", "purrr-2.2.3")
+    dots <- map_if(dots, formulas, as_quosure)
+  }
+
+  dots <- map_if(dots, is_quosure, eval_tidy, data = .x)
   list_recurse(.x, dots, function(x, y) y)
 }
 

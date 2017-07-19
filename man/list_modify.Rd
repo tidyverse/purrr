@@ -27,9 +27,8 @@ both lists \code{list_modify()} takes the value from \code{y}, and \code{list_me
 concatenates the values together.
 }
 \details{
-\code{list_update()} is a helper optimised for interactively
-modifying an existing list: you can use a formula (a quosure) to replace
-using existing values.
+\code{list_update()} handles quosures that can refer to values existing
+within the input list.
 }
 \examples{
 x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
