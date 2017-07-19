@@ -44,6 +44,12 @@ x %>% pluck(1, accessor, "foo")
   `.null` has been renamed to `.default` to better reflect its intent (#298).
   `.default` is returned whenever an element is absent or empty (#231, #254).
 
+  `as_mapper()` sanitises primitive functions by transforming them to
+  closures with standardised argument names (using `rlang::as_closure()`).
+  For instance `+` is transformed to `function(.x, .y) .x + .y`. This
+  results in proper argument matching so that `map(1:10, partial(`-`,
+  .x = 5))` produces `list(5 - 1, 5 - 2, ...)`.
+
 * Recursive indexing can now extract objects out of environments (#213) and
   S4 objects (#200), as well as lists.
 
