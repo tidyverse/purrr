@@ -139,7 +139,7 @@ of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
   comes from.
 
 * `is_numeric()` and `is_scalar_numeric()` are deprecated because they
-  don't test for what you might naively expect.
+  don't test for what you might expect at first sight.
 
 * `reduce()` now throws an error if `.x` is empty and `.init` is not
   supplied.
