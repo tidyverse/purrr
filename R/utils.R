@@ -108,3 +108,7 @@ has_names <- function(x) {
 }
 
 ndots <- function(...) nargs()
+
+is_names <- function(nms) {
+  is_character(nms) && !any(is.na(nms) | nms == "")
+}
