@@ -75,15 +75,6 @@ Version: 0.1.3
     Execution halted
     ```
 
-## Newly fixed
-
-*   checking whether package ‘modeval’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: Installed Rcpp (0.12.12) different from Rcpp used to build dplyr (0.12.11).
-    See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/modeval/old/modeval.Rcheck/00install.out’ for details.
-    ```
-
 # pollen
 
 Version: 0.52.00
@@ -121,15 +112,6 @@ Version: 0.52.00
     Execution halted
     ```
 
-## Newly fixed
-
-*   checking whether package ‘pollen’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: Installed Rcpp (0.12.12) different from Rcpp used to build dplyr (0.12.11).
-    See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/pollen/old/pollen.Rcheck/00install.out’ for details.
-    ```
-
 # tatoo
 
 Version: 1.0.6
@@ -156,6 +138,95 @@ Version: 1.0.6
       
       Error: testthat unit tests failed
       Execution halted
+    ```
+
+# tidyquant
+
+Version: 0.5.1
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    ...
+     Removing FB.
+    Warning: x = 'NFLX', get = 'stock.prices': Error in charToDate(x): character string is not in a standard unambiguous format
+     Removing NFLX.
+    Warning in value[[3L]](cond) : Returning as nested data frame.
+    > 
+    > # Plot for stocks
+    > a <- stocks %>%
+    +     ggplot(aes(date, adjusted, color = symbol)) +
+    +     geom_line() +
+    +     labs(title = "Multi stock example",
+    +          xlab = "Date",
+    +          ylab = "Adjusted Close")
+    > 
+    > # Plot with tidyquant theme and colors
+    > a +
+    +     theme_tq() +
+    +     scale_color_tq()
+    Don't know how to automatically pick scale for object of type function. Defaulting to continuous.
+    Error in FUN(X[[i]], ...) : object 'adjusted' not found
+    Calls: <Anonymous> ... by_layer -> f -> <Anonymous> -> f -> lapply -> FUN -> FUN
+    Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    ...
+    setdiff():     lubridate, base
+    union():       lubridate, base
+    
+    Attaching package: 'tidyquant'
+    
+    The following object is masked from 'package:dplyr':
+    
+        as_tibble
+    
+    The following object is masked from 'package:tibble':
+    
+        as_tibble
+    
+    Getting data...
+    
+    Getting data...
+    
+    Quitting from lines 366-369 (TQ01-core-functions-in-tidyquant.Rmd) 
+    Error: processing vignette 'TQ01-core-functions-in-tidyquant.Rmd' failed with diagnostics:
+    Evaluation error: character string is not in a standard unambiguous format.
+    Execution halted
+    ```
+
+## In both
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      testthat results ================================================================
+      OK: 139 SKIPPED: 0 FAILED: 14
+      1. Failure: Test 1 returns tibble with correct rows and columns. (@test_tq_get_compound_getters.R#24) 
+      2. Failure: Test 2 returns tibble with correct rows and columns. (@test_tq_get_compound_getters.R#33) 
+      3. Failure: Test 3 returns tibble with correct rows and columns. (@test_tq_get_compound_getters.R#42) 
+      4. Failure: Test prints warning message on invalid x input. (@test_tq_get_compound_getters.R#62) 
+      5. Error: Test prints warning message on invalid x input. (@test_tq_get_dividends.R#23) 
+      6. Error: Test returns NA on invalid x input. (@test_tq_get_dividends.R#27) 
+      7. Failure: Test returns tibble with correct rows and columns. (@test_tq_get_exchange_rates.R#25) 
+      8. Failure: Test returns tibble with correct rows and columns. (@test_tq_get_metal_prices.R#26) 
+      9. Failure: Test prints warning message on invalid x input. (@test_tq_get_splits.R#23) 
+      1. ...
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘broom’ ‘devtools’
+      All declared Imports should be used.
     ```
 
 # valaddin
@@ -201,14 +272,5 @@ Version: 0.1.0
       ‘[purrr:type-predicates]{Type predicates}’
     
     See section 'Cross-references' in the 'Writing R Extensions' manual.
-    ```
-
-## Newly fixed
-
-*   checking whether package ‘valaddin’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: Installed Rcpp (0.12.12) different from Rcpp used to build dplyr (0.12.11).
-    See ‘/Users/lionel/Dropbox/Projects/R/hadley/lowliner/revdep/checks/valaddin/old/valaddin.Rcheck/00install.out’ for details.
     ```
 
