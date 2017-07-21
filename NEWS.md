@@ -33,7 +33,7 @@ accessor(x[[1]])$foo
 to the equivalent pluck:
 
 ```
-pluck(x, 1, accessor, "foo")
+x %>% pluck(1, accessor, "foo")
 ```
 
 

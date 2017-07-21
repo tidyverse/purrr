@@ -13,7 +13,10 @@ attr_getter(attr)
 \item{.x}{A vector or environment}
 
 \item{...}{A list of accessors for indexing into the object. Can be
-an integer position, a string name, or an accessor function.
+an integer position, a string name, or an accessor function. If
+the object being indexed is an S4 object, accessing it by name
+will return the corresponding slot.
+
 These dots \link[rlang:dots_splice]{splice lists automatically}. This
 means you can supply arguments and lists of arguments
 indistinctly.}
@@ -25,8 +28,9 @@ indistinctly.}
 \description{
 This is a generalised form of \code{[[} which allows you to index deeply
 and flexibly into data structures. It supports R standard accessors
-like integer positions and string names and accepts any accessor
-functions.
+like integer positions and string names, and also accepts arbitrary
+accessor functions, i.e. functions that take an object and return
+some internal piece.
 
 \code{pluck()} is often more readable than a mix of operators and
 accessors because it reads linearly and is free of syntactic
@@ -34,12 +38,19 @@ cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo"
 
 [[` which allows you to index deeply
 and flexibly into data structures. It supports R standard accessors
-like integer positions and string names and accepts any accessor
-functions.
+like integer positions and string names, and also accepts arbitrary
+accessor functions, i.e. functions that take an object and return
+some internal piece.
 
 \code{pluck()} is often more readable than a mix of operators and
 accessors because it reads linearly and is free of syntactic
-cruft. Compare: `accessor(x[[1]: R:[%60%20which%20allows%20you%20to%20index%20deeply%0Aand%20flexibly%20into%20data%20structures.%20It%20supports%20R%20standard%20accessors%0Alike%20integer%20positions%20and%20string%20names%20and%20accepts%20any%20accessor%0Afunctions.%0A%0A%60pluck()%60%20is%20often%20more%20readable%20than%20a%20mix%20of%20operators%20and%0Aaccessors%20because%20it%20reads%20linearly%20and%20is%20free%20of%20syntactic%0Acruft.%20Compare:%20%60accessor(x[[1
+cruft. Compare: `accessor(x[[1]: R:[%60%20which%20allows%20you%20to%20index%20deeply%0Aand%20flexibly%20into%20data%20structures.%20It%20supports%20R%20standard%20accessors%0Alike%20integer%20positions%20and%20string%20names,%20and%20also%20accepts%20arbitrary%0Aaccessor%20functions,%20i.e.%20functions%20that%20take%20an%20object%20and%20return%0Asome%20internal%20piece.%0A%0A%60pluck()%60%20is%20often%20more%20readable%20than%20a%20mix%20of%20operators%20and%0Aaccessors%20because%20it%20reads%20linearly%20and%20is%20free%20of%20syntactic%0Acruft.%20Compare:%20%60accessor(x[[1
+}
+\details{
+Since it handles arbitrary accessor functions, \code{pluck()} is a type
+of composition operator. However, it is indexing-oriented thanks to
+its handling of strings and integers. By the same token is also
+explicit regarding the intent of the composition (e.g. extraction).
 }
 \examples{
 # pluck() supports integer positions, string names, and functions.
@@ -57,7 +68,9 @@ pluck(x, 1, my_element)
 pluck(x, 2, my_element)
 
 # Even for this simple data structure, this is more readable than
-# the alternative form:
+# the alternative form because it requires you to read both from
+# right-to-left and from left-to-right in different parts of the
+# expression:
 my_element(x[[1]])
 
 

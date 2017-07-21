@@ -65,17 +65,28 @@ as_function <- function(...) {
 #'
 #' This is a generalised form of `[[` which allows you to index deeply
 #' and flexibly into data structures. It supports R standard accessors
-#' like integer positions and string names and accepts any accessor
-#' functions.
+#' like integer positions and string names, and also accepts arbitrary
+#' accessor functions, i.e. functions that take an object and return
+#' some internal piece.
 #'
 #' `pluck()` is often more readable than a mix of operators and
 #' accessors because it reads linearly and is free of syntactic
 #' cruft. Compare: `accessor(x[[1]])$foo` to `pluck(x, 1, accessor,
 #' "foo")`.
 #'
+#' @details
+#'
+#' Since it handles arbitrary accessor functions, `pluck()` is a type
+#' of composition operator. However, it is indexing-oriented thanks to
+#' its handling of strings and integers. By the same token is also
+#' explicit regarding the intent of the composition (e.g. extraction).
+#'
 #' @param .x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
-#'   an integer position, a string name, or an accessor function.
+#'   an integer position, a string name, or an accessor function. If
+#'   the object being indexed is an S4 object, accessing it by name
+#'   will return the corresponding slot.
+#'
 #'   These dots [splice lists automatically][rlang::dots_splice]. This
 #'   means you can supply arguments and lists of arguments
 #'   indistinctly.
@@ -98,7 +109,9 @@ as_function <- function(...) {
 #' pluck(x, 2, my_element)
 #'
 #' # Even for this simple data structure, this is more readable than
-#' # the alternative form:
+#' # the alternative form because it requires you to read both from
+#' # right-to-left and from left-to-right in different parts of the
+#' # expression:
 #' my_element(x[[1]])
 #'
 #'
