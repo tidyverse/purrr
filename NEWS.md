@@ -4,8 +4,11 @@
 
 We noticed the following issues during reverse dependencies checks:
 
-* The reduce functions now issue an error when the input is empty and
-  `.init` is not supplied.
+* If `reduce()` fails with this message: ``Error: `.x` is empty, and
+  no `.init` supplied``, this is because `reduce()` now returns
+  `.init` when `.x` is empty. Fix the problem by supplying an
+  appropriate argument to `.init`, or by providing special behaviour
+  when `.x` has length 0.
 
 * The type predicates have been migrated to rlang. Consequently the
   `bare-type-predicates` documentation topic is no longer in purrr,
