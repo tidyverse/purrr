@@ -28,8 +28,12 @@ purrr and dplyr:
 * Recursive indexing can now extract objects out of environments (#213) and
   S4 objects (#200), as well as lists.
 
-* `get_attr()` makes it possible to extract from attributes
-  like `map(list(iris, mtcars), get_attr("row.names"))`.
+* `attr_getter()` makes it possible to extract from attributes
+  like `map(list(iris, mtcars), attr_getter("row.names"))`.
+
+* The plucking mechanism used for indexing into data structures with
+  `map()` has been extracted into the function `pluck()`. You can use
+  it just like `map()`: `pluck(x, list(2, "name", attr_getter("myattr")))`.
 
 * The argument list for formula-functions has been tweaked so that you can
   refer to arguments by position with `..1`, `..2`, and so on. This makes it
