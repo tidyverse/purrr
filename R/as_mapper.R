@@ -164,8 +164,7 @@ find_extract_default <- function(.null, .default) {
 }
 
 plucker <- function(i, default) {
-  stopifnot(is.list(i))
-
+  # Interpolation creates a closure with a more readable source
   expr_interp(function(x, ...)
     pluck(x, !! i, .default = !! default)
   )
