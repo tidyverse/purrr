@@ -101,6 +101,17 @@ test_that("can pluck attributes", {
   expect_equal(pluck(x, list(1, attr_getter("x"))), 1)
 })
 
+test_that("attr_getter() evaluates eagerly", {
+  getters <- list_len(2)
+  attrs <- c("foo", "bar")
+  for (i in seq_along(attrs)) {
+    getters[[i]] <- attr_getter(attrs[[i]])
+  }
+
+  x <- set_attrs(list(), foo = "foo", bar = "bar")
+  expect_identical(getters[[1]](x), "foo")
+})
+
 test_that("delegate error handling to Rf_eval()", {
   expect_error(pluck(letters, list(function() NULL)), "unused argument")
   expect_error(pluck(letters, list(function(x, y) y)), "missing, with no default")

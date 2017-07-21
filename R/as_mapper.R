@@ -140,6 +140,7 @@ pluck <- function(.x, ..., .default = NULL) {
 #' @rdname pluck
 #' @param attr An attribute name as string.
 attr_getter <- function(attr) {
+  force(attr)
   function(x) attr(x, attr)
 }
 
