@@ -1,5 +1,17 @@
 # purrr 0.2.2.9000
 
+## Breaking changes
+
+We noticed the following issues during reverse dependencies checks:
+
+* The reduce functions now issue an error when the input is empty and
+  `.init` is not supplied.
+
+* The type predicates have been migrated to rlang. Consequently the
+  `bare-type-predicates` documentation topic is no longer in purrr,
+  which might cause a warning if you cross-reference it.
+
+
 ## Dependencies
 
 purrr no longer depends on lazyeval or Rcpp (or dplyr, as of the
