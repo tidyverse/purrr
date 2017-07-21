@@ -1,9 +1,5 @@
 context("pluck")
 
-test_that("index must be a list", {
-  expect_error(pluck(1:10, 1), "must be a list")
-})
-
 test_that("contents must be a vector", {
   expect_error(pluck(quote(x), list(1)), "Don't know how to pluck")
 })

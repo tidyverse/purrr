@@ -61,12 +61,25 @@ as_function <- function(...) {
 
 #' Pluck out a single an element from a vector or environment
 #'
-#' This is a generalised form of `[[` which allows you to index by
-#' name, position, or attribute.
+#' @description
 #'
-#' @param x A vector or environment
-#' @param index A list indexing into the object
-#' @param default Value to use if target is empty or absent.
+#' This is a generalised form of `[[` which allows you to index deeply
+#' and flexibly into data structures. It supports R standard accessors
+#' like integer positions and string names and accepts any accessor
+#' functions.
+#'
+#' `pluck()` is often more readable than a mix of operators and
+#' accessors because it reads linearly and is free of syntactic
+#' cruft. Compare: `accessor(x[[1]])$foo` to `pluck(x, 1, accessor,
+#' "foo")`.
+#'
+#' @param .x A vector or environment
+#' @param ... A list of accessors for indexing into the object. Can be
+#'   an integer position, a string name, or an accessor function.
+#'   These dots [splice lists automatically][rlang::dots_splice]. This
+#'   means you can supply arguments and lists of arguments
+#'   indistinctly.
+#' @param .default Value to use if target is empty or absent.
 #' @keywords internal
 #' @export
 #' @examples
@@ -81,8 +94,12 @@ as_function <- function(...) {
 #' my_element <- function(x) x[[2]]$elt
 #'
 #' # The accessor can then be passed to pluck:
-#' pluck(x, list(1, my_element))
-#' pluck(x, list(2, my_element))
+#' pluck(x, 1, my_element)
+#' pluck(x, 2, my_element)
+#'
+#' # Even for this simple data structure, this is more readable than
+#' # the alternative form:
+#' my_element(x[[1]])
 #'
 #'
 #' # This technique is used for plucking into attributes with
@@ -94,10 +111,16 @@ as_function <- function(...) {
 #'
 #' # pluck() is handy for extracting deeply into a data structure.
 #' # Here we'll first extract by position, then by attribute:
-#' pluck(x, list(1, attr_getter("obj_attr")))  # From first object
-#' pluck(x, list(2, attr_getter("obj_attr")))  # From second object
-pluck <- function(x, index, default = NULL) {
-  .Call(extract_impl, x, index, default)
+#' pluck(x, 1, attr_getter("obj_attr"))  # From first object
+#' pluck(x, 2, attr_getter("obj_attr"))  # From second object
+#'
+#'
+#' # pluck() splices lists of arguments automatically. The following
+#' # pluck is equivalent to the one above:
+#' idx <- list(1, attr_getter("obj_attr"))
+#' pluck(x, idx)
+pluck <- function(.x, ..., .default = NULL) {
+  .Call(extract_impl, .x, dots_splice(...), .default)
 }
 
 #' @export
@@ -144,7 +167,7 @@ plucker <- function(i, default) {
   stopifnot(is.list(i))
 
   expr_interp(function(x, ...)
-    pluck(x, !!(i), default = !!(default))
+    pluck(x, !! i, .default = !! default)
   )
 }
 

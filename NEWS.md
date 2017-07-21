@@ -18,6 +18,25 @@ purrr and dplyr:
   dplyr (#217).
 
 
+## pluck()
+
+The plucking mechanism used for indexing into data structures with
+`map()` has been extracted into the function `pluck()`. Plucking is
+often more readable to extract an element buried in a deep data
+structure. Compare this syntax-heavy extraction which reads
+non-linearly:
+
+```
+accessor(x[[1]])$foo
+```
+
+to the equivalent pluck:
+
+```
+pluck(x, 1, accessor, "foo")
+```
+
+
 ## Map helpers
 
 * `as_function()` is now `as_mapper()` because it is a tranformation that
@@ -30,10 +49,6 @@ purrr and dplyr:
 
 * `attr_getter()` makes it possible to extract from attributes
   like `map(list(iris, mtcars), attr_getter("row.names"))`.
-
-* The plucking mechanism used for indexing into data structures with
-  `map()` has been extracted into the function `pluck()`. You can use
-  it just like `map()`: `pluck(x, list(2, "name", attr_getter("myattr")))`.
 
 * The argument list for formula-functions has been tweaked so that you can
   refer to arguments by position with `..1`, `..2`, and so on. This makes it
