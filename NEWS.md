@@ -1,4 +1,4 @@
-# purrr 0.2.2.9000
+# purrr 0.2.3
 
 ## Breaking changes
 
