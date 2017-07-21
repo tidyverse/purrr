@@ -101,7 +101,6 @@ SEXP extract_env(SEXP x, SEXP index_i, int i) {
   return (out == R_UnboundValue) ? R_NilValue : out;
 }
 
-
 SEXP extract_attr(SEXP x, SEXP index_i, int i) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
     Rf_errorcall(R_NilValue, "Index %i is not a string", i + 1);
@@ -115,6 +114,14 @@ SEXP extract_attr(SEXP x, SEXP index_i, int i) {
   return Rf_getAttrib(x, sym);
 }
 
+SEXP extract_clo(SEXP x, SEXP clo) {
+  SEXP expr = PROTECT(Rf_lang2(clo, x));
+  SEXP out = Rf_eval(expr, R_EmptyEnv);
+
+  UNPROTECT(1);
+  return out;
+}
+
 SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   if (TYPEOF(index) != VECSXP) {
     Rf_errorcall(R_NilValue, "`index` must be a list (not a %s)",
@@ -126,8 +133,8 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing) {
   for (int i = 0; i < n; ++i) {
     SEXP index_i = VECTOR_ELT(index, i);
 
-    if (Rf_inherits(index_i, "attr")) {
-      x = extract_attr(x, index_i, i);
+    if (TYPEOF(index_i) == CLOSXP) {
+      x = extract_clo(x, index_i);
     } else {
       if (Rf_isNull(x)) {
         return missing;

@@ -1,9 +1,5 @@
 context("pluck")
 
-test_that("index must be a list", {
-  expect_error(pluck(1:10, 1), "must be a list")
-})
-
 test_that("contents must be a vector", {
   expect_error(pluck(quote(x), list(1)), "Don't know how to pluck")
 })
@@ -87,7 +83,8 @@ test_that("handles weird names", {
   expect_null(pluck(x, list(NA_character_)))
 })
 
-# attributes --------------------------------------------------------------
+
+# closures ----------------------------------------------------------------
 
 test_that("can pluck attributes", {
   x <- structure(
@@ -100,9 +97,26 @@ test_that("can pluck attributes", {
     y = 2
   )
 
-  expect_equal(pluck(x, list(get_attr("y"))), 2)
-  expect_equal(pluck(x, list(1, get_attr("x"))), 1)
+  expect_equal(pluck(x, list(attr_getter("y"))), 2)
+  expect_equal(pluck(x, list(1, attr_getter("x"))), 1)
 })
+
+test_that("attr_getter() evaluates eagerly", {
+  getters <- list_len(2)
+  attrs <- c("foo", "bar")
+  for (i in seq_along(attrs)) {
+    getters[[i]] <- attr_getter(attrs[[i]])
+  }
+
+  x <- set_attrs(list(), foo = "foo", bar = "bar")
+  expect_identical(getters[[1]](x), "foo")
+})
+
+test_that("delegate error handling to Rf_eval()", {
+  expect_error(pluck(letters, list(function() NULL)), "unused argument")
+  expect_error(pluck(letters, list(function(x, y) y)), "missing, with no default")
+})
+
 
 # environments ------------------------------------------------------------
 
