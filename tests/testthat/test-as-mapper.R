@@ -44,6 +44,11 @@ test_that("Additional arguments are ignored", {
   expect_equal(as_mapper(function() NULL, foo = "bar", foobar), function() NULL)
 })
 
+test_that("can supply length > 1 vectors", {
+  expect_identical(as_mapper(1:2)(list(list("a", "b"))), "b")
+  expect_identical(as_mapper(c("a", "b"))(list(a = list("a", b = "b"))), "b")
+})
+
 
 # primitive functions --------------------------------------------------
 
