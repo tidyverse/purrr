@@ -3,18 +3,12 @@
 \name{as_mapper}
 \alias{as_mapper}
 \alias{as_function}
-\alias{get_attr}
-\alias{as_mapper.attr}
 \alias{as_mapper.character}
 \alias{as_mapper.numeric}
 \alias{as_mapper.list}
 \title{Convert an object into a mapper function}
 \usage{
 as_mapper(.f, ...)
-
-get_attr(x)
-
-\method{as_mapper}{attr}(.f, ..., .null, .default = NULL)
 
 \method{as_mapper}{character}(.f, ..., .null, .default = NULL)
 
@@ -46,8 +40,6 @@ to extract named attributes. If a component is not present, the value of
 
 \item{...}{Additional arguments passed on to methods.}
 
-\item{x}{A string}
-
 \item{.default, .null}{Optional additional argument for extractor functions
 (i.e. when \code{.f} is character, integer, or list). Returned when
 value is absent (does not exist) or empty (has length 0).
@@ -69,7 +61,7 @@ as_mapper(c("a", "b", "c"))
 as_mapper(list(1, "a", 2))
 # Equivalent to function(x) x[[1]][["a"]][[2]]
 
-as_mapper(list(1, get_attr("a")))
+as_mapper(list(1, attr_getter("a")))
 # Equivalent to function(x) attr(x[[1]], "a")
 
 as_mapper(c("a", "b", "c"), .null = NA)

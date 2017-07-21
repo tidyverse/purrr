@@ -87,7 +87,8 @@ test_that("handles weird names", {
   expect_null(pluck(x, list(NA_character_)))
 })
 
-# attributes --------------------------------------------------------------
+
+# closures ----------------------------------------------------------------
 
 test_that("can pluck attributes", {
   x <- structure(
@@ -100,9 +101,15 @@ test_that("can pluck attributes", {
     y = 2
   )
 
-  expect_equal(pluck(x, list(get_attr("y"))), 2)
-  expect_equal(pluck(x, list(1, get_attr("x"))), 1)
+  expect_equal(pluck(x, list(attr_getter("y"))), 2)
+  expect_equal(pluck(x, list(1, attr_getter("x"))), 1)
 })
+
+test_that("delegate error handling to Rf_eval()", {
+  expect_error(pluck(letters, list(function() NULL)), "unused argument")
+  expect_error(pluck(letters, list(function(x, y) y)), "missing, with no default")
+})
+
 
 # environments ------------------------------------------------------------
 
