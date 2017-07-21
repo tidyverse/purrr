@@ -36,6 +36,9 @@ some internal piece.
 accessors because it reads linearly and is free of syntactic
 cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo")}.
 
+Furthermore, \code{pluck()} never partial-matches unlike \code{$} which will
+select the \code{disp} object if you write \code{mtcars$di}.
+
 [[` which allows you to index deeply
 and flexibly into data structures. It supports R standard accessors
 like integer positions and string names, and also accepts arbitrary

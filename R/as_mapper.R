@@ -74,6 +74,9 @@ as_function <- function(...) {
 #' cruft. Compare: `accessor(x[[1]])$foo` to `pluck(x, 1, accessor,
 #' "foo")`.
 #'
+#' Furthermore, `pluck()` never partial-matches unlike `$` which will
+#' select the `disp` object if you write `mtcars$di`.
+#'
 #' @details
 #'
 #' Since it handles arbitrary accessor functions, `pluck()` is a type
