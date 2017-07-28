@@ -1,4 +1,19 @@
-# purrr 0.2.2.9000
+# purrr 0.2.3
+
+## Breaking changes
+
+We noticed the following issues during reverse dependencies checks:
+
+* If `reduce()` fails with this message: ``Error: `.x` is empty, and
+  no `.init` supplied``, this is because `reduce()` now returns
+  `.init` when `.x` is empty. Fix the problem by supplying an
+  appropriate argument to `.init`, or by providing special behaviour
+  when `.x` has length 0.
+
+* The type predicates have been migrated to rlang. Consequently the
+  `bare-type-predicates` documentation topic is no longer in purrr,
+  which might cause a warning if you cross-reference it.
+
 
 ## Dependencies
 
@@ -43,6 +58,12 @@ x %>% pluck(1, accessor, "foo")
   makes sense primarily for mapping functions, not in general (#298).
   `.null` has been renamed to `.default` to better reflect its intent (#298).
   `.default` is returned whenever an element is absent or empty (#231, #254).
+
+  `as_mapper()` sanitises primitive functions by transforming them to
+  closures with standardised argument names (using `rlang::as_closure()`).
+  For instance `+` is transformed to `function(.x, .y) .x + .y`. This
+  results in proper argument matching so that `map(1:10, partial(`-`,
+  .x = 5))` produces `list(5 - 1, 5 - 2, ...)`.
 
 * Recursive indexing can now extract objects out of environments (#213) and
   S4 objects (#200), as well as lists.
@@ -139,7 +160,7 @@ of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
   comes from.
 
 * `is_numeric()` and `is_scalar_numeric()` are deprecated because they
-  don't test for what you might naively expect.
+  don't test for what you might expect at first sight.
 
 * `reduce()` now throws an error if `.x` is empty and `.init` is not
   supplied.

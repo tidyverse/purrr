@@ -21,6 +21,28 @@ Version: 0.1.0
     Execution halted
     ```
 
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+         })
+      9: reduce_impl(.x, .f, ..., .init = .init, .left = TRUE)
+      10: reduce_init(.x, .init, left = .left)
+      11: stop("`.x` is empty, and no `.init` supplied", call. = FALSE)
+      
+      testthat results ================================================================
+      OK: 6 SKIPPED: 0 FAILED: 5
+      1. Error: add_predictors() combines predictors (@test-formulas.R#5) 
+      2. Error: add_predictors() combines with fun (@test-formulas.R#9) 
+      3. Error: add_predictors() handles lhss (@test-formulas.R#13) 
+      4. Error: merge_formula() handles lhss (@test-formulas.R#18) 
+      5. Error: formulas() combines the lhs (@test-formulas.R#47) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
 ## In both
 
 *   checking dependencies in R code ... NOTE
@@ -50,49 +72,6 @@ Version: 0.1.3
     Quitting from lines 112-115 (modeval.Rmd) 
     Error: processing vignette 'modeval.Rmd' failed with diagnostics:
     the argument has already been evaluated
-    Execution halted
-    ```
-
-# phylopath
-
-Version: 0.2.3
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘phylopath-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: average
-    > ### Title: Extract and average the best supported models from a
-    > ###   phylogenetic path analysis.
-    > ### Aliases: average
-    > 
-    > ### ** Examples
-    > 
-    >   candidates <- list(A = DAG(LS ~ BM, NL ~ BM, DD ~ NL + LS),
-    +                      C = DAG(LS ~ BM, NL ~ LS + BM, DD ~ NL))
-    >   p <- phylo_path(candidates, rhino, rhino_tree)
-    Error: Fitting the following model:
-        DD ~ NL + LS + BM 
-    produced this error:
-        Error in nlme::gls(..., correlation = cor_fun(par, .x)): 
-    model must be a formula of the form "resp ~ pred"
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 85-87 (intro_to_phylopath.Rmd) 
-    Error: processing vignette 'intro_to_phylopath.Rmd' failed with diagnostics:
-    Fitting the following model:
-        DD ~ NL + BM 
-    produced this error:
-        Error in nlme::gls(..., correlation = cor_fun(par, .x)): 
-    model must be a formula of the form "resp ~ pred"
     Execution halted
     ```
 
@@ -131,6 +110,34 @@ Version: 0.52.00
     Error: processing vignette 'intro.Rmd' failed with diagnostics:
     non-numeric argument to binary operator
     Execution halted
+    ```
+
+# tatoo
+
+Version: 1.0.6
+
+## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      tres2 <- stack_table_list(list(t_mash_1, t_comp_3, t_df1), meta = t_meta_verbose) produced warnings.
+      
+      
+      3. Failure: Tagged_table constructors work (@test_Tagged_table.R#37) -----------
+      tres <- stack_table(t_df1, t_df2, meta = t_meta_simple) produced warnings.
+      
+      
+      testthat results ================================================================
+      OK: 116 SKIPPED: 0 FAILED: 3
+      1. Failure: Stacked_table works as expected (@test_Stacked_table.R#11) 
+      2. Failure: Stacked_table works as expected (@test_Stacked_table.R#19) 
+      3. Failure: Tagged_table constructors work (@test_Tagged_table.R#37) 
+      
+      Error: testthat unit tests failed
+      Execution halted
     ```
 
 # tidyquant
@@ -193,6 +200,28 @@ Version: 0.5.1
 
 ## In both
 
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      testthat results ================================================================
+      OK: 139 SKIPPED: 0 FAILED: 14
+      1. Failure: Test 1 returns tibble with correct rows and columns. (@test_tq_get_compound_getters.R#24) 
+      2. Failure: Test 2 returns tibble with correct rows and columns. (@test_tq_get_compound_getters.R#33) 
+      3. Failure: Test 3 returns tibble with correct rows and columns. (@test_tq_get_compound_getters.R#42) 
+      4. Failure: Test prints warning message on invalid x input. (@test_tq_get_compound_getters.R#62) 
+      5. Error: Test prints warning message on invalid x input. (@test_tq_get_dividends.R#23) 
+      6. Error: Test returns NA on invalid x input. (@test_tq_get_dividends.R#27) 
+      7. Failure: Test returns tibble with correct rows and columns. (@test_tq_get_exchange_rates.R#25) 
+      8. Failure: Test returns tibble with correct rows and columns. (@test_tq_get_metal_prices.R#26) 
+      9. Failure: Test prints warning message on invalid x input. (@test_tq_get_splits.R#23) 
+      1. ...
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
@@ -205,6 +234,28 @@ Version: 0.5.1
 Version: 0.1.0
 
 ## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      1. Failure: error raised when .f is not a closure (@test-firmly.R#12) ----------
+      firmly(f) did not throw an error.
+      
+      
+      2. Failure: error raised when .f not a closure (@test-loosely.R#10) ------------
+      loosely(f) did not throw an error.
+      
+      
+      testthat results ================================================================
+      OK: 3695 SKIPPED: 0 FAILED: 2
+      1. Failure: error raised when .f is not a closure (@test-firmly.R#12) 
+      2. Failure: error raised when .f not a closure (@test-loosely.R#10) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
 
 *   checking Rd cross-references ... WARNING
     ```
