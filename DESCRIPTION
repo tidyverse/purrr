@@ -2,8 +2,8 @@ Package: purrr
 Title: Functional Programming Tools
 Version: 0.2.3
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
-    person("Lionel", "Henry", , "lionel.hry@gmail.com", "ctb"),
+    person("Lionel", "Henry", , "lionel@rstudio.com", c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
     person("RStudio", role = c("cph", "fnd"))
     )
 Description: A complete and consistent functional programming toolkit for R.

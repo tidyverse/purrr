@@ -18,11 +18,15 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Hadley Wickham \email{hadley@rstudio.com}
+\strong{Maintainer}: Lionel Henry \email{lionel@rstudio.com}
+
+Authors:
+\itemize{
+  \item Hadley Wickham \email{hadley@rstudio.com}
+}
 
 Other contributors:
 \itemize{
-  \item Lionel Henry \email{lionel.hry@gmail.com} [contributor]
   \item RStudio [copyright holder, funder]
 }
 
