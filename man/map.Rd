@@ -152,11 +152,11 @@ mtcars \%>\% map(sum)
 mtcars \%>\% map_dbl(sum)
 
 # If each element of the output is a data frame, use
-# map_df to row-bind them together:
+# map_dfr to row-bind them together:
 mtcars \%>\%
   split(.$cyl) \%>\%
   map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map_df(~ as.data.frame(t(as.matrix(coef(.)))))
+  map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
 }
