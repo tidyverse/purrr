@@ -21,10 +21,29 @@ test_that("partial() works with no partialised arguments", {
 })
 
 test_that("lazy evaluation means arguments aren't repeatedly evaluated", {
-  f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+  f <- partial(runif, n = !! rpois(1, 5))
   .n <- 100
   v <- map_int(rerun(.n, f()), length)
   expect_true(table(v) == .n)
+})
+
+test_that("partialised arguments can be unquoted", {
+  zero <- 0
+  foo <- function(x, y) list(x, y)
+  foo_partial <- partial(foo, x = !! zero)
+  zero <- "reassignment cannot affect a previously unquoted object"
+  expect_identical(foo_partial("y"), list(0, "y"))
+})
+
+test_that("partialised arguments can be spliced", {
+  foo <- function(x, y, z) list(x, y, z)
+  bar1 <- partial(foo, x = "x", z = "z")
+  bar2 <- partial(foo, !!! list(x = "x", z = "z"))
+  bar3 <- partial(foo, !!! list(x = "x"), z = "z")
+  list("x", "y", "z") %>%
+    expect_identical(bar1("y")) %>%
+    expect_identical(bar2("y")) %>%
+    expect_identical(bar3("y"))
 })
 
 # fixes #349
@@ -35,3 +54,7 @@ test_that("calling environment of ...f and partial(...f, ...) coincide", {
   expect_identical(env1, env2)
 })
 
+test_that("'.env' and '.lazy' are deprecated", {
+  expect_error(partial(identical, .env = NULL), "`.env` is deprecated")
+  expect_error(partial(identical, .lazy = NULL), "`.lazy` is deprecated")
+})
