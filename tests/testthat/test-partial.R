@@ -1,23 +1,49 @@
 context("partial")
 
-test_that("dots are correctly placed in the signature", {
-  dots_last_actual <- call("runif", n = call("rpois", 1, 5), quote(...))
-  dots_last_alleged <- partial(runif, n = rpois(1, 5)) %>% body()
-  expect_identical(dots_last_actual, dots_last_alleged)
+test_that("partialised arguments are filled", {
+  foo <- function(x, y, ..., z = 0) list(x, y, ..., z)
 
-  # Also tests that argument names are not eaten when .dots_first = TRUE
-  dots_first_actual <- call("runif", quote(...), n = call("rpois", 1, 5))
-  dots_first_alleged <- partial(runif, n = rpois(1, 5), .first = FALSE) %>%
-    body()
-  expect_identical(dots_first_actual, dots_first_alleged)
+  expect_equal(
+    partial(foo, x = "x")(1, 2),
+    list("x", 1, 2, 0)
+  )
+  expect_equal(
+    partial(foo, y = "y")(1, 2),
+    list(1, "y", 2, 0)
+  )
+  expect_equal(
+    partial(foo, z = "z")(1, 2),
+    list(1, 2, "z")
+  )
+  expect_equal(
+    partial(foo, x = "x", y = "y")(),
+    list("x", "y", 0)
+  )
+  expect_equal(
+    partial(foo, x = "x", z = "z")(1, 2),
+    list("x", 1, 2, "z")
+  )
+  expect_equal(
+    partial(foo, y = "y", z = "z")(1, 2),
+    list(1, "y", 2, "z")
+  )
+  expect_equal(
+    partial(foo, x = "x", y = "y", z = "z")(1, 2),
+    list("x", "y", 1, 2, "z")
+  )
+})
+
+test_that("position of partialised argument in call is determined by .first", {
+  foo <- function(x, y) c(x, y)
+  expect_identical(partial(foo, 0, .first = TRUE)(1), c(0, 1))
+  expect_identical(partial(foo, 0, .first = FALSE)(1), c(1, 0))
 })
 
 test_that("partial() works with no partialised arguments", {
-  actual <- call("runif", quote(...))
-  alleged1 <- partial(runif, .first = TRUE) %>% body()
-  alleged2 <- partial(runif, .first = FALSE) %>% body()
-  expect_identical(actual, alleged1)
-  expect_identical(actual, alleged2)
+  alleged1 <- partial(runif, .first = TRUE)
+  alleged2 <- partial(runif, .first = FALSE)
+  expect_identical(alleged1, runif)
+  expect_identical(alleged2, runif)
 })
 
 test_that("lazy evaluation means arguments aren't repeatedly evaluated", {
