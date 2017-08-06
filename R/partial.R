@@ -55,33 +55,49 @@
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
-partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE,
-                    .first = TRUE) {
-  stopifnot(is.function(...f))
+#'
+partial <- function(...f, ..., .first = TRUE, .env, .lazy) {
+  if (!missing(.env))
+    abort("`.env` is deprecated")
+  if (!missing(.lazy))
+    abort("`.lazy` is deprecated; use unquoting to enforce eager evaluation")
 
-  if (.lazy) {
-    fcall <- substitute(...f(...))
-  } else {
-    fcall <- make_call(substitute(...f), .args = list(...))
+  f <- as_closure(...f)
+  args <- quos(...)
+
+  if (is_empty(args))
+    return(f)
+
+  `__subst_args` <- function(call) {
+    vals <- lapply(args, eval_tidy)
+    subst_vals(call, vals)
   }
+  if (.first)
+    subst_vals <- function(call, vals) as.call(c(f, vals, node_cdr(call)))
+  else
+    subst_vals <- function(call, vals) as.call(c(f, node_cdr(call), vals))
 
-  # Pass on ... from parent function
-  n <- length(fcall)
-  if (!.first && n > 1) {
-    tmp <- fcall[1]
-    tmp[[2]] <- quote(...)
-    tmp[seq(3, n + 1)] <- fcall[seq(2, n)]
-    names(tmp)[seq(3, n + 1)] <- names2(fcall)[seq(2, n)]
-    fcall <- tmp
-  } else {
-    fcall[[n + 1]] <- quote(...)
-  }
-
-  args <- list("..." = quote(expr = ))
-  new_function(args, fcall, .env)
+  set_attrs(
+    function(...) {
+      call <- `__subst_args`(sys.call())
+      eval_bare(call, parent.frame())
+    },
+    class = "partial_function"
+  )
 }
 
-make_call <- function(f, ..., .args = list()) {
-  if (is.character(f)) f <- as.name(f)
-  as.call(c(f, ..., .args))
+#' @export
+print.partial_function <- function(x, ...) {
+  cat("<partial_function>\n")
+  cat("\n* Default values:\n")
+  cat(itemize_vals(environment(x)$args), "\n", sep = "")
+  cat("\n* Original function:\n")
+  print(environment(x)$f)
+  invisible(x)
+}
+itemize_vals <- function(args) {
+  vals <- lapply(args, quo_expr)
+  nms <- names(vals)
+  nms[nzchar(nms)] <- sprintf("%s = ", nms[nzchar(nms)])
+  paste(paste0(nms, vals), collapse = "\n")
 }
