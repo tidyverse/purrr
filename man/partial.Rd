@@ -4,29 +4,36 @@
 \alias{partial}
 \title{Partial apply a function, filling in some arguments.}
 \usage{
-partial(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE)
+partial(...f, ..., .first = TRUE, .env, .lazy)
 }
 \arguments{
-\item{...f}{a function. For the output source to read well, this should be a
-named function.}
+\item{...f}{a function.}
 
-\item{...}{named arguments to \code{...f} that should be partially applied.}
-
-\item{.env}{the environment of the created function. Defaults to
-\code{\link[=parent.frame]{parent.frame()}} and you should rarely need to modify this.}
-
-\item{.lazy}{If \code{TRUE} arguments evaluated lazily, if \code{FALSE},
-evaluated when \code{partial} is called.}
+\item{...}{named arguments to \code{...f} that should be partially applied.
+\link[rlang:UQ]{Unquoting and splicing} semantics are supported, see
+\emph{Examples}.}
 
 \item{.first}{If \code{TRUE}, the partialized arguments are placed
 to the front of the function signature. If \code{FALSE}, they are
 moved to the back. Only useful to control position matching of
 arguments when the partialized arguments are not named.}
+
+\item{.env}{Deprecated, see \emph{Details}.}
+
+\item{.lazy}{Deprecated, see \emph{Details}.}
 }
 \description{
 Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.
+}
+\details{
+Partialized arguments are captured as \link[rlang:quo]{quosures}, and
+are \link[rlang:eval_tidy]{tidily evaluated}, when \code{...f} is partially
+applied. (Therefore, the \code{.env} argument is obsolete.) To fix the value of
+a partially applied argument at the point where \code{partial()} is called,
+unquote it with the \code{\link[rlang:UQ]{!!}} operator. (Previously, lazy
+evaluation was controlled by the \code{.lazy} flag.)
 }
 \section{Design choices}{
 
@@ -46,9 +53,9 @@ compact1 <- function(x) discard(x, is.null)
 # we can write:
 compact2 <- partial(discard, .p = is.null)
 
-# and the generated source code is very similar to what we made by hand
-compact1
+# When printed, the partialized arguments and original function are shown:
 compact2
+compact1
 
 # Note that the evaluation occurs "lazily" so that arguments will be
 # repeatedly evaluated
@@ -57,16 +64,23 @@ f
 f()
 f()
 
-# You can override this by saying .lazy = FALSE
-f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+# You can override this by unquoting:
+f <- partial(runif, n = !! rpois(1, 5))
 f
 f()
 f()
 
-# This also means that partial works fine with functions that do
-# non-standard evaluation
+# Partialized arguments can be spliced:
+args <- list(n = rpois(1, 5))
+f <- partial(runif, !!! args)
+f
+f()
+f()
+
+# partial() works fine with functions that do non-standard evaluation
 my_long_variable <- 1:10
 plot2 <- partial(plot, my_long_variable)
 plot2()
 plot2(runif(10), type = "l")
+
 }
