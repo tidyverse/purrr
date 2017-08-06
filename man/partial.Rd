@@ -18,9 +18,7 @@ to the front of the function signature. If \code{FALSE}, they are
 moved to the back. Only useful to control position matching of
 arguments when the partialized arguments are not named.}
 
-\item{.env}{Deprecated, see \emph{Details}.}
-
-\item{.lazy}{Deprecated, see \emph{Details}.}
+\item{.env, .lazy}{Deprecated, see \emph{Details}.}
 }
 \description{
 Partial function application allows you to modify a function by pre-filling

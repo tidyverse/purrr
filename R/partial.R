@@ -16,12 +16,11 @@
 #' @param ... named arguments to `...f` that should be partially applied.
 #'   [Unquoting and splicing][rlang::UQ()] semantics are supported, see
 #'   _Examples_.
-#' @param .env Deprecated, see _Details_.
-#' @param .lazy Deprecated, see _Details_.
 #' @param .first If `TRUE`, the partialized arguments are placed
 #'   to the front of the function signature. If `FALSE`, they are
 #'   moved to the back. Only useful to control position matching of
 #'   arguments when the partialized arguments are not named.
+#' @param .env,.lazy Deprecated, see _Details_.
 #'
 #' @details Partialized arguments are captured as [quosures][rlang::quo()], and
 #'   are [tidily evaluated][rlang::eval_tidy()], when `...f` is partially
