@@ -26,3 +26,12 @@ test_that("lazy evaluation means arguments aren't repeatedly evaluated", {
   v <- map_int(rerun(.n, f()), length)
   expect_true(table(v) == .n)
 })
+
+# fixes #349
+test_that("calling environment of ...f and partial(...f, ...) coincide", {
+  foo <- function(...) parent.frame()
+  env1 <- foo()
+  env2 <- partial(foo, "x")()
+  expect_identical(env1, env2)
+})
+
