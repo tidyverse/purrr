@@ -18,7 +18,7 @@ to the front of the function signature. If \code{FALSE}, they are
 moved to the back. Only useful to control position matching of
 arguments when the partialized arguments are not named.}
 
-\item{.env, .lazy}{Deprecated, see \emph{Details}.}
+\item{.env, .lazy}{Obsolete, see \emph{Details}.}
 }
 \description{
 Partial function application allows you to modify a function by pre-filling
@@ -26,12 +26,13 @@ some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.
 }
 \details{
-Partialized arguments are captured as \link[rlang:quo]{quosures}, and
-are \link[rlang:eval_tidy]{tidily evaluated}, when \code{...f} is partially
-applied. (Therefore, the \code{.env} argument is obsolete.) To fix the value of
-a partially applied argument at the point where \code{partial()} is called,
-unquote it with the \code{\link[rlang:UQ]{!!}} operator. (Previously, lazy
-evaluation was controlled by the \code{.lazy} flag.)
+Partialized arguments are captured as \link[rlang:quo]{quosures} (thus
+rendering the \code{.env} argument obsolete). They are
+\link[rlang:eval_tidy]{tidily evaluated} each time the partial application
+of \code{...f} is called. To fix the value of a partialized argument in the
+context where \code{partial()} is called, unquote it with the
+\code{\link[rlang:UQ]{!!}} operator. (Previously, lazy evaluation was
+controlled by the \code{.lazy} flag.)
 }
 \section{Design choices}{
 
@@ -53,7 +54,6 @@ compact2 <- partial(discard, .p = is.null)
 
 # When printed, the partialized arguments and original function are shown:
 compact2
-compact1
 
 # Note that the evaluation occurs "lazily" so that arguments will be
 # repeatedly evaluated

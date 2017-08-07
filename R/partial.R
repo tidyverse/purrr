@@ -20,14 +20,15 @@
 #'   to the front of the function signature. If `FALSE`, they are
 #'   moved to the back. Only useful to control position matching of
 #'   arguments when the partialized arguments are not named.
-#' @param .env,.lazy Deprecated, see _Details_.
+#' @param .env,.lazy Obsolete, see _Details_.
 #'
-#' @details Partialized arguments are captured as [quosures][rlang::quo()], and
-#'   are [tidily evaluated][rlang::eval_tidy()], when `...f` is partially
-#'   applied. (Therefore, the `.env` argument is obsolete.) To fix the value of
-#'   a partially applied argument at the point where `partial()` is called,
-#'   unquote it with the \code{\link[rlang:UQ]{!!}} operator. (Previously, lazy
-#'   evaluation was controlled by the `.lazy` flag.)
+#' @details Partialized arguments are captured as [quosures][rlang::quo()] (thus
+#'   rendering the `.env` argument obsolete). They are
+#'   [tidily evaluated][rlang::eval_tidy()] each time the partial application
+#'   of `...f` is called. To fix the value of a partialized argument in the
+#'   context where `partial()` is called, unquote it with the
+#'   \code{\link[rlang:UQ]{!!}} operator. (Previously, lazy evaluation was
+#'   controlled by the `.lazy` flag.)
 #'
 #' @export
 #'
@@ -41,7 +42,6 @@
 #'
 #' # When printed, the partialized arguments and original function are shown:
 #' compact2
-#' compact1
 #'
 #' # Note that the evaluation occurs "lazily" so that arguments will be
 #' # repeatedly evaluated
@@ -73,7 +73,7 @@ partial <- function(...f, ..., .first = TRUE, .env, .lazy) {
   if (!missing(.env))
     abort("`.env` is deprecated")
   if (!missing(.lazy))
-    abort("`.lazy` is deprecated; use unquoting to enforce eager evaluation")
+    abort("`.lazy` is deprecated; unquote values to evalute them immediately")
 
   f <- as_closure(...f)
   args <- quos(...)
@@ -102,7 +102,7 @@ partial <- function(...f, ..., .first = TRUE, .env, .lazy) {
 #' @export
 print.partial_function <- function(x, ...) {
   cat("<partial_function>\n")
-  cat("\n* Default values:\n")
+  cat("\n* Pre-filled arguments:\n")
   cat(itemize_vals(environment(x)$args), "\n", sep = "")
   cat("\n* Original function:\n")
   print(environment(x)$f)
