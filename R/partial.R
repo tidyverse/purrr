@@ -81,18 +81,18 @@ partial <- function(...f, ..., .first = TRUE, .env, .lazy) {
   if (is_empty(args))
     return(f)
 
-  `__subst_args` <- function(call) {
+  fill_args <- function(call) {
     vals <- lapply(args, eval_tidy)
-    subst_vals(call, vals)
+    insert_vals(vals, call)
   }
   if (.first)
-    subst_vals <- function(call, vals) as.call(c(f, vals, node_cdr(call)))
+    insert_vals <- function(vals, call) as.call(c(f, vals, node_cdr(call)))
   else
-    subst_vals <- function(call, vals) as.call(c(f, node_cdr(call), vals))
+    insert_vals <- function(vals, call) as.call(c(f, node_cdr(call), vals))
 
   set_attrs(
     function(...) {
-      call <- `__subst_args`(sys.call())
+      call <- fill_args(sys.call())
       eval_bare(call, parent.frame())
     },
     class = "partial_function"
