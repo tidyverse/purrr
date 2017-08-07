@@ -109,7 +109,7 @@ print.partial_function <- function(x, ...) {
   invisible(x)
 }
 itemize_vals <- function(args) {
-  vals <- lapply(args, quo_expr)
+  vals <- lapply(args, quo_text)
   nms <- names(vals)
   nms[nzchar(nms)] <- sprintf("%s = ", nms[nzchar(nms)])
   paste(paste0(nms, vals), collapse = "\n")
