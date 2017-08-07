@@ -38,16 +38,6 @@ cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo"
 
 Furthermore, \code{pluck()} never partial-matches unlike \code{$} which will
 select the \code{disp} object if you write \code{mtcars$di}.
-
-[[` which allows you to index deeply
-and flexibly into data structures. It supports R standard accessors
-like integer positions and string names, and also accepts arbitrary
-accessor functions, i.e. functions that take an object and return
-some internal piece.
-
-\code{pluck()} is often more readable than a mix of operators and
-accessors because it reads linearly and is free of syntactic
-cruft. Compare: `accessor(x[[1]: R:[%60%20which%20allows%20you%20to%20index%20deeply%0Aand%20flexibly%20into%20data%20structures.%20It%20supports%20R%20standard%20accessors%0Alike%20integer%20positions%20and%20string%20names,%20and%20also%20accepts%20arbitrary%0Aaccessor%20functions,%20i.e.%20functions%20that%20take%20an%20object%20and%20return%0Asome%20internal%20piece.%0A%0A%60pluck()%60%20is%20often%20more%20readable%20than%20a%20mix%20of%20operators%20and%0Aaccessors%20because%20it%20reads%20linearly%20and%20is%20free%20of%20syntactic%0Acruft.%20Compare:%20%60accessor(x[[1
 }
 \details{
 Since it handles arbitrary accessor functions, \code{pluck()} is a type
