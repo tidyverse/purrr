@@ -1,8 +1,5 @@
 
-# purrr 0.2.3.9000
-
-
-# purrr 0.2.3
+# purrr 0.3.0
 
 ## Breaking changes
 
