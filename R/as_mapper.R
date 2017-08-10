@@ -71,8 +71,8 @@ as_function <- function(...) {
 #'
 #' `pluck()` is often more readable than a mix of operators and
 #' accessors because it reads linearly and is free of syntactic
-#' cruft. Compare: `accessor(x[[1]])$foo` to `pluck(x, 1, accessor,
-#' "foo")`.
+#' cruft. Compare: \code{accessor(x[[1]])$foo} to `pluck(x, 1,
+#' accessor, "foo")`.
 #'
 #' Furthermore, `pluck()` never partial-matches unlike `$` which will
 #' select the `disp` object if you write `mtcars$di`.
