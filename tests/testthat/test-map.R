@@ -53,15 +53,6 @@ test_that("map forces arguments in same way as base R", {
   expect_equal(f_map[[2]](0), f_base[[2]](0))
 })
 
-test_that("row and column binding work", {
-  mtcar_mod <- mtcars %>%
-    split(.$cyl) %>%
-    map(~ lm(mpg ~ wt, data = .x))
-  f_coef <- function(x) as.data.frame(t(as.matrix(coef(x))))
-  expect_length(mtcar_mod %>% map_dfr(f_coef), 2)
-  expect_length(mtcar_mod %>% map_dfc(f_coef), 6)
-})
-
 test_that("walk is used for side-effects", {
   expect_output(walk(1:3, str))
 })
@@ -70,4 +61,10 @@ test_that("map_if() and map_at() always return a list", {
   df <- tibble::tibble(x = 1, y = "a")
   expect_identical(map_if(df, is.character, ~"out"), list(x = 1, y = "out"))
   expect_identical(map_at(df, 1, ~"out"), list(x = "out", y = "a"))
+})
+
+test_that("row and column binding work", {
+  tbl <- tibble::tibble(x = 1, y = 2)
+  expect_identical(map_dfr(1:2, ~tbl), dplyr::bind_rows(tbl, tbl))
+  expect_identical(map_dfc(1:2, ~tbl), dplyr::bind_cols(tbl, tbl))
 })
