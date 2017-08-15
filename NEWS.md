@@ -1,6 +1,9 @@
 
 # purrr 0.2.3.9000
 
+* `map_dfr()` and `map_dfc()` now handle functions returning vectors
+  correctly (#179).
+
 
 # purrr 0.2.3
 
