@@ -63,8 +63,23 @@ test_that("map_if() and map_at() always return a list", {
   expect_identical(map_at(df, 1, ~"out"), list(x = "out", y = "a"))
 })
 
-test_that("row and column binding work", {
+test_that("map_dfr() and map_dfc() handle data frames", {
   tbl <- tibble::tibble(x = 1, y = 2)
   expect_identical(map_dfr(1:2, ~tbl), dplyr::bind_rows(tbl, tbl))
   expect_identical(map_dfc(1:2, ~tbl), dplyr::bind_cols(tbl, tbl))
+})
+
+test_that("map_dfr() and map_dfc() handle dataframeable lists", {
+  tbl <- tibble::tibble(x = 1, y = 2)
+  list <- list(x = 1, y = 2)
+  expect_identical(map_dfr(1:2, ~list), dplyr::bind_rows(tbl, tbl))
+  expect_identical(map_dfc(1:2, ~list), dplyr::bind_cols(tbl, tbl))
+})
+
+test_that("map_dfr() and map_dfc() handle named vectors", {
+  row <- c(x = 1, y = 2)
+  expect_identical(map_dfr(1:2, ~row), tibble::tibble(x = c(1, 1), y = c(2, 2)))
+
+  col <- c(1, 2)
+  expect_identical(map_dfc(c(w = 0, z = 0), ~col), tibble::tibble(w = col, z = col))
 })
