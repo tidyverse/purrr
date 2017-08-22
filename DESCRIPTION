@@ -21,7 +21,7 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Depends: 
