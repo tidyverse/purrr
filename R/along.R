@@ -6,7 +6,7 @@
 #'
 #' @param x A vector.
 #' @param y Values to repeat.
-#' @return An vectors the same length as `.x`.
+#' @return A vector of the same length as `x`.
 #' @keywords internal
 #' @examples
 #' x <- 1:5
