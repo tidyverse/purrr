@@ -2,6 +2,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include "coerce.h"
+#include "backports.h"
 #include <string.h>
 
 int find_offset(SEXP x, SEXP index, int i) {
