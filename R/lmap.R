@@ -6,7 +6,7 @@
 #' \emph{and} return a list (or data frame). Thus, instead of mapping
 #' the elements of a list (as in \code{.x[[i]]}), they apply a
 #' function `.f` to each subset of size 1 of that list (as in
-#' `.x[i]`). We call those those elements `list-elements').
+#' `.x[i]`). We call those those elements `list-elements`).
 #'
 #' Mapping the list-elements `.x[i]` has several advantages. It
 #' makes it possible to work with functions that exclusively take a
