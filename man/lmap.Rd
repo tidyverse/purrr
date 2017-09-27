@@ -41,7 +41,7 @@ difference that they operate exclusively on functions that take
 \emph{and} return a list (or data frame). Thus, instead of mapping
 the elements of a list (as in \code{.x[[i]]}), they apply a
 function \code{.f} to each subset of size 1 of that list (as in
-\code{.x[i]}). We call those those elements `list-elements').
+\code{.x[i]}). We call those those elements \code{list-elements}).
 }
 \details{
 Mapping the list-elements \code{.x[i]} has several advantages. It
