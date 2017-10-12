@@ -11,7 +11,6 @@
 #'
 #'   The `_if` and `_at` variants take a predicate function `.p` that
 #'   determines which elements of `.x` are transformed with `.f`.
-#'   transform.
 #'
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return
 #'   vectors of the corresponding type (or die trying).
