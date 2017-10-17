@@ -15,7 +15,7 @@ SEXP flatten_impl(SEXP x) {
   // Determine output size and check type
   int n = 0;
   int has_names = 0;
-  SEXP x_names = Rf_getAttrib(x, R_NamesSymbol);
+  SEXP x_names = PROTECT(Rf_getAttrib(x, R_NamesSymbol));
 
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
@@ -40,14 +40,13 @@ SEXP flatten_impl(SEXP x) {
   SEXP names = PROTECT(Rf_allocVector(STRSXP, n));
   if (has_names)
     Rf_setAttrib(out, R_NamesSymbol, names);
-  UNPROTECT(1);
 
   int i = 0;
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
     int n_j = Rf_length(x_j);
 
-    SEXP names_j = Rf_getAttrib(x_j, R_NamesSymbol);
+    SEXP names_j = PROTECT(Rf_getAttrib(x_j, R_NamesSymbol));
     int has_names_j = !Rf_isNull(names_j);
 
     for (int k = 0; k < n_j; ++k, ++i) {
@@ -69,12 +68,14 @@ SEXP flatten_impl(SEXP x) {
       }
       if (i % 1000 == 0)
         R_CheckUserInterrupt();
+
     }
+    UNPROTECT(1);
   }
 
 
 
-  UNPROTECT(1);
+  UNPROTECT(3);
   return out;
 }
 
@@ -108,7 +109,7 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
     SEXP x_j = VECTOR_ELT(x, j);
     int n_j = Rf_length(x_j);
 
-    SEXP names_j = Rf_getAttrib(x_j, R_NamesSymbol);
+    SEXP names_j = PROTECT(Rf_getAttrib(x_j, R_NamesSymbol));
     int has_names_j = !Rf_isNull(names_j);
 
     for (int k = 0; k < n_j; ++k, ++i) {
@@ -119,6 +120,8 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
       if (i % 1000 == 0)
         R_CheckUserInterrupt();
     }
+
+    UNPROTECT(1);
   }
 
   UNPROTECT(1);
