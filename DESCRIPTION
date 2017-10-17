@@ -7,22 +7,22 @@ Authors@R: c(
     person("RStudio", role = c("cph", "fnd"))
     )
 Description: A complete and consistent functional programming toolkit for R.
+License: GPL-3 | file LICENSE
 URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
-License: GPL-3 | file LICENSE
-LazyData: true
-Imports:
-    magrittr (>= 1.5),
-    tibble,
-    rlang (>= 0.1)
-Suggests:
-    covr,
-    dplyr (>= 0.4.3),
-    testthat,
-    knitr,
-    rmarkdown
-RoxygenNote: 6.0.1
-Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
 Depends: 
     R (>= 3.1)
+Imports: 
+    magrittr (>= 1.5),
+    rlang (>= 0.1),
+    tibble
+Suggests: 
+    covr,
+    dplyr (>= 0.4.3),
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
