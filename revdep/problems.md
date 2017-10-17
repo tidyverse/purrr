@@ -301,60 +301,6 @@ Version: 0.1.0
       Note: found 1 marked UTF-8 string
     ```
 
-# cytominer
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-            <dbl>      <dbl>      <dbl>              <int>                 <int>
-    1 -0.56047565 -1.0678237 -0.6947070                  1                     1
-    2 -0.23017749 -0.2179749 -0.2079173                  2                     1
-    3  1.55870831 -1.0260044 -1.2653964                  3                     1
-    4  0.07050839 -0.7288912  2.1689560                  4                     1
-    5  0.12928774 -0.6250393  1.2079620                  5                     1
-    6  1.71506499 -1.6866933 -1.1231086                  6                     1
-    # ... with 1 more variables: Metadata_batch <int>
-    > 
-    > # `replicate_correlation`` returns the median, min, and max 
-    > # replicate correlation (across batches) per variable
-    > replicate_correlation(sample = sample,
-    +                       variables = c("x", "y", "z"),
-    +                       strata = c("Metadata_treatment"),
-    +                       replicates = 2,
-    +                       split_by = "Metadata_batch",
-    +                       replicate_by = "Metadata_replicate_id",
-    +                       cores = 1) 
-    Error in { : task 1 failed - "Argument 1 must have names"
-    Calls: replicate_correlation -> %>% -> eval -> eval -> %dopar% -> <Anonymous>
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-                 correlation_matrix <- sample_split %>% dplyr::arrange_(.dots = strata) %>% 
-                     dplyr::select_(.dots = c(strata, variable, replicate_by)) %>% tidyr::spread_(replicate_by, 
-                     variable) %>% dplyr::select_(~-dplyr::one_of(setdiff(strata, replicate_by))) %>% 
-                     stats::cor()
-                 median(correlation_matrix[upper.tri(correlation_matrix)])
-             }) %>% dplyr::mutate(variable = variable)
-         }
-      11: e$fun(obj, substitute(ex), parent.frame(), e$data)
-      
-      testthat results ================================================================
-      OK: 22 SKIPPED: 0 FAILED: 1
-      1. Error: `replicate_correlation` measures correlationbetween replicates in each feature (@test-replicate_correlation.R#57) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # d3r
 
 Version: 0.7.0
@@ -541,34 +487,6 @@ Version: 0.1.2
 
 Version: 0.3.2
 
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    Running examples in ‘esc-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: combine_esc
-    > ### Title: Combine one or more 'esc' objects into a data frame
-    > ### Aliases: combine_esc
-    > 
-    > ### ** Examples
-    > 
-    > e1 <- esc_2x2(grp1yes = 30, grp1no = 50, grp2yes = 40,
-    +               grp2no = 45, study = "Study 1")
-    > e2 <- esc_2x2(grp1yes = 30, grp1no = 50, grp2yes = 40, grp2no = 45,
-    +               es.type = "or", study = "Study 2")
-    > e3 <- esc_t(p = 0.03, grp1n = 100, grp2n = 150, study = "Study 3")
-    > e4 <- esc_mean_sd(grp1m = 7, grp1sd = 2, grp1n = 50, grp2m = 9, grp2sd = 3,
-    +                   grp2n = 60, es.type = "logit", study = "Study 4")
-    > 
-    > combine_esc(e1, e2, e3, e4)
-    Error in bind_rows_(x, .id) : Argument 1 must have names
-    Calls: combine_esc -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-    Execution halted
-    ```
-
 ## In both
 
 *   checking Rd cross-references ... NOTE
@@ -715,31 +633,6 @@ Version: 0.1.1
     Quitting from lines 34-37 (geoparser.Rmd) 
     Error: processing vignette 'geoparser.Rmd' failed with diagnostics:
     HTTP failure: 401
-    Execution halted
-    ```
-
-# ggeffects
-
-Version: 0.2.2
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘ggeffects-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: emm
-    > ### Title: Get marginal effects for model response
-    > ### Aliases: emm
-    > 
-    > ### ** Examples
-    > 
-    > data(efc)
-    > fit <- lm(barthtot ~ c12hour + neg_c_7 + c161sex + c172code, data = efc)
-    > emm(fit)
-    Error in bind_rows_(x, .id) : Argument 1 must have names
-    Calls: emm -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
     Execution halted
     ```
 
@@ -914,28 +807,6 @@ Version: 0.5.0
       sub-directories of 1Mb or more:
         doc          13.7Mb
         htmlwidgets   1.8Mb
-    ```
-
-# HURDAT
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(HURDAT)
-      > 
-      > test_check("HURDAT")
-      Error in bind_rows_(x, .id) : Argument 1 must have names
-      Calls: test_check ... .f -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-      testthat results ================================================================
-      OK: 0 SKIPPED: 0 FAILED: 0
-      Execution halted
     ```
 
 # hurricaneexposure
@@ -1223,58 +1094,6 @@ Version: 0.2.1
     manual.
     ```
 
-# naniar
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘naniar-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: add_label_shadow
-    > ### Title: Add a column describing whether there is a shadow
-    > ### Aliases: add_label_shadow
-    > 
-    > ### ** Examples
-    > 
-    > 
-    > airquality %>%
-    +   add_shadow(Ozone, Solar.R) %>%
-    +   add_label_shadow()
-    Error in bind_rows_(x, .id) : Argument 1 must have names
-    Calls: %>% ... as_shadow.data.frame -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(naniar)
-      > 
-      > test_check("naniar")
-      Error in bind_rows_(x, .id) : Argument 1 must have names
-      Calls: test_check ... as_shadow.data.frame -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-      testthat results ================================================================
-      OK: 10 SKIPPED: 0 FAILED: 0
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 61-64 (getting-started-w-naniar.Rmd) 
-    Error: processing vignette 'getting-started-w-naniar.Rmd' failed with diagnostics:
-    Argument 1 must have names
-    Execution halted
-    ```
-
 # perccalc
 
 Version: 1.0.0
@@ -1353,58 +1172,6 @@ ERROR: lazy loading failed for package ‘pointblank’
 # proustr
 
 Version: 0.2.1
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘proustr-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: pr_detect_pro
-    > ### Title: Detect French pronoums
-    > ### Aliases: pr_detect_pro
-    > 
-    > ### ** Examples
-    > 
-    > library(proustr)
-    > a <- proust_books()[1,] 
-    > pr_detect_pro(a, text, verbose = TRUE)
-    # A tibble: 2 x 6
-                                                                                  text
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      > 
-      > test_check("proustr")
-      [31m1. Error: Pronouns are detected (@test-detect-pronouns.R#6) [39m--------------------
-      Argument 1 must have names
-      1: pr_detect_pro(a, text) at testthat/test-detect-pronouns.R:6
-      2: purrr::map_df(df[, pos:length(df)], length_list)
-      3: dplyr::bind_rows(!(!(!res)), .id = .id)
-      4: bind_rows_(x, .id)
-      
-      testthat results ================================================================
-      OK: 77 SKIPPED: 0 FAILED: 1
-      1. Error: Pronouns are detected (@test-detect-pronouns.R#6) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 131-134 (gettingstarted.Rmd) 
-    Error: processing vignette 'gettingstarted.Rmd' failed with diagnostics:
-    Argument 1 must have names
-    Execution halted
-    ```
 
 ## In both
 
@@ -1854,29 +1621,6 @@ Version: 0.1.1
       All declared Imports should be used.
     ```
 
-# ShinyTester
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘ShinyTester-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: ShinyDummyCheck
-    > ### Title: ShinyDummyCheck
-    > ### Aliases: ShinyDummyCheck
-    > 
-    > ### ** Examples
-    > 
-    > ShinyDummyCheck(directory = system.file("example", package = "ShinyTester"))
-    Error in bind_rows_(x, .id) : Argument 1 must have names
-    Calls: ShinyDummyCheck ... <Anonymous> -> map_df -> <Anonymous> -> bind_rows_ -> .Call
-    Execution halted
-    ```
-
 # simglm
 
 Version: 0.6.0
@@ -1915,34 +1659,6 @@ Version: 1.0.4
 # sjmisc
 
 Version: 2.6.1
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    1        0
-    2        0
-    3        0
-    4        0
-    5        1
-    6        2
-    > row_count(dat, c1:c3, count = 2, append = TRUE)
-    # A tibble: 6 x 5
-         c1    c2    c3    c4 rowcount
-      <dbl> <dbl> <dbl> <dbl>    <int>
-    1     1     3     1     1        0
-    2     2     2     1     1        2
-    3     3     1     2     3        1
-    4     1     2     1     2        1
-    5     3    NA     3     1        0
-    6    NA     3    NA     2        0
-    > 
-    > col_count(dat, count = 1)
-    Error in bind_rows_(x, .id) : Argument 1 must have names
-    Calls: col_count -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-    Execution halted
-    ```
 
 ## In both
 
@@ -2108,34 +1824,6 @@ Version: 1.0.8
     Namespaces in Imports field not imported from:
       ‘crayon’ ‘utils’
       All declared Imports should be used.
-    ```
-
-# tibbletime
-
-Version: 0.0.2
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      20: `_fseq`(`_lhs`)
-      21: freduce(value, `_function_list`)
-      22: function_list[[i]](value)
-      23: fun(., ...)
-      24: mutate.tbl_df(., ...)
-      25: mutate_impl(.data, dots)
-      
-      testthat results ================================================================
-      OK: 166 SKIPPED: 0 FAILED: 3
-      1. Error: tmap_dfr returns a tibble (@test_tmap.R#46) 
-      2. Error: tmap_df returns a tibble (@test_tmap.R#51) 
-      3. Error: Groups are respected (@test_tmap.R#95) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
 # tidyquant
@@ -2406,56 +2094,6 @@ Version: 0.1.0
     ```
     Namespace in Imports field not imported from: ‘pander’
       All declared Imports should be used.
-    ```
-
-# visdat
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘visdat-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: vis_dat
-    > ### Title: Visualises a data.frame to tell you what it contains.
-    > ### Aliases: vis_dat
-    > 
-    > ### ** Examples
-    > 
-    > 
-    > vis_dat(airquality)
-    Error in bind_rows_(x, .id) : Argument 1 must have names
-    Calls: vis_dat ... <Anonymous> -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(visdat)
-      > 
-      > test_check("visdat")
-      Error in bind_rows_(x, .id) : Argument 1 must have names
-      Calls: test_check ... <Anonymous> -> <Anonymous> -> <Anonymous> -> bind_rows_ -> .Call
-      testthat results ================================================================
-      OK: 0 SKIPPED: 0 FAILED: 0
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 58-61 (using_visdat.Rmd) 
-    Error: processing vignette 'using_visdat.Rmd' failed with diagnostics:
-    Argument 1 must have names
-    Execution halted
     ```
 
 # wand

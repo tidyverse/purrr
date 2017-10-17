@@ -1,6 +1,6 @@
+# purrr 0.2.4
 
-# purrr 0.2.3.9000
-
+* Fixes for R 3.1.
 
 # purrr 0.2.3
 
