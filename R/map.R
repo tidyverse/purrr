@@ -166,7 +166,7 @@ map_dfr <- function(.x, .f, ..., .id = NULL) {
 
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
-  dplyr::bind_rows(!!! res, .id = .id)
+  dplyr::bind_rows(res, .id = .id)
 }
 
 #' @rdname map
@@ -183,7 +183,7 @@ map_dfc <- function(.x, .f, ...) {
 
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
-  dplyr::bind_cols(!!! res)
+  dplyr::bind_cols(res)
 }
 
 #' @export
