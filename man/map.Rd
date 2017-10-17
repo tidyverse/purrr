@@ -95,7 +95,6 @@ type as the input.
 
 The \code{_if} and \code{_at} variants take a predicate function \code{.p} that
 determines which elements of \code{.x} are transformed with \code{.f}.
-transform.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return
 vectors of the corresponding type (or die trying).
 \item \code{map_dfr()} and \code{map_dfc()} return data frames created by
