@@ -1,6 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.2.4
+Version: 0.2.4.9000
 Authors@R: c(
     person("Lionel", "Henry", , "lionel@rstudio.com", c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
@@ -10,13 +10,13 @@ Description: A complete and consistent functional programming toolkit for R.
 License: GPL-3 | file LICENSE
 URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
-Depends: 
+Depends:
     R (>= 3.1)
-Imports: 
+Imports:
     magrittr (>= 1.5),
     rlang (>= 0.1),
     tibble
-Suggests: 
+Suggests:
     covr,
     dplyr (>= 0.4.3),
     knitr,
