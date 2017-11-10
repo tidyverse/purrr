@@ -41,8 +41,8 @@
 #' # In update_list() you can also use quosures and formulas to
 #' # compute new values. This function is likely to be deprecated in
 #' # the future
-#' update_list(x, z1 = ~z[[1]])
-#' update_list(x, z = rlang::quo(x + y))
+#' str(update_list(x, z1 = ~z[[1]]))
+#' str(update_list(x, z = rlang::quo(x + y)))
 list_modify <- function(.x, ...) {
   dots <- dots_list(...)
   list_recurse(.x, dots, function(x, y) y)
