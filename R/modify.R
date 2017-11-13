@@ -16,7 +16,9 @@
 #'
 #' All these functions are S3 generic. However, the default method is
 #' sufficient in many cases. It should be suitable for any data type
-#' that implements the subset-assignment method `[<-`.
+#' that implements the subset-assignment method `[<-`. Methods are provided
+#' for character, integer and double, (counterparts to `map_int`, `map_dbl`
+#' and `map_chr`)
 #'
 #' In some cases it may make sense to provide a custom implementation
 #' with a method suited to your S3 class. For example, a `grouped_df`
@@ -87,6 +89,24 @@ modify.default <- function(.x, .f, ...) {
   .x[] <- map(.x, .f, ...)
   .x
 }
+#' @rdname modify
+#' @export
+modify.integer  <- function (.x, .f, ...) {
+  .x[] <- map_int(.x, .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify.double  <- function (.x, .f, ...) {
+  .x[] <- map_dbl(.x, .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify.character  <- function (.x, .f, ...) {
+  .x[] <- map_chr(.x, .f, ...)
+  .x
+}
 
 #' @rdname modify
 #' @export
@@ -100,6 +120,27 @@ modify_if.default <- function(.x, .p, .f, ...) {
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
+#' @rdname modify
+#' @export
+modify_if.integer <- function(.x, .p, .f, ...) {
+  sel <- probe(.x, .p)
+  .x[sel] <- map_int(.x[sel], .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify_if.double <- function(.x, .p, .f, ...) {
+  sel <- probe(.x, .p)
+  .x[sel] <- map_dbl(.x[sel], .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify_if.character <- function(.x, .p, .f, ...) {
+  sel <- probe(.x, .p)
+  .x[sel] <- map_chr(.x[sel], .f, ...)
+  .x
+}
 
 #' @rdname modify
 #' @export
@@ -111,6 +152,27 @@ modify_at <- function(.x, .at, .f, ...) {
 modify_at.default <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map(.x[sel], .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify_at.integer <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+  .x[sel] <- map_int(.x[sel], .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify_at.double <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+  .x[sel] <- map_dbl(.x[sel], .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify_at.character <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+  .x[sel] <- map_chr(.x[sel], .f, ...)
   .x
 }
 
