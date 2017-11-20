@@ -15,6 +15,18 @@ void copy_names(SEXP from, SEXP to) {
   Rf_setAttrib(to, R_NamesSymbol, names);
 }
 
+void check_vector(SEXP x, const char *name) {
+  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x))
+    return;
+
+  Rf_errorcall(
+    R_NilValue,
+    "`%s` is not a vector (%s)",
+    name,
+    Rf_type2char(TYPEOF(x))
+  );
+}
+
 // call must involve i
 SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
   // Create variable "i" and map to scalar integer
@@ -55,13 +67,12 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = Rf_eval(x, env);
+  check_vector(x_val, ".x");
 
-  if (Rf_isNull(x_val)) {
-    return Rf_allocVector(type, 0);
-  } else if (!Rf_isVector(x_val)) {
-    Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
-  }
   int n = Rf_length(x_val);
+  if (n == 0) {
+    return Rf_allocVector(type, 0);
+  }
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
   // actual values for f or x, because they may be long, which creates
@@ -89,12 +100,9 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
+  check_vector(x_val, ".x");
   SEXP y_val = PROTECT(Rf_eval(y, env));
-
-  if (!Rf_isVector(x_val) && !Rf_isNull(x_val))
-    Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
-  if (!Rf_isVector(y_val) && !Rf_isNull(y_val))
-    Rf_errorcall(R_NilValue, "`.y` is not a vector (%s)", Rf_type2char(TYPEOF(y_val)));
+  check_vector(y_val, ".y");
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx == 0 || ny == 0) {

@@ -1,6 +1,7 @@
 
 # purrr 0.2.4.9000
 
+* `map()` and `modify()` now work with calls and pairlists (#412).
 
 # purrr 0.2.4
 

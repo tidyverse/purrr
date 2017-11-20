@@ -26,6 +26,13 @@ test_that("modify_at operates on character and numeric indexing", {
   expect_error(modify_at(df1, TRUE, toupper))
 })
 
+test_that("modify works with calls and pairlists", {
+  out <- modify(quote(f(x)), ~ quote(z))
+  expect_equal(out, quote(z(z)))
+
+  out <- modify(pairlist(1, 2), ~ . + 1)
+  expect_equal(out, pairlist(2, 3))
+})
 
 # modify_depth ------------------------------------------------------------
 

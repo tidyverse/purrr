@@ -88,6 +88,12 @@ modify.default <- function(.x, .f, ...) {
   .x
 }
 
+#' @export
+modify.pairlist <- function(.x, .f, ...) {
+  as.pairlist(map(.x, .f, ...))
+}
+
+
 #' @rdname modify
 #' @export
 modify_if <- function(.x, .p, .f, ...) {
