@@ -26,6 +26,12 @@ test_that("modify_at operates on character and numeric indexing", {
   expect_error(modify_at(df1, TRUE, toupper))
 })
 
+test_that("negative .at omits locations", {
+  x <- list(1, 2, 3)
+  out <- modify_at(x, -1, ~ .x * 2)
+  expect_equal(out, list(1, 4, 6))
+})
+
 test_that("modify works with calls and pairlists", {
   out <- modify(quote(f(x)), ~ quote(z))
   expect_equal(out, quote(z(z)))

@@ -193,7 +193,12 @@ inv_which <- function(x, sel) {
     }
     names %in% sel
   } else if (is.numeric(sel)) {
-    seq_along(x) %in% sel
+    if (any(sel < 0)) {
+      !seq_along(x) %in% abs(sel)
+    } else {
+      seq_along(x) %in% sel
+    }
+
   } else {
     stop("unrecognised index type", call. = FALSE)
   }
