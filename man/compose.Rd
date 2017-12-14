@@ -16,7 +16,7 @@ A function
 Compose multiple functions
 }
 \examples{
-not_null <- compose(`!`, is.null)
+not_null <- compose(`!`, "is.null")
 not_null(4)
 not_null(NULL)
 
