@@ -1,6 +1,6 @@
 #' Compose multiple functions
 #'
-#' @param ... n functions to apply in order from right to left.
+#' @param ... n functions to apply in order from right to left. Args can be symbols, character vector, functions or one side formula.
 #' @return A function
 #'
 #' @export

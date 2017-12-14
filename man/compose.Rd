@@ -7,7 +7,7 @@
 compose(...)
 }
 \arguments{
-\item{...}{n functions to apply in order from right to left.}
+\item{...}{n functions to apply in order from right to left. Args can be symbols, character vector, functions or one side formula.}
 }
 \value{
 A function
