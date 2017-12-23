@@ -28,7 +28,7 @@
 #' }
 split_by <- function(data, ..., sep = ".") {
   if (!is_installed("dplyr")) {
-    abort("`map_df()` requires dplyr")
+    abort("`split_by()` requires dplyr")
   }
 
   data <- dplyr::group_by(data, ..., add = FALSE)
