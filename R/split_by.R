@@ -2,8 +2,8 @@
 #'
 #' An alternative to [base::split.data.frame()] with the following differences:
 #' + it operates on bare symbols (like dplyr verbs)
-#' + if splitting on multiple varialbes, it does not include combinations not
-#'   present in the data as factor levels (equivelatnt to `drop = TRUE` in
+#' + if splitting on multiple variables, it does not include missing combinations
+#'   not present in the data (equivelatnt to `drop = TRUE` in
 #'   [base::split.data.frame()])
 #'
 #' This funciton is powerful in combination with [map_dfr()].

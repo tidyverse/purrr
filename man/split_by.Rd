@@ -21,8 +21,8 @@ a named list of dataframes
 An alternative to \code{\link[base:split.data.frame]{base::split.data.frame()}} with the following differences:
 \itemize{
 \item it operates on bare symbols (like dplyr verbs)
-\item if splitting on multiple varialbes, it does not include combinations not
-present in the data as factor levels (equivelatnt to \code{drop = TRUE} in
+\item if splitting on multiple variables, it does not include missing combinations
+not present in the data (equivelatnt to \code{drop = TRUE} in
 \code{\link[base:split.data.frame]{base::split.data.frame()}})
 }
 }
