@@ -26,9 +26,9 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
-\item{.at}{A character vector of names or a numeric vector of
-positions. Only those elements corresponding to \code{.at} will be
-modified.}
+\item{.at}{A character vector of names, positive numeric vector of
+positions to include, or a negative numeric vector of positions to
+exlude. Only those elements corresponding to \code{.at} will be modified.}
 }
 \value{
 If \code{.x} is a list, a list. If \code{.x} is a data
@@ -41,7 +41,7 @@ difference that they operate exclusively on functions that take
 \emph{and} return a list (or data frame). Thus, instead of mapping
 the elements of a list (as in \code{.x[[i]]}), they apply a
 function \code{.f} to each subset of size 1 of that list (as in
-\code{.x[i]}). We call those those elements `list-elements').
+\code{.x[i]}). We call those those elements \code{list-elements}).
 }
 \details{
 Mapping the list-elements \code{.x[i]} has several advantages. It

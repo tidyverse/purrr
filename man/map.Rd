@@ -54,7 +54,7 @@ This syntax allows you to create very compact anonymous functions.
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in \code{get_attr()}
+and name at different levels. Within a list, wrap strings in \code{\link[=get-attr]{get-attr()}}
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
@@ -67,9 +67,9 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
-\item{.at}{A character vector of names or a numeric vector of
-positions. Only those elements corresponding to \code{.at} will be
-modified.}
+\item{.at}{A character vector of names, positive numeric vector of
+positions to include, or a negative numeric vector of positions to
+exlude. Only those elements corresponding to \code{.at} will be modified.}
 
 \item{.id}{If not \code{NULL} a variable with this name will be created
 giving either the name or the index of the data frame.}
@@ -95,7 +95,6 @@ type as the input.
 
 The \code{_if} and \code{_at} variants take a predicate function \code{.p} that
 determines which elements of \code{.x} are transformed with \code{.f}.
-transform.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return
 vectors of the corresponding type (or die trying).
 \item \code{map_dfr()} and \code{map_dfc()} return data frames created by

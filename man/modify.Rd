@@ -48,7 +48,7 @@ This syntax allows you to create very compact anonymous functions.
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in \code{get_attr()}
+and name at different levels. Within a list, wrap strings in \code{\link[=get-attr]{get-attr()}}
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
@@ -61,9 +61,9 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
-\item{.at}{A character vector of names or a numeric vector of
-positions. Only those elements corresponding to \code{.at} will be
-modified.}
+\item{.at}{A character vector of names, positive numeric vector of
+positions to include, or a negative numeric vector of positions to
+exlude. Only those elements corresponding to \code{.at} will be modified.}
 
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.

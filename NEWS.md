@@ -1,5 +1,14 @@
 
-# purrr 0.2.3.9000
+# purrr 0.2.4.9000
+
+* `map_at()`, `modify_at()` and `lmap_at()` accept negative values for `.at`, 
+  ignoring elements at those positions.
+
+* `map()` and `modify()` now work with calls and pairlists (#412).
+
+# purrr 0.2.4
+
+* Fixes for R 3.1.
 
 
 # purrr 0.2.3

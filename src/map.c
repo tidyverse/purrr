@@ -15,13 +15,24 @@ void copy_names(SEXP from, SEXP to) {
   Rf_setAttrib(to, R_NamesSymbol, names);
 }
 
+void check_vector(SEXP x, const char *name) {
+  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x))
+    return;
+
+  Rf_errorcall(
+    R_NilValue,
+    "`%s` is not a vector (%s)",
+    name,
+    Rf_type2char(TYPEOF(x))
+  );
+}
+
 // call must involve i
 SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
   // Create variable "i" and map to scalar integer
   SEXP i_val = PROTECT(Rf_ScalarInteger(1));
   SEXP i = Rf_install("i");
   Rf_defineVar(i, i_val, env);
-  UNPROTECT(1);
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   for (int i = 0; i < n; ++i) {
@@ -31,17 +42,18 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
     INTEGER(i_val)[0] = i + 1;
 
 #if defined(R_VERSION) && R_VERSION >= R_Version(3, 2, 3)
-    SEXP res = R_forceAndCall(call, force_args, env);
+    SEXP res = PROTECT(R_forceAndCall(call, force_args, env));
 #else
-    SEXP res = Rf_eval(call, env);
+    SEXP res = PROTECT(Rf_eval(call, env));
 #endif
     if (type != VECSXP && Rf_length(res) != 1)
       Rf_errorcall(R_NilValue, "Result %i is not a length 1 atomic vector", i + 1);
 
     set_vector_value(out, i, res, 0);
+    UNPROTECT(1);
   }
 
-  UNPROTECT(1);
+  UNPROTECT(2);
   return out;
 }
 
@@ -55,13 +67,12 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = Rf_eval(x, env);
+  check_vector(x_val, ".x");
 
-  if (Rf_isNull(x_val)) {
-    return Rf_allocVector(type, 0);
-  } else if (!Rf_isVector(x_val)) {
-    Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
-  }
   int n = Rf_length(x_val);
+  if (n == 0) {
+    return Rf_allocVector(type, 0);
+  }
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
   // actual values for f or x, because they may be long, which creates
@@ -88,16 +99,14 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP x_val = Rf_eval(x, env);
-  SEXP y_val = Rf_eval(y, env);
-
-  if (!Rf_isVector(x_val) && !Rf_isNull(x_val))
-    Rf_errorcall(R_NilValue, "`.x` is not a vector (%s)", Rf_type2char(TYPEOF(x_val)));
-  if (!Rf_isVector(y_val) && !Rf_isNull(y_val))
-    Rf_errorcall(R_NilValue, "`.y` is not a vector (%s)", Rf_type2char(TYPEOF(y_val)));
+  SEXP x_val = PROTECT(Rf_eval(x, env));
+  check_vector(x_val, ".x");
+  SEXP y_val = PROTECT(Rf_eval(y, env));
+  check_vector(y_val, ".y");
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx == 0 || ny == 0) {
+    UNPROTECT(2);
     return Rf_allocVector(type, 0);
   }
   if (nx != ny && !(nx == 1 || ny == 1)) {
@@ -114,14 +123,14 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP out = PROTECT(call_loop(env, f_call, n, type, 2));
   copy_names(x_val, out);
 
-  UNPROTECT(5);
+  UNPROTECT(7);
   return out;
 }
 
 SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   const char* l_name = CHAR(Rf_asChar(l_name_));
   SEXP l = Rf_install(l_name);
-  SEXP l_val = Rf_eval(l, env);
+  SEXP l_val = PROTECT(Rf_eval(l, env));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val))
@@ -140,6 +149,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     int nj = Rf_length(j_val);
 
     if (nj == 0) {
+      UNPROTECT(1);
       return Rf_allocVector(type, 0);
     } else if (nj > n) {
       n = nj;
@@ -156,7 +166,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
       Rf_errorcall(R_NilValue, "Element %i has length %i, not 1 or %i.", j + 1, nj, n);
   }
 
-  SEXP l_names = Rf_getAttrib(l_val, R_NamesSymbol);
+  SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));
   int has_names = !Rf_isNull(l_names);
 
   const char* f_name = CHAR(Rf_asChar(f_name_));
@@ -193,6 +203,6 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   SEXP out = PROTECT(call_loop(env, f_call, n, type, m));
   copy_names(VECTOR_ELT(l_val, 0), out);
 
-  UNPROTECT(3);
+  UNPROTECT(5);
   return out;
 }

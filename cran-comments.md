@@ -1,22 +1,26 @@
 ## Test environments
-* local OS X install, R 3.4.1
-* ubuntu 12.04 (on travis-ci), R 3.4.1
-* win-builder (devel and release)
-
+* local OS X install, R-release
+* ubuntu 12.04, R 3.1 -> R-devel
+* win-builder (R-devel)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
+## revdepcheck results
 
-## Reverse dependencies
+We checked 194 reverse dependencies (188 from CRAN + 6 from BioConductor), comparing R CMD check results across CRAN and dev versions of this package.
 
-I have run R CMD check on the 147 downstream dependencies.
-(Summary at https://github.com/tidyverse/purrr/tree/master/revdep).
+ * We saw 0 new problems
+ * We failed to check 6 packages
 
-There were 4 packages with new problems (compared to running the
-revdeps with the current CRAN version of purrr). All package
-maintainers were notified on July 21 of these problems.
+Issues with CRAN packages are summarised below.
 
-The maintainer of valaddin informed us that his package was already
-fixed and will be sent to CRAN.
+### Failed to check
+
+* anomalyDetection (failed to install)
+* diceR            (failed to install)
+* imager           (failed to install)
+* pointblank       (failed to install)
+* RSQLServer       (failed to install)
+* wand             (failed to install)
