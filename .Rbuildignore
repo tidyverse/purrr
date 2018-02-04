@@ -11,3 +11,4 @@
 ^docs$
 ^\.dir-locals.el
 ^src/\.dir-locals.el
+^CONDUCT\.md$
