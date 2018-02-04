@@ -7,7 +7,7 @@
 compose(...)
 }
 \arguments{
-\item{...}{n functions to apply in order from right to left.}
+\item{...}{n functions to apply in order from right to left. Args can be symbols, character vector, functions or one side formula.}
 }
 \value{
 A function
@@ -16,7 +16,7 @@ A function
 Compose multiple functions
 }
 \examples{
-not_null <- compose(`!`, is.null)
+not_null <- compose(`!`, "is.null")
 not_null(4)
 not_null(NULL)
 
