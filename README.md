@@ -34,7 +34,7 @@ The following example uses purrr to solve a fairly realistic problem: split a da
 library(purrr)
 
 mtcars %>%
-  split(.$cyl) %>% # from base R
+  split_by(cyl) %>%
   map(~ lm(mpg ~ wt, data = .)) %>%
   map(summary) %>%
   map_dbl("r.squared")
