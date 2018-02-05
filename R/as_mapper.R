@@ -60,6 +60,11 @@ as_function <- function(...) {
 }
 
 #' @export
+as_mapper.default <- function(.f, ...) {
+  rlang::as_closure(.f)
+}
+
+#' @export
 #' @rdname as_mapper
 as_mapper.character <- function(.f, ..., .null, .default = NULL) {
   .default <- find_extract_default(.null, .default)
@@ -90,13 +95,11 @@ find_extract_default <- function(.null, .default) {
 }
 
 plucker <- function(i, default) {
-  # Interpolation creates a closure with a more readable source
-  expr_interp(function(x, ...)
-    pluck(x, !! i, .default = !! default)
-  )
-}
+  x <- NULL # supress global variables check NOTE
 
-#' @export
-as_mapper.default <- function(.f, ...) {
-  rlang::as_closure(.f)
+  new_function(
+    exprs(x = , ... = ),
+    expr(pluck(x, !!i, .default = !!default)),
+    env = caller_env()
+  )
 }
