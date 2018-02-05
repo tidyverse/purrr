@@ -52,6 +52,6 @@ str(list_modify(x, !!! l))
 # In update_list() you can also use quosures and formulas to
 # compute new values. This function is likely to be deprecated in
 # the future
-update_list(x, z1 = ~z[[1]])
-update_list(x, z = rlang::quo(x + y))
+str(update_list(x, z1 = ~z[[1]]))
+str(update_list(x, z = rlang::quo(x + y)))
 }

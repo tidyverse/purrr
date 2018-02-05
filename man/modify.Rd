@@ -68,9 +68,9 @@ exlude. Only those elements corresponding to \code{.at} will be modified.}
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
 \itemize{
-\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] <- fun(x)}
-\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x[] <- map(x, fun)}
-\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x[] <- map(x, ~ map(., fun))}
+\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] &lt;- fun(x)}
+\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x[] &lt;- map(x, fun)}
+\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x[] &lt;- map(x, ~ map(., fun))}
 }}
 
 \item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
@@ -81,7 +81,7 @@ no elements at depth \code{.depth}.}
 An object the same class as \code{.x}
 }
 \description{
-\code{modify()} is a short-cut for \code{x[] <- map(x, .f); return(x)}. \code{modify_if()}
+\code{modify()} is a short-cut for \code{x[] &lt;- map(x, .f); return(x)}. \code{modify_if()}
 only modifies the elements of \code{x} that satisfy a predicate and leaves the
 others unchanged. \code{modify_at()} only modifies elements given by names or
 positions. \code{modify_depth()} only modifies elements at a given level of a
@@ -98,7 +98,7 @@ must preserve the length of the input.
 
 All these functions are S3 generic. However, the default method is
 sufficient in many cases. It should be suitable for any data type
-that implements the subset-assignment method \code{[<-}.
+that implements the subset-assignment method \code{[&lt;-}.
 
 In some cases it may make sense to provide a custom implementation
 with a method suited to your S3 class. For example, a \code{grouped_df}
@@ -157,3 +157,4 @@ Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
   \code{\link{map2}}, \code{\link{map}}
 }
+\concept{map variants}

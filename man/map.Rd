@@ -8,6 +8,7 @@
 \alias{map_chr}
 \alias{map_int}
 \alias{map_dbl}
+\alias{map_raw}
 \alias{map_dfr}
 \alias{map_df}
 \alias{map_dfc}
@@ -27,6 +28,8 @@ map_chr(.x, .f, ...)
 map_int(.x, .f, ...)
 
 map_dbl(.x, .f, ...)
+
+map_raw(.x, .f, ...)
 
 map_dfr(.x, .f, ..., .id = NULL)
 
@@ -164,3 +167,4 @@ Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
   \code{\link{map2}}, \code{\link{modify}}
 }
+\concept{map variants}

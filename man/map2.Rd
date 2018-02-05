@@ -5,6 +5,7 @@
 \alias{map2_lgl}
 \alias{map2_int}
 \alias{map2_dbl}
+\alias{map2_raw}
 \alias{map2_chr}
 \alias{map2_dfr}
 \alias{map2_dfc}
@@ -14,6 +15,7 @@
 \alias{pmap_lgl}
 \alias{pmap_int}
 \alias{pmap_dbl}
+\alias{pmap_raw}
 \alias{pmap_chr}
 \alias{pmap_dfr}
 \alias{pmap_dfc}
@@ -28,6 +30,8 @@ map2_lgl(.x, .y, .f, ...)
 map2_int(.x, .y, .f, ...)
 
 map2_dbl(.x, .y, .f, ...)
+
+map2_raw(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
 
@@ -44,6 +48,8 @@ pmap_lgl(.l, .f, ...)
 pmap_int(.l, .f, ...)
 
 pmap_dbl(.l, .f, ...)
+
+pmap_raw(.l, .f, ...)
 
 pmap_chr(.l, .f, ...)
 
@@ -159,3 +165,4 @@ Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
   \code{\link{map}}, \code{\link{modify}}
 }
+\concept{map variants}

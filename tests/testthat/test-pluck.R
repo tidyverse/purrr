@@ -35,6 +35,10 @@ test_that("can pluck from atomic vectors", {
   expect_identical(pluck("a", list(1)), "a")
 })
 
+test_that("can't pluck from complex", {
+  expect_error( pluck( 1+2i, 1 ), "Don't know how to index object of type complex at level 1" )
+})
+
 test_that("can pluck by name and position", {
   x <- list(a = list(list(b = 1)))
   expect_equal(pluck(x, list("a", 1, "b")), 1)

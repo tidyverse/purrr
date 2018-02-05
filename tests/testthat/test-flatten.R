@@ -60,6 +60,7 @@ test_that("can flatten all atomic vectors", {
   expect_equal(flatten_int(list(1L)), 1L)
   expect_equal(flatten_dbl(list(1)), 1)
   expect_equal(flatten_chr(list("a")), "a")
+  expect_equal(flatten_raw(list(as.raw(1))), as.raw(1))
 })
 
 test_that("preserves inner names", {

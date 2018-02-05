@@ -56,6 +56,12 @@ flatten_chr <- function(.x) {
 
 #' @export
 #' @rdname flatten
+flatten_raw <- function(.x) {
+  .Call(vflatten_impl, .x, "raw")
+}
+
+#' @export
+#' @rdname flatten
 flatten_dfr <- function(.x, .id = NULL) {
   res <- .Call(flatten_impl, .x)
   dplyr::bind_rows(res, .id = .id)
