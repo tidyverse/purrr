@@ -20,13 +20,11 @@
 #'   to the front of the function signature. If `FALSE`, they are
 #'   moved to the back. Only useful to control position matching of
 #'   arguments when the partialized arguments are not named.
-#' @param .env,.lazy Obsolete, see _Details_.
-#'
-#' @details Partialized arguments are captured as [quosures][rlang::quo()] (thus
-#'   rendering the `.env` argument obsolete). They are
-#'   [tidily evaluated][rlang::eval_tidy()] each time the partial application
-#'   of `...f` is called. To fix the value of a partialized argument in the
-#'   context where `partial()` is called, unquote it with the
+#' @param .env,.lazy Obsolete. Partialized arguments are captured as
+#'   [quosures][rlang::quo()] (thus rendering the `.env` argument obsolete).
+#'   They are [tidily evaluated][rlang::eval_tidy()] each time the partial
+#'   application of `...f` is called. To fix the value of a partialized argument
+#'   in the context where `partial()` is called, unquote it with the
 #'   \code{\link[rlang:UQ]{!!}} operator. (Previously, lazy evaluation was
 #'   controlled by the `.lazy` flag.)
 #'
