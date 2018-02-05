@@ -1,9 +1,10 @@
 #' Map over multiple inputs simultaneously.
 #'
-#' These functions are variants of `map()` iterate over multiple
-#' arguments in parallel. `map2()` and `walk2()` are specialised for the two
-#' argument case; `pmap()` and `pwalk()` allow you to provide any number of
-#' arguments in a list.
+#' These functions are variants of `map()` iterate over multiple arguments
+#' simultaneously. They are parallel in the sense that each input is processed
+#' in parallel with the others, not in the sense of multicore computing.
+#' `map2()` and `walk2()` are specialised for the two argument case; `pmap()`
+#' and `pwalk()` allow you to provide any number of arguments in a list.
 #'
 #' Note that arguments to be vectorised over come before the `.f`,
 #' and arguments that are supplied to every call come after `.f`.

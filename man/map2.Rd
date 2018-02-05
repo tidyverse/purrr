@@ -100,10 +100,11 @@ If all input is length 0, the output will be length 0. If any
 input is length 1, it will be recycled to the length of the longest.
 }
 \description{
-These functions are variants of \code{map()} iterate over multiple
-arguments in parallel. \code{map2()} and \code{walk2()} are specialised for the two
-argument case; \code{pmap()} and \code{pwalk()} allow you to provide any number of
-arguments in a list.
+These functions are variants of \code{map()} iterate over multiple arguments
+simultaneously. They are parallel in the sense that each input is processed
+in parallel with the others, not in the sense of multicore computing.
+\code{map2()} and \code{walk2()} are specialised for the two argument case; \code{pmap()}
+and \code{pwalk()} allow you to provide any number of arguments in a list.
 }
 \details{
 Note that arguments to be vectorised over come before the \code{.f},
