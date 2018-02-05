@@ -23,7 +23,7 @@ imap_dbl(.x, .f, ...)
 
 imap_dfr(.x, .f, ..., .id = NULL)
 
-imap_dfc(.x, .f, ..., .id = NULL)
+imap_dfc(.x, .f, ...)
 
 iwalk(.x, .f, ...)
 }
