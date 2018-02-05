@@ -16,15 +16,21 @@ test_that("can't coerce downwards", {
   expect_error(coerce_dbl(list(1)), "Can't coerce")
   expect_error(coerce_int(list(1)), "Can't coerce")
   expect_error(coerce_lgl(list(1)), "Can't coerce")
+  expect_error(coerce_raw(list(1)), "Can't coerce")
 
   expect_error(coerce_dbl("a"), "Can't coerce")
   expect_error(coerce_int("a"), "Can't coerce")
   expect_error(coerce_lgl("a"), "Can't coerce")
+  expect_error(coerce_raw("a"), "Can't coerce")
 
   expect_error(coerce_int(1), "Can't coerce")
   expect_error(coerce_lgl(1), "Can't coerce")
+  expect_error(coerce_raw(1), "Can't coerce")
 
   expect_error(coerce_lgl(1L), "Can't coerce")
+  expect_error(coerce_raw(1L), "Can't coerce")
+
+  expect_error(coerce_raw(TRUE), "Can't coerce")
 })
 
 test_that("coercing to same type returns input", {
@@ -32,6 +38,7 @@ test_that("coercing to same type returns input", {
   expect_equal(coerce_dbl(c(1, 2)), c(1, 2))
   expect_equal(coerce_int(c(1L, 2L)), c(1L, 2L))
   expect_equal(coerce_chr(c("a", "b")), c("a", "b"))
+  expect_equal(coerce_raw(as.raw(c(0,1))), as.raw(c(0,1)))
 })
 
 test_that("types automatically coerced upwards", {
