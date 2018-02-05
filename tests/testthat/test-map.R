@@ -41,6 +41,10 @@ test_that("types automatically coerced upwards", {
   expect_identical(map_chr(as.raw(0:255), identity), as.character(as.raw(0:255)))
 })
 
+test_that("map_raw",{
+  expect_equal(map_raw("a", charToRaw), charToRaw("a"))
+})
+
 test_that("logical and integer NA become correct double NA", {
   expect_identical(
     map_dbl(list(NA, NA_integer_), identity),
