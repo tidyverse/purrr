@@ -44,6 +44,11 @@ test_that("Additional arguments are ignored", {
   expect_equal(as_mapper(function() NULL, foo = "bar", foobar), function() NULL)
 })
 
+test_that("can supply length > 1 vectors", {
+  expect_identical(as_mapper(1:2)(list(list("a", "b"))), "b")
+  expect_identical(as_mapper(c("a", "b"))(list(a = list("a", b = "b"))), "b")
+})
+
 
 # primitive functions --------------------------------------------------
 
@@ -58,7 +63,7 @@ test_that("syntactic primitives are wrapped", {
 })
 
 
-# lists and attributes ----------------------------------------------------
+# lists ------------------------------------------------------------------
 
 test_that("lists are wrapped", {
   mapper_list <- as_mapper(list("mpg", 5))(mtcars)
@@ -75,8 +80,4 @@ test_that("attributes are wrapped", {
 
 test_that("raw vectors are supported for indexing", {
   expect_equal( as_mapper(1)(raw(2)), raw(1) )
-})
-
-test_that("raw and complex types aren't supported for indexing", {
-  expect_error(as_mapper(1)(complex(2)))
 })

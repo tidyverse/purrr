@@ -24,6 +24,9 @@ to transform the existing names.
 \value{
 \code{.x} with the names attribute set.
 }
+\description{
+Set names in a vector
+}
 \details{
 This is a snake case wrapper for \code{\link[stats:setNames]{stats::setNames()}}, with
 tweaked defaults, and stricter argument checking.

@@ -68,3 +68,23 @@ test_that("row and column binding work", {
 test_that("walk is used for side-effects", {
   expect_output(walk(1:3, str))
 })
+
+test_that("map_if() and map_at() always return a list", {
+  df <- tibble::tibble(x = 1, y = "a")
+  expect_identical(map_if(df, is.character, ~"out"), list(x = 1, y = "out"))
+  expect_identical(map_at(df, 1, ~"out"), list(x = "out", y = "a"))
+})
+
+test_that("negative .at omits locations", {
+  x <- c(1, 2, 3)
+  out <- map_at(x, -1, ~ .x * 2)
+  expect_equal(out, list(1, 4, 6))
+})
+
+test_that("map works with calls and pairlists", {
+  out <- map(quote(f(x)), ~ quote(z))
+  expect_equal(out, list(quote(z), quote(z)))
+
+  out <- map(pairlist(1, 2), ~ . + 1)
+  expect_equal(out, list(2, 3))
+})

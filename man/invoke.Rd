@@ -104,3 +104,4 @@ Other map variants: \code{\link{imap}}, \code{\link{lmap}},
   \code{\link{map2}}, \code{\link{map}},
   \code{\link{modify}}
 }
+\concept{map variants}

@@ -12,17 +12,17 @@
 #'   list(list()),
 #'   list(list(list(1)))
 #' )
-#' depth(x)
-#' x %>% map_int(depth)
-depth <- function(x) {
+#' vec_depth(x)
+#' x %>% map_int(vec_depth)
+vec_depth <- function(x) {
   if (is_null(x)) {
     0L
   } else if (is_atomic(x)) {
     1L
   } else if (is_list(x)) {
-    depths <- map_int(x, depth)
+    depths <- map_int(x, vec_depth)
     1L + max(depths, 0L)
   } else {
-    stop("`x` must be a vector", call. = FALSE)
+    abort("`x` must be a vector")
   }
 }

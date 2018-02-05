@@ -1,18 +1,37 @@
 #' Apply a function to each element of a vector
 #'
 #' @description
-#' The map function transform the input, returning a vector the same length
-#' as the input. `map()` returns a list or a data frame; `map_lgl()`,
-#' `map_int()`, `map_dbl()` and `map_chr()` return vectors of the
-#' corresponding type (or die trying).
 #'
-#' `map_dfr()` and `map_dfc()` return data frames created by row-binding and
-#' column-binding respectively. They require dplyr to be installed.
+#' The map functions transform their input by applying a function to
+#' each element and returning a vector the same length as the input.
 #'
-#' `walk()` calls `.f` for its side-effect and returns the input `.x`.
+#' * `map()`, `map_if()` and `map_at()` always return a list. See the
+#'   [modify()] family for versions that return an object of the same
+#'   type as the input.
+#'
+#'   The `_if` and `_at` variants take a predicate function `.p` that
+#'   determines which elements of `.x` are transformed with `.f`.
+#'
+#' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return
+#'   vectors of the corresponding type (or die trying).
+#'
+#' * `map_dfr()` and `map_dfc()` return data frames created by
+#'   row-binding and column-binding respectively. They require dplyr
+#'   to be installed.
+#'
+#' * `walk()` calls `.f` for its side-effect and returns the input `.x`.
 #'
 #' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
+#' @param .p A single predicate function, a formula describing such a
+#'   predicate function, or a logical vector of the same length as `.x`.
+#'   Alternatively, if the elements of `.x` are themselves lists of
+#'   objects, a string indicating the name of a logical element in the
+#'   inner lists. Only those elements where `.p` evaluates to
+#'   `TRUE` will be modified.
+#' @param .at A character vector of names, positive numeric vector of
+#'   positions to include, or a negative numeric vector of positions to
+#'   exlude. Only those elements corresponding to `.at` will be modified.
 #' @param ... Additional arguments passed on to `.f`.
 #' @return All functions return a vector the same length as `.x`.
 #'
@@ -73,17 +92,40 @@
 #' mtcars %>% map_dbl(sum)
 #'
 #' # If each element of the output is a data frame, use
-#' # map_df to row-bind them together:
+#' # map_dfr to row-bind them together:
 #' mtcars %>%
 #'   split(.$cyl) %>%
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
-#'   map_df(~ as.data.frame(t(as.matrix(coef(.)))))
+#'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
 map <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
 }
+#' @rdname map
+#' @export
+map_if <- function(.x, .p, .f, ...) {
+  sel <- probe(.x, .p)
+
+  out <- list_along(.x)
+  out[sel]  <- map(.x[sel], .f, ...)
+  out[!sel] <- .x[!sel]
+
+  set_names(out, names(.x))
+}
+#' @rdname map
+#' @export
+map_at <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+
+  out <- list_along(.x)
+  out[sel]  <- map(.x[sel], .f, ...)
+  out[!sel] <- .x[!sel]
+
+  set_names(out, names(.x))
+}
+
 
 #' @rdname map
 #' @export
@@ -125,6 +167,10 @@ map_raw <- function(.x, .f, ...) {
 #'   giving either the name or the index of the data frame.
 #' @export
 map_dfr <- function(.x, .f, ..., .id = NULL) {
+  if (!is_installed("dplyr")) {
+    abort("`map_df()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_rows(res, .id = .id)
@@ -138,6 +184,10 @@ map_df <- map_dfr
 #' @rdname map
 #' @export
 map_dfc <- function(.x, .f, ...) {
+  if (!is_installed("dplyr")) {
+    abort("`map_dfc()` requires dplyr")
+  }
+
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
   dplyr::bind_cols(res)

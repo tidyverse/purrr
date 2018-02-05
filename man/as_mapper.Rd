@@ -3,18 +3,12 @@
 \name{as_mapper}
 \alias{as_mapper}
 \alias{as_function}
-\alias{get_attr}
-\alias{as_mapper.attr}
 \alias{as_mapper.character}
 \alias{as_mapper.numeric}
 \alias{as_mapper.list}
 \title{Convert an object into a mapper function}
 \usage{
 as_mapper(.f, ...)
-
-get_attr(x)
-
-\method{as_mapper}{attr}(.f, ..., .null, .default = NULL)
 
 \method{as_mapper}{character}(.f, ..., .null, .default = NULL)
 
@@ -40,13 +34,11 @@ This syntax allows you to create very compact anonymous functions.
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in \code{get_attr()}
+and name at different levels. Within a list, wrap strings in \code{\link[=get-attr]{get-attr()}}
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to methods.}
-
-\item{x}{A string}
 
 \item{.default, .null}{Optional additional argument for extractor functions
 (i.e. when \code{.f} is character, integer, or list). Returned when
@@ -69,7 +61,7 @@ as_mapper(c("a", "b", "c"))
 as_mapper(list(1, "a", 2))
 # Equivalent to function(x) x[[1]][["a"]][[2]]
 
-as_mapper(list(1, get_attr("a")))
+as_mapper(list(1, attr_getter("a")))
 # Equivalent to function(x) attr(x[[1]], "a")
 
 as_mapper(c("a", "b", "c"), .null = NA)

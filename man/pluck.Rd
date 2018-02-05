@@ -2,19 +2,87 @@
 % Please edit documentation in R/as_mapper.R
 \name{pluck}
 \alias{pluck}
+\alias{attr_getter}
 \title{Pluck out a single an element from a vector or environment}
 \usage{
-pluck(x, index, default = NULL)
+pluck(.x, ..., .default = NULL)
+
+attr_getter(attr)
 }
 \arguments{
-\item{x}{A vector or environment}
+\item{.x}{A vector or environment}
 
-\item{index}{A list indexing into the object}
+\item{...}{A list of accessors for indexing into the object. Can be
+an integer position, a string name, or an accessor function. If
+the object being indexed is an S4 object, accessing it by name
+will return the corresponding slot.
 
-\item{default}{Value to use if target is empty or absent.}
+These dots \link[rlang:dots_splice]{splice lists automatically}. This
+means you can supply arguments and lists of arguments
+indistinctly.}
+
+\item{.default}{Value to use if target is empty or absent.}
+
+\item{attr}{An attribute name as string.}
 }
 \description{
-This is a generalise form of \code{[[} which allows you to index by
-name, position, or attribute.
+This is a generalised form of \code{[[} which allows you to index deeply
+and flexibly into data structures. It supports R standard accessors
+like integer positions and string names, and also accepts arbitrary
+accessor functions, i.e. functions that take an object and return
+some internal piece.
+
+\code{pluck()} is often more readable than a mix of operators and
+accessors because it reads linearly and is free of syntactic
+cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo")}.
+
+Furthermore, \code{pluck()} never partial-matches unlike \code{$} which will
+select the \code{disp} object if you write \code{mtcars$di}.
+}
+\details{
+Since it handles arbitrary accessor functions, \code{pluck()} is a type
+of composition operator. However, it is indexing-oriented thanks to
+its handling of strings and integers. By the same token is also
+explicit regarding the intent of the composition (e.g. extraction).
+}
+\examples{
+# pluck() supports integer positions, string names, and functions.
+# Using functions, you can easily extend pluck(). Let's create a
+# list of data structures:
+obj1 <- list("a", list(1, elt = "foobar"))
+obj2 <- list("b", list(2, elt = "foobaz"))
+x <- list(obj1, obj2)
+
+# And now an accessor for these complex data structures:
+my_element <- function(x) x[[2]]$elt
+
+# The accessor can then be passed to pluck:
+pluck(x, 1, my_element)
+pluck(x, 2, my_element)
+
+# Even for this simple data structure, this is more readable than
+# the alternative form because it requires you to read both from
+# right-to-left and from left-to-right in different parts of the
+# expression:
+my_element(x[[1]])
+
+
+# This technique is used for plucking into attributes with
+# attr_getter(). It takes an attribute name and returns a function
+# to access the attribute:
+obj1 <- structure("obj", obj_attr = "foo")
+obj2 <- structure("obj", obj_attr = "bar")
+x <- list(obj1, obj2)
+
+# pluck() is handy for extracting deeply into a data structure.
+# Here we'll first extract by position, then by attribute:
+pluck(x, 1, attr_getter("obj_attr"))  # From first object
+pluck(x, 2, attr_getter("obj_attr"))  # From second object
+
+
+# pluck() splices lists of arguments automatically. The following
+# pluck is equivalent to the one above:
+idx <- list(1, attr_getter("obj_attr"))
+pluck(x, idx)
 }
 \keyword{internal}

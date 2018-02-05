@@ -35,7 +35,7 @@ However, the goal of purrr is not to try and simulate a purer functional program
   by magrittr).
 
 * R is weakly typed, so we need `map` variants that describe the output type 
-  (like `map_int()`, `map_dbl()`, etc) because don't the return type of `.f`.
+  (like `map_int()`, `map_dbl()`, etc) because we don't know the return type of `.f`.
 
 * R has named arguments, so instead of providing different functions for
   minor variations (e.g. `detect()` and `detectLast()`) we use a named

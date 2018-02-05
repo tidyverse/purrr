@@ -7,8 +7,8 @@
 partial(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE)
 }
 \arguments{
-\item{...f}{a function. For the output source to read well, this should be an
-be a named function.}
+\item{...f}{a function. For the output source to read well, this should be a
+named function.}
 
 \item{...}{named arguments to \code{...f} that should be partially applied.}
 

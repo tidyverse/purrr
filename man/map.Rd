@@ -2,6 +2,8 @@
 % Please edit documentation in R/map.R
 \name{map}
 \alias{map}
+\alias{map_if}
+\alias{map_at}
 \alias{map_lgl}
 \alias{map_chr}
 \alias{map_int}
@@ -14,6 +16,10 @@
 \title{Apply a function to each element of a vector}
 \usage{
 map(.x, .f, ...)
+
+map_if(.x, .p, .f, ...)
+
+map_at(.x, .at, .f, ...)
 
 map_lgl(.x, .f, ...)
 
@@ -51,11 +57,22 @@ This syntax allows you to create very compact anonymous functions.
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in \code{get_attr()}
+and name at different levels. Within a list, wrap strings in \code{\link[=get-attr]{get-attr()}}
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to \code{.f}.}
+
+\item{.p}{A single predicate function, a formula describing such a
+predicate function, or a logical vector of the same length as \code{.x}.
+Alternatively, if the elements of \code{.x} are themselves lists of
+objects, a string indicating the name of a logical element in the
+inner lists. Only those elements where \code{.p} evaluates to
+\code{TRUE} will be modified.}
+
+\item{.at}{A character vector of names, positive numeric vector of
+positions to include, or a negative numeric vector of positions to
+exlude. Only those elements corresponding to \code{.at} will be modified.}
 
 \item{.id}{If not \code{NULL} a variable with this name will be created
 giving either the name or the index of the data frame.}
@@ -72,15 +89,22 @@ e.g. logical -> integer -> double -> character.
 use in pipe.
 }
 \description{
-The map function transform the input, returning a vector the same length
-as the input. \code{map()} returns a list or a data frame; \code{map_lgl()},
-\code{map_int()}, \code{map_dbl()} and \code{map_chr()} return vectors of the
-corresponding type (or die trying).
+The map functions transform their input by applying a function to
+each element and returning a vector the same length as the input.
+\itemize{
+\item \code{map()}, \code{map_if()} and \code{map_at()} always return a list. See the
+\code{\link[=modify]{modify()}} family for versions that return an object of the same
+type as the input.
 
-\code{map_dfr()} and \code{map_dfc()} return data frames created by row-binding and
-column-binding respectively. They require dplyr to be installed.
-
-\code{walk()} calls \code{.f} for its side-effect and returns the input \code{.x}.
+The \code{_if} and \code{_at} variants take a predicate function \code{.p} that
+determines which elements of \code{.x} are transformed with \code{.f}.
+\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return
+vectors of the corresponding type (or die trying).
+\item \code{map_dfr()} and \code{map_dfc()} return data frames created by
+row-binding and column-binding respectively. They require dplyr
+to be installed.
+\item \code{walk()} calls \code{.f} for its side-effect and returns the input \code{.x}.
+}
 }
 \examples{
 1:10 \%>\%
@@ -130,11 +154,11 @@ mtcars \%>\% map(sum)
 mtcars \%>\% map_dbl(sum)
 
 # If each element of the output is a data frame, use
-# map_df to row-bind them together:
+# map_dfr to row-bind them together:
 mtcars \%>\%
   split(.$cyl) \%>\%
   map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map_df(~ as.data.frame(t(as.matrix(coef(.)))))
+  map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
 }
@@ -143,3 +167,4 @@ Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
   \code{\link{map2}}, \code{\link{modify}}
 }
+\concept{map variants}

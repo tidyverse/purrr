@@ -20,7 +20,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
 
   // Create space for output
   SEXP out = PROTECT(Rf_allocVector(VECSXP, m));
-  SEXP names1 = Rf_getAttrib(x, R_NamesSymbol);
+  SEXP names1 = PROTECT(Rf_getAttrib(x, R_NamesSymbol));
 
   for (int j = 0; j < m; ++j) {
     SEXP xj = PROTECT(Rf_allocVector(VECSXP, n));
@@ -95,6 +95,6 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
     UNPROTECT(1);
   }
 
-  UNPROTECT(1);
+  UNPROTECT(2);
   return out;
 }
