@@ -51,12 +51,12 @@ imap_dbl <- function(.x, .f, ...) {
 #' @export
 imap_dfr <- function(.x, .f, ..., .id = NULL) {
   .f <- as_mapper(.f, ...)
-  map2_dfr(.x, vec_index(.x), .f, ...)
+  map2_dfr(.x, vec_index(.x), .f, ..., .id = .id)
 }
 
 #' @rdname imap
 #' @export
-imap_dfc <- function(.x, .f, ..., .id = NULL) {
+imap_dfc <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   map2_dfc(.x, vec_index(.x), .f, ...)
 }
