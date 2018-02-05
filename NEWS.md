@@ -1,9 +1,9 @@
 
 # purrr 0.2.4.9000
 
-* `flatten_dfr` and `flatten_dfc` now aborts if `dplyr` is not installed. (#454)
+* `flatten_dfr()` and `flatten_dfc()` now aborts if dplyr is not installed. (#454)
 
-* `imap_dfr` now works with `.id` argument is provided (#429)
+* `imap_dfr()` now works with `.id` argument is provided (#429)
 
 * `map_at()`, `modify_at()` and `lmap_at()` accept negative values for `.at`, 
   ignoring elements at those positions.
