@@ -53,8 +53,12 @@ to extract named attributes. If a component is not present, the value of
 
 \item{...}{Additional arguments passed on to \code{.f}.}
 
-\item{.id}{If not \code{NULL} a variable with this name will be created
-giving either the name or the index of the data frame.}
+\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
+a variable with that name, storing either the name (if \code{.x} is named) or
+the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
+variable will be created.
+
+Only applies to \code{_dfr} variant.}
 }
 \value{
 A vector the same length as \code{.x}.

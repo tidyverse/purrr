@@ -71,8 +71,12 @@ inner lists. Only those elements where \code{.p} evaluates to
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.}
 
-\item{.id}{If not \code{NULL} a variable with this name will be created
-giving either the name or the index of the data frame.}
+\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
+a variable with that name, storing either the name (if \code{.x} is named) or
+the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
+variable will be created.
+
+Only applies to \code{_dfr} variant.}
 }
 \value{
 All functions return a vector the same length as \code{.x}.
