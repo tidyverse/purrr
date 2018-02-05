@@ -7,6 +7,7 @@
 \alias{invoke_map_int}
 \alias{invoke_map_dbl}
 \alias{invoke_map_chr}
+\alias{invoke_map_raw}
 \alias{invoke_map_dfr}
 \alias{invoke_map_dfc}
 \alias{invoke_map_df}
@@ -24,6 +25,8 @@ invoke_map_int(.f, .x = list(NULL), ..., .env = NULL)
 invoke_map_dbl(.f, .x = list(NULL), ..., .env = NULL)
 
 invoke_map_chr(.f, .x = list(NULL), ..., .env = NULL)
+
+invoke_map_raw(.f, .x = list(NULL), ..., .env = NULL)
 
 invoke_map_dfr(.f, .x = list(NULL), ..., .env = NULL)
 

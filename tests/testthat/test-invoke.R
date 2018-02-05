@@ -33,6 +33,8 @@ test_that("invoke_map() works with bare function", {
   expect_identical(invoke_map_int(`+`, data), c(3L, 7L))
   expect_identical(invoke_map_lgl(`&&`, data), c(TRUE, TRUE))
 
+  expect_identical(invoke_map_raw(identity, as.raw(1:3)), as.raw(1:3))
+
   ops <- set_names(c(`+`, `-`), c("a", "b"))
   expect_identical(invoke_map_dfr(ops, data), invoke_map_dfc(ops, data))
 })

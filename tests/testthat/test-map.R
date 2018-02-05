@@ -29,13 +29,20 @@ test_that("map() always returns a list", {
 
 test_that("types automatically coerced upwards", {
   expect_identical(map_int(c(FALSE, TRUE), identity), c(0L, 1L))
+  expect_identical(map_int(as.raw(0:1), identity), 0:1)
 
   expect_identical(map_dbl(c(FALSE, TRUE), identity), c(0, 1))
   expect_identical(map_dbl(c(1L, 2L), identity), c(1, 2))
+  expect_identical(map_dbl(as.raw(0:1), identity), c(0, 1))
 
   expect_identical(map_chr(c(FALSE, TRUE), identity), c("FALSE", "TRUE"))
   expect_identical(map_chr(c(1L, 2L), identity), c("1", "2"))
   expect_identical(map_chr(c(1.5, 2.5), identity), c("1.500000", "2.500000"))
+  expect_identical(map_chr(as.raw(0:255), identity), as.character(as.raw(0:255)))
+})
+
+test_that("map_raw",{
+  expect_equal(map_raw("a", charToRaw), charToRaw("a"))
 })
 
 test_that("logical and integer NA become correct double NA", {

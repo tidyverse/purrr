@@ -113,6 +113,13 @@ invoke_map_chr <- function(.f, .x = list(NULL), ..., .env = NULL) {
   .f <- as_invoke_function(.f)
   map2_chr(.f, .x, invoke, ..., .env = .env)
 }
+#' @rdname invoke
+#' @export
+invoke_map_raw <- function(.f, .x = list(NULL), ..., .env = NULL) {
+  .env <- .env %||% parent.frame()
+  .f <- as_invoke_function(.f)
+  map2_raw(.f, .x, invoke, ..., .env = .env)
+}
 
 #' @rdname invoke
 #' @export
