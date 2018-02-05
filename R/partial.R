@@ -12,18 +12,24 @@
 #' similar as possible to the anonymous functions that you'd create by hand,
 #' if you weren't using `partial`.
 #'
-#' @param ...f a function. For the output source to read well, this should be a
-#'   named function.
+#' @param ...f a function.
 #' @param ... named arguments to `...f` that should be partially applied.
-#' @param .env the environment of the created function. Defaults to
-#'   [parent.frame()] and you should rarely need to modify this.
-#' @param .lazy If `TRUE` arguments evaluated lazily, if `FALSE`,
-#'   evaluated when `partial` is called.
+#'   [Unquoting and splicing][rlang::UQ()] semantics are supported, see
+#'   _Examples_.
 #' @param .first If `TRUE`, the partialized arguments are placed
 #'   to the front of the function signature. If `FALSE`, they are
 #'   moved to the back. Only useful to control position matching of
 #'   arguments when the partialized arguments are not named.
+#' @param .env,.lazy Obsolete. Partialized arguments are captured as
+#'   [quosures][rlang::quo()] (thus rendering the `.env` argument obsolete).
+#'   They are [tidily evaluated][rlang::eval_tidy()] each time the partial
+#'   application of `...f` is called. To fix the value of a partialized argument
+#'   in the context where `partial()` is called, unquote it with the
+#'   \code{\link[rlang:UQ]{!!}} operator. (Previously, lazy evaluation was
+#'   controlled by the `.lazy` flag.)
+#'
 #' @export
+#'
 #' @examples
 #' # Partial is designed to replace the use of anonymous functions for
 #' # filling in function arguments. Instead of:
@@ -32,8 +38,7 @@
 #' # we can write:
 #' compact2 <- partial(discard, .p = is.null)
 #'
-#' # and the generated source code is very similar to what we made by hand
-#' compact1
+#' # When printed, the partialized arguments and original function are shown:
 #' compact2
 #'
 #' # Note that the evaluation occurs "lazily" so that arguments will be
@@ -43,45 +48,67 @@
 #' f()
 #' f()
 #'
-#' # You can override this by saying .lazy = FALSE
-#' f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+#' # You can override this by unquoting:
+#' f <- partial(runif, n = !! rpois(1, 5))
 #' f
 #' f()
 #' f()
 #'
-#' # This also means that partial works fine with functions that do
-#' # non-standard evaluation
+#' # Partialized arguments can be spliced:
+#' args <- list(n = rpois(1, 5))
+#' f <- partial(runif, !!! args)
+#' f
+#' f()
+#' f()
+#'
+#' # partial() works fine with functions that do non-standard evaluation
 #' my_long_variable <- 1:10
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
-partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE,
-                    .first = TRUE) {
-  stopifnot(is.function(...f))
+#'
+partial <- function(...f, ..., .first = TRUE, .env, .lazy) {
+  if (!missing(.env))
+    abort("`.env` is deprecated")
+  if (!missing(.lazy))
+    abort("`.lazy` is deprecated; unquote values to evalute them immediately")
 
-  if (.lazy) {
-    fcall <- substitute(...f(...))
-  } else {
-    fcall <- make_call(substitute(...f), .args = list(...))
+  f <- as_closure(...f)
+  args <- quos(...)
+
+  if (is_empty(args))
+    return(f)
+
+  fill_args <- function(call) {
+    vals <- lapply(args, eval_tidy)
+    insert_vals(vals, call)
   }
+  if (.first)
+    insert_vals <- function(vals, call) as.call(c(f, vals, node_cdr(call)))
+  else
+    insert_vals <- function(vals, call) as.call(c(f, node_cdr(call), vals))
 
-  # Pass on ... from parent function
-  n <- length(fcall)
-  if (!.first && n > 1) {
-    tmp <- fcall[1]
-    tmp[[2]] <- quote(...)
-    tmp[seq(3, n + 1)] <- fcall[seq(2, n)]
-    names(tmp)[seq(3, n + 1)] <- names2(fcall)[seq(2, n)]
-    fcall <- tmp
-  } else {
-    fcall[[n + 1]] <- quote(...)
-  }
-
-  args <- list("..." = quote(expr = ))
-  new_function(args, fcall, .env)
+  set_attrs(
+    function(...) {
+      call <- fill_args(sys.call())
+      eval_bare(call, parent.frame())
+    },
+    class = "partial_function"
+  )
 }
 
-make_call <- function(f, ..., .args = list()) {
-  if (is.character(f)) f <- as.name(f)
-  as.call(c(f, ..., .args))
+#' @export
+print.partial_function <- function(x, ...) {
+  cat("<partial_function>\n")
+  cat("\n* Pre-filled arguments:\n")
+  cat(itemize_vals(environment(x)$args), "\n", sep = "")
+  cat("\n* Original function:\n")
+  print(environment(x)$f)
+  invisible(x)
+}
+itemize_vals <- function(args) {
+  vals <- lapply(args, quo_text)
+  nms <- names(vals)
+  nms[nzchar(nms)] <- sprintf("%s = ", nms[nzchar(nms)])
+  paste(paste0(nms, vals), collapse = "\n")
 }
