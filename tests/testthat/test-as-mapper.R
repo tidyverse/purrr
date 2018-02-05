@@ -71,13 +71,6 @@ test_that("lists are wrapped", {
   expect_identical(mapper_list, base_list)
 })
 
-test_that("attributes are wrapped", {
-  expect_identical(
-    as_mapper(get_attr("row.names"))(mtcars),
-    row.names(mtcars)
-  )
-})
-
 test_that("raw vectors are supported for indexing", {
   expect_equal( as_mapper(1)(raw(2)), raw(1) )
 })
