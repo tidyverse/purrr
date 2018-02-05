@@ -1,4 +1,3 @@
-
 # purrr 0.2.4.9000
 
 * `flatten_dfr()` and `flatten_dfc()` now aborts if dplyr is not installed. (#454)
@@ -13,7 +12,6 @@
 # purrr 0.2.4
 
 * Fixes for R 3.1.
-
 
 # purrr 0.2.3
 
