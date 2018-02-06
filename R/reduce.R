@@ -142,6 +142,7 @@ seq_len2 <- function(start, end) {
 #' both functions keep the intermediate results.
 #'
 #' @inheritParams reduce
+#' @param .keep_names If `TRUE`, names of `.x` will be copied to the result. Otherwise the result will be unnamed.
 #' @export
 #' @examples
 #' 1:3 %>% accumulate(`+`)
@@ -170,25 +171,43 @@ seq_len2 <- function(start, end) {
 #'     geom_line(aes(color = simulation)) +
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
-accumulate <- function(.x, .f, ..., .init) {
+accumulate <- function(.x, .f, ..., .init, .keep_names = FALSE) {
   .f <- as_mapper(.f, ...)
 
   f <- function(x, y) {
     .f(x, y, ...)
   }
+  
+  # Stop early so costly Reduce is called only when everything is fine
+  if (!is.logical(.keep_names) || length(.keep_names) != 1 || is.na(.keep_names)) {
+    rlang::abort("`.keep_names` must be TRUE or FALSE")
+  }
 
-  Reduce(f, .x, init = .init, accumulate = TRUE)
+  res <- Reduce(f, .x, init = .init, accumulate = TRUE)
+  if (.keep_names) {
+    names(res) <- names(.x)
+  }
+  res
 }
 
 #' @export
 #' @rdname accumulate
-accumulate_right <- function(.x, .f, ..., .init) {
+accumulate_right <- function(.x, .f, ..., .init, .keep_names = FALSE) {
   .f <- as_mapper(.f, ...)
 
   # Note the order of arguments is switched
   f <- function(x, y) {
     .f(y, x, ...)
   }
+  
+  # Stop early so costly Reduce is called only when everything is fine
+  if (!is.logical(.keep_names) || length(.keep_names) != 1 || is.na(.keep_names)) {
+    rlang::abort("`.keep_names` must be TRUE or FALSE")
+  }
 
-  Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
+  res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
+  if (.keep_names) {
+    names(res) <- names(.x)
+  }
+  res
 }
