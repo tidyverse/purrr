@@ -107,7 +107,12 @@ modify.character  <- function (.x, .f, ...) {
   .x[] <- map_chr(.x, .f, ...)
   .x
 }
-
+#' @rdname modify
+#' @export
+modify.logical  <- function (.x, .f, ...) {
+  .x[] <- map_lgl(.x, .f, ...)
+  .x
+}
 #' @export
 modify.pairlist <- function(.x, .f, ...) {
   as.pairlist(map(.x, .f, ...))
