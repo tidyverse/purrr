@@ -98,7 +98,7 @@ plucker <- function(i, default) {
   x <- NULL # supress global variables check NOTE
 
   new_function(
-    exprs(x = , ... = ),
+    exprs(x = , ... = , .ignore_empty = "none"),
     expr(pluck(x, !!i, .default = !!default)),
     env = caller_env()
   )
