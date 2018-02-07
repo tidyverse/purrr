@@ -152,6 +152,13 @@ modify_if.character <- function(.x, .p, .f, ...) {
   .x[sel] <- map_chr(.x[sel], .f, ...)
   .x
 }
+#' @rdname modify
+#' @export
+modify_if.logical <- function(.x, .p, .f, ...) {
+  sel <- probe(.x, .p)
+  .x[sel] <- map_lgl(.x[sel], .f, ...)
+  .x
+}
 
 #' @rdname modify
 #' @export
@@ -184,6 +191,13 @@ modify_at.double <- function(.x, .at, .f, ...) {
 modify_at.character <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map_chr(.x[sel], .f, ...)
+  .x
+}
+#' @rdname modify
+#' @export
+modify_at.logical <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+  .x[sel] <- map_lgl(.x[sel], .f, ...)
   .x
 }
 

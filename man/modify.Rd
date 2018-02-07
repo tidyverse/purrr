@@ -12,11 +12,13 @@
 \alias{modify_if.integer}
 \alias{modify_if.double}
 \alias{modify_if.character}
+\alias{modify_if.logical}
 \alias{modify_at}
 \alias{modify_at.default}
 \alias{modify_at.integer}
 \alias{modify_at.double}
 \alias{modify_at.character}
+\alias{modify_at.logical}
 \alias{modify_depth}
 \alias{modify_depth.default}
 \alias{at_depth}
@@ -44,6 +46,8 @@ modify_if(.x, .p, .f, ...)
 
 \method{modify_if}{character}(.x, .p, .f, ...)
 
+\method{modify_if}{logical}(.x, .p, .f, ...)
+
 modify_at(.x, .at, .f, ...)
 
 \method{modify_at}{default}(.x, .at, .f, ...)
@@ -53,6 +57,8 @@ modify_at(.x, .at, .f, ...)
 \method{modify_at}{double}(.x, .at, .f, ...)
 
 \method{modify_at}{character}(.x, .at, .f, ...)
+
+\method{modify_at}{logical}(.x, .at, .f, ...)
 
 modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 
@@ -129,8 +135,8 @@ must preserve the length of the input.
 All these functions are S3 generic. However, the default method is
 sufficient in many cases. It should be suitable for any data type
 that implements the subset-assignment method \code{[<-}. Methods are provided
-for character, integer and double, (counterparts to \code{map_int}, \code{map_dbl}
-and \code{map_chr})
+for character, logical, integer and double classes (counterparts to \code{map_chr},
+\code{map_lgl}, \code{map_int}, and \code{map_dbl})
 
 In some cases it may make sense to provide a custom implementation
 with a method suited to your S3 class. For example, a \code{grouped_df}
