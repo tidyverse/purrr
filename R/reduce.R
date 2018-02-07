@@ -171,28 +171,21 @@ seq_len2 <- function(start, end) {
 #'     geom_line(aes(color = simulation)) +
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
-accumulate <- function(.x, .f, ..., .init, .keep_names = FALSE) {
+accumulate <- function(.x, .f, ..., .init) {
   .f <- as_mapper(.f, ...)
 
   f <- function(x, y) {
     .f(x, y, ...)
   }
   
-  # Stop early so costly Reduce is called only when everything is fine
-  if (!is.logical(.keep_names) || length(.keep_names) != 1 || is.na(.keep_names)) {
-    rlang::abort("`.keep_names` must be TRUE or FALSE")
-  }
-
   res <- Reduce(f, .x, init = .init, accumulate = TRUE)
-  if (.keep_names) {
-    names(res) <- names(.x)
-  }
+  names(res) <- names(.x)
   res
 }
 
 #' @export
 #' @rdname accumulate
-accumulate_right <- function(.x, .f, ..., .init, .keep_names = FALSE) {
+accumulate_right <- function(.x, .f, ..., .init) {
   .f <- as_mapper(.f, ...)
 
   # Note the order of arguments is switched
@@ -200,14 +193,7 @@ accumulate_right <- function(.x, .f, ..., .init, .keep_names = FALSE) {
     .f(y, x, ...)
   }
   
-  # Stop early so costly Reduce is called only when everything is fine
-  if (!is.logical(.keep_names) || length(.keep_names) != 1 || is.na(.keep_names)) {
-    rlang::abort("`.keep_names` must be TRUE or FALSE")
-  }
-
   res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
-  if (.keep_names) {
-    names(res) <- names(.x)
-  }
+  names(res) <- names(.x)
   res
 }
