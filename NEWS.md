@@ -1,5 +1,10 @@
 # purrr 0.2.4.9000
 
+* `attr_getter()` no longer uses partial matching. For example,
+  if an `x` object has a `labels` attribute but no `label` attribute,
+  `attr_getter("label")(x)` will no longer extract the `labels`
+  attribute (#460, @huftis).
+
 * `flatten_dfr()` and `flatten_dfc()` now aborts if dplyr is not installed. (#454)
 
 * `imap_dfr()` now works with `.id` argument is provided (#429)

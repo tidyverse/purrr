@@ -118,6 +118,17 @@ test_that("delegate error handling to Rf_eval()", {
 })
 
 
+# attribute extraction ----------------------------------------------------
+
+test_that("attr_getter() uses exact (non-partial) matching", {
+  x <- 1
+  attr(x, "labels") <- "foo"
+
+  expect_identical(attr_getter("labels")(x), "foo")
+  expect_identical(attr_getter("label")(x), NULL)
+})
+
+
 # environments ------------------------------------------------------------
 
 test_that("pluck errors with invalid indices", {
