@@ -1,5 +1,7 @@
 # purrr 0.2.4.9000
 
+* `accumulate()` and `accumulate_right()` now inherit names from their first input (@AshesITR, #446)
+
 * `flatten_dfr()` and `flatten_dfc()` now aborts if dplyr is not installed. (#454)
 
 * `imap_dfr()` now works with `.id` argument is provided (#429)
