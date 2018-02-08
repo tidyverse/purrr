@@ -38,6 +38,11 @@ cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo"
 
 Furthermore, \code{pluck()} never partial-matches unlike \code{$} which will
 select the \code{disp} object if you write \code{mtcars$di}.
+
+\code{attr_getter()} generates an attribute accessor function;
+i.e., it generates a function for extracting an attribute with
+a given name. Unlike the base R \code{attr()} function with default
+options, it doesn't use partial matching.
 }
 \details{
 Since it handles arbitrary accessor functions, \code{pluck()} is a type

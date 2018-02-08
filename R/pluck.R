@@ -16,6 +16,11 @@
 #' Furthermore, `pluck()` never partial-matches unlike `$` which will
 #' select the `disp` object if you write `mtcars$di`.
 #'
+#' `attr_getter()` generates an attribute accessor function;
+#' i.e., it generates a function for extracting an attribute with
+#' a given name. Unlike the base R `attr()` function with default
+#' options, it doesn't use partial matching.
+#'
 #' @details
 #'
 #' Since it handles arbitrary accessor functions, `pluck()` is a type
@@ -83,5 +88,5 @@ pluck <- function(.x, ..., .default = NULL) {
 #' @param attr An attribute name as string.
 attr_getter <- function(attr) {
   force(attr)
-  function(x) attr(x, attr)
+  function(x) attr(x, attr, exact = TRUE)
 }
