@@ -39,6 +39,11 @@ test_that("lists are replaced recursively", {
   )
 })
 
+test_that("duplicate names works", {
+  expect_equal(list_modify(list(x = 1), x = 2, x = 3), list(x = 3))
+})
+
+
 
 # list_merge --------------------------------------------------------------
 
@@ -64,6 +69,9 @@ test_that("list_merge returns the non-empty list", {
   expect_equal(list_merge(list(), 2), set_names(list(2), ""))
 })
 
+test_that("list_merge handles duplicate names", {
+  expect_equal(list_merge(list(x = 1), x = 2, x = 3), list(x = 1:3))
+})
 
 # update_list ------------------------------------------------------------
 

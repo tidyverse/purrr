@@ -14,6 +14,9 @@
 
 * `map()` and `modify()` now work with calls and pairlists (#412).
 
+* `list_modify()`, `update_list()` and `list_merge()` now handle duplicate
+  duplicate argument names correctly (#441, @mgirlich).
+
 # purrr 0.2.4
 
 * Fixes for R 3.1.

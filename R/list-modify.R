@@ -75,11 +75,12 @@ list_recurse <- function(x, y, base_case) {
       }
     }
   } else if (is_names(x_names) && is_names(y_names)) {
-    for (nm in y_names) {
-      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[nm]])) {
-        x[[nm]] <- list_recurse(x[[nm]], y[[nm]], base_case)
+    for (i in seq_along(y_names)) {
+      nm <- y_names[[i]]
+      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]])) {
+        x[[nm]] <- list_recurse(x[[nm]], y[[i]], base_case)
       } else {
-        x[[nm]] <- base_case(x[[nm]], y[[nm]])
+        x[[nm]] <- base_case(x[[nm]], y[[i]])
       }
     }
   } else {
