@@ -21,7 +21,6 @@ test_that("can refer to second arg in two ways", {
 # })
 
 test_that(".default replaces absent values", {
-  skip("as_mapper() WIP")
   x <- list(
     list(a = 1, b = 2, c = 3),
     list(a = 1, c = 2),
@@ -33,7 +32,6 @@ test_that(".default replaces absent values", {
 })
 
 test_that(".default replaces elements with length 0", {
-  skip("as_mapper() WIP")
   x <- list(
     list(a = 1),
     list(a = NULL),
