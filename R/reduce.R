@@ -139,10 +139,9 @@ seq_len2 <- function(start, end) {
 #'
 #' `accumulate` applies a function recursively over a list from the left, while
 #' `accumulate_right` applies the function from the right. Unlike `reduce`
-#' both functions keep the intermediate results.
+#' both functions keep the intermediate results and the names of `.x`.
 #'
 #' @inheritParams reduce
-#' @param .keep_names If `TRUE`, names of `.x` will be copied to the result. Otherwise the result will be unnamed.
 #' @export
 #' @examples
 #' 1:3 %>% accumulate(`+`)
