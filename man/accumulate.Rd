@@ -30,7 +30,7 @@ is empty. If missing, and \code{x} is empty, will throw an error.}
 \description{
 \code{accumulate} applies a function recursively over a list from the left, while
 \code{accumulate_right} applies the function from the right. Unlike \code{reduce}
-both functions keep the intermediate results.
+both functions keep the intermediate results and the names of \code{.x}.
 }
 \examples{
 1:3 \%>\% accumulate(`+`)
