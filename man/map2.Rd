@@ -100,9 +100,10 @@ If all input is length 0, the output will be length 0. If any
 input is length 1, it will be recycled to the length of the longest.
 }
 \description{
-These functions are variants of \code{map()} iterate over multiple arguments
+These functions are variants of \code{map()} that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
-in parallel with the others, not in the sense of multicore computing.
+in parallel with the others, not in the sense of multicore computing. They
+share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
 \code{map2()} and \code{walk2()} are specialised for the two argument case; \code{pmap()}
 and \code{pwalk()} allow you to provide any number of arguments in a list.
 }
@@ -119,11 +120,6 @@ map2(x, y, ~ .x + .y)
 # Or just
 map2(x, y, `+`)
 
-# Split into pieces, fit model to each piece, then predict
-by_cyl <- mtcars \%>\% split(.$cyl)
-mods <- by_cyl \%>\% map(~ lm(mpg ~ wt, data = .))
-map2(mods, by_cyl, predict)
-
 pmap(list(x, y, z), sum)
 
 # Matching arguments by position
@@ -132,6 +128,11 @@ pmap(list(x, y, z), function(a, b ,c) a / (b + c))
 # Matching arguments by name
 l <- list(a = x, b = y, c = z)
 pmap(l, function(c, b, a) a / (b + c))
+
+# Split into pieces, fit model to each piece, then predict
+by_cyl <- mtcars \%>\% split(.$cyl)
+mods <- by_cyl \%>\% map(~ lm(mpg ~ wt, data = .))
+map2(mods, by_cyl, predict)
 
 # Vectorizing a function over multiple arguments
 df <- data.frame(
@@ -143,7 +144,7 @@ df <- data.frame(
 pmap(df, gsub)
 pmap_chr(df, gsub)
 
-## Use `...` to absorb unused components of input list .l
+# Use `...` to absorb unused components of input list .l
 df <- data.frame(
   x = 1:3 + 0.1,
   y = 3:1 - 0.1,
@@ -151,13 +152,23 @@ df <- data.frame(
 )
 plus <- function(x, y) x + y
 \dontrun{
-## this won't work
+# this won't work
 pmap(df, plus)
 }
-## but this will
+# but this will
 plus2 <- function(x, y, ...) x + y
 pmap_dbl(df, plus2)
 
+# The "p" for "parallel" in pmap() is the same as in base::pmin()
+# and base::pmax()
+df <- data.frame(
+  x = c(1, 2, 5),
+  y = c(5, 4, 8)
+)
+# all produce the same result
+pmin(df$x, df$y)
+map2_dbl(df$x, df$y, min)
+pmap_dbl(df, min)
 }
 \seealso{
 Other map variants: \code{\link{imap}},
