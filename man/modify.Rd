@@ -6,6 +6,7 @@
 \alias{modify.integer}
 \alias{modify.double}
 \alias{modify.character}
+\alias{modify.logical}
 \alias{modify_if}
 \alias{modify_if.default}
 \alias{modify_if.integer}
@@ -32,6 +33,8 @@ modify(.x, .f, ...)
 \method{modify}{double}(.x, .f, ...)
 
 \method{modify}{character}(.x, .f, ...)
+
+\method{modify}{logical}(.x, .f, ...)
 
 modify_if(.x, .p, .f, ...)
 
