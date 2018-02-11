@@ -98,7 +98,9 @@ must preserve the length of the input.
 
 All these functions are S3 generic. However, the default method is
 sufficient in many cases. It should be suitable for any data type
-that implements the subset-assignment method \code{[<-}.
+that implements the subset-assignment method \code{[<-}. Methods are provided
+for character, logical, integer and double classes (counterparts to \code{map_chr},
+\code{map_lgl}, \code{map_int}, and \code{map_dbl})
 
 In some cases it may make sense to provide a custom implementation
 with a method suited to your S3 class. For example, a \code{grouped_df}

@@ -16,6 +16,13 @@
 
 * `map()` and `modify()` now work with calls and pairlists (#412).
 
+* `modify()`, `modify_if()` and `modify_at()` now preserve the class of atomic
+  vectors instead of promoting them to lists. New S3 methods are provided for
+  character, logical, double, and integer classes (@t-kalinowski, #417).
+
+* `list_modify()`, `update_list()` and `list_merge()` now handle duplicate
+  duplicate argument names correctly (#441, @mgirlich).
+
 # purrr 0.2.4
 
 * Fixes for R 3.1.
