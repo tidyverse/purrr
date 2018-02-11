@@ -40,6 +40,23 @@ test_that("modify works with calls and pairlists", {
   expect_equal(out, pairlist(2, 3))
 })
 
+test_that("modify{,_at,_if} preserves atomic vector classes", {
+  expect_type(modify("a", identity), "character")
+  expect_type(modify(1L,  identity), "integer")
+  expect_type(modify(1,   identity), "double")
+  expect_type(modify(TRUE, identity), "logical")
+
+  expect_type(modify_at("a",   1L, identity), "character")
+  expect_type(modify_at(1L,    1L, identity), "integer")
+  expect_type(modify_at(1,     1L, identity), "double")
+  expect_type(modify_at(TRUE,  1L, identity), "logical")
+
+  expect_type(modify_if("a",   TRUE, identity), "character")
+  expect_type(modify_if(1L,    TRUE, identity), "integer")
+  expect_type(modify_if(1,     TRUE, identity), "double")
+  expect_type(modify_if(TRUE,  TRUE, identity), "logical")
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {

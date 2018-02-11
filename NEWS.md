@@ -1,5 +1,9 @@
 # purrr 0.2.4.9000
 
+* `modify()`, `modify_if()` and `modify_at()` now preserve the class of atomic
+  vectors instead of promoting them to lists. New S3 methods are provided for
+  character, logical, double, and integer classes (@t-kalinowski, #417).
+
 * `attr_getter()` no longer uses partial matching. For example,
   if an `x` object has a `labels` attribute but no `label` attribute,
   `attr_getter("label")(x)` will no longer extract the `labels`
