@@ -3,22 +3,10 @@
 \name{modify}
 \alias{modify}
 \alias{modify.default}
-\alias{modify.integer}
-\alias{modify.double}
-\alias{modify.character}
-\alias{modify.logical}
 \alias{modify_if}
 \alias{modify_if.default}
-\alias{modify_if.integer}
-\alias{modify_if.double}
-\alias{modify_if.character}
-\alias{modify_if.logical}
 \alias{modify_at}
 \alias{modify_at.default}
-\alias{modify_at.integer}
-\alias{modify_at.double}
-\alias{modify_at.character}
-\alias{modify_at.logical}
 \alias{modify_depth}
 \alias{modify_depth.default}
 \alias{at_depth}
@@ -28,37 +16,13 @@ modify(.x, .f, ...)
 
 \method{modify}{default}(.x, .f, ...)
 
-\method{modify}{integer}(.x, .f, ...)
-
-\method{modify}{double}(.x, .f, ...)
-
-\method{modify}{character}(.x, .f, ...)
-
-\method{modify}{logical}(.x, .f, ...)
-
 modify_if(.x, .p, .f, ...)
 
 \method{modify_if}{default}(.x, .p, .f, ...)
 
-\method{modify_if}{integer}(.x, .p, .f, ...)
-
-\method{modify_if}{double}(.x, .p, .f, ...)
-
-\method{modify_if}{character}(.x, .p, .f, ...)
-
-\method{modify_if}{logical}(.x, .p, .f, ...)
-
 modify_at(.x, .at, .f, ...)
 
 \method{modify_at}{default}(.x, .at, .f, ...)
-
-\method{modify_at}{integer}(.x, .at, .f, ...)
-
-\method{modify_at}{double}(.x, .at, .f, ...)
-
-\method{modify_at}{character}(.x, .at, .f, ...)
-
-\method{modify_at}{logical}(.x, .at, .f, ...)
 
 modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 

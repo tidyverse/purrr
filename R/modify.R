@@ -89,25 +89,21 @@ modify.default <- function(.x, .f, ...) {
   .x[] <- map(.x, .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify.integer  <- function (.x, .f, ...) {
   .x[] <- map_int(.x, .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify.double  <- function (.x, .f, ...) {
   .x[] <- map_dbl(.x, .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify.character  <- function (.x, .f, ...) {
   .x[] <- map_chr(.x, .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify.logical  <- function (.x, .f, ...) {
   .x[] <- map_lgl(.x, .f, ...)
@@ -132,28 +128,24 @@ modify_if.default <- function(.x, .p, .f, ...) {
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_if.integer <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
   .x[sel] <- map_int(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_if.double <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
   .x[sel] <- map_dbl(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_if.character <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
   .x[sel] <- map_chr(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_if.logical <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
@@ -173,28 +165,24 @@ modify_at.default <- function(.x, .at, .f, ...) {
   .x[sel] <- map(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map_int(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_at.double <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map_dbl(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_at.character <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map_chr(.x[sel], .f, ...)
   .x
 }
-#' @rdname modify
 #' @export
 modify_at.logical <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
