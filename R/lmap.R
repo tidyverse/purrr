@@ -76,14 +76,14 @@
 #' iris %>% lmap_if(is.factor, disjoin)
 #' mtcars %>% lmap_at(c("cyl", "vs", "am"), disjoin)
 lmap <- function(.x, .f, ...) {
-  .x %>% lmap_at(seq_along(.x), .f, ...)
+  lmap_at(.x, seq_along(.x), .f, ...)
 }
 
 #' @rdname lmap
 #' @export
 lmap_if <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p) %>% which()
-  .x %>% lmap_at(sel, .f, ...)
+  sel <- which(probe(.x, .p))
+  lmap_at(.x, sel, .f, ...)
 }
 
 #' @rdname lmap
@@ -106,5 +106,5 @@ lmap_at <- function(.x, .at, .f, ...) {
     out[[i]] <- res
   }
 
-  flatten(out) %>% maybe_as_data_frame(.x)
+  maybe_as_data_frame(flatten(out), .x)
 }

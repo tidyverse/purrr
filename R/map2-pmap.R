@@ -217,7 +217,7 @@ pmap_df <- pmap_dfr
 #' @rdname map2
 pwalk <- function(.l, .f, ...) {
   .f <- as_mapper(.f, ...)
-  args_list <- recycle_args(.l) %>% transpose()
+  args_list <- transpose(recycle_args(.l))
   for (args in args_list) {
     do.call(".f", c(args, list(...)))
   }
