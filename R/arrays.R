@@ -45,13 +45,13 @@
 #' # margin argument:
 #' array_tree(x, c(3, 1)) %>% str()
 array_branch <- function(array, margin = NULL) {
-    dim(array) <- dim(array) %||% length(array)
-    margin <- margin %||% seq_along(dim(array))
+  dim(array) <- dim(array) %||% length(array)
+  margin <- margin %||% seq_along(dim(array))
 
   if (length(margin) == 0) {
     list(array)
   } else {
-    apply(array, margin, list) %>% flatten()
+    flatten(apply(array, margin, list))
   }
 }
 
@@ -63,7 +63,7 @@ array_tree <- function(array, margin = NULL) {
 
   if (length(margin) > 1) {
     new_margin <- ifelse(margin[-1] > margin[[1]], margin[-1] - 1, margin[-1])
-    apply(array, margin[[1]], . %>% array_tree(new_margin))
+    apply(array, margin[[1]], array_tree, new_margin)
   } else {
     array_branch(array, margin)
   }
