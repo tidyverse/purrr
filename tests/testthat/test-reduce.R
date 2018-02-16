@@ -33,6 +33,11 @@ test_that("accumulate passes arguments to function", {
   expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
 })
 
+test_that("accumulate keeps input names", {
+  input <- set_names(1:26, letters)
+  expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
+  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), letters))
+})
 
 # reduce2 -----------------------------------------------------------------
 

@@ -142,6 +142,8 @@ seq_len2 <- function(start, end) {
 #' both functions keep the intermediate results.
 #'
 #' @inheritParams reduce
+#'
+#' @return A vector the same length of `.x` with the same names as `.x`
 #' @export
 #' @examples
 #' 1:3 %>% accumulate(`+`)
@@ -176,8 +178,10 @@ accumulate <- function(.x, .f, ..., .init) {
   f <- function(x, y) {
     .f(x, y, ...)
   }
-
-  Reduce(f, .x, init = .init, accumulate = TRUE)
+  
+  res <- Reduce(f, .x, init = .init, accumulate = TRUE)
+  names(res) <- names(.x)
+  res
 }
 
 #' @export
@@ -189,6 +193,8 @@ accumulate_right <- function(.x, .f, ..., .init) {
   f <- function(x, y) {
     .f(y, x, ...)
   }
-
-  Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
+  
+  res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
+  names(res) <- names(.x)
+  res
 }
