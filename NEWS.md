@@ -22,6 +22,9 @@
 
 * `list_modify()`, `update_list()` and `list_merge()` now handle duplicate
   duplicate argument names correctly (#441, @mgirlich).
+  
+* Support for raw vectors with added functions `map_raw`, `imap_raw`, 
+  `flatten_raw`, `invoke_map_raw`, `map2_raw`, `pmap_raw`. 
 
 # purrr 0.2.4
 
