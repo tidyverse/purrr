@@ -165,3 +165,7 @@ test_that("pluck returns missing with missing index", {
 test_that("plucks by name", {
   expect_equal(pluck(A, list("a")), 1)
 })
+
+test_that("can't pluck from complex", {
+  expect_error( pluck( 1+2i, 1 ), "Don't know how to index object of type complex at level 1" )
+})

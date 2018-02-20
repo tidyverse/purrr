@@ -77,6 +77,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i) {
   case REALSXP: return Rf_ScalarReal(REAL(x)[offset]);
   case STRSXP:  return Rf_ScalarString(STRING_ELT(x, offset));
   case VECSXP:  return VECTOR_ELT(x, offset);
+  case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
   default:
     Rf_errorcall(R_NilValue,
       "Don't know how to index object of type %s at level %i",

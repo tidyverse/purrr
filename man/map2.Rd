@@ -6,6 +6,7 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
+\alias{map2_raw}
 \alias{map2_dfr}
 \alias{map2_dfc}
 \alias{map2_df}
@@ -15,6 +16,7 @@
 \alias{pmap_int}
 \alias{pmap_dbl}
 \alias{pmap_chr}
+\alias{pmap_raw}
 \alias{pmap_dfr}
 \alias{pmap_dfc}
 \alias{pmap_df}
@@ -31,6 +33,8 @@ map2_dbl(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
 
+map2_raw(.x, .y, .f, ...)
+
 map2_dfr(.x, .y, .f, ..., .id = NULL)
 
 map2_dfc(.x, .y, .f, ...)
@@ -46,6 +50,8 @@ pmap_int(.l, .f, ...)
 pmap_dbl(.l, .f, ...)
 
 pmap_chr(.l, .f, ...)
+
+pmap_raw(.l, .f, ...)
 
 pmap_dfr(.l, .f, ..., .id = NULL)
 

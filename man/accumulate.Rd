@@ -27,10 +27,13 @@ the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
 }
+\value{
+A vector the same length of \code{.x} with the same names as \code{.x}
+}
 \description{
 \code{accumulate} applies a function recursively over a list from the left, while
 \code{accumulate_right} applies the function from the right. Unlike \code{reduce}
-both functions keep the intermediate results and the names of \code{.x}.
+both functions keep the intermediate results.
 }
 \examples{
 1:3 \%>\% accumulate(`+`)

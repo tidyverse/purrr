@@ -156,6 +156,13 @@ map_dbl <- function(.x, .f, ...) {
 }
 
 #' @rdname map
+#' @export
+map_raw <- function(.x, .f, ...) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_impl, environment(), ".x", ".f", "raw")
+}
+
+#' @rdname map
 #' @param .id Either a string or `NULL`. If a string, the output will contain
 #'   a variable with that name, storing either the name (if `.x` is named) or
 #'   the index (if `.x` is unnamed) of the input. If `NULL`, the default, no

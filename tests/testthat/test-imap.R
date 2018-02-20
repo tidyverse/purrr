@@ -15,6 +15,7 @@ test_that("atomic vector imap works", {
   expect_length(imap_chr(x, paste), 3)
   expect_equal(imap_int(x, ~ .x + as.integer(.y)), x * 2)
   expect_equal(imap_dbl(x, ~ .x + as.numeric(.y)), x * 2)
+  expect_equal(imap_raw(as.raw(12), rawShift), rawShift(as.raw(12), 1) )
 })
 
 test_that("data frame imap works", {

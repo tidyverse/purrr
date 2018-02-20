@@ -6,6 +6,7 @@
 \alias{imap_chr}
 \alias{imap_int}
 \alias{imap_dbl}
+\alias{imap_raw}
 \alias{imap_dfr}
 \alias{imap_dfc}
 \alias{iwalk}
@@ -20,6 +21,8 @@ imap_chr(.x, .f, ...)
 imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
+
+imap_raw(.x, .f, ...)
 
 imap_dfr(.x, .f, ..., .id = NULL)
 

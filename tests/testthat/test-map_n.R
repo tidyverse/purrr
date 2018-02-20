@@ -46,6 +46,7 @@ test_that("outputs are suffixes have correct type", {
   expect_is(pmap_int(list(x), length), "integer")
   expect_is(pmap_dbl(list(x), mean), "numeric")
   expect_is(pmap_chr(list(x), paste), "character")
+  expect_is(pmap_raw(list(x), as.raw), "raw")
   expect_is(pmap_dfr(list(x), as.data.frame), "data.frame")
   expect_is(pmap_dfc(list(x), as.data.frame), "data.frame")
 })
@@ -57,4 +58,5 @@ test_that("pmap on data frames performs rowwise operations", {
   expect_is(pmap_int(mtcars2, function(mpg, cyl) as.integer(cyl)), "integer")
   expect_is(pmap_dbl(mtcars2, function(mpg, cyl) mpg + cyl), "numeric")
   expect_is(pmap_chr(mtcars2, paste), "character")
+  expect_is(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
 })

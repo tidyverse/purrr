@@ -3,6 +3,15 @@
 #include <Rinternals.h>
 #include <stdio.h>
 
+const char* sixteen = "0123456789abcdef" ;
+
+SEXP raw_to_char( Rbyte x){
+  char buf[2] ;
+  buf[0] = sixteen[ x >> 4] ;
+  buf[1] = sixteen[ x & 0x0F ] ;
+  return Rf_mkCharLen( buf, 2) ;
+}
+
 double logical_to_real(int x) {
   return (x == NA_LOGICAL) ? NA_REAL : x;
 }
@@ -58,6 +67,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     switch(TYPEOF(from)) {
     case LGLSXP: INTEGER(to)[i] = LOGICAL(from)[j]; break;
     case INTSXP: INTEGER(to)[i] = INTEGER(from)[j]; break;
+    case RAWSXP: INTEGER(to)[i] = RAW(from)[j]; break ;
     default: cant_coerce(from, to, i);
     }
     break;
@@ -66,6 +76,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     case LGLSXP:  REAL(to)[i] = logical_to_real(LOGICAL(from)[j]); break;
     case INTSXP:  REAL(to)[i] = integer_to_real(INTEGER(from)[j]); break;
     case REALSXP: REAL(to)[i] = REAL(from)[j]; break;
+    case RAWSXP:  REAL(to)[i] = RAW(from)[j]; break ;
     default: cant_coerce(from, to, i);
     }
     break;
@@ -75,12 +86,19 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     case INTSXP:  SET_STRING_ELT(to, i, integer_to_char(INTEGER(from)[j])); break;
     case REALSXP: SET_STRING_ELT(to, i, double_to_char(REAL(from)[j])); break;
     case STRSXP:  SET_STRING_ELT(to, i, STRING_ELT(from, j)); break;
+    case RAWSXP:  SET_STRING_ELT(to, i, raw_to_char(RAW(from)[j])); break;
     default: cant_coerce(from, to, i);
     }
     break;
   case VECSXP:
     SET_VECTOR_ELT(to, i, from);
     break;
+  case RAWSXP:
+    switch(TYPEOF(from)) {
+    case RAWSXP: RAW(to)[i] = RAW(from)[j]; break;
+    default: cant_coerce(from, to, i);
+    }
+    break ;
   default: cant_coerce(from, to, i);
   }
 }
