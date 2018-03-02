@@ -89,7 +89,7 @@ generic. The default method forwards its arguments to
 
     <pre class="usage"><span class='fu'>as_mapper</span>(<span class='no'>.f</span>, <span class='no'>...</span>)
 
-<span class='fu'>get_attr</span>(<span class='no'>x</span>)
+<span class='fu'>attr_getter</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for attr</span>
 <span class='fu'>as_mapper</span>(<span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.null</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -121,7 +121,7 @@ are three ways to refer to the arguments:</p><ul>
 <p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in <code>get_attr()</code>
+and name at different levels. Within a list, wrap strings in <code>attr_getter()</code>
 to extract named attributes. If a component is not present, the value of
 <code>.default</code> will be returned.</p></td>
     </tr>
@@ -157,7 +157,7 @@ value is absent (does not exist) or empty (has length 0).
 #&gt; extract(x, list(1, "a", 2), default = NULL)
 #&gt; &lt;environment: 0x108052978&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
 
-<span class='fu'>as_mapper</span>(<span class='fu'>list</span>(<span class='fl'>1</span>, <span class='fu'>get_attr</span>(<span class='st'>"a"</span>)))</div><div class='output co'>#&gt; function (x, ...) 
+<span class='fu'>as_mapper</span>(<span class='fu'>list</span>(<span class='fl'>1</span>, <span class='fu'>attr_getter</span>(<span class='st'>"a"</span>)))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; extract(x, list(1, "a"), default = NULL)
 #&gt; &lt;environment: 0x111012318&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
 
