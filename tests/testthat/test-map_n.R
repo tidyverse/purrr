@@ -60,3 +60,9 @@ test_that("pmap on data frames performs rowwise operations", {
   expect_is(pmap_chr(mtcars2, paste), "character")
   expect_is(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
 })
+
+test_that("pwalk conserves expressions", {
+  expr <- quote(1 + 2)
+  expect_output(pwalk(list(list(expr), 1), ~ print(.x)), regexp = "1 \\+ 2")
+  expect_output(pwalk(list(list(eval(expr)), 1), ~ print(.x)), regexp = "3")
+})
