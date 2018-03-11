@@ -11,12 +11,11 @@
 #' transpose operation on a matrix. You can get back the original
 #' input by transposing it twice.
 #'
-#' @param .l A list of vectors to zip. The first element is used as the
-#'   template; you'll get a warning if a sub-list is not the same length as
-#'   the first element.
-#' @param .names For efficiency, `transpose()` usually inspects the
-#'   first component of `.l` to determine the structure. Use `.names`
-#'   if you want to override this default.
+#' @param .l A list of vectors to transpose. The first element is used as the
+#'   template; you'll get a warning if a subsequent element has a different
+#'   length.
+#' @param .names For efficiency, `transpose()` bases the return structure on
+#'   the first component of `.l` by default. Specify `.names` to override this.
 #' @return A list with indexing transposed compared to `.l`.
 #' @export
 #' @examples
