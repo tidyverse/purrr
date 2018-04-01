@@ -3,7 +3,7 @@
 \name{pluck}
 \alias{pluck}
 \alias{attr_getter}
-\title{Pluck out a single an element from a vector or environment}
+\title{Pluck out a single element from a vector or environment}
 \usage{
 pluck(.x, ..., .default = NULL)
 
