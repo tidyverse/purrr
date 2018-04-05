@@ -40,7 +40,7 @@
 #' pmap(list(x, y, z), sum)
 #'
 #' # Matching arguments by position
-#' pmap(list(x, y, z), function(a, b ,c) a / (b + c))
+#' pmap(list(x, y, z), function(a, b, c) a / (b + c))
 #'
 #' # Matching arguments by name
 #' l <- list(a = x, b = y, c = z)
