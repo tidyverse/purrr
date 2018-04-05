@@ -6,7 +6,7 @@
 #' @param .n Number of times to run expressions
 #' @param ... Expressions to re-run.
 #' @return A list of length `.n`. Each element of `...` will be
-#'   re-run once for each `.n`. It
+#'   re-run once for each `.n`.
 #'
 #'   There is one special case: if there's a single unnamed input, the second
 #'   level list will be dropped. In this case, `rerun(n, x)` behaves like
