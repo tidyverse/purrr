@@ -1,8 +1,8 @@
 #' Flatten a list of lists into a simple vector.
 #'
 #' These functions remove a level hierarchy from a list. They are similar to
-#' [unlist()], only ever remove a single layer of hierarchy, and
-#' are type-stable so you always know what the type of the output is.
+#' [unlist()], but they only ever remove a single layer of hierarchy and they
+#' are type-stable, so you always know what the type of the output is.
 #'
 #' @param .x A list of flatten. The contents of the list can be anything for
 #'   `flatten` (as a list is returned), but the contents must match the
