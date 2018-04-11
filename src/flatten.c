@@ -67,7 +67,7 @@ SEXP flatten_impl(SEXP x) {
           SET_STRING_ELT(names, i, !Rf_isNull(x_names) ? STRING_ELT(x_names, j) : Rf_mkChar(""));
         }
       }
-      if (i % 1000 == 0)
+      if (i % 1024 == 0)
         R_CheckUserInterrupt();
     }
   }
@@ -118,7 +118,7 @@ SEXP vflatten_impl(SEXP x, SEXP type_) {
 
       if (has_names)
         SET_STRING_ELT(names, i, has_names_j ? STRING_ELT(names_j, k) : Rf_mkChar(""));
-      if (i % 1000 == 0)
+      if (i % 1024 == 0)
         R_CheckUserInterrupt();
     }
   }
