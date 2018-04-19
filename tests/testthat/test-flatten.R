@@ -74,5 +74,5 @@ test_that("preserves inner names", {
 
 test_that("can flatten to a data frame with named lists", {
   expect_is(flatten_dfr(list(c(a = 1), c(b = 2))), "data.frame")
-  expect_error(flatten_dfc(list(1)))
+  expect_equal(flatten_dfc(list(1)), tibble::tibble(V1 = 1))
 })
