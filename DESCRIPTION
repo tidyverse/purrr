@@ -10,20 +10,21 @@ Description: A complete and consistent functional programming toolkit for R.
 License: GPL-3 | file LICENSE
 URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
-Depends:
+Depends: 
     R (>= 3.1)
-Imports:
+Imports: 
     magrittr (>= 1.5),
     rlang (>= 0.1),
     tibble
-Suggests:
+Suggests: 
     covr,
-    dplyr (>= 0.4.3),
+    dplyr (>= 0.7.4.9003),
     knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
+Encoding: UTF-8
 LazyData: true
+Remotes: tidyverse/dplyr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
-Encoding: UTF-8
