@@ -1,12 +1,12 @@
 #' Keep or discard elements using a predicate function.
 #'
-#' `keep` and `discard` are opposites. `compact` is a handy
-#' wrapper that removes all elements that are `NULL`.
+#' `keep()` and `discard()` are opposites. `compact()` is a handy
+#' wrapper that removes all empty elements.
 #'
 #' These are usually called `select` or `filter` and `reject` or
-#' `drop`, but those names are already taken. `keep` is similar to
-#' [Filter()] but the argument order is more convenient, and the
-#' evaluation of `.f` is stricter.
+#' `drop`, but those names are already taken. `keep()` is similar to
+#' [Filter()], but the argument order is more convenient, and the
+#' evaluation of the predicate function `.p` is stricter.
 #'
 #' @param .x A list or vector.
 #' @param ... Additional arguments passed on to `.p`.
@@ -28,6 +28,10 @@
 #' x
 #' x %>% keep("a")
 #' x %>% discard("a")
+#'
+#' # compact() discards elements that are NULL or that have length zero
+#' list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) %>%
+#'   compact()
 keep <- function(.x, .p, ...) {
   sel <- probe(.x, .p, ...)
   .x[!is.na(sel) & sel]

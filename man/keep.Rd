@@ -25,14 +25,14 @@ inner lists. Only those elements where \code{.p} evaluates to
 \item{...}{Additional arguments passed on to \code{.p}.}
 }
 \description{
-\code{keep} and \code{discard} are opposites. \code{compact} is a handy
-wrapper that removes all elements that are \code{NULL}.
+\code{keep()} and \code{discard()} are opposites. \code{compact()} is a handy
+wrapper that removes all empty elements.
 }
 \details{
 These are usually called \code{select} or \code{filter} and \code{reject} or
-\code{drop}, but those names are already taken. \code{keep} is similar to
-\code{\link[=Filter]{Filter()}} but the argument order is more convenient, and the
-evaluation of \code{.f} is stricter.
+\code{drop}, but those names are already taken. \code{keep()} is similar to
+\code{\link[=Filter]{Filter()}}, but the argument order is more convenient, and the
+evaluation of the predicate function \code{.p} is stricter.
 }
 \examples{
 rep(10, 10) \%>\%
@@ -50,4 +50,8 @@ x <- rerun(5, a = rbernoulli(1), b = sample(10))
 x
 x \%>\% keep("a")
 x \%>\% discard("a")
+
+# compact() discards elements that are NULL or that have length zero
+list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) \%>\%
+  compact()
 }
