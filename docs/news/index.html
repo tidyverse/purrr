@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • purrr</title>
+<title>Changelog • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,109 +89,169 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/tidyverse/purrr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
-    <div id="purrr-0-2-2-9000" class="section level1">
-<h1 class="hasAnchor">
-<a href="#purrr-0-2-2-9000" class="anchor"></a>purrr 0.2.2.9000</h1>
-<div id="purrr-and-dplyr" class="section level2">
+    <div id="purrr-0-2-4-9000" class="section level1">
+<h1 class="page-header">
+<a href="#purrr-0-2-4-9000" class="anchor"></a>purrr 0.2.4.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> and <code><a href="../reference/accumulate.html">accumulate_right()</a></code> now inherit names from their first input (<a href='http://github.com/AshesITR'>@AshesITR</a>, <a href='https://github.com/tidyverse/purrr/issues/446'>#446</a>)</p></li>
+<li><p><code><a href="../reference/pluck.html">attr_getter()</a></code> no longer uses partial matching. For example, if an <code>x</code> object has a <code>labels</code> attribute but no <code>label</code> attribute, <code>attr_getter("label")(x)</code> will no longer extract the <code>labels</code> attribute (<a href='https://github.com/tidyverse/purrr/issues/460'>#460</a>, <a href='http://github.com/huftis'>@huftis</a>).</p></li>
+<li><p><code><a href="../reference/flatten.html">flatten_dfr()</a></code> and <code><a href="../reference/flatten.html">flatten_dfc()</a></code> now aborts if dplyr is not installed. (<a href='https://github.com/tidyverse/purrr/issues/454'>#454</a>)</p></li>
+<li><p><code><a href="../reference/imap.html">imap_dfr()</a></code> now works with <code>.id</code> argument is provided (<a href='https://github.com/tidyverse/purrr/issues/429'>#429</a>)</p></li>
+<li><p><code><a href="../reference/map.html">map_at()</a></code>, <code><a href="../reference/modify.html">modify_at()</a></code> and <code><a href="../reference/lmap.html">lmap_at()</a></code> accept negative values for <code>.at</code>, ignoring elements at those positions.</p></li>
+<li><p><code><a href="../reference/map.html">map()</a></code> and <code><a href="../reference/modify.html">modify()</a></code> now work with calls and pairlists (<a href='https://github.com/tidyverse/purrr/issues/412'>#412</a>).</p></li>
+<li><p><code><a href="../reference/modify.html">modify()</a></code>, <code><a href="../reference/modify.html">modify_if()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> now preserve the class of atomic vectors instead of promoting them to lists. New S3 methods are provided for character, logical, double, and integer classes (<a href='http://github.com/t'>@t</a>-kalinowski, <a href='https://github.com/tidyverse/purrr/issues/417'>#417</a>).</p></li>
+<li><p><code><a href="../reference/list_modify.html">list_modify()</a></code>, <code><a href="../reference/list_modify.html">update_list()</a></code> and <code><a href="../reference/list_modify.html">list_merge()</a></code> now handle duplicate duplicate argument names correctly (<a href='https://github.com/tidyverse/purrr/issues/441'>#441</a>, <a href='http://github.com/mgirlich'>@mgirlich</a>).</p></li>
+<li><p><code>map_raw</code>, <code>imap_raw</code>, <code>flatten_raw</code>, <code>invoke_map_raw</code>, <code>map2_raw</code> and <code>pmap_raw</code> added to support raw vectors. (<a href='https://github.com/tidyverse/purrr/issues/455'>#455</a>, <a href='http://github.com/romainfrancois'>@romainfrancois</a>)</p></li>
+</ul>
+</div>
+    <div id="purrr-0-2-4" class="section level1">
+<h1 class="page-header">
+<a href="#purrr-0-2-4" class="anchor"></a>purrr 0.2.4<small> 2017-10-18 </small>
+</h1>
+<ul>
+<li>Fixes for R 3.1.</li>
+</ul>
+</div>
+    <div id="purrr-0-2-3" class="section level1">
+<h1 class="page-header">
+<a href="#purrr-0-2-3" class="anchor"></a>purrr 0.2.3<small> 2017-08-02 </small>
+</h1>
+<div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#purrr-and-dplyr" class="anchor"></a>purrr and dplyr</h2>
-<p>purrr no longer depends on dplyr, lazyeval, or Rcpp. This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages. This means that data-frame based mappers (<code>dmap()</code>, <code>dmap_at()</code>, <code>dmap_if()</code>, <code>invoke_rows()</code>, <code>slice_rows()</code>, <code>map_rows()</code>, <code>by_slice()</code>, <code>by_row()</code>, and <code>unslice()</code>) have been moved to a new package, purrrlyr. This is a bit of an aggressive change but it needed to be done, and in this case I think it’s better to rip the band aid off quickly.</p>
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<p>We noticed the following issues during reverse dependencies checks:</p>
+<ul>
+<li><p>If <code><a href="../reference/reduce.html">reduce()</a></code> fails with this message: <code>Error: `.x` is empty, and no `.init` supplied</code>, this is because <code><a href="../reference/reduce.html">reduce()</a></code> now returns <code>.init</code> when <code>.x</code> is empty. Fix the problem by supplying an appropriate argument to <code>.init</code>, or by providing special behaviour when <code>.x</code> has length 0.</p></li>
+<li><p>The type predicates have been migrated to rlang. Consequently the <code>bare-type-predicates</code> documentation topic is no longer in purrr, which might cause a warning if you cross-reference it.</p></li>
+</ul>
+</div>
+<div id="dependencies" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<p>purrr no longer depends on lazyeval or Rcpp (or dplyr, as of the previous version). This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages.</p>
 <p>There have also been two changes to eliminate name conflicts between purrr and dplyr:</p>
 <ul>
-<li><p><code>order_by()</code>, <code>sort_by()</code> and <code>split_by()</code> have been removed. <code>order_by()</code> conflicted with <code>dplyr::order_by()</code> and the complete family doesn’t feel that useful. Use tibbles instead (#217).</p></li>
-<li><p><code>contains()</code> has been renamed to <code><a href="../reference/has_element.html">has_element()</a></code> to avoid conflicts with dplyr (#217).</p></li>
+<li><p><code>order_by()</code>, <code>sort_by()</code> and <code>split_by()</code> have been removed. <code>order_by()</code> conflicted with <code><a href="http://dplyr.tidyverse.org/reference/order_by.html">dplyr::order_by()</a></code> and the complete family doesn’t feel that useful. Use tibbles instead (<a href='https://github.com/tidyverse/purrr/issues/217'>#217</a>).</p></li>
+<li><p><code>contains()</code> has been renamed to <code><a href="../reference/has_element.html">has_element()</a></code> to avoid conflicts with dplyr (<a href='https://github.com/tidyverse/purrr/issues/217'>#217</a>).</p></li>
 </ul>
+</div>
+<div id="pluck" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pluck" class="anchor"></a>pluck()</h2>
+<p>The plucking mechanism used for indexing into data structures with <code><a href="../reference/map.html">map()</a></code> has been extracted into the function <code><a href="../reference/pluck.html">pluck()</a></code>. Plucking is often more readable to extract an element buried in a deep data structure. Compare this syntax-heavy extraction which reads non-linearly:</p>
+<pre><code>accessor(x[[1]])$foo</code></pre>
+<p>to the equivalent pluck:</p>
+<pre><code>x %&gt;% pluck(1, accessor, "foo")</code></pre>
 </div>
 <div id="map-helpers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#map-helpers" class="anchor"></a>Map helpers</h2>
 <ul>
-<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> is now <code><a href="../reference/as_mapper.html">as_mapper()</a></code> because it is a tranformation that makes sense primarily for mapping functions, not in general (#298). <code>.null</code> has been renamed to <code>.default</code> to better reflect its intent (#298). <code>.default</code> is returned whenever an element is absent or empty (#231, #254).</p></li>
-<li><p>Recursive indexing can now extract objects out of environments (#213) and S4 objects (#200), as well as lists.</p></li>
-<li><p><code><a href="../reference/as_mapper.html">get_attr()</a></code> makes it possible to extract from attributes like <code><a href="../reference/map.html">map(list(iris, mtcars), get_attr("row.names"))</a></code>.</p></li>
-<li><p>The argument list for formula-functions has been tweaked so that you can refer to arguments by position with <code>..1</code>, <code>..2</code>, and so on. This makes it possible to use the formula shorthand for functions with more than two arguments (#289).</p></li>
+<li>
+<p><code><a href="../reference/as_mapper.html">as_function()</a></code> is now <code><a href="../reference/as_mapper.html">as_mapper()</a></code> because it is a tranformation that makes sense primarily for mapping functions, not in general (<a href='https://github.com/tidyverse/purrr/issues/298'>#298</a>). <code>.null</code> has been renamed to <code>.default</code> to better reflect its intent (<a href='https://github.com/tidyverse/purrr/issues/298'>#298</a>). <code>.default</code> is returned whenever an element is absent or empty (<a href='https://github.com/tidyverse/purrr/issues/231'>#231</a>, <a href='https://github.com/tidyverse/purrr/issues/254'>#254</a>).</p>
+<p><code><a href="../reference/as_mapper.html">as_mapper()</a></code> sanitises primitive functions by transforming them to closures with standardised argument names (using <code><a href="http://www.rdocumentation.org/packages/rlang/topics/as_function">rlang::as_closure()</a></code>). For instance <code>+</code> is transformed to <code>function(.x, .y) .x + .y</code>. This results in proper argument matching so that <code>map(1:10, partial(</code>-<code>, .x = 5))</code> produces <code>list(5 - 1, 5 - 2, ...)</code>.</p>
+</li>
+<li><p>Recursive indexing can now extract objects out of environments (<a href='https://github.com/tidyverse/purrr/issues/213'>#213</a>) and S4 objects (<a href='https://github.com/tidyverse/purrr/issues/200'>#200</a>), as well as lists.</p></li>
+<li><p><code><a href="../reference/pluck.html">attr_getter()</a></code> makes it possible to extract from attributes like <code><a href="../reference/map.html">map(list(iris, mtcars), attr_getter("row.names"))</a></code>.</p></li>
+<li><p>The argument list for formula-functions has been tweaked so that you can refer to arguments by position with <code>..1</code>, <code>..2</code>, and so on. This makes it possible to use the formula shorthand for functions with more than two arguments (<a href='https://github.com/tidyverse/purrr/issues/289'>#289</a>).</p></li>
+<li><p><code><a href="../reference/safely.html">possibly()</a></code>, <code><a href="../reference/safely.html">safely()</a></code> and friends no longer capture interrupts: this means that you can now terminate a mapper using one of these with Escape or Ctrl + C (<a href='https://github.com/tidyverse/purrr/issues/314'>#314</a>)</p></li>
 </ul>
 </div>
 <div id="map-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#map-functions" class="anchor"></a>Map functions</h2>
 <ul>
-<li><p>All map functions now treat <code>NULL</code> the same way as an empty vector (#199), and return an empty vector if any input is an empty vector.</p></li>
-<li><p>All <code><a href="../reference/map.html">map()</a></code> functions now force their arguments in the same way that base R does for <code>lapply()</code> (#191). This makes <code><a href="../reference/map.html">map()</a></code> etc easier to use when generating functions.</p></li>
-<li><p>A new family of “indexed” map functions, <code><a href="../reference/imap.html">imap()</a></code>, <code><a href="../reference/imap.html">imap_lgl()</a></code> etc, provide a short-hand for <code><a href="../reference/map2.html">map2(x, names(x))</a></code> or <code><a href="../reference/map2.html">map2(x, seq_along(x))</a></code> (#240).</p></li>
-<li><p>The data frame suffix <code>_df</code> has been (soft) deprecated in favour of <code>_dfr</code> to more clearly indicate that it’s a row-bind. All variants now also have a <code>_dfc</code> for column binding (#167). (These will not be terribly useful until <code>dplyr::bind_rows()</code>/<code>dplyr::bind_cols()</code> have better semantics for vectors.)</p></li>
+<li><p>All map functions now treat <code>NULL</code> the same way as an empty vector (<a href='https://github.com/tidyverse/purrr/issues/199'>#199</a>), and return an empty vector if any input is an empty vector.</p></li>
+<li><p>All <code><a href="../reference/map.html">map()</a></code> functions now force their arguments in the same way that base R does for <code>lapply()</code> (<a href='https://github.com/tidyverse/purrr/issues/191'>#191</a>). This makes <code><a href="../reference/map.html">map()</a></code> etc easier to use when generating functions.</p></li>
+<li><p>A new family of “indexed” map functions, <code><a href="../reference/imap.html">imap()</a></code>, <code><a href="../reference/imap.html">imap_lgl()</a></code> etc, provide a short-hand for <code><a href="../reference/map2.html">map2(x, names(x))</a></code> or <code><a href="../reference/map2.html">map2(x, seq_along(x))</a></code> (<a href='https://github.com/tidyverse/purrr/issues/240'>#240</a>).</p></li>
+<li><p>The data frame suffix <code>_df</code> has been (soft) deprecated in favour of <code>_dfr</code> to more clearly indicate that it’s a row-bind. All variants now also have a <code>_dfc</code> for column binding (<a href='https://github.com/tidyverse/purrr/issues/167'>#167</a>). (These will not be terribly useful until <code><a href="http://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_rows()</a></code>/<code><a href="http://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_cols()</a></code> have better semantics for vectors.)</p></li>
 </ul>
 </div>
 <div id="modify-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#modify-functions" class="anchor"></a>Modify functions</h2>
-<p><code><a href="../reference/map.html">map()</a></code> always returns a list, regardless of the input type. A new <code><a href="../reference/modify.html">modify()</a></code> family returns the same output of the type as the input <code>.x</code>. They rely on the semantics of <code>[&lt;-</code> so <code><a href="../reference/modify.html">modify()</a></code> is shorthand for <code>x[] &lt;- map(x, f)</code>.</p>
+<p>A new <code><a href="../reference/modify.html">modify()</a></code> family returns the same output of the type as the input <code>.x</code>. This is in contrast to the <code><a href="../reference/map.html">map()</a></code> family which always returns a list, regardless of the input type.</p>
+<p>The modify functions are S3 generics. However their default methods should be sufficient for most classes since they rely on the semantics of <code>[&lt;-</code>. <code><a href="../reference/modify.html">modify.default()</a></code> is thus a shorthand for <code>x[] &lt;- map(x, f)</code>.</p>
 <ul>
-<li><p><code><a href="../reference/modify.html">modify_if()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> replace the now deprecated <code><a href="../reference/modify.html">map_at()</a></code> and <code><a href="../reference/modify.html">map_if()</a></code> (#169, #292). If you want the previous behaviour, just coerce <code>.x</code> to a list. <code><a href="../reference/modify.html">at_depth()</a></code> has been renamed to <code><a href="../reference/modify.html">modify_depth()</a></code>.</p></li>
-<li><p><code><a href="../reference/modify.html">modify_depth()</a></code> gains new <code>.ragged</code> argument, and negative depths are now computed relative to the deepest component of the list (#236).</p></li>
-<li><p><code><a href="../reference/modify.html">map_at()</a></code> and <code><a href="../reference/modify.html">map_if()</a></code> have been deprecated. Please use <code><a href="../reference/modify.html">modify_at()</a></code> and <code><a href="../reference/modify.html">modify_if()</a></code> instead .</p></li>
+<li><p><code><a href="../reference/modify.html">at_depth()</a></code> has been renamed to <code><a href="../reference/modify.html">modify_depth()</a></code>.</p></li>
+<li><p><code><a href="../reference/modify.html">modify_depth()</a></code> gains new <code>.ragged</code> argument, and negative depths are now computed relative to the deepest component of the list (<a href='https://github.com/tidyverse/purrr/issues/236'>#236</a>).</p></li>
 </ul>
 </div>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
-<li><p><code><a href="../reference/safely.html">auto_browse(f)</a></code> returns a new function that automatically calls <code>browser()</code> if <code>f</code> throws an error (#281).</p></li>
-<li><p><code><a href="../reference/depth.html">depth()</a></code> computes the depth (i.e. the number of levels of indexing) or a vector (#243).</p></li>
-<li><p><code><a href="../reference/reduce.html">reduce2()</a></code> and <code><a href="../reference/reduce.html">reduce2_right()</a></code> make it possible to reduce with a 3 argument function where the first argument is the accumulated value, the second argument is <code>.x</code>, and the third argument is <code>.y</code> (#163).</p></li>
-<li><p><code><a href="../reference/list_modify.html">list_modify()</a></code> extends <code>stats::modifyList()</code> to replace by position if the list is not named. <code><a href="../reference/list_modify.html">list_update()</a></code> uses <code><a href="../reference/list_modify.html">list_modify()</a></code> (#201). <code><a href="../reference/list_modify.html">update_list()</a></code> has been renamed to <code><a href="../reference/list_modify.html">list_update()</a></code>.</p></li>
+<li><p><code><a href="../reference/safely.html">auto_browse(f)</a></code> returns a new function that automatically calls <code>browser()</code> if <code>f</code> throws an error (<a href='https://github.com/tidyverse/purrr/issues/281'>#281</a>).</p></li>
+<li><p><code><a href="../reference/vec_depth.html">vec_depth()</a></code> computes the depth (i.e. the number of levels of indexing) or a vector (<a href='https://github.com/tidyverse/purrr/issues/243'>#243</a>).</p></li>
+<li><p><code><a href="../reference/reduce.html">reduce2()</a></code> and <code><a href="../reference/reduce.html">reduce2_right()</a></code> make it possible to reduce with a 3 argument function where the first argument is the accumulated value, the second argument is <code>.x</code>, and the third argument is <code>.y</code> (<a href='https://github.com/tidyverse/purrr/issues/163'>#163</a>).</p></li>
+<li><p><code><a href="../reference/list_modify.html">list_modify()</a></code> extends <code>stats::modifyList()</code> to replace by position if the list is not named.(<a href='https://github.com/tidyverse/purrr/issues/201'>#201</a>). <code><a href="../reference/list_modify.html">list_merge()</a></code> operates similarly to <code><a href="../reference/list_modify.html">list_modify()</a></code> but combines instead of replacing (<a href='https://github.com/tidyverse/purrr/issues/322'>#322</a>).</p></li>
+<li><p>The legacy function <code><a href="../reference/list_modify.html">update_list()</a></code> is basically a version of <code>list_modify</code> that evaluates formulas within the list. It is likely to be deprecated in the future in favour of a tidyeval interface such as a list method for <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>.</p></li>
 </ul>
 </div>
 <div id="minor-improvements-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
-<li><p>All predicate functions are re-exported from rlang (#124).</p></li>
-<li><p><code><a href="../reference/keep.html">compact()</a></code> now works with standard mapper conventions (#282).</p></li>
+<li><p>Thanks to <a href='http://github.com/dchiu911'>@dchiu911</a>, the unit test coverage of purrr is now much greater.</p></li>
+<li><p>All predicate functions are re-exported from rlang (<a href='https://github.com/tidyverse/purrr/issues/124'>#124</a>).</p></li>
+<li><p><code><a href="../reference/keep.html">compact()</a></code> now works with standard mapper conventions (<a href='https://github.com/tidyverse/purrr/issues/282'>#282</a>).</p></li>
 <li><p><code><a href="../reference/cross.html">cross_n()</a></code> has been renamed to <code><a href="../reference/cross.html">cross()</a></code>. The <code>_n</code> suffix was removed for consistency with <code><a href="../reference/map2.html">pmap()</a></code> (originally called <code>map_n()</code> at the start of the project) and <code><a href="../reference/transpose.html">transpose()</a></code> (originally called <code>zip_n()</code>). Similarly, <code><a href="../reference/cross.html">cross_d()</a></code> has been renamed to <code><a href="../reference/cross.html">cross_df()</a></code> for consistency with <code><a href="../reference/map.html">map_df()</a></code>.</p></li>
-<li><p><code><a href="../reference/every.html">every()</a></code> and <code><a href="../reference/every.html">some()</a></code> now return <code>NA</code> if present in the output (#174).</p></li>
-<li><p><code><a href="../reference/invoke.html">invoke()</a></code> uses a more robust approach to generate the argument list (#249) It no longer uses lazyeval to figure out which enviroment a character <code>f</code> comes from.</p></li>
-<li><p><code><a href="../reference/is_numeric.html">is_numeric()</a></code> and <code><a href="../reference/is_numeric.html">is_scalar_numeric()</a></code> are deprecated because they don’t test for what you might naively expect.</p></li>
+<li><p><code><a href="../reference/every.html">every()</a></code> and <code><a href="../reference/every.html">some()</a></code> now return <code>NA</code> if present in the input (<a href='https://github.com/tidyverse/purrr/issues/174'>#174</a>).</p></li>
+<li><p><code><a href="../reference/invoke.html">invoke()</a></code> uses a more robust approach to generate the argument list (<a href='https://github.com/tidyverse/purrr/issues/249'>#249</a>) It no longer uses lazyeval to figure out which enviroment a character <code>f</code> comes from.</p></li>
+<li><p><code><a href="../reference/is_numeric.html">is_numeric()</a></code> and <code><a href="../reference/is_numeric.html">is_scalar_numeric()</a></code> are deprecated because they don’t test for what you might expect at first sight.</p></li>
 <li><p><code><a href="../reference/reduce.html">reduce()</a></code> now throws an error if <code>.x</code> is empty and <code>.init</code> is not supplied.</p></li>
 <li><p>Deprecated functions <code>flatmap()</code>, <code>map3()</code>, <code>map_n()</code>, <code>walk3()</code>, <code>walk_n()</code>, <code>zip2()</code>, <code>zip3()</code>, <code>zip_n()</code> have been removed.</p></li>
-<li><p><code><a href="../reference/map2.html">pmap()</a></code> coerces data frames to lists to avoid the expensive <code>[.data.frame</code> which provides security that is unneeded here (#220).</p></li>
-<li><p><code><a href="../reference/rdunif.html">rdunif()</a></code> checks its inputs for validity (#211).</p></li>
-<li><p><code><a href="../reference/set_names.html">set_names()</a></code> can now take a function to tranform the names programmatically (#276).</p></li>
-<li><p><code><a href="../reference/safely.html">safely()</a></code> now actually uses the <code>quiet</code> argument (#296).</p></li>
-<li><p><code><a href="../reference/transpose.html">transpose()</a></code> now matches by name if available (#164). You can override the default choice with the new <code>.names</code> argument.</p></li>
+<li><p><code><a href="../reference/map2.html">pmap()</a></code> coerces data frames to lists to avoid the expensive <code>[.data.frame</code> which provides security that is unneeded here (<a href='https://github.com/tidyverse/purrr/issues/220'>#220</a>).</p></li>
+<li><p><code><a href="../reference/rdunif.html">rdunif()</a></code> checks its inputs for validity (<a href='https://github.com/tidyverse/purrr/issues/211'>#211</a>).</p></li>
+<li><p><code><a href="../reference/set_names.html">set_names()</a></code> can now take a function to tranform the names programmatically (<a href='https://github.com/tidyverse/purrr/issues/276'>#276</a>), and you can supply names in <code>...</code> to reduce typing even more more (<a href='https://github.com/tidyverse/purrr/issues/316'>#316</a>). <code><a href="../reference/set_names.html">set_names()</a></code> is now powered by <code><a href="http://www.rdocumentation.org/packages/rlang/topics/set_names">rlang::set_names()</a></code>.</p></li>
+<li><p><code><a href="../reference/safely.html">safely()</a></code> now actually uses the <code>quiet</code> argument (<a href='https://github.com/tidyverse/purrr/issues/296'>#296</a>).</p></li>
+<li><p><code><a href="../reference/transpose.html">transpose()</a></code> now matches by name if available (<a href='https://github.com/tidyverse/purrr/issues/164'>#164</a>). You can override the default choice with the new <code>.names</code> argument.</p></li>
+<li><p>The function argument of <code><a href="../reference/detect.html">detect()</a></code> and <code><a href="../reference/detect.html">detect_index()</a></code> have been renamed from <code>.p</code> to <code>.f</code>. This is because they have mapper semantics rather than predicate semantics.</p></li>
 </ul>
 </div>
 </div>
+    <div id="purrr-0-2-2-1" class="section level1">
+<h1 class="page-header">
+<a href="#purrr-0-2-2-1" class="anchor"></a>purrr 0.2.2.1<small> Unreleased </small>
+</h1>
+<p>This is a compatibility release with dplyr 0.6.0.</p>
+<ul>
+<li>All data-frame based mappers have been removed in favour of new functions and idioms in the tidyverse. <code>dmap()</code>, <code>dmap_at()</code>, <code>dmap_if()</code>, <code>invoke_rows()</code>, <code>slice_rows()</code>, <code>map_rows()</code>, <code>by_slice()</code>, <code>by_row()</code>, and <code>unslice()</code> have been moved to purrrlyr. This is a bit of an aggresive change but it allows us to make the dependencies much lighter.</li>
+</ul>
+</div>
     <div id="purrr-0-2-2" class="section level1">
-<h1 class="hasAnchor">
-<a href="#purrr-0-2-2" class="anchor"></a>purrr 0.2.2</h1>
+<h1 class="page-header">
+<a href="#purrr-0-2-2" class="anchor"></a>purrr 0.2.2<small> 2016-06-18 </small>
+</h1>
 <ul>
 <li><p>Fix for dev tibble support.</p></li>
-<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> now supports list arguments which allow recursive indexing using either names or positions. They now always stop when encountering the first NULL (#173).</p></li>
+<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> now supports list arguments which allow recursive indexing using either names or positions. They now always stop when encountering the first NULL (<a href='https://github.com/tidyverse/purrr/issues/173'>#173</a>).</p></li>
 <li><p><code>accumulate</code> and <code>reduce</code> correctly pass extra arguments to the worker function.</p></li>
 </ul>
 </div>
     <div id="purrr-0-2-1" class="section level1">
-<h1 class="hasAnchor">
-<a href="#purrr-0-2-1" class="anchor"></a>purrr 0.2.1</h1>
+<h1 class="page-header">
+<a href="#purrr-0-2-1" class="anchor"></a>purrr 0.2.1<small> 2016-02-13 </small>
+</h1>
 <ul>
-<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> gains a <code>.null</code> argument that for character and numeric values allows you to specify what to return for null/absent elements (#110). This can be used with any map function, e.g. <code><a href="../reference/map.html">map_int(x, 1, .null = NA)</a></code></p></li>
+<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> gains a <code>.null</code> argument that for character and numeric values allows you to specify what to return for null/absent elements (<a href='https://github.com/tidyverse/purrr/issues/110'>#110</a>). This can be used with any map function, e.g. <code><a href="../reference/map.html">map_int(x, 1, .null = NA)</a></code></p></li>
 <li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> is now generic.</p></li>
-<li><p>New <code><a href="../reference/reexports.html">is_function()</a></code> that returns <code>TRUE</code> only for regular functions.</p></li>
+<li><p>New <code><a href="http://www.rdocumentation.org/packages/rlang/topics/is_function">is_function()</a></code> that returns <code>TRUE</code> only for regular functions.</p></li>
 <li><p>Fix crash on GCC triggered by <code>invoke_rows()</code>.</p></li>
 </ul>
 </div>
     <div id="purrr-0-2-0" class="section level1">
-<h1 class="hasAnchor">
-<a href="#purrr-0-2-0" class="anchor"></a>purrr 0.2.0</h1>
+<h1 class="page-header">
+<a href="#purrr-0-2-0" class="anchor"></a>purrr 0.2.0<small> 2016-01-04 </small>
+</h1>
 <div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions-1" class="anchor"></a>New functions</h2>
@@ -185,21 +260,21 @@
 <p>There are two handy infix functions:</p>
 <ul>
 <li>
-<code><a href="../reference/null-default.html">x %||% y</a></code> is shorthand for <code>if (is.null(x)) y else x</code> (#109).</li>
+<code>x %||% y</code> is shorthand for <code>if (is.null(x)) y else x</code> (<a href='https://github.com/tidyverse/purrr/issues/109'>#109</a>).</li>
 <li>
-<code><a href="../reference/get-attr.html">x %@% "a"</a></code> is shorthand for <code>attr(x, "a", exact = TRUE)</code> (#69).</li>
+<code>x %@% "a"</code> is shorthand for <code>attr(x, "a", exact = TRUE)</code> (<a href='https://github.com/tidyverse/purrr/issues/69'>#69</a>).</li>
 </ul>
 </li>
-<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> has been added to handle recursive folding. It is shortand for <code>Reduce(f, .x, accumulate = TRUE)</code> and follows a similar syntax to <code><a href="../reference/reduce.html">reduce()</a></code> (#145). A right-hand version <code><a href="../reference/accumulate.html">accumulate_right()</a></code> was also added.</p></li>
-<li><p><code><a href="../reference/map.html">map_df()</a></code> row-binds output together. It’s the equivalent of <code>plyr::ldply()</code> (#127)</p></li>
+<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> has been added to handle recursive folding. It is shortand for <code>Reduce(f, .x, accumulate = TRUE)</code> and follows a similar syntax to <code><a href="../reference/reduce.html">reduce()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/145'>#145</a>). A right-hand version <code><a href="../reference/accumulate.html">accumulate_right()</a></code> was also added.</p></li>
+<li><p><code><a href="../reference/map.html">map_df()</a></code> row-binds output together. It’s the equivalent of <code><a href="http://www.rdocumentation.org/packages/plyr/topics/ldply">plyr::ldply()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/127'>#127</a>)</p></li>
 <li><p><code><a href="../reference/flatten.html">flatten()</a></code> is now type-stable and always returns a list. To return a simpler vector, use <code><a href="../reference/flatten.html">flatten_lgl()</a></code>, <code><a href="../reference/flatten.html">flatten_int()</a></code>, <code><a href="../reference/flatten.html">flatten_dbl()</a></code>, <code><a href="../reference/flatten.html">flatten_chr()</a></code>, or <code><a href="../reference/flatten.html">flatten_df()</a></code>.</p></li>
-<li><p><code><a href="../reference/invoke.html">invoke()</a></code> has been overhauled to be more useful: it now works similarly to <code><a href="../reference/invoke.html">map_call()</a></code> when <code>.x</code> is NULL, and hence <code><a href="../reference/invoke.html">map_call()</a></code> has been deprecated. <code><a href="../reference/invoke.html">invoke_map()</a></code> is a vectorised complement to <code><a href="../reference/invoke.html">invoke()</a></code> (#125), and comes with typed variants <code><a href="../reference/invoke.html">invoke_map_lgl()</a></code>, <code><a href="../reference/invoke.html">invoke_map_int()</a></code>, <code><a href="../reference/invoke.html">invoke_map_dbl()</a></code>, <code><a href="../reference/invoke.html">invoke_map_chr()</a></code>, and <code><a href="../reference/invoke.html">invoke_map_df()</a></code>.</p></li>
-<li><p><code><a href="../reference/transpose.html">transpose()</a></code> replaces <code>zip2()</code>, <code>zip3()</code>, and <code>zip_n()</code> (#128). The name more clearly reflects the intent (transposing the first and second levels of list). It no longer has fields argument or the <code>.simplify</code> argument; instead use the new <code><a href="../reference/as_vector.html">simplify_all()</a></code> function.</p></li>
-<li><p><code><a href="../reference/safely.html">safely()</a></code>, <code><a href="../reference/safely.html">quietly()</a></code>, and <code><a href="../reference/safely.html">possibly()</a></code> are experimental functions for working with functions with side-effects (e.g. printed output, messages, warnings, and errors) (#120). <code><a href="../reference/safely.html">safely()</a></code> is a version of <code>try()</code> that modifies a function (rather than an expression), and always returns a list with two components, <code>result</code> and <code>error</code>.</p></li>
-<li><p><code><a href="../reference/along.html">list_along()</a></code> and <code><a href="../reference/along.html">rep_along()</a></code> generalise the idea of <code>seq_along()</code>. (#122).</p></li>
-<li><p><code><a href="../reference/reexports.html">is_null()</a></code> is the snake-case version of <code>is.null()</code>.</p></li>
-<li><p><code><a href="../reference/map2.html">pmap()</a></code> (parallel map) replaces <code>map_n()</code> (#132), and has typed-variants suffixed <code><a href="../reference/map2.html">pmap_lgl()</a></code>, <code><a href="../reference/map2.html">pmap_int()</a></code>, <code><a href="../reference/map2.html">pmap_dbl()</a></code>, <code><a href="../reference/map2.html">pmap_chr()</a></code>, and <code><a href="../reference/map2.html">pmap_df()</a></code>.</p></li>
-<li><p><code><a href="../reference/set_names.html">set_names()</a></code> is a snake-case alternative to <code>setNames()</code> with stricter equality checking, and more convenient defaults for pipes: <code><a href="../reference/pipe.html">x %&gt;% set_names()</a></code> is equivalent to <code>setNames(x, x)</code> (#119).</p></li>
+<li><p><code><a href="../reference/invoke.html">invoke()</a></code> has been overhauled to be more useful: it now works similarly to <code><a href="../reference/invoke.html">map_call()</a></code> when <code>.x</code> is NULL, and hence <code><a href="../reference/invoke.html">map_call()</a></code> has been deprecated. <code><a href="../reference/invoke.html">invoke_map()</a></code> is a vectorised complement to <code><a href="../reference/invoke.html">invoke()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/125'>#125</a>), and comes with typed variants <code><a href="../reference/invoke.html">invoke_map_lgl()</a></code>, <code><a href="../reference/invoke.html">invoke_map_int()</a></code>, <code><a href="../reference/invoke.html">invoke_map_dbl()</a></code>, <code><a href="../reference/invoke.html">invoke_map_chr()</a></code>, and <code><a href="../reference/invoke.html">invoke_map_df()</a></code>.</p></li>
+<li><p><code><a href="../reference/transpose.html">transpose()</a></code> replaces <code>zip2()</code>, <code>zip3()</code>, and <code>zip_n()</code> (<a href='https://github.com/tidyverse/purrr/issues/128'>#128</a>). The name more clearly reflects the intent (transposing the first and second levels of list). It no longer has fields argument or the <code>.simplify</code> argument; instead use the new <code><a href="../reference/as_vector.html">simplify_all()</a></code> function.</p></li>
+<li><p><code><a href="../reference/safely.html">safely()</a></code>, <code><a href="../reference/safely.html">quietly()</a></code>, and <code><a href="../reference/safely.html">possibly()</a></code> are experimental functions for working with functions with side-effects (e.g. printed output, messages, warnings, and errors) (<a href='https://github.com/tidyverse/purrr/issues/120'>#120</a>). <code><a href="../reference/safely.html">safely()</a></code> is a version of <code>try()</code> that modifies a function (rather than an expression), and always returns a list with two components, <code>result</code> and <code>error</code>.</p></li>
+<li><p><code><a href="../reference/along.html">list_along()</a></code> and <code><a href="../reference/along.html">rep_along()</a></code> generalise the idea of <code>seq_along()</code>. (<a href='https://github.com/tidyverse/purrr/issues/122'>#122</a>).</p></li>
+<li><p><code><a href="http://www.rdocumentation.org/packages/rlang/topics/type-predicates">is_null()</a></code> is the snake-case version of <code>is.null()</code>.</p></li>
+<li><p><code><a href="../reference/map2.html">pmap()</a></code> (parallel map) replaces <code>map_n()</code> (<a href='https://github.com/tidyverse/purrr/issues/132'>#132</a>), and has typed-variants suffixed <code><a href="../reference/map2.html">pmap_lgl()</a></code>, <code><a href="../reference/map2.html">pmap_int()</a></code>, <code><a href="../reference/map2.html">pmap_dbl()</a></code>, <code><a href="../reference/map2.html">pmap_chr()</a></code>, and <code><a href="../reference/map2.html">pmap_df()</a></code>.</p></li>
+<li><p><code><a href="../reference/set_names.html">set_names()</a></code> is a snake-case alternative to <code>setNames()</code> with stricter equality checking, and more convenient defaults for pipes: <code>x %&gt;% set_names()</code> is equivalent to <code>setNames(x, x)</code> (<a href='https://github.com/tidyverse/purrr/issues/119'>#119</a>).</p></li>
 </ul>
 </div>
 <div id="row-based-functionals" class="section level2">
@@ -207,8 +282,8 @@
 <a href="#row-based-functionals" class="anchor"></a>Row based functionals</h2>
 <p>We are still figuring out what belongs in dplyr and what belongs in purrr. Expect much experimentation and many changes with these functions.</p>
 <ul>
-<li><p><code><a href="../reference/map.html">map()</a></code> now always returns a list. Data frame support has been moved to <code><a href="../reference/map.html">map_df()</a></code> and <code>dmap()</code>. The latter supports sliced data frames as a shortcut for the combination of <code>by_slice()</code> and <code>dmap()</code>: <code><a href="../reference/pipe.html">x %&gt;% by_slice(dmap, fun, .collate = "rows")</a></code>. The conditional variants <code>dmap_at()</code> and <code>dmap_if()</code> also support sliced data frames and will recycle scalar results to the slice size.</p></li>
-<li><p><code>map_rows()</code> has been renamed to <code>invoke_rows()</code>. As other rows-based functionals, it collates results inside lists by default, but with column collation this function is equivalent to <code>plyr::mdply()</code>.</p></li>
+<li><p><code><a href="../reference/map.html">map()</a></code> now always returns a list. Data frame support has been moved to <code><a href="../reference/map.html">map_df()</a></code> and <code>dmap()</code>. The latter supports sliced data frames as a shortcut for the combination of <code>by_slice()</code> and <code>dmap()</code>: <code>x %&gt;% by_slice(dmap, fun, .collate = "rows")</code>. The conditional variants <code>dmap_at()</code> and <code>dmap_if()</code> also support sliced data frames and will recycle scalar results to the slice size.</p></li>
+<li><p><code>map_rows()</code> has been renamed to <code>invoke_rows()</code>. As other rows-based functionals, it collates results inside lists by default, but with column collation this function is equivalent to <code><a href="http://www.rdocumentation.org/packages/plyr/topics/mdply">plyr::mdply()</a></code>.</p></li>
 <li><p>The rows-based functionals gain a <code>.to</code> option to name the output column as well as a <code>.collate</code> argument. The latter allows to collate the output in lists (by default), on columns or on rows. This makes these functions more flexible and more predictable.</p></li>
 </ul>
 </div>
@@ -216,11 +291,11 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-and-minor-changes" class="anchor"></a>Bug fixes and minor changes</h2>
 <ul>
-<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code>, which converts formulas etc to functions, is now exported (#123).</p></li>
-<li><p><code><a href="../reference/rerun.html">rerun()</a></code> is correctly scoped (#95)</p></li>
-<li><p><code><a href="../reference/list_modify.html">update_list()</a></code> can now modify an element called <code>x</code> (#98).</p></li>
-<li><p><code>map*()</code> now use custom C code, rather than relying on <code>lapply()</code>, <code>mapply()</code> etc. The performance characteristcs are very similar, but it allows us greater control over the output (#118).</p></li>
-<li><p><code><a href="../reference/map.html">map_lgl()</a></code> now has second argument <code>.f</code>, not <code>.p</code> (#134).</p></li>
+<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code>, which converts formulas etc to functions, is now exported (<a href='https://github.com/tidyverse/purrr/issues/123'>#123</a>).</p></li>
+<li><p><code><a href="../reference/rerun.html">rerun()</a></code> is correctly scoped (<a href='https://github.com/tidyverse/purrr/issues/95'>#95</a>)</p></li>
+<li><p><code><a href="../reference/list_modify.html">update_list()</a></code> can now modify an element called <code>x</code> (<a href='https://github.com/tidyverse/purrr/issues/98'>#98</a>).</p></li>
+<li><p><code>map*()</code> now use custom C code, rather than relying on <code>lapply()</code>, <code>mapply()</code> etc. The performance characteristcs are very similar, but it allows us greater control over the output (<a href='https://github.com/tidyverse/purrr/issues/118'>#118</a>).</p></li>
+<li><p><code><a href="../reference/map.html">map_lgl()</a></code> now has second argument <code>.f</code>, not <code>.p</code> (<a href='https://github.com/tidyverse/purrr/issues/134'>#134</a>).</p></li>
 </ul>
 </div>
 <div id="deprecated-functions" class="section level2">
@@ -234,14 +309,16 @@
 </ul>
 </div>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#purrr-0-2-2-9000">0.2.2.9000</a></li>
+        <li><a href="#purrr-0-2-4-9000">0.2.4.9000</a></li>
+        <li><a href="#purrr-0-2-4">0.2.4</a></li>
+        <li><a href="#purrr-0-2-3">0.2.3</a></li>
+        <li><a href="#purrr-0-2-2-1">0.2.2.1</a></li>
         <li><a href="#purrr-0-2-2">0.2.2</a></li>
         <li><a href="#purrr-0-2-1">0.2.1</a></li>
         <li><a href="#purrr-0-2-0">0.2.0</a></li>
@@ -257,21 +334,23 @@
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -1,0 +1,6 @@
+pandoc: 2.1.3
+pkgdown: 1.0.0
+pkgdown_sha: ~
+articles:
+  other-langs: other-langs.html
+

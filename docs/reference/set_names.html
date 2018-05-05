@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,20 +89,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Set names in a vector</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/set_names.R'><code>R/set_names.R</code></a></small>
+    <div class="hidden name"><code>set_names.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>This is a snake case wrapper for <code><a href='http://www.rdocumentation.org/packages/stats/topics/setNames'>stats::setNames()</a></code>, with
-tweaked defaults, and stricter argument checking.</p>
+    <p>These objects are imported from other packages. Follow the links
+below to see their documentation.</p>
+<dl class='dl-horizontal'>
+  <dt>rlang</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/rlang/topics/set_names'>set_names</a></code></p></dd>
+</dl>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>set_names</span>(<span class='no'>x</span>, <span class='kw'>nm</span> <span class='kw'>=</span> <span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>set_names</span>(<span class='no'>x</span>, <span class='kw'>nm</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -95,10 +117,15 @@ tweaked defaults, and stricter argument checking.</p>
       <td><p>Vector to name</p></td>
     </tr>
     <tr>
-      <th>nm</th>
+      <th>nm, ...</th>
       <td><p>Vector of names, the same length as <code>x</code>.</p>
-<p>If <code>x</code> already has names, you can provide a function or formula
-to transform the existing names.</p></td>
+<p>You can specify names in three ways:</p><ul>
+<li><p>If you do nothing, <code>x</code> will be named with itself</p></li>
+<li><p>You can supply either a character vector to <code>nm</code> or individual
+strings in to `...``</p></li>
+<li><p>If <code>x</code> already has names, you can provide a function or formula
+to transform the existing names.</p></li>
+</ul></td>
     </tr>
     </table>
     
@@ -106,9 +133,16 @@ to transform the existing names.</p></td>
 
     <p><code>.x</code> with the names attribute set.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This is a snake case wrapper for <code><a href='http://www.rdocumentation.org/packages/stats/topics/setNames'>stats::setNames()</a></code>, with
+tweaked defaults, and stricter argument checking.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>set_names</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span>))</div><div class='output co'>#&gt; a b c d 
+#&gt; 1 2 3 4 </div><div class='input'><span class='fu'>set_names</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='output co'>#&gt; a b c d 
+#&gt; 1 2 3 4 </div><div class='input'><span class='fu'>set_names</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span>)</div><div class='output co'>#&gt; a b c d 
 #&gt; 1 2 3 4 </div><div class='input'>
 <span class='co'># If the second argument is ommitted a vector is named with itself</span>
 <span class='fu'>set_names</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt;   a   b   c   d   e 
@@ -129,6 +163,8 @@ to transform the existing names.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
@@ -142,21 +178,23 @@ to transform the existing names.</p></td>
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

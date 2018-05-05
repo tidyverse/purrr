@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,37 +89,40 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transpose a list.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/transpose.R'><code>R/transpose.R</code></a></small>
+    <div class="hidden name"><code>transpose.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Tranpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
+    <p>Transpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 list of pairs, or a list of pairs into pair of lists. For example,
-If you had a list of length n where each component had values <code>a</code> and
+if you had a list of length n where each component had values <code>a</code> and
 <code>b</code>, <code>transpose()</code> would make a list with elements <code>a</code> and
 <code>b</code> that contained lists of length n. It's called transpose because
 <code>x[[1]][[2]]</code> is equivalent to <code>transpose(x)[[2]][[1]]</code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>transpose</span>(<span class='no'>.l</span>, <span class='kw'>.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.l</th>
-      <td><p>A list of vectors to zip. The first element is used as the
-template; you'll get a warning if a sub-list is not the same length as
-the first element.</p></td>
+      <td><p>A list of vectors to transpose. The first element is used as the
+template; you'll get a warning if a subsequent element has a different
+length.</p></td>
     </tr>
     <tr>
       <th>.names</th>
-      <td><p>For efficiency, <code>transpose()</code> usually inspects the
-first component of <code>.l</code> to determine the structure. Use <code>.names</code>
-if you want to override this default.</p></td>
+      <td><p>For efficiency, <code>transpose()</code> bases the return structure on
+the first component of <code>.l</code> by default. Specify <code>.names</code> to override this.</p></td>
     </tr>
     </table>
     
@@ -173,7 +191,7 @@ input by transposing it twice.</p>
 #&gt;   ..$ result: NULL
 #&gt;   ..$ error :List of 2
 #&gt;   .. ..$ message: chr "non-numeric argument to mathematical function"
-#&gt;   .. ..$ call   : language .f(...)
+#&gt;   .. ..$ call   : language log(x = x, base = base)
 #&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
 #&gt;  $ :List of 2
 #&gt;   ..$ result: num 0
@@ -188,7 +206,7 @@ input by transposing it twice.</p>
 #&gt;  $ error :List of 3
 #&gt;   ..$ :List of 2
 #&gt;   .. ..$ message: chr "non-numeric argument to mathematical function"
-#&gt;   .. ..$ call   : language .f(...)
+#&gt;   .. ..$ call   : language log(x = x, base = base)
 #&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"
 #&gt;   ..$ : NULL
 #&gt;   ..$ : NULL</div><div class='input'>
@@ -220,6 +238,52 @@ input by transposing it twice.</p>
 #&gt; 
 #&gt; $b
 #&gt; [1] 2 4 6
+#&gt; </div><div class='input'>
+<span class='co'># Provide explicit component names to prevent loss of those that don't</span>
+<span class='co'># appear in first component</span>
+<span class='no'>ll</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
+  <span class='fu'>list</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"one"</span>),
+  <span class='fu'>list</span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"deux"</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+)
+<span class='no'>ll</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>()</div><div class='output co'>#&gt; $x
+#&gt; $x[[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; $x[[2]]
+#&gt; [1] 2
+#&gt; 
+#&gt; 
+#&gt; $y
+#&gt; $y[[1]]
+#&gt; [1] "one"
+#&gt; 
+#&gt; $y[[2]]
+#&gt; NULL
+#&gt; 
+#&gt; </div><div class='input'><span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='no'>ll</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>names</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='reduce.html'>reduce</a></span>(<span class='no'>union</span>)
+<span class='no'>ll</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>(<span class='kw'>.names</span> <span class='kw'>=</span> <span class='no'>nms</span>)</div><div class='output co'>#&gt; $x
+#&gt; $x[[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; $x[[2]]
+#&gt; [1] 2
+#&gt; 
+#&gt; 
+#&gt; $y
+#&gt; $y[[1]]
+#&gt; [1] "one"
+#&gt; 
+#&gt; $y[[2]]
+#&gt; NULL
+#&gt; 
+#&gt; 
+#&gt; $z
+#&gt; $z[[1]]
+#&gt; NULL
+#&gt; 
+#&gt; $z[[2]]
+#&gt; [1] "deux"
+#&gt; 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -243,21 +307,23 @@ input by transposing it twice.</p>
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

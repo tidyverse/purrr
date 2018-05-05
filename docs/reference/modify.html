@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modify elements "in-place" — modify • purrr</title>
+<title>Modify elements selectively — modify • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,28 +89,45 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modify elements "in-place"</h1>
+    <h1>Modify elements selectively</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/modify.R'><code>R/modify.R</code></a></small>
+    <div class="hidden name"><code>modify.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p><code>modify()</code> is a short-cut for <code>x[] &lt;- map(x, .f)</code>. <code>modify_if()</code> only modifies
-the elements of <code>.x</code> that satisfy a predicate. <code>map_at()</code> only modifies
-elements given by names or positions. <code>modify_depth()</code> only modifies
-elements at a given level of a nested data structure.</p>
+    <p><code>modify()</code> is a short-cut for <code>x[] &lt;- map(x, .f); return(x)</code>. <code>modify_if()</code>
+only modifies the elements of <code>x</code> that satisfy a predicate and leaves the
+others unchanged. <code>modify_at()</code> only modifies elements given by names or
+positions. <code>modify_depth()</code> only modifies elements at a given level of a
+nested data structure.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>modify</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for default</span>
+<span class='fu'>modify</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>modify_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
 <span class='fu'>modify_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>modify_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for default</span>
+<span class='fu'>modify_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+
+<span class='fu'>modify_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='no'>.depth</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>)
+
+<span class='co'># S3 method for default</span>
 <span class='fu'>modify_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='no'>.depth</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -117,7 +149,7 @@ are three ways to refer to the arguments:</p><ul>
 <p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it
 is converted to an extractor function. Character vectors index by name
 and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in <code>get_attr()</code>
+and name at different levels. Within a list, wrap strings in <code><a href='get-attr.html'>get-attr()</a></code>
 to extract named attributes. If a component is not present, the value of
 <code>.default</code> will be returned.</p></td>
     </tr>
@@ -136,9 +168,9 @@ inner lists. Only those elements where <code>.p</code> evaluates to
     </tr>
     <tr>
       <th>.at</th>
-      <td><p>A character vector of names or a numeric vector of
-positions. Only those elements corresponding to <code>.at</code> will be
-modified.</p></td>
+      <td><p>A character vector of names, positive numeric vector of
+positions to include, or a negative numeric vector of positions to
+exlude. Only those elements corresponding to <code>.at</code> will be modified.</p></td>
     </tr>
     <tr>
       <th>.depth</th>
@@ -163,29 +195,42 @@ no elements at depth <code>.depth</code>.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These modify the input data structure; it's your responsibility to ensure
-that the transformation produces a valid output. For example, if you're
-modifying a data frame, <code>.f</code> must preserve the length of the input.</p>
+    <p>Since the transformation can alter the structure of the input; it's
+your responsibility to ensure that the transformation produces a
+valid output. For example, if you're modifying a data frame, <code>.f</code>
+must preserve the length of the input.</p>
+    
+    <h2 class="hasAnchor" id="genericity"><a class="anchor" href="#genericity"></a>Genericity</h2>
+
+    
+    <p>All these functions are S3 generic. However, the default method is
+sufficient in many cases. It should be suitable for any data type
+that implements the subset-assignment method <code>[&lt;-</code>. Methods are provided
+for character, logical, integer and double classes (counterparts to <code>map_chr</code>,
+<code>map_lgl</code>, <code>map_int</code>, and <code>map_dbl</code>)</p>
+<p>In some cases it may make sense to provide a custom implementation
+with a method suited to your S3 class. For example, a <code>grouped_df</code>
+method might take into account the grouped nature of a data frame.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other map variants: <code><a href='imap.html'>imap</a></code>,
+    <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
-  <code><a href='map2.html'>map2</a></code>, <code><a href='map.html'>map</a></code></p>
+  <code><a href='map2.html'>map2</a></code>, <code><a href='map.html'>map</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Convert factors to characters</span>
 <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>map_if</span>(<span class='no'>is.factor</span>, <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>str</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: map_if() is deprecated, please use `modify_if()` instead</span></div><div class='output co'>#&gt; 'data.frame':	150 obs. of  5 variables:
+  <span class='fu'>modify_if</span>(<span class='no'>is.factor</span>, <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>str</span>()</div><div class='output co'>#&gt; 'data.frame':	150 obs. of  5 variables:
 #&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 #&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
 #&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 #&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 #&gt;  $ Species     : chr  "setosa" "setosa" "setosa" "setosa" ...</div><div class='input'>
 <span class='co'># Specify which columns to map with a numeric vector of positions:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_at</span>(<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>5</span>), <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span> <span class='fu'>str</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: map_at() is deprecated, please use `modify_at()` instead</span></div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
+<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_at</span>(<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>5</span>), <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span> <span class='fu'>str</span>()</div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
 #&gt;  $ mpg : chr  "21" "21" "22.8" "21.4" ...
 #&gt;  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
 #&gt;  $ disp: num  160 160 108 258 360 ...
@@ -198,7 +243,7 @@ modifying a data frame, <code>.f</code> must preserve the length of the input.</
 #&gt;  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
 #&gt;  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</div><div class='input'>
 <span class='co'># Or with a vector of names:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_at</span>(<span class='fu'>c</span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>), <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span> <span class='fu'>str</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: map_at() is deprecated, please use `modify_at()` instead</span></div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
+<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_at</span>(<span class='fu'>c</span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>), <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span> <span class='fu'>str</span>()</div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
 #&gt;  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
 #&gt;  $ cyl : chr  "6" "6" "4" "6" ...
 #&gt;  $ disp: num  160 160 108 258 360 ...
@@ -212,9 +257,9 @@ modifying a data frame, <code>.f</code> must preserve the length of the input.</
 #&gt;  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</div><div class='input'>
 <span class='fu'>list</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>100</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='transpose.html'>transpose</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>map_if</span>(<span class='st'>"x"</span>, ~ <span class='fu'><a href='list_modify.html'>update_list</a></span>(<span class='no'>.</span>, <span class='kw'>y</span> <span class='kw'>=</span> ~ <span class='no'>y</span> * <span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>modify_if</span>(<span class='st'>"x"</span>, ~ <span class='fu'><a href='list_modify.html'>update_list</a></span>(<span class='no'>.</span>, <span class='kw'>y</span> <span class='kw'>=</span> ~ <span class='no'>y</span> * <span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='transpose.html'>transpose</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='as_vector.html'>simplify_all</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: map_if() is deprecated, please use `modify_if()` instead</span></div><div class='output co'>#&gt; $x
+  <span class='fu'><a href='as_vector.html'>simplify_all</a></span>()</div><div class='output co'>#&gt; $x
 #&gt;   [1] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
 #&gt;  [13] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 #&gt;  [25]  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
@@ -308,6 +353,8 @@ modifying a data frame, <code>.f</code> must preserve the length of the input.</
 
       <li><a href="#details">Details</a></li>
 
+      <li><a href="#genericity">Genericity</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -322,21 +369,23 @@ modifying a data frame, <code>.f</code> must preserve the length of the input.</
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

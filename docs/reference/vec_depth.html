@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate random sample from a Bernoulli distribution — rbernoulli • purrr</title>
+<title>Compute the depth of a vector — vec_depth • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -92,47 +92,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate random sample from a Bernoulli distribution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>rbernoulli.Rd</code></div>
+    <h1>Compute the depth of a vector</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/depth.R'><code>R/depth.R</code></a></small>
+    <div class="hidden name"><code>vec_depth.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Generate random sample from a Bernoulli distribution</p>
+    <p>The depth of a vector is basically how many levels that you can index
+into it.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rbernoulli</span>(<span class='no'>n</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</pre>
+    <pre class="usage"><span class='fu'>vec_depth</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>n</th>
-      <td><p>Number of samples</p></td>
-    </tr>
-    <tr>
-      <th>p</th>
-      <td><p>Probability of getting <code>TRUE</code></p></td>
+      <th>x</th>
+      <td><p>A vector</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A logical vector</p>
+    <p>An integer.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>rbernoulli</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE</div><div class='input'><span class='fu'>rbernoulli</span>(<span class='fl'>100</span>, <span class='fl'>0.1</span>)</div><div class='output co'>#&gt;   [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE
-#&gt;  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [37] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-#&gt;  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-#&gt;  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [97] FALSE FALSE FALSE FALSE</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(
+  <span class='fu'>list</span>(),
+  <span class='fu'>list</span>(<span class='fu'>list</span>()),
+  <span class='fu'>list</span>(<span class='fu'>list</span>(<span class='fu'>list</span>(<span class='fl'>1</span>)))
+)
+<span class='fu'>vec_depth</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map_int</a></span>(<span class='no'>vec_depth</span>)</div><div class='output co'>#&gt; [1] 1 2 4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

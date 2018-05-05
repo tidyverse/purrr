@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,38 +89,43 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Modify a list</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/list-modify.R'><code>R/list-modify.R</code></a></small>
+    <div class="hidden name"><code>list_modify.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p><code>list_modify()</code> recursively modifies a list, matching elements either by
-name or position. <code>list_update()</code> is a helper optimised for interactively
-modifying an existing list: you can use a formula (a quosure) to replace
-using existing values.</p>
+    <p><code>list_modify()</code> and <code>list_merge()</code> recursively combine two lists, matching
+elements either by name or position. If a sub-element is present in
+both lists <code>list_modify()</code> takes the value from <code>y</code>, and <code>list_merge()</code>
+concatenates the values together.</p>
+<p><code>update_list()</code> handles formulas and quosures that can refer to
+values existing within the input list. Note that this function
+might be deprecated in the future in favour of a <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code>
+method for lists.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+    <pre class="usage"><span class='fu'>list_modify</span>(<span class='no'>.x</span>, <span class='no'>...</span>)
 
-<span class='fu'>list_update</span>(<span class='no'>`_x`</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>list_merge</span>(<span class='no'>.x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>y</th>
-      <td><p>Replacement list</p></td>
-    </tr>
-    <tr>
-      <th>_x, x</th>
-      <td><p>List to modify</p></td>
+      <th>.x</th>
+      <td><p>List to modify.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>New values of a list. Use <code>NULL</code> to remove values.
-Use a formula to evaluate in the context of the list values.</p></td>
+Use a formula to evaluate in the context of the list values.
+These dots have <a href='http://www.rdocumentation.org/packages/rlang/topics/tidy-dots'>splicing semantics</a>.</p></td>
     </tr>
     </table>
     
@@ -119,72 +139,54 @@ Use a formula to evaluate in the context of the list values.</p></td>
 #&gt;   ..$ a: num 1
 #&gt;   ..$ b: num 2</div><div class='input'>
 <span class='co'># Update values</span>
-<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>)))</div><div class='output co'>#&gt; List of 4
+<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; List of 4
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
 #&gt;  $ z:List of 2
 #&gt;   ..$ a: num 1
 #&gt;   ..$ b: num 2
 #&gt;  $ a: num 1</div><div class='input'><span class='co'># Replace values</span>
-<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='fu'>list</span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>5</span>)))</div><div class='output co'>#&gt; List of 3
+<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
-#&gt;  $ z: num 5</div><div class='input'><span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='fu'>list</span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>))))</div><div class='output co'>#&gt; List of 3
+#&gt;  $ z: num 5</div><div class='input'><span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)))</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
 #&gt;  $ z:List of 2
 #&gt;   ..$ a: int [1:5] 1 2 3 4 5
 #&gt;   ..$ b: num 2</div><div class='input'><span class='co'># Remove values</span>
-<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='fu'>list</span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)))</div><div class='output co'>#&gt; List of 2
+<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>))</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4</div><div class='input'>
-<span class='co'># list_update is useful for interactive tweaking, because it</span>
-<span class='co'># uses ... instead of a separate list</span>
-<span class='fu'>str</span>(<span class='fu'>list_update</span>(<span class='no'>x</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; List of 4
-#&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
+<span class='co'># Combine values</span>
+<span class='fu'>str</span>(<span class='fu'>list_merge</span>(<span class='no'>x</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>5</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>3</span>)))</div><div class='output co'>#&gt; List of 3
+#&gt;  $ x: num [1:11] 1 2 3 4 5 6 7 8 9 10 ...
 #&gt;  $ y: num 4
-#&gt;  $ z:List of 2
+#&gt;  $ z:List of 3
+#&gt;   ..$ a: num [1:5] 1 2 3 4 5
+#&gt;   ..$ b: num 2
+#&gt;   ..$ c: num 3</div><div class='input'>
+
+<span class='co'># All these functions take dots with splicing. Use !!! or UQS() to</span>
+<span class='co'># splice a list of arguments:</span>
+<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='fu'>str</span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, !!! <span class='no'>l</span>))</div><div class='output co'>#&gt; List of 3
+#&gt;  $ x  : int [1:10] 1 2 3 4 5 6 7 8 9 10
+#&gt;  $ z  : num 5
+#&gt;  $ new: num 1</div><div class='input'>
+<span class='co'># In update_list() you can also use quosures and formulas to</span>
+<span class='co'># compute new values. This function is likely to be deprecated in</span>
+<span class='co'># the future</span>
+<span class='fu'>str</span>(<span class='fu'>update_list</span>(<span class='no'>x</span>, <span class='kw'>z1</span> <span class='kw'>=</span> ~<span class='no'>z</span><span class='kw'>[[</span><span class='fl'>1</span>]]))</div><div class='output co'>#&gt; List of 4
+#&gt;  $ x : int [1:10] 1 2 3 4 5 6 7 8 9 10
+#&gt;  $ y : num 4
+#&gt;  $ z :List of 2
 #&gt;   ..$ a: num 1
 #&gt;   ..$ b: num 2
-#&gt;  $ a: num 1</div><div class='input'><span class='fu'>str</span>(<span class='fu'>list_update</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; List of 3
+#&gt;  $ z1: num 1</div><div class='input'><span class='fu'>str</span>(<span class='fu'>update_list</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/rlang/topics/quotation'>quo</a></span>(<span class='no'>x</span> + <span class='no'>y</span>)))</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
-#&gt;  $ z: num 5</div><div class='input'><span class='fu'>str</span>(<span class='fu'>list_update</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)))</div><div class='output co'>#&gt; List of 3
-#&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
-#&gt;  $ y: num 4
-#&gt;  $ z:List of 2
-#&gt;   ..$ a: int [1:5] 1 2 3 4 5
-#&gt;   ..$ b: num 2</div><div class='input'><span class='fu'>str</span>(<span class='fu'>list_update</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>))</div><div class='output co'>#&gt; List of 2
-#&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
-#&gt;  $ y: num 4</div><div class='input'>
-<span class='co'># In list_update() you can also use formulas to compute new values</span>
-<span class='fu'>list_update</span>(<span class='no'>x</span>, <span class='kw'>z1</span> <span class='kw'>=</span> ~ <span class='no'>z</span>[<span class='fl'>1</span>])</div><div class='output co'>#&gt; $x
-#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
-#&gt; 
-#&gt; $y
-#&gt; [1] 4
-#&gt; 
-#&gt; $z
-#&gt; $z$a
-#&gt; [1] 1
-#&gt; 
-#&gt; $z$b
-#&gt; [1] 2
-#&gt; 
-#&gt; 
-#&gt; $z1
-#&gt; $z1$a
-#&gt; [1] 1
-#&gt; 
-#&gt; </div><div class='input'><span class='fu'>list_update</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> ~ <span class='no'>x</span> + <span class='no'>y</span>)</div><div class='output co'>#&gt; $x
-#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
-#&gt; 
-#&gt; $y
-#&gt; [1] 4
-#&gt; 
-#&gt; $z
-#&gt;  [1]  5  6  7  8  9 10 11 12 13 14
-#&gt; </div></pre>
+#&gt;  $ z: num [1:10] 5 6 7 8 9 10 11 12 13 14</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -203,21 +205,23 @@ Use a formula to evaluate in the context of the list values.</p></td>
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

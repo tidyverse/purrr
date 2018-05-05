@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,12 +89,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Coerce a list to a vector</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/coercion.R'><code>R/coercion.R</code></a></small>
+    <div class="hidden name"><code>as_vector.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>as_vector()</code> collapses a list of vectors into one vector. It
 checks that the type of each vector is consistent with
@@ -87,6 +105,7 @@ checks that the type of each vector is consistent with
 <code>simplify</code> will simplify a vector if possible; <code>simplify_all</code>
 will apply <code>simplify</code> to every element of a list.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>as_vector</span>(<span class='no'>.x</span>, <span class='kw'>.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
@@ -94,7 +113,7 @@ will apply <code>simplify</code> to every element of a list.</p>
 
 <span class='fu'>simplify_all</span>(<span class='no'>.x</span>, <span class='kw'>.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -129,9 +148,10 @@ the type, one of: "logical", "integer", "double", "complex",
 <span class='co'># Vector molds are more flexible because they also specify the</span>
 <span class='co'># length of the concatenated vectors:</span>
 <span class='fu'>list</span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>, <span class='fl'>5</span>:<span class='fl'>6</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='fu'>integer</span>(<span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 1 2 3 4 5 6</div><div class='input'>
-<span class='co'># Note that unlike vapply(), as_vector() never adds dimension</span>
-<span class='co'># attributes. So when you specify a vector mold of size &gt; 1, you</span>
-<span class='co'># always get a vector and not a matrix</span></div></pre>
+# Note that unlike vapply(), as_vector() never adds dimension
+# attributes. So when you specify a vector mold of size > 1, you
+# always get a vector and not a matrix
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -152,21 +172,23 @@ the type, one of: "logical", "integer", "double", "complex",
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

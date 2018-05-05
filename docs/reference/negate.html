@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,19 +89,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Negate a predicate function.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/negate.R'><code>R/negate.R</code></a></small>
+    <div class="hidden name"><code>negate.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Negate a predicate function.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>negate</span>(<span class='no'>.p</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -115,14 +134,17 @@ value is absent (does not exist) or empty (has length 0).
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>negate</span>(<span class='st'>"x"</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; {
-#&gt;     !(extract(x, list("x"), default = NULL))
+#&gt;     !pluck(x, list("x"), .default = NULL)
 #&gt; }
-#&gt; &lt;environment: 0x10f8bc5f0&gt;</div><div class='input'><span class='co'># negate(is.null) # FIXME: uncomment when we switch to as_closure()</span>
-<span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
+#&gt; &lt;environment: 0x7f9d53c00600&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
 #&gt; {
-#&gt;     !(.x &gt; 0)
+#&gt;     !is.null(x = x)
 #&gt; }
-#&gt; &lt;environment: 0x10948bfc0&gt;</div><div class='input'>
+#&gt; &lt;environment: base&gt;</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
+#&gt; {
+#&gt;     !.x &gt; 0
+#&gt; }
+#&gt; &lt;environment: 0x7f9d53fcf190&gt;</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'>list</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'>length</span>()</div><div class='output co'>#&gt; [1] 5</div></pre>
@@ -146,21 +168,23 @@ value is absent (does not exist) or empty (has length 0).
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

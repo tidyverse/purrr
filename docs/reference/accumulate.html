@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,23 +89,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Accumulate recursive folds across a list</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/reduce.R'><code>R/reduce.R</code></a></small>
+    <div class="hidden name"><code>accumulate.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>accumulate</code> applies a function recursively over a list from the left, while
 <code>accumulate_right</code> applies the function from the right. Unlike <code>reduce</code>
 both functions keep the intermediate results.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>accumulate</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>)
 
 <span class='fu'>accumulate_right</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -99,10 +118,10 @@ both functions keep the intermediate results.</p>
     </tr>
     <tr>
       <th>.f</th>
-      <td><p>For <code>reduce()</code>, a 2-argument function. The function will be
+      <td><p>For <code><a href='reduce.html'>reduce()</a></code>, a 2-argument function. The function will be
 passed the accumulated value as the first argument and the "next" value
 as the second argument.</p>
-<p>For <code>reduce2()</code>, a 3-argument function. The function will be passed the
+<p>For <code><a href='reduce.html'>reduce2()</a></code>, a 3-argument function. The function will be passed the
 accumulated value as the first argument, the next value of <code>.x</code> as the
 second argument, and the next value of <code>.y</code> as the third argument.</p></td>
     </tr>
@@ -119,35 +138,42 @@ is empty. If missing, and <code>x</code> is empty, will throw an error.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A vector the same length of <code>.x</code> with the same names as <code>.x</code></p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>1:3 %>% accumulate(`+`)
-1:10 %>% accumulate_right(`*`)
-
-# From Haskell's scanl documentation
-1:10 %>% accumulate(max, .init = 5)
-
-# Understanding the arguments .x and .y when .f
-# is a lambda function
-# .x is the accumulating value
-1:10 %>% accumulate(~ .x)
-# .y is element in the list
-1:10 %>% accumulate(~ .y)
-
+    <pre class="examples"><div class='input'><span class='fl'>1</span>:<span class='fl'>3</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>`+`</span>)</div><div class='output co'>#&gt; [1] 1 3 6</div><div class='input'><span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate_right</span>(<span class='no'>`*`</span>)</div><div class='output co'>#&gt;  [1] 3628800 3628800 1814400  604800  151200   30240    5040     720      90
+#&gt; [10]      10</div><div class='input'>
+<span class='co'># From Haskell's scanl documentation</span>
+<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>max</span>, <span class='kw'>.init</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt;  [1]  5  5  5  5  5  5  6  7  8  9 10</div><div class='input'>
+<span class='co'># Understanding the arguments .x and .y when .f</span>
+<span class='co'># is a lambda function</span>
+<span class='co'># .x is the accumulating value</span>
+<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(~ <span class='no'>.x</span>)</div><div class='output co'>#&gt;  [1] 1 1 1 1 1 1 1 1 1 1</div><div class='input'><span class='co'># .y is element in the list</span>
+<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(~ <span class='no'>.y</span>)</div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</div><div class='input'>
 # Simulating stochastic processes with drift
-not_run({
-  library(dplyr)  library(ggplot2)    rerun(5, rnorm(100)) %>%    set_names(paste0("sim", 1:5)) %>%    map(~ accumulate(., ~ .05 + .x + .y)) %>%    map_df(~ data_frame(value = .x, step = 1:100), .id = "simulation") %>%    ggplot(aes(x = step, y = value)) +      geom_line(aes(color = simulation)) +      ggtitle("Simulations of a random walk with drift")
-})
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:16:19: unexpected symbol</span>
-#&gt; <span class='error'>15: not_run({</span>
-#&gt; <span class='error'>16:   library(dplyr)  library</span>
-#&gt; <span class='error'>                      ^</span></div></pre>
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+
+<span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='fu'>rnorm</span>(<span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'>paste0</span>(<span class='st'>"sim"</span>, <span class='fl'>1</span>:<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map</a></span>(~ <span class='fu'>accumulate</span>(<span class='no'>.</span>, ~ <span class='fl'>.05</span> + <span class='no'>.x</span> + <span class='no'>.y</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map_dfr</a></span>(~ <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>data_frame</a></span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>.x</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>), <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"simulation"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>step</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>simulation</span>)) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ggtitle</a></span>(<span class='st'>"Simulations of a random walk with drift"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -160,21 +186,23 @@ not_run({
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

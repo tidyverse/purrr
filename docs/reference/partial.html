@@ -52,13 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
@@ -74,27 +89,31 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Partial apply a function, filling in some arguments.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/partial.R'><code>R/partial.R</code></a></small>
+    <div class="hidden name"><code>partial.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>partial</span>(<span class='no'>...f</span>, <span class='no'>...</span>, <span class='kw'>.env</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>(), <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>.first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...f</th>
-      <td><p>a function. For the output source to read well, this should be an
-be a named function.</p></td>
+      <td><p>a function. For the output source to read well, this should be a
+named function.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -123,7 +142,7 @@ arguments when the partialized arguments are not named.</p></td>
 
     
     <p>There are many ways to implement partial function application in R.
-(see e.g. <code>dots</code> in <a href = 'https://github.com/crowding/ptools'>https://github.com/crowding/ptools</a> for another
+(see e.g. <code>dots</code> in <a href='https://github.com/crowding/ptools'>https://github.com/crowding/ptools</a> for another
 approach.)  This implementation is based on creating functions that are as
 similar as possible to the anonymous functions that you'd create by hand,
 if you weren't using <code>partial</code>.</p>
@@ -139,25 +158,25 @@ if you weren't using <code>partial</code>.</p>
 
 <span class='co'># and the generated source code is very similar to what we made by hand</span>
 <span class='no'>compact1</span></div><div class='output co'>#&gt; function(x) discard(x, is.null)
-#&gt; &lt;environment: 0x10fa66e28&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
+#&gt; &lt;environment: 0x7f9d52624630&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
 #&gt; discard(.p = is.null, ...)
-#&gt; &lt;environment: 0x10fa66e28&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x7f9d52624630&gt;</div><div class='input'>
 <span class='co'># Note that the evaluation occurs "lazily" so that arguments will be</span>
 <span class='co'># repeatedly evaluated</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>rpois</span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
 <span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
 #&gt; runif(n = rpois(1, 5), ...)
-#&gt; &lt;environment: 0x10fa66e28&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.17635011 0.11075900 0.93834241 0.84647114 0.57114358 0.67909341 0.08932224</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2269574 0.4481785 0.1612276 0.1761117 0.1982281 0.3576113 0.1813332</div><div class='input'>
+#&gt; &lt;environment: 0x7f9d52624630&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.17635011 0.11075900 0.93834241 0.84647114 0.57114358 0.67909341 0.08932224</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2269574 0.4481785 0.1612276 0.1761117 0.1982281 0.3576113 0.1813332</div><div class='input'>
 <span class='co'># You can override this by saying .lazy = FALSE</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>rpois</span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
 #&gt; runif(n = 5L, ...)
-#&gt; &lt;environment: 0x10fa66e28&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.659083010 0.660253409 0.002400788 0.993446034 0.627489231</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.01463034 0.20517822 0.66307666 0.46374403 0.36034816</div><div class='input'>
+#&gt; &lt;environment: 0x7f9d52624630&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.659083010 0.660253409 0.002400788 0.993446034 0.627489231</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.01463034 0.20517822 0.66307666 0.46374403 0.36034816</div><div class='input'>
 <span class='co'># This also means that partial works fine with functions that do</span>
 <span class='co'># non-standard evaluation</span>
 <span class='no'>my_long_variable</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='no'>plot2</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>plot</span>, <span class='no'>my_long_variable</span>)
-<span class='fu'>plot2</span>()</div><img src='partial-18.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot2</span>(<span class='fu'>runif</span>(<span class='fl'>10</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><img src='partial-20.png' alt='' width='540' height='400' /></pre>
+<span class='fu'>plot2</span>()</div><div class='img'><img src='partial-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2</span>(<span class='fu'>runif</span>(<span class='fl'>10</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='img'><img src='partial-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -178,21 +197,23 @@ if you weren't using <code>partial</code>.</p>
 </div>
 
 <div class="author">
-  <p>Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' height='24' /></a>.</p>
-  <p>Site built by <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='http://tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.</p>
+  <p>Site built by <a href="http://pkgdown.r-lib.org">pkgdown</a>.</p>
 </div>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
 
-  ga('create', 'UA-67989-18', 'auto');
-  ga('send', 'pageview');
+ gtag('config', 'UA-115082821-1');
 </script>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
