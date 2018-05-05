@@ -1,4 +1,4 @@
-#' Pluck out a single an element from a vector or environment
+#' Pluck out a single element from a vector or environment
 #'
 #' @description
 #'
