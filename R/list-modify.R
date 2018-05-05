@@ -3,7 +3,7 @@
 #' @description
 #'
 #' `list_modify()` and `list_merge()` recursively combine two lists, matching
-#' elements either by name or position. If an sub-element is present in
+#' elements either by name or position. If a sub-element is present in
 #' both lists `list_modify()` takes the value from `y`, and `list_merge()`
 #' concatenates the values together.
 #'
