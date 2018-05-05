@@ -101,7 +101,7 @@
 <ul>
 <li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> is now <code><a href="../reference/as_mapper.html">as_mapper()</a></code> because it is a tranformation that makes sense primarily for mapping functions, not in general (#298). <code>.null</code> has been renamed to <code>.default</code> to better reflect its intent (#298). <code>.default</code> is returned whenever an element is absent or empty (#231, #254).</p></li>
 <li><p>Recursive indexing can now extract objects out of environments (#213) and S4 objects (#200), as well as lists.</p></li>
-<li><p><code><a href="../reference/as_mapper.html">get_attr()</a></code> makes it possible to extract from attributes like <code><a href="../reference/map.html">map(list(iris, mtcars), get_attr("row.names"))</a></code>.</p></li>
+<li><p><code><a href="../reference/as_mapper.html">attr_getter()</a></code> makes it possible to extract from attributes like <code><a href="../reference/map.html">map(list(iris, mtcars), attr_getter("row.names"))</a></code>.</p></li>
 <li><p>The argument list for formula-functions has been tweaked so that you can refer to arguments by position with <code>..1</code>, <code>..2</code>, and so on. This makes it possible to use the formula shorthand for functions with more than two arguments (#289).</p></li>
 </ul>
 </div>
