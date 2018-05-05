@@ -79,10 +79,11 @@ reference:
 - title: Misc
   contents:
   - "`%||%`"
+  - "`%@%`"
   - array_tree
   - as_vector
-  - depth
   - rbernoulli
   - rdunif
   - rerun
   - set_names
+  - vec_depth
