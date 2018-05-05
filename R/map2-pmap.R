@@ -235,7 +235,7 @@ pwalk <- function(.l, .f, ...) {
   .f <- as_mapper(.f, ...)
   args_list <- transpose(recycle_args(.l))
   for (args in args_list) {
-    do.call(".f", c(args, list(...)))
+    do.call(".f", c(args, list(...)), quote = TRUE)
   }
   invisible(.l)
 }
