@@ -51,8 +51,8 @@ be installed.
 }
 \description{
 These functions remove a level hierarchy from a list. They are similar to
-\code{\link[=unlist]{unlist()}}, only ever remove a single layer of hierarchy, and
-are type-stable so you always know what the type of the output is.
+\code{\link[=unlist]{unlist()}}, but they only ever remove a single layer of hierarchy and they
+are type-stable, so you always know what the type of the output is.
 }
 \examples{
 x <- rerun(2, sample(4))

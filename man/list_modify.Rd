@@ -19,7 +19,7 @@ These dots have \link[rlang:dots_list]{splicing semantics}.}
 }
 \description{
 \code{list_modify()} and \code{list_merge()} recursively combine two lists, matching
-elements either by name or position. If an sub-element is present in
+elements either by name or position. If a sub-element is present in
 both lists \code{list_modify()} takes the value from \code{y}, and \code{list_merge()}
 concatenates the values together.
 
