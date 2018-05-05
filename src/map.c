@@ -36,7 +36,7 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   for (int i = 0; i < n; ++i) {
-    if (i % 1000 == 0)
+    if (i % 1024 == 0)
       R_CheckUserInterrupt();
 
     INTEGER(i_val)[0] = i + 1;
