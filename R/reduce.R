@@ -59,7 +59,7 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
 #' @export
 #' @rdname reduce
 reduce2_right <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .f, .y, ..., .init = .init, .left = FALSE)
+  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
 }
 
 reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
@@ -178,7 +178,7 @@ accumulate <- function(.x, .f, ..., .init) {
   f <- function(x, y) {
     .f(x, y, ...)
   }
-  
+
   res <- Reduce(f, .x, init = .init, accumulate = TRUE)
   names(res) <- names(.x)
   res
@@ -193,7 +193,7 @@ accumulate_right <- function(.x, .f, ..., .init) {
   f <- function(x, y) {
     .f(y, x, ...)
   }
-  
+
   res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
   names(res) <- names(.x)
   res
