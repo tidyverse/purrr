@@ -16,6 +16,10 @@
 #' * `map_flat_dfr()` and `map_flat_dfc()` is equivalent to [map()] followed
 #'   respectively by [flatten_dfr()] and [flatten_dfc()]
 #'
+#' Compared to [map_lgl()], [map_chr()], etc,
+#' map_flat functions are adapted to functions returning a variable
+#' number of elements.
+#'
 #' @return `map_flat` returns a list, `map_flat_lgl()` a logical
 #'   vector, `map_flat_int()` an integer vector, `map_flat_dbl()` a
 #'   double vector, and `map_flat_chr()` a character vector.
@@ -27,18 +31,24 @@
 #' @inheritParams map
 #' @export
 #' @family map variants
-#' @seealso [map_lgl()], [map_chr()], [map_dbl()], [map_int()], [map_dfr()], [map_dfc()]
+#' @seealso [map_lgl()], [map_chr()], [map_dbl()], [map_int()], [map_dfr()],
+#'   [map_dfc()], [map_raw()]
 #' @examples
 #' # Sample a variable number of elements from each column and
 #' # concatenate the results
 #' var_select <- function(x) sample(x, size = rdunif(1, 5))
-#' c(mtcars) %>% flatmap(var_select)
-#'
-#' # You can also check that the results are of expected type
+#' # map var_select on each mtcars column then flatten the result
+#' # by on level
+#' c(mtcars) %>% map_flat(var_select) # a list
+#' c(mtcars) %>% map_flat_dbl(var_select) # a numeric vector
+#' c(mtcars) %>% map_flat_chr(var_select) # a character vector
+#' # equivalent to
+#' c(mtcars) %>% map(var_select) %>% flatten_dbl()
+#' # as number of value is different in each element
+#' # map_dbl won't work
 #' \dontrun{
-#' c(mtcars) %>% flatmap(var_select, .type = "character")
+#' c(mtcars) %>% map_dbl(var_select)
 #' }
-#' c(mtcars) %>% flatmap(var_select, .type = "numeric")
 map_flat <- function(.x, .f, ...) {
   out <- map(.x, .f = .f, ...)
   flatten(out)
