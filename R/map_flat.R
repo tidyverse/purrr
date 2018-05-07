@@ -9,11 +9,11 @@
 #' * `map_flat()` is equivalent to [map()] followed by [flatten()].
 #'
 #' * `map_flat_lgl()`, `map_flat_int()`, `map_flap_dbl()`, `map_flat_chr()` and
-#'   `map_flat_raw` is equivalent to [map()] followed respectively by
+#'   `map_flat_raw` are equivalent to [map()] followed respectively by
 #'   [flatten_lgl()], [flatten_int()], [flatten_dbl()], [flatten_chr()] and
 #'   [flatten_raw()]
 #'
-#' * `map_flat_dfr()` and `map_flat_dfc()` is equivalent to [map()] followed
+#' * `map_flat_dfr()` and `map_flat_dfc()` are equivalent to [map()] followed
 #'   respectively by [flatten_dfr()] and [flatten_dfc()]
 #'
 #' Compared to [map_lgl()], [map_chr()], etc,
