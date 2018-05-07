@@ -73,6 +73,19 @@ names2 <- function(x) {
 #' rbernoulli(10)
 #' rbernoulli(100, 0.1)
 rbernoulli <- function(n, p = 0.5) {
+  # cannot let runif catch problems with n because need the value of n in order
+  # to truncate prob
+  if (length(n) == 0) {
+    return(logical(0))
+  } else if (length(n) == 1 && n == 0) {
+    return(logical(0))
+  } else if (length(n) > 1) {
+    n <- length(n)
+  }
+  # truncate to at most n probs
+  if (length(p) > n) {
+    p <- p[seq_len(n)]
+  }
   stats::runif(n) > (1 - p)
 }
 
