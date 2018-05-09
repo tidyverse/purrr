@@ -17,7 +17,7 @@ as_mapper(.f, ...)
 \method{as_mapper}{list}(.f, ..., .null, .default = NULL)
 }
 \arguments{
-\item{.f}{A function, formula, or atomic vector.
+\item{.f}{A function, formula, or vector (not necessarily atomic).
 
 If a \strong{function}, it is used as is.
 

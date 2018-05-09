@@ -1,20 +1,22 @@
 #' Map over multiple inputs simultaneously.
 #'
-#' These functions are variants of `map()` that iterate over multiple arguments
+#' These functions are variants of [map()] that iterate over multiple arguments
 #' simultaneously. They are parallel in the sense that each input is processed
 #' in parallel with the others, not in the sense of multicore computing. They
 #' share the same notion of "parallel" as [base::pmax()] and [base::pmin()].
 #' `map2()` and `walk2()` are specialised for the two argument case; `pmap()`
-#' and `pwalk()` allow you to provide any number of arguments in a list.
+#' and `pwalk()` allow you to provide any number of arguments in a list. Note
+#' that a data frame is a very important special case, in which case `pmap()`
+#' and `pwalk()` apply the function `.f` to each row.
 #'
-#' Note that arguments to be vectorised over come before the `.f`,
+#' Note that arguments to be vectorised over come before `.f`,
 #' and arguments that are supplied to every call come after `.f`.
 #'
 #' @inheritParams map
 #' @param .x,.y Vectors of the same length. A vector of length 1 will
 #'   be recycled.
-#' @param .l A list of lists. The length of `.l` determines the
-#'   number of arguments that `.f` will be called with. List
+#' @param .l A list of vectors, such as a data frame. The length of `.l`
+#'   determines the number of arguments that `.f` will be called with. List
 #'   names will be used if present.
 #' @return An atomic vector, list, or data frame, depending on the suffix.
 #'   Atomic vectors and lists will be named if `.x` or the first

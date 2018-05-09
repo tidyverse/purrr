@@ -40,7 +40,7 @@ walk(.x, .f, ...)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A function, formula, or atomic vector.
+\item{.f}{A function, formula, or vector (not necessarily atomic).
 
 If a \strong{function}, it is used as is.
 
