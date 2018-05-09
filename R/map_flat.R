@@ -44,6 +44,22 @@
 #' @seealso [map_lgl()], [map_chr()], [map_dbl()], [map_int()], [map_dfr()],
 #'   [map_dfc()], [map_raw()]
 #' @examples
+#' # It can be useful to map a function but flatten the result
+#' # to a vector. It is like concatenating map results.
+#' c("one piece", "four red pieces") %>%
+#'   map_flat_chr(~strsplit(.x, " ")[[1]])
+#' # this is equivalent to
+#' c("one piece", "four red pieces") %>%
+#'   map(~strsplit(.x, " ")[[1]]) %>%
+#'   flatten_chr()
+#' # Using map_chr() does not work here because resulting
+#' # elements before coercion is not of length 1,
+#' # so coercion failed.
+#' \dontrun{
+#' c("one piece", "four red pieces") %>%
+#'   map_chr(~strsplit(.x, " ")[[1]])
+#' }
+#'
 #' # Sample a variable number of elements from each column and
 #' # concatenate the results
 #' var_select <- function(x) sample(x, size = rdunif(1, 5))
@@ -54,11 +70,6 @@
 #' c(mtcars) %>% map_flat_chr(var_select) # a character vector
 #' # equivalent to
 #' c(mtcars) %>% map(var_select) %>% flatten_dbl()
-#' # as number of value is different in each element
-#' # map_dbl won't work
-#' \dontrun{
-#' c(mtcars) %>% map_dbl(var_select)
-#' }
 map_flat <- function(.x, .f, ...) {
   out <- map(.x, .f = .f, ...)
   flatten(out)
