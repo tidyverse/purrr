@@ -63,7 +63,7 @@ pwalk(.l, .f, ...)
 \item{.x, .y}{Vectors of the same length. A vector of length 1 will
 be recycled.}
 
-\item{.f}{A function, formula, or atomic vector.
+\item{.f}{A function, formula, or vector (not necessarily atomic).
 
 If a \strong{function}, it is used as is.
 
@@ -93,8 +93,8 @@ variable will be created.
 
 Only applies to \code{_dfr} variant.}
 
-\item{.l}{A list of lists. The length of \code{.l} determines the
-number of arguments that \code{.f} will be called with. List
+\item{.l}{A list of vectors, such as a data frame. The length of \code{.l}
+determines the number of arguments that \code{.f} will be called with. List
 names will be used if present.}
 }
 \value{
@@ -106,15 +106,17 @@ If all input is length 0, the output will be length 0. If any
 input is length 1, it will be recycled to the length of the longest.
 }
 \description{
-These functions are variants of \code{map()} that iterate over multiple arguments
+These functions are variants of \code{\link[=map]{map()}} that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
 share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
 \code{map2()} and \code{walk2()} are specialised for the two argument case; \code{pmap()}
-and \code{pwalk()} allow you to provide any number of arguments in a list.
+and \code{pwalk()} allow you to provide any number of arguments in a list. Note
+that a data frame is a very important special case, in which case \code{pmap()}
+and \code{pwalk()} apply the function \code{.f} to each row.
 }
 \details{
-Note that arguments to be vectorised over come before the \code{.f},
+Note that arguments to be vectorised over come before \code{.f},
 and arguments that are supplied to every call come after \code{.f}.
 }
 \examples{

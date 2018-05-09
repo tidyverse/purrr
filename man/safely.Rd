@@ -16,7 +16,7 @@ possibly(.f, otherwise, quiet = TRUE)
 auto_browse(.f)
 }
 \arguments{
-\item{.f}{A function, formula, or atomic vector.
+\item{.f}{A function, formula, or vector (not necessarily atomic).
 
 If a \strong{function}, it is used as is.
 

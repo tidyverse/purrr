@@ -5,7 +5,7 @@
 #' generic. The default method forwards its arguments to
 #' [rlang::as_function()].
 #'
-#' @param .f A function, formula, or atomic vector.
+#' @param .f A function, formula, or vector (not necessarily atomic).
 #'
 #'   If a __function__, it is used as is.
 #'
