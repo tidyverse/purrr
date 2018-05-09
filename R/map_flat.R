@@ -16,9 +16,19 @@
 #' * `map_flat_dfr()` and `map_flat_dfc()` are equivalent to [map()] followed
 #'   respectively by [flatten_dfr()] and [flatten_dfc()]
 #'
+#' @section About map vs map_flat Variants:
+#'
 #' Compared to [map_lgl()], [map_chr()], etc,
 #' map_flat functions are adapted to functions returning a variable
 #' number of elements.
+#'
+#' The map variants works by coercing the list to
+#' a vector of corresponding type - for that each element of the list resulting
+#' map must be a length 1 atomic vector, otherwise it will return an error.
+#'
+#' map_flat variants don't have that limitation as they unlist one level before
+#' trying to return a vector - it is more like concatenating map results, whatever the size
+#' of each elements in the resulting list after applying the function.
 #'
 #' @return `map_flat` returns a list, `map_flat_lgl()` a logical
 #'   vector, `map_flat_int()` an integer vector, `map_flat_dbl()` a
