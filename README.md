@@ -33,6 +33,10 @@ install.packages("purrr")
 devtools::install_github("tidyverse/purrr")
 ```
 
+## Cheatsheet
+
+<a href="https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/purrr-cheatsheet-thumbs.png" width="630" height="252"/></a>
+
 ## Usage
 
 The following example uses purrr to solve a fairly realistic problem:
@@ -64,12 +68,7 @@ the equivalents in base R:
   - All `map()` functions either accept function, formulas (used for
     succinctly generating anonymous functions), a character vector (used
     to extract components by name), or a numeric vector (used to extract
-    by
-position).
-
-### Cheat sheet
-
-<a href="https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/purrr-cheatsheet-thumbs.png" width="630" height="252"/></a>
+    by position).
 
 ## Code of conduct
 
