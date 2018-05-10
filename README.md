@@ -66,6 +66,11 @@ the equivalents in base R:
     to extract components by name), or a numeric vector (used to extract
     by position).
 
+See a list of functions on the
+cheatsheet:
+
+<a href="https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/purrr-cheatsheet-thumbs.png" width="630" height="252"/></a>
+
 ## Code of conduct
 
 Please note that this project is released with a [Contributor Code of
