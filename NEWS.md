@@ -1,6 +1,13 @@
+
+# purrr 0.2.5
+
+This is a maintenance release following the release of dplyr 0.7.5.
+
+
 # purrr 0.2.4
 
 * Fixes for R 3.1.
+
 
 # purrr 0.2.3
 
