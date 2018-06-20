@@ -13,7 +13,7 @@
 #'   determines which elements of `.x` are transformed with `.f`.
 #'
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return
-#'   vectors of the corresponding type (or die trying).
+#'   vectors of *length 1* of the corresponding type (or die trying).
 #'
 #' * `map_dfr()` and `map_dfc()` return data frames created by
 #'   row-binding and column-binding respectively. They require dplyr
