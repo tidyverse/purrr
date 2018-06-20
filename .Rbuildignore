@@ -12,3 +12,4 @@
 ^\.dir-locals.el
 ^src/\.dir-locals.el
 ^CODE_OF_CONDUCT\.md$
+^\.github$
