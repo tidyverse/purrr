@@ -18,7 +18,7 @@
 #'    The return value of `.f` must be of length one for each element of
 #'    `.x`. If `.f` uses an extractor function shortcut, `.default`
 #'    can be specified to handle values that are absent or empty.  See
-#'    [as_mapper()] for more on .default.
+#'    [as_mapper()] for more on `.default`.
 #'
 #' * `map_dfr()` and `map_dfc()` return data frames created by
 #'   row-binding and column-binding respectively. They require dplyr
