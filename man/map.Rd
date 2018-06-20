@@ -102,8 +102,13 @@ type as the input.
 
 The \code{_if} and \code{_at} variants take a predicate function \code{.p} that
 determines which elements of \code{.x} are transformed with \code{.f}.
-\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return
-vectors of the corresponding type (or die trying).
+\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} each return
+an atomic vector of the indicated type (or die trying).
+
+The return value of \code{.f} must be of length one for each element of
+\code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
+can be specified to handle values that are absent or empty.  See
+\code{\link[=as_mapper]{as_mapper()}} for more on .default.
 \item \code{map_dfr()} and \code{map_dfc()} return data frames created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.
