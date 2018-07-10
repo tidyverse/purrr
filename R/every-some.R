@@ -33,5 +33,5 @@ some <- function(.x, .p, ...) {
     if (no_na && anyNA(val)) no_na <- FALSE
   }
   if (no_na) FALSE
-  NA
+  else NA
 }
