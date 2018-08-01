@@ -11,7 +11,9 @@
 #' @param otherwise Default value to use when an error occurs.
 #'
 #' @return `safely`: wrapped function instead returns a list with
-#'   components `result` and `error`. One value is always `NULL`.
+#'   components `result` and `error`. If an error occurred, `error` is
+#'   an `error` object and `result` has a default value (`otherwise`).
+#'   Else `error` is `NULL`.
 #'
 #'   `quietly`: wrapped function instead returns a list with components
 #'   `result`, `output`, `messages` and `warnings`.
