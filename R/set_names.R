@@ -1,9 +1,5 @@
 #' @title Set names in a vector
 #'
-#' @details
-#' This is a snake case wrapper for [stats::setNames()], with
-#' tweaked defaults, and stricter argument checking.
-#'
 #' @usage set_names(x, nm = x, ...)
 #' @param x Vector to name
 #' @param nm,... Vector of names, the same length as `x`.
