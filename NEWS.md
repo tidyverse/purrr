@@ -1,5 +1,8 @@
 # purrr 0.2.4.9000
 
+* `modify_depth` now has `.ragged` argument evaluates correctly to `TRUE` by
+default when `.depth < 0` (@cderv, #530)
+
 * `accumulate()` and `accumulate_right()` now inherit names from their first input (@AshesITR, #446)
 
 * `attr_getter()` no longer uses partial matching. For example,
