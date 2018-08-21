@@ -13,7 +13,7 @@ purrr draws inspiration from many related tools:
 
 * Scala's [list methods][scala].
 
-* Functional programming librarys for javascript: 
+* Functional programming libraries for javascript: 
   [underscore.js](http://underscorejs.org), 
   [lodash](https://lodash.com) and 
   [lazy.js](http://danieltao.com/lazy.js/).
