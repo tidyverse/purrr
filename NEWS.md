@@ -1,4 +1,4 @@
-# purrr 0.2.4.9000
+# purrr 0.2.5.9000
 
 * `accumulate()` and `accumulate_right()` now inherit names from their first input (@AshesITR, #446)
 
@@ -25,6 +25,10 @@
   
 * `map_raw`, `imap_raw`, `flatten_raw`, `invoke_map_raw`, `map2_raw` and `pmap_raw`
   added to support raw vectors. (#455, @romainfrancois)
+
+# purrr 0.2.5
+
+* This is a maintenance release following the release of dplyr 0.7.5.
 
 # purrr 0.2.4
 
