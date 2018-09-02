@@ -25,6 +25,9 @@
   
 * `map_raw`, `imap_raw`, `flatten_raw`, `invoke_map_raw`, `map2_raw` and `pmap_raw`
   added to support raw vectors. (#455, @romainfrancois)
+  
+* `some()` now returns `NA` only after it has checked all other predicates are 
+  either `NA` or `FALSE` (#514, @daniel-barnett).
 
 # purrr 0.2.4
 
