@@ -27,7 +27,7 @@
   added to support raw vectors. (#455, @romainfrancois)
   
 * `some()` now returns `NA` only after it has checked all other predicates are 
-  either `NA` or `FALSE` (#514, @daniel-barnett).
+  either `NA` or `FALSE` (@daniel-barnett, #514).
 
 # purrr 0.2.4
 
