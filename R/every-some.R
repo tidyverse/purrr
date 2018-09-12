@@ -26,10 +26,10 @@ every <- function(.x, .p, ...) {
 #' @rdname every
 some <- function(.x, .p, ...) {
   .p <- as_mapper(.p, ...)
+  val <- FALSE
   for (i in seq_along(.x)) {
-    val <- .p(.x[[i]], ...)
+    val <- val || .p(.x[[i]], ...)
     if (is_true(val)) return(TRUE)
-    if (anyNA(val)) return(NA)
   }
-  FALSE
+  val
 }
