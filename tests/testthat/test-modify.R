@@ -83,4 +83,6 @@ test_that(".ragged = TRUE operates on leaves", {
 
   expect_equal(modify_depth(x1, 3, ~ . + 1, .ragged = TRUE), x2)
   expect_equal(modify_depth(x1, -1, ~ . + 1, .ragged = TRUE), x2)
+  # .ragged should be TRUE is .depth < 0
+  expect_equal(modify_depth(x1, -1, ~ . + 1), x2)
 })

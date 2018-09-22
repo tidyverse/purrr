@@ -202,6 +202,7 @@ modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
 #' @export
 modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   stopifnot(is_integerish(.depth, n = 1))
+  force(.ragged)
 
   if (.depth < 0) {
     .depth <- vec_depth(.x) + .depth
