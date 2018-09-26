@@ -64,3 +64,9 @@ test_that("pmap on data frames performs rowwise operations", {
 test_that("pmap works with empty lists", {
   expect_identical(pmap(list(), identity), list())
 })
+
+test_that("preserves S3 class of input vectors (#358)", {
+  date <- as.Date("2018-09-27")
+  expect_equal(pmap(list(date), identity), list(date))
+  expect_output(pwalk(list(date), print), format(date))
+})

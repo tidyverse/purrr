@@ -209,9 +209,6 @@ map_dfc <- function(.x, .f, ...) {
 #' @export
 #' @rdname map
 walk <- function(.x, .f, ...) {
-  .f <- as_mapper(.f, ...)
-  for (i in seq_along(.x)) {
-    .f(.x[[i]], ...)
-  }
+  map(.x, .f, ...)
   invisible(.x)
 }
