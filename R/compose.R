@@ -11,7 +11,11 @@
 #' add1 <- function(x) x + 1
 #' compose(add1, add1)(8)
 compose <- function(...) {
-  fs <- lapply(list(...), match.fun)
+
+  # Keep compatibility for composition with character vectors
+
+  fs <- lapply(list(...), function(x) ifelse( is.character(x), match.fun(x), rlang::as_function(x) ) )
+
   n <- length(fs)
 
   last <- fs[[n]]
