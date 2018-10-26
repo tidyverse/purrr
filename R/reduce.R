@@ -44,6 +44,7 @@ reduce <- function(.x, .f, ..., .init) {
   reduce_impl(.x, .f, ..., .init = .init, .left = TRUE)
 }
 
+
 #' @export
 #' @rdname reduce
 reduce_right <- function(.x, .f, ..., .init) {
@@ -82,7 +83,6 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
   out
 }
 
-
 reduce_impl <- function(.x, .f, ..., .init, .left = TRUE) {
   out <- reduce_init(.x, .init, left = .left)
   idx <- reduce_index(.x, .init, left = .left)
@@ -90,6 +90,120 @@ reduce_impl <- function(.x, .f, ..., .init, .left = TRUE) {
   .f <- as_mapper(.f, ...)
   for (i in idx) {
     out <- .f(out, .x[[i]], ...)
+  }
+
+  out
+}
+
+#' Reduce a list to a single value by iterative applying a binary function
+#'
+#' `reduce_while` encapsulates the pattern of combining elements with
+#' a two argument function until a condition is met or until all elements have
+#' been consumed. `reduce_while` combines
+#' elements from left to right, `reduce_while_right` combines from right to left.
+#' `reduce2_while` and sided versions extend this to functions of three arguments.
+#' By default results are the accumulated value up to, but not including the first
+#' failing test. This can be configured with the `.hind` argument.
+#' @inheritParams reduce
+#' @param .p A predicate function to apply to the current result, evaluations is
+#' stopped when `.p` evaluates to FALSE, or there are no elements to consume.
+#' @param .hind Whether the results are hind facing. Default is the `TRUE` which
+#' returns the last result that passes `.p`. Setting to `FALSE` returns
+#' the result that first fails `.p`.
+#' @export
+#' @examples
+#' 1:6 %>% reduce_while(`+`, ~ . < 5) ## adds 1 + 2, then fails on 3
+#' 1:6 %>% reduce_while(`+`, ~ . < 5, .hind = FALSE) ## fails on +3, but returns that result
+#' 1:6 %>% reduce_while_right(`+`, ~ . < 5)
+#' 1:6 %>% reduce_while_right(`+`, ~ . < 5, .hind = FALSE)
+#' 
+#' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+#' letters[1:4] %>% reduce_while(paste2, ~ nchar(.) < 5)
+#' letters[1:4] %>% reduce_while(paste2, ~ nchar(.) < 5, .hind = FALSE)
+#' letters[1:4] %>% reduce2_while(c("-", ".", "-"), paste2, ~ !grepl("\\.", .))
+#' letters[1:4] %>% reduce2_while(c("-", ".", "-"), paste2, ~ !grepl("\\.", .), .hind = FALSE)
+reduce_while <- function(.x, .f, .p, ..., .init, .hind = TRUE){
+  reduce_while_impl(.x, .f, .p, ..., .init = .init, .left = TRUE, .hind = .hind)
+}
+
+#' @export
+#' @rdname reduce_while
+reduce2_while <- function(.x, .y, .f, .p, ..., .init, .hind = TRUE){
+  reduce2_while_impl(.x, .y, .f, .p, ..., .init = .init, .left = TRUE, .hind = .hind)
+}
+
+#' @export
+#' @rdname reduce_while
+reduce_while_right <- function(.x, .f, .p, ..., .init, .hind = TRUE){
+  reduce_while_impl(.x, .f, .p, ..., .init = .init, .left = FALSE, .hind = .hind)
+}
+
+#' @export
+#' @rdname reduce_while
+reduce2_while <- function(.x, .y, .f, .p, ..., .init, .hind = TRUE){
+  reduce2_while_impl(.x, .y, .f, .p, ..., .init = .init, .left = TRUE, .hind = .hind)
+}
+
+reduce_while_impl <- function(.x, .f, .p, ...,
+                              .init, .left = TRUE, .hind = TRUE) {
+  out <- reduce_init(.x, .init, left = .left)
+  idx <- reduce_index(.x, .init, left = .left)
+
+  .f <- as_mapper(.f, ...)
+  .p <- as_mapper(.p)
+  
+  if(isFALSE(.p(out))){
+    if(isTRUE(.hind)) return(NA)
+    return(out)
+  }
+  
+  for (i in idx) {
+    new_out <- .f(out, .x[[i]], ...)
+    if(isFALSE(.p(new_out))){
+      if(isFALSE(.hind))
+        out <- new_out
+
+      break
+    }
+
+    out <- new_out
+  }
+
+  out
+}
+
+reduce2_while_impl <- function(.x, .y, .f, .p, ...,
+                               .init, .left = TRUE, .hind = TRUE) {
+  out <- reduce_init(.x, .init, left = .left)
+  x_idx <- reduce_index(.x, .init, left = .left)
+  y_idx <- reduce_index(.y, NULL, left = .left)
+
+  if (length(x_idx) != length(y_idx)) {
+    stop("`.y` does not have length ", length(x_idx))
+  }
+
+  .f <- as_mapper(.f, ...)
+  .p <- as_mapper(.p)
+
+  if(isFALSE(.p(out))){
+    if(isTRUE(.hind)) return(NA)
+    return(out)
+  }
+  
+  for (i in seq_along(x_idx)) {
+    x_i <- x_idx[[i]]
+    y_i <- y_idx[[i]]
+
+    new_out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
+    
+    if(isFALSE(.p(new_out))){
+      if(isFALSE(.hind))
+        out <- new_out
+
+      break
+    }
+
+    out <- new_out
   }
 
   out

@@ -25,6 +25,22 @@ test_that("reduce_right equivalent to reversing input", {
   expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
 })
 
+# reduce_while --------------------------------------------------------------
+
+test_that("reduce_while stops appropriately", {
+  expect_equal(reduce_while(1:6, `+`, ~ . < 5), 3)
+  expect_equal(reduce_while(1:6, `+`, ~ . < 5, .hind = FALSE), 6)
+})
+
+test_that("hind looking reduce_while with a failing predicate returns NA", {
+  expect_true(is.na(reduce_while(1:6, `+`, ~ FALSE)))
+})
+
+test_that("reduce_while_right works like reduce_while(rev(x), ...)", {
+  expect_equal(reduce_while(1:6, `+`, ~ . < 20)
+             , reduce_while_right(rev(1:6), `+`, ~ . < 20))
+})
+
 # accumulate --------------------------------------------------------------
 
 test_that("accumulate passes arguments to function", {
@@ -59,4 +75,15 @@ test_that("reduce2_right works if lengths match", {
 test_that("reduce returns original input if it was length one", {
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   expect_equal(reduce(x[1], paste), x[[1]])
+})
+
+# reduce2 -----------------------------------------------------------------
+
+test_that("basic application works", {
+  paste2 <- function(x, y, sep) paste(x, y, sep = sep)
+
+  x <- c("a", "b", "c")
+  expect_equal(reduce2_while(x, c("-", "."), paste2, ~ nchar(.) < 5), "a-b")
+  expect_equal(reduce2_while(x, c(".", "-", "."), paste2,  ~ nchar(.) < 6, .init = "x")
+             , "x.a-b")
 })
