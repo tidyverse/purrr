@@ -7,7 +7,8 @@
 compose(...)
 }
 \arguments{
-\item{...}{n functions to apply in order from right to left.}
+\item{...}{Functions to apply in order from right to left. Formulas
+are converted to functions in the usual way.}
 }
 \value{
 A function
@@ -22,4 +23,8 @@ not_null(NULL)
 
 add1 <- function(x) x + 1
 compose(add1, add1)(8)
+
+# You can use the formula shortcut for functions:
+fn <- compose(~ paste(.x, "foo"), ~ paste(.x, "bar"))
+fn("input")
 }

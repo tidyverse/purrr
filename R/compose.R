@@ -1,6 +1,7 @@
 #' Compose multiple functions
 #'
-#' @param ... n functions to apply in order from right to left.
+#' @param ... Functions to apply in order from right to left. Formulas
+#'   are converted to functions in the usual way.
 #' @return A function
 #' @export
 #' @examples
@@ -10,6 +11,10 @@
 #'
 #' add1 <- function(x) x + 1
 #' compose(add1, add1)(8)
+#'
+#' # You can use the formula shortcut for functions:
+#' fn <- compose(~ paste(.x, "foo"), ~ paste(.x, "bar"))
+#' fn("input")
 compose <- function(...) {
   fs <- map(list(...), rlang::as_function, env = caller_env())
 
