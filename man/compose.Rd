@@ -8,7 +8,10 @@ compose(...)
 }
 \arguments{
 \item{...}{Functions to apply in order from right to left. Formulas
-are converted to functions in the usual way.}
+are converted to functions in the usual way.
+
+These dots support \link[rlang:list2]{tidy dots features}. In particular, you can
+splice lists of functions with \code{!!!}.}
 }
 \value{
 A function
@@ -26,5 +29,13 @@ compose(add1, add1)(8)
 
 # You can use the formula shortcut for functions:
 fn <- compose(~ paste(.x, "foo"), ~ paste(.x, "bar"))
+fn("input")
+
+# Lists of functions can be spliced with !!!
+fns <- list(
+  function(x) paste(x, "foo"),
+  ~ paste(.x, "bar")
+)
+fn <- compose(!!!fns)
 fn("input")
 }
