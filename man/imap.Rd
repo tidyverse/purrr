@@ -83,3 +83,4 @@ Other map variants: \code{\link{invoke}},
   \code{\link{lmap}}, \code{\link{map2}},
   \code{\link{map}}, \code{\link{modify}}
 }
+\concept{map variants}

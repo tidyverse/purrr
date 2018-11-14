@@ -4,7 +4,8 @@
 \alias{partial}
 \title{Partial apply a function, filling in some arguments.}
 \usage{
-partial(...f, ..., .env = parent.frame(), .lazy = TRUE, .first = TRUE)
+partial(...f, ..., .env = parent.frame(), .lazy = TRUE,
+  .first = TRUE)
 }
 \arguments{
 \item{...f}{a function. For the output source to read well, this should be a

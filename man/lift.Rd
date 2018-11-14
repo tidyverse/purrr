@@ -2,7 +2,6 @@
 % Please edit documentation in R/composition.R
 \name{lift}
 \alias{lift}
-\alias{lift}
 \alias{lift_dl}
 \alias{lift_dv}
 \alias{lift_vl}

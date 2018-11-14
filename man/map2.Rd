@@ -183,3 +183,4 @@ Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
   \code{\link{map}}, \code{\link{modify}}
 }
+\concept{map variants}

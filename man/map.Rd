@@ -171,3 +171,4 @@ Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
   \code{\link{map2}}, \code{\link{modify}}
 }
+\concept{map variants}
