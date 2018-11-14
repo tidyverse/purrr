@@ -60,3 +60,7 @@ test_that("pmap on data frames performs rowwise operations", {
   expect_is(pmap_chr(mtcars2, paste), "character")
   expect_is(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
 })
+
+test_that("pmap works with empty lists", {
+  expect_identical(pmap(list(), identity), list())
+})

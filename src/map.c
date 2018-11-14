@@ -201,7 +201,10 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
   SEXP out = PROTECT(call_loop(env, f_call, n, type, m));
-  copy_names(VECTOR_ELT(l_val, 0), out);
+
+  if (Rf_length(l_val)) {
+    copy_names(VECTOR_ELT(l_val, 0), out);
+  }
 
   UNPROTECT(5);
   return out;

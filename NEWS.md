@@ -1,5 +1,7 @@
 # purrr 0.2.4.9000
 
+* Fixed a `pmap()` crash with empty lists on the Win32 platform (#565).
+
 * `modify_depth` now has `.ragged` argument evaluates correctly to `TRUE` by
 default when `.depth < 0` (@cderv, #530)
 
