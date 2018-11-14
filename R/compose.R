@@ -11,7 +11,8 @@
 #' add1 <- function(x) x + 1
 #' compose(add1, add1)(8)
 compose <- function(...) {
-  fs <- lapply(list(...), match.fun)
+  fs <- map(list(...), rlang::as_function, env = caller_env())
+
   n <- length(fs)
 
   last <- fs[[n]]
