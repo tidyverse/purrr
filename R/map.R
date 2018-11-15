@@ -12,8 +12,13 @@
 #'   The `_if` and `_at` variants take a predicate function `.p` that
 #'   determines which elements of `.x` are transformed with `.f`.
 #'
-#' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return
-#'   vectors of the corresponding type (or die trying).
+#' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` each return
+#'    an atomic vector of the indicated type (or die trying).
+#'
+#'    The return value of `.f` must be of length one for each element of
+#'    `.x`. If `.f` uses an extractor function shortcut, `.default`
+#'    can be specified to handle values that are absent or empty.  See
+#'    [as_mapper()] for more on `.default`.
 #'
 #' * `map_dfr()` and `map_dfc()` return data frames created by
 #'   row-binding and column-binding respectively. They require dplyr
