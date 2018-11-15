@@ -40,6 +40,8 @@
 #'   vector. The output of `.f` will be automatically typed upwards,
 #'   e.g. logical -> integer -> double -> character.
 #'
+#'   If `.x` has `names()`, the return value preserves those names.
+#'
 #'   `walk()` returns the input `.x` (invisibly). This makes it easy to
 #'   use in pipe.
 #' @export
