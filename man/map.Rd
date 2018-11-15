@@ -89,6 +89,8 @@ integer vector, \code{map_dbl()} a double vector, and \code{map_chr()} a charact
 vector. The output of \code{.f} will be automatically typed upwards,
 e.g. logical -> integer -> double -> character.
 
+If \code{.x} has \code{names()}, the return value preserves those names.
+
 \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in pipe.
 }
@@ -122,6 +124,13 @@ to be installed.
 # Or a formula
 1:10 \%>\%
   map(~ rnorm(10, .x))
+
+# The names of the input are preserved in the output:
+list(foo = 1, bar = 2) \%>\% map(`+`, 10)
+
+# Using set_names() with character vectors is handy to keep track
+# of the original inputs:
+set_names(c("foo", "bar")) \%>\% map_chr(paste0, ":suffix")
 
 # Extract by name or position
 # .default specifies value for elements that are missing or NULL

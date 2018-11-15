@@ -59,6 +59,13 @@
 #' 1:10 %>%
 #'   map(~ rnorm(10, .x))
 #'
+#' # The names of the input are preserved in the output:
+#' list(foo = 1, bar = 2) %>% map(`+`, 10)
+#'
+#' # Using set_names() with character vectors is handy to keep track
+#' # of the original inputs:
+#' set_names(c("foo", "bar")) %>% map_chr(paste0, ":suffix")
+#'
 #' # Extract by name or position
 #' # .default specifies value for elements that are missing or NULL
 #' l1 <- list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L))
