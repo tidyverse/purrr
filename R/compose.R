@@ -2,6 +2,10 @@
 #'
 #' @param ... Functions to apply in order from right to left. Formulas
 #'   are converted to functions in the usual way.
+#'
+#'   These dots support tidy dots features. In particular, if your
+#'   functions are stored in a list, you can splice that in with
+#'   `!!!`.
 #' @return A function
 #' @export
 #' @examples
@@ -15,8 +19,16 @@
 #' # You can use the formula shortcut for functions:
 #' fn <- compose(~ paste(.x, "foo"), ~ paste(.x, "bar"))
 #' fn("input")
+#'
+#' # Lists of functions can be spliced with !!!
+#' fns <- list(
+#'   function(x) paste(x, "foo"),
+#'   ~ paste(.x, "bar")
+#' )
+#' fn <- compose(!!!fns)
+#' fn("input")
 compose <- function(...) {
-  fs <- map(list(...), rlang::as_function, env = caller_env())
+  fs <- map(list2(...), rlang::as_function, env = caller_env())
 
   n <- length(fs)
 

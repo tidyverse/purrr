@@ -22,3 +22,12 @@ test_that("compose() supports character vectors", {
   })
   expect_identical(fn("quux"), "quux baz baz")
 })
+
+test_that("can splice lists of functions", {
+  fns <- list(
+    ~ paste(.x, "a"),
+    ~ paste(.x, "b")
+  )
+  fn <- compose(!!!fns)
+  expect_identical(fn("c"), "c b a")
+})
