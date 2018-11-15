@@ -10,8 +10,9 @@ compose(...)
 \item{...}{Functions to apply in order from right to left. Formulas
 are converted to functions in the usual way.
 
-These dots support \link[rlang:list2]{tidy dots features}. In particular, you can
-splice lists of functions with \code{!!!}.}
+These dots support tidy dots features. In particular, if your
+functions are stored in a list, you can splice that in with
+\code{!!!}.}
 }
 \value{
 A function

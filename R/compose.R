@@ -3,8 +3,9 @@
 #' @param ... Functions to apply in order from right to left. Formulas
 #'   are converted to functions in the usual way.
 #'
-#'   These dots support [tidy dots features][rlang::list2]. In particular, you can
-#'   splice lists of functions with `!!!`.
+#'   These dots support tidy dots features. In particular, if your
+#'   functions are stored in a list, you can splice that in with
+#'   `!!!`.
 #' @return A function
 #' @export
 #' @examples
