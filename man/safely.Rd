@@ -44,7 +44,9 @@ as they occur?}
 }
 \value{
 \code{safely}: wrapped function instead returns a list with
-components \code{result} and \code{error}. One value is always \code{NULL}.
+components \code{result} and \code{error}. If an error occurred, \code{error} is
+an \code{error} object and \code{result} has a default value (\code{otherwise}).
+Else \code{error} is \code{NULL}.
 
 \code{quietly}: wrapped function instead returns a list with components
 \code{result}, \code{output}, \code{messages} and \code{warnings}.
