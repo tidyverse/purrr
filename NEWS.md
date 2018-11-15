@@ -1,4 +1,4 @@
-# purrr 0.2.4.9000
+# purrr 0.2.5.9000
 
 * `compose()` now supports composition with lambdas (@ColinFay, #556)
 
@@ -35,6 +35,10 @@ default when `.depth < 0` (@cderv, #530)
   
 * `some()` now returns `NA` only after it has checked all other predicates are 
   either `NA` or `FALSE` (@daniel-barnett, #514).
+
+# purrr 0.2.5
+
+* This is a maintenance release following the release of dplyr 0.7.5.
 
 # purrr 0.2.4
 
