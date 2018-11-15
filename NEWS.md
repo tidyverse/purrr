@@ -1,5 +1,8 @@
 # purrr 0.2.5.9000
 
+* `pmap()` and `pwalk()` now preserve class for inputs of `factor`, `Date`, `POSIXct`
+  and other atomic S3 classes with an appropriate `[[` method (#358, @mikmart).
+
 * `compose()` now supports composition with lambdas (@ColinFay, #556)
 
 * Fixed a `pmap()` crash with empty lists on the Win32 platform (#565).

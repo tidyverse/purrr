@@ -174,7 +174,11 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   SEXP i = Rf_install("i");
   SEXP one = PROTECT(Rf_ScalarInteger(1));
 
-  // Construct call like f(.x[[c(1, i)]], .x[[c(2, i)]], ...)
+  // Construct call like f(.l[[1]][[i]], .l[[2]][[i]], ...)
+  //
+  // Currently accessing S3 vectors in a list like .l[[c(1, i)]] will not
+  // preserve the class (cf. #358).
+  //
   // We construct the call backwards because can only add to the front of a
   // linked list. That makes PROTECTion tricky because we need to update it
   // each time to point to the start of the linked list.
@@ -186,10 +190,10 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   for (int j = m - 1; j >= 0; --j) {
     int nj = Rf_length(VECTOR_ELT(l_val, j));
 
-    // Construct call like .l[[c(j, i)]]
+    // Construct call like .l[[j]][[i]]
     SEXP j_ = PROTECT(Rf_ScalarInteger(j + 1));
-    SEXP ji_ = PROTECT(Rf_lang3(Rf_install("c"), j_, nj == 1 ? one : i));
-    SEXP l_ji = PROTECT(Rf_lang3(R_Bracket2Symbol, l, ji_));
+    SEXP l_j = PROTECT(Rf_lang3(R_Bracket2Symbol, l, j_));
+    SEXP l_ji = PROTECT(Rf_lang3(R_Bracket2Symbol, l_j, nj == 1 ? one : i));
 
     REPROTECT(f_call = Rf_lcons(l_ji, f_call), fi);
     if (has_names && CHAR(STRING_ELT(l_names, j))[0] != '\0')
