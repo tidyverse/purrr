@@ -1,5 +1,24 @@
 # purrr 0.2.5.9000
 
+* In `reduce2_right()`, `.y` and `.f` are now correctly passed through internal
+`reduce2_impl()`, in keeping with the documentation and `reduce_right()`.
+Previously, and incorrectly, `.y` and `.f` had their behavior reversed. If you
+inverted `.y` and `.f` to make it works, you should now revert back the order
+(#500, @cderv).
+
+```R
+paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+
+## with purrr > 2.5
+reduce2_right(letters[1:4], c("-", ".", "-"), paste2)
+
+## with purrr <= 2.5
+# error
+reduce2_right(.x = letters[1:4], .y = c("-", ".", "-"), .f = paste2) # error
+# working 
+reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
+```
+
 * `pmap()` and `pwalk()` now preserve class for inputs of `factor`, `Date`, `POSIXct`
   and other atomic S3 classes with an appropriate `[[` method (#358, @mikmart).
 
