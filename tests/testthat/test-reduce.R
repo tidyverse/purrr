@@ -46,14 +46,16 @@ test_that("basic application works", {
 
   x <- c("a", "b", "c")
   expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
+  expect_equal(reduce2_right(x, c("-", "."), paste2), "c.b-a")
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
+  expect_equal(reduce2_right(x, c(".", "-", "."), paste2, .init = "x"), "x.c-b.a")
 })
 
 test_that("reduce2_right works if lengths match", {
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   y <- list(c(6, 7), c(8, 9))
-  expect_equal(reduce2_right(x, paste, y), c("4 2 8 0 6", "5 3 9 1 7"))
-  expect_error(reduce2_right(y, paste, x))
+  expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
+  expect_error(reduce2_right(y, x, paste))
 })
 
 test_that("reduce returns original input if it was length one", {
