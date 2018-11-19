@@ -59,11 +59,11 @@ mtcars %>%
 
 This example illustrates some of the advantages of purrr functions over the equivalents in base R:
 
-* The first argument is alwa/ys the data, so purrr works naturally with the pipe.
+* The first argument is always the data, so purrr works naturally with the pipe.
 
 * All purrr functions are type-stable. They always return the advertised output
   type (`map()` returns lists; `map_dbl()` returns double vectors), or they 
-  throw an errror.
+  throw an error.
   
 * All `map()` functions either accept function, formulas (used for succinctly
   generating anonymous functions), a character vector (used to extract 
