@@ -6,6 +6,8 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
 [![Build
 Status](https://travis-ci.org/tidyverse/purrr.svg?branch=master)](https://travis-ci.org/tidyverse/purrr)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/tidyverse/purrr?branch=master&svg=true)](https://ci.appveyor.com/project/tidyverse/purrr)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/tidyverse/purrr/master.svg)](https://codecov.io/github/tidyverse/purrr?branch=master)
 
@@ -58,12 +60,12 @@ mtcars %>%
 This example illustrates some of the advantages of purrr functions over
 the equivalents in base R:
 
-  - The first argument is alwa/ys the data, so purrr works naturally
-    with the pipe.
+  - The first argument is always the data, so purrr works naturally with
+    the pipe.
 
   - All purrr functions are type-stable. They always return the
     advertised output type (`map()` returns lists; `map_dbl()` returns
-    double vectors), or they throw an errror.
+    double vectors), or they throw an error.
 
   - All `map()` functions either accept function, formulas (used for
     succinctly generating anonymous functions), a character vector (used
