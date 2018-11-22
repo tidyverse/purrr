@@ -28,6 +28,8 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
    added benefit of being passed the current index as argument to the
    lambda).
 
+* `map_call()` is defunct.
+
 
 ## Minor improvements and fixes
 

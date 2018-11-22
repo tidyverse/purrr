@@ -145,6 +145,5 @@ invoke_map_df <- invoke_map_dfr
 #' @export
 #' @usage NULL
 map_call <- function(.x, .f, ...) {
-  warning("`map_call()` is deprecated. Please use `invoke()` instead.")
-  invoke(.f, .x, ...)
+  .Defunct("`map_call()` is deprecated. Please use `invoke()` instead.")
 }
