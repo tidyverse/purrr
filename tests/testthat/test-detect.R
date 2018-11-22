@@ -1,4 +1,4 @@
-context("find-position")
+context("detect")
 
 y <- 4:10
 
