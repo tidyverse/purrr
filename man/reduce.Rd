@@ -50,6 +50,7 @@ the right. \code{reduce(list(x1, x2, x3), f)} is equivalent to
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% reduce(paste2)
 letters[1:4] \%>\% reduce2(c("-", ".", "-"), paste2)
+letters[1:4] \%>\% reduce2_right(c("-", ".", "-"), paste2)
 
 samples <- rerun(2, sample(10, 5))
 samples
@@ -61,4 +62,10 @@ x \%>\% reduce(c)
 x \%>\% reduce_right(c)
 # Equivalent to:
 x \%>\% rev() \%>\% reduce(c)
+
+y <- list(c(6, 7), c(8, 9))
+reduce2(x, y, paste)
+reduce2_right(x, y, paste)
+# Equivalent to:
+x \%>\% rev() \%>\% reduce2(rev(y), paste)
 }
