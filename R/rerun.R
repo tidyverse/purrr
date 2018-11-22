@@ -1,5 +1,9 @@
 #' Re-run expressions multiple times.
 #'
+#' @description
+#'
+#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+#'
 #' This is a convenient way of generating sample data. It works similarly to
 #' \code{\link{replicate}(..., simplify = FALSE)}.
 #'
@@ -11,6 +15,15 @@
 #'   There is one special case: if there's a single unnamed input, the second
 #'   level list will be dropped. In this case, `rerun(n, x)` behaves like
 #'   `replicate(n, x, simplify = FALSE)`.
+#'
+#' @section Lifecycle:
+#'
+#' `rerun()` is in the questioning lifecycle stage because we are no
+#' longer convinced NSE functions are a good fit for purrr. Also,
+#' `rerun(n, x)` can just as easily be expressed as `map(1:n, ~ x)`
+#' (with the added benefit of being passed the current index as
+#' argument to the lambda).
+#'
 #' @export
 #' @examples
 #' 10 %>% rerun(rnorm(5))

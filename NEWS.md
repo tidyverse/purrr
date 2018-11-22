@@ -20,6 +20,15 @@ reduce2_right(.x = letters[1:4], .y = c("-", ".", "-"), .f = paste2) # error
 reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 ```
 
+## Life cycle
+
+* `rerun()` is now in the questioning stage because we are no longer
+   convinced NSE functions are a good fit for purrr. Also, `rerun(n,
+   x)` can just as easily be expressed as `map(1:n, ~ x)` (with the
+   added benefit of being passed the current index as argument to the
+   lambda).
+
+
 ## Minor improvements and fixes
 
 * In `reduce2_right()`, `.y` and `.f` are now correctly passed through internal
