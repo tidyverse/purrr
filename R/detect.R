@@ -1,4 +1,4 @@
-#' Find the value or position of the first match.
+#' Find the value or position of the first match
 #'
 #' @inheritParams every
 #' @inheritParams map
@@ -9,6 +9,8 @@
 #'  predicate; `detect_index` the position of the matching item.
 #'  If not found, `detect` returns `NULL` and `detect_index`
 #'  returns 0.
+#'
+#' @seealso [keep()] for keeping all matching values.
 #' @export
 #' @examples
 #' is_even <- function(x) x %% 2 == 0
@@ -30,6 +32,13 @@
 #'
 #' detect(x, "foo")
 #' detect_index(x, "foo")
+#'
+#'
+#' # If you need to find all values, use keep():
+#' keep(x, "foo")
+#'
+#' # If you need to find all positions, use map_lgl():
+#' which(map_lgl(x, "foo"))
 detect <- function(.x, .f, ..., .right = FALSE, .p) {
   if (!missing(.p)) {
     warn("`.p` has been renamed to `.f`", "purrr_2.2.3")

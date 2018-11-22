@@ -3,7 +3,7 @@
 \name{detect}
 \alias{detect}
 \alias{detect_index}
-\title{Find the value or position of the first match.}
+\title{Find the value or position of the first match}
 \usage{
 detect(.x, .f, ..., .right = FALSE, .p)
 
@@ -53,7 +53,7 @@ If not found, \code{detect} returns \code{NULL} and \code{detect_index}
 returns 0.
 }
 \description{
-Find the value or position of the first match.
+Find the value or position of the first match
 }
 \examples{
 is_even <- function(x) x \%\% 2 == 0
@@ -75,4 +75,14 @@ x <- list(
 
 detect(x, "foo")
 detect_index(x, "foo")
+
+
+# If you need to find all values, use keep():
+keep(x, "foo")
+
+# If you need to find all positions, use map_lgl():
+which(map_lgl(x, "foo"))
+}
+\seealso{
+\code{\link[=keep]{keep()}} for keeping all matching values.
 }
