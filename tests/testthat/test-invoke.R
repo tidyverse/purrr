@@ -6,7 +6,12 @@ test_that("invoke() is soft-deprecated", {
   expect_warning(invoke(mean, list(), x = 1:10), "soft-deprecated")
 })
 
-scoped_options(lifecycle_disable_verbose_retirement = TRUE)
+test_that("invoke_map() is soft-deprecated", {
+  scoped_lifecycle_warnings()
+  expect_warning(invoke_map(list(mean), list(x = 1:10)), "soft-deprecated")
+})
+
+scoped_options(lifecycle_disable_warnings = TRUE)
 
 
 # invoke ------------------------------------------------------------------

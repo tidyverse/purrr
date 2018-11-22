@@ -59,14 +59,26 @@ makes it easier to call lists of functions with lists of parameters.
 }
 \section{Life cycle}{
 
-
-\code{invoke()} is soft-deprecated and replaced by the simpler \code{exec()}
-function reexported from rlang. \code{exec()} evaluates a function call
-built from its inputs and supports tidy dots:\preformatted{# Before:
+\itemize{
+\item \code{invoke()} is soft-deprecated as of purrr 0.3.0 and replaced by
+the simpler \code{exec()} function reexported from rlang. \code{exec()}
+evaluates a function call built from its inputs and supports tidy
+dots:\preformatted{# Before:
 invoke(mean, list(na.rm = TRUE), x = 1:10)
 
 # After
 exec(mean, 1:10, !!!list(na.rm = TRUE))
+}
+\item \code{invoke_map()} is soft-deprecated as of purrr 0.3.0 without
+replacement because it is more complex to understand than the
+corresponding code using \code{map()}, \code{map2()} and \code{exec()}:\preformatted{# Before:
+invoke_map(fns, list(args))
+invoke_map(fns, list(args1, args2))
+
+# After:
+map(fns, exec, !!!args)
+map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
+}
 }
 }
 
