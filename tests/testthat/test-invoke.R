@@ -1,6 +1,14 @@
 context("invoke")
 
 
+test_that("invoke() is soft-deprecated", {
+  scoped_lifecycle_warnings()
+  expect_warning(invoke(mean, list(), x = 1:10), "soft-deprecated")
+})
+
+scoped_options(lifecycle_disable_verbose_retirement = TRUE)
+
+
 # invoke ------------------------------------------------------------------
 
 test_that("invoke() evaluates expressions in the right environment", {

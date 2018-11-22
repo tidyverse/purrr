@@ -1,5 +1,9 @@
 #' Invoke functions.
 #'
+#' @description
+#'
+#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#'
 #' This pair of functions make it easier to combine a function and list
 #' of parameters to get a result. `invoke` is a wrapper around
 #' `do.call` that makes it easy to use in a pipe. `invoke_map`
@@ -18,6 +22,21 @@
 #'   as `.f` the name of a function rather than its value, or as
 #'   `.x` symbols of objects rather than their values.
 #' @inheritParams map
+#'
+#' @section Life cycle:
+#'
+#' `invoke()` is soft-deprecated and replaced by the simpler `exec()`
+#' function reexported from rlang. `exec()` evaluates a function call
+#' built from its inputs and supports tidy dots:
+#'
+#' ```
+#' # Before:
+#' invoke(mean, list(na.rm = TRUE), x = 1:10)
+#'
+#' # After
+#' exec(mean, 1:10, !!!list(na.rm = TRUE))
+#' ```
+#'
 #' @export
 #' @family map variants
 #' @examples
@@ -64,6 +83,17 @@
 #' df
 #' invoke_map(df$f, df$params)
 invoke <- function(.f, .x = NULL, ..., .env = NULL) {
+  signal_soft_deprecated(paste_line(
+    "`invoke()` is soft-deprecated as of purrr 0.3.0.",
+    "Please use `purrr::exec()` (reexported from rlang) instead.",
+    "",
+    "  # Before:",
+    "  invoke(mean, list(na.rm = TRUE), x = 1:10)",
+    "",
+    "  # After:",
+    "  exec(mean, 1:10, !!!list(na.rm = TRUE))",
+    ""
+  ))
   .env <- .env %||% parent.frame()
 
   args <- c(as.list(.x), list(...))

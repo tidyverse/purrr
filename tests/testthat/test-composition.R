@@ -4,11 +4,11 @@ test_that("lift_dl and lift_ld are inverses of each other", {
   expect_identical(
     sum %>%
       lift_dl(.unnamed = TRUE) %>%
-      invoke(list(3, NA, 4, na.rm = TRUE)),
+      do.call(list(3, NA, 4, na.rm = TRUE)),
     sum %>%
       lift_dl() %>%
       lift_ld() %>%
-      invoke(3, NA, 4, na.rm = TRUE)
+      exec(3, NA, 4, na.rm = TRUE)
   )
 })
 
@@ -27,7 +27,7 @@ test_that("lift_vl is from c(...) to list(...)", {
 test_that("lift_lv is from list(...) to c(...)", {
   glue <- function(l) {
     if (!is.list(l)) stop("not a list")
-    l %>% invoke(paste, .)
+    l %>% do.call(paste, .)
   }
   expect_identical(lift_lv(glue)(letters), paste(letters, collapse = " "))
 })

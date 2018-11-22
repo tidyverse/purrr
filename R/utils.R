@@ -112,3 +112,7 @@ ndots <- function(...) nargs()
 is_names <- function(nms) {
   is_character(nms) && !any(is.na(nms) | nms == "")
 }
+
+paste_line <- function(...) {
+  paste(chr(...), collapse = "\n")
+}
