@@ -243,6 +243,10 @@ modify2 <- function(.x, .y, .f, ...) {
 modify2.default <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
 
+  args <- recycle_args(list(.x, .y))
+  .x <- args[[1]]
+  .y <- args[[2]]
+
   for (i in seq_along(.x)) {
     .x[[i]] <- .f(.x[[i]], .y[[i]], ...)
   }
@@ -257,23 +261,28 @@ imodify <- function(.x, .f, ...) {
 
 # TODO: Improve genericity (see above)
 #' @export
-modify2.integer  <- function (.x, .y, .f, ...) {
-  .x[] <- map2_int(.x, .y, .f, ...)
-  .x
+modify2.integer  <- function(.x, .y, .f, ...) {
+  modify_base(map2_int, .x, .y, .f, ...)
 }
 #' @export
-modify2.double  <- function (.x, .y, .f, ...) {
-  .x[] <- map2_dbl(.x, .y, .f, ...)
-  .x
+modify2.double  <- function(.x, .y, .f, ...) {
+  modify_base(map2_dbl, .x, .y, .f, ...)
 }
 #' @export
-modify2.character  <- function (.x, .y, .f, ...) {
-  .x[] <- map2_chr(.x, .y, .f, ...)
-  .x
+modify2.character  <- function(.x, .y, .f, ...) {
+  modify_base(map2_chr, .x, .y, .f, ...)
 }
 #' @export
-modify2.logical  <- function (.x, .y, .f, ...) {
-  .x[] <- map2_lgl(.x, .y, .f, ...)
+modify2.logical  <- function(.x, .y, .f, ...) {
+  modify_base(map2_lgl, .x, .y, .f, ...)
+}
+
+modify_base <- function(mapper, .x, .y, .f, ...) {
+  args <- recycle_args(list(.x, .y))
+  .x <- args[[1]]
+  .y <- args[[2]]
+
+  .x[] <- mapper(.x, .y, .f, ...)
   .x
 }
 

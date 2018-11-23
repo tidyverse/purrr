@@ -74,6 +74,13 @@ test_that("modify2() and imodify() preserve type of first input", {
   expect_identical(out$vs, paste(mtcars$vs, "vs"))
 })
 
+test_that("modify2() recycles arguments", {
+  expect_identical(modify2(1:3, 1L, `+`), int(2, 3, 4))
+  expect_identical(modify2(1, 1:3, `+`), dbl(2, 3, 4))
+  expect_identical(modify2(mtcars, seq_along(mtcars), `+`)$carb, mtcars$carb + ncol(mtcars))
+  expect_identical(modify2(mtcars, 1, `+`)$carb, mtcars$carb + 1L)
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {
