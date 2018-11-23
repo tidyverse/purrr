@@ -65,6 +65,9 @@ inner lists. Only those elements where \code{.p} evaluates to
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.}
 
+\item{.y}{Vectors of the same length. A vector of length 1 will
+be recycled.}
+
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
 \itemize{

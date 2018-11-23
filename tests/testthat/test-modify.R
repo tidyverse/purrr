@@ -63,6 +63,16 @@ test_that("modify() implements sane coercion rules for base vectors", {
   expect_error(modify_if(1:3, is_integer, ~ "foo"), "Can't coerce")
 })
 
+test_that("modify2() and imodify() preserve type of first input", {
+  x <- c(foo = 1L, bar = 2L)
+  y <- c(TRUE, FALSE)
+  expect_identical(modify2(x, y, ~ if (.y) .x else 0L), c(foo = 1L, bar = 0L))
+
+  out <- imodify(mtcars, paste)
+  expect_is(out, "data.frame")
+  expect_identical(out$vs, paste(mtcars$vs, "vs"))
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {

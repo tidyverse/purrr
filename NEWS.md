@@ -59,6 +59,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* New `modify2()` and `imodify()` functions. These work like `map()`
+  and `imap()` but preserve the type of `.x` in the return value.
+
 * `modify()` and variants are now implemented using `length()`, `[[`,
   and `[[<-` methods. This implementation should be compatible with
   most vector classes.
