@@ -237,6 +237,10 @@ modify_at.logical <- function(.x, .at, .f, ...) {
 #' @rdname modify
 #' @export
 modify2 <- function(.x, .y, .f, ...) {
+  UseMethod("modify2")
+}
+#' @export
+modify2.default <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
 
   for (i in seq_along(.x)) {
@@ -249,6 +253,28 @@ modify2 <- function(.x, .y, .f, ...) {
 #' @export
 imodify <- function(.x, .f, ...) {
   modify2(.x, vec_index(.x), .f, ...)
+}
+
+# TODO: Improve genericity (see above)
+#' @export
+modify2.integer  <- function (.x, .y, .f, ...) {
+  .x[] <- map2_int(.x, .y, .f, ...)
+  .x
+}
+#' @export
+modify2.double  <- function (.x, .y, .f, ...) {
+  .x[] <- map2_dbl(.x, .y, .f, ...)
+  .x
+}
+#' @export
+modify2.character  <- function (.x, .y, .f, ...) {
+  .x[] <- map2_chr(.x, .y, .f, ...)
+  .x
+}
+#' @export
+modify2.logical  <- function (.x, .y, .f, ...) {
+  .x[] <- map2_lgl(.x, .y, .f, ...)
+  .x
 }
 
 #' @rdname modify

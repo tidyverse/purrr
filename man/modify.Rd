@@ -7,6 +7,8 @@
 \alias{modify_if.default}
 \alias{modify_at}
 \alias{modify_at.default}
+\alias{modify2}
+\alias{imodify}
 \alias{modify_depth}
 \alias{modify_depth.default}
 \alias{at_depth}
@@ -23,6 +25,10 @@ modify_if(.x, .p, .f, ...)
 modify_at(.x, .at, .f, ...)
 
 \method{modify_at}{default}(.x, .at, .f, ...)
+
+modify2(.x, .y, .f, ...)
+
+imodify(.x, .f, ...)
 
 modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 
@@ -92,6 +98,9 @@ type (list for \code{map()}, integer vector for \code{map_int()}, etc), the
 \item \code{modify_if()} only modifies the elements of \code{x} that satisfy a
 predicate and leaves the others unchanged. \code{modify_at()} only
 modifies elements given by names or positions.
+\item \code{modify2()} modifies the elements of \code{.x} but also passes the
+elements of \code{.y} to \code{.f}, just like \code{\link[=map2]{map2()}}. \code{imodify()} passes
+the names or the indices to \code{.f} like \code{\link[=imap]{imap()}} does.
 \item \code{modify_depth()} only modifies elements at a given level of a
 nested data structure.
 }
@@ -136,6 +145,12 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   modify_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
   transpose() \%>\%
   simplify_all()
+
+# Use modify2() to map over two vectors and preserve the type of
+# the first one:
+x <- c(foo = 1L, bar = 2L)
+y <- c(TRUE, FALSE)
+modify2(x, y, ~ if (.y) .x else 0L)
 
 # Modify at specified depth ---------------------------
 l1 <- list(
