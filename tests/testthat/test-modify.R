@@ -57,6 +57,12 @@ test_that("modify{,_at,_if} preserves atomic vector classes", {
   expect_type(modify_if(TRUE,  TRUE, identity), "logical")
 })
 
+test_that("modify() implements sane coercion rules for base vectors", {
+  expect_error(modify(1:3, ~ "foo"), "Can't coerce")
+  expect_error(modify_at(1:3, 1, ~ "foo"), "Can't coerce")
+  expect_error(modify_if(1:3, is_integer, ~ "foo"), "Can't coerce")
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {

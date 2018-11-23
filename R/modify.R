@@ -1,10 +1,20 @@
 #' Modify elements selectively
 #'
-#' `modify()` is a short-cut for `x[] <- map(x, .f); return(x)`. `modify_if()`
-#' only modifies the elements of `x` that satisfy a predicate and leaves the
-#' others unchanged. `modify_at()` only modifies elements given by names or
-#' positions. `modify_depth()` only modifies elements at a given level of a
-#' nested data structure.
+#' @description
+#'
+#' Unlike [map()] and its variants which always return a fixed object
+#' type (list for `map()`, integer vector for `map_int()`, etc), the
+#' `modify()` family always returns the same type as the input object.
+#'
+#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]);
+#'   return(x)`.
+#'
+#' * `modify_if()` only modifies the elements of `x` that satisfy a
+#'   predicate and leaves the others unchanged. `modify_at()` only
+#'   modifies elements given by names or positions.
+#'
+#' * `modify_depth()` only modifies elements at a given level of a
+#'   nested data structure.
 #'
 #' @inheritParams map
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
@@ -24,15 +34,23 @@
 #'
 #' @section Genericity:
 #'
-#' All these functions are S3 generic. However, the default method is
-#' sufficient in many cases. It should be suitable for any data type
-#' that implements the subset-assignment method `[<-`. Methods are provided
-#' for character, logical, integer and double classes (counterparts to `map_chr`,
-#' `map_lgl`, `map_int`, and `map_dbl`)
+#' `modify()` and variants are generic over classes that implement
+#' `length()`, `[[` and `[[<-` methods. If the default implementation
+#' is not compatible for your class, you can override them with your
+#' own methods.
 #'
-#' In some cases it may make sense to provide a custom implementation
-#' with a method suited to your S3 class. For example, a `grouped_df`
-#' method might take into account the grouped nature of a data frame.
+#' If you implement your own `modify()` method, make sure it satisfies
+#' the following invariants:
+#'
+#' ```
+#' modify(x, identity) === x
+#' modify(x, compose(f, g)) === modify(x, g) %>% modify(f)
+#' ```
+#'
+#' These invariants are known as the [functor
+#' laws](https://wiki.haskell.org/Functor#Functor_Laws) in computer
+#' science.
+#'
 #'
 #' @family map variants
 #' @examples
@@ -88,9 +106,48 @@ modify <- function(.x, .f, ...) {
 #' @rdname modify
 #' @export
 modify.default <- function(.x, .f, ...) {
-  .x[] <- map(.x, .f, ...)
+  .f <- as_mapper(.f, ...)
+
+  for (i in seq_along(.x)) {
+    .x[[i]] <- .f(.x[[i]], ...)
+  }
+
   .x
 }
+
+#' @rdname modify
+#' @export
+modify_if <- function(.x, .p, .f, ...) {
+  UseMethod("modify_if")
+}
+#' @rdname modify
+#' @export
+modify_if.default <- function(.x, .p, .f, ...) {
+  .f <- as_mapper(.f, ...)
+  sel <- probe(.x, .p)
+
+  for (i in seq_along(.x)[sel]) {
+    .x[[i]] <- .f(.x[[i]], ...)
+  }
+
+  .x
+}
+
+#' @rdname modify
+#' @export
+modify_at <- function(.x, .at, .f, ...) {
+  UseMethod("modify_at")
+}
+#' @rdname modify
+#' @export
+modify_at.default <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+  modify_if(.x, sel, .f, ...)
+}
+
+# TODO: Replace all the following methods with a generic strategy that
+# implements sane coercion rules for base vectors
+
 #' @export
 modify.integer  <- function (.x, .f, ...) {
   .x[] <- map_int(.x, .f, ...)
@@ -111,25 +168,11 @@ modify.logical  <- function (.x, .f, ...) {
   .x[] <- map_lgl(.x, .f, ...)
   .x
 }
-
 #' @export
 modify.pairlist <- function(.x, .f, ...) {
   as.pairlist(map(.x, .f, ...))
 }
 
-
-#' @rdname modify
-#' @export
-modify_if <- function(.x, .p, .f, ...) {
-  UseMethod("modify_if")
-}
-#' @rdname modify
-#' @export
-modify_if.default <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map(.x[sel], .f, ...)
-  .x
-}
 #' @export
 modify_if.integer <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
@@ -155,18 +198,6 @@ modify_if.logical <- function(.x, .p, .f, ...) {
   .x
 }
 
-#' @rdname modify
-#' @export
-modify_at <- function(.x, .at, .f, ...) {
-  UseMethod("modify_at")
-}
-#' @rdname modify
-#' @export
-modify_at.default <- function(.x, .at, .f, ...) {
-  sel <- inv_which(.x, .at)
-  .x[sel] <- map(.x[sel], .f, ...)
-  .x
-}
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
