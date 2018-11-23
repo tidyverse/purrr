@@ -50,11 +50,38 @@ as \code{.f} the name of a function rather than its value, or as
 \code{.x} symbols of objects rather than their values.}
 }
 \description{
+\Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+
 This pair of functions make it easier to combine a function and list
 of parameters to get a result. \code{invoke} is a wrapper around
 \code{do.call} that makes it easy to use in a pipe. \code{invoke_map}
 makes it easier to call lists of functions with lists of parameters.
 }
+\section{Life cycle}{
+
+\itemize{
+\item \code{invoke()} is soft-deprecated as of purrr 0.3.0 and replaced by
+the simpler \code{exec()} function reexported from rlang. \code{exec()}
+evaluates a function call built from its inputs and supports tidy
+dots:\preformatted{# Before:
+invoke(mean, list(na.rm = TRUE), x = 1:10)
+
+# After
+exec(mean, 1:10, !!!list(na.rm = TRUE))
+}
+\item \code{invoke_map()} is soft-deprecated as of purrr 0.3.0 without
+replacement because it is more complex to understand than the
+corresponding code using \code{map()}, \code{map2()} and \code{exec()}:\preformatted{# Before:
+invoke_map(fns, list(args))
+invoke_map(fns, list(args1, args2))
+
+# After:
+map(fns, exec, !!!args)
+map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
+}
+}
+}
+
 \examples{
 # Invoke a function with a list of arguments
 invoke(runif, list(n = 10))

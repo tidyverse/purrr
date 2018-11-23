@@ -22,6 +22,32 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Life cycle
 
+* `invoke()` is soft-deprecated and replaced by the `exec()` function,
+  reexported from rlang. `exec()` evaluates a function call built from
+  its inputs and supports tidy dots:
+
+  ```r
+  # Before:
+  invoke(mean, list(na.rm = TRUE), x = 1:10)
+
+  # After
+  exec(mean, 1:10, !!!list(na.rm = TRUE))
+  ```
+
+* `invoke_map()` is soft-deprecated without replacement because it is
+  more complex to understand than the corresponding code using
+  `map()`, `map2()` and `exec()`:
+
+  ```r
+  # Before:
+  invoke_map(fns, list(args))
+  invoke_map(fns, list(args1, args2))
+
+  # After:
+  map(fns, exec, !!!args)
+  map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
+  ```
+
 * `rerun()` is now in the questioning stage because we are no longer
    convinced NSE functions are a good fit for purrr. Also, `rerun(n,
    x)` can just as easily be expressed as `map(1:n, ~ x)` (with the
