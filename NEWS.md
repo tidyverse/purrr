@@ -59,6 +59,10 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `modify()` and variants are now implemented using `length()`, `[[`,
+  and `[[<-` methods. This implementation should be compatible with
+  most vector classes.
+
 * In `reduce2_right()`, `.y` and `.f` are now correctly passed through internal
 `reduce2_impl()`, in keeping with the documentation and `reduce_right()` (#500, @cderv).
 
