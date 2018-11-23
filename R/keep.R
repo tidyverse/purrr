@@ -9,6 +9,13 @@
 #' evaluation of the predicate function `.p` is stricter.
 #'
 #' @param .x A list or vector.
+#' @param .p For `keep()` and `discard()`, a predicate function. Only
+#'   those elements where `.p` evaluates to `TRUE` will be kept or
+#'   discarded.
+#'
+#'   For `compact()`, a function that is applied to each element of
+#'   `.x`. Only those elements where `.p` evaluates to an empty vector
+#'   will be discarded.
 #' @param ... Additional arguments passed on to `.p`.
 #' @inheritParams map_if
 #' @export

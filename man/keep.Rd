@@ -15,12 +15,13 @@ compact(.x, .p = identity)
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+\item{.p}{For \code{keep()} and \code{discard()}, a predicate function. Only
+those elements where \code{.p} evaluates to \code{TRUE} will be kept or
+discarded.
+
+For \code{compact()}, a function that is applied to each element of
+\code{.x}. Only those elements where \code{.p} evaluates to an empty vector
+will be discarded.}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
 }

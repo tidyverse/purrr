@@ -12,14 +12,12 @@ some(.x, .p, ...)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+\item{.p}{A predicate function to apply on each element of \code{.x}.
+\code{some()} returns \code{TRUE} when \code{.p} is \code{TRUE} for at least one
+element. \code{every()} returns \code{TRUE} when \code{.p} is \code{TRUE} for all
+elements.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to \code{.p}.}
 }
 \value{
 A logical vector of length 1.

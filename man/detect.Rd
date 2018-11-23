@@ -33,18 +33,16 @@ and name at different levels. Within a list, wrap strings in \code{\link[=get-at
 to extract named attributes. If a component is not present, the value of
 \code{.default} will be returned.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to \code{.p}.}
 
 \item{.right}{If \code{FALSE}, the default, starts at the beginning
 of the vector and move towards the end; if \code{TRUE}, starts at the end
 of the vector and moves towards the beginning.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+\item{.p}{A predicate function to apply on each element of \code{.x}.
+\code{some()} returns \code{TRUE} when \code{.p} is \code{TRUE} for at least one
+element. \code{every()} returns \code{TRUE} when \code{.p} is \code{TRUE} for all
+elements.}
 }
 \value{
 \code{detect} the value of the first item that matches the
