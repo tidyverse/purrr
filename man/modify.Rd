@@ -81,11 +81,17 @@ no elements at depth \code{.depth}.}
 An object the same class as \code{.x}
 }
 \description{
-\code{modify()} is a short-cut for \code{x[] <- map(x, .f); return(x)}. \code{modify_if()}
-only modifies the elements of \code{x} that satisfy a predicate and leaves the
-others unchanged. \code{modify_at()} only modifies elements given by names or
-positions. \code{modify_depth()} only modifies elements at a given level of a
+Unlike \code{\link[=map]{map()}} and its variants which always return a fixed object
+type (list for \code{map()}, integer vector for \code{map_int()}, etc), the
+\code{modify()} family always returns the same type as the input object.
+\itemize{
+\item \code{modify()} is a shortcut for \code{x[[i]] <- f(x[[i]]); return(x)}.
+\item \code{modify_if()} only modifies the elements of \code{x} that satisfy a
+predicate and leaves the others unchanged. \code{modify_at()} only
+modifies elements given by names or positions.
+\item \code{modify_depth()} only modifies elements at a given level of a
 nested data structure.
+}
 }
 \details{
 Since the transformation can alter the structure of the input; it's
@@ -96,15 +102,18 @@ must preserve the length of the input.
 \section{Genericity}{
 
 
-All these functions are S3 generic. However, the default method is
-sufficient in many cases. It should be suitable for any data type
-that implements the subset-assignment method \code{[<-}. Methods are provided
-for character, logical, integer and double classes (counterparts to \code{map_chr},
-\code{map_lgl}, \code{map_int}, and \code{map_dbl})
+\code{modify()} and variants are generic over classes that implement
+\code{length()}, \code{[[} and \code{[[<-} methods. If the default implementation
+is not compatible for your class, you can override them with your
+own methods.
 
-In some cases it may make sense to provide a custom implementation
-with a method suited to your S3 class. For example, a \code{grouped_df}
-method might take into account the grouped nature of a data frame.
+If you implement your own \code{modify()} method, make sure it satisfies
+the following invariants:\preformatted{modify(x, identity) === x
+modify(x, compose(f, g)) === modify(x, g) \%>\% modify(f)
+}
+
+These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
+science.
 }
 
 \examples{
