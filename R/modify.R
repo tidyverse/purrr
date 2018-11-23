@@ -6,11 +6,21 @@
 #' positions. `modify_depth()` only modifies elements at a given level of a
 #' nested data structure.
 #'
+#' @inheritParams map
+#' @param .depth Level of `.x` to map on. Use a negative value to count up
+#'  from the lowest level of the list.
+#'
+#'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
+#'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
+#'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
+#' @return An object the same class as `.x`
+#'
+#' @details
+#'
 #' Since the transformation can alter the structure of the input; it's
 #' your responsibility to ensure that the transformation produces a
 #' valid output. For example, if you're modifying a data frame, `.f`
 #' must preserve the length of the input.
-#'
 #'
 #' @section Genericity:
 #'
@@ -24,16 +34,7 @@
 #' with a method suited to your S3 class. For example, a `grouped_df`
 #' method might take into account the grouped nature of a data frame.
 #'
-#' @inheritParams map
-#' @param .depth Level of `.x` to map on. Use a negative value to count up
-#'  from the lowest level of the list.
-#'
-#'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
-#'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
-#'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
-#' @return An object the same class as `.x`
 #' @family map variants
-#' @export
 #' @examples
 #' # Convert factors to characters
 #' iris %>%
@@ -80,6 +81,7 @@
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
 #' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
+#' @export
 modify <- function(.x, .f, ...) {
   UseMethod("modify")
 }
