@@ -13,10 +13,15 @@
 #'   predicate and leaves the others unchanged. `modify_at()` only
 #'   modifies elements given by names or positions.
 #'
+#' * `modify2()` modifies the elements of `.x` but also passes the
+#'   elements of `.y` to `.f`, just like [map2()]. `imodify()` passes
+#'   the names or the indices to `.f` like [imap()] does.
+#'
 #' * `modify_depth()` only modifies elements at a given level of a
 #'   nested data structure.
 #'
 #' @inheritParams map
+#' @inheritParams map2
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'  from the lowest level of the list.
 #'
@@ -70,6 +75,12 @@
 #'   modify_if("x", ~ update_list(., y = ~ y * 100)) %>%
 #'   transpose() %>%
 #'   simplify_all()
+#'
+#' # Use modify2() to map over two vectors and preserve the type of
+#' # the first one:
+#' x <- c(foo = 1L, bar = 2L)
+#' y <- c(TRUE, FALSE)
+#' modify2(x, y, ~ if (.y) .x else 0L)
 #'
 #' # Modify at specified depth ---------------------------
 #' l1 <- list(
@@ -220,6 +231,58 @@ modify_at.character <- function(.x, .at, .f, ...) {
 modify_at.logical <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
   .x[sel] <- map_lgl(.x[sel], .f, ...)
+  .x
+}
+
+#' @rdname modify
+#' @export
+modify2 <- function(.x, .y, .f, ...) {
+  UseMethod("modify2")
+}
+#' @export
+modify2.default <- function(.x, .y, .f, ...) {
+  .f <- as_mapper(.f, ...)
+
+  args <- recycle_args(list(.x, .y))
+  .x <- args[[1]]
+  .y <- args[[2]]
+
+  for (i in seq_along(.x)) {
+    .x[[i]] <- .f(.x[[i]], .y[[i]], ...)
+  }
+
+  .x
+}
+#' @rdname modify
+#' @export
+imodify <- function(.x, .f, ...) {
+  modify2(.x, vec_index(.x), .f, ...)
+}
+
+# TODO: Improve genericity (see above)
+#' @export
+modify2.integer  <- function(.x, .y, .f, ...) {
+  modify_base(map2_int, .x, .y, .f, ...)
+}
+#' @export
+modify2.double  <- function(.x, .y, .f, ...) {
+  modify_base(map2_dbl, .x, .y, .f, ...)
+}
+#' @export
+modify2.character  <- function(.x, .y, .f, ...) {
+  modify_base(map2_chr, .x, .y, .f, ...)
+}
+#' @export
+modify2.logical  <- function(.x, .y, .f, ...) {
+  modify_base(map2_lgl, .x, .y, .f, ...)
+}
+
+modify_base <- function(mapper, .x, .y, .f, ...) {
+  args <- recycle_args(list(.x, .y))
+  .x <- args[[1]]
+  .y <- args[[2]]
+
+  .x[] <- mapper(.x, .y, .f, ...)
   .x
 }
 

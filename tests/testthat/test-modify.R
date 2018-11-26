@@ -57,10 +57,28 @@ test_that("modify{,_at,_if} preserves atomic vector classes", {
   expect_type(modify_if(TRUE,  TRUE, identity), "logical")
 })
 
-test_that("modify() implements sane coercion rules for base vectors", {
+test_that("modify() and variants implement sane coercion rules for base vectors", {
   expect_error(modify(1:3, ~ "foo"), "Can't coerce")
   expect_error(modify_at(1:3, 1, ~ "foo"), "Can't coerce")
   expect_error(modify_if(1:3, is_integer, ~ "foo"), "Can't coerce")
+  expect_error(modify2(1:3, "foo", ~ .y), "Can't coerce")
+})
+
+test_that("modify2() and imodify() preserve type of first input", {
+  x <- c(foo = 1L, bar = 2L)
+  y <- c(TRUE, FALSE)
+  expect_identical(modify2(x, y, ~ if (.y) .x else 0L), c(foo = 1L, bar = 0L))
+
+  out <- imodify(mtcars, paste)
+  expect_is(out, "data.frame")
+  expect_identical(out$vs, paste(mtcars$vs, "vs"))
+})
+
+test_that("modify2() recycles arguments", {
+  expect_identical(modify2(1:3, 1L, `+`), int(2, 3, 4))
+  expect_identical(modify2(1, 1:3, `+`), dbl(2, 3, 4))
+  expect_identical(modify2(mtcars, seq_along(mtcars), `+`)$carb, mtcars$carb + ncol(mtcars))
+  expect_identical(modify2(mtcars, 1, `+`)$carb, mtcars$carb + 1L)
 })
 
 # modify_depth ------------------------------------------------------------
