@@ -82,6 +82,5 @@ partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE,
 }
 
 make_call <- function(f, ..., .args = list()) {
-  if (is.character(f)) f <- as.name(f)
   as.call(c(f, ..., .args))
 }
