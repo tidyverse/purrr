@@ -10,9 +10,16 @@ NULL
 
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
+    check_tibble()
     tibble::as_tibble(out)
   } else {
     out
+  }
+}
+
+check_tibble <- function() {
+  if (!is_installed("tibble")) {
+    abort("The tibble package must be installed")
   }
 }
 

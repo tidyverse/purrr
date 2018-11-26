@@ -144,6 +144,7 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @rdname cross
 #' @export
 cross_df <- function(.l, .filter = NULL) {
+  check_tibble()
   cross(.l, .filter = .filter) %>%
     transpose() %>%
     simplify_all() %>%

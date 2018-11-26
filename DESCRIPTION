@@ -14,15 +14,15 @@ Depends:
     R (>= 3.1)
 Imports: 
     magrittr (>= 1.5),
-    rlang (>= 0.3.0),
-    tibble
+    rlang (>= 0.3.0)
 Suggests: 
     covr,
     crayon,
     dplyr (>= 0.7.4.9003),
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    tibble
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true

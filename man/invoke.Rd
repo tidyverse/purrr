@@ -115,16 +115,18 @@ list(m1 = mean, m2 = median) \%>\%
 # If you have pairs of function name and arguments, it's natural
 # to store them in a data frame. Here we use a tibble because
 # it has better support for list-columns
-df <- tibble::tibble(
-  f = c("runif", "rpois", "rnorm"),
-  params = list(
-    list(n = 10),
-    list(n = 5, lambda = 10),
-    list(n = 10, mean = -3, sd = 10)
+if (rlang::is_installed("tibble")) {
+  df <- tibble::tibble(
+    f = c("runif", "rpois", "rnorm"),
+    params = list(
+      list(n = 10),
+      list(n = 5, lambda = 10),
+      list(n = 10, mean = -3, sd = 10)
+    )
   )
-)
-df
-invoke_map(df$f, df$params)
+  df
+  invoke_map(df$f, df$params)
+}
 }
 \seealso{
 Other map variants: \code{\link{imap}}, \code{\link{lmap}},
