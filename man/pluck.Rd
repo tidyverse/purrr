@@ -17,9 +17,9 @@ an integer position, a string name, or an accessor function. If
 the object being indexed is an S4 object, accessing it by name
 will return the corresponding slot.
 
-These dots \link[rlang:dots_splice]{splice lists automatically}. This
-means you can supply arguments and lists of arguments
-indistinctly.}
+These dots support \link[rlang:list2]{tidy dots} features. In
+particular, if your accessors are stored in a list, you can
+splice that in with \code{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
 
@@ -85,9 +85,8 @@ pluck(x, 1, attr_getter("obj_attr"))  # From first object
 pluck(x, 2, attr_getter("obj_attr"))  # From second object
 
 
-# pluck() splices lists of arguments automatically. The following
-# pluck is equivalent to the one above:
+# If you have a list of accessors, you can splice those in with `!!!`:
 idx <- list(1, attr_getter("obj_attr"))
-pluck(x, idx)
+pluck(x, !!!idx)
 }
 \keyword{internal}

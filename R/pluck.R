@@ -34,9 +34,9 @@
 #'   the object being indexed is an S4 object, accessing it by name
 #'   will return the corresponding slot.
 #'
-#'   These dots [splice lists automatically][rlang::dots_splice]. This
-#'   means you can supply arguments and lists of arguments
-#'   indistinctly.
+#'   These dots support [tidy dots][rlang::list2] features. In
+#'   particular, if your accessors are stored in a list, you can
+#'   splice that in with `!!!`.
 #' @param .default Value to use if target is empty or absent.
 #' @keywords internal
 #' @export
@@ -75,12 +75,11 @@
 #' pluck(x, 2, attr_getter("obj_attr"))  # From second object
 #'
 #'
-#' # pluck() splices lists of arguments automatically. The following
-#' # pluck is equivalent to the one above:
+#' # If you have a list of accessors, you can splice those in with `!!!`:
 #' idx <- list(1, attr_getter("obj_attr"))
-#' pluck(x, idx)
+#' pluck(x, !!!idx)
 pluck <- function(.x, ..., .default = NULL) {
-  .Call(extract_impl, .x, dots_splice(...), .default)
+  .Call(extract_impl, .x, list2(...), .default)
 }
 
 #' @export

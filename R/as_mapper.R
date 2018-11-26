@@ -99,7 +99,7 @@ plucker <- function(i, default) {
 
   new_function(
     exprs(x = , ... = ),
-    expr(pluck(x, !!i, .default = !!default)),
+    expr(pluck(x, !!!i, .default = !!default)),
     env = caller_env()
   )
 }

@@ -20,6 +20,11 @@ reduce2_right(.x = letters[1:4], .y = c("-", ".", "-"), .f = paste2) # error
 reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 ```
 
+* `pluck()` no longer flattens lists of arguments. You can still do it
+  manually with `!!!`. This breaking change is for consistency with
+  other dots-collecting functions of the tidyverse.
+
+
 ## Life cycle
 
 * `invoke()` is soft-deprecated and replaced by the `exec()` function,
