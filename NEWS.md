@@ -68,6 +68,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   alternative function that is mapped over elements of the input for
   which the predicate function returns `FALSE` (#324).
 
+* New `pluck_assign()` and `pluck<-` functions. They modify a data
+  structure at a pluck location.
+
 * Functions taking predicates (`map_if()`, `keep()`, `some()`,
   `every()`, `keep()`, etc) now fail with an informative message when
   the return value is not `TRUE` or `FALSE` (#470).
