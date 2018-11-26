@@ -39,6 +39,11 @@ test_that("accumulate keeps input names", {
   expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), letters))
 })
 
+test_that("accumulate keeps input names when init is supplied", {
+  expect_identical(accumulate(1:2, c, .init = 0L), list(0L, 0:1, 0:2))
+  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
+})
+
 # reduce2 -----------------------------------------------------------------
 
 test_that("basic application works", {

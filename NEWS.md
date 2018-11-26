@@ -59,6 +59,8 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* Fixed names of `accumulate()` output when `.init` is supplied.
+
 * New `modify2()` and `imodify()` functions. These work like `map()`
   and `imap()` but preserve the type of `.x` in the return value.
 

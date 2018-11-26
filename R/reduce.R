@@ -187,7 +187,8 @@ accumulate <- function(.x, .f, ..., .init) {
   }
 
   res <- Reduce(f, .x, init = .init, accumulate = TRUE)
-  names(res) <- names(.x)
+  names(res) <- accumulate_names(names(.x), .init)
+
   res
 }
 
@@ -202,6 +203,17 @@ accumulate_right <- function(.x, .f, ..., .init) {
   }
 
   res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
-  names(res) <- names(.x)
+  names(res) <- accumulate_names(names(.x), .init)
+
   res
+}
+
+accumulate_names <- function(nms, init) {
+  if (!is_null(nms)) {
+    if (missing(init)) {
+      nms
+    } else {
+      c(".init", nms)
+    }
+  }
 }
