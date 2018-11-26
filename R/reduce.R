@@ -150,7 +150,11 @@ seq_len2 <- function(start, end) {
 #'
 #' @inheritParams reduce
 #'
-#' @return A vector the same length of `.x` with the same names as `.x`
+#' @return A vector the same length of `.x` with the same names as `.x`.
+#'
+#'   If `.init` is supplied, the length is extended by 1. If `.x` has
+#'   names, the initial value is given the name `".init"`, otherwise
+#'   the returned vector is kept unnamed.
 #' @export
 #' @examples
 #' 1:3 %>% accumulate(`+`)
