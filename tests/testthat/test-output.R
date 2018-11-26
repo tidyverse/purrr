@@ -38,9 +38,10 @@ test_that("possibly returns default value on failure", {
 })
 
 test_that("possibly emits a message on failure if quiet = FALSE", {
+  f <- function(...) stop("tilt")
   expect_message({
-    possibly(log, NA_real_, quiet = FALSE)("a")
-  }, regexp = "non-numeric argument to mathematical function")
+    possibly(f, NA_real_, quiet = FALSE)()
+  }, regexp = "tilt")
 })
 
 test_that("auto_browse() not intended for primitive functions", {
