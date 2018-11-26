@@ -30,8 +30,8 @@ splice that in with \code{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
 
-\item{where}{A pluck location, as a numeric vector of positions, a
-character vector of names, or a list combining both.}
+\item{where, .where}{A pluck location, as a numeric vector of
+positions, a character vector of names, or a list combining both.}
 
 \item{value}{A value to replace in \code{.x} at the location specified
 by accessors in \code{...}.}
@@ -93,5 +93,6 @@ y
 }
 \seealso{
 \code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable
-for use with \code{pluck()} and \code{chuck()}.
+for use with \code{pluck()} and \code{chuck()}. \code{\link[=pluck_modify]{pluck_modify()}} for
+applying a function to a pluck location.
 }

@@ -33,7 +33,8 @@
 #'
 #'
 #' @seealso [attr_getter()] for creating attribute getters suitable
-#'   for use with `pluck()` and `chuck()`.
+#'   for use with `pluck()` and `chuck()`. [pluck_modify()] for
+#'   applying a function to a pluck location.
 #' @examples
 #' # pluck() supports integer positions, string names, and functions.
 #' # Using functions, you can easily extend pluck(). Let's create a
@@ -91,8 +92,8 @@ chuck <- function(.x, ...) {
 }
 
 #' @rdname pluck
-#' @param where A pluck location, as a numeric vector of positions, a
-#'   character vector of names, or a list combining both.
+#' @param where,.where A pluck location, as a numeric vector of
+#'   positions, a character vector of names, or a list combining both.
 #' @param value A value to replace in `.x` at the location specified
 #'   by accessors in `...`.
 #' @export
@@ -130,6 +131,37 @@ is_index <- function(x) {
     return(FALSE)
   }
   length(x) == 1
+}
+
+#' Modify a pluck location
+#'
+#' `pluck_modify()` applies a function to a [pluck()] location and
+#' returns the modified data structure.
+#'
+#' @inheritParams pluck
+#' @param .f A function to apply at the pluck location given by `.where`.
+#' @param ... Arguments passed to `.f`.
+#'
+#' @seealso [pluck()]
+#' @examples
+#' # While pluck() returns a component of a data structure that might
+#' # be arbitrarily deep
+#' x <- list(list(bar = 1, foo = 2))
+#' pluck(x, 1, "foo")
+#'
+#' # pluck_modify() applies a function to that location and update the
+#' # element in place:
+#' pluck_modify(x, list(1, "foo"), ~ .x * 200)
+#'
+#' # Additional arguments are passed to the function in the ordinary way:
+#' pluck_modify(x, list(1, "foo"), `+`, 100)
+#' @export
+pluck_modify <- function(.x, .where, .f, ...) {
+  .where <- as.list(.where)
+  .f <- rlang::as_function(.f)
+
+  value <- .f(pluck(.x, !!!.where), ...)
+  pluck_assign(.x, .where, value)
 }
 
 

@@ -220,3 +220,16 @@ test_that("pluck_assign() requires at least one location", {
   x <- list("foo")
   expect_error(pluck(x) <- "foo", "without pluck locations")
 })
+
+
+# pluck_modify() ----------------------------------------------------------
+
+test_that("pluck_modify() modifies in pluck location", {
+  x <- list(list(bar = 1, foo = 2))
+
+  out <- pluck_modify(x, list(1, "foo"), `+`, 100)
+  expect_identical(out, list(list(bar = 1, foo = 102)))
+
+  out <- pluck_modify(x, c(1, 1), `+`, 10)
+  expect_identical(out, list(list(bar = 11, foo = 2)))
+})
