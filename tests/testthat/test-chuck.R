@@ -11,7 +11,7 @@ test_that("trying to chuck NULL raises errors", {
 test_that("special indexes raise errors", {
   x <- list(a = 1, b = 2, c = 3)
 
-  expect_error(chuck(x, NA_character_), "must be finite")
+  expect_error(chuck(x, NA_character_), "can't be NA")
   expect_error(chuck(x, ""), "can't be an empty string")
 
   expect_error(chuck(x, NA_integer_), "must be finite")
@@ -50,7 +50,7 @@ test_that("handles weird names", {
   names(x) <- c("a", "a", NA_character_, "", "b")
 
   expect_error(chuck(x, ""), "can't be an empty string")
-  expect_error(chuck(x, NA_character_), "must be finite")
+  expect_error(chuck(x, NA_character_), "can't be NA")
 })
 
 # environments ------------------------------------------------------------
