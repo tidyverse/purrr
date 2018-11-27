@@ -1,7 +1,7 @@
 context("pluck")
 
 test_that("contents must be a vector", {
-  expect_error(pluck(quote(x), list(1)), "Don't know how to pluck")
+  expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
 })
 
 # pluck vector --------------------------------------------------------------
@@ -138,8 +138,8 @@ test_that("attr_getter() uses exact (non-partial) matching", {
 # environments ------------------------------------------------------------
 
 test_that("pluck errors with invalid indices", {
-  expect_error(pluck(environment(), 1), "not a string")
-  expect_error(pluck(environment(), letters), "not a string")
+  expect_error(pluck(environment(), 1), "must be a string")
+  expect_error(pluck(environment(), letters), "must be a string")
 })
 
 test_that("pluck returns missing with missing index", {
@@ -160,8 +160,8 @@ newA <- methods::setClass("A", list(a = "numeric", b = "numeric"))
 A <- newA(a = 1, b = 10)
 
 test_that("pluck errors with invalid indices", {
-  expect_error(pluck(A, 1), "not a string")
-  expect_error(pluck(A, letters), "not a string")
+  expect_error(pluck(A, 1), "must be a string")
+  expect_error(pluck(A, letters), "must be a string")
 })
 
 test_that("pluck returns missing with missing index", {
