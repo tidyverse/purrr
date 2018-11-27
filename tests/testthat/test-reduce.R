@@ -19,10 +19,9 @@ test_that("length 1 argument reduced with init", {
   expect_equal(reduce_right(1, `+`, .init = 1), 2)
 })
 
-test_that("reduce_right equivalent to reversing input", {
-  x <- list(c(2, 1), c(4, 3), c(6, 5))
-  expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
-  expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
+test_that("direction of reduce determines how generated trees lean", {
+  expect_identical(reduce(1:4, list), list(list(list(1L, 2L), 3L), 4L))
+  expect_identical(reduce(1:4, list, .dir = "right"), list(1L, list(2L, list(3L, 4L))))
 })
 
 # accumulate --------------------------------------------------------------
@@ -70,3 +69,18 @@ test_that("reduce returns original input if it was length one", {
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   expect_equal(reduce(x[1], paste), x[[1]])
 })
+
+# Life cycle --------------------------------------------------------------
+
+test_that("reduce_right is retired", {
+  scoped_lifecycle_warnings()
+  expect_warning(reduce_right(1:3, c), "soft-deprecated")
+})
+
+test_that("reduce_right equivalent to reversing input", {
+  scoped_options(lifecycle_disable_warnings = TRUE)
+  x <- list(c(2, 1), c(4, 3), c(6, 5))
+  expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
+  expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
+})
+

@@ -27,6 +27,32 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Life cycle
 
+* `reduce_right()` is soft-deprecated and replaced by a new `.dir`
+  argument of `reduce()`:
+
+  ```{r}
+  # Before:
+  reduce_right(1:3, f)
+
+  # After:
+  reduce(1:3, f, .dir = \"right\")
+  ```
+
+  Note that the details of the computation have changed. Whereas
+  `reduce_right()` computed `f(f(3, 2), 1)`, it now computes `f(1,
+  f(2, 3))`. This is the standard way of reducing from the right.
+
+  To produce the exact same reduction as `reduce_right()`, simply
+  reverse your vector and use a left reduction:
+
+  ```{r}
+  # Before:
+  reduce_right(1:3, f)
+
+  # After:
+  reduce(rev(1:3), f)
+  ```
+
 * The `.right` argument of `detect()` and `detect_index()` is
   soft-deprecated and renamed to `.dir` for consistency with other
   functions and clarity of the interface.
