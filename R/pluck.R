@@ -79,12 +79,12 @@
 #' idx <- list(1, attr_getter("obj_attr"))
 #' pluck(x, !!!idx)
 pluck <- function(.x, ..., .default = NULL) {
-  .Call(extract_impl, .x, list2(...), .default, FALSE)
+  .Call(pluck_impl, .x, list2(...), .default, FALSE)
 }
 
 #' @export
 chuck <- function(.x, ...) {
-  .Call(extract_impl, .x, list2(...), NULL, TRUE)
+  .Call(pluck_impl, .x, list2(...), NULL, TRUE)
 }
 
 #' @export

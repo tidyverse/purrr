@@ -245,7 +245,7 @@ SEXP extract_clo(SEXP x, SEXP clo) {
   return out;
 }
 
-SEXP extract_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
+SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   if (TYPEOF(index) != VECSXP) {
     Rf_errorcall(R_NilValue, "`index` must be a list (not a %s)",
       Rf_type2char(TYPEOF(index)));
