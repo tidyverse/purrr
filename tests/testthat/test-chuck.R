@@ -37,8 +37,8 @@ test_that("indices outside of vector length raise errors", {
   expect_error(chuck(integer(), 1), "must have at least one element")
 
   # past end
-  expect_error(chuck(1:4, 10), "exceeds the length of object")
-  expect_error(chuck(1:4, 10L), "exceeds the length of object")
+  expect_error(chuck(1:4, 10), "exceeds the length of plucked object")
+  expect_error(chuck(1:4, 10L), "exceeds the length of plucked object")
 
   # before start
   expect_error(chuck(1:4, -1), "must be greater than 0")

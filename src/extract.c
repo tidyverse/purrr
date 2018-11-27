@@ -19,7 +19,7 @@ int find_offset(SEXP x, SEXP index, int i, int strict) {
   int n = Rf_length(x);
   if (n == 0) {
     if (strict) {
-      Rf_errorcall(R_NilValue, "Object being plucked must have at least one element.");
+      Rf_errorcall(R_NilValue, "Plucked object must have at least one element.");
     } else {
       return -1;
     }
@@ -51,7 +51,7 @@ int find_offset(SEXP x, SEXP index, int i, int strict) {
     } else if (val >= n) {
       if (strict) {
         Rf_errorcall(R_NilValue,
-                     "Index %i exceeds the length of object being plucked (%i > %i).",
+                     "Index %i exceeds the length of plucked object (%i > %i).",
                      i + 1,
                      val + 1,
                      n);
@@ -88,7 +88,7 @@ int find_offset(SEXP x, SEXP index, int i, int strict) {
     } else if (val >= n) {
       if (strict) {
         Rf_errorcall(R_NilValue,
-                     "Index %i exceeds the length of object being plucked (%.0f > %i).",
+                     "Index %i exceeds the length of plucked object (%.0f > %i).",
                      i + 1,
                      val + 1,
                      n);
