@@ -16,9 +16,9 @@ static int check_input_lengths(int n, int index_n, int i, bool strict) {
   }
 
   if (index_n > 1) {
-    Rf_errorcall(R_NilValue, "Index %i must have length 1, not %i.", i + 1, n);
+    Rf_errorcall(R_NilValue, "Index %d must have length 1, not %d.", i + 1, n);
   } else if (strict && index_n == 0) {
-    Rf_errorcall(R_NilValue, "Index %i must have length 1, not 0", i + 1);
+    Rf_errorcall(R_NilValue, "Index %d must have length 1, not 0.", i + 1);
   }
 
   return 0;
@@ -31,7 +31,7 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 
   if (strict) {
     Rf_errorcall(R_NilValue,
-                 "Index %i must be finite, not %s.",
+                 "Index %d must be finite, not %s.",
                  i + 1,
                  Rf_translateCharUTF8(Rf_asChar(index)));
   } else {
@@ -43,7 +43,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
   if (val < 0) {
     if (strict) {
       Rf_errorcall(R_NilValue,
-                   "Index %i must be greater than 0, not %.0f.",
+                   "Index %d must be greater than 0, not %.0f.",
                    i + 1,
                    val + 1);
     } else {
@@ -52,7 +52,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
   } else if (val >= n) {
     if (strict) {
       Rf_errorcall(R_NilValue,
-                   "Index %i exceeds the length of plucked object (%.0f > %i).",
+                   "Index %d exceeds the length of plucked object (%.0f > %d).",
                    i + 1,
                    val + 1,
                    n);
@@ -67,7 +67,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
 static int check_character_index(SEXP string, int i, bool strict) {
   if (string == NA_STRING) {
     if (strict) {
-      Rf_errorcall(R_NilValue, "Index %i can't be NA.", i + 1);
+      Rf_errorcall(R_NilValue, "Index %d can't be NA.", i + 1);
     } else {
       return -1;
     }
@@ -77,7 +77,7 @@ static int check_character_index(SEXP string, int i, bool strict) {
   const char* val = CHAR(string);
   if (val[0] == '\0') {
     if (strict) {
-      Rf_errorcall(R_NilValue, "Index %i can't be an empty string (\"\").", i + 1);
+      Rf_errorcall(R_NilValue, "Index %d can't be an empty string (\"\").", i + 1);
     } else {
       return -1;
     }
@@ -92,7 +92,7 @@ static int check_names(SEXP names, int i, bool strict) {
   }
 
   if (strict) {
-    Rf_errorcall(R_NilValue, "Index %i is attempting to pluck from an unnamed vector using a string name.", i + 1);
+    Rf_errorcall(R_NilValue, "Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
   } else {
     return -1;
   }
@@ -209,7 +209,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   default:
-    Rf_errorcall(R_NilValue, "Index %i must be a character or numeric vector.", i + 1);
+    Rf_errorcall(R_NilValue, "Index %d must be a character or numeric vector.", i + 1);
   }
 }
 
@@ -228,7 +228,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
   default:
     Rf_errorcall(R_NilValue,
-      "Don't know how to index object of type %s at level %i",
+      "Don't know how to index object of type %s at level %d",
       Rf_type2char(TYPEOF(x)), i + 1
     );
   }
@@ -238,7 +238,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    Rf_errorcall(R_NilValue, "Index %i must be a string.", i + 1);
+    Rf_errorcall(R_NilValue, "Index %d must be a string.", i + 1);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -258,7 +258,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    Rf_errorcall(R_NilValue, "Index %i must be a string.", i + 1);
+    Rf_errorcall(R_NilValue, "Index %d must be a string.", i + 1);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
