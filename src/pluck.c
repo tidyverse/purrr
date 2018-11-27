@@ -1,11 +1,12 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include <stdbool.h>
 #include "coerce.h"
 #include "backports.h"
 #include <string.h>
 
-int find_offset(SEXP x, SEXP index, int i, int strict) {
+int find_offset(SEXP x, SEXP index, int i, bool strict) {
   if (Rf_length(index) > 1) {
     Rf_errorcall(R_NilValue,
       "Index %i must have length 1, not %i.",
@@ -149,7 +150,7 @@ int find_offset(SEXP x, SEXP index, int i, int strict) {
   }
 }
 
-SEXP extract_vector(SEXP x, SEXP index_i, int i, int strict) {
+SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   int offset = find_offset(x, index_i, i, strict);
   if (offset < 0) {
     if (strict) {
@@ -178,7 +179,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, int strict) {
   return R_NilValue;
 }
 
-SEXP extract_env(SEXP x, SEXP index_i, int i, int strict) {
+SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
     Rf_errorcall(R_NilValue, "Index %i must be a string.", i + 1);
   }
@@ -208,7 +209,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, int strict) {
   return out;
 }
 
-SEXP extract_s4(SEXP x, SEXP index_i, int i, int strict) {
+SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
     Rf_errorcall(R_NilValue, "Index %i must be a string.", i + 1);
   }
@@ -252,7 +253,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   }
 
   int n = Rf_length(index);
-  int strict = Rf_asLogical(strict_arg);
+  bool strict = Rf_asLogical(strict_arg);
 
   for (int i = 0; i < n; ++i) {
     SEXP index_i = VECTOR_ELT(index, i);
