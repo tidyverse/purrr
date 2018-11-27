@@ -24,17 +24,6 @@ static int check_input_lengths(int n, int index_n, int i, bool strict) {
   return 0;
 }
 
-static int check_int_index_finiteness(int val, int i, bool strict) {
-  if (val != NA_INTEGER) {
-    return 0;
-  }
-
-  if (strict) {
-    Rf_errorcall(R_NilValue, "Index %i must be finite, not NA.", i + 1);
-  } else {
-    return -1;
-  }
-}
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict) {
   if (R_finite(val)) {
     return 0;
@@ -50,30 +39,6 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
   }
 }
 
-static int check_int_index_length(int val, int n, int i, bool strict) {
-  if (val < 0) {
-    if (strict) {
-      Rf_errorcall(R_NilValue,
-                   "Index %i must be greater than 0, not %i.",
-                   i + 1,
-                   val + 1);
-    } else {
-      return -1;
-    }
-  } else if (val >= n) {
-    if (strict) {
-      Rf_errorcall(R_NilValue,
-                   "Index %i exceeds the length of plucked object (%i > %i).",
-                   i + 1,
-                   val + 1,
-                   n);
-    } else {
-      return -1;
-    }
-  }
-
-  return 0;
-}
 static int check_double_index_length(double val, int n, int i, bool strict) {
   if (val < 0) {
     if (strict) {
@@ -182,32 +147,33 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   switch (TYPEOF(index)) {
-  case INTSXP: {
-    int val = INTEGER(index)[0];
-    if (check_int_index_finiteness(val, i, strict)) {
-      return -1;
-    }
-
-    --val;
-    if (check_int_index_length(val, n, i, strict)) {
-      return -1;
-    }
-
-    return val;
-  }
-
+  case INTSXP:
   case REALSXP: {
-    double val = REAL(index)[0];
+    int n_protect = 0;
+
+    double val;
+    if (TYPEOF(index) == INTSXP) {
+      // Coerce instead of cast to standardise missing value
+      index = PROTECT(Rf_coerceVector(index, REALSXP));
+      ++n_protect;
+    }
+    val = REAL(index)[0];
+
     if (check_double_index_finiteness(val, index, i, strict)) {
-      return -1;
+      goto numeric_index_error;
     }
 
     --val;
     if (check_double_index_length(val, n, i, strict)) {
-      return -1;
+      goto numeric_index_error;
     }
 
+    UNPROTECT(n_protect);
     return val;
+
+   numeric_index_error:
+    UNPROTECT(n_protect);
+    return -1;
   }
 
   case STRSXP: {
