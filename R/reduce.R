@@ -50,45 +50,22 @@
 reduce <- function(.x, .f, ..., .init) {
   reduce_impl(.x, .f, ..., .init = .init, .left = TRUE)
 }
-
-#' @export
 #' @rdname reduce
+#' @export
 reduce_right <- function(.x, .f, ..., .init) {
   reduce_impl(.x, .f, ..., .init = .init, .left = FALSE)
 }
 
-#' @export
 #' @rdname reduce
+#' @export
 reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
-
-#' @export
 #' @rdname reduce
+#' @export
 reduce2_right <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
 }
-
-reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
-  out <- reduce_init(.x, .init, left = .left)
-  x_idx <- reduce_index(.x, .init, left = .left)
-  y_idx <- reduce_index(.y, NULL, left = .left)
-
-  if (length(x_idx) != length(y_idx)) {
-    stop("`.y` does not have length ", length(x_idx))
-  }
-
-  .f <- as_mapper(.f, ...)
-  for (i in seq_along(x_idx)) {
-    x_i <- x_idx[[i]]
-    y_i <- y_idx[[i]]
-
-    out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
-  }
-
-  out
-}
-
 
 reduce_impl <- function(.x, .f, ..., .init, .left = TRUE) {
   out <- reduce_init(.x, .init, left = .left)
@@ -132,6 +109,26 @@ reduce_index <- function(x, init, left = TRUE) {
       rev(seq_len2(1L, n - 1L))
     }
   }
+}
+
+reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
+  out <- reduce_init(.x, .init, left = .left)
+  x_idx <- reduce_index(.x, .init, left = .left)
+  y_idx <- reduce_index(.y, NULL, left = .left)
+
+  if (length(x_idx) != length(y_idx)) {
+    stop("`.y` does not have length ", length(x_idx))
+  }
+
+  .f <- as_mapper(.f, ...)
+  for (i in seq_along(x_idx)) {
+    x_i <- x_idx[[i]]
+    y_i <- y_idx[[i]]
+
+    out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
+  }
+
+  out
 }
 
 seq_len2 <- function(start, end) {
