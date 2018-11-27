@@ -45,8 +45,8 @@
 #' # margin argument:
 #' array_tree(x, c(3, 1)) %>% str()
 array_branch <- function(array, margin = NULL) {
-  dim(array) <- dim(array) %||% length(array)
-  margin <- margin %||% seq_along(dim(array))
+  dims <- dim(array) %||% length(array)
+  margin <- margin %||% seq_along(dims)
 
   if (length(margin) == 0) {
     list(array)
@@ -58,8 +58,8 @@ array_branch <- function(array, margin = NULL) {
 #' @rdname array-coercion
 #' @export
 array_tree <- function(array, margin = NULL) {
-  dim(array) <- dim(array) %||% length(array)
-  margin <- margin %||% seq_along(dim(array))
+  dims <- dim(array) %||% length(array)
+  margin <- margin %||% seq_along(dims)
 
   if (length(margin) > 1) {
     new_margin <- ifelse(margin[-1] > margin[[1]], margin[-1] - 1, margin[-1])
