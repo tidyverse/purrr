@@ -28,7 +28,11 @@ you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
 }
 \value{
-A vector the same length of \code{.x} with the same names as \code{.x}
+A vector the same length of \code{.x} with the same names as \code{.x}.
+
+If \code{.init} is supplied, the length is extended by 1. If \code{.x} has
+names, the initial value is given the name \code{".init"}, otherwise
+the returned vector is kept unnamed.
 }
 \description{
 \code{accumulate} applies a function recursively over a list from the left, while

@@ -36,7 +36,15 @@ test_that("accumulate passes arguments to function", {
 test_that("accumulate keeps input names", {
   input <- set_names(1:26, letters)
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
-  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), letters))
+  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+})
+
+test_that("accumulate keeps input names when init is supplied", {
+  expect_identical(accumulate(1:2, c, .init = 0L), list(0L, 0:1, 0:2))
+  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
+
+  expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
+  expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
 })
 
 # reduce2 -----------------------------------------------------------------

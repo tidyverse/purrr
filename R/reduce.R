@@ -150,7 +150,11 @@ seq_len2 <- function(start, end) {
 #'
 #' @inheritParams reduce
 #'
-#' @return A vector the same length of `.x` with the same names as `.x`
+#' @return A vector the same length of `.x` with the same names as `.x`.
+#'
+#'   If `.init` is supplied, the length is extended by 1. If `.x` has
+#'   names, the initial value is given the name `".init"`, otherwise
+#'   the returned vector is kept unnamed.
 #' @export
 #' @examples
 #' 1:3 %>% accumulate(`+`)
@@ -187,7 +191,8 @@ accumulate <- function(.x, .f, ..., .init) {
   }
 
   res <- Reduce(f, .x, init = .init, accumulate = TRUE)
-  names(res) <- names(.x)
+  names(res) <- accumulate_names(names(.x), .init)
+
   res
 }
 
@@ -202,6 +207,22 @@ accumulate_right <- function(.x, .f, ..., .init) {
   }
 
   res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
-  names(res) <- names(.x)
+  names(res) <- accumulate_names(names(.x), .init, right = TRUE)
+
   res
+}
+
+accumulate_names <- function(nms, init, right = FALSE) {
+  if (is_null(nms)) {
+    return(NULL)
+  }
+
+  if (!missing(init)) {
+    nms <- c(".init", nms)
+  }
+  if (right) {
+    nms <- rev(nms)
+  }
+
+  nms
 }
