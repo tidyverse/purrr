@@ -246,7 +246,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
     return R_NilValue;
   }
 
-  switch(TYPEOF(x)) {
+  switch (TYPEOF(x)) {
   case LGLSXP:  return Rf_ScalarLogical(LOGICAL(x)[offset]);
   case INTSXP:  return Rf_ScalarInteger(INTEGER(x)[offset]);
   case REALSXP: return Rf_ScalarReal(REAL(x)[offset]);
@@ -328,9 +328,8 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
       case NILSXP:
         if (strict) {
           Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
-        } else {
-          return missing;
         }
+        break;
       case LGLSXP:
       case INTSXP:
       case REALSXP:
