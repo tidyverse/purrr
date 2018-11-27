@@ -260,19 +260,30 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     if (TYPEOF(index_i) == CLOSXP) {
       x = extract_clo(x, index_i);
     } else {
-      if (Rf_isNull(x)) {
+      switch (TYPEOF(x)) {
+      case NILSXP:
         if (strict) {
           Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
         } else {
           return missing;
         }
-      } else if (Rf_isVector(x)) {
+      case LGLSXP:
+      case INTSXP:
+      case REALSXP:
+      case CPLXSXP:
+      case STRSXP:
+      case RAWSXP:
+      case VECSXP:
+      case EXPRSXP:
         x = extract_vector(x, index_i, i, strict);
-      } else if (Rf_isEnvironment(x)) {
+        break;
+      case ENVSXP:
         x = extract_env(x, index_i, i, strict);
-      } else if (Rf_isS4(x)) {
+        break;
+      case S4SXP:
         x = extract_s4(x, index_i, i, strict);
-      } else {
+        break;
+      default:
         Rf_errorcall(R_NilValue, "Can't pluck from a %s", Rf_type2char(TYPEOF(x)));
       }
     }
