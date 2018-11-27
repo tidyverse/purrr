@@ -125,6 +125,9 @@ default when `.depth < 0` (@cderv, #530)
 * `some()` now returns `NA` only after it has checked all other predicates are 
   either `NA` or `FALSE` (@daniel-barnett, #514).
 
+* `array_branch()` and `array_tree()` now retain the `dimnames()` of the input
+  array (#584, @flying-sheep)
+
 # purrr 0.2.5
 
 * This is a maintenance release following the release of dplyr 0.7.5.
