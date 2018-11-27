@@ -1,7 +1,7 @@
 context("pluck")
 
 test_that("contents must be a vector", {
-  expect_error(pluck(quote(x), list(1)), "Don't know how to pluck")
+  expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
 })
 
 # pluck vector --------------------------------------------------------------

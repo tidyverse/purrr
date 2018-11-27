@@ -119,7 +119,7 @@ int find_offset(SEXP x, SEXP index, int i, int strict) {
     const char* val = Rf_translateCharUTF8(STRING_ELT(index, 0));
     if (val[0] == '\0') { // "" matches nothing
       if (strict)
-        Rf_errorcall(R_NilValue, "Index %i must not be an empty string (\"\").", i + 1);
+        Rf_errorcall(R_NilValue, "Index %i can't be an empty string (\"\").", i + 1);
       else
         return -1;
     }
@@ -182,7 +182,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, int strict) {
   SEXP index = STRING_ELT(index_i, 0);
   if (index == NA_STRING) {
     if (strict)
-      Rf_errorcall(R_NilValue, "Index %i must not be NA.", i + 1);
+      Rf_errorcall(R_NilValue, "Index %i can't be NA.", i + 1);
     else
       return R_NilValue;
   }
@@ -211,7 +211,7 @@ SEXP extract_s4(SEXP x, SEXP index_i, int i, int strict) {
   SEXP index = STRING_ELT(index_i, 0);
   if (index == NA_STRING) {
     if (strict)
-      Rf_errorcall(R_NilValue, "Index %i must not be NA.", i + 1);
+      Rf_errorcall(R_NilValue, "Index %i can't be NA.", i + 1);
     else
       return R_NilValue;
   }
@@ -256,7 +256,7 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     } else {
       if (Rf_isNull(x)) {
         if (strict)
-          Rf_errorcall(R_NilValue, "Object being plucked must not be NULL.");
+          Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
         else
           return missing;
       } else if (Rf_isVector(x)) {
@@ -266,9 +266,7 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
       } else if (Rf_isS4(x)) {
         x = extract_s4(x, index_i, i, strict);
       } else {
-        Rf_errorcall(R_NilValue,
-          "Don't know how to pluck from a %s", Rf_type2char(TYPEOF(x))
-        );
+        Rf_errorcall(R_NilValue, "Can't pluck from a %s", Rf_type2char(TYPEOF(x)));
       }
     }
 
@@ -276,4 +274,3 @@ SEXP extract_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
   return (Rf_length(x) == 0) ? missing : x;
 }
-

@@ -3,7 +3,7 @@ context("chuck")
 # NULL input ----------------------------------------------------------------
 
 test_that("trying to chuck NULL raises errors", {
-  expect_error(chuck(NULL, "a"), "must not be NULL")
+  expect_error(chuck(NULL, "a"), "can't be NULL")
 })
 
 # chuck vector --------------------------------------------------------------
@@ -12,7 +12,7 @@ test_that("special indexes raise errors", {
   x <- list(a = 1, b = 2, c = 3)
 
   expect_error(chuck(x, NA_character_), "must be finite")
-  expect_error(chuck(x, ""), "must not be an empty string")
+  expect_error(chuck(x, ""), "can't be an empty string")
 
   expect_error(chuck(x, NA_integer_), "must be finite")
 
@@ -49,14 +49,14 @@ test_that("handles weird names", {
   x <- list(1, 2, 3, 4, 5)
   names(x) <- c("a", "a", NA_character_, "", "b")
 
-  expect_error(chuck(x, ""), "must not be an empty string")
+  expect_error(chuck(x, ""), "can't be an empty string")
   expect_error(chuck(x, NA_character_), "must be finite")
 })
 
 # environments ------------------------------------------------------------
 
 test_that("raises error with missing index", {
-  expect_error(chuck(environment(), NA_character_), "must not be NA")
+  expect_error(chuck(environment(), NA_character_), "can't be NA")
 })
 
 test_that("non-existent object name raises error", {
@@ -69,7 +69,7 @@ newA <- methods::setClass("A", list(a = "numeric", b = "numeric"))
 A <- newA(a = 1, b = 10)
 
 test_that("raises error for NA index on S4 object", {
-  expect_error(chuck(A, NA_character_), "must not be NA")
+  expect_error(chuck(A, NA_character_), "can't be NA")
 })
 
 test_that("can't chuck if S4 slot doesn't exist", {
