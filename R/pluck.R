@@ -1,24 +1,9 @@
 #' Pluck or chuck a single element from a vector or environment
 #'
-#' @description
-#'
 #' `pluck()` and `chuck()` implement a generalised form of `[[` that
-#' allow you to index deeply and flexibly into data structures. While
+#' allow you to index deeply and flexibly into data structures.
 #' `pluck()` consistently returns `NULL` when an element does not
 #' exist, `chuck()` always throws an error in that case.
-#'
-#' * You can pluck or chuck with standard accessors like integer
-#'   positions and string names, and also accepts arbitrary accessor
-#'   functions, i.e. functions that take an object and return some
-#'   internal piece.
-#'
-#'   This is often more readable than a mix of operators and accessors
-#'   because it reads linearly and is free of syntactic
-#'   cruft. Compare: \code{accessor(x[[1]])$foo} to `pluck(x, 1,
-#'   accessor, "foo")`.
-#'
-#' * These accessors never partial-match. This is unlike `$` which
-#'   will select the `disp` object if you write `mtcars$di`.
 #'
 #' @param .x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
@@ -32,11 +17,19 @@
 #' @param .default Value to use if target is empty or absent.
 #'
 #' @details
+#' * You can pluck or chuck with standard accessors like integer
+#'   positions and string names, and also accepts arbitrary accessor
+#'   functions, i.e. functions that take an object and return some
+#'   internal piece.
 #'
-#' Since it handles arbitrary accessor functions, `pluck()` is a type
-#' of composition operator. However, it is indexing-oriented thanks to
-#' its handling of strings and integers. By the same token is also
-#' explicit regarding the intent of the composition (e.g. extraction).
+#'   This is often more readable than a mix of operators and accessors
+#'   because it reads linearly and is free of syntactic
+#'   cruft. Compare: \code{accessor(x[[1]])$foo} to `pluck(x, 1,
+#'   accessor, "foo")`.
+#'
+#' * These accessors never partial-match. This is unlike `$` which
+#'   will select the `disp` object if you write `mtcars$di`.
+#'
 #'
 #' @seealso [attr_getter()] for creating attribute getters suitable
 #'   for use with `pluck()` and `chuck()`.

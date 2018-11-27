@@ -25,9 +25,11 @@ splice that in with \code{!!!}.}
 }
 \description{
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
-allow you to index deeply and flexibly into data structures. While
+allow you to index deeply and flexibly into data structures.
 \code{pluck()} consistently returns \code{NULL} when an element does not
 exist, \code{chuck()} always throws an error in that case.
+}
+\details{
 \itemize{
 \item You can pluck or chuck with standard accessors like integer
 positions and string names, and also accepts arbitrary accessor
@@ -40,12 +42,6 @@ cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo"
 \item These accessors never partial-match. This is unlike \code{$} which
 will select the \code{disp} object if you write \code{mtcars$di}.
 }
-}
-\details{
-Since it handles arbitrary accessor functions, \code{pluck()} is a type
-of composition operator. However, it is indexing-oriented thanks to
-its handling of strings and integers. By the same token is also
-explicit regarding the intent of the composition (e.g. extraction).
 }
 \examples{
 # pluck() supports integer positions, string names, and functions.
