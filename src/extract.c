@@ -134,7 +134,7 @@ int find_offset(SEXP x, SEXP index, int i, int strict) {
 
     }
     if (strict)
-      Rf_errorcall(R_NilValue, "Can't find name '%s' in vector.", val);
+      Rf_errorcall(R_NilValue, "Can't find name `%s` in vector.", val);
     else
       return -1;
   } else {
@@ -150,7 +150,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, int strict) {
   if (offset < 0) {
     if (strict)
       Rf_errorcall(R_NilValue,
-        "Can't find index '%s' in vector.",
+        "Can't find index `%s` in vector.",
         Rf_translateCharUTF8(Rf_asChar(index_i))
       );
     else
@@ -193,7 +193,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, int strict) {
   if (out == R_UnboundValue) {
     if (strict)
       Rf_errorcall(R_NilValue,
-        "Can't find object '%s' in environment.",
+        "Can't find object `%s` in environment.",
         Rf_translateCharUTF8(Rf_asChar(index_i))
       );
     else
@@ -219,7 +219,7 @@ SEXP extract_s4(SEXP x, SEXP index_i, int i, int strict) {
   if (!R_has_slot(x, index_i)) {
     if (strict)
       Rf_errorcall(R_NilValue,
-        "Can't find slot '%s'.",
+        "Can't find slot `%s`.",
         Rf_translateCharUTF8(Rf_asChar(index_i))
       );
     else
