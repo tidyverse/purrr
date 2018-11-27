@@ -6,139 +6,15 @@
 #include "backports.h"
 #include <string.h>
 
-static int check_input_lengths(int n, int index_n, int i, bool strict) {
-  if (n == 0) {
-    if (strict) {
-      Rf_errorcall(R_NilValue, "Plucked object must have at least one element.");
-    } else {
-      return -1;
-    }
-  }
+static int check_input_lengths(int n, int index_n, int i, bool strict);
+static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
+static int check_double_index_length(double val, int n, int i, bool strict);
+static int check_character_index(SEXP string, int i, bool strict);
+static int check_names(SEXP names, int i, bool strict);
+static int check_offset(int offset, SEXP index_i, bool strict);
+static int check_unbound_value(SEXP val, SEXP index_i, bool strict);
+static int check_s4_slot(SEXP val, SEXP index_i, bool strict);
 
-  if (index_n > 1) {
-    Rf_errorcall(R_NilValue, "Index %d must have length 1, not %d.", i + 1, n);
-  } else if (strict && index_n == 0) {
-    Rf_errorcall(R_NilValue, "Index %d must have length 1, not 0.", i + 1);
-  }
-
-  return 0;
-}
-
-static int check_double_index_finiteness(double val, SEXP index, int i, bool strict) {
-  if (R_finite(val)) {
-    return 0;
-  }
-
-  if (strict) {
-    Rf_errorcall(R_NilValue,
-                 "Index %d must be finite, not %s.",
-                 i + 1,
-                 Rf_translateCharUTF8(Rf_asChar(index)));
-  } else {
-    return -1;
-  }
-}
-
-static int check_double_index_length(double val, int n, int i, bool strict) {
-  if (val < 0) {
-    if (strict) {
-      Rf_errorcall(R_NilValue,
-                   "Index %d must be greater than 0, not %.0f.",
-                   i + 1,
-                   val + 1);
-    } else {
-      return -1;
-    }
-  } else if (val >= n) {
-    if (strict) {
-      Rf_errorcall(R_NilValue,
-                   "Index %d exceeds the length of plucked object (%.0f > %d).",
-                   i + 1,
-                   val + 1,
-                   n);
-    } else {
-      return -1;
-    }
-  }
-
-  return 0;
-}
-
-static int check_character_index(SEXP string, int i, bool strict) {
-  if (string == NA_STRING) {
-    if (strict) {
-      Rf_errorcall(R_NilValue, "Index %d can't be NA.", i + 1);
-    } else {
-      return -1;
-    }
-  }
-
-  // "" matches nothing
-  const char* val = CHAR(string);
-  if (val[0] == '\0') {
-    if (strict) {
-      Rf_errorcall(R_NilValue, "Index %d can't be an empty string (\"\").", i + 1);
-    } else {
-      return -1;
-    }
-  }
-
-  return 0;
-}
-
-static int check_names(SEXP names, int i, bool strict) {
-  if (names != R_NilValue) {
-    return 0;
-  }
-
-  if (strict) {
-    Rf_errorcall(R_NilValue, "Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
-  } else {
-    return -1;
-  }
-}
-
-static int check_offset(int offset, SEXP index_i, bool strict) {
-  if (offset >= 0) {
-    return 0;
-  }
-
-  if (strict) {
-    Rf_errorcall(R_NilValue,
-                 "Can't find index `%s` in vector.",
-                 Rf_translateCharUTF8(Rf_asChar(index_i)));
-  } else {
-    return -1;
-  }
-}
-
-static int check_unbound_value(SEXP val, SEXP index_i, bool strict) {
-  if (val != R_UnboundValue) {
-    return 0;
-  }
-
-  if (strict) {
-    Rf_errorcall(R_NilValue,
-                 "Can't find object `%s` in environment.",
-                 Rf_translateCharUTF8(Rf_asChar(index_i)));
-  } else {
-    return -1;
-  }
-}
-
-static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
-  if (R_has_slot(val, index_i)) {
-    return 0;
-  }
-
-  if (strict) {
-    Rf_errorcall(R_NilValue,
-                 "Can't find slot `%s`.",
-                 Rf_translateCharUTF8(Rf_asChar(index_i)));
-  } else {
-    return -1;
-  }
-}
 
 int find_offset(SEXP x, SEXP index, int i, bool strict) {
   int n = Rf_length(x);
@@ -327,4 +203,141 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   }
 
   return (Rf_length(x) == 0) ? missing : x;
+}
+
+
+/* Type checking */
+
+static int check_input_lengths(int n, int index_n, int i, bool strict) {
+  if (n == 0) {
+    if (strict) {
+      Rf_errorcall(R_NilValue, "Plucked object must have at least one element.");
+    } else {
+      return -1;
+    }
+  }
+
+  if (index_n > 1) {
+    Rf_errorcall(R_NilValue, "Index %d must have length 1, not %d.", i + 1, n);
+  } else if (strict && index_n == 0) {
+    Rf_errorcall(R_NilValue, "Index %d must have length 1, not 0.", i + 1);
+  }
+
+  return 0;
+}
+
+static int check_double_index_finiteness(double val, SEXP index, int i, bool strict) {
+  if (R_finite(val)) {
+    return 0;
+  }
+
+  if (strict) {
+    Rf_errorcall(R_NilValue,
+                 "Index %d must be finite, not %s.",
+                 i + 1,
+                 Rf_translateCharUTF8(Rf_asChar(index)));
+  } else {
+    return -1;
+  }
+}
+
+static int check_double_index_length(double val, int n, int i, bool strict) {
+  if (val < 0) {
+    if (strict) {
+      Rf_errorcall(R_NilValue,
+                   "Index %d must be greater than 0, not %.0f.",
+                   i + 1,
+                   val + 1);
+    } else {
+      return -1;
+    }
+  } else if (val >= n) {
+    if (strict) {
+      Rf_errorcall(R_NilValue,
+                   "Index %d exceeds the length of plucked object (%.0f > %d).",
+                   i + 1,
+                   val + 1,
+                   n);
+    } else {
+      return -1;
+    }
+  }
+
+  return 0;
+}
+
+static int check_character_index(SEXP string, int i, bool strict) {
+  if (string == NA_STRING) {
+    if (strict) {
+      Rf_errorcall(R_NilValue, "Index %d can't be NA.", i + 1);
+    } else {
+      return -1;
+    }
+  }
+
+  // "" matches nothing
+  const char* val = CHAR(string);
+  if (val[0] == '\0') {
+    if (strict) {
+      Rf_errorcall(R_NilValue, "Index %d can't be an empty string (\"\").", i + 1);
+    } else {
+      return -1;
+    }
+  }
+
+  return 0;
+}
+
+static int check_names(SEXP names, int i, bool strict) {
+  if (names != R_NilValue) {
+    return 0;
+  }
+
+  if (strict) {
+    Rf_errorcall(R_NilValue, "Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
+  } else {
+    return -1;
+  }
+}
+
+static int check_offset(int offset, SEXP index_i, bool strict) {
+  if (offset >= 0) {
+    return 0;
+  }
+
+  if (strict) {
+    Rf_errorcall(R_NilValue,
+                 "Can't find index `%s` in vector.",
+                 Rf_translateCharUTF8(Rf_asChar(index_i)));
+  } else {
+    return -1;
+  }
+}
+
+static int check_unbound_value(SEXP val, SEXP index_i, bool strict) {
+  if (val != R_UnboundValue) {
+    return 0;
+  }
+
+  if (strict) {
+    Rf_errorcall(R_NilValue,
+                 "Can't find object `%s` in environment.",
+                 Rf_translateCharUTF8(Rf_asChar(index_i)));
+  } else {
+    return -1;
+  }
+}
+
+static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
+  if (R_has_slot(val, index_i)) {
+    return 0;
+  }
+
+  if (strict) {
+    Rf_errorcall(R_NilValue,
+                 "Can't find slot `%s`.",
+                 Rf_translateCharUTF8(Rf_asChar(index_i)));
+  } else {
+    return -1;
+  }
 }
