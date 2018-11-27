@@ -181,7 +181,8 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     return -1;
   }
 
-  if (TYPEOF(index) == INTSXP) {
+  switch (TYPEOF(index)) {
+  case INTSXP: {
     int val = INTEGER(index)[0];
     if (check_int_index_finiteness(val, i, strict)) {
       return -1;
@@ -193,7 +194,9 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     }
 
     return val;
-  } if (TYPEOF(index) == REALSXP) {
+  }
+
+  case REALSXP: {
     double val = REAL(index)[0];
     if (check_double_index_finiteness(val, index, i, strict)) {
       return -1;
@@ -205,7 +208,9 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     }
 
     return val;
-  } else if (TYPEOF(index) == STRSXP) {
+  }
+
+  case STRSXP: {
     SEXP names = Rf_getAttrib(x, R_NamesSymbol);
     if (check_names(names, i, strict)) {
       return -1;
@@ -235,7 +240,9 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     } else {
       return -1;
     }
-  } else {
+  }
+
+  default:
     Rf_errorcall(R_NilValue, "Index %i must be a character or numeric vector.", i + 1);
   }
 }
