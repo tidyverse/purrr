@@ -64,6 +64,10 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* New `chuck()` function. This is a strict variant of `pluck()` that
+  throws errors when an element does not exist instead of returning
+  `NULL` (@daniel-barnett, #482).
+
 * The tibble package is now in Suggests rather than Imports. This
   brings the hard dependency of purrr to just rlang and magrittr.
 

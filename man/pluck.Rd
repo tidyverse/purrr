@@ -2,12 +2,12 @@
 % Please edit documentation in R/pluck.R
 \name{pluck}
 \alias{pluck}
-\alias{attr_getter}
-\title{Pluck out a single element from a vector or environment}
+\alias{chuck}
+\title{Pluck or chuck a single element from a vector or environment}
 \usage{
 pluck(.x, ..., .default = NULL)
 
-attr_getter(attr)
+chuck(.x, ...)
 }
 \arguments{
 \item{.x}{A vector or environment}
@@ -22,27 +22,24 @@ particular, if your accessors are stored in a list, you can
 splice that in with \code{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
-
-\item{attr}{An attribute name as string.}
 }
 \description{
-This is a generalised form of \code{[[} which allows you to index deeply
-and flexibly into data structures. It supports R standard accessors
-like integer positions and string names, and also accepts arbitrary
-accessor functions, i.e. functions that take an object and return
-some internal piece.
+\code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
+allow you to index deeply and flexibly into data structures. While
+\code{pluck()} consistently returns \code{NULL} when an element does not
+exist, \code{chuck()} always throws an error in that case.
+\itemize{
+\item You can pluck or chuck with standard accessors like integer
+positions and string names, and also accepts arbitrary accessor
+functions, i.e. functions that take an object and return some
+internal piece.
 
-\code{pluck()} is often more readable than a mix of operators and
-accessors because it reads linearly and is free of syntactic
+This is often more readable than a mix of operators and accessors
+because it reads linearly and is free of syntactic
 cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo")}.
-
-Furthermore, \code{pluck()} never partial-matches unlike \code{$} which will
-select the \code{disp} object if you write \code{mtcars$di}.
-
-\code{attr_getter()} generates an attribute accessor function;
-i.e., it generates a function for extracting an attribute with
-a given name. Unlike the base R \code{attr()} function with default
-options, it doesn't use partial matching.
+\item These accessors never partial-match. This is unlike \code{$} which
+will select the \code{disp} object if you write \code{mtcars$di}.
+}
 }
 \details{
 Since it handles arbitrary accessor functions, \code{pluck()} is a type
@@ -71,22 +68,11 @@ pluck(x, 2, my_element)
 # expression:
 my_element(x[[1]])
 
-
-# This technique is used for plucking into attributes with
-# attr_getter(). It takes an attribute name and returns a function
-# to access the attribute:
-obj1 <- structure("obj", obj_attr = "foo")
-obj2 <- structure("obj", obj_attr = "bar")
-x <- list(obj1, obj2)
-
-# pluck() is handy for extracting deeply into a data structure.
-# Here we'll first extract by position, then by attribute:
-pluck(x, 1, attr_getter("obj_attr"))  # From first object
-pluck(x, 2, attr_getter("obj_attr"))  # From second object
-
-
 # If you have a list of accessors, you can splice those in with `!!!`:
-idx <- list(1, attr_getter("obj_attr"))
+idx <- list(1, my_element)
 pluck(x, !!!idx)
 }
-\keyword{internal}
+\seealso{
+\code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable
+for use with \code{pluck()} and \code{chuck()}.
+}
