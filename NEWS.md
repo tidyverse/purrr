@@ -59,6 +59,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* The tibble package is now in Suggests rather than Imports. This
+  brings the hard dependency of purrr to just rlang and magrittr.
+
 * Fixed ordering of names returned by `accumulate_right()`
   output. They now correspond to the order of inputs.
 
