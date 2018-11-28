@@ -62,6 +62,8 @@
 #' right reduction have in this case. Please reach out if you know
 #' about a use case for a right reduction with a ternary function.
 #'
+#' @seealso [accumulate()] for a version that returns all intermediate
+#'   values of the reduction.
 #' @examples
 #' # Reducing `+` computes the sum of a vector while reducing `*`
 #' # computes the product:
@@ -183,11 +185,14 @@ seq_len2 <- function(start, end) {
   start:end
 }
 
-#' Accumulate recursive folds across a list
+#' Accumulate intermediate results of a vector reduction
 #'
-#' `accumulate` applies a function recursively over a list from the left, while
-#' `accumulate_right` applies the function from the right. Unlike `reduce`
-#' both functions keep the intermediate results.
+#' @description
+#'
+#' `accumulate()` [reduces][reduce] a vector with a binary function,
+#' keeping all intermediate results, from the initial value to the
+#' final reduced value, i.e. the result you'd have gotten if you used
+#' [reduce()] instead of `accumulate()`.
 #'
 #' @inheritParams reduce
 #'
@@ -196,20 +201,38 @@ seq_len2 <- function(start, end) {
 #'   If `.init` is supplied, the length is extended by 1. If `.x` has
 #'   names, the initial value is given the name `".init"`, otherwise
 #'   the returned vector is kept unnamed.
-#' @export
+#'
+#'   If `.dir` is `"left"` (the default), the first element is the
+#'   initial value (`.init` if supplied, or the first element of `.x`)
+#'   and the last element is the final reduced value. In case of a
+#'   right accumulation, this order is reversed.
+#'
+#' @section Life cycle:
+#'
+#' `accumulate_right()` is soft-deprecated in favour of the `.dir`
+#' argument as of rlang 0.3.0. Note that the algorithm has
+#' slightly changed: the accumulated value is passed to the right
+#' rather than the left, which is consistent with a right reduction.
+#'
+#' @seealso [reduce()] when you only need the final reduced value.
 #' @examples
-#' 1:3 %>% accumulate(`+`)
-#' 1:10 %>% accumulate_right(`*`)
+#' # With an associative operation, the final value is always the
+#' # same, no matter the direction. You'll find it in the last element
+#' # for a left accumulation, and in the first element for a right one:
+#' 1:5 %>% accumulate(`+`)
+#' 1:5 %>% accumulate(`+`, .dir = "right")
 #'
-#' # From Haskell's scanl documentation
-#' 1:10 %>% accumulate(max, .init = 5)
+#' # The final value is always equal to the equivalent reduction:
+#' 1:5 %>% reduce(`+`)
 #'
-#' # Understanding the arguments .x and .y when .f
-#' # is a lambda function
-#' # .x is the accumulating value
-#' 1:10 %>% accumulate(~ .x)
-#' # .y is element in the list
-#' 1:10 %>% accumulate(~ .y)
+#' # It is easier to understand the details of the reduction with
+#' # `paste()`.
+#' accumulate(letters[1:5], paste, sep = ".")
+#'
+#' # Note how the intermediary reduced values are passed to the left
+#' # with a left reduction, and to the right otherwise:
+#' accumulate(letters[1:5], paste, sep = ".", .dir = "right")
+#'
 #'
 #' # Simulating stochastic processes with drift
 #' \dontrun{
@@ -224,36 +247,22 @@ seq_len2 <- function(start, end) {
 #'     geom_line(aes(color = simulation)) +
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
-accumulate <- function(.x, .f, ..., .init) {
-  .f <- as_mapper(.f, ...)
+#' @export
+accumulate <- function(.x, .f, ..., .init, .dir = c("left", "right")) {
+  left <- arg_match(.dir, c("left", "right")) == "left"
 
+  .f <- as_mapper(.f, ...)
   f <- function(x, y) {
     .f(x, y, ...)
   }
 
-  res <- Reduce(f, .x, init = .init, accumulate = TRUE)
-  names(res) <- accumulate_names(names(.x), .init)
+  res <- Reduce(f, .x, init = .init, accumulate = TRUE, right = !left)
+  names(res) <- accumulate_names(names(.x), .init, left = left)
 
   res
 }
 
-#' @export
-#' @rdname accumulate
-accumulate_right <- function(.x, .f, ..., .init) {
-  .f <- as_mapper(.f, ...)
-
-  # Note the order of arguments is switched
-  f <- function(x, y) {
-    .f(y, x, ...)
-  }
-
-  res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
-  names(res) <- accumulate_names(names(.x), .init, right = TRUE)
-
-  res
-}
-
-accumulate_names <- function(nms, init, right = FALSE) {
+accumulate_names <- function(nms, init, left = left) {
   if (is_null(nms)) {
     return(NULL)
   }
@@ -261,7 +270,7 @@ accumulate_names <- function(nms, init, right = FALSE) {
   if (!missing(init)) {
     nms <- c(".init", nms)
   }
-  if (right) {
+  if (!left) {
     nms <- rev(nms)
   }
 
@@ -313,4 +322,27 @@ reduce2_right <- function(.x, .y, .f, ..., .init) {
     ""
   ))
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
+}
+
+#' @rdname reduce_right
+#' @export
+accumulate_right <- function(.x, .f, ..., .init) {
+  signal_soft_deprecated(paste_line(
+    "`accumulate_right()` is soft-deprecated as of purrr 0.3.0.",
+    "Please use `accumulate(.dir = \"right\")` instead.",
+    "",
+    "  # Before:",
+    "  accumulate_right(x, f)",
+    "",
+    "  # After:",
+    "  accumulate(x, f, .dir = \"right\")",
+    ""
+  ))
+
+  # Note the order of arguments is switched
+  f <- function(y, x) {
+    .f(x, y, ...)
+  }
+
+  accumulate(.x, f, .init = .init, .dir = "right")
 }

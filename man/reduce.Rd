@@ -105,3 +105,7 @@ x <- list(c(0, 1), c(2, 3), c(4, 5))
 y <- list(c(6, 7), c(8, 9))
 reduce2(x, y, paste)
 }
+\seealso{
+\code{\link[=accumulate]{accumulate()}} for a version that returns all intermediate
+values of the reduction.
+}

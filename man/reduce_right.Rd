@@ -3,11 +3,14 @@
 \name{reduce_right}
 \alias{reduce_right}
 \alias{reduce2_right}
+\alias{accumulate_right}
 \title{Reduce from the right (retired)}
 \usage{
 reduce_right(.x, .f, ..., .init)
 
 reduce2_right(.x, .y, .f, ..., .init)
+
+accumulate_right(.x, .f, ..., .init)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

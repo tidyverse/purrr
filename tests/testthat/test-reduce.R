@@ -29,21 +29,21 @@ test_that("direction of reduce determines how generated trees lean", {
 test_that("accumulate passes arguments to function", {
   tt <- c("a", "b", "c")
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
-  expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
+  expect_equal(accumulate(tt, paste, sep = ".", .dir = "right"), c("a.b.c", "b.c", "c"))
 })
 
 test_that("accumulate keeps input names", {
   input <- set_names(1:26, letters)
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
-  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+  expect_identical(accumulate(input, sum, .dir = "right"), set_names(rev(cumsum(rev(1:26))), rev(letters)))
 })
 
 test_that("accumulate keeps input names when init is supplied", {
   expect_identical(accumulate(1:2, c, .init = 0L), list(0L, 0:1, 0:2))
-  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
+  expect_identical(accumulate(0:1, c, .init = 2L, .dir = "right"), list(0:2, 1:2, 2L))
 
-  expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
-  expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
+  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
+  expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "right"), list(b = 0:2, a = 1:2, .init = 2L))
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -63,10 +63,11 @@ test_that("reduce returns original input if it was length one", {
 
 # Life cycle --------------------------------------------------------------
 
-test_that("reduce_right and reduce2_right are retired", {
+test_that("right variants are retired", {
   scoped_lifecycle_warnings()
   expect_warning(reduce_right(1:3, c), "soft-deprecated")
   expect_warning(reduce2_right(1:3, 1:2, c), "soft-deprecated")
+  expect_warning(accumulate_right(1:3, c), "soft-deprecated")
 })
 
 test_that("reduce_right equivalent to reversing input", {
@@ -87,4 +88,15 @@ test_that("reduce2_right still works", {
   y <- list(c(6, 7), c(8, 9))
   expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
   expect_error(reduce2_right(y, x, paste))
+})
+
+test_that("accumulate_right still works", {
+  tt <- c("a", "b", "c")
+  expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
+
+  input <- set_names(1:26, letters)
+  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+
+  expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
+  expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
 })

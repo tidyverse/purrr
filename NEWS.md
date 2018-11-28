@@ -58,6 +58,19 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   this case. Please reach out if you know about a use case for a right
   reduction with a ternary function.
 
+* `accumulate_right()` is soft-deprecated and replaced by the new
+  `.dir` argument of `accumulate()`. Note that the algorithm has
+  slightly changed: the accumulated value is passed to the right
+  rather than the left, which is consistent with a right reduction.
+
+  ```{r}
+  # Before:
+  accumulate_right(1:3, f)
+
+  # After:
+  accumulate(1:3, f, .dir = "right")
+  ```
+
 * The `.right` argument of `detect()` and `detect_index()` is
   soft-deprecated and renamed to `.dir` for consistency with other
   functions and clarity of the interface.
