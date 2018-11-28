@@ -53,16 +53,7 @@ test_that("basic application works", {
 
   x <- c("a", "b", "c")
   expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
-  expect_equal(reduce2_right(x, c("-", "."), paste2), "c.b-a")
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
-  expect_equal(reduce2_right(x, c(".", "-", "."), paste2, .init = "x"), "x.c-b.a")
-})
-
-test_that("reduce2_right works if lengths match", {
-  x <- list(c(0, 1), c(2, 3), c(4, 5))
-  y <- list(c(6, 7), c(8, 9))
-  expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
-  expect_error(reduce2_right(y, x, paste))
 })
 
 test_that("reduce returns original input if it was length one", {
@@ -72,9 +63,10 @@ test_that("reduce returns original input if it was length one", {
 
 # Life cycle --------------------------------------------------------------
 
-test_that("reduce_right is retired", {
+test_that("reduce_right and reduce2_right are retired", {
   scoped_lifecycle_warnings()
   expect_warning(reduce_right(1:3, c), "soft-deprecated")
+  expect_warning(reduce2_right(1:3, 1:2, c), "soft-deprecated")
 })
 
 test_that("reduce_right equivalent to reversing input", {
@@ -84,3 +76,15 @@ test_that("reduce_right equivalent to reversing input", {
   expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
 })
 
+test_that("reduce2_right still works", {
+  scoped_options(lifecycle_disable_warnings = TRUE)
+  paste2 <- function(x, y, sep) paste(x, y, sep = sep)
+  x <- c("a", "b", "c")
+  expect_equal(reduce2_right(x, c("-", "."), paste2), "c.b-a")
+  expect_equal(reduce2_right(x, c(".", "-", "."), paste2, .init = "x"), "x.c-b.a")
+
+  x <- list(c(0, 1), c(2, 3), c(4, 5))
+  y <- list(c(6, 7), c(8, 9))
+  expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
+  expect_error(reduce2_right(y, x, paste))
+})

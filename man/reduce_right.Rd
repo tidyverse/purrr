@@ -2,9 +2,12 @@
 % Please edit documentation in R/reduce.R
 \name{reduce_right}
 \alias{reduce_right}
+\alias{reduce2_right}
 \title{Reduce from the right (retired)}
 \usage{
 reduce_right(.x, .f, ..., .init)
+
+reduce2_right(.x, .y, .f, ..., .init)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -23,11 +26,16 @@ second argument, and the next value of \code{.y} as the third argument.}
 the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
+
+\item{.y}{For \code{reduce2()}, an additional argument that is passed to
+\code{.f}. If \code{init} is not set, \code{.y} should be 1 element shorter than
+\code{.x}.}
 }
 \description{
 \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
 
-This function is retired as of purrr 0.3.0. Please use the \code{.dir}
-argument of \code{\link[=reduce]{reduce()}} instead.
+These functions are retired as of purrr 0.3.0. Please use the
+\code{.dir} argument of \code{\link[=reduce]{reduce()}} instead, or reverse your vectors
+and use a left reduction.
 }
 \keyword{internal}

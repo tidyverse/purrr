@@ -3,14 +3,11 @@
 \name{reduce}
 \alias{reduce}
 \alias{reduce2}
-\alias{reduce2_right}
 \title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
 reduce(.x, .f, ..., .init, .dir = c("left", "right"))
 
 reduce2(.x, .y, .f, ..., .init)
-
-reduce2_right(.x, .y, .f, ..., .init)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -73,6 +70,11 @@ reduce_right(1:3, f)
 # After:
 reduce(rev(1:3), f)
 }
+
+\code{reduce2_right()} is soft-deprecated as of purrr 0.3.0 without
+replacement. It is not clear what algorithmic properties should a
+right reduction have in this case. Please reach out if you know
+about a use case for a right reduction with a ternary function.
 }
 
 \examples{
@@ -93,20 +95,13 @@ reduce(1:4, `+`, .dir = "right")
 str(reduce(1:4, list))
 str(reduce(1:4, list, .dir = "right"))
 
+# reduce2() takes a ternary function and a second vector that is
+# one element smaller than the first vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% reduce(paste2)
 letters[1:4] \%>\% reduce2(c("-", ".", "-"), paste2)
-letters[1:4] \%>\% reduce2_right(c("-", ".", "-"), paste2)
-
-samples <- rerun(2, sample(10, 5))
-samples
-reduce(samples, union)
-reduce(samples, intersect)
 
 x <- list(c(0, 1), c(2, 3), c(4, 5))
 y <- list(c(6, 7), c(8, 9))
 reduce2(x, y, paste)
-reduce2_right(x, y, paste)
-# Equivalent to:
-x \%>\% rev() \%>\% reduce2(rev(y), paste)
 }

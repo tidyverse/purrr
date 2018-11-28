@@ -57,6 +57,11 @@
 #' reduce(rev(1:3), f)
 #' ```
 #'
+#' `reduce2_right()` is soft-deprecated as of purrr 0.3.0 without
+#' replacement. It is not clear what algorithmic properties should a
+#' right reduction have in this case. Please reach out if you know
+#' about a use case for a right reduction with a ternary function.
+#'
 #' @examples
 #' # Reducing `+` computes the sum of a vector while reducing `*`
 #' # computes the product:
@@ -75,36 +80,23 @@
 #' str(reduce(1:4, list))
 #' str(reduce(1:4, list, .dir = "right"))
 #'
+#' # reduce2() takes a ternary function and a second vector that is
+#' # one element smaller than the first vector:
 #' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 #' letters[1:4] %>% reduce(paste2)
 #' letters[1:4] %>% reduce2(c("-", ".", "-"), paste2)
-#' letters[1:4] %>% reduce2_right(c("-", ".", "-"), paste2)
-#'
-#' samples <- rerun(2, sample(10, 5))
-#' samples
-#' reduce(samples, union)
-#' reduce(samples, intersect)
 #'
 #' x <- list(c(0, 1), c(2, 3), c(4, 5))
 #' y <- list(c(6, 7), c(8, 9))
 #' reduce2(x, y, paste)
-#' reduce2_right(x, y, paste)
-#' # Equivalent to:
-#' x %>% rev() %>% reduce2(rev(y), paste)
 #' @export
 reduce <- function(.x, .f, ..., .init, .dir = c("left", "right")) {
   reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
 }
-
 #' @rdname reduce
 #' @export
 reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
-}
-#' @rdname reduce
-#' @export
-reduce2_right <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
 }
 
 reduce_impl <- function(.x, .f, ..., .init, .dir = "left") {
@@ -282,8 +274,9 @@ accumulate_names <- function(nms, init, right = FALSE) {
 #'
 #' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
 #'
-#' This function is retired as of purrr 0.3.0. Please use the `.dir`
-#' argument of [reduce()] instead.
+#' These functions are retired as of purrr 0.3.0. Please use the
+#' `.dir` argument of [reduce()] instead, or reverse your vectors
+#' and use a left reduction.
 #'
 #' @inheritParams reduce
 #'
@@ -304,4 +297,20 @@ reduce_right <- function(.x, .f, ..., .init) {
   ))
   .x <- rev(.x) # Compatibility
   reduce_impl(.x, .f, ..., .init = .init)
+}
+#' @rdname reduce_right
+#' @export
+reduce2_right <- function(.x, .y, .f, ..., .init) {
+  signal_soft_deprecated(paste_line(
+    "`reduce2_right()` is soft-deprecated as of purrr 0.3.0.",
+    "Please reverse your vectors and use `reduce2()` instead.",
+    "",
+    "  # Before:",
+    "  reduce2_right(x, y, f)",
+    "",
+    "  # After:",
+    "  reduce2(rev(x), rev(y), f)",
+    ""
+  ))
+  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
 }

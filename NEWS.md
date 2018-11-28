@@ -53,6 +53,11 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   reduce(rev(1:3), f)
   ```
 
+* `reduce2_right()` is soft-deprecated without replacement. It is not
+  clear what algorithmic properties should a right reduction have in
+  this case. Please reach out if you know about a use case for a right
+  reduction with a ternary function.
+
 * The `.right` argument of `detect()` and `detect_index()` is
   soft-deprecated and renamed to `.dir` for consistency with other
   functions and clarity of the interface.
