@@ -66,8 +66,8 @@
 #' pluck(x, 2, 2, "elt") <- "quuux"
 #' x
 #'
-#' # This is a shortcut for the prefix function pluck_assign():
-#' y <- pluck_assign(x, list(2, 2, "elt"), value = "QUUUX")
+#' # This is a shortcut for the prefix function assign_in():
+#' y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
 #' y
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
@@ -98,7 +98,7 @@ chuck <- function(.x, ...) {
 #' @param value A value to replace in `.x` at the location specified
 #'   by accessors in `...`.
 #' @export
-pluck_assign <- function(x, where, value) {
+assign_in <- function(x, where, value) {
   # Check value exists at pluck location
   chuck(x, !!!where)
 
@@ -110,7 +110,7 @@ pluck_assign <- function(x, where, value) {
 #' @rdname pluck
 #' @export
 `pluck<-` <- function(.x, ..., value) {
-  pluck_assign(.x, list2(...), value)
+  assign_in(.x, list2(...), value)
 }
 
 reduce_subset_call <- function(init, idx) {
@@ -165,7 +165,7 @@ pluck_modify <- function(.x, .where, .f, ...) {
   .f <- rlang::as_function(.f)
 
   value <- .f(chuck(.x, !!!.where), ...)
-  pluck_assign(.x, .where, value)
+  assign_in(.x, .where, value)
 }
 
 

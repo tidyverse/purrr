@@ -3,7 +3,7 @@
 \name{pluck}
 \alias{pluck}
 \alias{chuck}
-\alias{pluck_assign}
+\alias{assign_in}
 \alias{pluck<-}
 \title{Pluck or chuck a single element from a vector or environment}
 \usage{
@@ -11,7 +11,7 @@ pluck(.x, ..., .default = NULL)
 
 chuck(.x, ...)
 
-pluck_assign(x, where, value)
+assign_in(x, where, value)
 
 pluck(.x, ...) <- value
 }
@@ -88,8 +88,8 @@ pluck(x, !!!idx)
 pluck(x, 2, 2, "elt") <- "quuux"
 x
 
-# This is a shortcut for the prefix function pluck_assign():
-y <- pluck_assign(x, list(2, 2, "elt"), value = "QUUUX")
+# This is a shortcut for the prefix function assign_in():
+y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
 y
 }
 \seealso{

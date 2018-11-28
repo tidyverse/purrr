@@ -191,40 +191,40 @@ test_that("can't pluck from complex", {
 })
 
 
-# pluck_assign() ----------------------------------------------------------
+# assign_in() ----------------------------------------------------------
 
 test_that("reduce_subset_call() type-checks", {
   expect_identical(reduce_subset_call(NA, list(1, 4, "foo", 3)), quote(NA[[1]][[4]][["foo"]][[3]]))
   expect_error(reduce_subset_call(NA, list(1, attr_getter("foo"), 3)), "must be names or positions, not a function")
 })
 
-test_that("pluck_assign() doesn't assign in the caller environment", {
+test_that("assign_in() doesn't assign in the caller environment", {
   x <- list(list(bar = 1, foo = 2))
-  pluck_assign(x, list(1, "foo"), value = 20)
+  assign_in(x, list(1, "foo"), value = 20)
   expect_identical(x, list(list(bar = 1, foo = 2)))
 })
 
-test_that("pluck_assign() assigns", {
+test_that("assign_in() assigns", {
   x <- list(list(bar = 1, foo = 2))
-  out <- pluck_assign(x, list(1, "foo"), value = 20)
+  out <- assign_in(x, list(1, "foo"), value = 20)
   expect_identical(out, list(list(bar = 1, foo = 20)))
 })
 
-test_that("pluck<- is an alias for pluck_assign()", {
+test_that("pluck<- is an alias for assign_in()", {
   x <- list(list(bar = 1, foo = 2))
   pluck(x, 1, "foo") <- 30
   expect_identical(x, list(list(bar = 1, foo = 30)))
 })
 
-test_that("pluck_assign() requires at least one location", {
+test_that("assign_in() requires at least one location", {
   x <- list("foo")
   expect_error(pluck(x) <- "foo", "without pluck locations")
 })
 
-test_that("pluck_assign() requires existing location", {
+test_that("assign_in() requires existing location", {
   x <- list(list(bar = 1, foo = 2))
-  expect_error(pluck_assign(x, 2, 10), "exceeds the length")
-  expect_error(pluck_assign(x, list(1, "baz"), 10), "Can't find name `baz`")
+  expect_error(assign_in(x, 2, 10), "exceeds the length")
+  expect_error(assign_in(x, list(1, "baz"), 10), "Can't find name `baz`")
 })
 
 
