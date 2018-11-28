@@ -31,7 +31,8 @@ splice that in with \code{!!!}.}
 \item{.default}{Value to use if target is empty or absent.}
 
 \item{where, .where}{A pluck location, as a numeric vector of
-positions, a character vector of names, or a list combining both.}
+positions, a character vector of names, or a list combining both.
+The location must exist in the data structure.}
 
 \item{value}{A value to replace in \code{.x} at the location specified
 by accessors in \code{...}.}

@@ -10,7 +10,8 @@ pluck_modify(.x, .where, .f, ...)
 \item{.x}{A vector or environment}
 
 \item{.where}{A pluck location, as a numeric vector of
-positions, a character vector of names, or a list combining both.}
+positions, a character vector of names, or a list combining both.
+The location must exist in the data structure.}
 
 \item{.f}{A function to apply at the pluck location given by \code{.where}.}
 

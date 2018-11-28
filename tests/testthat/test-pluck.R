@@ -221,6 +221,12 @@ test_that("pluck_assign() requires at least one location", {
   expect_error(pluck(x) <- "foo", "without pluck locations")
 })
 
+test_that("pluck_assign() requires existing location", {
+  x <- list(list(bar = 1, foo = 2))
+  expect_error(pluck_assign(x, 2, 10), "exceeds the length")
+  expect_error(pluck_assign(x, list(1, "baz"), 10), "Can't find name `baz`")
+})
+
 
 # pluck_modify() ----------------------------------------------------------
 
@@ -232,4 +238,10 @@ test_that("pluck_modify() modifies in pluck location", {
 
   out <- pluck_modify(x, c(1, 1), `+`, 10)
   expect_identical(out, list(list(bar = 11, foo = 2)))
+})
+
+test_that("pluck_modify() requires existing location", {
+  x <- list(list(bar = 1, foo = 2))
+  expect_error(pluck_modify(x, 2, `+`, 10), "exceeds the length")
+  expect_error(pluck_modify(x, list(1, "baz"), `+`, 10), "Can't find name `baz`")
 })
