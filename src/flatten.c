@@ -2,14 +2,16 @@
 #include <R.h>
 #include <Rinternals.h>
 #include "coerce.h"
+#include "utils.h"
 
 const char* objtype(SEXP x) {
   return Rf_type2char(TYPEOF(x));
 }
 
 SEXP flatten_impl(SEXP x) {
-  if (TYPEOF(x) != VECSXP)
-    Rf_errorcall(R_NilValue, "`.x` must be a list (%s)", objtype(x));
+  if (TYPEOF(x) != VECSXP) {
+    Rf_errorcall(R_NilValue, "`.x` must be a list, not %s", friendly_typeof(x));
+  }
   int m = Rf_length(x);
 
   // Determine output size and check type
@@ -20,7 +22,10 @@ SEXP flatten_impl(SEXP x) {
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
     if (!Rf_isVector(x_j) && !Rf_isNull(x_j))
-      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, objtype(x_j));
+      Rf_errorcall(R_NilValue,
+                   "Element %d of `.x` must be a vector, not %s",
+                   j + 1,
+                   friendly_typeof(x_j));
 
     n += Rf_length(x_j);
     if (!has_names) {
@@ -57,7 +62,7 @@ SEXP flatten_impl(SEXP x) {
       case STRSXP:   SET_VECTOR_ELT(out, i, Rf_ScalarString(STRING_ELT(x_j, k))); break;
       case VECSXP:   SET_VECTOR_ELT(out, i, VECTOR_ELT(x_j, k)); break;
       default:
-        Rf_errorcall(R_NilValue, "Unsupported type at element %i (%s)", j + 1, objtype(x_j));
+        Rf_errorcall(R_NilValue, "Element %d must be a vector, not %s", j + 1, friendly_typeof(x_j));
       }
       if (has_names) {
         if (has_names_j) {
@@ -80,8 +85,9 @@ SEXP flatten_impl(SEXP x) {
 }
 
 SEXP vflatten_impl(SEXP x, SEXP type_) {
-  if (TYPEOF(x) != VECSXP)
-    Rf_errorcall(R_NilValue, "`.x` must be a list (%s)", objtype(x));
+  if (TYPEOF(x) != VECSXP) {
+    Rf_errorcall(R_NilValue, "`.x` must be a list, not %s", friendly_typeof(x));
+  }
   int m = Rf_length(x);
 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
