@@ -50,7 +50,12 @@ array_branch <- function(array, margin = NULL) {
 
   if (length(margin) == 0) {
     list(array)
-  } else if (identical(as.integer(margin), 1L) && is.null(dim(array))) {
+  } else if (is.null(dim(array))) {
+    if (!identical(as.integer(margin), 1L)) {
+      stop(
+        "The passed array is 1D and does not have the margin(s) ",
+        toString(margin), call. = FALSE)
+    }
     as.list(array)
   } else {
     flatten(apply(array, margin, list))
