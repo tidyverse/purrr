@@ -3,15 +3,12 @@
 \name{pluck}
 \alias{pluck}
 \alias{chuck}
-\alias{assign_in}
 \alias{chuck<-}
 \title{Pluck or chuck a single element from a vector or environment}
 \usage{
 pluck(.x, ..., .default = NULL)
 
 chuck(.x, ...)
-
-assign_in(x, where, value)
 
 chuck(.x, ...) <- value
 }
@@ -30,12 +27,7 @@ splice that in with \code{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
 
-\item{where, .where}{A pluck location, as a numeric vector of
-positions, a character vector of names, or a list combining both.
-The location must exist in the data structure.}
-
-\item{value}{A value to replace in \code{.x} at the location specified
-by accessors in \code{...}.}
+\item{value}{A value to replace in \code{.x} at the pluck location.}
 }
 \description{
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that

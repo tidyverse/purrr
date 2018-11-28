@@ -91,22 +91,7 @@ chuck <- function(.x, ...) {
 }
 
 #' @rdname pluck
-#' @param where,.where A pluck location, as a numeric vector of
-#'   positions, a character vector of names, or a list combining both.
-#'   The location must exist in the data structure.
-#' @param value A value to replace in `.x` at the location specified
-#'   by accessors in `...`.
-#' @export
-assign_in <- function(x, where, value) {
-  # Check value exists at pluck location
-  chuck(x, !!!where)
-
-  call <- reduce_subset_call(quote(x), as.list(where))
-  call <- call("<-", call, value)
-  eval_bare(call)
-  x
-}
-#' @rdname pluck
+#' @inheritParams modify_in
 #' @export
 `chuck<-` <- function(.x, ..., value) {
   assign_in(.x, list2(...), value)
