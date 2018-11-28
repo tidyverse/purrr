@@ -50,7 +50,7 @@ array_branch <- function(array, margin = NULL) {
 
   if (length(margin) == 0) {
     list(array)
-  } else if (identical(margin, 1) && is.null(dim(array))) {
+  } else if (identical(as.integer(margin), 1L) && is.null(dim(array))) {
     as.list(array)
   } else {
     flatten(apply(array, margin, list))

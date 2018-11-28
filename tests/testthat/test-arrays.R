@@ -10,6 +10,11 @@ test_that("array_branch wraps array in list when margin has length 0", {
   expect_identical(array_branch(x, numeric(0)), list(x))
 })
 
+test_that("array_branch works on vectors", {
+  expect_identical(array_branch(1:3), list(1L, 2L, 3L))
+  expect_identical(array_branch(1:3, 1), list(1L, 2L, 3L))
+})
+
 test_that("length depends on whether list is flattened or not", {
   m1 <- c(3, 1)
   m2 <- 3
