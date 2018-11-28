@@ -52,9 +52,10 @@ array_branch <- function(array, margin = NULL) {
     list(array)
   } else if (is.null(dim(array))) {
     if (!identical(as.integer(margin), 1L)) {
-      stop(
-        "The passed array is 1D and does not have the margin(s) ",
-        toString(margin), call. = FALSE)
+      abort(sprintf(
+        "`margin` must be `NULL` or `1` with 1D arrays, not `%s`",
+        toString(margin)
+      ))
     }
     as.list(array)
   } else {
