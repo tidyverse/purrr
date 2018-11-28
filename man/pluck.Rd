@@ -94,6 +94,6 @@ y
 }
 \seealso{
 \code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable
-for use with \code{pluck()} and \code{chuck()}. \code{\link[=pluck_modify]{pluck_modify()}} for
+for use with \code{pluck()} and \code{chuck()}. \code{\link[=modify_in]{modify_in()}} for
 applying a function to a pluck location.
 }

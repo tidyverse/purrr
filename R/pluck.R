@@ -33,7 +33,7 @@
 #'
 #'
 #' @seealso [attr_getter()] for creating attribute getters suitable
-#'   for use with `pluck()` and `chuck()`. [pluck_modify()] for
+#'   for use with `pluck()` and `chuck()`. [modify_in()] for
 #'   applying a function to a pluck location.
 #' @examples
 #' # pluck() supports integer positions, string names, and functions.
@@ -139,7 +139,7 @@ is_index <- function(x) {
 
 #' Modify a pluck location
 #'
-#' `pluck_modify()` applies a function to a [pluck()] location and
+#' `modify_in()` applies a function to a [pluck()] location and
 #' returns the modified data structure.
 #'
 #' @inheritParams pluck
@@ -153,14 +153,14 @@ is_index <- function(x) {
 #' x <- list(list(bar = 1, foo = 2))
 #' pluck(x, 1, "foo")
 #'
-#' # pluck_modify() applies a function to that location and update the
+#' # modify_in() applies a function to that location and update the
 #' # element in place:
-#' pluck_modify(x, list(1, "foo"), ~ .x * 200)
+#' modify_in(x, list(1, "foo"), ~ .x * 200)
 #'
 #' # Additional arguments are passed to the function in the ordinary way:
-#' pluck_modify(x, list(1, "foo"), `+`, 100)
+#' modify_in(x, list(1, "foo"), `+`, 100)
 #' @export
-pluck_modify <- function(.x, .where, .f, ...) {
+modify_in <- function(.x, .where, .f, ...) {
   .where <- as.list(.where)
   .f <- rlang::as_function(.f)
 

@@ -228,20 +228,20 @@ test_that("assign_in() requires existing location", {
 })
 
 
-# pluck_modify() ----------------------------------------------------------
+# modify_in() ----------------------------------------------------------
 
-test_that("pluck_modify() modifies in pluck location", {
+test_that("modify_in() modifies in pluck location", {
   x <- list(list(bar = 1, foo = 2))
 
-  out <- pluck_modify(x, list(1, "foo"), `+`, 100)
+  out <- modify_in(x, list(1, "foo"), `+`, 100)
   expect_identical(out, list(list(bar = 1, foo = 102)))
 
-  out <- pluck_modify(x, c(1, 1), `+`, 10)
+  out <- modify_in(x, c(1, 1), `+`, 10)
   expect_identical(out, list(list(bar = 11, foo = 2)))
 })
 
-test_that("pluck_modify() requires existing location", {
+test_that("modify_in() requires existing location", {
   x <- list(list(bar = 1, foo = 2))
-  expect_error(pluck_modify(x, 2, `+`, 10), "exceeds the length")
-  expect_error(pluck_modify(x, list(1, "baz"), `+`, 10), "Can't find name `baz`")
+  expect_error(modify_in(x, 2, `+`, 10), "exceeds the length")
+  expect_error(modify_in(x, list(1, "baz"), `+`, 10), "Can't find name `baz`")
 })
