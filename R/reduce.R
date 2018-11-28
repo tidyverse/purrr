@@ -8,16 +8,17 @@
 #' `f` over `1:3` computes the value `f(f(1, 2), 3)`.
 #'
 #' @inheritParams map
-#' @param .y For `reduce2()`, an additional argument that is passed to
-#'   `.f`. If `init` is not set, `.y` should be 1 element shorter than
-#'   `.x`.
-#' @param .f For `reduce()`, a 2-argument function. The function will be
-#'   passed the accumulated value as the first argument and the "next" value
-#'   as the second argument.
+#' @param .y For `reduce2()` and `accumulate2()`, an additional
+#'   argument that is passed to `.f`. If `init` is not set, `.y`
+#'   should be 1 element shorter than `.x`.
+#' @param .f For `reduce()`, and `accumulate()`, a 2-argument
+#'   function. The function will be passed the accumulated value as
+#'   the first argument and the "next" value as the second argument.
 #'
-#'   For `reduce2()`, a 3-argument function. The function will be passed the
-#'   accumulated value as the first argument, the next value of `.x` as the
-#'   second argument, and the next value of `.y` as the third argument.
+#'   For `reduce2()` and `accumulate2()`, a 3-argument function. The
+#'   function will be passed the accumulated value as the first
+#'   argument, the next value of `.x` as the second argument, and the
+#'   next value of `.y` as the third argument.
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using `x[[1]]`. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
@@ -158,7 +159,11 @@ reduce_index <- function(x, init, left = TRUE) {
   }
 }
 
-reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
+reduce2_impl <- function(.x, .y, .f,
+                         ...,
+                         .init,
+                         .left = TRUE,
+                         .acc = FALSE) {
   out <- reduce_init(.x, .init, left = .left)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
@@ -168,14 +173,30 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE) {
   }
 
   .f <- as_mapper(.f, ...)
+
+  if (.acc) {
+    offset <- !missing(.init)
+    res <- new_list(length(x_idx) + offset)
+    res[[1]] <- out
+  }
+
   for (i in seq_along(x_idx)) {
     x_i <- x_idx[[i]]
     y_i <- y_idx[[i]]
 
     out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
+
+    if (.acc) {
+      res[[x_i + offset]] <- out
+    }
   }
 
-  out
+  if (.acc) {
+    names(res) <- accumulate_names(names(.x), .init, left = .left)
+    res
+  } else {
+    out
+  }
 }
 
 seq_len2 <- function(start, end) {
@@ -234,6 +255,11 @@ seq_len2 <- function(start, end) {
 #' # with a left reduction, and to the right otherwise:
 #' accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 #'
+#' # `accumulate2()` is a version of `accumulate()` that works with
+#' # ternary functions and one additional vector:
+#' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+#' letters[1:4] %>% accumulate(paste2)
+#' letters[1:4] %>% accumulate2(c("-", ".", "-"), paste2)
 #'
 #' # Simulating stochastic processes with drift
 #' \dontrun{
@@ -261,6 +287,11 @@ accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
   names(res) <- accumulate_names(names(.x), .init, left = left)
 
   res
+}
+#' @rdname accumulate
+#' @export
+accumulate2 <- function(.x, .y, .f, ..., .init, .dir = c("left", "right")) {
+  reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
 }
 
 accumulate_names <- function(nms, init, left = left) {

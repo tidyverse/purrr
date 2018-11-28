@@ -137,6 +137,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* New `accumulate2()` function which is to `accumulate()` what
+  `reduce2()` is to `reduce()`.
+
 * `flatten()` now supports raw and complex elements.
 
 * By popular request, `at_depth()` has been brought back as
