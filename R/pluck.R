@@ -61,9 +61,8 @@
 #' pluck(x, !!!idx)
 #'
 #'
-#' # You can also assign a value in a pluck location (only for
-#' # positions and names):
-#' pluck(x, 2, 2, "elt") <- "quuux"
+#' # You can also assign a value in a pluck location with chuck<-:
+#' chuck(x, 2, 2, "elt") <- "quuux"
 #' x
 #'
 #' # This is a shortcut for the prefix function assign_in():
@@ -109,7 +108,7 @@ assign_in <- function(x, where, value) {
 }
 #' @rdname pluck
 #' @export
-`pluck<-` <- function(.x, ..., value) {
+`chuck<-` <- function(.x, ..., value) {
   assign_in(.x, list2(...), value)
 }
 
