@@ -1,19 +1,26 @@
 context("map2")
 
 test_that("map2 inputs must be same length", {
-  expect_error(map2(1:3, 2:3, function(...) NULL), "different lengths")
+  expect_error(
+    map2(1:3, 2:3, function(...) NULL),
+    paste_line(
+      "Mapped vectors must have consistent lengths:",
+      "\\* `.x` has length 3",
+      "\\* `.y` has length 2"
+    )
+  )
 })
 
 test_that("map2 can't simplify if elements longer than length 1", {
   expect_error(
     map2_int(1:4, 5:8, range),
-    "Result 1 is not a length 1 atomic vector"
+    "Result 1 must be a single integer, not an integer vector of length 2"
   )
 })
 
 test_that("fails on non-vectors", {
-  expect_error(map2(environment(), "a", identity), "not a vector")
-  expect_error(map2("a", environment(), identity), "not a vector")
+  expect_error(map2(environment(), "a", identity), "`.x` must be a vector, not an environment")
+  expect_error(map2("a", environment(), identity), "`.y` must be a vector, not an environment")
 })
 
 test_that("map2 vectorised inputs of length 1", {
