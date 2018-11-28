@@ -137,37 +137,6 @@ is_index <- function(x) {
   length(x) == 1
 }
 
-#' Modify a pluck location
-#'
-#' `modify_in()` applies a function to a [pluck()] location and
-#' returns the modified data structure.
-#'
-#' @inheritParams pluck
-#' @param .f A function to apply at the pluck location given by `.where`.
-#' @param ... Arguments passed to `.f`.
-#'
-#' @seealso [pluck()]
-#' @examples
-#' # While pluck() returns a component of a data structure that might
-#' # be arbitrarily deep
-#' x <- list(list(bar = 1, foo = 2))
-#' pluck(x, 1, "foo")
-#'
-#' # modify_in() applies a function to that location and update the
-#' # element in place:
-#' modify_in(x, list(1, "foo"), ~ .x * 200)
-#'
-#' # Additional arguments are passed to the function in the ordinary way:
-#' modify_in(x, list(1, "foo"), `+`, 100)
-#' @export
-modify_in <- function(.x, .where, .f, ...) {
-  .where <- as.list(.where)
-  .f <- rlang::as_function(.f)
-
-  value <- .f(chuck(.x, !!!.where), ...)
-  assign_in(.x, .where, value)
-}
-
 
 #' Create an attribute getter function
 #'
