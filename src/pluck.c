@@ -179,7 +179,8 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
       if (strict) {
         Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
       }
-      break;
+      // Leave the indexing loop early
+      goto end;
     case LGLSXP:
     case INTSXP:
     case REALSXP:
@@ -202,6 +203,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
   }
 
+ end:
   return (Rf_length(x) == 0) ? missing : x;
 }
 
