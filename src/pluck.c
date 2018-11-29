@@ -171,32 +171,33 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
     if (TYPEOF(index_i) == CLOSXP) {
       x = extract_clo(x, index_i);
-    } else {
-      switch (TYPEOF(x)) {
-      case NILSXP:
-        if (strict) {
-          Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
-        }
-        break;
-      case LGLSXP:
-      case INTSXP:
-      case REALSXP:
-      case CPLXSXP:
-      case STRSXP:
-      case RAWSXP:
-      case VECSXP:
-      case EXPRSXP:
-        x = extract_vector(x, index_i, i, strict);
-        break;
-      case ENVSXP:
-        x = extract_env(x, index_i, i, strict);
-        break;
-      case S4SXP:
-        x = extract_s4(x, index_i, i, strict);
-        break;
-      default:
-        Rf_errorcall(R_NilValue, "Can't pluck from a %s", Rf_type2char(TYPEOF(x)));
+      continue;
+    }
+
+    switch (TYPEOF(x)) {
+    case NILSXP:
+      if (strict) {
+        Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
       }
+      break;
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case RAWSXP:
+    case VECSXP:
+    case EXPRSXP:
+      x = extract_vector(x, index_i, i, strict);
+      break;
+    case ENVSXP:
+      x = extract_env(x, index_i, i, strict);
+      break;
+    case S4SXP:
+      x = extract_s4(x, index_i, i, strict);
+      break;
+    default:
+      Rf_errorcall(R_NilValue, "Can't pluck from a %s", Rf_type2char(TYPEOF(x)));
     }
 
   }
