@@ -14,10 +14,17 @@ static int check_names(SEXP names, int i, bool strict);
 static int check_offset(int offset, SEXP index_i, bool strict);
 static int check_unbound_value(SEXP val, SEXP index_i, bool strict);
 static int check_s4_slot(SEXP val, SEXP index_i, bool strict);
+static int check_obj_length(SEXP n, bool strict);
+
+int obj_length(SEXP x, bool strict);
 
 
 int find_offset(SEXP x, SEXP index, int i, bool strict) {
-  int n = Rf_length(x);
+  int n = obj_length(x, strict);
+  if (n < 0) {
+    return -1;
+  }
+
   if (check_input_lengths(n, Rf_length(index), i, strict)) {
     return -1;
   }
@@ -352,4 +359,34 @@ static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
   } else {
     return -1;
   }
+}
+
+static int check_obj_length(SEXP n, bool strict) {
+  if (TYPEOF(n) != INTSXP || Rf_length(n) != 1) {
+    if (strict) {
+      Rf_errorcall(R_NilValue, "Length of S3 object must be a scalar integer");
+    } else {
+      return -1;
+    }
+  }
+
+  return 0;
+}
+
+
+int obj_length(SEXP x, bool strict) {
+  if (!OBJECT(x)) {
+    return Rf_length(x);
+  }
+
+  SEXP length_call = PROTECT(Rf_lang2(Rf_install("length"), x));
+  SEXP n = PROTECT(Rf_eval(length_call, R_GlobalEnv));
+
+  if (check_obj_length(n, strict)) {
+    UNPROTECT(2);
+    return -1;
+  }
+
+  UNPROTECT(2);
+  return INTEGER(n)[0];
 }
