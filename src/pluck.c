@@ -17,6 +17,7 @@ static int check_s4_slot(SEXP val, SEXP index_i, bool strict);
 static int check_obj_length(SEXP n, bool strict);
 
 int obj_length(SEXP x, bool strict);
+SEXP obj_names(SEXP x, bool strict);
 
 
 int find_offset(SEXP x, SEXP index, int i, bool strict) {
@@ -60,13 +61,16 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   case STRSXP: {
-    SEXP names = Rf_getAttrib(x, R_NamesSymbol);
+    // Protection is needed because names could be generated in the S3 case
+    SEXP names = PROTECT(obj_names(x, strict));
     if (check_names(names, i, strict)) {
+      UNPROTECT(1);
       return -1;
     }
 
     SEXP string = STRING_ELT(index, 0);
     if (check_character_index(string, i, strict)) {
+      UNPROTECT(1);
       return -1;
     }
 
@@ -80,6 +84,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
       const char* names_j = Rf_translateCharUTF8(STRING_ELT(names, j));
       if (strcmp(names_j, val) == 0) {
+        UNPROTECT(1);
         return j;
       }
 
@@ -87,6 +92,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     if (strict) {
       Rf_errorcall(R_NilValue, "Can't find name `%s` in vector.", val);
     } else {
+      UNPROTECT(1);
       return -1;
     }
   }
@@ -389,4 +395,16 @@ int obj_length(SEXP x, bool strict) {
 
   UNPROTECT(2);
   return INTEGER(n)[0];
+}
+
+SEXP obj_names(SEXP x, bool strict) {
+  if (!OBJECT(x)) {
+    return Rf_getAttrib(x, R_NamesSymbol);
+  }
+
+  SEXP names_call = PROTECT(Rf_lang2(Rf_install("names"), x));
+  SEXP names = Rf_eval(names_call, R_GlobalEnv);
+
+  UNPROTECT(1);
+  return names;
 }
