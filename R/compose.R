@@ -1,11 +1,14 @@
 #' Compose multiple functions
 #'
-#' @param ... Functions to apply in order from right to left. Formulas
-#'   are converted to functions in the usual way.
+#' @param ... Functions to apply in order (from right to left by
+#'   default). Formulas are converted to functions in the usual way.
 #'
 #'   These dots support [tidy dots][rlang::list2] features. In
 #'   particular, if your functions are stored in a list, you can
 #'   splice that in with `!!!`.
+#' @param .rev If `TRUE` (the default), the functions are called in
+#'   the reverse order, from right to left, as is conventional in
+#'   mathematics. Otherwise they are called from left to right.
 #' @return A function
 #' @export
 #' @examples
@@ -27,18 +30,22 @@
 #' )
 #' fn <- compose(!!!fns)
 #' fn("input")
-compose <- function(...) {
-  fs <- map(list2(...), rlang::as_function, env = caller_env())
+compose <- function(..., .rev = TRUE) {
+  fns <- map(list2(...), rlang::as_function, env = caller_env())
 
-  n <- length(fs)
-
-  last <- fs[[n]]
-  rest <- fs[-n]
+  if (.rev) {
+    n <- length(fns)
+    first_fn <- fns[[n]]
+    fns <- rev(fns[-n])
+  } else {
+    first_fn <- fns[[1]]
+    fns <- fns[-1]
+  }
 
   function(...) {
-    out <- last(...)
-    for (f in rev(rest)) {
-      out <- f(out)
+    out <- first_fn(...)
+    for (fn in fns) {
+      out <- fn(out)
     }
     out
   }

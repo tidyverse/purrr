@@ -1,11 +1,15 @@
 context("compose")
 
-test_that("composed functions are applied right to left", {
+test_that("composed functions are applied right to left by default", {
   expect_identical(!is.null(4), compose(`!`, is.null)(4))
 
   set.seed(1)
   x <- sample(1:4, 100, replace = TRUE)
   expect_identical(unname(sort(table(x))), compose(unname, sort, table)(x))
+})
+
+test_that("composed functions are applied in reverse order if .dir is supplied", {
+  expect_identical(compose(~ .x + 100, ~ .x * 2, .rev = FALSE)(2), 204)
 })
 
 test_that("compose supports formulas", {
