@@ -61,7 +61,18 @@ as_function <- function(...) {
 
 #' @export
 as_mapper.default <- function(.f, ...) {
-  rlang::as_closure(.f)
+  if (typeof(.f) %in% c("special", "builtin")) {
+    .f <- rlang::as_closure(.f)
+
+    # Workaround until fixed in rlang
+    if (is_reference(fn_env(.f), base_env())) {
+      environment(.f) <- global_env()
+    }
+
+    .f
+  } else {
+    rlang::as_function(.f)
+  }
 }
 
 #' @export

@@ -92,3 +92,11 @@ test_that("map works with calls and pairlists", {
   out <- map(pairlist(1, 2), ~ . + 1)
   expect_equal(out, list(2, 3))
 })
+
+test_that("primitive dispatch correctly", {
+  scoped_bindings(.env = global_env(),
+    as.character.test_class = function(x) "dispatched!"
+  )
+  x <- structure(list(), class = "test_class")
+  expect_identical(map(list(x, x), as.character), list("dispatched!", "dispatched!"))
+})
