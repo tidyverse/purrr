@@ -123,6 +123,15 @@ test_that("delegate error handling to Rf_eval()", {
   expect_error(pluck(letters, function(x, y) y), "missing, with no default")
 })
 
+test_that("pluck() dispatches on base getters", {
+  expect_identical(pluck(iris, "Species", levels), levels(iris$Species))
+})
+
+test_that("pluck() dispatches on global methods", {
+  scoped_bindings(.env = global_env(), levels.factor = function(...) "dispatched!")
+  expect_identical(pluck(iris, "Species", levels), levels(iris$Species))
+})
+
 
 # attribute extraction ----------------------------------------------------
 

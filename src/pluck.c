@@ -152,7 +152,7 @@ SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_clo(SEXP x, SEXP clo) {
   SEXP expr = PROTECT(Rf_lang2(clo, x));
-  SEXP out = Rf_eval(expr, R_EmptyEnv);
+  SEXP out = Rf_eval(expr, R_GlobalEnv);
 
   UNPROTECT(1);
   return out;
