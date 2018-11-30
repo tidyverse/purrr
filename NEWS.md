@@ -64,6 +64,8 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `pluck()` now supports primitive functions (#404).
+
 * New `.rev` argument in `compose()`. If set to `FALSE`, the functions
   are composed from left to right rather than right to left.
 

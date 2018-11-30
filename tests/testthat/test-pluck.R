@@ -90,7 +90,7 @@ test_that("supports splicing", {
 })
 
 
-# closures ----------------------------------------------------------------
+# functions ---------------------------------------------------------------
 
 test_that("can pluck attributes", {
   x <- structure(
@@ -130,6 +130,11 @@ test_that("pluck() dispatches on base getters", {
 test_that("pluck() dispatches on global methods", {
   scoped_bindings(.env = global_env(), levels.factor = function(...) "dispatched!")
   expect_identical(pluck(iris, "Species", levels), levels(iris$Species))
+})
+
+test_that("pluck() supports primitive functions (#404)", {
+  x <- list(a = "apple", n = 3, v = 1:5)
+  expect_identical(pluck(x, "n", as.character), "3")
 })
 
 

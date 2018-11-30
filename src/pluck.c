@@ -150,12 +150,22 @@ SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   return Rf_getAttrib(x, sym);
 }
 
-SEXP extract_clo(SEXP x, SEXP clo) {
+SEXP extract_fn(SEXP x, SEXP clo) {
   SEXP expr = PROTECT(Rf_lang2(clo, x));
   SEXP out = Rf_eval(expr, R_GlobalEnv);
 
   UNPROTECT(1);
   return out;
+}
+static bool is_function(SEXP x) {
+  switch (TYPEOF(x)) {
+  case CLOSXP:
+  case BUILTINSXP:
+  case SPECIALSXP:
+    return true;
+  default:
+    return false;
+  }
 }
 
 SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
@@ -169,8 +179,8 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   for (int i = 0; i < n; ++i) {
     SEXP index_i = VECTOR_ELT(index, i);
 
-    if (TYPEOF(index_i) == CLOSXP) {
-      x = extract_clo(x, index_i);
+    if (is_function(index_i)) {
+      x = extract_fn(x, index_i);
       continue;
     }
 
