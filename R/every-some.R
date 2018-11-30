@@ -9,10 +9,6 @@
 #' @return A logical vector of length 1.
 #' @export
 #' @examples
-#' x <- list(0, 1, TRUE)
-#' x %>% every(identity)
-#' x %>% some(identity)
-#'
 #' y <- list(0:10, 5.5)
 #' y %>% every(is.numeric)
 #' y %>% every(is.integer)
