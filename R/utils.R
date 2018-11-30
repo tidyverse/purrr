@@ -182,6 +182,14 @@ paste_classes <- function(x) {
   paste(class(x), collapse = "/")
 }
 
-is_bool <- function(x) {
-  is_logical(x, n = 1) && !is.na(x)
+is_bool <- function(x, na = NULL) {
+  if (!is_logical(x, n = 1)) {
+    return(FALSE)
+  }
+
+  if (is_null(na)) {
+    return(TRUE)
+  }
+
+  identical(na, is.na(x))
 }

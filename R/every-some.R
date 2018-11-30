@@ -17,7 +17,7 @@
 #' y %>% every(is.numeric)
 #' y %>% every(is.integer)
 every <- function(.x, .p, ...) {
-  .p <- as_predicate(.p, ..., .mapper = TRUE)
+  .p <- as_predicate(.p, ..., .mapper = TRUE, .na = NULL)
 
   for (i in seq_along(.x)) {
     val <- .p(.x[[i]], ...)
@@ -31,7 +31,7 @@ every <- function(.x, .p, ...) {
 #' @export
 #' @rdname every
 some <- function(.x, .p, ...) {
-  .p <- as_predicate(.p, ..., .mapper = TRUE)
+  .p <- as_predicate(.p, ..., .mapper = TRUE, .na = NULL)
 
   val <- FALSE
   for (i in seq_along(.x)) {

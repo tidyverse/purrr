@@ -114,7 +114,7 @@ plucker <- function(i, default) {
   )
 }
 
-as_predicate <- function(.fn, ..., .mapper) {
+as_predicate <- function(.fn, ..., .mapper, .na = FALSE) {
   if (.mapper) {
     .fn <- as_mapper(.fn, ...)
   }
@@ -122,7 +122,7 @@ as_predicate <- function(.fn, ..., .mapper) {
   function(...) {
     out <- .fn(...)
 
-    if (!is_bool(out)) {
+    if (!is_bool(out, .na)) {
       abort(sprintf(
         "Predicate functions must return a single logical `TRUE` or `FALSE`, not %s",
         as_predicate_friendly_type_of(out)
