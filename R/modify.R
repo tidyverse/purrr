@@ -348,6 +348,7 @@ probe <- function(.x, .p, ...) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
+    .p <- as_predicate(.p, ..., .mapper = TRUE)
     map_lgl(.x, .p, ...)
   }
 }

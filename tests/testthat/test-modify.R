@@ -81,6 +81,11 @@ test_that("modify2() recycles arguments", {
   expect_identical(modify2(mtcars, 1, `+`)$carb, mtcars$carb + 1L)
 })
 
+test_that("modify_if() requires predicate functions", {
+  expect_error(modify_if(list(1, 2), ~ NA, ~ "foo"), ", not a missing value")
+  expect_error(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), ", not a logical vector of length 2")
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {
