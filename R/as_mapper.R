@@ -18,12 +18,11 @@
 #'
 #'   This syntax allows you to create very compact anonymous functions.
 #'
-#'   If __character vector__, __numeric vector__, or __list__, it
-#'   is converted to an extractor function. Character vectors index by name
-#'   and numeric vectors index by position; use a list to index by position
-#'   and name at different levels. Within a list, wrap strings in [get-attr()]
-#'   to extract named attributes. If a component is not present, the value of
-#'   `.default` will be returned.
+#'   If __character vector__, __numeric vector__, or __list__, it is
+#'   converted to an extractor function. Character vectors index by
+#'   name and numeric vectors index by position; use a list to index
+#'   by position and name at different levels. If a component is not
+#'   present, the value of `.default` will be returned.
 #' @param .default,.null Optional additional argument for extractor functions
 #'   (i.e. when `.f` is character, integer, or list). Returned when
 #'   value is absent (does not exist) or empty (has length 0).
