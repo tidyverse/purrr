@@ -3,25 +3,31 @@
 \name{pluck}
 \alias{pluck}
 \alias{chuck}
+\alias{pluck<-}
 \title{Pluck or chuck a single element from a vector or environment}
 \usage{
 pluck(.x, ..., .default = NULL)
 
 chuck(.x, ...)
+
+pluck(.x, ...) <- value
 }
 \arguments{
-\item{.x}{A vector or environment}
+\item{.x, x}{A vector or environment}
 
 \item{...}{A list of accessors for indexing into the object. Can be
-an integer position, a string name, or an accessor function. If
-the object being indexed is an S4 object, accessing it by name
-will return the corresponding slot.
+an integer position, a string name, or an accessor function
+(except for the assignment variants which only support names and
+positions). If the object being indexed is an S4 object,
+accessing it by name will return the corresponding slot.
 
 These dots support \link[rlang:list2]{tidy dots} features. In
 particular, if your accessors are stored in a list, you can
 splice that in with \code{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
+
+\item{value}{A value to replace in \code{.x} at the pluck location.}
 }
 \description{
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
@@ -67,8 +73,18 @@ my_element(x[[1]])
 # If you have a list of accessors, you can splice those in with `!!!`:
 idx <- list(1, my_element)
 pluck(x, !!!idx)
+
+
+# You can also assign a value in a pluck location with pluck<-:
+pluck(x, 2, 2, "elt") <- "quuux"
+x
+
+# This is a shortcut for the prefix function assign_in():
+y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
+y
 }
 \seealso{
 \code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable
-for use with \code{pluck()} and \code{chuck()}.
+for use with \code{pluck()} and \code{chuck()}. \code{\link[=modify_in]{modify_in()}} for
+applying a function to a pluck location.
 }

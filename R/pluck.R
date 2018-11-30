@@ -5,11 +5,12 @@
 #' `pluck()` consistently returns `NULL` when an element does not
 #' exist, `chuck()` always throws an error in that case.
 #'
-#' @param .x A vector or environment
+#' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
-#'   an integer position, a string name, or an accessor function. If
-#'   the object being indexed is an S4 object, accessing it by name
-#'   will return the corresponding slot.
+#'   an integer position, a string name, or an accessor function
+#'   (except for the assignment variants which only support names and
+#'   positions). If the object being indexed is an S4 object,
+#'   accessing it by name will return the corresponding slot.
 #'
 #'   These dots support [tidy dots][rlang::list2] features. In
 #'   particular, if your accessors are stored in a list, you can
@@ -32,7 +33,8 @@
 #'
 #'
 #' @seealso [attr_getter()] for creating attribute getters suitable
-#'   for use with `pluck()` and `chuck()`.
+#'   for use with `pluck()` and `chuck()`. [modify_in()] for
+#'   applying a function to a pluck location.
 #' @examples
 #' # pluck() supports integer positions, string names, and functions.
 #' # Using functions, you can easily extend pluck(). Let's create a
@@ -57,6 +59,15 @@
 #' # If you have a list of accessors, you can splice those in with `!!!`:
 #' idx <- list(1, my_element)
 #' pluck(x, !!!idx)
+#'
+#'
+#' # You can also assign a value in a pluck location with pluck<-:
+#' pluck(x, 2, 2, "elt") <- "quuux"
+#' x
+#'
+#' # This is a shortcut for the prefix function assign_in():
+#' y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
+#' y
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
   .Call(
@@ -78,6 +89,38 @@ chuck <- function(.x, ...) {
     strict = TRUE
   )
 }
+
+#' @rdname pluck
+#' @inheritParams modify_in
+#' @export
+`pluck<-` <- function(.x, ..., value) {
+  assign_in(.x, list2(...), value)
+}
+
+reduce_subset_call <- function(init, idx) {
+  if (!length(idx)) {
+    abort("Can't pluck-assign without pluck locations")
+  }
+  reduce(idx, subset_call, .init = init)
+}
+subset_call <- function(x, idx) {
+  if (!is_index(idx)) {
+    type <- friendly_type_of(idx)
+    abort(sprintf("The pluck-assign indices must be names or positions, not %s", type))
+  }
+  call("[[", x, idx)
+}
+
+is_index <- function(x) {
+  if (is.object(x)) {
+    return(FALSE)
+  }
+  if (!typeof(x) %in% c("character", "integer", "double")) {
+    return(FALSE)
+  }
+  length(x) == 1
+}
+
 
 #' Create an attribute getter function
 #'
