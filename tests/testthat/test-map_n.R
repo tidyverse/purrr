@@ -70,3 +70,13 @@ test_that("preserves S3 class of input vectors (#358)", {
   expect_equal(pmap(list(date), identity), list(date))
   expect_output(pwalk(list(date), print), format(date))
 })
+
+test_that("walk2() and pwalk() don't evaluate symbolic objects", {
+  walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+  pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
+})
+
+test_that("map2() and pmap() don't evaluate symbolic objects", {
+  map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+  pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
+})
