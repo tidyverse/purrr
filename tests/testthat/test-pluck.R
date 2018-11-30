@@ -210,16 +210,16 @@ test_that("assign_in() assigns", {
   expect_identical(out, list(list(bar = 1, foo = 20)))
 })
 
-test_that("chuck<- is an alias for assign_in()", {
+test_that("pluck<- is an alias for assign_in()", {
   x <- list(list(bar = 1, foo = 2))
-  chuck(x, 1, "foo") <- 30
+  pluck(x, 1, "foo") <- 30
   expect_identical(x, list(list(bar = 1, foo = 30)))
 })
 
 test_that("assign_in() requires at least one location", {
   x <- list("foo")
   expect_error(assign_in(x, NULL, value = "foo"), "without pluck locations")
-  expect_error(chuck(x) <- "foo", "without pluck locations")
+  expect_error(pluck(x) <- "foo", "without pluck locations")
 })
 
 test_that("assign_in() requires existing location", {

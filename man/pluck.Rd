@@ -3,14 +3,14 @@
 \name{pluck}
 \alias{pluck}
 \alias{chuck}
-\alias{chuck<-}
+\alias{pluck<-}
 \title{Pluck or chuck a single element from a vector or environment}
 \usage{
 pluck(.x, ..., .default = NULL)
 
 chuck(.x, ...)
 
-chuck(.x, ...) <- value
+pluck(.x, ...) <- value
 }
 \arguments{
 \item{.x, x}{A vector or environment}
@@ -75,8 +75,8 @@ idx <- list(1, my_element)
 pluck(x, !!!idx)
 
 
-# You can also assign a value in a pluck location with chuck<-:
-chuck(x, 2, 2, "elt") <- "quuux"
+# You can also assign a value in a pluck location with pluck<-:
+pluck(x, 2, 2, "elt") <- "quuux"
 x
 
 # This is a shortcut for the prefix function assign_in():

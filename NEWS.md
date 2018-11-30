@@ -68,7 +68,7 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   alternative function that is mapped over elements of the input for
   which the predicate function returns `FALSE` (#324).
 
-* New `assign_in()` and `chuck<-` functions. They modify a data
+* New `assign_in()` and `pluck<-` functions. They modify a data
   structure at an existing pluck location.
 
 * New `modify_in()` function to map a function at a pluck location.
