@@ -14,10 +14,20 @@ static int check_names(SEXP names, int i, bool strict);
 static int check_offset(int offset, SEXP index_i, bool strict);
 static int check_unbound_value(SEXP val, SEXP index_i, bool strict);
 static int check_s4_slot(SEXP val, SEXP index_i, bool strict);
+static int check_obj_length(SEXP n, bool strict);
+
+int obj_length(SEXP x, bool strict);
+SEXP obj_names(SEXP x, bool strict);
 
 
+// S3 objects must implement a `length()` method in the case of a
+// numeric index and a `names()` method for the character case
 int find_offset(SEXP x, SEXP index, int i, bool strict) {
-  int n = Rf_length(x);
+  int n = obj_length(x, strict);
+  if (n < 0) {
+    return -1;
+  }
+
   if (check_input_lengths(n, Rf_length(index), i, strict)) {
     return -1;
   }
@@ -53,13 +63,16 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   case STRSXP: {
-    SEXP names = Rf_getAttrib(x, R_NamesSymbol);
+    // Protection is needed because names could be generated in the S3 case
+    SEXP names = PROTECT(obj_names(x, strict));
     if (check_names(names, i, strict)) {
+      UNPROTECT(1);
       return -1;
     }
 
     SEXP string = STRING_ELT(index, 0);
     if (check_character_index(string, i, strict)) {
+      UNPROTECT(1);
       return -1;
     }
 
@@ -73,6 +86,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
       const char* names_j = Rf_translateCharUTF8(STRING_ELT(names, j));
       if (strcmp(names_j, val) == 0) {
+        UNPROTECT(1);
         return j;
       }
 
@@ -80,6 +94,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     if (strict) {
       Rf_errorcall(R_NilValue, "Can't find name `%s` in vector.", val);
     } else {
+      UNPROTECT(1);
       return -1;
     }
   }
@@ -93,6 +108,16 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   int offset = find_offset(x, index_i, i, strict);
   if (check_offset(offset, index_i, strict)) {
     return R_NilValue;
+  }
+
+  if (OBJECT(x)) {
+    // We check `index_i` with `check_offset()` but pass the original
+    // index rather than an offset in order to support unordered
+    // vector classes
+    SEXP extract_call = PROTECT(Rf_lang3(Rf_install("[["), x, index_i));
+    SEXP out = Rf_eval(extract_call, R_GlobalEnv);
+    UNPROTECT(1);
+    return out;
   }
 
   switch (TYPEOF(x)) {
@@ -181,6 +206,11 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
     if (is_function(index_i)) {
       x = extract_fn(x, index_i);
+      continue;
+    }
+    // Assume all S3 objects implement the vector interface
+    if (OBJECT(x) && TYPEOF(x) != S4SXP) {
+      x = extract_vector(x, index_i, i, strict);
       continue;
     }
 
@@ -301,7 +331,7 @@ static int check_character_index(SEXP string, int i, bool strict) {
 }
 
 static int check_names(SEXP names, int i, bool strict) {
-  if (names != R_NilValue) {
+  if (TYPEOF(names) == STRSXP) {
     return 0;
   }
 
@@ -352,4 +382,46 @@ static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
   } else {
     return -1;
   }
+}
+
+static int check_obj_length(SEXP n, bool strict) {
+  if (TYPEOF(n) != INTSXP || Rf_length(n) != 1) {
+    if (strict) {
+      Rf_errorcall(R_NilValue, "Length of S3 object must be a scalar integer");
+    } else {
+      return -1;
+    }
+  }
+
+  return 0;
+}
+
+
+int obj_length(SEXP x, bool strict) {
+  if (!OBJECT(x)) {
+    return Rf_length(x);
+  }
+
+  SEXP length_call = PROTECT(Rf_lang2(Rf_install("length"), x));
+  SEXP n = PROTECT(Rf_eval(length_call, R_GlobalEnv));
+
+  if (check_obj_length(n, strict)) {
+    UNPROTECT(2);
+    return -1;
+  }
+
+  UNPROTECT(2);
+  return INTEGER(n)[0];
+}
+
+SEXP obj_names(SEXP x, bool strict) {
+  if (!OBJECT(x)) {
+    return Rf_getAttrib(x, R_NamesSymbol);
+  }
+
+  SEXP names_call = PROTECT(Rf_lang2(Rf_install("names"), x));
+  SEXP names = Rf_eval(names_call, R_GlobalEnv);
+
+  UNPROTECT(1);
+  return names;
 }

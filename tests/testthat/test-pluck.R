@@ -246,3 +246,48 @@ test_that("modify_in() requires existing location", {
   expect_error(modify_in(x, 2, `+`, 10), "exceeds the length")
   expect_error(modify_in(x, list(1, "baz"), `+`, 10), "Can't find name `baz`")
 })
+
+
+# S3 ----------------------------------------------------------------------
+
+test_that("pluck() dispatches on vector methods", {
+  new_test_pluck <- function(x) {
+    structure(list(x), class = "test_pluck")
+  }
+
+  inner <- list(a = "foo", b = list("bar"))
+  x <- list(new_test_pluck(inner))
+
+  with_bindings(.env = global_env(),
+    `[[.test_pluck` = function(x, i) .subset2(x, 1)[[i]],
+    names.test_pluck = function(x) names(.subset2(x, 1)),
+    length.test_pluck = function(x) length(.subset2(x, 1)),
+    {
+      expect_identical(pluck(x, 1, 1), "foo")
+      expect_identical(pluck(x, 1, "b", 1), "bar")
+      expect_identical(chuck(x, 1, 1), "foo")
+      expect_identical(chuck(x, 1, "b", 1), "bar")
+    }
+  )
+
+  # With faulty length() method
+  with_bindings(.env = global_env(),
+    `[[.test_pluck` = function(x, i) .subset2(x, 1)[[i]],
+    length.test_pluck = function(x) NA,
+    {
+      expect_null(pluck(x, 1, 1))
+      expect_error(chuck(x, 1, 1), "Length of S3 object must be a scalar integer")
+    }
+  )
+
+  # With faulty names() method
+  with_bindings(.env = global_env(),
+    `[[.test_pluck` = function(x, i) .subset2(x, 1)[[i]],
+    names.test_pluck = function(x) NA,
+    length.test_pluck = function(x) length(.subset2(x, 1)),
+    {
+      expect_null(pluck(x, 1, "b", 1))
+      expect_error(chuck(x, 1, "b", 1), "unnamed vector")
+    }
+  )
+})

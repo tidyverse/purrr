@@ -64,6 +64,10 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `pluck()` now dispatches properly with S3 vectors. The vector class
+  must implement a `length()` method for numeric indexing and a
+  `names()` method for string indexing.
+
 * New `.else` argument for `map_if()` and `modify_if()`. They take an
   alternative function that is mapped over elements of the input for
   which the predicate function returns `FALSE` (#324).
