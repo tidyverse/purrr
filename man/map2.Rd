@@ -83,7 +83,7 @@ name and numeric vectors index by position; use a list to index
 by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or

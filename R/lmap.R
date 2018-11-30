@@ -85,6 +85,16 @@ lmap_if <- function(.x, .p, .f, ...) {
   sel <- which(probe(.x, .p))
   lmap_at(.x, sel, .f, ...)
 }
+#' @rdname lmap
+#' @export
+lmap_if_else <- function(.x, .p, .if, .else, ...) {
+  sel <- probe(.x, .p)
+
+  .x <- lmap_at(.x, which(sel), .if, ...)
+  .x <- lmap_at(.x, which(!sel), .else, ...)
+
+  .x
+}
 
 #' @rdname lmap
 #' @export

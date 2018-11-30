@@ -86,6 +86,12 @@ test_that("modify_if() requires predicate functions", {
   expect_error(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), ", not a logical vector of length 2")
 })
 
+test_that("modify_if_else() modifies true and false elements", {
+  exp <- modify_if(iris, negate(is.factor), as.integer)
+  exp <- modify_if(exp, is.factor, as.character)
+  expect_identical(modify_if_else(iris, is.factor, as.character, as.integer), exp)
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {

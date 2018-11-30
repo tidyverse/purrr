@@ -82,6 +82,13 @@
 #' y <- c(TRUE, FALSE)
 #' modify2(x, y, ~ if (.y) .x else 0L)
 #'
+#' # Use a predicate function to decide whether to map a function:
+#' modify_if(iris, is.factor, as.character)
+#'
+#' # Specify an alternative with the if-else variant:
+#' modify_if_else(iris, is.factor, as.character, as.integer)
+#'
+#'
 #' # Modify at specified depth ---------------------------
 #' l1 <- list(
 #'   obj1 = list(
@@ -139,6 +146,25 @@ modify_if.default <- function(.x, .p, .f, ...) {
 
   for (i in seq_along(.x)[sel]) {
     .x[[i]] <- .f(.x[[i]], ...)
+  }
+
+  .x
+}
+
+#' @rdname modify
+#' @export
+modify_if_else <- function(.x, .p, .if, .else, ...) {
+  .if <- as_mapper(.if, ...)
+  .else <- as_mapper(.else, ...)
+
+  sel <- probe(.x, .p)
+  index <- seq_along(.x)
+
+  for (i in index[sel]) {
+    .x[[i]] <- .if(.x[[i]], ...)
+  }
+  for (i in index[!sel]) {
+    .x[[i]] <- .else(.x[[i]], ...)
   }
 
   .x

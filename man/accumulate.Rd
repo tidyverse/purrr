@@ -20,7 +20,7 @@ For \code{reduce2()}, a 3-argument function. The function will be passed the
 accumulated value as the first argument, the next value of \code{.x} as the
 second argument, and the next value of \code{.y} as the third argument.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{x[[1]]}. This is useful if

@@ -37,7 +37,7 @@
 #' @param .at A character vector of names, positive numeric vector of
 #'   positions to include, or a negative numeric vector of positions to
 #'   exlude. Only those elements corresponding to `.at` will be modified.
-#' @param ... Additional arguments passed on to `.f`.
+#' @param ... Additional arguments passed on to the mapped function.
 #' @return All functions return a vector the same length as `.x`.
 #'
 #'   `map()` returns a list, `map_lgl()` a logical vector, `map_int()` an
@@ -91,6 +91,13 @@
 #' l2 %>% map(list("num", 3))
 #' l2 %>% map_int(list("num", 3), .default = NA)
 #'
+#'
+#' # Use a predicate function to decide whether to map a function:
+#' map_if(iris, is.factor, as.character)
+#'
+#' # Specify an alternative with the if-else variant:
+#' map_if_else(iris, is.factor, as.character, as.integer)
+#'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
 #' mtcars %>%
@@ -136,6 +143,20 @@ map_at <- function(.x, .at, .f, ...) {
   out <- list_along(.x)
   out[sel]  <- map(.x[sel], .f, ...)
   out[!sel] <- .x[!sel]
+
+  set_names(out, names(.x))
+}
+#' @rdname map
+#' @param .if,.else `.if` is a function applied to elements of `.x`
+#'   for which `.p` returns `TRUE` and `.else` is a function applied
+#'   to `FALSE` elements.
+#' @export
+map_if_else <- function(.x, .p, .if, .else, ...) {
+  sel <- probe(.x, .p)
+
+  out <- list_along(.x)
+  out[sel]  <- map(.x[sel], .if, ...)
+  out[!sel]  <- map(.x[!sel], .else, ...)
 
   set_names(out, names(.x))
 }
