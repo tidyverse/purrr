@@ -39,11 +39,7 @@
 #'
 #' # If you need to find all positions, use map_lgl():
 #' which(map_lgl(x, "foo"))
-detect <- function(.x, .f, ..., .right = FALSE, .p) {
-  if (!missing(.p)) {
-    warn("`.p` has been renamed to `.f`", "purrr_2.2.3")
-    .f <- .p
-  }
+detect <- function(.x, .f, ..., .right = FALSE) {
   .f <- as_mapper(.f, ...)
 
   for (i in index(.x, .right)) {
@@ -54,11 +50,7 @@ detect <- function(.x, .f, ..., .right = FALSE, .p) {
 
 #' @export
 #' @rdname detect
-detect_index <- function(.x, .f, ..., .right = FALSE, .p) {
-  if (!missing(.p)) {
-    warn("`.p` has been renamed to `.f`", "purrr_2.2.3")
-    .f <- .p
-  }
+detect_index <- function(.x, .f, ..., .right = FALSE) {
   .f <- as_mapper(.f, ...)
 
   for (i in index(.x, .right)) {

@@ -5,9 +5,9 @@
 \alias{detect_index}
 \title{Find the value or position of the first match}
 \usage{
-detect(.x, .f, ..., .right = FALSE, .p)
+detect(.x, .f, ..., .right = FALSE)
 
-detect_index(.x, .f, ..., .right = FALSE, .p)
+detect_index(.x, .f, ..., .right = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -38,11 +38,6 @@ to extract named attributes. If a component is not present, the value of
 \item{.right}{If \code{FALSE}, the default, starts at the beginning
 of the vector and move towards the end; if \code{TRUE}, starts at the end
 of the vector and moves towards the beginning.}
-
-\item{.p}{A predicate function to apply on each element of \code{.x}.
-\code{some()} returns \code{TRUE} when \code{.p} is \code{TRUE} for at least one
-element. \code{every()} returns \code{TRUE} when \code{.p} is \code{TRUE} for all
-elements.}
 }
 \value{
 \code{detect} the value of the first item that matches the

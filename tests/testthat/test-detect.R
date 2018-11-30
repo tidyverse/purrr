@@ -22,13 +22,3 @@ test_that("has_element checks whether a list contains an object", {
   expect_true(has_element(list(1, 2), 1))
   expect_false(has_element(list(1, 2), 3))
 })
-
-test_that("detect functions still work with `.p`", {
-  is_even <- function(x) x %% 2 == 0
-  expect_warning(regex = "renamed to `.f`",
-    expect_identical(detect(1:3, .p = is_even), 2L)
-  )
-  expect_warning(regex = "renamed to `.f`",
-    expect_identical(detect_index(1:3, .p = is_even), 2L)
-  )
-})
