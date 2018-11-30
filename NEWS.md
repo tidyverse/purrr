@@ -64,9 +64,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
-* New `map_if_else()` and `modify_if_else()` variants. They take two
-  functions to map over a vector and one predicate function that
-  decides which function to apply to each element (#324).
+* New `.else` argument for `map_if()` and `modify_if()`. They take an
+  alternative function that is mapped over elements of the input for
+  which the predicate function returns `FALSE` (#324).
 
 * Functions taking predicates (`map_if()`, `keep()`, `some()`,
   `every()`, `keep()`, etc) now fail with an informative message when

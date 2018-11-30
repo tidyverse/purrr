@@ -5,7 +5,6 @@
 \alias{modify.default}
 \alias{modify_if}
 \alias{modify_if.default}
-\alias{modify_if_else}
 \alias{modify_at}
 \alias{modify_at.default}
 \alias{modify2}
@@ -19,11 +18,9 @@ modify(.x, .f, ...)
 
 \method{modify}{default}(.x, .f, ...)
 
-modify_if(.x, .p, .f, ...)
+modify_if(.x, .p, .f, ..., .else = NULL)
 
-\method{modify_if}{default}(.x, .p, .f, ...)
-
-modify_if_else(.x, .p, .if, .else, ...)
+\method{modify_if}{default}(.x, .p, .f, ..., .else = NULL)
 
 modify_at(.x, .at, .f, ...)
 
@@ -69,13 +66,8 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
-\item{.if}{\code{.if} is a function applied to elements of \code{.x}
-for which \code{.p} returns \code{TRUE} and \code{.else} is a function applied
-to \code{FALSE} elements.}
-
-\item{.else}{\code{.if} is a function applied to elements of \code{.x}
-for which \code{.p} returns \code{TRUE} and \code{.else} is a function applied
-to \code{FALSE} elements.}
+\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
+returns \code{FALSE}.}
 
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
@@ -165,8 +157,8 @@ modify2(x, y, ~ if (.y) .x else 0L)
 # Use a predicate function to decide whether to map a function:
 modify_if(iris, is.factor, as.character)
 
-# Specify an alternative with the if-else variant:
-modify_if_else(iris, is.factor, as.character, as.integer)
+# Specify an alternative with the `.else` argument:
+modify_if(iris, is.factor, as.character, .else = as.integer)
 
 
 # Modify at specified depth ---------------------------

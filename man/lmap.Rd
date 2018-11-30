@@ -3,15 +3,12 @@
 \name{lmap}
 \alias{lmap}
 \alias{lmap_if}
-\alias{lmap_if_else}
 \alias{lmap_at}
 \title{Apply a function to list-elements of a list}
 \usage{
 lmap(.x, .f, ...)
 
-lmap_if(.x, .p, .f, ...)
-
-lmap_if_else(.x, .p, .if, .else, ...)
+lmap_if(.x, .p, .f, ..., .else = NULL)
 
 lmap_at(.x, .at, .f, ...)
 }
@@ -29,13 +26,8 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
-\item{.if}{\code{.if} is a function applied to elements of \code{.x}
-for which \code{.p} returns \code{TRUE} and \code{.else} is a function applied
-to \code{FALSE} elements.}
-
-\item{.else}{\code{.if} is a function applied to elements of \code{.x}
-for which \code{.p} returns \code{TRUE} and \code{.else} is a function applied
-to \code{FALSE} elements.}
+\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
+returns \code{FALSE}.}
 
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to

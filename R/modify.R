@@ -85,8 +85,8 @@
 #' # Use a predicate function to decide whether to map a function:
 #' modify_if(iris, is.factor, as.character)
 #'
-#' # Specify an alternative with the if-else variant:
-#' modify_if_else(iris, is.factor, as.character, as.integer)
+#' # Specify an alternative with the `.else` argument:
+#' modify_if(iris, is.factor, as.character, .else = as.integer)
 #'
 #'
 #' # Modify at specified depth ---------------------------
@@ -135,36 +135,25 @@ modify.default <- function(.x, .f, ...) {
 
 #' @rdname modify
 #' @export
-modify_if <- function(.x, .p, .f, ...) {
+modify_if <- function(.x, .p, .f, ..., .else = NULL) {
   UseMethod("modify_if")
 }
 #' @rdname modify
 #' @export
-modify_if.default <- function(.x, .p, .f, ...) {
-  .f <- as_mapper(.f, ...)
-  sel <- probe(.x, .p)
-
-  for (i in seq_along(.x)[sel]) {
-    .x[[i]] <- .f(.x[[i]], ...)
-  }
-
-  .x
-}
-
-#' @rdname modify
-#' @export
-modify_if_else <- function(.x, .p, .if, .else, ...) {
-  .if <- as_mapper(.if, ...)
-  .else <- as_mapper(.else, ...)
-
+modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
   sel <- probe(.x, .p)
   index <- seq_along(.x)
 
+  .f <- as_mapper(.f, ...)
   for (i in index[sel]) {
-    .x[[i]] <- .if(.x[[i]], ...)
+    .x[[i]] <- .f(.x[[i]], ...)
   }
-  for (i in index[!sel]) {
-    .x[[i]] <- .else(.x[[i]], ...)
+
+  if (!is_null(.else)) {
+    .else <- as_mapper(.else, ...)
+    for (i in index[!sel]) {
+      .x[[i]] <- .else(.x[[i]], ...)
+    }
   }
 
   .x

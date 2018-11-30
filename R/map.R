@@ -95,8 +95,8 @@
 #' # Use a predicate function to decide whether to map a function:
 #' map_if(iris, is.factor, as.character)
 #'
-#' # Specify an alternative with the if-else variant:
-#' map_if_else(iris, is.factor, as.character, as.integer)
+#' # Specify an alternative with the `.else` argument:
+#' map_if(iris, is.factor, as.character, .else = as.integer)
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
@@ -125,13 +125,20 @@ map <- function(.x, .f, ...) {
   .Call(map_impl, environment(), ".x", ".f", "list")
 }
 #' @rdname map
+#' @param .else A function applied to elements of `.x` for which `.p`
+#'   returns `FALSE`.
 #' @export
-map_if <- function(.x, .p, .f, ...) {
+map_if <- function(.x, .p, .f, ..., .else = NULL) {
   sel <- probe(.x, .p)
 
   out <- list_along(.x)
   out[sel]  <- map(.x[sel], .f, ...)
-  out[!sel] <- .x[!sel]
+
+  if (is_null(.else)) {
+    out[!sel] <- .x[!sel]
+  } else {
+    out[!sel]  <- map(.x[!sel], .else, ...)
+  }
 
   set_names(out, names(.x))
 }
@@ -146,21 +153,6 @@ map_at <- function(.x, .at, .f, ...) {
 
   set_names(out, names(.x))
 }
-#' @rdname map
-#' @param .if,.else `.if` is a function applied to elements of `.x`
-#'   for which `.p` returns `TRUE` and `.else` is a function applied
-#'   to `FALSE` elements.
-#' @export
-map_if_else <- function(.x, .p, .if, .else, ...) {
-  sel <- probe(.x, .p)
-
-  out <- list_along(.x)
-  out[sel]  <- map(.x[sel], .if, ...)
-  out[!sel]  <- map(.x[!sel], .else, ...)
-
-  set_names(out, names(.x))
-}
-
 
 #' @rdname map
 #' @export

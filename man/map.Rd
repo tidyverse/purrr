@@ -4,7 +4,6 @@
 \alias{map}
 \alias{map_if}
 \alias{map_at}
-\alias{map_if_else}
 \alias{map_lgl}
 \alias{map_chr}
 \alias{map_int}
@@ -18,11 +17,9 @@
 \usage{
 map(.x, .f, ...)
 
-map_if(.x, .p, .f, ...)
+map_if(.x, .p, .f, ..., .else = NULL)
 
 map_at(.x, .at, .f, ...)
-
-map_if_else(.x, .p, .if, .else, ...)
 
 map_lgl(.x, .f, ...)
 
@@ -72,13 +69,12 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
+\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
+returns \code{FALSE}.}
+
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.}
-
-\item{.if, .else}{\code{.if} is a function applied to elements of \code{.x}
-for which \code{.p} returns \code{TRUE} and \code{.else} is a function applied
-to \code{FALSE} elements.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or
@@ -167,8 +163,8 @@ l2 \%>\% map_int(list("num", 3), .default = NA)
 # Use a predicate function to decide whether to map a function:
 map_if(iris, is.factor, as.character)
 
-# Specify an alternative with the if-else variant:
-map_if_else(iris, is.factor, as.character, as.integer)
+# Specify an alternative with the `.else` argument:
+map_if(iris, is.factor, as.character, .else = as.integer)
 
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2

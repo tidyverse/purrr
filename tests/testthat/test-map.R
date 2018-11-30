@@ -105,6 +105,6 @@ test_that("map_if requires predicate functions", {
   expect_error(map_if(1:3, ~ NA, ~ "foo"), ", not a missing value")
 })
 
-test_that("map_if_else() maps true and false elements", {
-  expect_identical(map_if_else(-1:1, ~ .x > 0, paste, ~ "bar", "suffix"), list("bar", "bar", "1 suffix"))
+test_that("`.else` maps false elements", {
+  expect_identical(map_if(-1:1, ~ .x > 0, paste, .else = ~ "bar", "suffix"), list("bar", "bar", "1 suffix"))
 })
