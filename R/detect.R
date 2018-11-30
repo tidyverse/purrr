@@ -43,8 +43,11 @@ detect <- function(.x, .f, ..., .right = FALSE) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
 
   for (i in index(.x, .right)) {
-    if (is_true(.f(.x[[i]], ...))) return(.x[[i]])
+    if (.f(.x[[i]], ...)) {
+      return(.x[[i]])
+    }
   }
+
   NULL
 }
 
@@ -54,8 +57,11 @@ detect_index <- function(.x, .f, ..., .right = FALSE) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
 
   for (i in index(.x, .right)) {
-    if (is_true(.f(.x[[i]], ...))) return(i)
+    if (.f(.x[[i]], ...)) {
+      return(i)
+    }
   }
+
   0L
 }
 
