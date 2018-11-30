@@ -82,6 +82,13 @@
 #' y <- c(TRUE, FALSE)
 #' modify2(x, y, ~ if (.y) .x else 0L)
 #'
+#' # Use a predicate function to decide whether to map a function:
+#' modify_if(iris, is.factor, as.character)
+#'
+#' # Specify an alternative with the `.else` argument:
+#' modify_if(iris, is.factor, as.character, .else = as.integer)
+#'
+#'
 #' # Modify at specified depth ---------------------------
 #' l1 <- list(
 #'   obj1 = list(
@@ -128,17 +135,25 @@ modify.default <- function(.x, .f, ...) {
 
 #' @rdname modify
 #' @export
-modify_if <- function(.x, .p, .f, ...) {
+modify_if <- function(.x, .p, .f, ..., .else = NULL) {
   UseMethod("modify_if")
 }
 #' @rdname modify
 #' @export
-modify_if.default <- function(.x, .p, .f, ...) {
-  .f <- as_mapper(.f, ...)
+modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
   sel <- probe(.x, .p)
+  index <- seq_along(.x)
 
-  for (i in seq_along(.x)[sel]) {
+  .f <- as_mapper(.f, ...)
+  for (i in index[sel]) {
     .x[[i]] <- .f(.x[[i]], ...)
+  }
+
+  if (!is_null(.else)) {
+    .else <- as_mapper(.else, ...)
+    for (i in index[!sel]) {
+      .x[[i]] <- .else(.x[[i]], ...)
+    }
   }
 
   .x

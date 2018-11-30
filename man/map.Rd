@@ -17,7 +17,7 @@
 \usage{
 map(.x, .f, ...)
 
-map_if(.x, .p, .f, ...)
+map_if(.x, .p, .f, ..., .else = NULL)
 
 map_at(.x, .at, .f, ...)
 
@@ -60,7 +60,7 @@ name and numeric vectors index by position; use a list to index
 by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -68,6 +68,9 @@ Alternatively, if the elements of \code{.x} are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
+
+\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
+returns \code{FALSE}.}
 
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
@@ -155,6 +158,13 @@ l2 \%>\% map(c(2, 2))
 # and .default to provide a default value if the element does not exist
 l2 \%>\% map(list("num", 3))
 l2 \%>\% map_int(list("num", 3), .default = NA)
+
+
+# Use a predicate function to decide whether to map a function:
+map_if(iris, is.factor, as.character)
+
+# Specify an alternative with the `.else` argument:
+map_if(iris, is.factor, as.character, .else = as.integer)
 
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2
