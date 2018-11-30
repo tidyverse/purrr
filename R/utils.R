@@ -125,12 +125,18 @@ paste_line <- function(...) {
 }
 
 # From rlang
-friendly_type_of <- function(x) {
+friendly_type_of <- function(x, length = FALSE) {
   if (is.object(x)) {
-    sprintf("a `%s` object", paste_classes(x))
-  } else {
-    as_friendly_type(typeof(x))
+    return(sprintf("a `%s` object", paste_classes(x)))
   }
+
+  friendly <- as_friendly_type(typeof(x))
+
+  if (length && is_vector(x)) {
+    friendly <- paste0(friendly, sprintf(" of length %s", length(x)))
+  }
+
+  friendly
 }
 as_friendly_type <- function(type) {
   switch(type,
@@ -174,4 +180,8 @@ as_friendly_type <- function(type) {
 }
 paste_classes <- function(x) {
   paste(class(x), collapse = "/")
+}
+
+is_bool <- function(x) {
+  is_logical(x, n = 1) && !is.na(x)
 }

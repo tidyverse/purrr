@@ -16,3 +16,8 @@ test_that("some returns FALSE if all elements are FALSE", {
   expect_false(some(x, isTRUE))
   expect_true(some(x[1], negate(isTRUE)))
 })
+
+test_that("every and some require predicate functions", {
+  expect_error(some(1:3, ~ NA), ", not a missing value")
+  expect_error(every(1:3, ~ c(TRUE, FALSE)), ", not a logical vector of length 2")
+})

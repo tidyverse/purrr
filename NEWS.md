@@ -64,6 +64,10 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* Functions taking predicates (`some()`, `every()`, `keep()`, etc) now
+  fail with an informative message when the return value is not a
+  scalar logical (#470).
+
 * `pluck()` now supports primitive functions (#404).
 
 * New `.rev` argument in `compose()`. If set to `FALSE`, the functions

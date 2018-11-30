@@ -116,8 +116,11 @@ cross <- function(.l, .filter = NULL) {
     # NULL elements are removed later on.
     if (!is.null(.filter)) {
       is_to_filter <- do.call(".filter", unname(out[[i]]))
-      if (!is.logical(is_to_filter) || !length(is_to_filter) == 1) {
-        stop("The filter function must return TRUE or FALSE", call. = FALSE)
+      if (!is_bool(is_to_filter)) {
+        abort(sprintf(
+          "The filter function must return a single logical `TRUE` or `FALSE`, not %s",
+          as_predicate_friendly_type_of(is_to_filter)
+        ))
       }
       if (is_to_filter) {
         out[i] <- list(NULL)
