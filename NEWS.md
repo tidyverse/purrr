@@ -68,6 +68,12 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   `every()`, `keep()`, etc) now fail with an informative message when
   the return value is not `TRUE` or `FALSE` (#470).
 
+  This is a breaking change for `every()` and `some()` which were
+  documented to be more liberal in the values they accepted as logical
+  (any vector was considered `TRUE` if not a single `FALSE` value, no
+  matter its length). These functions signal soft-deprecation warnings
+  instead of a hard failure.
+
 * `pluck()` now supports primitive functions (#404).
 
 * New `.rev` argument in `compose()`. If set to `FALSE`, the functions
