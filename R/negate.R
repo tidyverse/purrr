@@ -18,7 +18,7 @@ negate <- function(.p, .default = FALSE) {
   .p <- as_mapper(.p)
 
   body(.p) <- expr({
-    ! ( !! body(.p) )
+    !(!!body(.p))
   })
 
   .p
