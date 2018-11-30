@@ -113,3 +113,39 @@ plucker <- function(i, default) {
     env = caller_env()
   )
 }
+
+as_predicate <- function(.fn, ..., .mapper, .deprecate = FALSE) {
+  if (.mapper) {
+    .fn <- as_mapper(.fn, ...)
+  }
+
+  function(...) {
+    out <- .fn(...)
+
+    if (!is_bool(out)) {
+      msg <- sprintf(
+        "Predicate functions must return a single logical `TRUE` or `FALSE`, not %s",
+        as_predicate_friendly_type_of(out)
+      )
+      if (.deprecate) {
+        msg <- paste_line(
+          "Returning complex values from a predicate function is soft-deprecated as of purrr 0.3.0.",
+          msg
+        )
+        signal_soft_deprecated(msg)
+      } else {
+        abort(msg)
+      }
+    }
+
+    out
+  }
+}
+
+as_predicate_friendly_type_of <- function(x) {
+  if (is_na(x)) {
+    "a missing value"
+  } else {
+    friendly_type_of(x, length = TRUE)
+  }
+}

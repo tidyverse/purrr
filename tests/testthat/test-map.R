@@ -100,3 +100,7 @@ test_that("primitive dispatch correctly", {
   x <- structure(list(), class = "test_class")
   expect_identical(map(list(x, x), as.character), list("dispatched!", "dispatched!"))
 })
+
+test_that("map_if requires predicate functions", {
+  expect_error(map_if(1:3, ~ NA, ~ "foo"), ", not a missing value")
+})
