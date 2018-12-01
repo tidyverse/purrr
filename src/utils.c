@@ -3,8 +3,8 @@
 
 SEXP sym_protect(SEXP x) {
   if (TYPEOF(x) == LANGSXP || TYPEOF(x) == SYMSXP) {
-    SEXP quote_head = Rf_lang3(Rf_install(":::"), Rf_install("base"), Rf_install("quote"));
-    return(Rf_lang2(quote_head, x));
+    SEXP quote_prim = Rf_eval(Rf_install("quote"), R_BaseEnv);
+    return(Rf_lang2(quote_prim, x));
   } else {
     return x;
   }
