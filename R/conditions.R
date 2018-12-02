@@ -35,15 +35,7 @@ stop_bad_type <- function(x,
                           arg = NULL,
                           message = NULL,
                           .subclass = NULL) {
-  if (is_null(what)) {
-    if (is_null(arg)) {
-      what <- "Object"
-    } else if (is_string(arg)) {
-      what <- sprintf("`%s`", arg)
-    } else {
-      stop_bad_type(arg, "`NULL` or a string", arg = "arg")
-    }
-  }
+  what <- what %||% what_bad_object(arg) %||% "Object"
   actual <- actual %||% friendly_type_of(x)
   message <- message %||% sprintf(
     "%s must be %s, not %s",
@@ -74,14 +66,7 @@ stop_bad_element_type <- function(x,
                                   message = NULL,
                                   .subclass = NULL) {
   stopifnot(is_integerish(index, n = 1, finite = TRUE))
-
-  if (is_null(arg)) {
-    where <- ""
-  } else {
-    where <- sprintf(" of `%s`", as_string(arg))
-  }
-  what <- what %||% "Element"
-  what <- sprintf("%s %d%s", what, index, where)
+  what <- what_bad_element(what, arg, index)
 
   stop_bad_type(
     x,
@@ -94,4 +79,24 @@ stop_bad_element_type <- function(x,
     message = message,
     .subclass = c(.subclass, "purrr_error_bad_element_type")
   )
+}
+
+what_bad_object <- function(arg) {
+  if (is_null(arg)) {
+    NULL
+  } else if (is_string(arg)) {
+    sprintf("`%s`", arg)
+  } else {
+    stop_bad_type(arg, "`NULL` or a string", arg = "arg")
+  }
+}
+what_bad_element <- function(what, arg, index) {
+  if (is_null(arg)) {
+    where <- ""
+  } else {
+    where <- sprintf(" of `%s`", as_string(arg))
+  }
+
+  what <- what %||% "Element"
+  sprintf("%s %d%s", what, index, where)
 }
