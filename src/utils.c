@@ -1,5 +1,6 @@
 #define R_NO_REMAP
 #include <Rinternals.h>
+#include <stdbool.h>
 
 SEXP sym_protect(SEXP x) {
   if (TYPEOF(x) == LANGSXP || TYPEOF(x) == SYMSXP) {
@@ -21,4 +22,19 @@ const char* friendly_typeof(SEXP x) {
   UNPROTECT(2);
 
   return CHAR(STRING_ELT(type, 0));
+}
+
+bool is_vector(SEXP x) {
+  switch (TYPEOF(x)) {
+  case LGLSXP:
+  case INTSXP:
+  case REALSXP:
+  case CPLXSXP:
+  case STRSXP:
+  case RAWSXP:
+  case VECSXP:
+    return true;
+  default:
+    return false;
+  }
 }
