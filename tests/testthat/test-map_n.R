@@ -1,7 +1,7 @@
 context("pmap")
 
 test_that("input must be a list of vectors", {
-  expect_error(pmap(environment(), identity), "`.x` must be a list, not an environment")
+  expect_error(pmap(environment(), identity), "`.l` must be a list, not an environment")
   expect_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
 })
 

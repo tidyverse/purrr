@@ -195,7 +195,7 @@ static bool is_function(SEXP x) {
 
 SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   if (TYPEOF(index) != VECSXP) {
-    Rf_errorcall(R_NilValue, "`index` must be a list, not a %s", Rf_type2char(TYPEOF(index)));
+    stop_bad_type(index, "a list", NULL, "where");
   }
 
   int n = Rf_length(index);
