@@ -43,7 +43,7 @@ test_that("can pluck by name and position", {
 
 test_that("require length 1 vectors", {
   expect_error(pluck(1, letters), "must have length 1")
-  expect_error(pluck(1, TRUE), "must be a character or numeric")
+  expect_error(pluck(1, TRUE), "Index 1 must be a character or numeric vector")
 })
 
 test_that("special indexes never match", {

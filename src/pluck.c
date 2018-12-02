@@ -2,9 +2,10 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <stdbool.h>
-#include "coerce.h"
-#include "backports.h"
 #include <string.h>
+#include "backports.h"
+#include "coerce.h"
+#include "conditions.h"
 
 static int check_input_lengths(int n, int index_n, int i, bool strict);
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
@@ -100,7 +101,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   default:
-    Rf_errorcall(R_NilValue, "Index %d must be a character or numeric vector.", i + 1);
+    stop_bad_element_type(x, i + 1, "a character or numeric vector", "Index", NULL);
   }
 }
 
