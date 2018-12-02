@@ -25,14 +25,14 @@ void stop_bad_type(SEXP x, const char* expected, const char* what, const char* a
   Rf_error("Internal error: `stop_bad_type()` should have thrown earlier");
 }
 
-void stop_bad_element_type(SEXP x, int index, const char* expected, const char* what, const char* arg) {
+void stop_bad_element_type(SEXP x, R_xlen_t index, const char* expected, const char* what, const char* arg) {
   SEXP fn = Rf_lang3(Rf_install(":::"),
                      Rf_install("purrr"),
                      Rf_install("stop_bad_element_type"));
 
   SEXP call = Rf_lang6(PROTECT(fn),
                        PROTECT(sym_protect(x)),
-                       PROTECT(Rf_ScalarInteger(index)),
+                       PROTECT(Rf_ScalarReal(index)),
                        PROTECT(Rf_mkString(expected)),
                        what ? PROTECT(Rf_mkString(what)) : R_NilValue,
                        arg ? PROTECT(Rf_mkString(arg)) : R_NilValue);
