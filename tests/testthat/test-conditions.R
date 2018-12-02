@@ -46,3 +46,11 @@ test_that("stop_bad_element_type() constructs type errors", {
     "purrr_error_bad_element_type"
   )
 })
+
+test_that("stop_bad_element_type() accepts `what`", {
+  expect_error(
+    stop_bad_element_type(1:3, 3, "a foobaz", what = "Result"),
+    "Result 3 must be a foobaz, not an integer vector",
+    "purrr_error_bad_element_type"
+  )
+})

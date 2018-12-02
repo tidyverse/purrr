@@ -23,7 +23,7 @@ SEXP flatten_impl(SEXP x) {
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
     if (!is_vector(x_j) && x_j != R_NilValue) {
-      stop_bad_element_type(x_j, j + 1, "a vector", ".x");
+      stop_bad_element_type(x_j, j + 1, "a vector", NULL, ".x");
     }
 
     n += Rf_length(x_j);

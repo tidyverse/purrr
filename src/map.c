@@ -152,7 +152,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
-      stop_bad_element_type(j_val, j + 1, "a vector", l_name);
+      stop_bad_element_type(j_val, j + 1, "a vector", NULL, l_name);
     }
 
     int nj = Rf_length(j_val);

@@ -2,9 +2,9 @@
 #'
 #' @param x The object whose type doesn't match `expected`.
 #' @param what What does `x` represent? This is used to introduce the
-#'   object in the error message. If `NULL` and `arg` is `NULL` as
-#'   well, defaults to `"Object"`. Otherwise defaults to `arg` wrapped
-#'   in backquotes.
+#'   object in the error message and should be capitalised. If `NULL`
+#'   and `arg` is `NULL` as well, defaults to `"Object"`. Otherwise
+#'   defaults to `arg` wrapped in backquotes.
 #' @param expected,actual The expected and actual type of `x`, in
 #'   friendly representation. If `actual` is not supplied, `x` is
 #'   passed to `friendly_type_of()` to provide a default value.
@@ -55,9 +55,9 @@ stop_bad_type <- function(x,
   abort(
     message,
     x = x,
-    what = what,
     expected = expected,
     actual = actual,
+    what = what,
     arg = arg,
     ...,
     .subclass = c(.subclass, "purrr_error_bad_type")
@@ -69,6 +69,7 @@ stop_bad_element_type <- function(x,
                                   expected,
                                   ...,
                                   actual = NULL,
+                                  what = NULL,
                                   arg = NULL,
                                   message = NULL,
                                   .subclass = NULL) {
@@ -79,13 +80,14 @@ stop_bad_element_type <- function(x,
   } else {
     where <- sprintf(" of `%s`", as_string(arg))
   }
-  what <- sprintf("Element %d%s", index, where)
+  what <- what %||% "Element"
+  what <- sprintf("%s %d%s", what, index, where)
 
   stop_bad_type(
     x,
     expected,
-    what = what,
     actual = actual,
+    what = what,
     arg = arg,
     index = index,
     ...,
