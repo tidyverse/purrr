@@ -12,5 +12,7 @@ const char* friendly_typeof(SEXP x);
 
 bool is_vector(SEXP x);
 
+SEXP lang7(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w, SEXP x, SEXP y);
+
 
 #endif

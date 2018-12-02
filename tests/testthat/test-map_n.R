@@ -6,7 +6,7 @@ test_that("input must be a list of vectors", {
 })
 
 test_that("elements must be same length", {
-  expect_error(pmap(list(1:2, 1:3), identity), "Element 1 of `.l` must have length 1 or 2, not 3")
+  expect_error(pmap(list(1:2, 1:3), identity), "Element 1 of `.l` must have length 1 or 3, not 2")
 })
 
 test_that("handles any length 0 input", {

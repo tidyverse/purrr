@@ -172,11 +172,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     int nj = Rf_length(j_val);
 
     if (nj != 1 && nj != n) {
-      Rf_errorcall(R_NilValue,
-                   "Element %d of `.l` must have length 1 or %d, not %d",
-                   j + 1,
-                   nj,
-                   n);
+      stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
     }
   }
 

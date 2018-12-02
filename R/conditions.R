@@ -23,7 +23,7 @@
 #' packages might tweak the friendly representation at any time.
 #'
 #' @keywords internal
-#' @name purrr-conditions
+#' @name purrr-conditions-type
 #' @noRd
 NULL
 
@@ -99,4 +99,79 @@ what_bad_element <- function(what, arg, index) {
 
   what <- what %||% "Element"
   sprintf("%s %d%s", what, index, where)
+}
+
+
+#' Error conditions for bad lengths
+#'
+#' @inheritParams purrr-conditions-type
+#' @param actual,expected The expected and actual lengths. If `actual`
+#'   is not supplied, `length(x)` is taken as default.
+#' @param recycle Whether `x` is also allowed to have length 1.
+#'
+#' @name purrr-conditions-length
+NULL
+
+stop_bad_length <- function(x,
+                            expected,
+                            ...,
+                            actual = NULL,
+                            what = NULL,
+                            arg = NULL,
+                            message = NULL,
+                            .recycle = FALSE,
+                            .subclass = NULL) {
+  what <- what %||% what_bad_object(arg) %||% "Vector"
+  actual <- actual %||% length(x)
+
+  if (.recycle) {
+    expected <- sprintf("1 or %s", expected)
+  }
+
+  message <- message %||% sprintf("%s must have length %s, not %s", what, expected, actual)
+
+  if (!is_integerish(actual)) {
+    stop_bad_type(actual, "a single number", arg = "`actual`")
+  }
+  if (length(actual) != 1) {
+    stop_bad_length(actual, 1, arg = "`actual`")
+  }
+
+  abort(
+    message,
+    x = x,
+    expected = expected,
+    actual = actual,
+    what = what,
+    arg = arg,
+    ...,
+    .subclass = c(.subclass, "purrr_error_bad_length")
+  )
+}
+
+stop_bad_element_length <- function(x,
+                                    index,
+                                    expected,
+                                    ...,
+                                    actual = NULL,
+                                    what = NULL,
+                                    arg = NULL,
+                                    message = NULL,
+                                    .recycle = FALSE,
+                                    .subclass = NULL) {
+  stopifnot(is_integerish(index, n = 1, finite = TRUE))
+  what <- what_bad_element(what, arg, index)
+
+  stop_bad_length(
+    x,
+    expected,
+    actual = actual,
+    what = what,
+    arg = arg,
+    index = index,
+    ...,
+    message = message,
+    .recycle = .recycle,
+    .subclass = c(.subclass, "purrr_error_bad_element_length")
+  )
 }
