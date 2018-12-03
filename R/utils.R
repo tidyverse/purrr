@@ -202,3 +202,33 @@ friendly_type_of_element <- function(x) {
     abort("Expected a base vector type")
   )
 }
+
+#' Box a final value for early termination
+#'
+#' @description
+#'
+#' A value boxed with `done_box()` signals to its caller that it
+#' should stop iterating. Use it to shortcircuit a loop.
+#'
+#' @param x For `done_box()`, a value to box. For `is_done_box()`, a
+#'   value to test.
+#'
+#' @examples
+#' done_box(3)
+#'
+#' x <- done_box(3)
+#' is_done_box(x)
+#' @export
+done_box <- function(x) {
+  new_box(x, "rlang_done_box")
+}
+#' @rdname done_box
+#' @export
+is_done_box <- function(x) {
+  inherits(x, "rlang_done_box")
+}
+#' @export
+print.rlang_done_box <- function(x, ...) {
+  cat("<done>\n")
+  print(unbox(x))
+}

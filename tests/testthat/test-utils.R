@@ -29,3 +29,8 @@ test_that("has_names returns vector of logicals", {
   expect_equal(has_names(letters %>% set_names()), rep_along(letters, TRUE))
   expect_equal(has_names(letters), rep_along(letters, FALSE))
 })
+
+test_that("done_box() boxes values", {
+  expect_true(is_done_box(done_box(3)))
+  expect_identical(unbox(done_box(3)), 3)
+})
