@@ -210,6 +210,8 @@ friendly_type_of_element <- function(x) {
 #' A value boxed with `done_box()` signals to its caller that it
 #' should stop iterating. Use it to shortcircuit a loop.
 #'
+#' Currently, [reduce()] and [reduce2()] handle done boxes.
+#'
 #' @param x For `done_box()`, a value to box. For `is_done_box()`, a
 #'   value to test.
 #'

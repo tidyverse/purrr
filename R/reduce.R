@@ -19,6 +19,10 @@
 #'   function will be passed the accumulated value as the first
 #'   argument, the next value of `.x` as the second argument, and the
 #'   next value of `.y` as the third argument.
+#'
+#'   The reduction terminates early if `.f` returns a value wrapped in
+#'   a [done_box()].
+#'
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using `x[[1]]`. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
@@ -93,6 +97,19 @@
 #' x <- list(c(0, 1), c(2, 3), c(4, 5))
 #' y <- list(c(6, 7), c(8, 9))
 #' reduce2(x, y, paste)
+#'
+#' # You can shortcircuit a reduction and terminate it early by
+#' # returning a value wrapped in a done_box():
+#' paste3 <- function(x, y, sep = ".") {
+#'   out <- paste(x, y, sep = sep)
+#'   if (x == "b" || y == "b") {
+#'     done_box(out)
+#'   } else {
+#'     out
+#'   }
+#' }
+#' letters[1:4] %>% reduce(paste3)
+#' letters[1:4] %>% reduce2(c("-", ".", "-"), paste3)
 #' @export
 reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
   reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
@@ -122,6 +139,10 @@ reduce_impl <- function(.x, .f, ..., .init, .dir = "forward") {
 
   for (i in idx) {
     out <- fn(out, .x[[i]], ...)
+
+    if (is_done_box(out)) {
+      return(unbox(out))
+    }
   }
 
   out
@@ -187,6 +208,11 @@ reduce2_impl <- function(.x, .y, .f,
 
     if (.acc) {
       res[[x_i + offset]] <- out
+    }
+
+    if (is_done_box(out)) {
+      if (.acc) abort("TODO")
+      return(unbox(out))
     }
   }
 

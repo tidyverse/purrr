@@ -22,7 +22,10 @@ the first argument and the "next" value as the second argument.
 For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
 function will be passed the accumulated value as the first
 argument, the next value of \code{.x} as the second argument, and the
-next value of \code{.y} as the third argument.}
+next value of \code{.y} as the third argument.
+
+The reduction terminates early if \code{.f} returns a value wrapped in
+a \code{\link[=done_box]{done_box()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 

@@ -141,6 +141,13 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `reduce()` and `reduce2()` now terminate early when the function
+  returns a value wrapped in a `done_box()`.
+
+* New `done_box()` function. Use it to wrap a value and signal early
+  termination to a caller. Currently, `reduce()` and `reduce2()`
+  support done sentinels.
+
 * New `accumulate2()` function which is to `accumulate()` what
   `reduce2()` is to `reduce()`.
 

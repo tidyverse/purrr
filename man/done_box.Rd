@@ -16,6 +16,8 @@ value to test.}
 \description{
 A value boxed with \code{done_box()} signals to its caller that it
 should stop iterating. Use it to shortcircuit a loop.
+
+Currently, \code{\link[=reduce]{reduce()}} and \code{\link[=reduce2]{reduce2()}} handle done boxes.
 }
 \examples{
 done_box(3)
