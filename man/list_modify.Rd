@@ -44,14 +44,8 @@ str(list_modify(x, z = NULL))
 str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 
 
-# All these functions take dots with splicing. Use !!! or UQS() to
-# splice a list of arguments:
+# All these functions support tidy dots features. Use !!! to splice
+# a list of arguments:
 l <- list(new = 1, y = NULL, z = 5)
-str(list_modify(x, !!! l))
-
-# In update_list() you can also use quosures and formulas to
-# compute new values. This function is likely to be deprecated in
-# the future
-str(update_list(x, z1 = ~z[[1]]))
-str(update_list(x, z = rlang::quo(x + y)))
+str(list_modify(x, !!!l))
 }
