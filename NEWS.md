@@ -155,6 +155,9 @@
 
 ## Minor improvements and fixes
 
+* Fixed an infinite loop when partialised function is given the same
+  name as the original function (#387).
+
 * `partial()` now supports quasiquotation. When you unquote an
   argument, it is evaluated once and for all. This is more flexible
   than the `.lazy` argument since you can control the timing of

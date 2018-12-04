@@ -58,17 +58,15 @@ partial <- function(...f,
                     .env = NULL,
                     .lazy = NULL,
                     .first = TRUE) {
-  fn <- enquo(...f)
-  stopifnot(is.function(...f))
-
   args <- enquos(...)
 
+  fn_expr <- enexpr(...f)
   fn <- switch(typeof(...f),
     builtin = ,
     special =
       as_closure(...f),
     closure =
-      fn,
+      ...f,
     abort(sprintf("`...f` must be a function, not a %s", friendly_type_of(...f)))
   )
 
@@ -108,7 +106,8 @@ partial <- function(...f,
   structure(
     partialised,
     class = "purrr_partial_function",
-    body = call
+    body = call,
+    fn = fn_expr
   )
 }
 
@@ -117,7 +116,7 @@ print.purrr_partial_function <- function(x, ...) {
   cat("<partialised>\n")
 
   body <- quo_squash(partialised_body(x))
-  body[[1]] <- quo_squash(body[[1]])
+  body[[1]] <- partialised_fn(x)
   body(x) <- body
 
   # Remove reference to internal environment
@@ -127,3 +126,4 @@ print.purrr_partial_function <- function(x, ...) {
 }
 
 partialised_body <- function(x) attr(x, "body")
+partialised_fn <- function(x) attr(x, "fn")

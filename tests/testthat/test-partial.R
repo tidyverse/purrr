@@ -2,18 +2,18 @@ context("partial")
 
 test_that("dots are correctly placed in the signature", {
   out <- partialised_body(partial(runif, n = rpois(1, 5)))
-  exp <- expr((!!quo(runif))(n = !!quo(rpois(1, 5)), ...))
+  exp <- expr((!!runif)(n = !!quo(rpois(1, 5)), ...))
   expect_identical(out, exp)
 
   # Also tests that argument names are not eaten when .dots_first = TRUE
   out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
-  exp <- expr((!!quo(runif))(..., n = !!quo(rpois(1, 5))))
+  exp <- expr((!!runif)(..., n = !!quo(rpois(1, 5))))
   expect_identical(out, exp)
 })
 
 test_that("partial() also works without partialised arguments", {
-  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr((!!quo(runif))(...)))
-  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr((!!quo(runif))(...)))
+  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr((!!runif)(...)))
+  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr((!!runif)(...)))
 })
 
 test_that("no lazy evaluation means arguments aren't repeatedly evaluated", {
@@ -81,6 +81,12 @@ test_that("partial() squashes quosures before printing", {
 test_that("partial() handles primitives with named arguments after `...`", {
   expect_identical(partial(min, na.rm = TRUE)(1, NA), 1)
   expect_true(is_na(partial(min, na.rm = FALSE)(1, NA)))
+})
+
+test_that("partialised function does not infloop when given the same name (#387)", {
+  fn <- function(...) "foo"
+  fn <- partial(fn)
+  expect_identical(fn(), "foo")
 })
 
 
