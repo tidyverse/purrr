@@ -66,7 +66,7 @@ test_that("list_merge concatenates without needing names", {
 
 test_that("list_merge returns the non-empty list", {
   expect_equal(list_merge(list(3)), list(3))
-  expect_equal(list_merge(list(), 2), set_names(list(2), ""))
+  expect_equal(list_merge(list(), 2), list(2))
 })
 
 test_that("list_merge handles duplicate names", {

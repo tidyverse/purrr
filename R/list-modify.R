@@ -38,14 +38,12 @@
 #' l <- list(new = 1, y = NULL, z = 5)
 #' str(list_modify(x, !!!l))
 list_modify <- function(.x, ...) {
-  dots <- dots_list(...)
-  list_recurse(.x, dots, function(x, y) y)
+  list_recurse(.x, list2(...), function(x, y) y)
 }
 #' @export
 #' @rdname list_modify
 list_merge <- function(.x, ...) {
-  dots <- dots_list(...)
-  list_recurse(.x, dots, c)
+  list_recurse(.x, list2(...), c)
 }
 
 list_recurse <- function(x, y, base_case) {
@@ -53,7 +51,8 @@ list_recurse <- function(x, y, base_case) {
 
   if (is_empty(x)) {
     return(y)
-  } else if (is_empty(y)) {
+  }
+  if (is_empty(y)) {
     return(x)
   }
 
