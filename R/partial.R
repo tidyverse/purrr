@@ -4,26 +4,23 @@
 #' some of the arguments.  It is particularly useful in conjunction with
 #' functionals and other function operators.
 #'
-#' @section Design choices:
-#'
-#' There are many ways to implement partial function application in R.
-#' (see e.g. `dots` in \url{https://github.com/crowding/ptools} for another
-#' approach.)  This implementation is based on creating functions that are as
-#' similar as possible to the anonymous functions that you'd create by hand,
-#' if you weren't using `partial`.
-#'
 #' @param ...f a function. For the output source to read well, this should be a
 #'   named function.
 #' @param ... named arguments to `...f` that should be partially applied.
-#' @param .env the environment of the created function. Defaults to
-#'   [parent.frame()] and you should rarely need to modify this.
-#' @param .lazy If `TRUE` arguments evaluated lazily, if `FALSE`,
-#'   evaluated when `partial` is called.
+#'
+#'   These dots support quasiquotation and quosures. If you unquote a
+#'   value, it is evaluated once and for all when the argument is
+#'   partialised. Otherwise, it is evaluated each time the function is
+#'   called.
+#' @param .env Soft-deprecated as of purrr 0.3.0. The environments are
+#'   now captured via quosures.
 #' @param .first If `TRUE`, the partialized arguments are placed
 #'   to the front of the function signature. If `FALSE`, they are
 #'   moved to the back. Only useful to control position matching of
 #'   arguments when the partialized arguments are not named.
-#' @export
+#' @param .lazy Soft-deprecated as of purrr 0.3.0. Please unquote the
+#'   arguments that should be evaluated once and for all.
+#'
 #' @examples
 #' # Partial is designed to replace the use of anonymous functions for
 #' # filling in function arguments. Instead of:
@@ -43,8 +40,8 @@
 #' f()
 #' f()
 #'
-#' # You can override this by saying .lazy = FALSE
-#' f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+#' # If you unquote an argument, it is evaluated once and for all:
+#' f <- partial(runif, n = !!rpois(1, 5))
 #' f
 #' f()
 #' f()
@@ -55,32 +52,78 @@
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
-partial <- function(...f, ..., .env = parent.frame(), .lazy = TRUE,
+#' @export
+partial <- function(...f,
+                    ...,
+                    .env = NULL,
+                    .lazy = NULL,
                     .first = TRUE) {
+  fn <- enquo(...f)
   stopifnot(is.function(...f))
 
-  if (.lazy) {
-    fcall <- substitute(...f(...))
-  } else {
-    fcall <- make_call(substitute(...f), .args = list(...))
+  args <- enquos(...)
+
+  fn <- switch(typeof(...f),
+    builtin = ,
+    special =
+      as_closure(...f),
+    closure =
+      fn,
+    abort(sprintf("`...f` must be a function, not a %s", friendly_type_of(...f)))
+  )
+
+  if (!is_null(.env)) {
+    signal_soft_deprecated(paste_line(
+      "The `.env` argument is soft-deprecated as of purrr 0.3.0.",
+    ))
+  }
+  if (!is_null(.lazy)) {
+    signal_soft_deprecated(paste_line(
+      "The `.lazy` argument is soft-deprecated as of purrr 0.3.0.",
+      "Please unquote the arguments that should be evaluated once and for all.",
+      "",
+      "  # Before:",
+      "  partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)",
+      "",
+      "  # After:",
+      "  partial(fn, u = !!runif(1), n = !!rnorm(1))  # All constant",
+      "  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant"
+    ))
+    if (!.lazy) {
+      args <- map(args, eval_tidy, env = caller_env())
+    }
   }
 
   # Pass on ... from parent function
-  n <- length(fcall)
-  if (!.first && n > 1) {
-    tmp <- fcall[1]
-    tmp[[2]] <- quote(...)
-    tmp[seq(3, n + 1)] <- fcall[seq(2, n)]
-    names(tmp)[seq(3, n + 1)] <- names2(fcall)[seq(2, n)]
-    fcall <- tmp
+  if (.first) {
+    call <- call_modify(call2(fn), !!!args, ... = )
   } else {
-    fcall[[n + 1]] <- quote(...)
+    call <- call_modify(call2(fn), ... = , !!!args)
   }
 
-  args <- list("..." = quote(expr = ))
-  new_function(args, fcall, .env)
+  partialised <- function(...) {
+    eval_tidy(call)
+  }
+
+  structure(
+    partialised,
+    class = "purrr_partial_function",
+    body = call
+  )
 }
 
-make_call <- function(f, ..., .args = list()) {
-  as.call(c(f, ..., .args))
+#' @export
+print.purrr_partial_function <- function(x, ...) {
+  cat("<partialised>\n")
+
+  body <- quo_squash(partialised_body(x))
+  body[[1]] <- quo_squash(body[[1]])
+  body(x) <- body
+
+  # Remove reference to internal environment
+  x <- set_env(x, global_env())
+
+  print(x, ...)
 }
+
+partialised_body <- function(x) attr(x, "body")

@@ -155,6 +155,27 @@
 
 ## Minor improvements and fixes
 
+* `partial()` now supports quasiquotation. When you unquote an
+  argument, it is evaluated once and for all. This is more flexible
+  than the `.lazy` argument since you can control the timing of
+  evaluation for each argument. Consequently, `.lazy` is
+  soft-deprecated (#457).
+
+* `partial()` now calls `as_closure()` on primitive functions to
+  ensure argument matching (#360).
+
+* The `.lazy` argument of `partial()` is soft-deprecated in favour of
+  quasiquotation:
+
+  ```r
+  # Before
+  partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)
+
+  # After
+  partial(fn, u = !!runif(1), n = !!rnorm(1))  # All constant
+  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant
+  ```
+
 * New `rate_backoff()` and `rate_delay()` functions to create rate
   objects. You can pass rates to `insistently()`, `slowly()`, or the
   lower level function `rate_sleep()`. This will cause a function to

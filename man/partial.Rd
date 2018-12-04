@@ -4,20 +4,24 @@
 \alias{partial}
 \title{Partial apply a function, filling in some arguments.}
 \usage{
-partial(...f, ..., .env = parent.frame(), .lazy = TRUE,
-  .first = TRUE)
+partial(...f, ..., .env = NULL, .lazy = NULL, .first = TRUE)
 }
 \arguments{
 \item{...f}{a function. For the output source to read well, this should be a
 named function.}
 
-\item{...}{named arguments to \code{...f} that should be partially applied.}
+\item{...}{named arguments to \code{...f} that should be partially applied.
 
-\item{.env}{the environment of the created function. Defaults to
-\code{\link[=parent.frame]{parent.frame()}} and you should rarely need to modify this.}
+These dots support quasiquotation and quosures. If you unquote a
+value, it is evaluated once and for all when the argument is
+partialised. Otherwise, it is evaluated each time the function is
+called.}
 
-\item{.lazy}{If \code{TRUE} arguments evaluated lazily, if \code{FALSE},
-evaluated when \code{partial} is called.}
+\item{.env}{Soft-deprecated as of purrr 0.3.0. The environments are
+now captured via quosures.}
+
+\item{.lazy}{Soft-deprecated as of purrr 0.3.0. Please unquote the
+arguments that should be evaluated once and for all.}
 
 \item{.first}{If \code{TRUE}, the partialized arguments are placed
 to the front of the function signature. If \code{FALSE}, they are
@@ -29,16 +33,6 @@ Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.
 }
-\section{Design choices}{
-
-
-There are many ways to implement partial function application in R.
-(see e.g. \code{dots} in \url{https://github.com/crowding/ptools} for another
-approach.)  This implementation is based on creating functions that are as
-similar as possible to the anonymous functions that you'd create by hand,
-if you weren't using \code{partial}.
-}
-
 \examples{
 # Partial is designed to replace the use of anonymous functions for
 # filling in function arguments. Instead of:
@@ -58,8 +52,8 @@ f
 f()
 f()
 
-# You can override this by saying .lazy = FALSE
-f <- partial(runif, n = rpois(1, 5), .lazy = FALSE)
+# If you unquote an argument, it is evaluated once and for all:
+f <- partial(runif, n = !!rpois(1, 5))
 f
 f()
 f()
