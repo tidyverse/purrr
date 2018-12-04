@@ -4,16 +4,6 @@ test_that("dots are correctly placed in the signature", {
   out <- partialised_body(partial(runif, n = rpois(1, 5)))
   exp <- expr((!!runif)(n = !!quo(rpois(1, 5)), ...))
   expect_identical(out, exp)
-
-  # Also tests that argument names are not eaten when .dots_first = TRUE
-  out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
-  exp <- expr((!!runif)(..., n = !!quo(rpois(1, 5))))
-  expect_identical(out, exp)
-})
-
-test_that("partial() also works without partialised arguments", {
-  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr((!!runif)(...)))
-  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr((!!runif)(...)))
 })
 
 test_that("no lazy evaluation means arguments aren't repeatedly evaluated", {
@@ -89,13 +79,27 @@ test_that("partialised function does not infloop when given the same name (#387)
   expect_identical(fn(), "foo")
 })
 
+test_that("partial() handles `... =` arguments", {
+  fn <- function(...) list(...)
+
+  default <- partial(fn, "partial")
+  expect_identical(default(1), list("partial", 1))
+
+  after <- partial(fn, "partial", ... = )
+  expect_identical(after(1), list("partial", 1))
+
+  before <- partial(fn, ... = , "partial")
+  expect_identical(before(1), list(1, "partial"))
+})
+
 
 # Life cycle --------------------------------------------------------------
 
-test_that("`.lazy` and `.env` are soft-deprecated", {
+test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
   scoped_lifecycle_warnings()
   expect_warning(partial(list, "foo", .lazy = TRUE), "soft-deprecated")
   expect_warning(partial(list, "foo", .env = env()), "soft-deprecated")
+  expect_warning(partial(list, "foo", .first = TRUE, "soft-deprecated"))
 })
 
 test_that("`.lazy` still works", {
@@ -104,4 +108,19 @@ test_that("`.lazy` still works", {
   eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
   walk(1:10, ~eager())
   expect_identical(counter$n, 1)
+})
+
+test_that("`.first` still works", {
+  scoped_options(lifecycle_disable_warnings = TRUE)
+  out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
+  exp <- expr((!!runif)(..., n = !!quo(rpois(1, 5))))
+  expect_identical(out, exp)
+
+  # partial() also works without partialised arguments
+  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr((!!runif)(...)))
+  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr((!!runif)(...)))
+})
+
+test_that("`...f` still works", {
+  expect_error(partial(...f = list, x = "foo"), "renamed")
 })

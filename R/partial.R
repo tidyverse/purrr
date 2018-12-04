@@ -4,9 +4,13 @@
 #' some of the arguments.  It is particularly useful in conjunction with
 #' functionals and other function operators.
 #'
-#' @param ...f a function. For the output source to read well, this should be a
+#' @param .f a function. For the output source to read well, this should be a
 #'   named function.
 #' @param ... named arguments to `...f` that should be partially applied.
+#'
+#'   Pass an empty `... = ` argument to specify the position of future
+#'   arguments relative to partialised ones. See
+#'   [rlang::call_modify()] to learn more about this syntax.
 #'
 #'   These dots support quasiquotation and quosures. If you unquote a
 #'   value, it is evaluated once and for all when the argument is
@@ -14,10 +18,9 @@
 #'   called.
 #' @param .env Soft-deprecated as of purrr 0.3.0. The environments are
 #'   now captured via quosures.
-#' @param .first If `TRUE`, the partialized arguments are placed
-#'   to the front of the function signature. If `FALSE`, they are
-#'   moved to the back. Only useful to control position matching of
-#'   arguments when the partialized arguments are not named.
+#' @param .first Soft-deprecated as of purrr 0.3.0. Please pass an
+#'   empty argument `... = ` to specify the position of future
+#'   arguments.
 #' @param .lazy Soft-deprecated as of purrr 0.3.0. Please unquote the
 #'   arguments that should be evaluated once and for all.
 #'
@@ -52,22 +55,35 @@
 #' plot2 <- partial(plot, my_long_variable)
 #' plot2()
 #' plot2(runif(10), type = "l")
+#'
+#'
+#' # By default, partialised arguments are passed before new ones:
+#' my_list <- partial(list, 1, 2)
+#' my_list("foo")
+#'
+#' # Control the position of these arguments by passing an empty
+#' # `... = ` argument:
+#' my_list <- partial(list, 1, ... = , 2)
+#' my_list("foo")
 #' @export
-partial <- function(...f,
+partial <- function(.f,
                     ...,
                     .env = NULL,
                     .lazy = NULL,
-                    .first = TRUE) {
+                    .first = NULL) {
   args <- enquos(...)
+  if (has_name(args, "...f")) {
+    stop_defunct("`...f` has been renamed to `.f` as of purrr 0.3.0.")
+  }
 
-  fn_expr <- enexpr(...f)
-  fn <- switch(typeof(...f),
+  fn_expr <- enexpr(.f)
+  fn <- switch(typeof(.f),
     builtin = ,
     special =
-      as_closure(...f),
+      as_closure(.f),
     closure =
-      ...f,
-    abort(sprintf("`...f` must be a function, not a %s", friendly_type_of(...f)))
+      .f,
+    abort(sprintf("`.f` must be a function, not a %s", friendly_type_of(.f)))
   )
 
   if (!is_null(.env)) {
@@ -91,12 +107,28 @@ partial <- function(...f,
       args <- map(args, eval_tidy, env = caller_env())
     }
   }
+  if (!is_null(.first)) {
+    signal_soft_deprecated(paste_line(
+      "The `.first` argument is soft-deprecated as of purrr 0.3.0.",
+      "Please pass a `... =` argument instead.",
+      "",
+      "  # Before:",
+      "  partial(fn, x = 1, y = 2, .first = FALSE)",
+      "",
+      "  # After:",
+      "  partial(fn, x = 1, y = 2, ... = )  # Partialised arguments last",
+      "  partial(fn, x = 1, ... = , y = 2)  # Partialised arguments around"
+    ))
+  }
 
-  # Pass on ... from parent function
-  if (.first) {
-    call <- call_modify(call2(fn), !!!args, ... = )
-  } else {
+  if (is_false(.first)) {
+    # For compatibility
     call <- call_modify(call2(fn), ... = , !!!args)
+  } else {
+    # Pass on `...` from parent function. It should be last, this way if
+    # `args` also contain a `...` argument, the position in `args`
+    # prevails.
+    call <- call_modify(call2(fn), !!!args, ... = )
   }
 
   partialised <- function(...) {
