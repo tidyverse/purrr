@@ -364,6 +364,9 @@ modify_base <- function(mapper, .x, .y, .f, ...) {
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
 modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
+  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
+    abort("`.depth` must be a single number")
+  }
   UseMethod("modify_depth")
 }
 #' @rdname modify
@@ -381,25 +384,30 @@ modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
 }
 
 modify_depth_rec <- function(.x, .depth, .f, ..., .ragged = FALSE) {
+  if (.depth < 0) {
+    abort("Invalid depth")
+  }
+
   if (.depth == 0) {
     .x[] <- .f(.x, ...)
-  } else if (.depth == 1) {
-    if (!is.list(.x)) {
-      if (.ragged) {
-        .x[] <- .f(.x, ...)
-      } else {
-        stop("List not deep enough", call. = FALSE)
-      }
-    } else {
-      .x[] <- map(.x, .f, ...)
-    }
-  } else if (.depth > 1) {
-    .x[] <- map(.x, function(x) {
-      modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged)
-    })
-  } else {
-    stop("Invalid `depth`", call. = FALSE)
+    return(.x)
   }
+
+  if (.depth == 1) {
+    if (is.list(.x)) {
+      .x[] <- map(.x, .f, ...)
+    } else {
+      if (!.ragged) {
+        abort("List not deep enough")
+      }
+      .x[] <- .f(.x, ...)
+    }
+    return(.x)
+  }
+
+  .x[] <- map(.x, function(x) {
+    modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged)
+  })
   .x
 }
 
