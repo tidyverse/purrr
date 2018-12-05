@@ -27,6 +27,23 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Life cycle
 
+* Removing elements from lists using `NULL` in `list_modify()` is
+  soft-deprecated. Please use the new `zap()` sentinel reexported from
+  rlang instead:
+
+  ```{r}
+    # Before:
+    list_modify(x, foo = NULL)
+
+    # After:
+    list_modify(x, foo = zap())
+  ```
+
+  This change is motivated by the ambiguity of `NULL` as a deletion
+  sentinel because `NULL` is also a valid value in lists. In the
+  future, `NULL` will set an element to `NULL` rather than removing
+  the element.
+
 * `invoke()` is soft-deprecated and replaced by the `exec()` function,
   reexported from rlang. `exec()` evaluates a function call built from
   its inputs and supports tidy dots:
@@ -63,6 +80,10 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 
 ## Minor improvements and fixes
+
+* `list_modify()` now supports the `zap()` sentinel (reexported from
+  rlang) to remove elements from lists. Consequently, removing
+  elements with the ambiguous sentinel `NULL` is soft-deprecated.
 
 * The requirements of `list_modify()` and `list_merge()` have been
   relaxed. Previously it required both the modified lists and the

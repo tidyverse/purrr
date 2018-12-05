@@ -9,3 +9,9 @@ rlang::set_names
 #' @export
 #' @name exec
 rlang::exec
+
+#' @title Zap an element
+#' @keywords NULL
+#' @export
+#' @name zap
+rlang::zap
