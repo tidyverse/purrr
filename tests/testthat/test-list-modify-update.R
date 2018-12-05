@@ -1,4 +1,4 @@
-context("list_modify")
+context("list-modify")
 
 # list_modify -------------------------------------------------------------
 
@@ -14,11 +14,20 @@ test_that("unnamed lists are replaced by position", {
   expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })
 
-test_that("error if one named and the other is not", {
+test_that("error if inputs are not all named or unnamed", {
   expect_error(
-    list_modify(list(a = 1), 2),
-    "must be either both named or both unnamed"
+    list_modify(list(a = 1), 2, a = 2),
+    "must be either all named, or all unnamed"
   )
+})
+
+test_that("can update unnamed lists with named inputs", {
+  expect_identical(list_modify(list(1), a = 2), list(1, a = 2))
+})
+
+test_that("can update named lists with unnamed inputs", {
+  expect_identical(list_modify(list(a = 1, b = 2), 2), list(a = 2, b = 2))
+  expect_identical(list_modify(list(a = 1, b = 2), 2, 3, 4), list(a = 2, b = 3, 4))
 })
 
 test_that("lists are replaced recursively", {

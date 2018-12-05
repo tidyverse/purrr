@@ -64,6 +64,13 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* The requirements of `list_modify()` and `list_merge()` have been
+  relaxed. Previously it required both the modified lists and the
+  inputs to be either named or unnamed. This restriction now only
+  applies to inputs in `...`. When inputs are all named, they are
+  matched to the list by name. When they are all unnamed, they are
+  matched positionally. Otherwise, this is an error.
+
 * `pluck()` now dispatches properly with S3 vectors. The vector class
   must implement a `length()` method for numeric indexing and a
   `names()` method for string indexing.

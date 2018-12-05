@@ -14,8 +14,13 @@
 #'
 #' @param .x List to modify.
 #' @param ... New values of a list. Use `NULL` to remove values.
-#'   Use a formula to evaluate in the context of the list values.
-#'   These dots have [splicing semantics][rlang::dots_list].
+#'   These values should be either all named or all unnamed. When
+#'   inputs are all named, they are matched to `.x` by name. When they
+#'   are all unnamed, they are matched positionally.
+#'
+#'   These dots support [tidy dots][rlang::list2] features. In
+#'   particular, if your functions are stored in a list, you can
+#'   splice that in with `!!!`.
 #' @export
 #' @examples
 #' x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
@@ -56,10 +61,13 @@ list_recurse <- function(x, y, base_case) {
     return(x)
   }
 
-  x_names <- names(x)
   y_names <- names(y)
 
-  if (!is_names(x_names) && !is_names(y_names)) {
+  if (!is_null(y_names) && !is_names(y_names)) {
+    abort("`...` arguments must be either all named, or all unnamed")
+  }
+
+  if (is_null(y_names)) {
     for (i in rev(seq_along(y))) {
       if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]])) {
         x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
@@ -67,7 +75,7 @@ list_recurse <- function(x, y, base_case) {
         x[[i]] <- base_case(x[[i]], y[[i]])
       }
     }
-  } else if (is_names(x_names) && is_names(y_names)) {
+  } else {
     for (i in seq_along(y_names)) {
       nm <- y_names[[i]]
       if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]])) {
@@ -76,8 +84,6 @@ list_recurse <- function(x, y, base_case) {
         x[[nm]] <- base_case(x[[nm]], y[[i]])
       }
     }
-  } else {
-    stop("`x` and `y` must be either both named or both unnamed", call. = FALSE)
   }
 
   x
