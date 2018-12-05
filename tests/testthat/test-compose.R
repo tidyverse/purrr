@@ -15,7 +15,7 @@ test_that("composed functions are applied in reverse order if .dir is supplied",
 test_that("compose supports formulas", {
   round_mean <- compose(~ .x * 100, ~ round(.x, 2), ~ mean(.x, na.rm = TRUE))
 
-  expect_is(round_mean, "function")
+  expect_is(round_mean, "purrr_composed_fn")
   expect_identical(round_mean(1:100), round( mean(1:100, na.rm = TRUE), 2) * 100 )
 })
 
@@ -34,4 +34,22 @@ test_that("can splice lists of functions", {
   )
   fn <- compose(!!!fns)
   expect_identical(fn("c"), "c b a")
+})
+
+test_that("composed function has formals of first function called", {
+  fn <- function(x, y = 1) NULL
+  expect_identical(formals(compose(identity, fn)), formals(fn))
+})
+
+test_that("can compose primitive functions", {
+  expect_identical(compose(is.character, as.character)(3), TRUE)
+  expect_identical(compose(`-`, `/`)(4, 2), -2)
+})
+
+test_that("composed function prints informatively", {
+  fn1 <- set_env(function(x) x + 1, global_env())
+  fn2 <- set_env(function(x) x / 1, global_env())
+  expect_known_output(file = test_path("compose-print.txt"),
+    print(compose(fn1, fn2))
+  )
 })

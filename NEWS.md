@@ -81,6 +81,11 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* Functions created with `compose()` now have the same formal
+  parameters as the first function to be called. They also feature a
+  more informative print method that prints all composed functions in
+  turn (@egnha, #366).
+
 * `list_modify()` now supports the `zap()` sentinel (reexported from
   rlang) to remove elements from lists. Consequently, removing
   elements with the ambiguous sentinel `NULL` is soft-deprecated.

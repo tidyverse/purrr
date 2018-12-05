@@ -1,0 +1,9 @@
+<composed>
+
+* Function 1:
+
+function(x) x / 1
+
+* Function 2:
+
+function(x) x + 1

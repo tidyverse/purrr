@@ -31,7 +31,7 @@
 #' fn <- compose(!!!fns)
 #' fn("input")
 compose <- function(..., .rev = TRUE) {
-  fns <- map(list2(...), rlang::as_function, env = caller_env())
+  fns <- map(list2(...), rlang::as_closure, env = caller_env())
 
   if (.rev) {
     n <- length(fns)
@@ -42,11 +42,38 @@ compose <- function(..., .rev = TRUE) {
     fns <- fns[-1]
   }
 
-  function(...) {
-    out <- first_fn(...)
+  body <- expr({
+    out <- !!fn_body(first_fn)
+
+    fns <- !!fns
     for (fn in fns) {
       out <- fn(out)
     }
+
     out
+  })
+
+  structure(
+    new_function(formals(first_fn), body, fn_env(first_fn)),
+    class = "purrr_composed_fn",
+    first_fn = first_fn,
+    fns = fns
+  )
+}
+
+#' @export
+print.purrr_composed_fn <- function(x, ...) {
+  cat("<composed>\n")
+
+  first <- attr(x, "first_fn")
+  cat("\n* Function 1:\n\n")
+  print(first, ...)
+
+  fns <- attr(x, "fns")
+  for (i in seq_along(fns)) {
+    cat(sprintf("\n* Function %d:\n\n", i + 1))
+    print(fns[[i]], ...)
   }
+
+  invisible(x)
 }
