@@ -66,12 +66,12 @@ print.purrr_composed_fn <- function(x, ...) {
   cat("<composed>\n")
 
   first <- attr(x, "first_fn")
-  cat("\n* Function 1:\n\n")
+  cat("1. ")
   print(first, ...)
 
   fns <- attr(x, "fns")
   for (i in seq_along(fns)) {
-    cat(sprintf("\n* Function %d:\n\n", i + 1))
+    cat(sprintf("\n%d. ", i + 1))
     print(fns[[i]], ...)
   }
 

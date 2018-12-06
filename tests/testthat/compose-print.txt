@@ -1,9 +1,4 @@
 <composed>
+1. function(x) x / 1
 
-* Function 1:
-
-function(x) x / 1
-
-* Function 2:
-
-function(x) x + 1
+2. function(x) x + 1
