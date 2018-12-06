@@ -23,11 +23,11 @@
 #' @inheritParams map
 #' @inheritParams map2
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
-#'  from the lowest level of the list.
+#'   from the lowest level of the list.
 #'
-#'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
-#'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
-#'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
+#'   * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`.
+#'   * `modify_depth(x, 1, fun)` is equivalent to `x <- modify(x, fun)`
+#'   * `modify_depth(x, 2, fun)` is equivalent to `x <- modify(x, ~ modify(., fun))`
 #' @return An object the same class as `.x`
 #'
 #' @details
@@ -104,6 +104,13 @@
 #' # In the above list, "obj" is level 1, "prop" is level 2 and "param"
 #' # is level 3. To apply sum() on all params, we map it at depth 3:
 #' l1 %>% modify_depth(3, sum) %>% str()
+#'
+#' # Note that vectorised operations will yield the same result when
+#' # applied at the list level as when applied at the atomic result.
+#' # The former is more efficient because it takes advantage of
+#' # vectorisation.
+#' l1 %>% modify_depth(3, `+`, 100L)
+#' l1 %>% modify_depth(4, `+`, 100L)
 #'
 #' # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
 #' l1 %>% modify(c("prop1", "param2")) %>% str()
@@ -372,7 +379,6 @@ modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
 #' @rdname modify
 #' @export
 modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  stopifnot(is_integerish(.depth, n = 1))
   force(.ragged)
 
   if (.depth < 0) {
@@ -380,35 +386,41 @@ modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   }
 
   .f <- as_mapper(.f, ...)
-  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged)
+  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
 }
 
-modify_depth_rec <- function(.x, .depth, .f, ..., .ragged = FALSE) {
+modify_depth_rec <- function(.x, .depth, .f,
+                             ...,
+                             .ragged = FALSE,
+                             .atomic = FALSE) {
   if (.depth < 0) {
     abort("Invalid depth")
   }
 
+  if (.atomic) {
+    if (!.ragged) {
+      abort("List not deep enough")
+    }
+    return(modify(.x, .f, ...))
+  }
+
   if (.depth == 0) {
+    # TODO vctrs: Use `vec_cast()` on result?
     .x[] <- .f(.x, ...)
     return(.x)
   }
 
   if (.depth == 1) {
-    if (is.list(.x)) {
-      .x[] <- map(.x, .f, ...)
-    } else {
-      if (!.ragged) {
-        abort("List not deep enough")
-      }
-      .x[] <- .f(.x, ...)
-    }
-    return(.x)
+    return(modify(.x, .f, ...))
   }
 
-  .x[] <- map(.x, function(x) {
-    modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged)
+  # Should this be replaced with a generic way of figuring out atomic
+  # types?
+  .atomic <- is_atomic(.x)
+
+  modify(.x, function(x) {
+    modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
   })
-  .x
 }
 
 #' @export
