@@ -120,6 +120,15 @@
 #'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
+#'
+#' # Use `map_depth()` to recursively traverse nested vectors and map
+#' # a function at a certain depth:
+#' x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
+#' str(x)
+#' map_depth(x, 2, paste, collapse = "/")
+#'
+#' # Equivalent to:
+#' map(x, map, paste, collapse = "/")
 map <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
@@ -229,4 +238,61 @@ map_dfc <- function(.x, .f, ...) {
 walk <- function(.x, .f, ...) {
   map(.x, .f, ...)
   invisible(.x)
+}
+
+#' @rdname map
+#' @param .depth Level of `.x` to map on. Use a negative value to count up
+#'   from the lowest level of the list.
+#'
+#'   * `map_depth(x, 0, fun)` is equivalent to `fun(x)`.
+#'   * `map_depth(x, 1, fun)` is equivalent to `x <- map(x, fun)`
+#'   * `map_depth(x, 2, fun)` is equivalent to `x <- map(x, ~ map(., fun))`
+#' @param .ragged If `TRUE`, will apply to leaves, even if they're not
+#'   at depth `.depth`. If `FALSE`, will throw an error if there are
+#'   no elements at depth `.depth`.
+#' @export
+map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
+  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
+    abort("`.depth` must be a single number")
+  }
+  if (.depth < 0) {
+    .depth <- vec_depth(.x) + .depth
+  }
+
+  .f <- as_mapper(.f, ...)
+  map_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
+}
+
+map_depth_rec <- function(.x,
+                          .depth,
+                          .f,
+                          ...,
+                          .ragged,
+                          .atomic) {
+  if (.depth < 0) {
+    abort("Invalid depth")
+  }
+
+  if (.atomic) {
+    if (!.ragged) {
+      abort("List not deep enough")
+    }
+    return(map(.x, .f, ...))
+  }
+
+  if (.depth == 0) {
+    return(.f(.x, ...))
+  }
+
+  if (.depth == 1) {
+    return(map(.x, .f, ...))
+  }
+
+  # Should this be replaced with a generic way of figuring out atomic
+  # types?
+  .atomic <- is_atomic(.x)
+
+  map(.x, function(x) {
+    map_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
+  })
 }

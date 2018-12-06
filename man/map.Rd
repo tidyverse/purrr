@@ -13,6 +13,7 @@
 \alias{map_df}
 \alias{map_dfc}
 \alias{walk}
+\alias{map_depth}
 \title{Apply a function to each element of a vector}
 \usage{
 map(.x, .f, ...)
@@ -36,6 +37,8 @@ map_dfr(.x, .f, ..., .id = NULL)
 map_dfc(.x, .f, ...)
 
 walk(.x, .f, ...)
+
+map_depth(.x, .depth, .f, ..., .ragged = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -82,6 +85,18 @@ the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, n
 variable will be created.
 
 Only applies to \code{_dfr} variant.}
+
+\item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
+from the lowest level of the list.
+\itemize{
+\item \code{map_depth(x, 0, fun)} is equivalent to \code{fun(x)}.
+\item \code{map_depth(x, 1, fun)} is equivalent to \code{x <- map(x, fun)}
+\item \code{map_depth(x, 2, fun)} is equivalent to \code{x <- map(x, ~ map(., fun))}
+}}
+
+\item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
+at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
+no elements at depth \code{.depth}.}
 }
 \value{
 All functions return a vector the same length as \code{.x}.
@@ -188,6 +203,15 @@ mtcars \%>\%
   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
+
+# Use `map_depth()` to recursively traverse nested vectors and map
+# a function at a certain depth:
+x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
+str(x)
+map_depth(x, 2, paste, collapse = "/")
+
+# Equivalent to:
+map(x, map, paste, collapse = "/")
 }
 \seealso{
 Other map variants: \code{\link{imap}},
