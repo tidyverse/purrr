@@ -53,3 +53,7 @@ test_that("composed function prints informatively", {
     print(compose(fn1, fn2))
   )
 })
+
+test_that("compose() with 0 inputs returns the identity", {
+  expect_identical(compose()(mtcars), mtcars)
+})

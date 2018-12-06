@@ -33,6 +33,11 @@
 compose <- function(..., .rev = TRUE) {
   fns <- map(list2(...), rlang::as_closure, env = caller_env())
 
+  if (!length(fns)) {
+    # Return the identity function
+    return(compose(function(x, ...) x))
+  }
+
   if (.rev) {
     n <- length(fns)
     first_fn <- fns[[n]]

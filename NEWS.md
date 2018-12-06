@@ -81,6 +81,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `compose()` now returns an identity function when called without
+  inputs.
+
 * Functions created with `compose()` now have the same formal
   parameters as the first function to be called. They also feature a
   more informative print method that prints all composed functions in
