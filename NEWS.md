@@ -81,6 +81,11 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* By popular request, `at_depth()` has been brought back as
+  `map_depth()`. Like `modify_depth()`, it applies a function at a
+  specified level of a data structure. However, it transforms all
+  traversed vectors up to `.depth` to bare lists (#381).
+
 * `modify_depth()` now modifies atomic leaves as well. This makes
   `modify_depth(x, 1, fn)` equivalent to `modify(x, fn)` (#359).
 

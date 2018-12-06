@@ -367,9 +367,6 @@ modify_base <- function(mapper, .x, .y, .f, ...) {
 
 #' @rdname modify
 #' @export
-#' @param .ragged If `TRUE`, will apply to leaves, even if they're not
-#'   at depth `.depth`. If `FALSE`, will throw an error if there are
-#'   no elements at depth `.depth`.
 modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   if (!is_integerish(.depth, n = 1, finite = TRUE)) {
     abort("`.depth` must be a single number")
@@ -427,11 +424,7 @@ modify_depth_rec <- function(.x, .depth, .f,
 #' @usage NULL
 #' @rdname modify
 at_depth <- function(.x, .depth, .f, ...) {
-  warning(
-    "at_depth() is deprecated, please use `modify_depth()` instead",
-    call. = FALSE
-  )
-  modify_depth(.x, .depth, .f, ...)
+  abort_defunct("at_depth() is defunct, please use `map_depth()` instead")
 }
 
 # Internal version of map_lgl() that works with logical vectors
