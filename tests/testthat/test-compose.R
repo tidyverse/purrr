@@ -49,11 +49,19 @@ test_that("can compose primitive functions", {
 test_that("composed function prints informatively", {
   fn1 <- set_env(function(x) x + 1, global_env())
   fn2 <- set_env(function(x) x / 1, global_env())
-  expect_known_output(file = test_path("compose-print.txt"),
+  expect_known_output(file = test_path("compose-print.txt"), {
+    cat("Single input:\n\n")
+    print(compose(fn1))
+
+    cat("Multiple inputs:\n\n")
     print(compose(fn1, fn2))
-  )
+  })
 })
 
 test_that("compose() with 0 inputs returns the identity", {
   expect_identical(compose()(mtcars), mtcars)
+})
+
+test_that("compose() with 1 input is a noop", {
+  expect_identical(compose(toupper)(letters), toupper(letters))
 })
