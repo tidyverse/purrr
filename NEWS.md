@@ -81,6 +81,9 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `modify_depth()` now modifies atomic leaves as well. This makes
+  `modify_depth(x, 1, fn)` equivalent to `modify(x, fn)` (#359).
+
 * `compose()` now returns an identity function when called without
   inputs.
 
