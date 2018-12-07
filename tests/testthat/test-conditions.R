@@ -74,3 +74,17 @@ test_that("stop_bad_element_length() constructs error message", {
   expect_error(stop_bad_element_length(1:3, 8, 10, arg = ".foo"), "Element 8 of `.foo` must have length 10, not 3")
   expect_error(stop_bad_element_length(1:3, 8, 10, arg = ".foo", what = "Result"), "Result 8 of `.foo` must have length 10, not 3")
 })
+
+test_that("stop_bad_vector() constructs error message", {
+  expect_error(stop_bad_vector(1:3, character(), 1), "Vector must be a single string, not an integer vector of length 3")
+  expect_error(stop_bad_vector(factor(c("a", "b")), character(), 10), "Vector must be a character vector of length 10, not a vector of class `factor` and of length 2")
+  expect_error(stop_bad_vector(1:3, character(), 10, .recycle = TRUE), "Vector must be a character vector of length 1 or 10, not an integer vector of length 3")
+  expect_error(stop_bad_vector(1:3, 1:2, 10, what = "This foobaz vector", .recycle = TRUE), "This foobaz vector must be an integer vector of length 1 or 10, not an integer vector of length 3")
+  expect_error(stop_bad_vector(list(1, 2), logical(), 10, arg = ".quux", .recycle = TRUE), "`.quux` must be a logical vector of length 1 or 10, not a list of length 2")
+})
+
+test_that("stop_bad_element_vector() constructs error message", {
+  expect_error(stop_bad_element_vector(1:3, 3, character(), 1), "Element 3 must be a single string, not an integer vector of length 3")
+  expect_error(stop_bad_element_vector(1:3, 20, 1:2, 10, what = "Result", .recycle = TRUE), "Result 20 must be an integer vector of length 1 or 10, not an integer vector of length 3")
+  expect_error(stop_bad_element_vector(list(1, 2), 1, logical(), 10, arg = ".quux", .recycle = TRUE), "Element 1 of `.quux` must be a logical vector of length 1 or 10, not a list of length 2")
+})

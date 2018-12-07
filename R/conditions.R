@@ -173,3 +173,87 @@ stop_bad_element_length <- function(x,
     .subclass = c(.subclass, "purrr_error_bad_element_length")
   )
 }
+
+#' Error conditions for bad vectors
+#'
+#' @inheritParams purrr-conditions-length
+#' @param expected_ptype The expected prototype of `x`, i.e. an empty
+#'   vector of the expected type.
+#'
+#' @keywords internal
+#' @name purrr-conditions-vector
+#' @noRd
+stop_bad_vector <- function(x,
+                            expected_ptype,
+                            expected_length = NULL,
+                            ...,
+                            what = NULL,
+                            arg = NULL,
+                            message = NULL,
+                            .recycle = FALSE,
+                            .subclass = NULL) {
+  what <- what %||% what_bad_object(arg) %||% "Vector"
+
+  expected <- friendly_vector_type(expected_ptype, expected_length, .recycle)
+  actual <- friendly_vector_type(x, length(x))
+
+  stop_bad_type(
+    x,
+    expected,
+    actual = actual,
+    what = what,
+    arg = arg,
+    message = message,
+    .subclass = c(.subclass, "purrr_error_bad_vector")
+  )
+}
+
+stop_bad_element_vector <- function(x,
+                                    index,
+                                    expected_ptype,
+                                    expected_length,
+                                    ...,
+                                    what = NULL,
+                                    arg = NULL,
+                                    message = NULL,
+                                    .recycle = FALSE,
+                                    .subclass = NULL) {
+  stopifnot(is_integerish(index, n = 1, finite = TRUE))
+  what <- what_bad_element(what, arg, index)
+
+  stop_bad_vector(
+    x,
+    expected_ptype,
+    expected_length,
+    what = what,
+    arg = arg,
+    index = index,
+    ...,
+    message = message,
+    .recycle = .recycle,
+    .subclass = c(.subclass, "purrr_error_bad_element_vector")
+  )
+}
+
+friendly_vector_type <- function(x, length = NULL, recycle = FALSE) {
+  length <- length %||% length(x)
+
+  if (length == 1) {
+    return(friendly_element_type_of(x, single = TRUE))
+  }
+
+  if (is.object(x)) {
+    classes <- paste0("`", paste_classes(x), "`")
+    type <- sprintf("a vector of class %s and", classes)
+  } else {
+    type <- friendly_type_of(x)
+  }
+
+  if (recycle) {
+    length <- sprintf("1 or %s", length)
+  } else {
+    length <- as.character(length)
+  }
+
+  sprintf("%s of length %s", type, length)
+}
