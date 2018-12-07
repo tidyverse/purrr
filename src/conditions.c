@@ -50,7 +50,7 @@ void stop_bad_element_type(SEXP x, R_xlen_t index, const char* expected, const c
 }
 
 void stop_bad_length(SEXP x,
-                     R_xlen_t expected,
+                     R_xlen_t expected_length,
                      const char* what,
                      const char* arg,
                      bool recycle) {
@@ -60,7 +60,7 @@ void stop_bad_length(SEXP x,
 
   SEXP call = Rf_lang5(PROTECT(fn),
                        PROTECT(sym_protect(x)),
-                       PROTECT(Rf_ScalarReal(expected)),
+                       PROTECT(Rf_ScalarReal(expected_length)),
                        what ? PROTECT(Rf_mkString(what)) : R_NilValue,
                        arg ? PROTECT(Rf_mkString(arg)) : R_NilValue);
 
@@ -78,7 +78,7 @@ void stop_bad_length(SEXP x,
 
 void stop_bad_element_length(SEXP x,
                              R_xlen_t index,
-                             R_xlen_t expected,
+                             R_xlen_t expected_length,
                              const char* what,
                              const char* arg,
                              bool recycle) {
@@ -89,7 +89,7 @@ void stop_bad_element_length(SEXP x,
   SEXP call = lang7(PROTECT(fn),
                     PROTECT(sym_protect(x)),
                     PROTECT(Rf_ScalarReal(index)),
-                    PROTECT(Rf_ScalarReal(expected)),
+                    PROTECT(Rf_ScalarReal(expected_length)),
                     what ? PROTECT(Rf_mkString(what)) : R_NilValue,
                     arg ? PROTECT(Rf_mkString(arg)) : R_NilValue,
                     PROTECT(Rf_ScalarLogical(recycle)));

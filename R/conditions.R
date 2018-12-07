@@ -105,43 +105,43 @@ what_bad_element <- function(what, arg, index) {
 #' Error conditions for bad lengths
 #'
 #' @inheritParams purrr-conditions-type
-#' @param actual,expected The expected and actual lengths. If `actual`
-#'   is not supplied, `length(x)` is taken as default.
-#' @param recycle Whether `x` is also allowed to have length 1.
+#' @param expected_length The expected length as a number. The actual length
+#'   is computed with `length(x)`.
+#' @param .recycle Whether `x` is also allowed to have length 1.
 #'
+#' @keywords internal
 #' @name purrr-conditions-length
+#' @noRd
 NULL
 
 stop_bad_length <- function(x,
-                            expected,
+                            expected_length,
                             ...,
-                            actual = NULL,
                             what = NULL,
                             arg = NULL,
                             message = NULL,
                             .recycle = FALSE,
                             .subclass = NULL) {
   what <- what %||% what_bad_object(arg) %||% "Vector"
-  actual <- actual %||% length(x)
 
   if (.recycle) {
-    expected <- sprintf("1 or %s", expected)
+    expected <- sprintf("1 or %s", expected_length)
+  } else {
+    expected <- as.character(expected_length)
   }
+  actual <- length(x)
 
-  message <- message %||% sprintf("%s must have length %s, not %s", what, expected, actual)
-
-  if (!is_integerish(actual)) {
-    stop_bad_type(actual, "a single number", arg = "`actual`")
-  }
-  if (length(actual) != 1) {
-    stop_bad_length(actual, 1, arg = "`actual`")
-  }
+  message <- message %||% sprintf(
+    "%s must have length %s, not %s",
+    what,
+    expected,
+    actual
+  )
 
   abort(
     message,
     x = x,
-    expected = expected,
-    actual = actual,
+    expected_length = expected_length,
     what = what,
     arg = arg,
     ...,
@@ -151,9 +151,8 @@ stop_bad_length <- function(x,
 
 stop_bad_element_length <- function(x,
                                     index,
-                                    expected,
+                                    expected_length,
                                     ...,
-                                    actual = NULL,
                                     what = NULL,
                                     arg = NULL,
                                     message = NULL,
@@ -164,8 +163,7 @@ stop_bad_element_length <- function(x,
 
   stop_bad_length(
     x,
-    expected,
-    actual = actual,
+    expected_length,
     what = what,
     arg = arg,
     index = index,

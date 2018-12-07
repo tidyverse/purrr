@@ -59,16 +59,14 @@ test_that("stop_bad_length() stores fields", {
   err <- catch_cnd(stop_bad_length(1:3, 10, actual = 100, arg = ".foo"))
   expect_is(err, "purrr_error_bad_length")
   expect_identical(err$x, 1:3)
-  expect_identical(err$expected, 10)
-  expect_identical(err$actual, 100)
+  expect_identical(err$expected_length, 10)
   expect_identical(err$arg, ".foo")
 })
 
 test_that("stop_bad_length() constructs error message", {
   expect_error(stop_bad_length(1:3, 10), "Vector must have length 10, not 3")
   expect_error(stop_bad_length(1:3, 10, arg = ".foo"), "`.foo` must have length 10, not 3")
-  expect_error(stop_bad_length(1:3, 10, actual = 100, arg = ".foo"), "`.foo` must have length 10, not 100")
-  expect_error(stop_bad_length(1:3, 10, actual = 100, arg = ".foo", what = "This thing"), "This thing must have length 10, not 100")
+  expect_error(stop_bad_length(1:3, 10, arg = ".foo", what = "This thing"), "This thing must have length 10, not 3")
 })
 
 test_that("stop_bad_element_length() constructs error message", {
