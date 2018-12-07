@@ -174,8 +174,8 @@ newA <- methods::setClass("A", list(a = "numeric", b = "numeric"))
 A <- newA(a = 1, b = 10)
 
 test_that("pluck errors with invalid indices", {
-  expect_error(pluck(A, 1), "must be a string")
-  expect_error(pluck(A, letters), "must be a string")
+  expect_error(pluck(A, 1), "Index 1 must be a single string, not a single double")
+  expect_error(pluck(A, letters), "Index 1 must be a single string, not a character vector of length 26")
 })
 
 test_that("pluck returns missing with missing index", {

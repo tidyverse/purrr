@@ -7,7 +7,7 @@
 #include "coerce.h"
 #include "conditions.h"
 
-static int check_input_lengths(int n, int index_n, int i, bool strict);
+static int check_input_lengths(int n, SEXP index, int i, bool strict);
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
 static int check_double_index_length(double val, int n, int i, bool strict);
 static int check_character_index(SEXP string, int i, bool strict);
@@ -29,7 +29,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     return -1;
   }
 
-  if (check_input_lengths(n, Rf_length(index), i, strict)) {
+  if (check_input_lengths(n, index, i, strict)) {
     return -1;
   }
 
@@ -253,7 +253,9 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
 /* Type checking */
 
-static int check_input_lengths(int n, int index_n, int i, bool strict) {
+static int check_input_lengths(int n, SEXP index, int i, bool strict) {
+  int index_n = Rf_length(index);
+
   if (n == 0) {
     if (strict) {
       Rf_errorcall(R_NilValue, "Plucked object must have at least one element.");
@@ -262,10 +264,8 @@ static int check_input_lengths(int n, int index_n, int i, bool strict) {
     }
   }
 
-  if (index_n > 1) {
-    Rf_errorcall(R_NilValue, "Index %d must have length 1, not %d.", i + 1, n);
-  } else if (strict && index_n == 0) {
-    Rf_errorcall(R_NilValue, "Index %d must have length 1, not 0.", i + 1);
+  if (index_n > 1 || (strict && index_n == 0)) {
+    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false);
   }
 
   return 0;
