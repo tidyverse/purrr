@@ -44,13 +44,10 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
 #else
     SEXP res = PROTECT(Rf_eval(call, env));
 #endif
-    if (type != VECSXP && Rf_length(res) != 1)
-      Rf_errorcall(R_NilValue,
-                   "Result %i must be a single %s, not %s of length %d",
-                   i + 1,
-                   Rf_type2char(type),
-                   friendly_typeof(res),
-                   Rf_length(res));
+    if (type != VECSXP && Rf_length(res) != 1) {
+      SEXP ptype = PROTECT(Rf_allocVector(type, 0));
+      stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);
+    }
 
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);

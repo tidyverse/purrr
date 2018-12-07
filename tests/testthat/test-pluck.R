@@ -152,8 +152,8 @@ test_that("attr_getter() uses exact (non-partial) matching", {
 # environments ------------------------------------------------------------
 
 test_that("pluck errors with invalid indices", {
-  expect_error(pluck(environment(), 1), "must be a string")
-  expect_error(pluck(environment(), letters), "must be a string")
+  expect_error(pluck(environment(), 1), "Index 1 must be a single string, not a single double")
+  expect_error(pluck(environment(), letters), "Index 1 must be a single string, not a character vector of length 26")
 })
 
 test_that("pluck returns missing with missing index", {

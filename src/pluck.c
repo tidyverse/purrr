@@ -140,7 +140,8 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    Rf_errorcall(R_NilValue, "Index %d must be a string.", i + 1);
+    SEXP ptype = PROTECT(Rf_allocVector(STRSXP, 0));
+    stop_bad_element_vector(index_i, i + 1, ptype, 1, "Index", NULL, false);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -160,7 +161,8 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    Rf_errorcall(R_NilValue, "Index %d must be a string.", i + 1);
+    SEXP ptype = PROTECT(Rf_allocVector(STRSXP, 0));
+    stop_bad_element_vector(index_i, i + 1, ptype, 1, "Index", NULL, false);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
