@@ -186,7 +186,7 @@ is_bool <- function(x) {
   is_logical(x, n = 1) && !is.na(x)
 }
 
-friendly_element_type_of <- function(x) {
+friendly_type_of_element <- function(x) {
   if (is.object(x)) {
     classes <- paste0("`", paste_classes(x), "`")
     if (single) {

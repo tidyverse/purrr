@@ -241,7 +241,7 @@ friendly_vector_type <- function(x, length = NULL, recycle = FALSE) {
   length <- length %||% length(x)
 
   if (length == 1) {
-    return(friendly_element_type_of(x))
+    return(friendly_type_of_element(x))
   }
 
   if (is.object(x)) {
