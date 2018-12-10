@@ -1,12 +1,12 @@
 context("transpose")
 
 test_that("input must be a list", {
-  expect_error(transpose(1:3), "is not a list")
+  expect_error(transpose(1:3), "`.l` must be a list, not an integer vector")
 })
 
-test_that("elements of input must be vectors", {
-  expect_error(transpose(list(environment())), "is not a vector")
-  expect_error(transpose(list(list(), environment())), "is not a vector")
+test_that("elements of input must be atomic vectors", {
+  expect_error(transpose(list(environment())), "Element 1 must be a vector, not an environment")
+  expect_error(transpose(list(list(), environment())), "Element 2 must be a vector, not an environment")
 })
 
 test_that("empty list returns empty list", {
@@ -30,12 +30,12 @@ test_that("outside names become inside names", {
 
 test_that("warns if element too short", {
   x <- list(list(1, 2), list(1))
-  expect_warning(out <- transpose(x), "Element 2 has length 1")
+  expect_warning(out <- transpose(x), "Element 2 must be length 2, not 1")
   expect_equal(out, list(list(1, 1), list(2, NULL)))
 })
 test_that("warns if element too long", {
   x <- list(list(1, 2), list(1, 2, 3))
-  expect_warning(out <- transpose(x), "Element 2 has length 3")
+  expect_warning(out <- transpose(x), "Element 2 must be length 2, not 3")
   expect_equal(out, list(list(1, 1), list(2, 2)))
 })
 
@@ -52,7 +52,10 @@ test_that("can transpose lists of atomic vectors", {
 })
 
 test_that("can't transpose expressions", {
-  expect_error(transpose(list(expression(a))), "Unsupported type")
+  expect_error(
+    transpose(list(expression(a))),
+    "Transposed element must be a vector, not an expression vector"
+  )
 })
 
 # Named based matching ----------------------------------------------------
@@ -97,7 +100,7 @@ test_that("warning if too short", {
     list(1, 2),
     list(1)
   )
-  expect_warning(tx <- transpose(x), "has length 1 not 2")
+  expect_warning(tx <- transpose(x), "must be length 2, not 1")
   expect_equal(tx, list(list(1, 1), list(2, NULL)))
 })
 
@@ -106,6 +109,6 @@ test_that("warning if too long", {
     list(1),
     list(1, 2)
   )
-  expect_warning(tx <- transpose(x), "has length 2 not 1")
+  expect_warning(tx <- transpose(x), "must be length 1, not 2")
   expect_equal(tx, list(list(1, 1)))
 })

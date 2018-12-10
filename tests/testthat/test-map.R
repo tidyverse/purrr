@@ -11,8 +11,8 @@ test_that("creates simple call", {
 })
 
 test_that("fails on non-vectors", {
-  expect_error(map(environment(), identity), "not a vector")
-  expect_error(map(quote(a), identity), "not a vector")
+  expect_error(map(environment(), identity), "`.x` must be a vector, not an environment")
+  expect_error(map(quote(a), identity), "`.x` must be a vector, not a symbol")
 })
 
 test_that("0 length input gives 0 length output", {
@@ -137,4 +137,12 @@ test_that("map_depth() with .ragged = TRUE operates on leaves", {
   expect_equal(map_depth(x1, -1, ~ . + 1, .ragged = TRUE), exp)
   # .ragged should be TRUE is .depth < 0
   expect_equal(map_depth(x1, -1, ~ . + 1), exp)
+})
+
+test_that("error message follows style guide when result is not length 1", {
+  x <- list(list(a = 1L), list(a = 2:3))
+  expect_error(
+    purrr::map_int(x, "a"),
+    "Result 2 must be a single integer, not an integer vector of length 2"
+  )
 })

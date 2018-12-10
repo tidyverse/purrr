@@ -1,12 +1,12 @@
 context("pmap")
 
 test_that("input must be a list of vectors", {
-  expect_error(pmap(environment(), identity), "not a list")
-  expect_error(pmap(list(environment()), identity), "not a vector")
+  expect_error(pmap(environment(), identity), "`.l` must be a list, not an environment")
+  expect_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
 })
 
 test_that("elements must be same length", {
-  expect_error(pmap(list(1:2, 1:3), identity), "has length 2")
+  expect_error(pmap(list(1:2, 1:3), identity), "Element 1 of `.l` must have length 1 or 3, not 2")
 })
 
 test_that("handles any length 0 input", {

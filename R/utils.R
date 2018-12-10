@@ -185,3 +185,26 @@ paste_classes <- function(x) {
 is_bool <- function(x) {
   is_logical(x, n = 1) && !is.na(x)
 }
+
+friendly_type_of_element <- function(x) {
+  if (is.object(x)) {
+    classes <- paste0("`", paste_classes(x), "`")
+    if (single) {
+      friendly <- sprintf("a single %s element", classes)
+    } else {
+      friendly <- sprintf("a %s element", classes)
+    }
+    return(friendly)
+  }
+
+  switch(typeof(x),
+    logical   = "a single logical",
+    integer   = "a single integer",
+    double    = "a single double",
+    complex   = "a single complex number",
+    character = "a single string",
+    raw       = "a single raw value",
+    list      = "a list of one element",
+    abort("Expected a base vector type")
+  )
+}

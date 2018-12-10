@@ -81,6 +81,8 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Minor improvements and fixes
 
+* `flatten()` now supports raw and complex elements.
+
 * By popular request, `at_depth()` has been brought back as
   `map_depth()`. Like `modify_depth()`, it applies a function at a
   specified level of a data structure. However, it transforms all
