@@ -210,10 +210,7 @@ signal_soft_deprecated_invoke_map <- function(suffix, env) {
   ))
 
   # Disable invoke() deprecation warning
-  scoped_options(
-    lifecycle_disable_warnings = TRUE,
-    .frame = caller_env()
-  )
+  scoped_lifecycle_silence(frame = caller_env())
 }
 
 

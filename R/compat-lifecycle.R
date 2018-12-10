@@ -21,6 +21,8 @@
 #'
 #' * `warn_deprecated()` warns unconditionally.
 #'
+#' * `stop_defunct()` fails unconditionally.
+#'
 #' Both functions warn only once per session by default to avoid
 #' overwhelming the user with repeated warnings.
 #'
@@ -37,24 +39,20 @@
 #'
 #' The verbosity of retirement warnings can be controlled with global
 #' options. You'll generally want to set these options locally with
-#' `with_options()` or `scoped_options()`.
+#' one of these helpers:
 #'
-#' * When `lifecycle_disable_warnings` is `TRUE`, no warnings are
-#'   issued in any circumstances.
+#' * `with_lifecycle_silence()` disables all soft-deprecation and
+#'   deprecation warnings.
 #'
-#' * When `lifecycle_verbose_soft_deprecation` is `TRUE`,
-#'   soft-deprecated functions always warn, unless
-#'   `lifecycle_disable_warnings` is `TRUE`.
+#' * `with_lifecycle_warnings()` enforces warnings for both
+#'   soft-deprecated and deprecated functions. The warnings are
+#'   repeated rather than signalled once per session.
 #'
-#' * When `lifecycle_repeat_warnings` is `TRUE`, deprecation warnings
-#'   are issued repeatedly rather than once per session.
+#' * `with_lifecycle_errors()` enforces errors for both
+#'   soft-deprecated and deprecated functions.
 #'
-#' To force warnings in all cases, you need
-#' `lifecycle_disable_warnings` set to `FALSE`,
-#' `lifecycle_verbose_deprecation` set to `TRUE`, and
-#' `lifecycle_repeat_warnings` set to `TRUE`. The options helpers
-#' `scoped_lifecycle_warnings()` and `with_lifecycle_warnings()` set
-#' these for you.
+#' All the `with_` helpers have `scoped_` variants that are
+#' particularly useful in testthat blocks.
 #'
 #' @noRd
 #' @seealso [lifecycle()]
@@ -99,7 +97,13 @@ warn_deprecated <- function(msg, id = msg) {
   has_colour <- function() rlang::is_installed("crayon") && crayon::has_color()
   silver <- function(x) if (has_colour()) crayon::silver(x) else x
 
-  .Deprecated(msg = paste0(
+  if (rlang::is_true(rlang::peek_option("lifecycle_warnings_as_errors"))) {
+    signal <- .Defunct
+  } else {
+    signal <- .Deprecated
+  }
+
+  signal(msg = paste0(
     msg,
     "\n",
     silver("This warning is displayed once per session.")
@@ -107,8 +111,18 @@ warn_deprecated <- function(msg, id = msg) {
 }
 deprecation_env <- new.env(parent = emptyenv())
 
-abort_defunct <- function(msg) {
+stop_defunct <- function(msg) {
   .Defunct(msg = msg)
+}
+
+scoped_lifecycle_silence <- function(frame = rlang::caller_env()) {
+  rlang::scoped_options(.frame = frame,
+    lifecycle_disable_warnings = TRUE
+  )
+}
+with_lifecycle_silence <- function(expr) {
+  scoped_lifecycle_silence()
+  expr
 }
 
 scoped_lifecycle_warnings <- function(frame = rlang::caller_env()) {
@@ -120,6 +134,17 @@ scoped_lifecycle_warnings <- function(frame = rlang::caller_env()) {
 }
 with_lifecycle_warnings <- function(expr) {
   scoped_lifecycle_warnings()
+  expr
+}
+
+scoped_lifecycle_errors <- function(frame = rlang::caller_env()) {
+  scoped_lifecycle_warnings(frame = frame)
+  rlang::scoped_options(.frame = frame,
+    lifecycle_warnings_as_errors = TRUE
+  )
+}
+with_lifecycle_warnings <- function(expr) {
+  scoped_lifecycle_errors()
   expr
 }
 

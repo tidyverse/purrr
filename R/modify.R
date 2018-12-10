@@ -424,7 +424,7 @@ modify_depth_rec <- function(.x, .depth, .f,
 #' @usage NULL
 #' @rdname modify
 at_depth <- function(.x, .depth, .f, ...) {
-  abort_defunct("at_depth() is defunct, please use `map_depth()` instead")
+  stop_defunct("at_depth() is defunct, please use `map_depth()` instead")
 }
 
 # Internal version of map_lgl() that works with logical vectors

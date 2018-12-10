@@ -11,7 +11,7 @@ test_that("invoke_map() is soft-deprecated", {
   expect_warning(invoke_map(list(mean), list(x = 1:10)), "soft-deprecated")
 })
 
-scoped_options(lifecycle_disable_warnings = TRUE)
+scoped_lifecycle_silence()
 
 
 # invoke ------------------------------------------------------------------
