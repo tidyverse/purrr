@@ -290,7 +290,7 @@ accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
 }
 #' @rdname accumulate
 #' @export
-accumulate2 <- function(.x, .y, .f, ..., .init, .dir = c("left", "right")) {
+accumulate2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
 }
 

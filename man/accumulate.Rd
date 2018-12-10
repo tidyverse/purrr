@@ -7,7 +7,7 @@
 \usage{
 accumulate(.x, .f, ..., .init, .dir = c("forward", "backward"))
 
-accumulate2(.x, .y, .f, ..., .init, .dir = c("left", "right"))
+accumulate2(.x, .y, .f, ..., .init)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
