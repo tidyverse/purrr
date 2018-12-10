@@ -103,7 +103,7 @@ void stop_bad_element_length(SEXP x,
   SET_TAG(node, Rf_install("arg"));
 
   node = CDR(node);
-  SET_TAG(node, Rf_install(".recycle"));
+  SET_TAG(node, Rf_install("recycle"));
 
   Rf_eval(call, R_BaseEnv);
   Rf_error("Internal error: `stop_bad_element_length()` should have thrown earlier");
@@ -167,7 +167,7 @@ void stop_bad_element_vector(SEXP x,
   SET_TAG(node, Rf_install("arg"));
 
   node = CDR(node);
-  SET_TAG(node, Rf_install(".recycle"));
+  SET_TAG(node, Rf_install("recycle"));
 
   Rf_eval(call, R_BaseEnv);
   Rf_error("Internal error: `stop_bad_element_length()` should have thrown earlier");
