@@ -2,6 +2,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include "coerce.h"
+#include "conditions.h"
 #include "utils.h"
 
 const char* objtype(SEXP x) {
@@ -10,7 +11,7 @@ const char* objtype(SEXP x) {
 
 SEXP flatten_impl(SEXP x) {
   if (TYPEOF(x) != VECSXP) {
-    Rf_errorcall(R_NilValue, "`.x` must be a list, not %s", friendly_typeof(x));
+    stop_bad_type(x, "a list", NULL, ".x");
   }
   int m = Rf_length(x);
 
@@ -21,11 +22,9 @@ SEXP flatten_impl(SEXP x) {
 
   for (int j = 0; j < m; ++j) {
     SEXP x_j = VECTOR_ELT(x, j);
-    if (!Rf_isVector(x_j) && !Rf_isNull(x_j))
-      Rf_errorcall(R_NilValue,
-                   "Element %d of `.x` must be a vector, not %s",
-                   j + 1,
-                   friendly_typeof(x_j));
+    if (!is_vector(x_j) && x_j != R_NilValue) {
+      stop_bad_element_type(x_j, j + 1, "a vector", NULL, ".x");
+    }
 
     n += Rf_length(x_j);
     if (!has_names) {
@@ -59,10 +58,12 @@ SEXP flatten_impl(SEXP x) {
       case LGLSXP:   SET_VECTOR_ELT(out, i, Rf_ScalarLogical(LOGICAL(x_j)[k])); break;
       case INTSXP:   SET_VECTOR_ELT(out, i, Rf_ScalarInteger(INTEGER(x_j)[k])); break;
       case REALSXP:  SET_VECTOR_ELT(out, i, Rf_ScalarReal(REAL(x_j)[k])); break;
+      case CPLXSXP:  SET_VECTOR_ELT(out, i, Rf_ScalarComplex(COMPLEX(x_j)[k])); break;
       case STRSXP:   SET_VECTOR_ELT(out, i, Rf_ScalarString(STRING_ELT(x_j, k))); break;
+      case RAWSXP:   SET_VECTOR_ELT(out, i, Rf_ScalarRaw(RAW(x_j)[k])); break;
       case VECSXP:   SET_VECTOR_ELT(out, i, VECTOR_ELT(x_j, k)); break;
       default:
-        Rf_errorcall(R_NilValue, "Element %d must be a vector, not %s", j + 1, friendly_typeof(x_j));
+        Rf_error("Internal error: `flatten_impl()` should have failed earlier");
       }
       if (has_names) {
         if (has_names_j) {
@@ -86,7 +87,7 @@ SEXP flatten_impl(SEXP x) {
 
 SEXP vflatten_impl(SEXP x, SEXP type_) {
   if (TYPEOF(x) != VECSXP) {
-    Rf_errorcall(R_NilValue, "`.x` must be a list, not %s", friendly_typeof(x));
+    stop_bad_type(x, "a list", NULL, ".x");
   }
   int m = Rf_length(x);
 

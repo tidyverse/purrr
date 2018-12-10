@@ -2,11 +2,12 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <stdbool.h>
-#include "coerce.h"
-#include "backports.h"
 #include <string.h>
+#include "backports.h"
+#include "coerce.h"
+#include "conditions.h"
 
-static int check_input_lengths(int n, int index_n, int i, bool strict);
+static int check_input_lengths(int n, SEXP index, int i, bool strict);
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
 static int check_double_index_length(double val, int n, int i, bool strict);
 static int check_character_index(SEXP string, int i, bool strict);
@@ -28,7 +29,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
     return -1;
   }
 
-  if (check_input_lengths(n, Rf_length(index), i, strict)) {
+  if (check_input_lengths(n, index, i, strict)) {
     return -1;
   }
 
@@ -100,7 +101,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   default:
-    Rf_errorcall(R_NilValue, "Index %d must be a character or numeric vector.", i + 1);
+    stop_bad_element_type(x, i + 1, "a character or numeric vector", "Index", NULL);
   }
 }
 
@@ -139,7 +140,8 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    Rf_errorcall(R_NilValue, "Index %d must be a string.", i + 1);
+    SEXP ptype = PROTECT(Rf_allocVector(STRSXP, 0));
+    stop_bad_element_vector(index_i, i + 1, ptype, 1, "Index", NULL, false);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -159,7 +161,8 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    Rf_errorcall(R_NilValue, "Index %d must be a string.", i + 1);
+    SEXP ptype = PROTECT(Rf_allocVector(STRSXP, 0));
+    stop_bad_element_vector(index_i, i + 1, ptype, 1, "Index", NULL, false);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -195,7 +198,7 @@ static bool is_function(SEXP x) {
 
 SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   if (TYPEOF(index) != VECSXP) {
-    Rf_errorcall(R_NilValue, "`index` must be a list, not a %s", Rf_type2char(TYPEOF(index)));
+    stop_bad_type(index, "a list", NULL, "where");
   }
 
   int n = Rf_length(index);
@@ -250,7 +253,9 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
 /* Type checking */
 
-static int check_input_lengths(int n, int index_n, int i, bool strict) {
+static int check_input_lengths(int n, SEXP index, int i, bool strict) {
+  int index_n = Rf_length(index);
+
   if (n == 0) {
     if (strict) {
       Rf_errorcall(R_NilValue, "Plucked object must have at least one element.");
@@ -259,10 +264,8 @@ static int check_input_lengths(int n, int index_n, int i, bool strict) {
     }
   }
 
-  if (index_n > 1) {
-    Rf_errorcall(R_NilValue, "Index %d must have length 1, not %d.", i + 1, n);
-  } else if (strict && index_n == 0) {
-    Rf_errorcall(R_NilValue, "Index %d must have length 1, not 0.", i + 1);
+  if (index_n > 1 || (strict && index_n == 0)) {
+    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false);
   }
 
   return 0;

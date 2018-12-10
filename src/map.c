@@ -3,6 +3,7 @@
 #include <Rversion.h>
 #include <Rinternals.h>
 #include "coerce.h"
+#include "conditions.h"
 #include "utils.h"
 
 void copy_names(SEXP from, SEXP to) {
@@ -17,15 +18,11 @@ void copy_names(SEXP from, SEXP to) {
 }
 
 void check_vector(SEXP x, const char *name) {
-  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x))
+  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
     return;
+  }
 
-  Rf_errorcall(
-    R_NilValue,
-    "`%s` must be a vector, not %s",
-    name,
-    friendly_typeof(x)
-  );
+  stop_bad_type(x, "a vector", NULL, name);
 }
 
 // call must involve i
@@ -47,13 +44,10 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
 #else
     SEXP res = PROTECT(Rf_eval(call, env));
 #endif
-    if (type != VECSXP && Rf_length(res) != 1)
-      Rf_errorcall(R_NilValue,
-                   "Result %i must be a single %s, not %s of length %d",
-                   i + 1,
-                   Rf_type2char(type),
-                   friendly_typeof(res),
-                   Rf_length(res));
+    if (type != VECSXP && Rf_length(res) != 1) {
+      SEXP ptype = PROTECT(Rf_allocVector(type, 0));
+      stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);
+    }
 
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);
@@ -145,9 +139,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val)) {
-    Rf_errorcall(R_NilValue,
-                 "`.x` must be a list, not %s",
-                 friendly_typeof(l_val));
+    stop_bad_type(l_val, "a list", NULL, l_name);
   }
 
   // Check all elements are lists and find maximum length
@@ -157,10 +149,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
-      Rf_errorcall(R_NilValue,
-                   "Element %d of `.l` must be a vector, not %s",
-                   j + 1,
-                   friendly_typeof(j_val));
+      stop_bad_element_type(j_val, j + 1, "a vector", NULL, l_name);
     }
 
     int nj = Rf_length(j_val);
@@ -180,11 +169,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     int nj = Rf_length(j_val);
 
     if (nj != 1 && nj != n) {
-      Rf_errorcall(R_NilValue,
-                   "Element %d of `.l` must have length 1 or %d, not %d",
-                   j + 1,
-                   nj,
-                   n);
+      stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
     }
   }
 

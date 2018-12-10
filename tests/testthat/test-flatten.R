@@ -7,7 +7,7 @@ test_that("input must be a list", {
 
 test_that("contents of list must be supported types", {
   expect_error(flatten(list(quote(a))), "Element 1 of `.x` must be a vector, not a symbol")
-  expect_error(flatten(list(expression(a))), "Element 1 must be a vector, not an expression vector")
+  expect_error(flatten(list(expression(a))), "Element 1 of `.x` must be a vector, not an expression vector")
 })
 
 test_that("each second level element becomes first level element", {
@@ -20,6 +20,8 @@ test_that("can flatten all atomic vectors", {
   expect_equal(flatten(list(1L)), list(1L))
   expect_equal(flatten(list(1)), list(1))
   expect_equal(flatten(list("a")), list("a"))
+  expect_equal(flatten(list(as.raw(1))), list(as.raw(1)))
+  expect_equal(flatten(list(1i)), list(1i))
   expect_equal(flatten_raw(list(as.raw(1))), as.raw(1))
 })
 
