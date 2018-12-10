@@ -6,9 +6,9 @@
 #'   These dots support [tidy dots][rlang::list2] features. In
 #'   particular, if your functions are stored in a list, you can
 #'   splice that in with `!!!`.
-#' @param .rev If `TRUE` (the default), the functions are called in
-#'   the reverse order, from right to left, as is conventional in
-#'   mathematics. Otherwise they are called from left to right.
+#' @param .dir If `"backward"` (the default), the functions are called
+#'   in the reverse order, from right to left, as is conventional in
+#'   mathematics. If `"forward"`, they are called from left to right.
 #' @return A function
 #' @export
 #' @examples
@@ -30,15 +30,16 @@
 #' )
 #' fn <- compose(!!!fns)
 #' fn("input")
-compose <- function(..., .rev = TRUE) {
-  fns <- map(list2(...), rlang::as_closure, env = caller_env())
+compose <- function(..., .dir = c("backward", "forward")) {
+  .dir <- arg_match(.dir, c("backward", "forward"))
 
+  fns <- map(list2(...), rlang::as_closure, env = caller_env())
   if (!length(fns)) {
     # Return the identity function
     return(compose(function(x, ...) x))
   }
 
-  if (.rev) {
+  if (.dir == "backward") {
     n <- length(fns)
     first_fn <- fns[[n]]
     fns <- rev(fns[-n])

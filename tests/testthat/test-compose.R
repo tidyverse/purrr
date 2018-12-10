@@ -9,7 +9,7 @@ test_that("composed functions are applied right to left by default", {
 })
 
 test_that("composed functions are applied in reverse order if .dir is supplied", {
-  expect_identical(compose(~ .x + 100, ~ .x * 2, .rev = FALSE)(2), 204)
+  expect_identical(compose(~ .x + 100, ~ .x * 2, .dir = "forward")(2), 204)
 })
 
 test_that("compose supports formulas", {
