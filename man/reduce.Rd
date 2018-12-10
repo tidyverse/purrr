@@ -12,13 +12,14 @@ reduce2(.x, .y, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, a 2-argument function. The function will be
-passed the accumulated value as the first argument and the "next" value
-as the second argument.
+\item{.f}{For \code{reduce()}, and \code{accumulate()}, a 2-argument
+function. The function will be passed the accumulated value as
+the first argument and the "next" value as the second argument.
 
-For \code{reduce2()}, a 3-argument function. The function will be passed the
-accumulated value as the first argument, the next value of \code{.x} as the
-second argument, and the next value of \code{.y} as the third argument.}
+For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
+function will be passed the accumulated value as the first
+argument, the next value of \code{.x} as the second argument, and the
+next value of \code{.y} as the third argument.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -31,9 +32,9 @@ is empty. If missing, and \code{x} is empty, will throw an error.}
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
 
-\item{.y}{For \code{reduce2()}, an additional argument that is passed to
-\code{.f}. If \code{init} is not set, \code{.y} should be 1 element shorter than
-\code{.x}.}
+\item{.y}{For \code{reduce2()} and \code{accumulate2()}, an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \description{
 \code{reduce()} is an operation that combines the elements of a vector

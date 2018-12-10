@@ -61,6 +61,17 @@ test_that("reduce returns original input if it was length one", {
   expect_equal(reduce(x[1], paste), x[[1]])
 })
 
+# accumulate2 -------------------------------------------------------------
+
+test_that("", {
+  paste2 <- function(x, y, sep) paste(x, y, sep = sep)
+
+  x <- c("a", "b", "c")
+  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b", "a-b.c"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b", "x.a-b.c"))
+})
+
+
 # Life cycle --------------------------------------------------------------
 
 test_that("right variants are retired", {

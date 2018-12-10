@@ -2,20 +2,24 @@
 % Please edit documentation in R/reduce.R
 \name{accumulate}
 \alias{accumulate}
+\alias{accumulate2}
 \title{Accumulate intermediate results of a vector reduction}
 \usage{
 accumulate(.x, .f, ..., .init, .dir = c("forward", "backward"))
+
+accumulate2(.x, .y, .f, ..., .init, .dir = c("left", "right"))
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, a 2-argument function. The function will be
-passed the accumulated value as the first argument and the "next" value
-as the second argument.
+\item{.f}{For \code{reduce()}, and \code{accumulate()}, a 2-argument
+function. The function will be passed the accumulated value as
+the first argument and the "next" value as the second argument.
 
-For \code{reduce2()}, a 3-argument function. The function will be passed the
-accumulated value as the first argument, the next value of \code{.x} as the
-second argument, and the next value of \code{.y} as the third argument.}
+For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
+function will be passed the accumulated value as the first
+argument, the next value of \code{.x} as the second argument, and the
+next value of \code{.y} as the third argument.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -27,6 +31,10 @@ is empty. If missing, and \code{x} is empty, will throw an error.}
 \item{.dir}{The direction of reduction as a string, one of
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
+
+\item{.y}{For \code{reduce2()} and \code{accumulate2()}, an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.
@@ -73,6 +81,11 @@ accumulate(letters[1:5], paste, sep = ".")
 # with a left reduction, and to the right otherwise:
 accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 
+# `accumulate2()` is a version of `accumulate()` that works with
+# ternary functions and one additional vector:
+paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+letters[1:4] \%>\% accumulate(paste2)
+letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
 
 # Simulating stochastic processes with drift
 \dontrun{
