@@ -27,6 +27,50 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Life cycle
 
+* `reduce_right()` is soft-deprecated and replaced by a new `.dir`
+  argument of `reduce()`:
+
+  ```{r}
+  # Before:
+  reduce_right(1:3, f)
+
+  # After:
+  reduce(1:3, f, .dir = "backward")
+  ```
+
+  Note that the details of the computation have changed. Whereas
+  `reduce_right()` computed `f(f(3, 2), 1)`, it now computes `f(1,
+  f(2, 3))`. This is the standard way of reducing from the right.
+
+  To produce the exact same reduction as `reduce_right()`, simply
+  reverse your vector and use a left reduction:
+
+  ```{r}
+  # Before:
+  reduce_right(1:3, f)
+
+  # After:
+  reduce(rev(1:3), f)
+  ```
+
+* `reduce2_right()` is soft-deprecated without replacement. It is not
+  clear what algorithmic properties should a right reduction have in
+  this case. Please reach out if you know about a use case for a right
+  reduction with a ternary function.
+
+* `accumulate_right()` is soft-deprecated and replaced by the new
+  `.dir` argument of `accumulate()`. Note that the algorithm has
+  slightly changed: the accumulated value is passed to the right
+  rather than the left, which is consistent with a right reduction.
+
+  ```{r}
+  # Before:
+  accumulate_right(1:3, f)
+
+  # After:
+  accumulate(1:3, f, .dir = "backward")
+  ```
+
 * The `.right` argument of `detect()` and `detect_index()` is
   soft-deprecated and renamed to `.dir` for consistency with other
   functions and clarity of the interface.

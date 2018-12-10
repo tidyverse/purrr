@@ -2,12 +2,9 @@
 % Please edit documentation in R/reduce.R
 \name{accumulate}
 \alias{accumulate}
-\alias{accumulate_right}
-\title{Accumulate recursive folds across a list}
+\title{Accumulate intermediate results of a vector reduction}
 \usage{
-accumulate(.x, .f, ..., .init)
-
-accumulate_right(.x, .f, ..., .init)
+accumulate(.x, .f, ..., .init, .dir = c("forward", "backward"))
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -26,6 +23,10 @@ second argument, and the next value of \code{.y} as the third argument.}
 the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
+
+\item{.dir}{The direction of reduction as a string, one of
+\code{"forward"} (the default) or \code{"backward"}. See the section about
+direction below.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.
@@ -33,25 +34,45 @@ A vector the same length of \code{.x} with the same names as \code{.x}.
 If \code{.init} is supplied, the length is extended by 1. If \code{.x} has
 names, the initial value is given the name \code{".init"}, otherwise
 the returned vector is kept unnamed.
+
+If \code{.dir} is \code{"forward"} (the default), the first element is the
+initial value (\code{.init} if supplied, or the first element of \code{.x})
+and the last element is the final reduced value. In case of a
+right accumulation, this order is reversed.
 }
 \description{
-\code{accumulate} applies a function recursively over a list from the left, while
-\code{accumulate_right} applies the function from the right. Unlike \code{reduce}
-both functions keep the intermediate results.
+\code{accumulate()} \link[=reduce]{reduces} a vector with a binary function,
+keeping all intermediate results, from the initial value to the
+final reduced value, i.e. the result you'd have gotten if you used
+\code{\link[=reduce]{reduce()}} instead of \code{accumulate()}.
 }
+\section{Life cycle}{
+
+
+\code{accumulate_right()} is soft-deprecated in favour of the \code{.dir}
+argument as of rlang 0.3.0. Note that the algorithm has
+slightly changed: the accumulated value is passed to the right
+rather than the left, which is consistent with a right reduction.
+}
+
 \examples{
-1:3 \%>\% accumulate(`+`)
-1:10 \%>\% accumulate_right(`*`)
+# With an associative operation, the final value is always the
+# same, no matter the direction. You'll find it in the last element
+# for a left accumulation, and in the first element for a right one:
+1:5 \%>\% accumulate(`+`)
+1:5 \%>\% accumulate(`+`, .dir = "backward")
 
-# From Haskell's scanl documentation
-1:10 \%>\% accumulate(max, .init = 5)
+# The final value is always equal to the equivalent reduction:
+1:5 \%>\% reduce(`+`)
 
-# Understanding the arguments .x and .y when .f
-# is a lambda function
-# .x is the accumulating value
-1:10 \%>\% accumulate(~ .x)
-# .y is element in the list
-1:10 \%>\% accumulate(~ .y)
+# It is easier to understand the details of the reduction with
+# `paste()`.
+accumulate(letters[1:5], paste, sep = ".")
+
+# Note how the intermediary reduced values are passed to the left
+# with a left reduction, and to the right otherwise:
+accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
+
 
 # Simulating stochastic processes with drift
 \dontrun{
@@ -66,4 +87,7 @@ rerun(5, rnorm(100)) \%>\%
     geom_line(aes(color = simulation)) +
     ggtitle("Simulations of a random walk with drift")
 }
+}
+\seealso{
+\code{\link[=reduce]{reduce()}} when you only need the final reduced value.
 }

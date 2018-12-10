@@ -19,10 +19,9 @@ test_that("length 1 argument reduced with init", {
   expect_equal(reduce_right(1, `+`, .init = 1), 2)
 })
 
-test_that("reduce_right equivalent to reversing input", {
-  x <- list(c(2, 1), c(4, 3), c(6, 5))
-  expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
-  expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
+test_that("direction of reduce determines how generated trees lean", {
+  expect_identical(reduce(1:4, list), list(list(list(1L, 2L), 3L), 4L))
+  expect_identical(reduce(1:4, list, .dir = "backward"), list(1L, list(2L, list(3L, 4L))))
 })
 
 # accumulate --------------------------------------------------------------
@@ -30,21 +29,21 @@ test_that("reduce_right equivalent to reversing input", {
 test_that("accumulate passes arguments to function", {
   tt <- c("a", "b", "c")
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
-  expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
+  expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward"), c("a.b.c", "b.c", "c"))
 })
 
 test_that("accumulate keeps input names", {
   input <- set_names(1:26, letters)
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
-  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+  expect_identical(accumulate(input, sum, .dir = "backward"), set_names(rev(cumsum(rev(1:26))), rev(letters)))
 })
 
 test_that("accumulate keeps input names when init is supplied", {
   expect_identical(accumulate(1:2, c, .init = 0L), list(0L, 0:1, 0:2))
-  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
+  expect_identical(accumulate(0:1, c, .init = 2L, .dir = "backward"), list(0:2, 1:2, 2L))
 
-  expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
-  expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
+  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
+  expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"), list(b = 0:2, a = 1:2, .init = 2L))
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -54,19 +53,50 @@ test_that("basic application works", {
 
   x <- c("a", "b", "c")
   expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
-  expect_equal(reduce2_right(x, c("-", "."), paste2), "c.b-a")
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
-  expect_equal(reduce2_right(x, c(".", "-", "."), paste2, .init = "x"), "x.c-b.a")
 })
 
-test_that("reduce2_right works if lengths match", {
+test_that("reduce returns original input if it was length one", {
+  x <- list(c(0, 1), c(2, 3), c(4, 5))
+  expect_equal(reduce(x[1], paste), x[[1]])
+})
+
+# Life cycle --------------------------------------------------------------
+
+test_that("right variants are retired", {
+  scoped_lifecycle_warnings()
+  expect_warning(reduce_right(1:3, c), "soft-deprecated")
+  expect_warning(reduce2_right(1:3, 1:2, c), "soft-deprecated")
+  expect_warning(accumulate_right(1:3, c), "soft-deprecated")
+})
+
+test_that("reduce_right equivalent to reversing input", {
+  scoped_options(lifecycle_disable_warnings = TRUE)
+  x <- list(c(2, 1), c(4, 3), c(6, 5))
+  expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
+  expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
+})
+
+test_that("reduce2_right still works", {
+  scoped_options(lifecycle_disable_warnings = TRUE)
+  paste2 <- function(x, y, sep) paste(x, y, sep = sep)
+  x <- c("a", "b", "c")
+  expect_equal(reduce2_right(x, c("-", "."), paste2), "c.b-a")
+  expect_equal(reduce2_right(x, c(".", "-", "."), paste2, .init = "x"), "x.c-b.a")
+
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   y <- list(c(6, 7), c(8, 9))
   expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
   expect_error(reduce2_right(y, x, paste))
 })
 
-test_that("reduce returns original input if it was length one", {
-  x <- list(c(0, 1), c(2, 3), c(4, 5))
-  expect_equal(reduce(x[1], paste), x[[1]])
+test_that("accumulate_right still works", {
+  tt <- c("a", "b", "c")
+  expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
+
+  input <- set_names(1:26, letters)
+  expect_identical(accumulate_right(input, sum), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+
+  expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
+  expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
 })

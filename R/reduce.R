@@ -1,9 +1,11 @@
-#' Reduce a list to a single value by iteratively applying a binary function.
+#' Reduce a list to a single value by iteratively applying a binary function
 #'
-#' `reduce()` combines from the left, `reduce_right()` combines from
-#' the right. `reduce(list(x1, x2, x3), f)` is equivalent to
-#' `f(f(x1, x2), x3)`; `reduce_right(list(x1, x2, x3), f)` is equivalent to
-#' `f(f(x3, x2), x1)`.
+#' @description
+#'
+#' `reduce()` is an operation that combines the elements of a vector
+#' into a single value. The combination is driven by `.f`, a binary
+#' function that takes two values and returns a single value: reducing
+#' `f` over `1:3` computes the value `f(f(1, 2), 3)`.
 #'
 #' @inheritParams map
 #' @param .y For `reduce2()`, an additional argument that is passed to
@@ -16,64 +18,109 @@
 #'   For `reduce2()`, a 3-argument function. The function will be passed the
 #'   accumulated value as the first argument, the next value of `.x` as the
 #'   second argument, and the next value of `.y` as the third argument.
-#'
 #' @param .init If supplied, will be used as the first value to start
-#'   the accumulation, rather than using \code{x[[1]]}. This is useful if
+#'   the accumulation, rather than using `x[[1]]`. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
 #'   is empty. If missing, and `x` is empty, will throw an error.
-#' @export
+#' @param .dir The direction of reduction as a string, one of
+#'   `"forward"` (the default) or `"backward"`. See the section about
+#'   direction below.
+#'
+#' @section Direction:
+#'
+#' When `.f` is an associative operation like `+` or `c()`, the
+#' direction of reduction does not matter. For instance, reducing the
+#' vector `1:3` with the binary function `+` computes the sum `((1 +
+#' 2) + 3)` from the left, and the same sum `(1 + (2 + 3))` from the
+#' right.
+#'
+#' In other cases, the direction has important consequences on the
+#' reduced value. For instance, reducing a vector with `list()` from
+#' the left produces a left-leaning nested list (or tree), while
+#' reducing `list()` from the right produces a right-leaning list.
+#'
+#' @section Life cycle:
+#'
+#' `reduce_right()` is soft-deprecated as of purrr 0.3.0. Please use
+#' the `.dir` argument of `reduce()` instead. Note that the algorithm
+#' has changed. Whereas `reduce_right()` computed `f(f(3, 2), 1)`,
+#' `reduce(.dir = \"backward\")` computes `f(1, f(2, 3))`. This is the
+#' standard way of reducing from the right.
+#'
+#' To update your code with the same reduction as `reduce_right()`,
+#' simply reverse your vector and use a left reduction:
+#'
+#' ```{r}
+#' # Before:
+#' reduce_right(1:3, f)
+#'
+#' # After:
+#' reduce(rev(1:3), f)
+#' ```
+#'
+#' `reduce2_right()` is soft-deprecated as of purrr 0.3.0 without
+#' replacement. It is not clear what algorithmic properties should a
+#' right reduction have in this case. Please reach out if you know
+#' about a use case for a right reduction with a ternary function.
+#'
+#' @seealso [accumulate()] for a version that returns all intermediate
+#'   values of the reduction.
 #' @examples
+#' # Reducing `+` computes the sum of a vector while reducing `*`
+#' # computes the product:
 #' 1:3 %>% reduce(`+`)
 #' 1:10 %>% reduce(`*`)
 #'
+#' # When the operation is associative, the direction of reduction
+#' # does not matter:
+#' reduce(1:4, `+`)
+#' reduce(1:4, `+`, .dir = "backward")
+#'
+#' # However with non-associative operations, the reduced value will
+#' # be different as a function of the direction. For instance,
+#' # `list()` will create left-leaning lists when reducing from the
+#' # right, and right-leaning lists otherwise:
+#' str(reduce(1:4, list))
+#' str(reduce(1:4, list, .dir = "backward"))
+#'
+#' # reduce2() takes a ternary function and a second vector that is
+#' # one element smaller than the first vector:
 #' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 #' letters[1:4] %>% reduce(paste2)
 #' letters[1:4] %>% reduce2(c("-", ".", "-"), paste2)
-#' letters[1:4] %>% reduce2_right(c("-", ".", "-"), paste2)
-#'
-#' samples <- rerun(2, sample(10, 5))
-#' samples
-#' reduce(samples, union)
-#' reduce(samples, intersect)
 #'
 #' x <- list(c(0, 1), c(2, 3), c(4, 5))
-#' x %>% reduce(c)
-#' x %>% reduce_right(c)
-#' # Equivalent to:
-#' x %>% rev() %>% reduce(c)
-#'
 #' y <- list(c(6, 7), c(8, 9))
 #' reduce2(x, y, paste)
-#' reduce2_right(x, y, paste)
-#' # Equivalent to:
-#' x %>% rev() %>% reduce2(rev(y), paste)
-reduce <- function(.x, .f, ..., .init) {
-  reduce_impl(.x, .f, ..., .init = .init, .left = TRUE)
-}
-#' @rdname reduce
 #' @export
-reduce_right <- function(.x, .f, ..., .init) {
-  reduce_impl(.x, .f, ..., .init = .init, .left = FALSE)
+reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
+  reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
 }
-
 #' @rdname reduce
 #' @export
 reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
-#' @rdname reduce
-#' @export
-reduce2_right <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
-}
 
-reduce_impl <- function(.x, .f, ..., .init, .left = TRUE) {
-  out <- reduce_init(.x, .init, left = .left)
-  idx <- reduce_index(.x, .init, left = .left)
+reduce_impl <- function(.x, .f, ..., .init, .dir = "forward") {
+  left <- arg_match(.dir, c("forward", "backward")) == "forward"
+
+  out <- reduce_init(.x, .init, left = left)
+  idx <- reduce_index(.x, .init, left = left)
 
   .f <- as_mapper(.f, ...)
-  for (i in idx) {
-    out <- .f(out, .x[[i]], ...)
+
+  # Left-reduce produces left-leaning computation trees (reduced
+  # values are passed to the left) while right-reduce produces
+  # right-leaning trees
+  if (left) {
+    for (i in idx) {
+      out <- .f(out, .x[[i]], ...)
+    }
+  } else {
+    for (i in idx) {
+      out <- .f(.x[[i]], out, ...)
+    }
   }
 
   out
@@ -139,11 +186,14 @@ seq_len2 <- function(start, end) {
   start:end
 }
 
-#' Accumulate recursive folds across a list
+#' Accumulate intermediate results of a vector reduction
 #'
-#' `accumulate` applies a function recursively over a list from the left, while
-#' `accumulate_right` applies the function from the right. Unlike `reduce`
-#' both functions keep the intermediate results.
+#' @description
+#'
+#' `accumulate()` [reduces][reduce] a vector with a binary function,
+#' keeping all intermediate results, from the initial value to the
+#' final reduced value, i.e. the result you'd have gotten if you used
+#' [reduce()] instead of `accumulate()`.
 #'
 #' @inheritParams reduce
 #'
@@ -152,20 +202,38 @@ seq_len2 <- function(start, end) {
 #'   If `.init` is supplied, the length is extended by 1. If `.x` has
 #'   names, the initial value is given the name `".init"`, otherwise
 #'   the returned vector is kept unnamed.
-#' @export
+#'
+#'   If `.dir` is `"forward"` (the default), the first element is the
+#'   initial value (`.init` if supplied, or the first element of `.x`)
+#'   and the last element is the final reduced value. In case of a
+#'   right accumulation, this order is reversed.
+#'
+#' @section Life cycle:
+#'
+#' `accumulate_right()` is soft-deprecated in favour of the `.dir`
+#' argument as of rlang 0.3.0. Note that the algorithm has
+#' slightly changed: the accumulated value is passed to the right
+#' rather than the left, which is consistent with a right reduction.
+#'
+#' @seealso [reduce()] when you only need the final reduced value.
 #' @examples
-#' 1:3 %>% accumulate(`+`)
-#' 1:10 %>% accumulate_right(`*`)
+#' # With an associative operation, the final value is always the
+#' # same, no matter the direction. You'll find it in the last element
+#' # for a left accumulation, and in the first element for a right one:
+#' 1:5 %>% accumulate(`+`)
+#' 1:5 %>% accumulate(`+`, .dir = "backward")
 #'
-#' # From Haskell's scanl documentation
-#' 1:10 %>% accumulate(max, .init = 5)
+#' # The final value is always equal to the equivalent reduction:
+#' 1:5 %>% reduce(`+`)
 #'
-#' # Understanding the arguments .x and .y when .f
-#' # is a lambda function
-#' # .x is the accumulating value
-#' 1:10 %>% accumulate(~ .x)
-#' # .y is element in the list
-#' 1:10 %>% accumulate(~ .y)
+#' # It is easier to understand the details of the reduction with
+#' # `paste()`.
+#' accumulate(letters[1:5], paste, sep = ".")
+#'
+#' # Note how the intermediary reduced values are passed to the left
+#' # with a left reduction, and to the right otherwise:
+#' accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
+#'
 #'
 #' # Simulating stochastic processes with drift
 #' \dontrun{
@@ -180,36 +248,22 @@ seq_len2 <- function(start, end) {
 #'     geom_line(aes(color = simulation)) +
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
-accumulate <- function(.x, .f, ..., .init) {
-  .f <- as_mapper(.f, ...)
+#' @export
+accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
+  left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
+  .f <- as_mapper(.f, ...)
   f <- function(x, y) {
     .f(x, y, ...)
   }
 
-  res <- Reduce(f, .x, init = .init, accumulate = TRUE)
-  names(res) <- accumulate_names(names(.x), .init)
+  res <- Reduce(f, .x, init = .init, accumulate = TRUE, right = !left)
+  names(res) <- accumulate_names(names(.x), .init, left = left)
 
   res
 }
 
-#' @export
-#' @rdname accumulate
-accumulate_right <- function(.x, .f, ..., .init) {
-  .f <- as_mapper(.f, ...)
-
-  # Note the order of arguments is switched
-  f <- function(x, y) {
-    .f(y, x, ...)
-  }
-
-  res <- Reduce(f, .x, init = .init, right = TRUE, accumulate = TRUE)
-  names(res) <- accumulate_names(names(.x), .init, right = TRUE)
-
-  res
-}
-
-accumulate_names <- function(nms, init, right = FALSE) {
+accumulate_names <- function(nms, init, left = left) {
   if (is_null(nms)) {
     return(NULL)
   }
@@ -217,9 +271,79 @@ accumulate_names <- function(nms, init, right = FALSE) {
   if (!missing(init)) {
     nms <- c(".init", nms)
   }
-  if (right) {
+  if (!left) {
     nms <- rev(nms)
   }
 
   nms
+}
+
+#' Reduce from the right (retired)
+#'
+#' @description
+#'
+#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#'
+#' These functions are retired as of purrr 0.3.0. Please use the
+#' `.dir` argument of [reduce()] instead, or reverse your vectors
+#' and use a left reduction.
+#'
+#' @inheritParams reduce
+#'
+#' @keywords internal
+#' @export
+reduce_right <- function(.x, .f, ..., .init) {
+  signal_soft_deprecated(paste_line(
+    "`reduce_right()` is soft-deprecated as of purrr 0.3.0.",
+    "Please use the new `.dir` argument of `reduce()` instead.",
+    "",
+    "  # Before:",
+    "  reduce_right(1:3, f)",
+    "",
+    "  # After:",
+    "  reduce(1:3, f, .dir = \"backward\")  # New algorithm",
+    "  reduce(rev(1:3), f)                # Same algorithm as reduce_right()",
+    ""
+  ))
+  .x <- rev(.x) # Compatibility
+  reduce_impl(.x, .f, ..., .init = .init)
+}
+#' @rdname reduce_right
+#' @export
+reduce2_right <- function(.x, .y, .f, ..., .init) {
+  signal_soft_deprecated(paste_line(
+    "`reduce2_right()` is soft-deprecated as of purrr 0.3.0.",
+    "Please reverse your vectors and use `reduce2()` instead.",
+    "",
+    "  # Before:",
+    "  reduce2_right(x, y, f)",
+    "",
+    "  # After:",
+    "  reduce2(rev(x), rev(y), f)",
+    ""
+  ))
+  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
+}
+
+#' @rdname reduce_right
+#' @export
+accumulate_right <- function(.x, .f, ..., .init) {
+  signal_soft_deprecated(paste_line(
+    "`accumulate_right()` is soft-deprecated as of purrr 0.3.0.",
+    "Please use the new `.dir` argument of `accumulate()` instead.",
+    "",
+    "  # Before:",
+    "  accumulate_right(x, f)",
+    "",
+    "  # After:",
+    "  accumulate(x, f, .dir = \"backward\")",
+    ""
+  ))
+
+  # Note the order of arguments is switched
+  f <- function(y, x) {
+    .f(x, y, ...)
+  }
+
+  accumulate(.x, f, .init = .init, .dir = "backward")
 }
