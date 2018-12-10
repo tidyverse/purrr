@@ -2,9 +2,10 @@
 #'
 #' @inheritParams every
 #' @inheritParams map
-#' @param .right If `FALSE`, the default, starts at the beginning
-#'   of the vector and move towards the end; if `TRUE`, starts at the end
-#'   of the vector and moves towards the beginning.
+#' @param .dir If `"forward"`, the default, starts at the beginning of
+#'   the vector and move towards the end; if `"backward"`, starts at
+#'   the end of the vector and moves towards the beginning.
+#' @param .right Soft-deprecated. Please use `.dir` instead.
 #' @return `detect` the value of the first item that matches the
 #'  predicate; `detect_index` the position of the matching item.
 #'  If not found, `detect` returns `NULL` and `detect_index`
@@ -39,10 +40,11 @@
 #'
 #' # If you need to find all positions, use map_lgl():
 #' which(map_lgl(x, "foo"))
-detect <- function(.x, .f, ..., .right = FALSE) {
+detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
+  .dir <- arg_match(.dir, c("forward", "backward"))
 
-  for (i in index(.x, .right)) {
+  for (i in index(.x, .dir, .right, "detect")) {
     if (.f(.x[[i]], ...)) {
       return(.x[[i]])
     }
@@ -53,10 +55,11 @@ detect <- function(.x, .f, ..., .right = FALSE) {
 
 #' @export
 #' @rdname detect
-detect_index <- function(.x, .f, ..., .right = FALSE) {
+detect_index <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
+  .dir <- arg_match(.dir, c("forward", "backward"))
 
-  for (i in index(.x, .right)) {
+  for (i in index(.x, .dir, .right, "detect_index")) {
     if (.f(.x[[i]], ...)) {
       return(i)
     }
@@ -65,10 +68,25 @@ detect_index <- function(.x, .f, ..., .right = FALSE) {
   0L
 }
 
-index <- function(x, right = FALSE) {
+index <- function(x, dir, right = NULL, fn) {
+  if (!is_null(right)) {
+    signal_soft_deprecated(env = caller_env(2), paste_line(
+      sprintf("The `.right` argument of `%s` is soft-deprecated as of purrr 0.3.0.", fn),
+      "Please use the new `.dir` argument instead:",
+      "",
+      "  # Before",
+      sprintf("  %s(x, f, .right = TRUE)", fn),
+      "",
+      "  # After",
+      sprintf("  %s(x, f, .dir = \"backward\")", fn)
+    ))
+    dir <- if (right) "backward" else "forward"
+  }
+
   idx <- seq_along(x)
-  if (right)
+  if (dir == "backward") {
     idx <- rev(idx)
+  }
   idx
 }
 

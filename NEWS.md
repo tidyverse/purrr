@@ -27,6 +27,18 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Life cycle
 
+* The `.right` argument of `detect()` and `detect_index()` is
+  soft-deprecated and renamed to `.dir` for consistency with other
+  functions and clarity of the interface.
+
+  ```{r}
+  # Before
+  detect(x, f, .right = TRUE)
+
+  # After
+  detect(x, f, .dir = "backward")
+  ```
+
 * Removing elements from lists using `NULL` in `list_modify()` is
   soft-deprecated. Please use the new `zap()` sentinel reexported from
   rlang instead:
