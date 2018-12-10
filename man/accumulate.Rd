@@ -4,7 +4,7 @@
 \alias{accumulate}
 \title{Accumulate intermediate results of a vector reduction}
 \usage{
-accumulate(.x, .f, ..., .init, .dir = c("left", "right"))
+accumulate(.x, .f, ..., .init, .dir = c("forward", "backward"))
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -24,8 +24,9 @@ the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
 
-\item{.dir}{The direction of reduction as a string, one of \code{"left"}
-or \code{"right"}. See the section about direction below.}
+\item{.dir}{The direction of reduction as a string, one of
+\code{"forward"} (the default) or \code{"backward"}. See the section about
+direction below.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.
@@ -34,7 +35,7 @@ If \code{.init} is supplied, the length is extended by 1. If \code{.x} has
 names, the initial value is given the name \code{".init"}, otherwise
 the returned vector is kept unnamed.
 
-If \code{.dir} is \code{"left"} (the default), the first element is the
+If \code{.dir} is \code{"forward"} (the default), the first element is the
 initial value (\code{.init} if supplied, or the first element of \code{.x})
 and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.
@@ -59,7 +60,7 @@ rather than the left, which is consistent with a right reduction.
 # same, no matter the direction. You'll find it in the last element
 # for a left accumulation, and in the first element for a right one:
 1:5 \%>\% accumulate(`+`)
-1:5 \%>\% accumulate(`+`, .dir = "right")
+1:5 \%>\% accumulate(`+`, .dir = "backward")
 
 # The final value is always equal to the equivalent reduction:
 1:5 \%>\% reduce(`+`)
@@ -70,7 +71,7 @@ accumulate(letters[1:5], paste, sep = ".")
 
 # Note how the intermediary reduced values are passed to the left
 # with a left reduction, and to the right otherwise:
-accumulate(letters[1:5], paste, sep = ".", .dir = "right")
+accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 
 
 # Simulating stochastic processes with drift

@@ -21,7 +21,7 @@ test_that("length 1 argument reduced with init", {
 
 test_that("direction of reduce determines how generated trees lean", {
   expect_identical(reduce(1:4, list), list(list(list(1L, 2L), 3L), 4L))
-  expect_identical(reduce(1:4, list, .dir = "right"), list(1L, list(2L, list(3L, 4L))))
+  expect_identical(reduce(1:4, list, .dir = "backward"), list(1L, list(2L, list(3L, 4L))))
 })
 
 # accumulate --------------------------------------------------------------
@@ -29,21 +29,21 @@ test_that("direction of reduce determines how generated trees lean", {
 test_that("accumulate passes arguments to function", {
   tt <- c("a", "b", "c")
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
-  expect_equal(accumulate(tt, paste, sep = ".", .dir = "right"), c("a.b.c", "b.c", "c"))
+  expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward"), c("a.b.c", "b.c", "c"))
 })
 
 test_that("accumulate keeps input names", {
   input <- set_names(1:26, letters)
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
-  expect_identical(accumulate(input, sum, .dir = "right"), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+  expect_identical(accumulate(input, sum, .dir = "backward"), set_names(rev(cumsum(rev(1:26))), rev(letters)))
 })
 
 test_that("accumulate keeps input names when init is supplied", {
   expect_identical(accumulate(1:2, c, .init = 0L), list(0L, 0:1, 0:2))
-  expect_identical(accumulate(0:1, c, .init = 2L, .dir = "right"), list(0:2, 1:2, 2L))
+  expect_identical(accumulate(0:1, c, .init = 2L, .dir = "backward"), list(0:2, 1:2, 2L))
 
   expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
-  expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "right"), list(b = 0:2, a = 1:2, .init = 2L))
+  expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"), list(b = 0:2, a = 1:2, .init = 2L))
 })
 
 # reduce2 -----------------------------------------------------------------

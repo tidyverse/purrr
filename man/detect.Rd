@@ -5,9 +5,10 @@
 \alias{detect_index}
 \title{Find the value or position of the first match}
 \usage{
-detect(.x, .f, ..., .right = FALSE)
+detect(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL)
 
-detect_index(.x, .f, ..., .right = FALSE)
+detect_index(.x, .f, ..., .dir = c("forward", "backward"),
+  .right = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -34,9 +35,11 @@ present, the value of \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
 
-\item{.right}{If \code{FALSE}, the default, starts at the beginning
-of the vector and move towards the end; if \code{TRUE}, starts at the end
-of the vector and moves towards the beginning.}
+\item{.dir}{If \code{"forward"}, the default, starts at the beginning of
+the vector and move towards the end; if \code{"backward"}, starts at
+the end of the vector and moves towards the beginning.}
+
+\item{.right}{Soft-deprecated. Please use \code{.dir} instead.}
 }
 \value{
 \code{detect} the value of the first item that matches the

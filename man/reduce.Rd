@@ -5,7 +5,7 @@
 \alias{reduce2}
 \title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
-reduce(.x, .f, ..., .init, .dir = c("left", "right"))
+reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
 
 reduce2(.x, .y, .f, ..., .init)
 }
@@ -27,8 +27,9 @@ the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
 
-\item{.dir}{The direction of reduction as a string, one of \code{"left"}
-or \code{"right"}. See the section about direction below.}
+\item{.dir}{The direction of reduction as a string, one of
+\code{"forward"} (the default) or \code{"backward"}. See the section about
+direction below.}
 
 \item{.y}{For \code{reduce2()}, an additional argument that is passed to
 \code{.f}. If \code{init} is not set, \code{.y} should be 1 element shorter than
@@ -60,7 +61,7 @@ reducing \code{list()} from the right produces a right-leaning list.
 \code{reduce_right()} is soft-deprecated as of purrr 0.3.0. Please use
 the \code{.dir} argument of \code{reduce()} instead. Note that the algorithm
 has changed. Whereas \code{reduce_right()} computed \code{f(f(3, 2), 1)},
-\code{reduce(.dir = \"right\")} computes \code{f(1, f(2, 3))}. This is the
+\code{reduce(.dir = \"backward\")} computes \code{f(1, f(2, 3))}. This is the
 standard way of reducing from the right.
 
 To update your code with the same reduction as \code{reduce_right()},
@@ -86,14 +87,14 @@ about a use case for a right reduction with a ternary function.
 # When the operation is associative, the direction of reduction
 # does not matter:
 reduce(1:4, `+`)
-reduce(1:4, `+`, .dir = "right")
+reduce(1:4, `+`, .dir = "backward")
 
 # However with non-associative operations, the reduced value will
 # be different as a function of the direction. For instance,
 # `list()` will create left-leaning lists when reducing from the
 # right, and right-leaning lists otherwise:
 str(reduce(1:4, list))
-str(reduce(1:4, list, .dir = "right"))
+str(reduce(1:4, list, .dir = "backward"))
 
 # reduce2() takes a ternary function and a second vector that is
 # one element smaller than the first vector:

@@ -4,7 +4,7 @@
 \alias{compose}
 \title{Compose multiple functions}
 \usage{
-compose(..., .rev = TRUE)
+compose(..., .dir = c("backward", "forward"))
 }
 \arguments{
 \item{...}{Functions to apply in order (from right to left by
@@ -14,9 +14,9 @@ These dots support \link[rlang:list2]{tidy dots} features. In
 particular, if your functions are stored in a list, you can
 splice that in with \code{!!!}.}
 
-\item{.rev}{If \code{TRUE} (the default), the functions are called in
-the reverse order, from right to left, as is conventional in
-mathematics. Otherwise they are called from left to right.}
+\item{.dir}{If \code{"backward"} (the default), the functions are called
+in the reverse order, from right to left, as is conventional in
+mathematics. If \code{"forward"}, they are called from left to right.}
 }
 \value{
 A function

@@ -22,8 +22,9 @@
 #'   the accumulation, rather than using `x[[1]]`. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
 #'   is empty. If missing, and `x` is empty, will throw an error.
-#' @param .dir The direction of reduction as a string, one of `"left"`
-#'   or `"right"`. See the section about direction below.
+#' @param .dir The direction of reduction as a string, one of
+#'   `"forward"` (the default) or `"backward"`. See the section about
+#'   direction below.
 #'
 #' @section Direction:
 #'
@@ -43,7 +44,7 @@
 #' `reduce_right()` is soft-deprecated as of purrr 0.3.0. Please use
 #' the `.dir` argument of `reduce()` instead. Note that the algorithm
 #' has changed. Whereas `reduce_right()` computed `f(f(3, 2), 1)`,
-#' `reduce(.dir = \"right\")` computes `f(1, f(2, 3))`. This is the
+#' `reduce(.dir = \"backward\")` computes `f(1, f(2, 3))`. This is the
 #' standard way of reducing from the right.
 #'
 #' To update your code with the same reduction as `reduce_right()`,
@@ -73,14 +74,14 @@
 #' # When the operation is associative, the direction of reduction
 #' # does not matter:
 #' reduce(1:4, `+`)
-#' reduce(1:4, `+`, .dir = "right")
+#' reduce(1:4, `+`, .dir = "backward")
 #'
 #' # However with non-associative operations, the reduced value will
 #' # be different as a function of the direction. For instance,
 #' # `list()` will create left-leaning lists when reducing from the
 #' # right, and right-leaning lists otherwise:
 #' str(reduce(1:4, list))
-#' str(reduce(1:4, list, .dir = "right"))
+#' str(reduce(1:4, list, .dir = "backward"))
 #'
 #' # reduce2() takes a ternary function and a second vector that is
 #' # one element smaller than the first vector:
@@ -92,7 +93,7 @@
 #' y <- list(c(6, 7), c(8, 9))
 #' reduce2(x, y, paste)
 #' @export
-reduce <- function(.x, .f, ..., .init, .dir = c("left", "right")) {
+reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
   reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
 }
 #' @rdname reduce
@@ -101,8 +102,8 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x, .f, ..., .init, .dir = "left") {
-  left <- arg_match(.dir, c("left", "right")) == "left"
+reduce_impl <- function(.x, .f, ..., .init, .dir = "forward") {
+  left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
   out <- reduce_init(.x, .init, left = left)
   idx <- reduce_index(.x, .init, left = left)
@@ -202,7 +203,7 @@ seq_len2 <- function(start, end) {
 #'   names, the initial value is given the name `".init"`, otherwise
 #'   the returned vector is kept unnamed.
 #'
-#'   If `.dir` is `"left"` (the default), the first element is the
+#'   If `.dir` is `"forward"` (the default), the first element is the
 #'   initial value (`.init` if supplied, or the first element of `.x`)
 #'   and the last element is the final reduced value. In case of a
 #'   right accumulation, this order is reversed.
@@ -220,7 +221,7 @@ seq_len2 <- function(start, end) {
 #' # same, no matter the direction. You'll find it in the last element
 #' # for a left accumulation, and in the first element for a right one:
 #' 1:5 %>% accumulate(`+`)
-#' 1:5 %>% accumulate(`+`, .dir = "right")
+#' 1:5 %>% accumulate(`+`, .dir = "backward")
 #'
 #' # The final value is always equal to the equivalent reduction:
 #' 1:5 %>% reduce(`+`)
@@ -231,7 +232,7 @@ seq_len2 <- function(start, end) {
 #'
 #' # Note how the intermediary reduced values are passed to the left
 #' # with a left reduction, and to the right otherwise:
-#' accumulate(letters[1:5], paste, sep = ".", .dir = "right")
+#' accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 #'
 #'
 #' # Simulating stochastic processes with drift
@@ -248,8 +249,8 @@ seq_len2 <- function(start, end) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 #' @export
-accumulate <- function(.x, .f, ..., .init, .dir = c("left", "right")) {
-  left <- arg_match(.dir, c("left", "right")) == "left"
+accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
+  left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
   .f <- as_mapper(.f, ...)
   f <- function(x, y) {
@@ -300,8 +301,8 @@ reduce_right <- function(.x, .f, ..., .init) {
     "  reduce_right(1:3, f)",
     "",
     "  # After:",
-    "  reduce(1:3, f, .dir = \"right\")  # New algorithm",
-    "  reduce(rev(1:3), f)             # Same algorithm as reduce_right()",
+    "  reduce(1:3, f, .dir = \"backward\")  # New algorithm",
+    "  reduce(rev(1:3), f)                # Same algorithm as reduce_right()",
     ""
   ))
   .x <- rev(.x) # Compatibility
@@ -329,13 +330,13 @@ reduce2_right <- function(.x, .y, .f, ..., .init) {
 accumulate_right <- function(.x, .f, ..., .init) {
   signal_soft_deprecated(paste_line(
     "`accumulate_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please use `accumulate(.dir = \"right\")` instead.",
+    "Please use the new `.dir` argument of `accumulate()` instead.",
     "",
     "  # Before:",
     "  accumulate_right(x, f)",
     "",
     "  # After:",
-    "  accumulate(x, f, .dir = \"right\")",
+    "  accumulate(x, f, .dir = \"backward\")",
     ""
   ))
 
@@ -344,5 +345,5 @@ accumulate_right <- function(.x, .f, ..., .init) {
     .f(x, y, ...)
   }
 
-  accumulate(.x, f, .init = .init, .dir = "right")
+  accumulate(.x, f, .init = .init, .dir = "backward")
 }

@@ -35,7 +35,7 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   reduce_right(1:3, f)
 
   # After:
-  reduce(1:3, f, .dir = \"right\")
+  reduce(1:3, f, .dir = "backward")
   ```
 
   Note that the details of the computation have changed. Whereas
@@ -68,7 +68,7 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
   accumulate_right(1:3, f)
 
   # After:
-  accumulate(1:3, f, .dir = "right")
+  accumulate(1:3, f, .dir = "backward")
   ```
 
 * The `.right` argument of `detect()` and `detect_index()` is
