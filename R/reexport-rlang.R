@@ -15,3 +15,9 @@ rlang::exec
 #' @export
 #' @name zap
 rlang::zap
+
+#' Default value for `NULL`
+#' @keywords NULL
+#' @export
+#' @name null-default
+rlang::`%||%`
