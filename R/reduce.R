@@ -120,11 +120,16 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x, .f, ..., .init, .dir = "forward") {
+reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
   left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
   out <- reduce_init(.x, .init, left = left)
   idx <- reduce_index(.x, .init, left = left)
+
+  if (.acc) {
+    acc_out <- accum_init(out, idx, left = left)
+    acc_idx <- accum_index(acc_out, left = left)
+  }
 
   .f <- as_mapper(.f, ...)
 
@@ -137,15 +142,38 @@ reduce_impl <- function(.x, .f, ..., .init, .dir = "forward") {
     fn <- function(x, y, ...) .f(y, x, ...)
   }
 
-  for (i in idx) {
-    out <- fn(out, .x[[i]], ...)
+  for (i in seq_along(idx)) {
+    elt <- .x[[idx[[i]]]]
+    out <- fn(out, elt, ...)
 
     if (is_done_box(out)) {
-      return(unbox(out))
+      return(reduce_early(out, .acc, acc_out, acc_idx[[i]], left))
+    }
+
+    if (.acc) {
+      acc_out[[acc_idx[[i]]]] <- out
     }
   }
 
-  out
+  if (.acc) {
+    acc_out
+  } else {
+    out
+  }
+}
+
+reduce_early <- function(out, accumulated, acc_out, acc_idx, left = TRUE) {
+  if (!accumulated) {
+    return(unbox(out))
+  }
+
+  acc_out[[acc_idx]] <- unbox(out)
+
+  if (left) {
+    acc_out[seq_len(acc_idx)]
+  } else {
+    acc_out[seq(acc_idx, length(acc_out))]
+  }
 }
 
 reduce_init <- function(x, init, left = TRUE) {
@@ -179,11 +207,29 @@ reduce_index <- function(x, init, left = TRUE) {
   }
 }
 
-reduce2_impl <- function(.x, .y, .f,
-                         ...,
-                         .init,
-                         .left = TRUE,
-                         .acc = FALSE) {
+accum_init <- function(first, idx, left) {
+  len <- length(idx) + 1L
+  out <- new_list(len)
+
+  if (left) {
+    out[[1]] <- first
+  } else {
+    out[[len]] <- first
+  }
+
+  out
+}
+accum_index <- function(out, left) {
+  n <- length(out)
+
+  if (left) {
+    seq_len2(2, n)
+  } else {
+    rev(seq_len(n - 1L))
+  }
+}
+
+reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE) {
   out <- reduce_init(.x, .init, left = .left)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
@@ -195,9 +241,8 @@ reduce2_impl <- function(.x, .y, .f,
   .f <- as_mapper(.f, ...)
 
   if (.acc) {
-    offset <- !missing(.init)
-    res <- new_list(length(x_idx) + offset)
-    res[[1]] <- out
+    acc_out <- accum_init(out, x_idx, left = .left)
+    acc_idx <- accum_index(acc_out, left = .left)
   }
 
   for (i in seq_along(x_idx)) {
@@ -206,19 +251,17 @@ reduce2_impl <- function(.x, .y, .f,
 
     out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
 
-    if (.acc) {
-      res[[x_i + offset]] <- out
+    if (is_done_box(out)) {
+      return(reduce_early(out, .acc, acc_out, acc_idx[[i]]))
     }
 
-    if (is_done_box(out)) {
-      if (.acc) abort("TODO")
-      return(unbox(out))
+    if (.acc) {
+      acc_out[[acc_idx[[i]]]] <- out
     }
   }
 
   if (.acc) {
-    names(res) <- accumulate_names(names(.x), .init, left = .left)
-    res
+    acc_out
   } else {
     out
   }
@@ -254,6 +297,9 @@ seq_len2 <- function(start, end) {
 #'   and the last element is the final reduced value. In case of a
 #'   right accumulation, this order is reversed.
 #'
+#'   The accumulation terminates early if `.f` returns a value wrapped
+#'   in a [done_box()].
+#'
 #' @section Life cycle:
 #'
 #' `accumulate_right()` is soft-deprecated in favour of the `.dir`
@@ -286,6 +332,19 @@ seq_len2 <- function(start, end) {
 #' letters[1:4] %>% accumulate(paste2)
 #' letters[1:4] %>% accumulate2(c("-", ".", "-"), paste2)
 #'
+#' # You can shortcircuit the accumulation and terminate it early by
+#' # returning a value wrapped in a done_box():
+#' paste3 <- function(x, y, sep = ".") {
+#'   out <- paste(x, y, sep = sep)
+#'   if (x == "b" || y == "b") {
+#'     done_box(out)
+#'   } else {
+#'     out
+#'   }
+#' }
+#' letters[1:4] %>% accumulate(paste3)
+#' letters[1:4] %>% accumulate2(c("-", ".", "-"), paste3)
+#'
 #' # Simulating stochastic processes with drift
 #' \dontrun{
 #' library(dplyr)
@@ -301,15 +360,17 @@ seq_len2 <- function(start, end) {
 #' }
 #' @export
 accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
-  left <- arg_match(.dir, c("forward", "backward")) == "forward"
-
+  .dir <- arg_match(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
-  f <- function(x, y) {
-    .f(x, y, ...)
-  }
 
-  res <- Reduce(f, .x, init = .init, accumulate = TRUE, right = !left)
-  names(res) <- accumulate_names(names(.x), .init, left = left)
+  res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
+  names(res) <- accumulate_names(names(.x), .init, .dir)
+
+  # FIXME vctrs: This simplification step is for compatibility with
+  # the `base::Reduce()` implementation in earlier purrr versions
+  if (all(map_int(res, length) == 1L)) {
+    res <- unlist(res, recursive = FALSE)
+  }
 
   res
 }
@@ -319,7 +380,7 @@ accumulate2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
 }
 
-accumulate_names <- function(nms, init, left = left) {
+accumulate_names <- function(nms, init, dir) {
   if (is_null(nms)) {
     return(NULL)
   }
@@ -327,7 +388,7 @@ accumulate_names <- function(nms, init, left = left) {
   if (!missing(init)) {
     nms <- c(".init", nms)
   }
-  if (!left) {
+  if (dir == "backward") {
     nms <- rev(nms)
   }
 
@@ -362,7 +423,7 @@ reduce_right <- function(.x, .f, ..., .init) {
     ""
   ))
   .x <- rev(.x) # Compatibility
-  reduce_impl(.x, .f, ..., .init = .init)
+  reduce_impl(.x, .f, ..., .dir = "forward", .init = .init)
 }
 #' @rdname reduce_right
 #' @export

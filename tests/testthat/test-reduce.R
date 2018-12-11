@@ -35,8 +35,12 @@ test_that("can shortcircuit reduction with done_box()", {
 
 test_that("accumulate passes arguments to function", {
   tt <- c("a", "b", "c")
+
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
   expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward"), c("a.b.c", "b.c", "c"))
+
+  expect_equal(accumulate(tt, paste, sep = ".", .init = "z"), c("z", "z.a", "z.a.b", "z.a.b.c"))
+  expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward", .init = "z"), c("a.b.c.z", "b.c.z", "c.z", "z"))
 })
 
 test_that("accumulate keeps input names", {
@@ -51,6 +55,24 @@ test_that("accumulate keeps input names when init is supplied", {
 
   expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
   expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"), list(b = 0:2, a = 1:2, .init = 2L))
+})
+
+test_that("can terminate accumulate() early", {
+  tt <- c("a", "b", "c")
+  paste2 <- function(x, y) {
+    out <- paste(x, y, sep = ".")
+    if (x == "b" || y == "b") {
+      done_box(out)
+    } else {
+      out
+    }
+  }
+
+  expect_equal(accumulate(tt, paste2), c("a", "a.b"))
+  expect_equal(accumulate(tt, paste2, .dir = "backward"), c("b.c", "c"))
+
+  expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a", "z.a.b"))
+  expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("b.c.z", "c.z", "z"))
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -76,6 +98,21 @@ test_that("basic accumulate2() works", {
   x <- c("a", "b", "c")
   expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b", "a-b.c"))
   expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b", "x.a-b.c"))
+})
+
+test_that("can terminate accumulate2() early", {
+  paste2 <- function(x, y, sep) {
+    out <- paste(x, y, sep = sep)
+    if (y == "b") {
+      done_box(out)
+    } else {
+      out
+    }
+  }
+
+  x <- c("a", "b", "c")
+  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b"))
 })
 
 

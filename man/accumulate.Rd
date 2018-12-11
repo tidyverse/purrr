@@ -50,6 +50,9 @@ If \code{.dir} is \code{"forward"} (the default), the first element is the
 initial value (\code{.init} if supplied, or the first element of \code{.x})
 and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.
+
+The accumulation terminates early if \code{.f} returns a value wrapped
+in a \code{\link[=done_box]{done_box()}}.
 }
 \description{
 \code{accumulate()} \link[=reduce]{reduces} a vector with a binary function,
@@ -89,6 +92,19 @@ accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% accumulate(paste2)
 letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
+
+# You can shortcircuit the accumulation and terminate it early by
+# returning a value wrapped in a done_box():
+paste3 <- function(x, y, sep = ".") {
+  out <- paste(x, y, sep = sep)
+  if (x == "b" || y == "b") {
+    done_box(out)
+  } else {
+    out
+  }
+}
+letters[1:4] \%>\% accumulate(paste3)
+letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste3)
 
 # Simulating stochastic processes with drift
 \dontrun{

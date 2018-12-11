@@ -17,7 +17,8 @@ value to test.}
 A value boxed with \code{done_box()} signals to its caller that it
 should stop iterating. Use it to shortcircuit a loop.
 
-Currently, \code{\link[=reduce]{reduce()}} and \code{\link[=reduce2]{reduce2()}} handle done boxes.
+Currently, \code{\link[=reduce]{reduce()}}, \code{\link[=reduce2]{reduce2()}}, \code{\link[=accumulate]{accumulate()}}, and
+\code{\link[=accumulate2]{accumulate2()}} support done boxes.
 }
 \examples{
 done_box(3)
