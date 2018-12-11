@@ -27,6 +27,10 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 ## Life cycle
 
+* `%@%` is soft-deprecated, please use the operator exported in rlang
+  instead. The latter features an interface more consistent with `@`
+  as it uses NSE, supports S4 fields, and has an assignment variant.
+
 * `reduce_right()` is soft-deprecated and replaced by a new `.dir`
   argument of `reduce()`:
 

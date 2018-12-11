@@ -13,9 +13,14 @@ x \%@\% name
 \item{name}{Attribute name}
 }
 \description{
-Infix attribute accessor
+\Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+
+Please use the \code{\%@\%} operator exported in rlang. It has an
+interface more consistent with \code{@}: uses NSE, supports S4 fields,
+and has an assignment variant.
 }
 \examples{
 factor(1:3) \%@\% "levels"
 mtcars \%@\% "class"
 }
+\keyword{internal}
