@@ -13,7 +13,9 @@ matrix:
     - r: 3.5
       after_success:
         - Rscript -e 'covr::codecov()'
-      before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
+      before_deploy:
+        - Rscript -e 'remotes::install_cran("pkgdown")'
+        - Rscript -e 'remotes::install_github("tidyverse/tidytemplate")'
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
@@ -23,6 +25,3 @@ matrix:
 env:
   global:
     - MAKEFLAGS="-j 2"
-
-r_github_packages:
-  - tidyverse/tidytemplate
