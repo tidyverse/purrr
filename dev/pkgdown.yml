@@ -1,0 +1,9 @@
+pandoc: '2.2'
+pkgdown: 1.3.0
+pkgdown_sha: ~
+articles:
+  other-langs: other-langs.html
+urls:
+  reference: https://purrr.tidyverse.org/reference
+  article: https://purrr.tidyverse.org/articles
+
