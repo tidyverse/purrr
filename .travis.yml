@@ -23,3 +23,6 @@ matrix:
 env:
   global:
     - MAKEFLAGS="-j 2"
+
+r_github_packages:
+  - tidyverse/tidytemplate

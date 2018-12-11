@@ -2,7 +2,9 @@ url: https://purrr.tidyverse.org
 
 template:
   package: tidytemplate
-  default_assets: false
+
+development:
+  mode: auto
 
 home:
   strip_header: true
