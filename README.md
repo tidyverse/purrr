@@ -3,7 +3,7 @@
 
 # purrr <img src="man/figures/logo.png" align="right" />
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
 [![Build
 Status](https://travis-ci.org/tidyverse/purrr.svg?branch=master)](https://travis-ci.org/tidyverse/purrr)
 [![AppVeyor Build
