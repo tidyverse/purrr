@@ -3,9 +3,6 @@ url: https://purrr.tidyverse.org
 template:
   package: tidytemplate
 
-development:
-  mode: auto
-
 home:
   strip_header: true
   links:
