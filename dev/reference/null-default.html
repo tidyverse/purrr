@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default value for <code>NULL</code>. — null-default • purrr</title>
+<title>Default value for <code>NULL</code> — null-default • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -29,11 +29,13 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
-<meta property="og:title" content="Default value for <code>NULL</code>. — null-default" />
+<meta property="og:title" content="Default value for <code>NULL</code> — null-default" />
 
-<meta property="og:description" content="This infix function makes it easy to replace NULLs with a
-default value. It's inspired by the way that Ruby's or operation (||)
-works." />
+<meta property="og:description" content="These objects are imported from other packages. Follow the links
+below to see their documentation.
+
+  rlang%||%
+" />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -138,42 +140,28 @@ works." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default value for <code>NULL</code>.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <h1>Default value for <code>NULL</code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/reexport-rlang.R'><code>R/reexport-rlang.R</code></a></small>
     <div class="hidden name"><code>null-default.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This infix function makes it easy to replace <code>NULL</code>s with a
-default value. It's inspired by the way that Ruby's or operation (<code>||</code>)
-works.</p>
+    <p>These objects are imported from other packages. Follow the links
+below to see their documentation.</p>
+<dl class='dl-horizontal'>
+  <dt>rlang</dt><dd><p><code><a href='https://rlang.r-lib.org/reference/op-null-default.html'>%||%</a></code></p></dd>
+</dl>
     
     </div>
 
-    <pre class="usage"><span class='no'>x</span> <span class='kw'>%||%</span> <span class='no'>y</span></pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x, y</th>
-      <td><p>If <code>x</code> is NULL, will return <code>y</code>; otherwise returns
-<code>x</code>.</p></td>
-    </tr>
-    </table>
-    
+        
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fl'>1</span> <span class='kw'>%||%</span> <span class='fl'>2</span></div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='kw'>NULL</span> <span class='kw'>%||%</span> <span class='fl'>2</span></div><div class='output co'>#&gt; [1] 2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>
