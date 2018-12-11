@@ -111,17 +111,17 @@ reduce_impl <- function(.x, .f, ..., .init, .dir = "forward") {
 
   .f <- as_mapper(.f, ...)
 
-  # Left-reduce produces left-leaning computation trees (reduced
-  # values are passed to the left) while right-reduce produces
-  # right-leaning trees
+  # Left-reduce passes the result-so-far on the left, right-reduce
+  # passes it on the right. A left-reduce produces left-leaning
+  # computation trees while right-reduce produces right-leaning trees.
   if (left) {
-    for (i in idx) {
-      out <- .f(out, .x[[i]], ...)
-    }
+    fn <- .f
   } else {
-    for (i in idx) {
-      out <- .f(.x[[i]], out, ...)
-    }
+    fn <- function(x, y, ...) .f(y, x, ...)
+  }
+
+  for (i in idx) {
+    out <- fn(out, .x[[i]], ...)
   }
 
   out

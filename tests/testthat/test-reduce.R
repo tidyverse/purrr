@@ -63,7 +63,7 @@ test_that("reduce returns original input if it was length one", {
 
 # accumulate2 -------------------------------------------------------------
 
-test_that("", {
+test_that("basic accumulate2() works", {
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
 
   x <- c("a", "b", "c")
