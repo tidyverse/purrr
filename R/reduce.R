@@ -140,21 +140,20 @@ reduce_init <- function(x, init, left = TRUE) {
     }
   }
 }
-
 reduce_index <- function(x, init, left = TRUE) {
   n <- length(x)
 
-  if (!missing(init)) {
-    if (left) {
-      seq_len(n)
-    } else {
-      rev(seq_len(n))
-    }
-  } else {
-    if (left) {
+  if (left) {
+    if (missing(init)) {
       seq_len2(2L, n)
     } else {
-      rev(seq_len2(1L, n - 1L))
+      seq_len(n)
+    }
+  } else {
+    if (missing(init)) {
+      rev(seq_len(n - 1L))
+    } else {
+      rev(seq_len(n))
     }
   }
 }
