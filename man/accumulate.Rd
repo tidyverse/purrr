@@ -52,7 +52,10 @@ and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.
 
 The accumulation terminates early if \code{.f} returns a value wrapped
-in a \code{\link[=done_box]{done_box()}}.
+in a \code{\link[=done_box]{done_box()}}. If the done box is empty, the last value is
+used instead and the result is one element shorter (but always
+includes the initial value, even when terminating at the first
+iteration).
 }
 \description{
 \code{accumulate()} \link[=reduce]{reduces} a vector with a binary function,

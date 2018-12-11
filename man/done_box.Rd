@@ -7,11 +7,16 @@
 \usage{
 done_box(x)
 
-is_done_box(x)
+is_done_box(x, empty = NULL)
 }
 \arguments{
 \item{x}{For \code{done_box()}, a value to box. For \code{is_done_box()}, a
 value to test.}
+
+\item{empty}{Whether the box is empty. If \code{NULL}, \code{is_done_box()}
+returns \code{TRUE} for all done boxes. If \code{TRUE}, it returns \code{TRUE}
+only for empty boxes. Otherwise it returns \code{TRUE} only for
+non-empty boxes.}
 }
 \description{
 A value boxed with \code{done_box()} signals to its caller that it

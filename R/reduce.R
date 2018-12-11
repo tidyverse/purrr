@@ -143,11 +143,12 @@ reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
   }
 
   for (i in seq_along(idx)) {
+    prev <- out
     elt <- .x[[idx[[i]]]]
     out <- fn(out, elt, ...)
 
     if (is_done_box(out)) {
-      return(reduce_early(out, .acc, acc_out, acc_idx[[i]], left))
+      return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]], left))
     }
 
     if (.acc) {
@@ -162,12 +163,21 @@ reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
   }
 }
 
-reduce_early <- function(out, accumulated, acc_out, acc_idx, left = TRUE) {
-  if (!accumulated) {
-    return(unbox(out))
+reduce_early <- function(out, prev, acc, acc_out, acc_idx, left = TRUE) {
+  if (is_done_box(out, empty = TRUE)) {
+    out <- prev
+    offset <- if (left) -1L else 1L
+  } else {
+    out <- unbox(out)
+    offset <- 0L
   }
 
-  acc_out[[acc_idx]] <- unbox(out)
+  if (!acc) {
+    return(out)
+  }
+
+  acc_idx <- acc_idx + offset
+  acc_out[[acc_idx]] <- out
 
   if (left) {
     acc_out[seq_len(acc_idx)]
@@ -246,13 +256,15 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE) {
   }
 
   for (i in seq_along(x_idx)) {
+    prev <- out
+
     x_i <- x_idx[[i]]
     y_i <- y_idx[[i]]
 
     out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
 
     if (is_done_box(out)) {
-      return(reduce_early(out, .acc, acc_out, acc_idx[[i]]))
+      return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]]))
     }
 
     if (.acc) {
@@ -298,7 +310,10 @@ seq_len2 <- function(start, end) {
 #'   right accumulation, this order is reversed.
 #'
 #'   The accumulation terminates early if `.f` returns a value wrapped
-#'   in a [done_box()].
+#'   in a [done_box()]. If the done box is empty, the last value is
+#'   used instead and the result is one element shorter (but always
+#'   includes the initial value, even when terminating at the first
+#'   iteration).
 #'
 #' @section Life cycle:
 #'

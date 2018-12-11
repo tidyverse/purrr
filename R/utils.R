@@ -223,12 +223,29 @@ friendly_type_of_element <- function(x) {
 #' is_done_box(x)
 #' @export
 done_box <- function(x) {
-  new_box(x, "rlang_done_box")
+  if (missing(x)) {
+    class <- c("rlang_empty_done_box", "rlang_done_box")
+  } else {
+    class <- "rlang_done_box"
+  }
+  new_box(maybe_missing(x), class)
 }
 #' @rdname done_box
+#' @param empty Whether the box is empty. If `NULL`, `is_done_box()`
+#'   returns `TRUE` for all done boxes. If `TRUE`, it returns `TRUE`
+#'   only for empty boxes. Otherwise it returns `TRUE` only for
+#'   non-empty boxes.
 #' @export
-is_done_box <- function(x) {
-  inherits(x, "rlang_done_box")
+is_done_box <- function(x, empty = NULL) {
+  if (!inherits(x, "rlang_done_box")) {
+    return(FALSE)
+  }
+
+  if (is_null(empty)) {
+    return(TRUE)
+  }
+
+  inherits(x, "rlang_empty_done_box") == empty
 }
 #' @export
 print.rlang_done_box <- function(x, ...) {

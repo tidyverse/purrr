@@ -28,6 +28,11 @@ test_that("can shortcircuit reduction with done_box()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
   out <- reduce(x, ~ if (.y) c(.x, "foo") else done_box(.x), .init = NULL)
   expect_identical(out, c("foo", "foo"))
+
+  # Empty done box yields the same value as returning the
+  # result-so-far (the last value) in a done box
+  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done_box(), .init = NULL)
+  expect_identical(out2, out)
 })
 
 
@@ -73,6 +78,27 @@ test_that("can terminate accumulate() early", {
 
   expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a", "z.a.b"))
   expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("b.c.z", "c.z", "z"))
+})
+
+test_that("can terminate accumulate() early with an empty box", {
+  tt <- c("a", "b", "c")
+  paste2 <- function(x, y) {
+    out <- paste(x, y, sep = ".")
+    if (x == "b" || y == "b") {
+      done_box()
+    } else {
+      out
+    }
+  }
+
+  expect_equal(accumulate(tt, paste2), "a")
+  expect_equal(accumulate(tt, paste2, .dir = "backward"), "c")
+
+  expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a"))
+  expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("c.z", "z"))
+
+  # Init value is always included, even if done at first iteration
+  expect_equal(accumulate(c("b", "c"), paste2), "b")
 })
 
 # reduce2 -----------------------------------------------------------------
