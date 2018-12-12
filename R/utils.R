@@ -202,3 +202,54 @@ friendly_type_of_element <- function(x) {
     abort("Expected a base vector type")
   )
 }
+
+#' Box a final value for early termination
+#'
+#' @description
+#'
+#' A value boxed with `done()` signals to its caller that it
+#' should stop iterating. Use it to shortcircuit a loop.
+#'
+#' Currently, [reduce()], [reduce2()], [accumulate()], and
+#' [accumulate2()] support done boxes.
+#'
+#' @param x For `done()`, a value to box. For `is_done_box()`, a
+#'   value to test.
+#' @return A [boxed][rlang::new_box] value.
+#'
+#' @examples
+#' done(3)
+#'
+#' x <- done(3)
+#' is_done_box(x)
+#' @export
+done <- function(x) {
+  if (missing(x)) {
+    class <- c("rlang_empty_done_box", "rlang_done_box")
+  } else {
+    class <- "rlang_done_box"
+  }
+  new_box(maybe_missing(x), class)
+}
+#' @rdname done
+#' @param empty Whether the box is empty. If `NULL`, `is_done_box()`
+#'   returns `TRUE` for all done boxes. If `TRUE`, it returns `TRUE`
+#'   only for empty boxes. Otherwise it returns `TRUE` only for
+#'   non-empty boxes.
+#' @export
+is_done_box <- function(x, empty = NULL) {
+  if (!inherits(x, "rlang_done_box")) {
+    return(FALSE)
+  }
+
+  if (is_null(empty)) {
+    return(TRUE)
+  }
+
+  inherits(x, "rlang_empty_done_box") == empty
+}
+#' @export
+print.rlang_done_box <- function(x, ...) {
+  cat("<done>\n")
+  print(unbox(x))
+}

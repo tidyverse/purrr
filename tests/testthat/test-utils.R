@@ -29,3 +29,24 @@ test_that("has_names returns vector of logicals", {
   expect_equal(has_names(letters %>% set_names()), rep_along(letters, TRUE))
   expect_equal(has_names(letters), rep_along(letters, FALSE))
 })
+
+test_that("done() boxes values", {
+  expect_true(is_done_box(done(3)))
+  expect_identical(unbox(done(3)), 3)
+})
+
+test_that("done() can be empty", {
+  empty <- done()
+
+  expect_identical(unbox(empty), missing_arg())
+
+  expect_true(is_done_box(empty))
+  expect_true(inherits_all(empty, c("rlang_empty_done_box", "rlang_done_box")))
+
+  expect_true(is_done_box(empty, empty = TRUE))
+  expect_false(is_done_box(empty, empty = FALSE))
+
+  nonempty <- done(missing_arg())
+  expect_false(is_done_box(nonempty, empty = TRUE))
+  expect_true(is_done_box(nonempty, empty = FALSE))
+})

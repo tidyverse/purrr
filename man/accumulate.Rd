@@ -19,7 +19,10 @@ the first argument and the "next" value as the second argument.
 For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
 function will be passed the accumulated value as the first
 argument, the next value of \code{.x} as the second argument, and the
-next value of \code{.y} as the third argument.}
+next value of \code{.y} as the third argument.
+
+The reduction terminates early if \code{.f} returns a value wrapped in
+a \code{\link[=done]{done()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -47,6 +50,12 @@ If \code{.dir} is \code{"forward"} (the default), the first element is the
 initial value (\code{.init} if supplied, or the first element of \code{.x})
 and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.
+
+The accumulation terminates early if \code{.f} returns a value wrapped
+in a \code{\link[=done]{done()}}. If the done box is empty, the last value is
+used instead and the result is one element shorter (but always
+includes the initial value, even when terminating at the first
+iteration).
 }
 \description{
 \code{accumulate()} \link[=reduce]{reduces} a vector with a binary function,
@@ -86,6 +95,42 @@ accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% accumulate(paste2)
 letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
+
+
+# You can shortcircuit an accumulation and terminate it early by
+# returning a value wrapped in a done(). In the following example
+# we return early if the result-so-far, which is passed on the LHS,
+# meets a condition:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done(out))
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% accumulate(paste3)
+
+# Note how we get twice the same value in the accumulation. That's
+# because we have returned it twice. To prevent this, return an empty
+# done box to signal to accumulate() that it should terminate with the
+# value of the last iteration:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done())
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% accumulate(paste3)
+
+# Here the early return branch checks the incoming inputs passed on
+# the RHS:
+paste4 <- function(out, input, sep = ".") {
+  if (input == "f") {
+    return(done())
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% accumulate(paste4)
+
 
 # Simulating stochastic processes with drift
 \dontrun{

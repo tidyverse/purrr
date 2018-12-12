@@ -24,12 +24,28 @@ test_that("direction of reduce determines how generated trees lean", {
   expect_identical(reduce(1:4, list, .dir = "backward"), list(1L, list(2L, list(3L, 4L))))
 })
 
+test_that("can shortcircuit reduction with done()", {
+  x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
+  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  expect_identical(out, c("foo", "foo"))
+
+  # Empty done box yields the same value as returning the
+  # result-so-far (the last value) in a done box
+  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done(), .init = NULL)
+  expect_identical(out2, out)
+})
+
+
 # accumulate --------------------------------------------------------------
 
 test_that("accumulate passes arguments to function", {
   tt <- c("a", "b", "c")
+
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
   expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward"), c("a.b.c", "b.c", "c"))
+
+  expect_equal(accumulate(tt, paste, sep = ".", .init = "z"), c("z", "z.a", "z.a.b", "z.a.b.c"))
+  expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward", .init = "z"), c("a.b.c.z", "b.c.z", "c.z", "z"))
 })
 
 test_that("accumulate keeps input names", {
@@ -44,6 +60,45 @@ test_that("accumulate keeps input names when init is supplied", {
 
   expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
   expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"), list(b = 0:2, a = 1:2, .init = 2L))
+})
+
+test_that("can terminate accumulate() early", {
+  tt <- c("a", "b", "c")
+  paste2 <- function(x, y) {
+    out <- paste(x, y, sep = ".")
+    if (x == "b" || y == "b") {
+      done(out)
+    } else {
+      out
+    }
+  }
+
+  expect_equal(accumulate(tt, paste2), c("a", "a.b"))
+  expect_equal(accumulate(tt, paste2, .dir = "backward"), c("b.c", "c"))
+
+  expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a", "z.a.b"))
+  expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("b.c.z", "c.z", "z"))
+})
+
+test_that("can terminate accumulate() early with an empty box", {
+  tt <- c("a", "b", "c")
+  paste2 <- function(x, y) {
+    out <- paste(x, y, sep = ".")
+    if (x == "b" || y == "b") {
+      done()
+    } else {
+      out
+    }
+  }
+
+  expect_equal(accumulate(tt, paste2), "a")
+  expect_equal(accumulate(tt, paste2, .dir = "backward"), "c")
+
+  expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a"))
+  expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("c.z", "z"))
+
+  # Init value is always included, even if done at first iteration
+  expect_equal(accumulate(c("b", "c"), paste2), "b")
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -69,6 +124,21 @@ test_that("basic accumulate2() works", {
   x <- c("a", "b", "c")
   expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b", "a-b.c"))
   expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b", "x.a-b.c"))
+})
+
+test_that("can terminate accumulate2() early", {
+  paste2 <- function(x, y, sep) {
+    out <- paste(x, y, sep = sep)
+    if (y == "b") {
+      done(out)
+    } else {
+      out
+    }
+  }
+
+  x <- c("a", "b", "c")
+  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b"))
 })
 
 
@@ -110,4 +180,10 @@ test_that("accumulate_right still works", {
 
   expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
   expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
+})
+
+test_that("can shortcircuit reduce2() with done()", {
+  x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
+  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  expect_identical(out, c("foo", "foo"))
 })

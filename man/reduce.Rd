@@ -19,7 +19,10 @@ the first argument and the "next" value as the second argument.
 For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
 function will be passed the accumulated value as the first
 argument, the next value of \code{.x} as the second argument, and the
-next value of \code{.y} as the third argument.}
+next value of \code{.y} as the third argument.
+
+The reduction terminates early if \code{.f} returns a value wrapped in
+a \code{\link[=done]{done()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -106,6 +109,29 @@ letters[1:4] \%>\% reduce2(c("-", ".", "-"), paste2)
 x <- list(c(0, 1), c(2, 3), c(4, 5))
 y <- list(c(6, 7), c(8, 9))
 reduce2(x, y, paste)
+
+
+# You can shortcircuit a reduction and terminate it early by
+# returning a value wrapped in a done(). In the following example
+# we return early if the result-so-far, which is passed on the LHS,
+# meets a condition:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done(out))
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% reduce(paste3)
+
+# Here the early return branch checks the incoming inputs passed on
+# the RHS:
+paste4 <- function(out, input, sep = ".") {
+  if (input == "j") {
+    return(done(out))
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% reduce(paste4)
 }
 \seealso{
 \code{\link[=accumulate]{accumulate()}} for a version that returns all intermediate
