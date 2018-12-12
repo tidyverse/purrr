@@ -2,9 +2,12 @@
 % Please edit documentation in R/rate.R
 \name{insistently}
 \alias{insistently}
-\title{Transform a function to make it run insistently}
+\alias{slowly}
+\title{Transform a function to make it run insistently or slowly}
 \usage{
 insistently(f, rate = rate_backoff(), quiet = TRUE)
+
+slowly(f, rate = rate_delay(), quiet = TRUE)
 }
 \arguments{
 \item{f}{A function to modify.}
@@ -14,14 +17,29 @@ insistently(f, rate = rate_backoff(), quiet = TRUE)
 \item{quiet}{If \code{FALSE}, prints a message displaying how long until
 the next request.}
 }
-\value{
-Wrapped function attempts to run \code{max_times} times; an
-error occurs if all attempts fail.
-}
 \description{
-Transform a function to make it run insistently
+\itemize{
+\item \code{insistently()} takes a function and modifies it to retry a given
+amount of time on error.
+\item \code{slowly()} takes a function and modifies it to wait a given
+amount of time between each call.
+}
+
+The number and rate of attempts is determined by a
+\link[=rate-helpers]{rate} object (by default a jittered exponential
+backoff rate for \code{insistently()}, and a constant rate for
+\code{slowly()}).
 }
 \examples{
+# For the purpose of this example, we first create a custom rate
+# object with a low waiting time between attempts:
+rate <- rate_delay(0.1)
+
+# slowly() causes a function to sleep for a given time between calls:
+slow_runif <- slowly(~ runif(1), rate = rate, quiet = FALSE)
+map(1:5, slow_runif)
+
+
 # insistently() makes a function repeatedly try to work
 risky_runif <- function(lo = 0, hi = 1) {
   y <- runif(1, lo, hi)
@@ -31,9 +49,9 @@ risky_runif <- function(lo = 0, hi = 1) {
   y
 }
 
-# For the purpose of this example, we first create a custom rate
-# object with a low waiting time between attempts:
-rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005, max_times = 4)
+# Let's now create an exponential backoff rate with a low waiting
+# time between attempts:
+rate <- rate_backoff(pause_base = 0.1, pause_min = 0.005, max_times = 4)
 
 # Modify your function to run insistently.
 insistent_risky_runif <- insistently(risky_runif, rate, quiet = FALSE)
@@ -54,7 +72,7 @@ try(insistent_risky_runif())
 
 
 # insistently() and possibly() are a useful combination
-rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
+rate <- rate_backoff(pause_base = 0.1, pause_min = 0.005)
 possibly_insistent_risky_runif <- possibly(insistent_risky_runif, otherwise = -99)
 
 set.seed(6)
@@ -65,7 +83,8 @@ possibly_insistent_risky_runif()
 }
 \seealso{
 \code{\link[httr:RETRY]{httr::RETRY()}} is a special case of \code{\link[=insistently]{insistently()}} for
-HTTP verbs. \code{\link[=rate_backoff]{rate_backoff()}} for creating custom backoff
-rates. \code{\link[=rate_sleep]{rate_sleep()}} for the function powering \code{insistently()}.
-\code{\link[=safely]{safely()}} for another useful function operator.
+HTTP verbs. \code{\link[=rate_backoff]{rate_backoff()}} and \code{\link[=rate_delay]{rate_delay()}} for creating
+custom backoff rates. \code{\link[=rate_sleep]{rate_sleep()}} for the function powering
+\code{insistently()} and \code{slowly()}. \code{\link[=safely]{safely()}} for another useful
+function operator.
 }
