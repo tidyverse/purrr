@@ -2,236 +2,485 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.4.1 (2017-06-30) |
-|os       |macOS Sierra 10.12.6         |
+|version  |R version 3.5.1 (2018-07-02) |
+|os       |macOS  10.14                 |
 |system   |x86_64, darwin15.6.0         |
-|ui       |RStudio                      |
+|ui       |X11                          |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
-|tz       |America/Chicago              |
-|date     |2017-10-17                   |
+|ctype    |en_US.UTF-8                  |
+|tz       |Europe/Brussels              |
+|date     |2018-11-26                   |
 
 # Dependencies
 
-|package  |old     |new     |Δ  |
-|:--------|:-------|:-------|:--|
-|purrr    |0.2.3   |0.2.4   |*  |
-|magrittr |1.5     |1.5     |   |
-|Rcpp     |0.12.13 |0.12.13 |   |
-|rlang    |0.1.2   |0.1.2   |   |
-|tibble   |1.3.4   |1.3.4   |   |
+|package    |old     |new        |Δ  |
+|:----------|:-------|:----------|:--|
+|purrr      |0.2.5   |0.2.5.9000 |*  |
+|assertthat |0.2.0   |0.2.0      |   |
+|cli        |1.0.1   |1.0.1      |   |
+|crayon     |1.3.4   |1.3.4      |   |
+|fansi      |0.4.0   |0.4.0      |   |
+|magrittr   |1.5     |1.5        |   |
+|pillar     |1.3.0   |1.3.0      |   |
+|rlang      |0.3.0.1 |0.3.0.1    |   |
+|tibble     |1.4.2   |1.4.2      |   |
+|utf8       |1.1.4   |1.1.4      |   |
 
 # Revdeps
 
-## Couldn't check (8)
+## Couldn't check (13)
 
-|package                                          |version |error |warning |note |
-|:------------------------------------------------|:-------|:-----|:-------|:----|
-|[anomalyDetection](problems.md#anomalydetection) |0.2.4   |1     |        |     |
-|[diceR](problems.md#dicer)                       |0.2.0   |1     |        |     |
-|[GA4GHclient](problems.md#ga4ghclient)           |1.0.0   |1     |        |     |
-|[imager](problems.md#imager)                     |0.40.2  |1     |        |1    |
-|[pointblank](problems.md#pointblank)             |0.1     |1     |        |     |
-|[RSQLServer](problems.md#rsqlserver)             |0.3.0   |1     |        |     |
-|[TPP](problems.md#tpp)                           |3.4.3   |1     |1       |3    |
-|[wand](problems.md#wand)                         |0.2.0   |1     |        |     |
+|repo |package                                          |version |error |warning |note |
+|:----|:------------------------------------------------|:-------|:-----|:-------|:----|
+|CRAN |[anomalyDetection](problems.md#anomalydetection) |0.2.5   |1     |        |     |
+|CRAN |[childesr](problems.md#childesr)                 |0.1.0   |1     |        |1    |
+|CRAN |[circumplex](problems.md#circumplex)             |0.2.0   |1     |        |     |
+|CRAN |[colorednoise](problems.md#colorednoise)         |1.0.3   |1     |        |     |
+|CRAN |[DChIPRep](problems.md#dchiprep)                 |1.10.0  |1     |        |     |
+|CRAN |[fingertipscharts](problems.md#fingertipscharts) |0.0.2   |1     |        |1    |
+|CRAN |[mlbgameday](problems.md#mlbgameday)             |0.1.2   |1     |        |1    |
+|CRAN |[openVA](problems.md#openva)                     |1.0.7   |1     |        |     |
+|CRAN |[Rdrools](problems.md#rdrools)                   |1.1.0   |1     |        |     |
+|CRAN |[rfishbase](problems.md#rfishbase)               |3.0.0   |1     |        |2    |
+|CRAN |[SCORPIUS](problems.md#scorpius)                 |1.0.2   |1     |        |     |
+|CRAN |[TPP](problems.md#tpp)                           |3.8.5   |1     |        |3    |
+|CRAN |[wand](problems.md#wand)                         |0.2.0   |1     |        |     |
 
-## All (194)
+## Broken (6)
 
-|package                                              |version |error |warning |note |
-|:----------------------------------------------------|:-------|:-----|:-------|:----|
-|ahnr                                                 |0.2.0   |      |        |     |
-|[alphavantager](problems.md#alphavantager)           |0.1.0   |1     |        |1    |
-|[anomalyDetection](problems.md#anomalydetection)     |0.2.4   |1     |        |     |
-|apa                                                  |0.2.0   |      |        |     |
-|[ari](problems.md#ari)                               |0.1.0   |1     |        |     |
-|atlantistools                                        |0.4.3   |      |        |     |
-|automagic                                            |0.3     |      |        |     |
-|[banR](problems.md#banr)                             |0.2.0   |      |        |1    |
-|blscrapeR                                            |3.0.1   |      |        |     |
-|BradleyTerryScalable                                 |0.1.0   |      |        |     |
-|[breathtestcore](problems.md#breathtestcore)         |0.4.0   |      |        |1    |
-|[breathteststan](problems.md#breathteststan)         |0.3.0   |      |1       |     |
-|[broom](problems.md#broom)                           |0.4.2   |2     |        |     |
-|[bsplus](problems.md#bsplus)                         |0.1.0   |      |        |1    |
-|bupaR                                                |0.3.0   |      |        |     |
-|cdcfluview                                           |0.5.1   |      |        |     |
-|[censys](problems.md#censys)                         |0.1.0   |1     |        |     |
-|[cepR](problems.md#cepr)                             |0.1.0   |      |        |1    |
-|[childsds](problems.md#childsds)                     |0.6.7   |      |        |2    |
-|civis                                                |1.0.2   |      |        |     |
-|[clustermq](problems.md#clustermq)                   |0.7.0   |      |        |1    |
-|colorednoise                                         |0.0.1   |      |        |     |
-|[congressbr](problems.md#congressbr)                 |0.1.1   |      |        |1    |
-|[corrr](problems.md#corrr)                           |0.2.1   |      |1       |     |
-|countytimezones                                      |1.0.0   |      |        |     |
-|[countyweather](problems.md#countyweather)           |0.1.0   |      |        |1    |
-|cymruservices                                        |0.2.0   |      |        |     |
-|cytominer                                            |0.1.0   |      |        |     |
-|[d3r](problems.md#d3r)                               |0.7.0   |1     |        |1    |
-|datadogr                                             |0.1.1   |      |        |     |
-|[dbplyr](problems.md#dbplyr)                         |1.1.0   |      |        |1    |
-|[DChIPRep](problems.md#dchiprep)                     |1.6.2   |      |        |1    |
-|desctable                                            |0.1.0   |      |        |     |
-|[dexter](problems.md#dexter)                         |0.4.4   |      |        |2    |
-|DiagrammeR                                           |0.9.2   |      |        |     |
-|[diceR](problems.md#dicer)                           |0.2.0   |1     |        |     |
-|docxtractr                                           |0.2.0   |      |        |     |
-|[dodgr](problems.md#dodgr)                           |0.0.1   |-1    |1       |     |
-|edeaR                                                |0.7.1   |      |        |     |
-|edgarWebR                                            |0.2.0   |      |        |     |
-|[eechidna](problems.md#eechidna)                     |1.1     |      |        |1    |
-|eesim                                                |0.1.0   |      |        |     |
-|epidata                                              |0.1.0   |      |        |     |
-|[epitable](problems.md#epitable)                     |0.1.2   |      |        |1    |
-|[esc](problems.md#esc)                               |0.3.2   |      |        |1    |
-|estatapi                                             |0.3.0   |      |        |     |
-|[evaluator](problems.md#evaluator)                   |0.1.0   |      |        |1    |
-|[EventStudy](problems.md#eventstudy)                 |0.34    |      |        |2    |
-|exampletestr                                         |1.0.1   |      |        |     |
-|[exifr](problems.md#exifr)                           |0.2.1   |      |        |2    |
-|[fbar](problems.md#fbar)                             |0.1.23  |      |        |1    |
-|fcuk                                                 |0.1.21  |      |        |     |
-|fingertipsR                                          |0.1.3   |      |        |     |
-|[flextable](problems.md#flextable)                   |0.3.0   |      |1       |1    |
-|fourierin                                            |0.2.2   |      |        |     |
-|[ftDK](problems.md#ftdk)                             |1.0     |      |        |1    |
-|fuzzr                                                |0.2.1   |      |        |     |
-|fuzzyjoin                                            |0.1.3   |      |        |     |
-|[GA4GHclient](problems.md#ga4ghclient)               |1.0.0   |1     |        |     |
-|gdns                                                 |0.2.1   |      |        |     |
-|[geoparser](problems.md#geoparser)                   |0.1.1   |1     |1       |     |
-|getCRUCLdata                                         |0.1.9   |      |        |     |
-|ggeffects                                            |0.2.2   |      |        |     |
-|gghighlight                                          |0.0.1   |      |        |     |
-|[gglogo](problems.md#gglogo)                         |0.1.3   |      |1       |1    |
-|[ggmosaic](problems.md#ggmosaic)                     |0.1.2   |      |        |1    |
-|[ggpubr](problems.md#ggpubr)                         |0.1.5   |      |        |1    |
-|[ggstance](problems.md#ggstance)                     |0.3     |      |        |1    |
-|giphyr                                               |0.1.1   |      |        |     |
-|gitlabr                                              |0.9     |      |        |     |
-|googleAnalyticsR                                     |0.4.1   |      |        |     |
-|googledrive                                          |0.1.1   |      |        |     |
-|[googleLanguageR](problems.md#googlelanguager)       |0.1.0   |1     |        |     |
-|[googlesheets](problems.md#googlesheets)             |0.2.2   |1     |1       |     |
-|[grattan](problems.md#grattan)                       |1.5.1.2 |      |        |1    |
-|GSODR                                                |1.0.7   |      |        |     |
-|[gutenbergr](problems.md#gutenbergr)                 |0.1.3   |      |        |1    |
-|[highcharter](problems.md#highcharter)               |0.5.0   |      |        |1    |
-|hrbrthemes                                           |0.1.0   |      |        |     |
-|HURDAT                                               |0.1.0   |      |        |     |
-|[hurricaneexposure](problems.md#hurricaneexposure)   |0.0.1   |      |        |1    |
-|icpsrdata                                            |0.3.0   |      |        |     |
-|[imager](problems.md#imager)                         |0.40.2  |1     |        |1    |
-|ImputeRobust                                         |1.2     |      |        |     |
-|[incgraph](problems.md#incgraph)                     |1.0.1   |      |        |1    |
-|inferr                                               |0.1.1   |      |        |     |
-|[influxdbr](problems.md#influxdbr)                   |0.13.0  |1     |        |     |
-|[jpmesh](problems.md#jpmesh)                         |0.4.0   |      |        |1    |
-|[jpndistrict](problems.md#jpndistrict)               |0.2.0   |      |        |1    |
-|kntnr                                                |0.4.1   |      |        |     |
-|[kokudosuuchi](problems.md#kokudosuuchi)             |0.2.0   |      |        |1    |
-|[leaflet](problems.md#leaflet)                       |1.1.0   |      |        |2    |
-|[leaflet.esri](problems.md#leafletesri)              |0.2     |      |        |1    |
-|[leaflet.extras](problems.md#leafletextras)          |0.2     |      |        |1    |
-|livechatR                                            |0.1.0   |      |        |     |
-|longurl                                              |0.3.0   |      |        |     |
-|mathpix                                              |0.1.0   |      |        |     |
-|[metagenomeFeatures](problems.md#metagenomefeatures) |1.8.1   |      |        |2    |
-|[modelr](problems.md#modelr)                         |0.1.1   |      |        |1    |
-|[modeval](problems.md#modeval)                       |0.1.3   |      |1       |     |
-|mschart                                              |0.2.1   |      |        |     |
-|[nandb](problems.md#nandb)                           |0.2.1   |1     |        |     |
-|naniar                                               |0.1.0   |      |        |     |
-|normalr                                              |0.0.3   |      |        |     |
-|officer                                              |0.1.8   |      |        |     |
-|olsrr                                                |0.3.0   |      |        |     |
-|[perccalc](problems.md#perccalc)                     |1.0.0   |      |        |1    |
-|pewdata                                              |0.2.0   |      |        |     |
-|phylopath                                            |0.3.1   |      |        |     |
-|pinnacle.API                                         |2.0.9   |      |        |     |
-|[PKPDmisc](problems.md#pkpdmisc)                     |2.0.0   |      |        |1    |
-|plotly                                               |4.7.1   |      |        |     |
-|[pointblank](problems.md#pointblank)                 |0.1     |1     |        |     |
-|pollen                                               |0.53.00 |      |        |     |
-|pollstR                                              |2.0.0   |      |        |     |
-|postlightmercury                                     |1.2     |      |        |     |
-|prcr                                                 |0.1.5   |      |        |     |
-|processmapR                                          |0.2.0   |      |        |     |
-|[proustr](problems.md#proustr)                       |0.2.1   |      |        |1    |
-|[psycho](problems.md#psycho)                         |0.0.2   |      |        |1    |
-|[purrrlyr](problems.md#purrrlyr)                     |0.0.2   |      |        |1    |
-|[qiitr](problems.md#qiitr)                           |0.1.0   |1     |        |     |
-|[quanteda](problems.md#quanteda)                     |0.99.12 |      |        |1    |
-|rAltmetric                                           |0.7.0   |      |        |     |
-|[rcongresso](problems.md#rcongresso)                 |0.1.3   |1     |        |1    |
-|[rdrop2](problems.md#rdrop2)                         |0.8.1   |1     |        |1    |
-|readOffice                                           |0.2.2   |      |        |     |
-|[recipes](problems.md#recipes)                       |0.1.0   |      |1       |     |
-|[repurrrsive](problems.md#repurrrsive)               |0.1.0   |      |        |1    |
-|RevEcoR                                              |0.99.3  |      |        |     |
-|[rmapzen](problems.md#rmapzen)                       |0.3.3   |1     |        |1    |
-|[rmsfuns](problems.md#rmsfuns)                       |0.0.0.2 |      |        |1    |
-|[rnoaa](problems.md#rnoaa)                           |0.7.0   |1     |        |     |
-|[roadoi](problems.md#roadoi)                         |0.4     |      |1       |     |
-|rsample                                              |0.0.1   |      |        |     |
-|[RSQLServer](problems.md#rsqlserver)                 |0.3.0   |1     |        |     |
-|[RTCGA](problems.md#rtcga)                           |1.6.0   |2     |        |3    |
-|rtdists                                              |0.7-3   |      |        |     |
-|rtypeform                                            |0.3.2   |      |        |     |
-|[scanstatistics](problems.md#scanstatistics)         |1.0.0   |      |        |1    |
-|[SCORPIUS](problems.md#scorpius)                     |1.0     |      |        |1    |
-|[sergeant](problems.md#sergeant)                     |0.5.2   |1     |1       |     |
-|[shiny.semantic](problems.md#shinysemantic)          |0.1.1   |      |        |2    |
-|ShinyTester                                          |0.1.0   |      |        |     |
-|[simglm](problems.md#simglm)                         |0.6.0   |      |1       |     |
-|[sjlabelled](problems.md#sjlabelled)                 |1.0.4   |      |        |3    |
-|[sjmisc](problems.md#sjmisc)                         |2.6.1   |      |        |1    |
-|[sjPlot](problems.md#sjplot)                         |2.3.3   |      |1       |2    |
-|[sjstats](problems.md#sjstats)                       |0.12.0  |      |        |1    |
-|snakecase                                            |0.5.1   |      |        |     |
-|[sperrorest](problems.md#sperrorest)                 |2.1.1   |1     |        |     |
-|[splashr](problems.md#splashr)                       |0.4.0   |1     |        |     |
-|spup                                                 |0.1-1   |      |        |     |
-|[starmie](problems.md#starmie)                       |0.1.2   |      |        |2    |
-|sugrrants                                            |0.1.0   |      |        |     |
-|surveydata                                           |0.2.0   |      |        |     |
-|[survminer](problems.md#survminer)                   |0.4.0   |      |        |1    |
-|survutils                                            |1.0.0   |      |        |     |
-|[sweep](problems.md#sweep)                           |0.2.0   |      |        |1    |
-|[tatoo](problems.md#tatoo)                           |1.0.8   |      |        |1    |
-|tensorr                                              |0.1.0   |      |        |     |
-|tibbletime                                           |0.0.2   |      |        |     |
-|tidyboot                                             |0.1.0   |      |        |     |
-|tidycensus                                           |0.2     |      |        |     |
-|tidygenomics                                         |0.1.0   |      |        |     |
-|[tidyquant](problems.md#tidyquant)                   |0.5.3   |1     |2       |1    |
-|[tidyr](problems.md#tidyr)                           |0.7.2   |      |        |1    |
-|[tidyRSS](problems.md#tidyrss)                       |1.2.2   |      |        |1    |
-|tidyselect                                           |0.2.2   |      |        |     |
-|tidytext                                             |0.1.4   |      |        |     |
-|[tidyverse](problems.md#tidyverse)                   |1.1.1   |      |1       |     |
-|[timekit](problems.md#timekit)                       |0.3.1   |      |        |1    |
-|[timetk](problems.md#timetk)                         |0.1.0   |      |        |1    |
-|[TPP](problems.md#tpp)                               |3.4.3   |1     |1       |3    |
-|[twilio](problems.md#twilio)                         |0.1.0   |1     |        |     |
-|uaparserjs                                           |0.1.0   |      |        |     |
-|[ukbtools](problems.md#ukbtools)                     |0.9.0   |      |        |1    |
-|unpivotr                                             |0.2.1   |      |        |     |
-|[uptasticsearch](problems.md#uptasticsearch)         |0.1.0   |1     |        |     |
-|useful                                               |1.2.3   |      |        |     |
-|[valaddin](problems.md#valaddin)                     |0.1.2   |      |        |1    |
-|valr                                                 |0.3.1   |      |        |     |
-|vdiffr                                               |0.2.1   |      |        |     |
-|[veccompare](problems.md#veccompare)                 |0.1.0   |      |        |1    |
-|visdat                                               |0.1.0   |      |        |     |
-|[wand](problems.md#wand)                             |0.2.0   |1     |        |     |
-|webTRISr                                             |0.1.0   |      |        |     |
-|widgetframe                                          |0.3.0   |      |        |     |
-|[widyr](problems.md#widyr)                           |0.1.0   |      |        |1    |
-|wiggleplotr                                          |1.0.0   |      |        |     |
-|WRTDStidal                                           |1.1.0   |      |        |     |
-|xesreadR                                             |0.2.1   |      |        |     |
-|zeallot                                              |0.0.6   |      |        |     |
-|[zeligverse](problems.md#zeligverse)                 |0.1.1   |      |1       |1    |
+|repo |package                                          |version |error  |warning |note |
+|:----|:------------------------------------------------|:-------|:------|:-------|:----|
+|CRAN |[classyfireR](problems.md#classyfirer)           |0.1.1   |__+1__ |        |     |
+|CRAN |[ggeffects](problems.md#ggeffects)               |0.7.0   |__+1__ |__+1__  |1    |
+|CRAN |[parsnip](problems.md#parsnip)                   |0.0.1   |__+1__ |        |     |
+|CRAN |[postal](problems.md#postal)                     |0.1.0   |__+1__ |        |     |
+|CRAN |[survivalAnalysis](problems.md#survivalanalysis) |0.1.0   |       |__+1__  |     |
+|CRAN |[tidytidbits](problems.md#tidytidbits)           |0.1.0   |       |__+1__  |     |
+
+## All (421)
+
+|repo     |package                                                  |version    |error  |warning |note |
+|:--------|:--------------------------------------------------------|:----------|:------|:-------|:----|
+|CRAN     |[abjutils](problems.md#abjutils)                         |0.2.1      |1      |        |     |
+|CRAN     |[adaptalint](problems.md#adaptalint)                     |0.2.3      |       |        |1    |
+|CRAN     |ahnr                                                     |0.3.1      |       |        |     |
+|CRAN     |[alphavantager](problems.md#alphavantager)               |0.1.0      |1      |        |     |
+|CRAN     |[amt](problems.md#amt)                                   |0.0.5.0    |       |1       |2    |
+|CRAN     |[anomalize](problems.md#anomalize)                       |0.1.1      |       |1       |2    |
+|CRAN     |[anomalyDetection](problems.md#anomalydetection)         |0.2.5      |1      |        |     |
+|CRAN     |apa                                                      |0.3.0      |       |        |     |
+|CRAN     |[arena2r](problems.md#arena2r)                           |1.0.0      |       |        |1    |
+|CRAN     |ari                                                      |0.1.0      |       |        |     |
+|CRAN     |atlantistools                                            |0.4.3      |       |        |     |
+|CRAN     |[automagic](problems.md#automagic)                       |0.3        |1      |        |     |
+|CRAN     |autothresholdr                                           |1.3.0      |       |        |     |
+|CRAN     |[banR](problems.md#banr)                                 |0.2.0      |       |        |1    |
+|CRAN     |BAwiR                                                    |1.1.3      |       |        |     |
+|CRAN     |[BayesMallows](problems.md#bayesmallows)                 |0.1.1      |       |1       |     |
+|CRAN     |beadplexr                                                |0.1.0      |       |        |     |
+|CRAN     |[bigQueryR](problems.md#bigqueryr)                       |0.4.0      |       |        |1    |
+|CRAN     |[biomartr](problems.md#biomartr)                         |0.8.0      |       |        |1    |
+|CRAN     |[blorr](problems.md#blorr)                               |0.1.0      |       |        |2    |
+|CRAN     |[blscrapeR](problems.md#blscraper)                       |3.1.2      |2      |        |     |
+|CRAN     |[BradleyTerryScalable](problems.md#bradleyterryscalable) |0.1.0      |       |1       |     |
+|CRAN     |[breathtestcore](problems.md#breathtestcore)             |0.4.5      |       |        |1    |
+|CRAN     |[breathteststan](problems.md#breathteststan)             |0.4.7      |       |        |1    |
+|CRAN     |[broom](problems.md#broom)                               |0.5.0      |       |1       |     |
+|CRAN     |[broom.mixed](problems.md#broommixed)                    |0.2.3      |       |        |1    |
+|CRAN     |[bsplus](problems.md#bsplus)                             |0.1.1      |       |        |1    |
+|CRAN     |bupaR                                                    |0.4.1      |       |        |     |
+|CRAN     |c3                                                       |0.2.0      |       |        |     |
+|CRAN     |[cdcfluview](problems.md#cdcfluview)                     |0.7.0      |       |        |1    |
+|CRAN     |[CDECRetrieve](problems.md#cdecretrieve)                 |0.1.2      |       |        |1    |
+|CRAN     |censys                                                   |0.1.0      |       |        |     |
+|CRAN     |[cepR](problems.md#cepr)                                 |0.1.0      |       |        |1    |
+|CRAN     |[childesr](problems.md#childesr)                         |0.1.0      |1      |        |1    |
+|CRAN     |[childsds](problems.md#childsds)                         |0.6.7      |       |        |2    |
+|CRAN     |chinese.misc                                             |0.1.9      |       |        |     |
+|CRAN     |[chorrrds](problems.md#chorrrds)                         |0.1.7      |       |        |2    |
+|CRAN     |[circumplex](problems.md#circumplex)                     |0.2.0      |1      |        |     |
+|CRAN     |[civis](problems.md#civis)                               |1.5.1      |1      |        |     |
+|CRAN     |[classyfireR](problems.md#classyfirer)                   |0.1.1      |__+1__ |        |     |
+|CRAN     |[clustermq](problems.md#clustermq)                       |0.8.5      |       |        |1    |
+|CRAN     |[CNPBayes](problems.md#cnpbayes)                         |1.10.0     |       |2       |2    |
+|CRAN     |coalitions                                               |0.6.5      |       |        |     |
+|CRAN     |[codebook](problems.md#codebook)                         |0.7.4      |       |        |3    |
+|CRAN     |[codemetar](problems.md#codemetar)                       |0.1.6      |1      |        |     |
+|CRAN     |coefplot                                                 |1.2.6      |       |        |     |
+|CRAN     |collateral                                               |0.4.2      |       |        |     |
+|CRAN     |[colorednoise](problems.md#colorednoise)                 |1.0.3      |1      |        |     |
+|CRAN     |colorfindr                                               |0.1.3      |       |        |     |
+|CRAN     |comtradr                                                 |0.2.2      |       |        |     |
+|CRAN     |[congressbr](problems.md#congressbr)                     |0.1.3      |1      |        |2    |
+|CRAN     |corrr                                                    |0.3.0      |       |        |     |
+|CRAN     |cosinor2                                                 |0.2.1      |       |        |     |
+|CRAN     |[countytimezones](problems.md#countytimezones)           |1.0.0      |       |1       |     |
+|CRAN     |[countyweather](problems.md#countyweather)               |0.1.0      |       |1       |1    |
+|CRAN     |covTestR                                                 |0.1.4      |       |        |     |
+|CRAN     |[crawl](problems.md#crawl)                               |2.2.1      |       |        |1    |
+|CRAN     |crimedata                                                |0.1.0      |       |        |     |
+|CRAN     |[CrossClustering](problems.md#crossclustering)           |4.0.3      |       |        |1    |
+|CRAN     |crplyr                                                   |0.2.0      |       |        |     |
+|CRAN     |[crsra](problems.md#crsra)                               |0.2.3      |       |        |1    |
+|CRAN     |cutpointr                                                |0.7.4      |       |        |     |
+|CRAN     |cytominer                                                |0.1.0      |       |        |     |
+|CRAN     |[d3r](problems.md#d3r)                                   |0.8.4      |       |        |1    |
+|CRAN     |datadogr                                                 |0.1.2      |       |        |     |
+|CRAN     |[DataPackageR](problems.md#datapackager)                 |0.15.4     |1      |        |     |
+|CRAN     |datastructures                                           |0.2.7      |       |        |     |
+|CRAN     |dbplot                                                   |0.3.0      |       |        |     |
+|CRAN     |dbplyr                                                   |1.2.2      |       |        |     |
+|CRAN     |[DChIPRep](problems.md#dchiprep)                         |1.10.0     |1      |        |     |
+|CRAN     |deeplr                                                   |1.0.0      |       |        |     |
+|CRAN     |[DEP](problems.md#dep)                                   |1.2.0      |       |        |1    |
+|CRAN     |desctable                                                |0.1.3      |       |        |     |
+|CRAN     |[detrendr](problems.md#detrendr)                         |0.6.0      |       |        |1    |
+|BioCsoft |[dexter](problems.md#dexter)                             |0.8.3      |       |1       |     |
+|CRAN     |[DiagrammeR](problems.md#diagrammer)                     |1.0.0      |       |        |2    |
+|CRAN     |dials                                                    |0.0.1      |       |        |     |
+|CRAN     |diceR                                                    |0.5.1      |       |        |     |
+|CRAN     |[diffdf](problems.md#diffdf)                             |1.0.1      |       |        |1    |
+|CRAN     |dkanr                                                    |0.1.2      |       |        |     |
+|CRAN     |[DLMtool](problems.md#dlmtool)                           |5.2.3      |1      |        |     |
+|CRAN     |[dlookr](problems.md#dlookr)                             |0.3.2      |       |        |2    |
+|CRAN     |docxtools                                                |0.2.0      |       |        |     |
+|CRAN     |docxtractr                                               |0.5.0      |       |        |     |
+|CRAN     |[dodgr](problems.md#dodgr)                               |0.1.1      |       |1       |2    |
+|CRAN     |[dotwhisker](problems.md#dotwhisker)                     |0.5.0      |       |1       |     |
+|CRAN     |drake                                                    |6.1.0      |       |        |     |
+|CRAN     |[dynutils](problems.md#dynutils)                         |1.0.0      |1      |        |     |
+|CRAN     |echarts4r                                                |0.2.0      |       |        |     |
+|CRAN     |echor                                                    |0.1.1      |       |        |     |
+|CRAN     |edeaR                                                    |0.8.1      |       |        |     |
+|CRAN     |[edgarWebR](problems.md#edgarwebr)                       |1.0.0      |       |        |1    |
+|CRAN     |[eechidna](problems.md#eechidna)                         |1.1        |       |        |1    |
+|CRAN     |[eesim](problems.md#eesim)                               |0.1.0      |       |1       |     |
+|CRAN     |egor                                                     |0.18.08-02 |       |        |     |
+|CRAN     |embed                                                    |0.0.2      |       |        |     |
+|CRAN     |[emuR](problems.md#emur)                                 |1.1.1      |       |1       |1    |
+|CRAN     |epidata                                                  |0.2.0      |       |        |     |
+|CRAN     |[epitable](problems.md#epitable)                         |0.1.2      |       |        |1    |
+|CRAN     |epubr                                                    |0.5.0      |       |        |     |
+|CRAN     |[ergm](problems.md#ergm)                                 |3.9.4      |       |        |3    |
+|CRAN     |ergm.ego                                                 |0.4.0      |       |        |     |
+|CRAN     |ERSA                                                     |0.1.1      |       |        |     |
+|CRAN     |[esc](problems.md#esc)                                   |0.4.1      |       |        |1    |
+|CRAN     |estatapi                                                 |0.3.0      |       |        |     |
+|CRAN     |europepmc                                                |0.3        |       |        |     |
+|CRAN     |evaluator                                                |0.3.1      |       |        |     |
+|CRAN     |[EventStudy](problems.md#eventstudy)                     |0.34       |       |        |2    |
+|CRAN     |exampletestr                                             |1.4.1      |       |        |     |
+|CRAN     |[exifr](problems.md#exifr)                               |0.2.2      |       |        |2    |
+|CRAN     |exuber                                                   |0.1.0      |       |        |     |
+|CRAN     |[eyetrackingR](problems.md#eyetrackingr)                 |0.1.7      |       |1       |     |
+|CRAN     |facerec                                                  |0.1.0      |       |        |     |
+|CRAN     |fbar                                                     |0.4.3      |       |        |     |
+|CRAN     |fc                                                       |0.1.0      |       |        |     |
+|CRAN     |fcuk                                                     |0.1.21     |       |        |     |
+|CRAN     |fedregs                                                  |0.1.0      |       |        |     |
+|CRAN     |[filesstrings](problems.md#filesstrings)                 |3.0.0      |       |        |1    |
+|CRAN     |finalfit                                                 |0.8.8      |       |        |     |
+|CRAN     |[fingertipscharts](problems.md#fingertipscharts)         |0.0.2      |1      |        |1    |
+|CRAN     |[fingertipsR](problems.md#fingertipsr)                   |0.2.0      |       |        |1    |
+|CRAN     |forestControl                                            |0.2.0      |       |        |     |
+|CRAN     |[forestmangr](problems.md#forestmangr)                   |0.9.0      |       |        |1    |
+|CRAN     |fourierin                                                |0.2.2      |       |        |     |
+|CRAN     |fpp2                                                     |2.3        |       |        |     |
+|CRAN     |[fredr](problems.md#fredr)                               |1.0.0      |       |        |1    |
+|CRAN     |frite                                                    |0.1.0      |       |        |     |
+|CRAN     |[ftDK](problems.md#ftdk)                                 |1.0        |       |        |1    |
+|CRAN     |furrr                                                    |0.1.0      |       |        |     |
+|CRAN     |fuzzr                                                    |0.2.2      |       |        |     |
+|CRAN     |fuzzyjoin                                                |0.1.4      |       |        |     |
+|CRAN     |[GA4GHshiny](problems.md#ga4ghshiny)                     |1.2.0      |1      |1       |2    |
+|CRAN     |geniusr                                                  |1.0.0      |       |        |     |
+|CRAN     |genogeographer                                           |0.1.8      |       |        |     |
+|CRAN     |geoparser                                                |0.1.1      |       |        |     |
+|CRAN     |[getTBinR](problems.md#gettbinr)                         |0.5.6      |       |        |1    |
+|CRAN     |ggbuildr                                                 |0.1.0      |       |        |     |
+|CRAN     |[ggdag](problems.md#ggdag)                               |0.1.0      |       |        |1    |
+|CRAN     |[ggedit](problems.md#ggedit)                             |0.3.0      |       |        |1    |
+|CRAN     |[ggeffects](problems.md#ggeffects)                       |0.7.0      |__+1__ |__+1__  |1    |
+|CRAN     |[ggformula](problems.md#ggformula)                       |0.9.0      |       |        |3    |
+|CRAN     |gghighlight                                              |0.1.0      |       |        |     |
+|CRAN     |[ggiraphExtra](problems.md#ggiraphextra)                 |0.2.9      |       |        |1    |
+|CRAN     |[gglogo](problems.md#gglogo)                             |0.1.3      |       |1       |1    |
+|CRAN     |ggmosaic                                                 |0.2.0      |       |        |     |
+|CRAN     |ggpage                                                   |0.2.2      |       |        |     |
+|CRAN     |ggparliament                                             |2.0.0      |       |        |     |
+|CRAN     |[ggpubr](problems.md#ggpubr)                             |0.2        |       |        |1    |
+|CRAN     |ggraptR                                                  |1.1        |       |        |     |
+|CRAN     |[ggstatsplot](problems.md#ggstatsplot)                   |0.0.6      |       |1       |2    |
+|CRAN     |[ggthemes](problems.md#ggthemes)                         |4.0.1      |       |        |1    |
+|CRAN     |[ggtree](problems.md#ggtree)                             |1.12.7     |       |1       |1    |
+|CRAN     |giphyr                                                   |0.1.3      |       |        |     |
+|CRAN     |[gitlabr](problems.md#gitlabr)                           |0.9        |       |        |1    |
+|CRAN     |googleAnalyticsR                                         |0.5.0      |       |        |     |
+|CRAN     |googledrive                                              |0.1.2      |       |        |     |
+|CRAN     |googleLanguageR                                          |0.2.0      |       |        |     |
+|CRAN     |googlenlp                                                |0.2.0      |       |        |     |
+|CRAN     |[googlesheets](problems.md#googlesheets)                 |0.3.0      |       |        |1    |
+|CRAN     |[graphTweets](problems.md#graphtweets)                   |0.5.0      |       |        |1    |
+|CRAN     |[gravity](problems.md#gravity)                           |0.9.0      |       |1       |     |
+|CRAN     |groupedstats                                             |0.0.3      |       |        |     |
+|CRAN     |GSODR                                                    |1.3.0      |       |        |     |
+|CRAN     |[gutenbergr](problems.md#gutenbergr)                     |0.1.4      |       |        |1    |
+|CRAN     |[healthcareai](problems.md#healthcareai)                 |2.2.0      |2      |1       |     |
+|CRAN     |[highcharter](problems.md#highcharter)                   |0.5.0      |       |1       |1    |
+|CRAN     |[hpiR](problems.md#hpir)                                 |0.2.0      |       |        |1    |
+|CRAN     |hrbrthemes                                               |0.5.0.1    |       |        |     |
+|CRAN     |humanize                                                 |0.2.0      |       |        |     |
+|CRAN     |[HURDAT](problems.md#hurdat)                             |0.2.0      |-1     |        |1    |
+|CRAN     |[hurricaneexposure](problems.md#hurricaneexposure)       |0.0.1      |       |        |1    |
+|CRAN     |icpsrdata                                                |0.3.0      |       |        |     |
+|CRAN     |ijtiff                                                   |1.5.0      |       |        |     |
+|CRAN     |[imager](problems.md#imager)                             |0.41.1     |1      |        |1    |
+|CRAN     |ImputeRobust                                             |1.3        |       |        |     |
+|CRAN     |[incgraph](problems.md#incgraph)                         |1.0.1      |       |        |1    |
+|CRAN     |[INDperform](problems.md#indperform)                     |0.1.1      |       |        |1    |
+|CRAN     |inferr                                                   |0.3.0      |       |        |     |
+|CRAN     |influxdbr                                                |0.14.2     |       |        |     |
+|CRAN     |[interplot](problems.md#interplot)                       |0.2.1      |       |1       |1    |
+|CRAN     |[ipumsr](problems.md#ipumsr)                             |0.3.0      |       |        |1    |
+|CRAN     |[irteQ](problems.md#irteq)                               |1.0.0      |       |        |1    |
+|CRAN     |janitor                                                  |1.1.1      |       |        |     |
+|CRAN     |[jpmesh](problems.md#jpmesh)                             |1.1.1      |       |        |1    |
+|CRAN     |[jpndistrict](problems.md#jpndistrict)                   |0.3.2      |       |        |1    |
+|CRAN     |jstor                                                    |0.3.5      |       |        |     |
+|CRAN     |knitrProgressBar                                         |1.1.0      |       |        |     |
+|CRAN     |kntnr                                                    |0.4.1      |       |        |     |
+|CRAN     |[kokudosuuchi](problems.md#kokudosuuchi)                 |0.4.2      |       |        |1    |
+|CRAN     |[konfound](problems.md#konfound)                         |0.1.0      |       |1       |1    |
+|CRAN     |[LAGOSNE](problems.md#lagosne)                           |1.1.0      |       |        |1    |
+|CRAN     |landscapetools                                           |0.4.0      |       |        |     |
+|CRAN     |leaflet                                                  |2.0.2      |       |        |     |
+|CRAN     |[LipidMS](problems.md#lipidms)                           |1.0.0      |       |        |1    |
+|CRAN     |[listarrays](problems.md#listarrays)                     |0.1.0      |       |        |1    |
+|CRAN     |livechatR                                                |0.1.0      |       |        |     |
+|CRAN     |lognorm                                                  |0.1.4      |       |        |     |
+|CRAN     |longurl                                                  |0.3.0      |       |        |     |
+|CRAN     |MarginalMediation                                        |0.5.1      |       |        |     |
+|CRAN     |mathpix                                                  |0.3.0      |       |        |     |
+|CRAN     |meetupapi                                                |0.1.0      |       |        |     |
+|CRAN     |[memery](problems.md#memery)                             |0.5.0      |       |        |1    |
+|CRAN     |metaDigitise                                             |1.0.0      |       |        |     |
+|CRAN     |[metagene](problems.md#metagene)                         |2.12.2     |1      |        |     |
+|CRAN     |[metagenomeFeatures](problems.md#metagenomefeatures)     |2.0.0      |       |3       |3    |
+|CRAN     |[MetamapsDB](problems.md#metamapsdb)                     |0.0.2      |       |        |1    |
+|CRAN     |mixdir                                                   |0.1.0      |       |        |     |
+|CRAN     |[mlbgameday](problems.md#mlbgameday)                     |0.1.2      |1      |        |1    |
+|CRAN     |[mleap](problems.md#mleap)                               |0.1.3      |1      |        |     |
+|CRAN     |[mlflow](problems.md#mlflow)                             |0.8.0      |       |        |1    |
+|CRAN     |[mlr](problems.md#mlr)                                   |2.13       |       |        |2    |
+|CRAN     |modeldb                                                  |0.1.0      |       |        |     |
+|CRAN     |[modelgrid](problems.md#modelgrid)                       |1.1.1.0    |       |        |1    |
+|CRAN     |[modelr](problems.md#modelr)                             |0.1.2      |       |        |1    |
+|CRAN     |[monkeylearn](problems.md#monkeylearn)                   |0.2.0      |       |        |1    |
+|CRAN     |[moonBook](problems.md#moonbook)                         |0.2.3      |       |        |1    |
+|CRAN     |[MPTmultiverse](problems.md#mptmultiverse)               |0.1        |1      |1       |     |
+|CRAN     |MRFcov                                                   |1.0.36     |       |        |     |
+|CRAN     |muHVT                                                    |0.2.1      |       |        |     |
+|CRAN     |[multicolor](problems.md#multicolor)                     |0.1.1      |       |        |1    |
+|CRAN     |multiMiR                                                 |1.2.0      |       |        |     |
+|CRAN     |namer                                                    |0.1.3      |       |        |     |
+|CRAN     |[nandb](problems.md#nandb)                               |2.0.0      |       |        |1    |
+|CRAN     |naniar                                                   |0.4.1      |       |        |     |
+|CRAN     |[ncappc](problems.md#ncappc)                             |0.3.0      |       |        |1    |
+|CRAN     |nesRdata                                                 |0.2.0      |       |        |     |
+|CRAN     |nls.multstart                                            |1.0.0      |       |        |     |
+|CRAN     |Nmisc                                                    |0.3.5      |       |        |     |
+|CRAN     |nomisr                                                   |0.4.0      |       |        |     |
+|CRAN     |normalr                                                  |1.0.0      |       |        |     |
+|CRAN     |[nullabor](problems.md#nullabor)                         |0.3.5      |       |        |1    |
+|CRAN     |oak                                                      |0.2.1      |       |        |     |
+|CRAN     |obliqueRSF                                               |0.1.0      |       |        |     |
+|CRAN     |[oec](problems.md#oec)                                   |2.7.8      |       |        |1    |
+|CRAN     |olsrr                                                    |0.5.2      |       |        |     |
+|CRAN     |[openair](problems.md#openair)                           |2.6-1      |       |        |1    |
+|CRAN     |[opensensmapr](problems.md#opensensmapr)                 |0.5.0      |1      |1       |     |
+|CRAN     |[openVA](problems.md#openva)                             |1.0.7      |1      |        |     |
+|CRAN     |[optiSel](problems.md#optisel)                           |2.0.2      |       |1       |     |
+|CRAN     |pammtools                                                |0.1.7      |       |        |     |
+|CRAN     |[parsnip](problems.md#parsnip)                           |0.0.1      |__+1__ |        |     |
+|CRAN     |patrick                                                  |0.0.1      |       |        |     |
+|CRAN     |patternize                                               |0.0.2      |       |        |     |
+|CRAN     |[pcr](problems.md#pcr)                                   |1.1.2      |1      |        |     |
+|CRAN     |perccalc                                                 |1.0.3      |       |        |     |
+|CRAN     |petrinetR                                                |0.2.0      |       |        |     |
+|CRAN     |pewdata                                                  |0.2.0      |       |        |     |
+|CRAN     |phylopath                                                |1.0.1      |       |        |     |
+|CRAN     |pinnacle.API                                             |2.3.3      |       |        |     |
+|CRAN     |[pivot](problems.md#pivot)                               |18.4.17    |       |        |2    |
+|CRAN     |[pkgdown](problems.md#pkgdown)                           |1.2.0      |1      |        |2    |
+|CRAN     |[PKPDmisc](problems.md#pkpdmisc)                         |2.1.1      |       |1       |2    |
+|CRAN     |[plotly](problems.md#plotly)                             |4.8.0      |       |        |2    |
+|CRAN     |pmatch                                                   |0.1.4      |       |        |     |
+|CRAN     |pointblank                                               |0.2.0      |       |        |     |
+|CRAN     |pollen                                                   |0.71.0     |       |        |     |
+|CRAN     |pollstR                                                  |2.0.1      |       |        |     |
+|CRAN     |[PopED](problems.md#poped)                               |0.4.0      |       |        |1    |
+|CRAN     |[postal](problems.md#postal)                             |0.1.0      |__+1__ |        |     |
+|CRAN     |postlightmercury                                         |1.2        |       |        |     |
+|CRAN     |powerTCR                                                 |1.0.0      |       |        |     |
+|CRAN     |prcr                                                     |0.1.5      |       |        |     |
+|CRAN     |[processmapR](problems.md#processmapr)                   |0.3.2      |       |        |1    |
+|CRAN     |[proustr](problems.md#proustr)                           |0.2.1      |       |        |1    |
+|CRAN     |[psychmeta](problems.md#psychmeta)                       |2.2.1      |       |1       |1    |
+|CRAN     |[psycho](problems.md#psycho)                             |0.3.7      |       |        |2    |
+|CRAN     |purrrlyr                                                 |0.0.3      |       |        |     |
+|CRAN     |qiitr                                                    |0.1.0      |       |        |     |
+|CRAN     |[qqplotr](problems.md#qqplotr)                           |0.0.3      |       |        |2    |
+|CRAN     |[qsort](problems.md#qsort)                               |0.2.3      |       |1       |2    |
+|CRAN     |qsub                                                     |1.0.3      |       |        |     |
+|CRAN     |qualmap                                                  |0.1.1      |       |        |     |
+|CRAN     |[quanteda](problems.md#quanteda)                         |1.3.14     |       |        |2    |
+|CRAN     |[quokar](problems.md#quokar)                             |0.1.0      |       |        |1    |
+|CRAN     |r4lineups                                                |0.1.1      |       |        |     |
+|CRAN     |rAltmetric                                               |0.7.0      |       |        |     |
+|CRAN     |[RBesT](problems.md#rbest)                               |1.3-7      |       |        |2    |
+|CRAN     |[rclimateca](problems.md#rclimateca)                     |1.0.2      |       |        |1    |
+|CRAN     |rcongresso                                               |0.4.6      |       |        |     |
+|CRAN     |rdflib                                                   |0.2.1      |       |        |     |
+|CRAN     |rdfp                                                     |0.1.2      |       |        |     |
+|CRAN     |[Rdrools](problems.md#rdrools)                           |1.1.0      |1      |        |     |
+|CRAN     |[rdrop2](problems.md#rdrop2)                             |0.8.1      |       |        |1    |
+|CRAN     |readOffice                                               |0.2.2      |       |        |     |
+|CRAN     |[recipes](problems.md#recipes)                           |0.1.4      |1      |        |3    |
+|CRAN     |REddyProc                                                |1.1.5      |       |        |     |
+|CRAN     |[reinforcelearn](problems.md#reinforcelearn)             |0.1.0      |       |1       |1    |
+|CRAN     |[repurrrsive](problems.md#repurrrsive)                   |0.1.0      |       |        |1    |
+|CRAN     |[reReg](problems.md#rereg)                               |1.1.6      |1      |        |1    |
+|CRAN     |RevEcoR                                                  |0.99.3     |       |        |     |
+|CRAN     |[rfbCNPJ](problems.md#rfbcnpj)                           |0.1.1      |       |        |1    |
+|CRAN     |[rfishbase](problems.md#rfishbase)                       |3.0.0      |1      |        |2    |
+|CRAN     |rfm                                                      |0.1.0      |       |        |     |
+|CRAN     |[rhierbaps](problems.md#rhierbaps)                       |1.1.0      |       |1       |     |
+|CRAN     |[riingo](problems.md#riingo)                             |0.1.0      |       |        |1    |
+|CRAN     |[rmapzen](problems.md#rmapzen)                           |0.4.1      |       |        |1    |
+|CRAN     |[rmsfuns](problems.md#rmsfuns)                           |0.0.0.2    |       |        |1    |
+|CRAN     |rmweather                                                |0.1.3      |       |        |     |
+|CRAN     |rnoaa                                                    |0.7.0      |       |        |     |
+|CRAN     |rnr                                                      |0.2.1      |       |        |     |
+|CRAN     |[roadoi](problems.md#roadoi)                             |0.5.2      |       |1       |     |
+|CRAN     |[roxygen2](problems.md#roxygen2)                         |6.1.1      |       |        |2    |
+|CRAN     |[RPyGeo](problems.md#rpygeo)                             |1.0.0      |       |1       |     |
+|CRAN     |rrtable                                                  |0.1.0      |       |        |     |
+|CRAN     |rsample                                                  |0.0.3      |       |        |     |
+|CRAN     |[RSDA](problems.md#rsda)                                 |2.0.8      |       |        |1    |
+|CRAN     |[RTCGA](problems.md#rtcga)                               |1.10.0     |2      |        |3    |
+|CRAN     |rtdists                                                  |0.9-0      |       |        |     |
+|CRAN     |[rtrek](problems.md#rtrek)                               |0.1.0      |       |        |1    |
+|CRAN     |rtypeform                                                |2.0.0      |       |        |     |
+|CRAN     |ruta                                                     |1.0.2      |       |        |     |
+|CRAN     |salesforcer                                              |0.1.2      |       |        |     |
+|CRAN     |salty                                                    |0.1.0      |       |        |     |
+|CRAN     |sampler                                                  |0.2.2      |       |        |     |
+|CRAN     |[SanzCircos](problems.md#sanzcircos)                     |0.1.0      |       |        |1    |
+|CRAN     |[scanstatistics](problems.md#scanstatistics)             |1.0.1      |       |1       |     |
+|CRAN     |[SCORPIUS](problems.md#scorpius)                         |1.0.2      |1      |        |     |
+|CRAN     |[scriptName](problems.md#scriptname)                     |1.0.0      |       |        |1    |
+|CRAN     |sealr                                                    |0.1.1      |       |        |     |
+|CRAN     |[sergeant](problems.md#sergeant)                         |0.5.2      |       |        |1    |
+|CRAN     |[sevenC](problems.md#sevenc)                             |1.0.0      |       |1       |1    |
+|CRAN     |[shiny.semantic](problems.md#shinysemantic)              |0.2.1      |       |        |1    |
+|CRAN     |ShinyTester                                              |0.1.0      |       |        |     |
+|CRAN     |[sigmajs](problems.md#sigmajs)                           |0.1.2      |       |        |2    |
+|CRAN     |simglm                                                   |0.7.1      |       |        |     |
+|CRAN     |simTool                                                  |1.1.0      |       |        |     |
+|CRAN     |[SingleCaseES](problems.md#singlecasees)                 |0.4.0      |       |1       |     |
+|CRAN     |sjlabelled                                               |1.0.15     |       |        |     |
+|CRAN     |sjmisc                                                   |2.7.6      |       |        |     |
+|CRAN     |sjPlot                                                   |2.6.1      |       |        |     |
+|CRAN     |[sjstats](problems.md#sjstats)                           |0.17.2     |       |        |1    |
+|CRAN     |skimr                                                    |1.0.3      |       |        |     |
+|CRAN     |sloop                                                    |1.0.0      |       |        |     |
+|CRAN     |spAddins                                                 |0.2.0      |       |        |     |
+|CRAN     |[sparklyr](problems.md#sparklyr)                         |0.9.2      |       |        |1    |
+|CRAN     |sparklyr.nested                                          |0.0.3      |       |        |     |
+|CRAN     |[sperrorest](problems.md#sperrorest)                     |2.1.5      |       |1       |     |
+|CRAN     |splashr                                                  |0.4.1      |       |        |     |
+|CRAN     |spotifyr                                                 |1.0.0      |       |        |     |
+|CRAN     |spup                                                     |1.3-1      |       |        |     |
+|CRAN     |[ssdtools](problems.md#ssdtools)                         |0.0.3      |       |1       |     |
+|CRAN     |[starmie](problems.md#starmie)                           |0.1.2      |       |        |2    |
+|CRAN     |[stminsights](problems.md#stminsights)                   |0.3.0      |       |        |1    |
+|CRAN     |strex                                                    |0.1.2      |       |        |     |
+|CRAN     |[STRMPS](problems.md#strmps)                             |0.5.8      |       |        |1    |
+|CRAN     |styler                                                   |1.1.0      |       |        |     |
+|CRAN     |surveydata                                               |0.2.0      |       |        |     |
+|CRAN     |[survivalAnalysis](problems.md#survivalanalysis)         |0.1.0      |       |__+1__  |     |
+|CRAN     |[survminer](problems.md#survminer)                       |0.4.3      |       |        |1    |
+|CRAN     |survutils                                                |1.0.2      |       |        |     |
+|CRAN     |[sweep](problems.md#sweep)                               |0.2.1.1    |1      |        |     |
+|CRAN     |swmmr                                                    |0.8.1      |       |        |     |
+|CRAN     |syllabifyr                                               |0.1.0      |       |        |     |
+|CRAN     |[tableschema.r](problems.md#tableschemar)                |1.1.0      |       |        |2    |
+|CRAN     |tabr                                                     |0.2.0      |       |        |     |
+|CRAN     |taipan                                                   |0.1.2      |       |        |     |
+|CRAN     |tatoo                                                    |1.1.0      |       |        |     |
+|CRAN     |tauturri                                                 |0.3.0      |       |        |     |
+|CRAN     |tbrf                                                     |0.1.0      |       |        |     |
+|CRAN     |tensorr                                                  |0.1.0      |       |        |     |
+|CRAN     |tfestimators                                             |1.9.1      |       |        |     |
+|CRAN     |tibbletime                                               |0.1.1      |       |        |     |
+|CRAN     |[tidybayes](problems.md#tidybayes)                       |1.0.3      |1      |        |     |
+|CRAN     |tidyboot                                                 |0.1.1      |       |        |     |
+|CRAN     |tidycensus                                               |0.8.1      |       |        |     |
+|CRAN     |tidygenomics                                             |0.1.0      |       |        |     |
+|CRAN     |[tidyinftheo](problems.md#tidyinftheo)                   |0.2.1      |1      |1       |1    |
+|CRAN     |[tidyLPA](problems.md#tidylpa)                           |0.2.3      |       |        |1    |
+|CRAN     |[tidymodels](problems.md#tidymodels)                     |0.0.1      |       |        |1    |
+|CRAN     |tidyposterior                                            |0.0.2      |       |        |     |
+|CRAN     |tidypredict                                              |0.2.0      |       |        |     |
+|CRAN     |[tidyquant](problems.md#tidyquant)                       |0.5.5      |       |        |2    |
+|CRAN     |[tidyr](problems.md#tidyr)                               |0.8.2      |       |        |1    |
+|CRAN     |[tidyRSS](problems.md#tidyrss)                           |1.2.7      |       |        |1    |
+|CRAN     |tidyselect                                               |0.2.5      |       |        |     |
+|CRAN     |tidystats                                                |0.2        |       |        |     |
+|BioCsoft |tidystringdist                                           |0.1.3      |       |        |     |
+|CRAN     |[tidytext](problems.md#tidytext)                         |0.2.0      |       |        |1    |
+|CRAN     |[tidytidbits](problems.md#tidytidbits)                   |0.1.0      |       |__+1__  |     |
+|CRAN     |[tidyverse](problems.md#tidyverse)                       |1.2.1      |       |        |1    |
+|CRAN     |[tidyxl](problems.md#tidyxl)                             |1.0.3      |       |1       |     |
+|CRAN     |[timetk](problems.md#timetk)                             |0.1.1.1    |1      |        |     |
+|CRAN     |[tipr](problems.md#tipr)                                 |0.1.1      |       |        |1    |
+|CRAN     |togglr                                                   |0.1.33     |       |        |     |
+|CRAN     |[totalcensus](problems.md#totalcensus)                   |0.5.0      |       |        |2    |
+|CRAN     |[TPP](problems.md#tpp)                                   |3.8.5      |1      |        |3    |
+|CRAN     |trelliscopejs                                            |0.1.14     |       |        |     |
+|CRAN     |[tsibble](problems.md#tsibble)                           |0.5.3      |       |1       |     |
+|CRAN     |tuber                                                    |0.9.7      |       |        |     |
+|CRAN     |twilio                                                   |0.1.0      |       |        |     |
+|CRAN     |uaparserjs                                               |0.1.0      |       |        |     |
+|CRAN     |[ukbtools](problems.md#ukbtools)                         |0.11.0     |       |        |2    |
+|CRAN     |[understandBPMN](problems.md#understandbpmn)             |1.1.0      |1      |        |     |
+|CRAN     |unpivotr                                                 |0.4.0      |       |        |     |
+|CRAN     |uptasticsearch                                           |0.3.0      |       |        |     |
+|CRAN     |useful                                                   |1.2.6      |       |        |     |
+|CRAN     |[valaddin](problems.md#valaddin)                         |0.1.2      |       |        |1    |
+|CRAN     |[valr](problems.md#valr)                                 |0.4.2      |       |        |1    |
+|CRAN     |VarBundle                                                |0.3.0      |       |        |     |
+|CRAN     |[vdiffr](problems.md#vdiffr)                             |0.2.3      |1      |        |     |
+|CRAN     |[veccompare](problems.md#veccompare)                     |0.1.0      |       |        |2    |
+|CRAN     |vinereg                                                  |0.5.0      |       |        |     |
+|CRAN     |[visdat](problems.md#visdat)                             |0.5.1      |1      |        |1    |
+|CRAN     |[voxel](problems.md#voxel)                               |1.3.5      |       |        |1    |
+|CRAN     |[vqtl](problems.md#vqtl)                                 |2.0.4      |       |        |1    |
+|CRAN     |walkalytics                                              |0.1.0      |       |        |     |
+|CRAN     |walmartAPI                                               |0.1.5      |       |        |     |
+|CRAN     |[wand](problems.md#wand)                                 |0.2.0      |1      |        |     |
+|CRAN     |[weathercan](problems.md#weathercan)                     |0.2.8      |       |        |3    |
+|CRAN     |[webTRISr](problems.md#webtrisr)                         |0.1.1      |       |        |1    |
+|CRAN     |widgetframe                                              |0.3.1      |       |        |     |
+|CRAN     |widyr                                                    |0.1.1      |       |        |     |
+|CRAN     |[wiggleplotr](problems.md#wiggleplotr)                   |1.4.0      |1      |2       |2    |
+|CRAN     |wikisourcer                                              |0.1.2      |       |        |     |
+|CRAN     |[wordbankr](problems.md#wordbankr)                       |0.3.0      |       |        |1    |
+|CRAN     |WRTDStidal                                               |1.1.1      |       |        |     |
+|CRAN     |xesreadR                                                 |0.2.2      |       |        |     |
+|CRAN     |xpose                                                    |0.4.3      |       |        |     |
+|CRAN     |yardstick                                                |0.0.2      |       |        |     |
+|CRAN     |zeallot                                                  |0.1.0      |       |        |     |
+|CRAN     |[zeligverse](problems.md#zeligverse)                     |0.1.1      |       |        |1    |
 
