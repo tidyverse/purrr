@@ -22,7 +22,7 @@ argument, the next value of \code{.x} as the second argument, and the
 next value of \code{.y} as the third argument.
 
 The reduction terminates early if \code{.f} returns a value wrapped in
-a \code{\link[=done_box]{done_box()}}.}
+a \code{\link[=done]{done()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -52,7 +52,7 @@ and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.
 
 The accumulation terminates early if \code{.f} returns a value wrapped
-in a \code{\link[=done_box]{done_box()}}. If the done box is empty, the last value is
+in a \code{\link[=done]{done()}}. If the done box is empty, the last value is
 used instead and the result is one element shorter (but always
 includes the initial value, even when terminating at the first
 iteration).
@@ -97,11 +97,11 @@ letters[1:4] \%>\% accumulate(paste2)
 letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
 
 # You can shortcircuit the accumulation and terminate it early by
-# returning a value wrapped in a done_box():
+# returning a value wrapped in a done():
 paste3 <- function(x, y, sep = ".") {
   out <- paste(x, y, sep = sep)
   if (x == "b" || y == "b") {
-    done_box(out)
+    done(out)
   } else {
     out
   }

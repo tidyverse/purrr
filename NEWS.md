@@ -143,7 +143,7 @@ reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
 
 * `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` now
   terminate early when the function returns a value wrapped in a
-  `done_box()` (#253). When an empty `done_box()` is returned, the
+  `done()` (#253). When an empty `done()` is returned, the
   value at the last iteration is returned instead.
 
 * New `done()` function. Use it to wrap a value and signal early

@@ -25,7 +25,7 @@ argument, the next value of \code{.x} as the second argument, and the
 next value of \code{.y} as the third argument.
 
 The reduction terminates early if \code{.f} returns a value wrapped in
-a \code{\link[=done_box]{done_box()}}.}
+a \code{\link[=done]{done()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 

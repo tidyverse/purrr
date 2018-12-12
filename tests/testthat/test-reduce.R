@@ -24,14 +24,14 @@ test_that("direction of reduce determines how generated trees lean", {
   expect_identical(reduce(1:4, list, .dir = "backward"), list(1L, list(2L, list(3L, 4L))))
 })
 
-test_that("can shortcircuit reduction with done_box()", {
+test_that("can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce(x, ~ if (.y) c(.x, "foo") else done_box(.x), .init = NULL)
+  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
   expect_identical(out, c("foo", "foo"))
 
   # Empty done box yields the same value as returning the
   # result-so-far (the last value) in a done box
-  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done_box(), .init = NULL)
+  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done(), .init = NULL)
   expect_identical(out2, out)
 })
 
@@ -67,7 +67,7 @@ test_that("can terminate accumulate() early", {
   paste2 <- function(x, y) {
     out <- paste(x, y, sep = ".")
     if (x == "b" || y == "b") {
-      done_box(out)
+      done(out)
     } else {
       out
     }
@@ -85,7 +85,7 @@ test_that("can terminate accumulate() early with an empty box", {
   paste2 <- function(x, y) {
     out <- paste(x, y, sep = ".")
     if (x == "b" || y == "b") {
-      done_box()
+      done()
     } else {
       out
     }
@@ -130,7 +130,7 @@ test_that("can terminate accumulate2() early", {
   paste2 <- function(x, y, sep) {
     out <- paste(x, y, sep = sep)
     if (y == "b") {
-      done_box(out)
+      done(out)
     } else {
       out
     }
@@ -182,8 +182,8 @@ test_that("accumulate_right still works", {
   expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
 })
 
-test_that("can shortcircuit reduce2() with done_box()", {
+test_that("can shortcircuit reduce2() with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done_box(.x), .init = NULL)
+  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
   expect_identical(out, c("foo", "foo"))
 })

@@ -21,7 +21,7 @@
 #'   next value of `.y` as the third argument.
 #'
 #'   The reduction terminates early if `.f` returns a value wrapped in
-#'   a [done_box()].
+#'   a [done()].
 #'
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using `x[[1]]`. This is useful if
@@ -99,11 +99,11 @@
 #' reduce2(x, y, paste)
 #'
 #' # You can shortcircuit a reduction and terminate it early by
-#' # returning a value wrapped in a done_box():
+#' # returning a value wrapped in a done():
 #' paste3 <- function(x, y, sep = ".") {
 #'   out <- paste(x, y, sep = sep)
 #'   if (x == "b" || y == "b") {
-#'     done_box(out)
+#'     done(out)
 #'   } else {
 #'     out
 #'   }
@@ -310,7 +310,7 @@ seq_len2 <- function(start, end) {
 #'   right accumulation, this order is reversed.
 #'
 #'   The accumulation terminates early if `.f` returns a value wrapped
-#'   in a [done_box()]. If the done box is empty, the last value is
+#'   in a [done()]. If the done box is empty, the last value is
 #'   used instead and the result is one element shorter (but always
 #'   includes the initial value, even when terminating at the first
 #'   iteration).
@@ -348,11 +348,11 @@ seq_len2 <- function(start, end) {
 #' letters[1:4] %>% accumulate2(c("-", ".", "-"), paste2)
 #'
 #' # You can shortcircuit the accumulation and terminate it early by
-#' # returning a value wrapped in a done_box():
+#' # returning a value wrapped in a done():
 #' paste3 <- function(x, y, sep = ".") {
 #'   out <- paste(x, y, sep = sep)
 #'   if (x == "b" || y == "b") {
-#'     done_box(out)
+#'     done(out)
 #'   } else {
 #'     out
 #'   }

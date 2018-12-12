@@ -22,7 +22,7 @@ argument, the next value of \code{.x} as the second argument, and the
 next value of \code{.y} as the third argument.
 
 The reduction terminates early if \code{.f} returns a value wrapped in
-a \code{\link[=done_box]{done_box()}}.}
+a \code{\link[=done]{done()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -111,11 +111,11 @@ y <- list(c(6, 7), c(8, 9))
 reduce2(x, y, paste)
 
 # You can shortcircuit a reduction and terminate it early by
-# returning a value wrapped in a done_box():
+# returning a value wrapped in a done():
 paste3 <- function(x, y, sep = ".") {
   out <- paste(x, y, sep = sep)
   if (x == "b" || y == "b") {
-    done_box(out)
+    done(out)
   } else {
     out
   }
