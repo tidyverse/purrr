@@ -172,7 +172,9 @@ the first argument and the "next" value as the second argument.</p>
 <p>For <code>reduce2()</code> and <code><a href='accumulate.html'>accumulate2()</a></code>, a 3-argument function. The
 function will be passed the accumulated value as the first
 argument, the next value of <code>.x</code> as the second argument, and the
-next value of <code>.y</code> as the third argument.</p></td>
+next value of <code>.y</code> as the third argument.</p>
+<p>The reduction terminates early if <code>.f</code> returns a value wrapped in
+a <code><a href='done.html'>done()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -266,7 +268,28 @@ values of the reduction.</p></div>
 <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>reduce</span>(<span class='no'>paste2</span>)</div><div class='output co'>#&gt; [1] "a.b.c.d"</div><div class='input'><span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>reduce2</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"-"</span>, <span class='st'>"."</span>, <span class='st'>"-"</span>), <span class='no'>paste2</span>)</div><div class='output co'>#&gt; [1] "a-b.c-d"</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>5</span>))
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>6</span>, <span class='fl'>7</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>8</span>, <span class='fl'>9</span>))
-<span class='fu'>reduce2</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>paste</span>)</div><div class='output co'>#&gt; [1] "0 2 6 4 8" "1 3 7 5 9"</div></pre>
+<span class='fu'>reduce2</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>paste</span>)</div><div class='output co'>#&gt; [1] "0 2 6 4 8" "1 3 7 5 9"</div><div class='input'>
+
+<span class='co'># You can shortcircuit a reduction and terminate it early by</span>
+<span class='co'># returning a value wrapped in a done(). In the following example</span>
+<span class='co'># we return early if the result-so-far, which is passed on the LHS,</span>
+<span class='co'># meets a condition:</span>
+<span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>(<span class='no'>out</span>))
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a.b.c"</div><div class='input'>
+<span class='co'># Here the early return branch checks the incoming inputs passed on</span>
+<span class='co'># the RHS:</span>
+<span class='no'>paste4</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='no'>input</span> <span class='kw'>==</span> <span class='st'>"j"</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>(<span class='no'>out</span>))
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce</span>(<span class='no'>paste4</span>)</div><div class='output co'>#&gt; [1] "a.b.c.d.e.f.g.h.i"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

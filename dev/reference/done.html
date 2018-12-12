@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Negate a predicate function. — negate • purrr</title>
+<title>Box a final value for early termination — done • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -29,9 +29,12 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
-<meta property="og:title" content="Negate a predicate function. — negate" />
+<meta property="og:title" content="Box a final value for early termination — done" />
 
-<meta property="og:description" content="Negate a predicate function." />
+<meta property="og:description" content="A value boxed with done() signals to its caller that it
+should stop iterating. Use it to shortcircuit a loop.
+Currently, reduce(), reduce2(), accumulate(), and
+accumulate2() support done boxes." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -136,61 +139,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Negate a predicate function.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/negate.R'><code>R/negate.R</code></a></small>
-    <div class="hidden name"><code>negate.Rd</code></div>
+    <h1>Box a final value for early termination</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>done.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Negate a predicate function.</p>
+    <p>A value boxed with <code>done()</code> signals to its caller that it
+should stop iterating. Use it to shortcircuit a loop.</p>
+<p>Currently, <code><a href='reduce.html'>reduce()</a></code>, <code><a href='reduce.html'>reduce2()</a></code>, <code><a href='accumulate.html'>accumulate()</a></code>, and
+<code><a href='accumulate.html'>accumulate2()</a></code> support done boxes.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>negate</span>(<span class='no'>.p</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>done</span>(<span class='no'>x</span>)
+
+<span class='fu'>is_done_box</span>(<span class='no'>x</span>, <span class='kw'>empty</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.p</th>
-      <td><p>A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as <code>.x</code>.
-Alternatively, if the elements of <code>.x</code> are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where <code>.p</code> evaluates to
-<code>TRUE</code> will be modified.</p></td>
+      <th>x</th>
+      <td><p>For <code>done()</code>, a value to box. For <code>is_done_box()</code>, a
+value to test.</p></td>
     </tr>
     <tr>
-      <th>.default</th>
-      <td><p>Optional additional argument for extractor functions
-(i.e. when <code>.f</code> is character, integer, or list). Returned when
-value is absent (does not exist) or empty (has length 0).
-<code>.null</code> is deprecated; please use <code>.default</code> instead.</p></td>
+      <th>empty</th>
+      <td><p>Whether the box is empty. If <code>NULL</code>, <code>is_done_box()</code>
+returns <code>TRUE</code> for all done boxes. If <code>TRUE</code>, it returns <code>TRUE</code>
+only for empty boxes. Otherwise it returns <code>TRUE</code> only for
+non-empty boxes.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new predicate function.</p>
+    <p>A <a href='https://rlang.r-lib.org/reference/box.html'>boxed</a> value.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>negate</span>(<span class='st'>"x"</span>)</div><div class='output co'>#&gt; function (x, ...) 
-#&gt; {
-#&gt;     !pluck(x, "x", .default = NULL)
-#&gt; }
-#&gt; &lt;environment: 0x4e0c990&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
-#&gt; {
-#&gt;     !is.null(x = x)
-#&gt; }</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
-#&gt; {
-#&gt;     !.x &gt; 0
-#&gt; }
-#&gt; &lt;environment: 0x4106ee0&gt;</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>done</span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; &lt;done&gt;
+#&gt; [1] 3</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>done</span>(<span class='fl'>3</span>)
+<span class='fu'>is_done_box</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

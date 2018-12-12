@@ -172,7 +172,9 @@ the first argument and the "next" value as the second argument.</p>
 <p>For <code><a href='reduce.html'>reduce2()</a></code> and <code>accumulate2()</code>, a 3-argument function. The
 function will be passed the accumulated value as the first
 argument, the next value of <code>.x</code> as the second argument, and the
-next value of <code>.y</code> as the third argument.</p></td>
+next value of <code>.y</code> as the third argument.</p>
+<p>The reduction terminates early if <code>.f</code> returns a value wrapped in
+a <code><a href='done.html'>done()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -209,6 +211,11 @@ the returned vector is kept unnamed.</p>
 initial value (<code>.init</code> if supplied, or the first element of <code>.x</code>)
 and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.</p>
+<p>The accumulation terminates early if <code>.f</code> returns a value wrapped
+in a <code><a href='done.html'>done()</a></code>. If the done box is empty, the last value is
+used instead and the result is one element shorter (but always
+includes the initial value, even when terminating at the first
+iteration).</p>
     
     <h2 class="hasAnchor" id="life-cycle"><a class="anchor" href="#life-cycle"></a>Life cycle</h2>
 
@@ -251,6 +258,39 @@ rather than the left, which is consistent with a right reduction.</p>
 #&gt; [[4]]
 #&gt; [1] "a-b.c-d"
 #&gt; </div><div class='input'>
+
+<span class='co'># You can shortcircuit an accumulation and terminate it early by</span>
+<span class='co'># returning a value wrapped in a done(). In the following example</span>
+<span class='co'># we return early if the result-so-far, which is passed on the LHS,</span>
+<span class='co'># meets a condition:</span>
+<span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>(<span class='no'>out</span>))
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a"     "a.b"   "a.b.c" "a.b.c"</div><div class='input'>
+<span class='co'># Note how we get twice the same value in the accumulation. That's</span>
+<span class='co'># because we have returned it twice. To prevent this, return an empty</span>
+<span class='co'># done box to signal to accumulate() that it should terminate with the</span>
+<span class='co'># value of the last iteration:</span>
+<span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a"     "a.b"   "a.b.c"</div><div class='input'>
+<span class='co'># Here the early return branch checks the incoming inputs passed on</span>
+<span class='co'># the RHS:</span>
+<span class='no'>paste4</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='no'>input</span> <span class='kw'>==</span> <span class='st'>"f"</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste4</span>)</div><div class='output co'>#&gt; [1] "a"         "a.b"       "a.b.c"     "a.b.c.d"   "a.b.c.d.e"</div><div class='input'>
+
 # Simulating stochastic processes with drift
 </div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)

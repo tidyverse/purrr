@@ -174,7 +174,9 @@ the first argument and the "next" value as the second argument.</p>
 <p>For <code><a href='reduce.html'>reduce2()</a></code> and <code><a href='accumulate.html'>accumulate2()</a></code>, a 3-argument function. The
 function will be passed the accumulated value as the first
 argument, the next value of <code>.x</code> as the second argument, and the
-next value of <code>.y</code> as the third argument.</p></td>
+next value of <code>.y</code> as the third argument.</p>
+<p>The reduction terminates early if <code>.f</code> returns a value wrapped in
+a <code><a href='done.html'>done()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
