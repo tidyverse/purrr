@@ -61,14 +61,14 @@ compose <- function(..., .dir = c("backward", "forward")) {
 
   structure(
     new_function(formals(first_fn), body, fn_env(first_fn)),
-    class = "purrr_composed_fn",
+    class = c("purrr_function_compose", "function"),
     first_fn = first_fn,
     fns = fns
   )
 }
 
 #' @export
-print.purrr_composed_fn <- function(x, ...) {
+print.purrr_function_compose <- function(x, ...) {
   cat("<composed>\n")
 
   first <- attr(x, "first_fn")

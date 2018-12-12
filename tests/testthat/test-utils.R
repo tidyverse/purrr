@@ -41,7 +41,7 @@ test_that("done() can be empty", {
   expect_identical(unbox(empty), missing_arg())
 
   expect_true(is_done_box(empty))
-  expect_true(inherits_all(empty, c("rlang_empty_done_box", "rlang_done_box")))
+  expect_true(inherits_all(empty, c("rlang_box_done_empty", "rlang_box_done")))
 
   expect_true(is_done_box(empty, empty = TRUE))
   expect_false(is_done_box(empty, empty = FALSE))

@@ -15,7 +15,7 @@ test_that("composed functions are applied in reverse order if .dir is supplied",
 test_that("compose supports formulas", {
   round_mean <- compose(~ .x * 100, ~ round(.x, 2), ~ mean(.x, na.rm = TRUE))
 
-  expect_is(round_mean, "purrr_composed_fn")
+  expect_is(round_mean, "purrr_function_compose")
   expect_identical(round_mean(1:100), round( mean(1:100, na.rm = TRUE), 2) * 100 )
 })
 

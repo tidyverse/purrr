@@ -225,9 +225,9 @@ friendly_type_of_element <- function(x) {
 #' @export
 done <- function(x) {
   if (missing(x)) {
-    class <- c("rlang_empty_done_box", "rlang_done_box")
+    class <- c("rlang_box_done_empty", "rlang_box_done")
   } else {
-    class <- "rlang_done_box"
+    class <- "rlang_box_done"
   }
   new_box(maybe_missing(x), class)
 }
@@ -238,7 +238,7 @@ done <- function(x) {
 #'   non-empty boxes.
 #' @export
 is_done_box <- function(x, empty = NULL) {
-  if (!inherits(x, "rlang_done_box")) {
+  if (!inherits(x, "rlang_box_done")) {
     return(FALSE)
   }
 
@@ -246,10 +246,10 @@ is_done_box <- function(x, empty = NULL) {
     return(TRUE)
   }
 
-  inherits(x, "rlang_empty_done_box") == empty
+  inherits(x, "rlang_box_done_empty") == empty
 }
 #' @export
-print.rlang_done_box <- function(x, ...) {
+print.rlang_box_done <- function(x, ...) {
   cat("<done>\n")
   print(unbox(x))
 }
