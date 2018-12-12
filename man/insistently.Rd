@@ -33,15 +33,15 @@ risky_runif <- function(lo = 0, hi = 1) {
 
 # For the purpose of this example, we first create a custom rate
 # object with a low waiting time between attempts:
-rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
+rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005, max_times = 4)
 
 # Modify your function to run insistently.
 insistent_risky_runif <- insistently(risky_runif, rate, quiet = FALSE)
 
-set.seed(1)
+set.seed(6) # Succeeding seed
 insistent_risky_runif()
 
-set.seed(3)
+set.seed(3) # Failing seed
 try(insistent_risky_runif())
 
 
@@ -57,8 +57,9 @@ try(insistent_risky_runif())
 rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
 possibly_insistent_risky_runif <- possibly(insistent_risky_runif, otherwise = -99)
 
-set.seed(1)
+set.seed(6)
 possibly_insistent_risky_runif()
+
 set.seed(3)
 possibly_insistent_risky_runif()
 }

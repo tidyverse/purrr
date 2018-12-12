@@ -21,15 +21,15 @@
 #'
 #' # For the purpose of this example, we first create a custom rate
 #' # object with a low waiting time between attempts:
-#' rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
+#' rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005, max_times = 4)
 #'
 #' # Modify your function to run insistently.
 #' insistent_risky_runif <- insistently(risky_runif, rate, quiet = FALSE)
 #'
-#' set.seed(1)
+#' set.seed(6) # Succeeding seed
 #' insistent_risky_runif()
 #'
-#' set.seed(3)
+#' set.seed(3) # Failing seed
 #' try(insistent_risky_runif())
 #'
 #'
@@ -45,8 +45,9 @@
 #' rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
 #' possibly_insistent_risky_runif <- possibly(insistent_risky_runif, otherwise = -99)
 #'
-#' set.seed(1)
+#' set.seed(6)
 #' possibly_insistent_risky_runif()
+#'
 #' set.seed(3)
 #' possibly_insistent_risky_runif()
 #' @export
@@ -59,14 +60,15 @@ insistently <- function(f, rate = rate_backoff(), quiet = TRUE) {
   }
 
   function(...) {
+    rate_reset(rate)
+
     repeat {
+      rate_sleep(rate, quiet = quiet)
       out <- capture_error(f(...), quiet = quiet)
 
       if (is_null(out$error)) {
         return(out$result)
       }
-
-      rate_sleep(rate, quiet = quiet)
     }
   }
 }
@@ -84,16 +86,12 @@ insistently <- function(f, rate = rate_backoff(), quiet = TRUE) {
 #' @examples
 #' # A delay rate waits the same amount of time:
 #' rate <- rate_delay(0.02)
-#' rate_sleep(rate, quiet = FALSE)
-#' rate_sleep(rate, quiet = FALSE)
-#' rate_sleep(rate, quiet = FALSE)
+#' for (i in 1:3) rate_sleep(rate, quiet = FALSE)
 #'
 #' # A backoff rate waits exponentially longer each time, with random
 #' # jitter by default:
 #' rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
-#' rate_sleep(rate, quiet = FALSE)
-#' rate_sleep(rate, quiet = FALSE)
-#' rate_sleep(rate, quiet = FALSE)
+#' for (i in 1:3) rate_sleep(rate, quiet = FALSE)
 #' @name rate-helpers
 NULL
 
@@ -213,15 +211,21 @@ rate_sleep <- function(rate, quiet = TRUE) {
   stopifnot(is_rate(rate))
 
   i <- rate_count(rate)
-  if (i >= rate$max_times) {
-    abort(
-      sprintf("Request failed after %d attempts", i),
-      "purrr_error_rate_excess",
-      i = i
-    )
-  }
-  rate_bump_count(rate)
 
+  if (i > rate$max_times) {
+    stop_rate_expired(rate)
+  }
+  if (i == rate$max_times) {
+    stop_rate_excess(rate)
+  }
+
+  if (i == 0L) {
+    rate_bump_count(rate)
+    signal_rate_init(rate)
+    return(invisible())
+  }
+
+  on.exit(rate_bump_count(rate))
   UseMethod("rate_sleep")
 }
 
@@ -235,16 +239,16 @@ rate_sleep.purrr_rate_backoff <- function(rate, quiet = TRUE) {
   }
 
   length <- max(rate$pause_min, pause_max)
-  rate_sleep_impl(length, quiet)
+  rate_sleep_impl(rate, length, quiet)
 }
 #' @export
 rate_sleep.purrr_rate_delay <- function(rate, quiet = TRUE) {
-  rate_sleep_impl(rate$pause, quiet)
+  rate_sleep_impl(rate, rate$pause, quiet)
 }
 
-rate_sleep_impl <- function(length, quiet) {
+rate_sleep_impl <- function(rate, length, quiet) {
   if (!quiet) {
-    inform_rate(length)
+    signal_rate_retry(rate, length, quiet)
   }
   Sys.sleep(length)
 }
@@ -267,10 +271,32 @@ rate_bump_count <- function(rate, n = 1L) {
   invisible(rate)
 }
 
-inform_rate <- function(length) {
-  inform(
-    sprintf("Retrying in %.1g seconds.", length),
-    "purrr_message_rate_retry",
-    length = length
+signal_rate_init <- function(rate) {
+  signal("", "purrr_condition_rate_init", rate = rate)
+}
+signal_rate_retry <- function(rate, length, quiet) {
+  msg <- sprintf("Retrying in %.1g seconds.", length)
+  class <- "purrr_message_rate_retry"
+  if (quiet) {
+    signal(msg, class, rate = rate, length = length)
+  } else {
+    inform(msg, class, rate = rate, length = length)
+  }
+}
+
+stop_rate_expired <- function(rate) {
+  msg <- paste_line(
+    "This `rate` object has already be run more than `max_times` allows.",
+    "Do you need to reset it with `rate_reset()`?"
   )
+  abort(msg, "purrr_error_rate_expired", rate = rate)
+}
+stop_rate_excess <- function(rate) {
+  i <- rate_count(rate)
+
+  # Bump counter to get an expired error next time around
+  rate_bump_count(rate)
+
+  msg <- sprintf("Request failed after %d attempts", i)
+  abort(msg, "purrr_error_rate_excess", rate = rate)
 }

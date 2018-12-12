@@ -39,16 +39,12 @@ These helpers create rate settings that you can pass to
 \examples{
 # A delay rate waits the same amount of time:
 rate <- rate_delay(0.02)
-rate_sleep(rate, quiet = FALSE)
-rate_sleep(rate, quiet = FALSE)
-rate_sleep(rate, quiet = FALSE)
+for (i in 1:3) rate_sleep(rate, quiet = FALSE)
 
 # A backoff rate waits exponentially longer each time, with random
 # jitter by default:
 rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
-rate_sleep(rate, quiet = FALSE)
-rate_sleep(rate, quiet = FALSE)
-rate_sleep(rate, quiet = FALSE)
+for (i in 1:3) rate_sleep(rate, quiet = FALSE)
 }
 \seealso{
 \code{\link[=rate_sleep]{rate_sleep()}}, \code{\link[=insistently]{insistently()}}
