@@ -190,48 +190,48 @@ input by transposing it twice.</p>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>1</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>5</span>))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>()</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.923
-#&gt;   ..$ y: num [1:5] 0.762 0.779 0.701 0.803 0.319
+#&gt;   ..$ x: num 0.891
+#&gt;   ..$ y: num [1:5] 0.142 0.69 0.262 0.701 0.576
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.317
-#&gt;   ..$ y: num [1:5] 0.729 0.401 0.78 0.475 0.206
+#&gt;   ..$ x: num 0.445
+#&gt;   ..$ y: num [1:5] 0.7763 0.4849 0.9892 0.2676 0.0776
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.707
-#&gt;   ..$ y: num [1:5] 0.449 0.714 0.358 0.17 0.47
+#&gt;   ..$ x: num 0.242
+#&gt;   ..$ y: num [1:5] 0.42 0.717 0.832 0.909 0.219
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.26
-#&gt;   ..$ y: num [1:5] 0.136 0.633 0.833 0.375 0.826
+#&gt;   ..$ x: num 0.426
+#&gt;   ..$ y: num [1:5] 0.563 0.125 0.364 0.737 0.292
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.167
-#&gt;   ..$ y: num [1:5] 0.0548 0.1037 0.5826 0.9442 0.8689</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;   ..$ x: num 0.276
+#&gt;   ..$ y: num [1:5] 0.781 0.466 0.412 0.581 0.536</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>()</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x:List of 5
-#&gt;   ..$ : num 0.923
-#&gt;   ..$ : num 0.317
-#&gt;   ..$ : num 0.707
-#&gt;   ..$ : num 0.26
-#&gt;   ..$ : num 0.167
+#&gt;   ..$ : num 0.891
+#&gt;   ..$ : num 0.445
+#&gt;   ..$ : num 0.242
+#&gt;   ..$ : num 0.426
+#&gt;   ..$ : num 0.276
 #&gt;  $ y:List of 5
-#&gt;   ..$ : num [1:5] 0.762 0.779 0.701 0.803 0.319
-#&gt;   ..$ : num [1:5] 0.729 0.401 0.78 0.475 0.206
-#&gt;   ..$ : num [1:5] 0.449 0.714 0.358 0.17 0.47
-#&gt;   ..$ : num [1:5] 0.136 0.633 0.833 0.375 0.826
-#&gt;   ..$ : num [1:5] 0.0548 0.1037 0.5826 0.9442 0.8689</div><div class='input'><span class='co'># Back to where we started</span>
+#&gt;   ..$ : num [1:5] 0.142 0.69 0.262 0.701 0.576
+#&gt;   ..$ : num [1:5] 0.7763 0.4849 0.9892 0.2676 0.0776
+#&gt;   ..$ : num [1:5] 0.42 0.717 0.832 0.909 0.219
+#&gt;   ..$ : num [1:5] 0.563 0.125 0.364 0.737 0.292
+#&gt;   ..$ : num [1:5] 0.781 0.466 0.412 0.581 0.536</div><div class='input'><span class='co'># Back to where we started</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>()</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.923
-#&gt;   ..$ y: num [1:5] 0.762 0.779 0.701 0.803 0.319
+#&gt;   ..$ x: num 0.891
+#&gt;   ..$ y: num [1:5] 0.142 0.69 0.262 0.701 0.576
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.317
-#&gt;   ..$ y: num [1:5] 0.729 0.401 0.78 0.475 0.206
+#&gt;   ..$ x: num 0.445
+#&gt;   ..$ y: num [1:5] 0.7763 0.4849 0.9892 0.2676 0.0776
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.707
-#&gt;   ..$ y: num [1:5] 0.449 0.714 0.358 0.17 0.47
+#&gt;   ..$ x: num 0.242
+#&gt;   ..$ y: num [1:5] 0.42 0.717 0.832 0.909 0.219
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.26
-#&gt;   ..$ y: num [1:5] 0.136 0.633 0.833 0.375 0.826
+#&gt;   ..$ x: num 0.426
+#&gt;   ..$ y: num [1:5] 0.563 0.125 0.364 0.737 0.292
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.167
-#&gt;   ..$ y: num [1:5] 0.0548 0.1037 0.5826 0.9442 0.8689</div><div class='input'>
+#&gt;   ..$ x: num 0.276
+#&gt;   ..$ y: num [1:5] 0.781 0.466 0.412 0.581 0.536</div><div class='input'>
 <span class='co'># transpose() is useful in conjunction with safely() &amp; quietly()</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"a"</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='safely.html'>safely</a></span>(<span class='no'>log</span>))

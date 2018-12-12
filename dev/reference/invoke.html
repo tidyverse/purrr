@@ -234,57 +234,57 @@ map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Invoke a function with a list of arguments</span>
-<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.38870131 0.97554784 0.28989230 0.67838043 0.73531960 0.19595673
-#&gt;  [7] 0.98053967 0.74152153 0.05144628 0.53021246</div><div class='input'><span class='co'># Invoke a function with named arguments</span>
-<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.69582388 0.68855600 0.03123033 0.22556253 0.30083081 0.63646561
-#&gt;  [7] 0.47902455 0.43217126 0.70643384 0.94857658</div><div class='input'>
+<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.5120159 0.5050239 0.5340354 0.5572494 0.8679195 0.8297087 0.1114492
+#&gt;  [8] 0.7036884 0.8974883 0.2797326</div><div class='input'><span class='co'># Invoke a function with named arguments</span>
+<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.22820188 0.01532989 0.12898156 0.09338193 0.23688501 0.79114741
+#&gt;  [7] 0.59973157 0.91014771 0.56042455 0.75570477</div><div class='input'>
 <span class='co'># Combine the two:</span>
 <span class='fu'>invoke</span>(<span class='no'>paste</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"01a"</span>, <span class='st'>"01b"</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "01a-01b"</div><div class='input'><span class='co'># That's more natural as part of a pipeline:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"01a"</span>, <span class='st'>"01b"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>invoke</span>(<span class='no'>paste</span>, <span class='no'>.</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "01a-01b"</div><div class='input'>
 <span class='co'># Invoke a list of functions, each with different arguments</span>
 <span class='fu'>invoke_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>runif</span>, <span class='no'>rnorm</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)))</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] 0.18033877 0.21689988 0.68016292 0.49884561 0.64167935 0.66028435
-#&gt;  [7] 0.09602416 0.76560016 0.76967480 0.99071231
+#&gt;  [1] 0.3791719 0.3732810 0.1702906 0.4533073 0.2584140 0.3362660 0.8895830
+#&gt;  [8] 0.2019463 0.5791860 0.2076320
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  1.88850493 -0.09744510 -0.93584735 -0.01595031 -0.82678895
+#&gt; [1] -0.5784837 -0.9423007 -0.2037282 -1.6664748 -0.4844551
 #&gt; </div><div class='input'><span class='co'># Or with the same inputs:</span>
 <span class='fu'>invoke_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>runif</span>, <span class='no'>rnorm</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.06521611 0.35420680 0.82519942 0.27381825 0.57004495
+#&gt; [1] 0.2293247 0.2129984 0.8771009 0.9932220 0.8442470
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] -0.4241750 -0.8723159  0.1066846 -0.5870140 -0.3278536
+#&gt; [1]  1.3434482 -0.7573557 -0.5837819 -1.5751319 -1.2569391
 #&gt; </div><div class='input'><span class='fu'>invoke_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>runif</span>, <span class='no'>rnorm</span>), <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.46598719 0.39003139 0.02006522 0.37697093 0.55991284
+#&gt; [1] 0.30481057 0.76928742 0.54065573 0.36237053 0.09255692
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  1.06730788  0.07003485 -0.63912332 -0.04996490 -0.25148344
+#&gt; [1]  0.70551551  1.30035799  0.03825201 -0.97928377  0.79376123
 #&gt; </div><div class='input'><span class='co'># Or the same function with different inputs:</span>
 <span class='fu'>invoke_map</span>(<span class='st'>"runif"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.67176682 0.05861411 0.99706914 0.14903547 0.51855664
+#&gt; [1] 0.784214704 0.654354915 0.378104397 0.008566967 0.955329554
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] 0.84612005 0.71826972 0.24131402 0.54704337 0.83480182 0.02795603
-#&gt;  [7] 0.46938430 0.80568003 0.81405131 0.40391100
+#&gt;  [1] 0.83861615 0.21342494 0.49471356 0.63624426 0.92109139 0.01174404
+#&gt;  [7] 0.26740292 0.43557210 0.82946709 0.87094404
 #&gt; </div><div class='input'>
 <span class='co'># Or as a pipeline</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span> <span class='fu'>invoke_map</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; $m1
-#&gt; [1] -17.1555
+#&gt; [1] 1.442278
 #&gt; 
 #&gt; $m2
-#&gt; [1] -0.2478571
-#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span> <span class='fu'>invoke_map_dbl</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt;         m1         m2 
-#&gt; -1.0554082 -0.1491601 </div><div class='input'>
+#&gt; [1] 0.2863512
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span> <span class='fu'>invoke_map_dbl</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt;           m1           m2 
+#&gt; -0.035989269  0.007874736 </div><div class='input'>
 <span class='co'># Note that you can also match by position by explicitly omitting `.x`.</span>
 <span class='co'># This can be useful when the argument names of the functions are not</span>
 <span class='co'># identical</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>invoke_map</span>(, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; $m1
-#&gt; [1] -0.634837
+#&gt; [1] 0.8570737
 #&gt; 
 #&gt; $m2
-#&gt; [1] -0.1482912
+#&gt; [1] -0.03480922
 #&gt; </div><div class='input'>
 <span class='co'># If you have pairs of function name and arguments, it's natural</span>
 <span class='co'># to store them in a data frame. Here we use a tibble because</span>
@@ -301,15 +301,15 @@ map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
   <span class='no'>df</span>
   <span class='fu'>invoke_map</span>(<span class='no'>df</span>$<span class='no'>f</span>, <span class='no'>df</span>$<span class='no'>params</span>)
 }</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] 0.204329063 0.471755611 0.385183100 0.392751929 0.218338430 0.007208941
-#&gt;  [7] 0.363712143 0.526106730 0.844163393 0.135991171
+#&gt;  [1] 0.22862927 0.10356121 0.89888084 0.25384382 0.41335554 0.09137221
+#&gt;  [7] 0.81196535 0.60923418 0.54550179 0.86115736
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 9 9 5 6 9
+#&gt; [1]  8  7 14  4 10
 #&gt; 
 #&gt; [[3]]
-#&gt;  [1]  -3.240840  12.844975  -2.943244  -9.482045  15.586632   5.283032
-#&gt;  [7]   8.990353   3.000512  -2.412399 -15.897635
+#&gt;  [1]  -2.2557137  -0.8815501  -7.6882877   5.8627049  -1.9041392 -12.8038554
+#&gt;  [7]  -1.5044170 -16.9802988  -2.3491836  -6.1430235
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -186,38 +186,38 @@ argument to the lambda).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] -0.06956080  0.51562199  1.39296654  1.01856317  0.05301056
+#&gt; [1]  0.83717502  0.09205533  0.98102841 -0.34016898  1.36954798
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  0.5802748 -0.5941795 -0.3718553 -1.4230352 -1.1404838
+#&gt; [1] -0.3466949  0.7233288  1.6367958  0.2426232  0.3558311
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  1.2685047 -0.2801044  0.9110540  2.0043945  0.2471404
+#&gt; [1] -1.94514391 -0.12278708  1.13367300 -0.39654331 -0.05652559
 #&gt; 
 #&gt; [[4]]
-#&gt; [1] -0.4290761 -2.1837551 -0.1236349  0.2873839 -0.3715993
+#&gt; [1] -0.4366884 -0.1640290  1.1411784  1.2281731  0.7771450
 #&gt; 
 #&gt; [[5]]
-#&gt; [1]  1.6265623  0.3099083 -1.5640407 -1.2306235 -1.3701975
+#&gt; [1] -1.1141685  0.3984125  1.2607149 -0.4802278 -1.3424265
 #&gt; 
 #&gt; [[6]]
-#&gt; [1]  0.1065558 -0.3988255 -0.3534061  0.2345011  1.7697899
+#&gt; [1] -0.6050812 -0.4646822  1.5111755  0.5527631 -1.0723879
 #&gt; 
 #&gt; [[7]]
-#&gt; [1]  0.45787638  1.14375811 -1.30772262 -0.94254960 -0.09496125
+#&gt; [1]  0.2304117 -2.2972390  0.4316871  1.1767477  0.6914628
 #&gt; 
 #&gt; [[8]]
-#&gt; [1] -1.130047 -1.456208 -1.698718 -1.240827 -1.058299
+#&gt; [1]  0.3622710  0.8701438 -0.2814359 -1.8534360 -0.8488507
 #&gt; 
 #&gt; [[9]]
-#&gt; [1] -0.75437857 -0.58510694  0.55814208 -0.01900658 -0.16935602
+#&gt; [1]  0.69349271 -0.96736766  0.52797599  0.10199702 -0.07518364
 #&gt; 
 #&gt; [[10]]
-#&gt; [1]  1.295331 -1.426060  1.754104 -2.115575  1.009702
+#&gt; [1]  2.6077898  0.6606619  1.2645990  0.8940587 -0.4868604
 #&gt; </div><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>rerun</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1]  0.002596342  0.673652978  0.261856431  0.270511553 -0.566697593
-#&gt;  [6] -0.591663103  0.564532598  0.005869156 -0.064905322 -0.079221444</div></pre>
+  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1] -0.19280157 -0.57998589 -0.42661781 -0.01385766 -0.55296877  0.20201645
+#&gt;  [7] -0.32893975  0.63676725  0.23318209  0.33055247</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

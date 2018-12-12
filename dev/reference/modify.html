@@ -339,26 +339,26 @@ science.</p>
   <span class='fu'>modify_if</span>(<span class='st'>"x"</span>, ~ <span class='fu'><a href='list_modify.html'>update_list</a></span>(<span class='no'>.</span>, <span class='kw'>y</span> <span class='kw'>=</span> ~ <span class='no'>y</span> * <span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='transpose.html'>transpose</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='as_vector.html'>simplify_all</a></span>()</div><div class='output co'>#&gt; $x
-#&gt;   [1] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-#&gt;  [13] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#&gt;  [25]  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
-#&gt;  [37]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
-#&gt;  [49] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE
-#&gt;  [61]  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
-#&gt;  [73]  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE
-#&gt;  [85]  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE
-#&gt;  [97]  TRUE FALSE FALSE  TRUE
+#&gt;   [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+#&gt;  [13] FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+#&gt;  [25]  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE
+#&gt;  [37] FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+#&gt;  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+#&gt;  [61] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+#&gt;  [73] FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+#&gt;  [85]  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE
+#&gt;  [97] FALSE FALSE  TRUE  TRUE
 #&gt; 
 #&gt; $y
-#&gt;   [1]     1   200     3     4     5   600   700   800     9  1000  1100  1200
-#&gt;  [13]    13    14    15  1600    17    18    19    20    21    22    23    24
-#&gt;  [25]  2500    26    27  2800  2900  3000    31  3200  3300  3400    35  3600
-#&gt;  [37]  3700  3800  3900    40    41    42    43  4400    45    46  4700    48
-#&gt;  [49]    49    50  5100    52    53    54    55  5600    57  5800  5900    60
-#&gt;  [61]  6100  6200    63  6400    65  6600    67    68    69    70  7100    72
-#&gt;  [73]  7300    74    75  7600  7700  7800    79    80  8100    82  8300    84
-#&gt;  [85]  8500  8600    87  8800    89  9000  9100  9200    93  9400    95    96
-#&gt;  [97]  9700    98    99 10000
+#&gt;   [1]     1   200   300     4     5   600   700     8     9  1000    11  1200
+#&gt;  [13]    13  1400    15  1600  1700  1800  1900  2000  2100  2200    23    24
+#&gt;  [25]  2500    26  2700  2800    29  3000    31    32    33    34  3500  3600
+#&gt;  [37]    37  3800  3900  4000    41  4200  4300  4400    45    46    47    48
+#&gt;  [49]  4900  5000  5100  5200  5300  5400  5500    56    57  5800    59  6000
+#&gt;  [61]    61    62    63  6400  6500    66    67    68    69  7000    71    72
+#&gt;  [73]    73    74  7500    76  7700  7800    79    80  8100  8200  8300    84
+#&gt;  [85]  8500    86    87  8800    89  9000    91  9200  9300    94    95    96
+#&gt;  [97]    97    98  9900 10000
 #&gt; </div><div class='input'>
 <span class='co'># Use modify2() to map over two vectors and preserve the type of</span>
 <span class='co'># the first one:</span>
