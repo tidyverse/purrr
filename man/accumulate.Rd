@@ -96,18 +96,41 @@ paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% accumulate(paste2)
 letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
 
-# You can shortcircuit the accumulation and terminate it early by
-# returning a value wrapped in a done():
-paste3 <- function(x, y, sep = ".") {
-  out <- paste(x, y, sep = sep)
-  if (x == "b" || y == "b") {
-    done(out)
-  } else {
-    out
+
+# You can shortcircuit an accumulation and terminate it early by
+# returning a value wrapped in a done(). In the following example
+# we return early if the result-so-far, which is passed on the LHS,
+# meets a condition:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done(out))
   }
+  paste(out, input, sep = sep)
 }
-letters[1:4] \%>\% accumulate(paste3)
-letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste3)
+letters \%>\% accumulate(paste3)
+
+# Note how we get twice the same value in the accumulation. That's
+# because we have returned it twice. To prevent this, return an empty
+# done box to signal to accumulate() that it should terminate with the
+# value of the last iteration:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done())
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% accumulate(paste3)
+
+# Here the early return branch checks the incoming inputs passed on
+# the RHS:
+paste4 <- function(out, input, sep = ".") {
+  if (input == "f") {
+    return(done())
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% accumulate(paste4)
+
 
 # Simulating stochastic processes with drift
 \dontrun{

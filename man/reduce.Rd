@@ -110,18 +110,28 @@ x <- list(c(0, 1), c(2, 3), c(4, 5))
 y <- list(c(6, 7), c(8, 9))
 reduce2(x, y, paste)
 
+
 # You can shortcircuit a reduction and terminate it early by
-# returning a value wrapped in a done():
-paste3 <- function(x, y, sep = ".") {
-  out <- paste(x, y, sep = sep)
-  if (x == "b" || y == "b") {
-    done(out)
-  } else {
-    out
+# returning a value wrapped in a done(). In the following example
+# we return early if the result-so-far, which is passed on the LHS,
+# meets a condition:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done(out))
   }
+  paste(out, input, sep = sep)
 }
-letters[1:4] \%>\% reduce(paste3)
-letters[1:4] \%>\% reduce2(c("-", ".", "-"), paste3)
+letters \%>\% reduce(paste3)
+
+# Here the early return branch checks the incoming inputs passed on
+# the RHS:
+paste4 <- function(out, input, sep = ".") {
+  if (input == "j") {
+    return(done(out))
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% reduce(paste4)
 }
 \seealso{
 \code{\link[=accumulate]{accumulate()}} for a version that returns all intermediate
