@@ -19,8 +19,35 @@ test_that("can bump and reset count", {
 
 test_that("rates have print methods", {
   expect_known_output(file = test_path("test-rate-print.txt"), {
+    # Also checks infinite `max_times` prints properly
+    print(rate_delay(20, max_times = Inf))
+
+    cat_line()
     print(rate_backoff())
   })
+})
+
+test_that("rate_delay() delays", {
+  rate <- rate_delay(
+    pause = 0.02,
+    max_times = 3
+  )
+
+  msg <- catch_cnd(rate_sleep(rate, quiet = FALSE))
+  expect_true(inherits_all(msg, c("purrr_message_rate_retry", "message")))
+  expect_identical(msg$length, 0.02)
+
+  msg <- catch_cnd(rate_sleep(rate, quiet = FALSE))
+  expect_identical(msg$length, 0.02)
+
+  msg <- catch_cnd(rate_sleep(rate, quiet = FALSE))
+  expect_identical(msg$length, 0.02)
+
+  expect_error_cnd(
+    rate_sleep(rate),
+    "Request failed after 3 attempts",
+    "purrr_error_rate_excess"
+  )
 })
 
 test_that("rate_backoff() backs off", {

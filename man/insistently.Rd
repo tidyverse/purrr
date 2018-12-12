@@ -45,11 +45,16 @@ set.seed(3)
 try(insistent_risky_runif())
 
 
-# Create a custom rate object to modify the parameters of the delay rate:
+# You can also use other types of rate settings, like a delay rate
+# that waits for a fixed amount of time. Be aware that a delay rate
+# has an infinite amount of attempts by default:
+rate <- rate_delay(0.2, max_times = 3)
+insistent_risky_runif <- insistently(risky_runif, rate = rate, quiet = FALSE)
+try(insistent_risky_runif())
+
 
 # insistently() and possibly() are a useful combination
 rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
-insistent_risky_runif <- insistently(risky_runif, quiet = FALSE)
 possibly_insistent_risky_runif <- possibly(insistent_risky_runif, otherwise = -99)
 
 set.seed(1)

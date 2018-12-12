@@ -185,6 +185,9 @@ is_bool <- function(x) {
 is_number <- function(x) {
   is_integerish(x, n = 1, finite = TRUE)
 }
+is_quantity <- function(x) {
+  typeof(x) %in% c("integer", "double") && length(x) == 1 && !is.na(x)
+}
 
 friendly_type_of_element <- function(x) {
   if (is.object(x)) {
@@ -224,4 +227,4 @@ bold      <- function(x) if (has_crayon()) crayon::bold(x)      else x
 italic    <- function(x) if (has_crayon()) crayon::italic(x)    else x
 underline <- function(x) if (has_crayon()) crayon::underline(x) else x
 
-bullet <- function(...) paste0(bold(silver("* ")), sprintf(...))
+bullet <- function(...) paste0(bold(silver(" * ")), sprintf(...))

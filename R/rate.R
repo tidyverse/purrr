@@ -33,11 +33,16 @@
 #' try(insistent_risky_runif())
 #'
 #'
-#' # Create a custom rate object to modify the parameters of the delay rate:
+#' # You can also use other types of rate settings, like a delay rate
+#' # that waits for a fixed amount of time. Be aware that a delay rate
+#' # has an infinite amount of attempts by default:
+#' rate <- rate_delay(0.2, max_times = 3)
+#' insistent_risky_runif <- insistently(risky_runif, rate = rate, quiet = FALSE)
+#' try(insistent_risky_runif())
+#'
 #'
 #' # insistently() and possibly() are a useful combination
 #' rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
-#' insistent_risky_runif <- insistently(risky_runif, quiet = FALSE)
 #' possibly_insistent_risky_runif <- possibly(insistent_risky_runif, otherwise = -99)
 #'
 #' set.seed(1)
@@ -69,32 +74,61 @@ insistently <- function(f, rate = rate_backoff(), quiet = TRUE) {
 #' Create delaying rate settings
 #'
 #' These helpers create rate settings that you can pass to
-#' [insistently()]. You can use them in your own functions with
+#' [insistently()]. You can also use them in your own functions with
 #' [rate_sleep()].
 #'
 #' @param max_times Maximum number of requests to attempt.
+#' @param jitter Whether to introduce a random jitter in the waiting time.
+#'
+#' @seealso [rate_sleep()], [insistently()]
+#' @examples
+#' # A delay rate waits the same amount of time:
+#' rate <- rate_delay(0.02)
+#' rate_sleep(rate, quiet = FALSE)
+#' rate_sleep(rate, quiet = FALSE)
+#' rate_sleep(rate, quiet = FALSE)
+#'
+#' # A backoff rate waits exponentially longer each time, with random
+#' # jitter by default:
+#' rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
+#' rate_sleep(rate, quiet = FALSE)
+#' rate_sleep(rate, quiet = FALSE)
+#' rate_sleep(rate, quiet = FALSE)
+#' @name rate-helpers
+NULL
+
+#' @rdname rate-helpers
+#' @param pause Delay between attempts in seconds.
+#' @export
+rate_delay <- function(pause = 1,
+                       max_times = Inf) {
+  stopifnot(is_quantity(pause))
+  new_rate(
+    "purrr_rate_delay",
+    pause = pause,
+    max_times = max_times,
+    jitter = FALSE
+  )
+}
+
+#' @rdname rate-helpers
 #' @param pause_base,pause_cap `rate_backoff()` uses an exponential
 #'   back-off so that each request waits `pause_base * 2^i` seconds,
 #'   up to a maximum of `pause_cap` seconds.
 #' @param pause_min Minimum time to wait in the backoff; generally
 #'   only necessary if you need pauses less than one second (which may
 #'   not be kind to the server, use with caution!).
-#' @param jitter Whether to introduce a random jitter in the waiting time.
-#'
-#' @seealso [rate_sleep()], [insistently()]
-#' @examples
-#' # With a lower backoff base rate, the waiting time between requests
-#' # will be shorter:
-#' rate_backoff(pause_base = 0.5)
-#'
-#' # Pass a minimum waiting time of 5 seconds:
-#' rate_backoff(pause_min = 5)
 #' @export
 rate_backoff <- function(pause_base = 1,
                          pause_cap = 60,
                          pause_min = 1,
                          max_times = 3,
                          jitter = TRUE) {
+  stopifnot(
+    is_quantity(pause_base),
+    is_quantity(pause_cap),
+    is_quantity(pause_min)
+  )
   new_rate(
     "purrr_rate_backoff",
     pause_base = pause_base,
@@ -106,7 +140,10 @@ rate_backoff <- function(pause_base = 1,
 }
 
 new_rate <- function(.subclass, ..., jitter = TRUE, max_times = 3) {
-  stopifnot(is_bool(jitter))
+  stopifnot(
+    is_bool(jitter),
+    is_number(max_times) || identical(max_times, Inf)
+  )
 
   rate <- list(
     ...,
@@ -120,7 +157,7 @@ new_rate <- function(.subclass, ..., jitter = TRUE, max_times = 3) {
     class = c(.subclass, "purrr_rate")
   )
 }
-#' @rdname rate_backoff
+#' @rdname rate-helpers
 #' @param x An object to test.
 #' @export
 is_rate <- function(x) {
@@ -128,15 +165,32 @@ is_rate <- function(x) {
 }
 
 #' @export
-print.purrr_rate_backoff <- function(x, ...) {
-  cat_line(bold("<rate: backoff>"))
-  NextMethod()
+print.purrr_rate_delay <- function(x, ...) {
+  cat_line(bold("<rate: delay>"))
+  print_purrr_rate(x)
+
+  cat_line(bullet("`pause`: %.2f", x$pause))
+
+  invisible(x)
 }
 #' @export
-print.purrr_rate <- function(x, ...) {
+print.purrr_rate_backoff <- function(x, ...) {
+  cat_line(bold("<rate: backoff>"))
+  print_purrr_rate(x)
+
   cat_line(
-    bullet("`i`: %d", rate_count(x)),
-    bullet("`max_times`: %d", x$max_times)
+    bullet("`pause_base`: %d", x$pause_base),
+    bullet("`pause_cap`: %d", x$pause_cap),
+    bullet("`pause_min`: %d", x$pause_min)
+  )
+
+  invisible(x)
+}
+print_purrr_rate <- function(x, ...) {
+  cat_line(
+    # Using `%s` to convert `Inf` to character
+    sprintf("Attempts: %d/%s", rate_count(x), x$max_times),
+    "Fields:"
   )
   invisible(x)
 }
@@ -154,11 +208,6 @@ print.purrr_rate <- function(x, ...) {
 #'   the next request.
 #'
 #' @seealso [rate_backoff()], [insistently()]
-#' @examples
-#' rate <- rate_backoff(pause_base = 0.5, pause_min = 0.005)
-#' rate_sleep(rate, quiet = FALSE)
-#' rate_sleep(rate, quiet = FALSE)
-#' rate_sleep(rate, quiet = FALSE)
 #' @export
 rate_sleep <- function(rate, quiet = TRUE) {
   stopifnot(is_rate(rate))
@@ -186,11 +235,17 @@ rate_sleep.purrr_rate_backoff <- function(rate, quiet = TRUE) {
   }
 
   length <- max(rate$pause_min, pause_max)
+  rate_sleep_impl(length, quiet)
+}
+#' @export
+rate_sleep.purrr_rate_delay <- function(rate, quiet = TRUE) {
+  rate_sleep_impl(rate$pause, quiet)
+}
 
+rate_sleep_impl <- function(length, quiet) {
   if (!quiet) {
     inform_rate(length)
   }
-
   Sys.sleep(length)
 }
 

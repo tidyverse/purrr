@@ -23,12 +23,6 @@ it is allowed to sleep, \code{rate_sleep()} throws an error of class
 \details{
 Call \code{rate_reset()} to reset the internal rate counter to 0.
 }
-\examples{
-rate <- rate_backoff(pause_base = 0.5, pause_min = 0.005)
-rate_sleep(rate, quiet = FALSE)
-rate_sleep(rate, quiet = FALSE)
-rate_sleep(rate, quiet = FALSE)
-}
 \seealso{
 \code{\link[=rate_backoff]{rate_backoff()}}, \code{\link[=insistently]{insistently()}}
 }
