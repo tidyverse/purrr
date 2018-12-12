@@ -155,6 +155,11 @@
 
 ## Minor improvements and fixes
 
+* New `rate_backoff()` constructor creates a rate object. Pass it to
+  `rate_sleep()` to wait for a given amount of time with exponential
+  backoff (increasingly larger waiting times). Or pass it to
+  insistently to configure the waiting time between attempts.
+
 * `insistently(f)` modifies a function, `f`, so that it is repeatedly
   called until it succeeds (@richierocks, @ijlyttle).
 

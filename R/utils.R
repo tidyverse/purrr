@@ -117,6 +117,9 @@ is_names <- function(nms) {
 paste_line <- function(...) {
   paste(chr(...), collapse = "\n")
 }
+cat_line <- function(...) {
+  cat(paste0(paste_line(...), "\n"))
+}
 
 # From rlang
 friendly_type_of <- function(x, length = FALSE) {
@@ -179,6 +182,9 @@ paste_classes <- function(x) {
 is_bool <- function(x) {
   is_logical(x, n = 1) && !is.na(x)
 }
+is_number <- function(x) {
+  is_integerish(x, n = 1, finite = TRUE)
+}
 
 friendly_type_of_element <- function(x) {
   if (is.object(x)) {
@@ -202,3 +208,20 @@ friendly_type_of_element <- function(x) {
     abort("Expected a base vector type")
   )
 }
+
+
+has_crayon <- function() is_installed("crayon") && crayon::has_color()
+
+red       <- function(x) if (has_crayon()) crayon::red(x)       else x
+blue      <- function(x) if (has_crayon()) crayon::blue(x)      else x
+green     <- function(x) if (has_crayon()) crayon::green(x)     else x
+yellow    <- function(x) if (has_crayon()) crayon::yellow(x)    else x
+magenta   <- function(x) if (has_crayon()) crayon::magenta(x)   else x
+cyan      <- function(x) if (has_crayon()) crayon::cyan(x)      else x
+blurred   <- function(x) if (has_crayon()) crayon::blurred(x)   else x
+silver    <- function(x) if (has_crayon()) crayon::silver(x)    else x
+bold      <- function(x) if (has_crayon()) crayon::bold(x)      else x
+italic    <- function(x) if (has_crayon()) crayon::italic(x)    else x
+underline <- function(x) if (has_crayon()) crayon::underline(x) else x
+
+bullet <- function(...) paste0(bold(silver("* ")), sprintf(...))

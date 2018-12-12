@@ -1,0 +1,3 @@
+<rate: backoff>
+* `i`: 0
+* `max_times`: 3
