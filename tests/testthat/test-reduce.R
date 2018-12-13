@@ -6,17 +6,12 @@ test_that("empty input returns init or error", {
 })
 
 test_that("first/value value used as first value", {
-  x <- c(1, 1)
-
-  expect_equal(reduce(x, `+`), 2)
-  expect_equal(reduce(x, `+`, .init = 1), 3)
-  expect_equal(reduce_right(x, `+`), 2)
-  expect_equal(reduce_right(x, `+`, .init = 1), 3)
+  expect_equal(reduce(c(1, 1), `+`), 2)
+  expect_equal(reduce(c(1, 1), `+`, .init = 1), 3)
 })
 
 test_that("length 1 argument reduced with init", {
   expect_equal(reduce(1, `+`, .init = 1), 2)
-  expect_equal(reduce_right(1, `+`, .init = 1), 2)
 })
 
 test_that("direction of reduce determines how generated trees lean", {
@@ -116,6 +111,12 @@ test_that("reduce returns original input if it was length one", {
   expect_equal(reduce(x[1], paste), x[[1]])
 })
 
+test_that("can shortcircuit reduce2() with done()", {
+  x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
+  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  expect_identical(out, c("foo", "foo"))
+})
+
 # accumulate2 -------------------------------------------------------------
 
 test_that("basic accumulate2() works", {
@@ -151,15 +152,23 @@ test_that("right variants are retired", {
   expect_warning(accumulate_right(1:3, c), "soft-deprecated")
 })
 
+test_that("reduce_right still works", {
+  scoped_lifecycle_silence()
+  expect_equal(reduce_right(c(1, 1), `+`), 2)
+  expect_equal(reduce_right(c(1, 1), `+`, .init = 1), 3)
+  expect_equal(reduce_right(1, `+`, .init = 1), 2)
+})
+
 test_that("reduce_right equivalent to reversing input", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  scoped_lifecycle_silence()
   x <- list(c(2, 1), c(4, 3), c(6, 5))
   expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
   expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
 })
 
 test_that("reduce2_right still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  scoped_lifecycle_silence()
+
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
   x <- c("a", "b", "c")
   expect_equal(reduce2_right(x, c("-", "."), paste2), "c.b-a")
@@ -172,6 +181,8 @@ test_that("reduce2_right still works", {
 })
 
 test_that("accumulate_right still works", {
+  scoped_lifecycle_silence()
+
   tt <- c("a", "b", "c")
   expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
 
@@ -180,10 +191,4 @@ test_that("accumulate_right still works", {
 
   expect_identical(accumulate_right(0:1, c, .init = 2L), list(2:0, 2:1, 2L))
   expect_identical(accumulate_right(c(a = 0L, b = 1L), c, .init = 2L), list(b = 2:0, a = 2:1, .init = 2L))
-})
-
-test_that("can shortcircuit reduce2() with done()", {
-  x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
-  expect_identical(out, c("foo", "foo"))
 })

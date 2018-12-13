@@ -108,13 +108,13 @@ test_that("can pluck attributes", {
 })
 
 test_that("attr_getter() evaluates eagerly", {
-  getters <- list_len(2)
+  getters <- new_list(2)
   attrs <- c("foo", "bar")
   for (i in seq_along(attrs)) {
     getters[[i]] <- attr_getter(attrs[[i]])
   }
 
-  x <- set_attrs(list(), foo = "foo", bar = "bar")
+  x <- structure(list(), foo = "foo", bar = "bar")
   expect_identical(getters[[1]](x), "foo")
 })
 

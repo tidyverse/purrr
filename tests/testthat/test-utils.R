@@ -1,9 +1,5 @@
 context("utils")
 
-test_that("%@% is an infix attribute accessor", {
-  expect_identical(mtcars %@% "names", attr(mtcars, "names"))
-})
-
 test_that("rbernoulli is a special case of rbinom", {
   set.seed(1)
   x <- rbernoulli(10)
@@ -49,4 +45,11 @@ test_that("done() can be empty", {
   nonempty <- done(missing_arg())
   expect_false(is_done_box(nonempty, empty = TRUE))
   expect_true(is_done_box(nonempty, empty = FALSE))
+})
+
+# Lifecycle ---------------------------------------------------------------
+
+test_that("%@% is an infix attribute accessor", {
+  scoped_lifecycle_silence()
+  expect_identical(mtcars %@% "names", attr(mtcars, "names"))
 })

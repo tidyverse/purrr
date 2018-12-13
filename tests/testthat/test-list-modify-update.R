@@ -5,7 +5,7 @@ context("list-modify")
 test_that("named lists have values replaced by name", {
   expect_equal(list_modify(list(a = 1), b = 2), list(a = 1, b = 2))
   expect_equal(list_modify(list(a = 1), a = 2), list(a = 2))
-  expect_equal(list_modify(list(a = 1, b = 2), b = NULL), list(a = 1))
+  expect_equal(list_modify(list(a = 1, b = 2), b = zap()), list(a = 1))
 })
 
 test_that("unnamed lists are replaced by position", {
