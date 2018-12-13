@@ -180,14 +180,14 @@ value is absent (does not exist) or empty (has length 0).
 #&gt; {
 #&gt;     !pluck(x, "x", .default = NULL)
 #&gt; }
-#&gt; &lt;environment: 0x2344010&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
+#&gt; &lt;environment: 0x1a5f670&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; function (x) 
 #&gt; {
 #&gt;     !is.null(x = x)
 #&gt; }</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; {
 #&gt;     !.x &gt; 0
 #&gt; }
-#&gt; &lt;environment: 0x25c1030&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x24cc630&gt;</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div></pre>

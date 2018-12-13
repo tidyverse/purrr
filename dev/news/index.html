@@ -146,8 +146,12 @@
 <h2 class="hasAnchor">
 <a href="#breaking-change" class="anchor"></a>Breaking change</h2>
 <ul>
-<li>In <code><a href="../reference/reduce_right.html">reduce2_right()</a></code>, <code>.y</code> and <code>.f</code> are now correctly passed through internal <code>reduce2_impl()</code>, in keeping with the documentation and <code><a href="../reference/reduce_right.html">reduce_right()</a></code>. Previously, and incorrectly, <code>.y</code> and <code>.f</code> had their behavior reversed. If you inverted <code>.y</code> and <code>.f</code> to make it works, you should now revert back the order.</li>
-</ul>
+<li>
+<p><code><a href="../reference/modify.html">modify()</a></code> and variants are now wrapping <code>[[&lt;-</code> instead of <code>[&lt;-</code>. This change increases the genericity of these functions but might cause different behaviour in some cases.</p>
+<p>For instance, the <code>[[&lt;-</code> for data frames is stricter than the <code>[&lt;-</code> method and might throw errors instead of warnings. This is the case when assigning a longer vector than the number of rows. <code>[&lt;-</code> truncates the vector with a warning, <code>[[&lt;-</code> fails with an error (as is appropriate).</p>
+</li>
+<li>
+<p>In <code><a href="../reference/reduce_right.html">reduce2_right()</a></code>, <code>.y</code> and <code>.f</code> are now correctly passed through internal <code>reduce2_impl()</code>, in keeping with the documentation and <code><a href="../reference/reduce_right.html">reduce_right()</a></code>. Previously, and incorrectly, <code>.y</code> and <code>.f</code> had their behavior reversed. If you inverted <code>.y</code> and <code>.f</code> to make it works, you should now revert back the order.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">paste2 &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">sep =</span> <span class="st">"."</span>) <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(x, y, <span class="dt">sep =</span> sep)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">## with purrr &gt; 2.5</a>
@@ -156,11 +160,10 @@
 <a class="sourceLine" id="cb1-6" data-line-number="6">## with purrr &lt;= 2.5</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># error</span></a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw"><a href="../reference/reduce_right.html">reduce2_right</a></span>(<span class="dt">.x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">.y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-"</span>, <span class="st">"."</span>, <span class="st">"-"</span>), <span class="dt">.f =</span> paste2) <span class="co"># error</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># working </span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># working</span></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="../reference/reduce_right.html">reduce2_right</a></span>(<span class="dt">.x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">.y =</span> paste2, <span class="dt">.f =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-"</span>, <span class="st">"."</span>, <span class="st">"-"</span>)) <span class="co"># working</span></a></code></pre></div>
-<ul>
-<li>
-<code><a href="../reference/pluck.html">pluck()</a></code> no longer flattens lists of arguments. You can still do it manually with <code>!!!</code>. This breaking change is for consistency with other dots-collecting functions of the tidyverse.</li>
+</li>
+<li><p><code><a href="../reference/pluck.html">pluck()</a></code> no longer flattens lists of arguments. You can still do it manually with <code>!!!</code>. This breaking change is for consistency with other dots-collecting functions of the tidyverse.</p></li>
 </ul>
 </div>
 <div id="life-cycle" class="section level2">
