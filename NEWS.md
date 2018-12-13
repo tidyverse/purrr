@@ -2,23 +2,34 @@
 
 ## Breaking change
 
-* In `reduce2_right()`, `.y` and `.f` are now correctly passed through internal
-`reduce2_impl()`, in keeping with the documentation and `reduce_right()`.
-Previously, and incorrectly, `.y` and `.f` had their behavior reversed. If you
-inverted `.y` and `.f` to make it works, you should now revert back the order.
+* `modify()` and variants are now wrapping `[[<-` instead of
+  `[<-`. This change increases the genericity of these functions but
+  might cause different behaviour in some cases.
 
-```R
-paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+  For instance, the `[[<-` for data frames is stricter than the `[<-`
+  method and might throw errors instead of warnings. This is the case
+  when assigning a longer vector than the number of rows. `[<-`
+  truncates the vector with a warning, `[[<-` fails with an error (as
+  is appropriate).
 
-## with purrr > 2.5
-reduce2_right(letters[1:4], c("-", ".", "-"), paste2)
+* In `reduce2_right()`, `.y` and `.f` are now correctly passed through
+  internal `reduce2_impl()`, in keeping with the documentation and
+  `reduce_right()`.  Previously, and incorrectly, `.y` and `.f` had
+  their behavior reversed. If you inverted `.y` and `.f` to make it
+  works, you should now revert back the order.
 
-## with purrr <= 2.5
-# error
-reduce2_right(.x = letters[1:4], .y = c("-", ".", "-"), .f = paste2) # error
-# working 
-reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
-```
+  ```r
+  paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+
+  ## with purrr > 2.5
+  reduce2_right(letters[1:4], c("-", ".", "-"), paste2)
+
+  ## with purrr <= 2.5
+  # error
+  reduce2_right(.x = letters[1:4], .y = c("-", ".", "-"), .f = paste2) # error
+  # working
+  reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
+  ```
 
 * `pluck()` no longer flattens lists of arguments. You can still do it
   manually with `!!!`. This breaking change is for consistency with
