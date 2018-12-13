@@ -77,7 +77,7 @@ Version: 0.0.5.0
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
-      ‘magrittr’ ‘Rcpp’
+      ‘Rcpp’ ‘magrittr’
       All declared Imports should be used.
     ```
 
@@ -130,7 +130,11 @@ Version: 0.2.5
 ** package ‘anomalyDetection’ successfully unpacked and MD5 sums checked
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -mtune=core2 -O3 -c bottlenecks.cpp -o bottlenecks.o
+clang: clang: error: unsupported option '-fopenmp'error: 
+unsupported option '-fopenmp'
+make: *** [bottlenecks.o] Error 1
+make: *** Waiting for unfinished jobs....
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘anomalyDetection’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/anomalyDetection/new/anomalyDetection.Rcheck/anomalyDetection’
@@ -143,8 +147,12 @@ ERROR: compilation failed for package ‘anomalyDetection’
 ** package ‘anomalyDetection’ successfully unpacked and MD5 sums checked
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -mtune=core2 -O3 -c bottlenecks.cpp -o bottlenecks.o
+clang: error: unsupported option '-fopenmp'clang: error: unsupported option '-fopenmp'
+
 make: *** [RcppExports.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [bottlenecks.o] Error 1
 ERROR: compilation failed for package ‘anomalyDetection’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/anomalyDetection/old/anomalyDetection.Rcheck/anomalyDetection’
 
@@ -190,28 +198,28 @@ Version: 0.2.0
 
 # BayesMallows
 
-Version: 0.1.1
+Version: 0.2.0
 
 ## In both
 
 *   checking re-building of vignette outputs ... WARNING
     ```
     ...
-    
-    The following objects are masked from 'package:base':
-    
-        intersect, setdiff, setequal, union
-    
-    Computing Mallows model with 1 clusters.
-    Computing Mallows model with 2 clusters.
-    Computing Mallows model with 3 clusters.
+    Using exact partition function.
     Computing Mallows model with 4 clusters.
+    Using exact partition function.
     Computing Mallows model with 5 clusters.
+    Using exact partition function.
     Computing Mallows model with 6 clusters.
+    Using exact partition function.
     Computing Mallows model with 7 clusters.
+    Using exact partition function.
     Computing Mallows model with 8 clusters.
+    Using exact partition function.
     Computing Mallows model with 9 clusters.
+    Using exact partition function.
     Computing Mallows model with 10 clusters.
+    Using exact partition function.
     pandoc-citeproc: when expecting a product (:*:), encountered Object instead
     Error running filter /usr/local/bin/pandoc-citeproc:
     Filter returned error status 1
@@ -229,6 +237,17 @@ Version: 0.4.0
 *   checking Rd cross-references ... NOTE
     ```
     Package unavailable to check Rd xrefs: ‘bigrquery’
+    ```
+
+# binneR
+
+Version: 2.0.5
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘metaboData’
     ```
 
 # biomartr
@@ -293,18 +312,17 @@ Version: 3.1.2
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      Attributes: < names for target but not for current >
-      Attributes: < current is not list-like >
-      current is not list-like
-      
-      ── 2. Error: (unknown) (@test_qcew_api.R#8)  ───────────────────────────────────
+      > library(testthat)
+      > library(blscrapeR)
+      > 
+      > test_check("blscrapeR")
+      ── 1. Error: (unknown) (@test_qcew_api.R#8)  ───────────────────────────────────
       cannot open URL 'https://data.bls.gov/cew/data/api/2013/1/industry/5112.csv'
       1: download.file(url, temp, quiet = TRUE) at testthat/test_qcew_api.R:8
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 1 SKIPPED: 0 FAILED: 2
-      1. Failure: (unknown) (@test_bls_api.R#41) 
-      2. Error: (unknown) (@test_qcew_api.R#8) 
+      OK: 2 SKIPPED: 0 FAILED: 1
+      1. Error: (unknown) (@test_qcew_api.R#8) 
       
       Error: testthat unit tests failed
       Execution halted
@@ -362,38 +380,6 @@ Version: 0.4.7
 *   checking for GNU extensions in Makefiles ... NOTE
     ```
     GNU make is a SystemRequirements.
-    ```
-
-# broom
-
-Version: 0.5.0
-
-## In both
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    ...
-    
-        intersect, setdiff, setequal, union
-    
-    Joining, by = "class"
-    Joining, by = "class"
-    Loading required package: tidyr
-    
-    Attaching package: 'rsample'
-    
-    The following object is masked from 'package:tidyr':
-    
-        fill
-    
-    The following object is masked from 'package:broom':
-    
-        tidy
-    
-    Quitting from lines 66-76 (bootstrapping.Rmd) 
-    Error: processing vignette 'bootstrapping.Rmd' failed with diagnostics:
-    Evaluation error: no applicable method for 'tidy' applied to an object of class "nls".
-    Execution halted
     ```
 
 # broom.mixed
@@ -461,9 +447,6 @@ Version: 0.1.0
 
 ## In both
 
-*   R CMD check timed out
-    
-
 *   checking dependencies in R code ... NOTE
     ```
     Namespace in Imports field not imported from: ‘dbplyr’
@@ -495,9 +478,9 @@ Version: 0.1.7
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.2Mb
+      installed size is  5.4Mb
       sub-directories of 1Mb or more:
-        data   4.9Mb
+        data   5.1Mb
     ```
 
 *   checking data for non-ASCII characters ... NOTE
@@ -507,7 +490,7 @@ Version: 0.1.7
 
 # circumplex
 
-Version: 0.2.0
+Version: 0.2.1
 
 ## In both
 
@@ -526,7 +509,14 @@ Version: 0.2.0
 ** package ‘circumplex’ successfully unpacked and MD5 sums checked
 ** libs
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
+clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c circular.cpp -o circular.o
+clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c parameters.cpp -o parameters.o
+clang: error: unsupported option '-fopenmp'clang: error: unsupported option '-fopenmp'
+
 clang: error: unsupported option '-fopenmp'
+make: *** [parameters.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [circular.o] Error 1
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘circumplex’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/circumplex/new/circumplex.Rcheck/circumplex’
@@ -539,7 +529,14 @@ ERROR: compilation failed for package ‘circumplex’
 ** package ‘circumplex’ successfully unpacked and MD5 sums checked
 ** libs
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
+clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c circular.cpp -o circular.o
+clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c parameters.cpp -o parameters.o
+clang: errorclang: unsupported option '-fopenmp'
+: error: unsupported option '-fopenmp'clang: error
+: unsupported option '-fopenmp'
+make: *** [parameters.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [circular.o] Error 1
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘circumplex’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/circumplex/old/circumplex.Rcheck/circumplex’
@@ -559,44 +556,19 @@ Version: 1.5.1
     manual.
     ```
 
-# classyfireR
-
-Version: 0.1.1
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      3: eval_bare(get_expr(quo), get_env(quo))
-      4: dplyr::is.tbl(retrieve_classification(inchi_sub$query_id)) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/Rtmpq7PEDu/R.INSTALLc20544d1960d/rlang/R/eval.R:99
-      5: retrieve_classification(inchi_sub$query_id)
-      6: jsonlite::fromJSON(text_content) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/classyfireR/new/classyfireR.Rcheck/00_pkg_src/classyfireR/R/retrieve_classification.R:27
-      7: fromJSON_string(txt = txt, simplifyVector = simplifyVector, simplifyDataFrame = simplifyDataFrame, 
-             simplifyMatrix = simplifyMatrix, flatten = flatten, ...)
-      8: parseJSON(txt, bigint_as_char)
-      9: parse_string(txt, bigint_as_char)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 10 SKIPPED: 0 FAILED: 1
-      1. Error: submit-classification (@test-submission.R#16) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # clustermq
 
 Version: 0.8.5
 
 ## In both
 
+*   R CMD check timed out
+    
+
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
-      ‘infuser’ ‘purrr’ ‘R6’
+      ‘R6’ ‘infuser’ ‘purrr’
       All declared Imports should be used.
     ```
 
@@ -632,11 +604,11 @@ Version: 1.10.0
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.8Mb
+      installed size is  8.7Mb
       sub-directories of 1Mb or more:
+        R      3.0Mb
         doc    3.4Mb
         libs   1.3Mb
-        R      3.1Mb
     ```
 
 *   checking R code for possible problems ... NOTE
@@ -653,7 +625,7 @@ Version: 1.10.0
 
 # codebook
 
-Version: 0.7.4
+Version: 0.7.5
 
 ## In both
 
@@ -709,7 +681,14 @@ Version: 1.0.3
 ** package ‘colorednoise’ successfully unpacked and MD5 sums checked
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c noise.cpp -o noise.o
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c simulation.cpp -o simulation.o
+clang: error: unsupported option '-fopenmp'clang: error: clang: error: 
+unsupported option '-fopenmp'unsupported option '-fopenmp'
+
+make: *** [simulation.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [noise.o] Error 1
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘colorednoise’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/colorednoise/new/colorednoise.Rcheck/colorednoise’
@@ -722,7 +701,14 @@ ERROR: compilation failed for package ‘colorednoise’
 ** package ‘colorednoise’ successfully unpacked and MD5 sums checked
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c noise.cpp -o noise.o
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c simulation.cpp -o simulation.o
 clang: error: unsupported option '-fopenmp'
+clang: error: clang: error: unsupported option '-fopenmp'unsupported option '-fopenmp'
+
+make: *** [simulation.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [noise.o] Error 1
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘colorednoise’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/colorednoise/old/colorednoise.Rcheck/colorednoise’
@@ -731,6 +717,35 @@ ERROR: compilation failed for package ‘colorednoise’
 # congressbr
 
 Version: 0.1.3
+
+## Newly broken
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error in re-building vignettes:
+      ...
+    Loading required package: dplyr
+    
+    Attaching package: 'dplyr'
+    
+    The following objects are masked from 'package:stats':
+    
+        filter, lag
+    
+    The following objects are masked from 'package:base':
+    
+        intersect, setdiff, setequal, union
+    
+    Quitting from lines 61-62 (senate.Rmd) 
+    Error: processing vignette 'senate.Rmd' failed with diagnostics:
+    at_depth() is defunct, please use `map_depth()` instead
+    Execution halted
+    ```
+
+## Newly fixed
+
+*   R CMD check timed out
+    
 
 ## In both
 
@@ -866,6 +881,19 @@ Version: 0.2.3
       Note: found 500 marked UTF-8 strings
     ```
 
+# customsteps
+
+Version: 0.7.1.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘rlang’ ‘tidyselect’
+      All declared Imports should be used.
+    ```
+
 # d3r
 
 Version: 0.8.4
@@ -956,9 +984,9 @@ Version: 1.2.0
     ```
       installed size is  6.0Mb
       sub-directories of 1Mb or more:
+        R      1.2Mb
         data   1.4Mb
         doc    3.1Mb
-        R      1.2Mb
     ```
 
 # detrendr
@@ -972,36 +1000,6 @@ Version: 0.6.0
     GNU make is a SystemRequirements.
     ```
 
-# dexter
-
-Version: 0.8.3
-
-## In both
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
-    
-    The following objects are masked from 'package:base':
-    
-        intersect, setdiff, setequal, union
-    
-    Loading required package: RSQLite
-    pandoc-citeproc: when expecting a product (:*:), encountered Object instead
-    Error running filter /usr/local/bin/pandoc-citeproc:
-    Filter returned error status 1
-    Error: processing vignette 'dexter.Rmd' failed with diagnostics:
-    pandoc document conversion failed with error 83
-    Execution halted
-    ```
-
 # DiagrammeR
 
 Version: 1.0.0
@@ -1012,8 +1010,8 @@ Version: 1.0.0
     ```
       installed size is  6.9Mb
       sub-directories of 1Mb or more:
-        htmlwidgets   3.0Mb
         R             3.0Mb
+        htmlwidgets   3.0Mb
     ```
 
 *   checking data for non-ASCII characters ... NOTE
@@ -1210,13 +1208,10 @@ Version: 1.1.1
     
         norm
     
-    Warning: call dbDisconnect() when finished working with a connection
-    [WARNING] Could not parse YAML metadata at line 1 column 1: :3:79: Unexpected '
-      '
     pandoc-citeproc: when expecting a product (:*:), encountered Object instead
     Error running filter /usr/local/bin/pandoc-citeproc:
     Filter returned error status 1
-    Error: processing vignette 'emuDB.Rmd' failed with diagnostics:
+    Error: processing vignette 'EQL.Rmd' failed with diagnostics:
     pandoc document conversion failed with error 83
     Execution halted
     ```
@@ -1225,9 +1220,9 @@ Version: 1.1.1
     ```
       installed size is  7.1Mb
       sub-directories of 1Mb or more:
+        R         3.1Mb
         doc       1.2Mb
         extdata   1.5Mb
-        R         3.0Mb
     ```
 
 # epitable
@@ -1256,10 +1251,10 @@ Version: 3.9.4
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.2Mb
+      installed size is  7.1Mb
       sub-directories of 1Mb or more:
+        R     4.0Mb
         doc   1.7Mb
-        R     4.2Mb
     ```
 
 *   checking Rd cross-references ... NOTE
@@ -1317,38 +1312,6 @@ Version: 0.2.2
       All declared Imports should be used.
     ```
 
-# eyetrackingR
-
-Version: 0.1.7
-
-## In both
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    ...
-      ...
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning: Removed 37 rows containing non-finite values (stat_summary).
-    Warning in make_onset_data(response_window_clean, onset_time = 15500, fixation_window_length = 1,  :
-      Very few trials have a legitimate first AOI! Possible incorrect onset time?
-    Warning in max(SwitchAOI) :
-      no non-missing arguments to max; returning -Inf
-    Warning in min(SwitchAOI) :
-      no non-missing arguments to min; returning Inf
-    Warning in max(df_plot$.Time) :
-      no non-missing arguments to max; returning -Inf
-    Quitting from lines 91-93 (onset_contingent_analysis_vignette.Rmd) 
-    Error: processing vignette 'onset_contingent_analysis_vignette.Rmd' failed with diagnostics:
-    replacement has 1 row, data has 0
-    Execution halted
-    ```
-
 # filesstrings
 
 Version: 3.0.0
@@ -1366,8 +1329,75 @@ Version: 0.0.2
 
 ## In both
 
-*   R CMD check timed out
+*   checking examples ... ERROR
+    ```
+    ...
+    > region <- "North East region"
+    > top_names <- c("England", region)
+    > dfdom <- fingertips_data(DomainID = 1938132762) %>%
+    + group_by(IndicatorID) %>%
+    +         filter(((IndicatorID == 41001 &
+    +                          Timeperiod == "2014 - 16" &
+    +                          Sex == "Persons") |
+    +                         (IndicatorID == 91393 &
+    +                                  Timeperiod == "2011 - 15" &
+    +                                  Sex == "Female") |
+    +                         (IndicatorID == 92607 &
+    +                                  Timeperiod == "2016" &
+    +                                  Sex == "Not applicable")) &
+    +                        (AreaName %in% top_names |
+    +                                 ParentName == region)) %>%
+    +         ungroup() %>%
+    +         mutate(Value = round(Value, 1))
+    Error in mutate_impl(.data, dots) : 
+      Evaluation error: object 'Indicator Name' not found.
+    Calls: %>% ... as.data.frame -> mutate -> mutate.tbl_df -> mutate_impl
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      23: function_list[[k]](value)
+      24: mutate_at(., .vars = character_fields, as.character)
+      25: mutate(.tbl, !!!funs)
+      26: mutate.data.frame(.tbl, !!!funs)
+      27: as.data.frame(mutate(tbl_df(.data), ...))
+      28: mutate(tbl_df(.data), ...)
+      29: mutate.tbl_df(tbl_df(.data), ...)
+      30: mutate_impl(.data, dots)
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 40 SKIPPED: 0 FAILED: 1
+      1. Error: (unknown) (@test-examples.R#126) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error in re-building vignettes:
+      ...
     
+    Attaching package: 'dplyr'
+    
+    The following objects are masked from 'package:stats':
+    
+        filter, lag
+    
+    The following objects are masked from 'package:base':
+    
+        intersect, setdiff, setequal, union
+    
+    Warning: Removed 2 rows containing missing values (geom_point).
+    Quitting from lines 224-235 (quick_charts.Rmd) 
+    Error: processing vignette 'quick_charts.Rmd' failed with diagnostics:
+    Evaluation error: object 'Indicator Name' not found.
+    Execution halted
+    ```
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -1409,6 +1439,62 @@ Version: 1.0.0
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 1 marked UTF-8 string
+    ```
+
+# frite
+
+Version: 0.1.0
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘frite-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: is.output.same
+    > ### Title: Checks if functions will produce identical output
+    > ### Aliases: is.output.same
+    > 
+    > ### ** Examples
+    > 
+    > 
+    > is.output.same(purrr::map(1:3, cumsum), lapply) # TRUE
+    Error in exists("chain_parts", env) : invalid 'envir' argument
+    Calls: is.output.same -> find_call_piped -> exists
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+             reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
+         })(.x, .f, ..., .init, .dir)
+      7: reduce_impl(.x, .f, ..., .init = .init, .dir = .dir) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmphmLsVj/R.INSTALLe86e71f0f301/purrr/R/reduce.R:125
+      8: fn(out, elt, ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmphmLsVj/R.INSTALLe86e71f0f301/purrr/R/reduce.R:158
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 14 SKIPPED: 0 FAILED: 5
+      1. Error: is.output.same returns logical (@test-is-output-same.R#4) 
+      2. Error: is.output.same returns false for outputs of different class (@test-is-output-same.R#8) 
+      3. Error: find_call_piped return has type 'language' (@test_find_call_piped.R#4) 
+      4. Error: tictocify functions work when duped args are given (@test_tictocify.R#15) 
+      5. Error: tictocify produces equal output to original (@test_tictocify.R#20) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error in re-building vignettes:
+      ...
+    Quitting from lines 50-57 (getting-started.Rmd) 
+    Error: processing vignette 'getting-started.Rmd' failed with diagnostics:
+    invalid 'type' (character) of argument
+    Execution halted
     ```
 
 # ftDK
@@ -1527,7 +1613,7 @@ Version: 0.7.0
          0, 5, 0, 0, 1, 3, 0, 0, 1, 8, 1, 3, 0, 12, 2, 0, 0, 0, 1, 1, 0, 2, 0, 5, 3, 1, 2, 
          1, 0, 0, 1, 2, 0, 0, 11, 0, 0, 0, 1, 1, 1, 0, 12, 9, 5, 5, 19, 17, 20, 14, 14, 16, 
          18, 8, 10, 7, 6, 13, 25, 24, 3, 14, 17, 18, 19, 8, 9, 6, 5, 22, 7, 6, 8, 6, 21, 21, 
-         18, 20, 25, 22, 19, 21, 8, 7, 6, 5, 20, 22, 19, 23, 8, 2, 3, 2, 18, 14, 14, 15)) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpmrHkDH/R.INSTALL9c415c2c1d4e/purrr/R/modify.R:141
+         18, 20, 25, 22, 19, 21, 8, 7, 6, 5, 20, 22, 19, 23, 8, 2, 3, 2, 18, 14, 14, 15)) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmphmLsVj/R.INSTALLe86e71f0f301/purrr/R/modify.R:156
       11: stop(sprintf(ngettext(N, "replacement has %d row, data has %d", "replacement has %d rows, data has %d"), 
              N, nrows), domain = NA)
       
@@ -1579,8 +1665,8 @@ Version: 0.9.0
     ```
       installed size is  7.0Mb
       sub-directories of 1Mb or more:
-        doc   2.7Mb
         R     3.1Mb
+        doc   2.7Mb
     ```
 
 *   checking dependencies in R code ... NOTE
@@ -1658,47 +1744,22 @@ Version: 0.2
 
 # ggstatsplot
 
-Version: 0.0.6
+Version: 0.0.7
 
 ## In both
 
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    ...
-    The following objects are masked from 'package:base':
+*   R CMD check timed out
     
-        intersect, setdiff, setequal, union
-    
-    -------------------------------------------------------------------------
-    You have loaded plyr after dplyr - this is likely to cause problems.
-    If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
-    library(plyr); library(dplyr)
-    -------------------------------------------------------------------------
-    
-    Attaching package: 'plyr'
-    
-    The following objects are masked from 'package:dplyr':
-    
-        arrange, count, desc, failwith, id, mutate, rename, summarise,
-        summarize
-    
-    Quitting from lines 231-233 (combine_plots.Rmd) 
-    Error: processing vignette 'combine_plots.Rmd' failed with diagnostics:
-    there is no package called 'devtools'
-    Execution halted
-    ```
 
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘devtools’
     ```
 
-*   checking installed package size ... NOTE
+*   checking dependencies in R code ... NOTE
     ```
-      installed size is  5.4Mb
-      sub-directories of 1Mb or more:
-        doc    2.6Mb
-        help   2.3Mb
+    Namespace in Imports field not imported from: ‘glmmTMB’
+      All declared Imports should be used.
     ```
 
 # ggthemes
@@ -1718,27 +1779,38 @@ Version: 1.12.7
 
 ## In both
 
-*   checking re-building of vignette outputs ... WARNING
+*   checking whether package ‘ggtree’ can be installed ... ERROR
     ```
-    Error in re-building vignettes:
-      ...
-    pandoc-citeproc: when expecting a product (:*:), encountered Object instead
-    Error running filter /usr/local/bin/pandoc-citeproc:
-    Filter returned error status 1
-    Error: processing vignette 'ggtree.Rmd' failed with diagnostics:
-    pandoc document conversion failed with error 83
-    Execution halted
+    Installation failed.
+    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ggtree/new/ggtree.Rcheck/00install.out’ for details.
     ```
 
-*   checking installed package size ... NOTE
-    ```
-      installed size is 11.0Mb
-      sub-directories of 1Mb or more:
-        doc        4.9Mb
-        examples   3.7Mb
-        R          2.1Mb
-    ```
+## Installation
 
+### Devel
+
+```
+* installing *source* package ‘ggtree’ ...
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error : object ‘as_data_frame’ is not exported by 'namespace:tidytree'
+ERROR: lazy loading failed for package ‘ggtree’
+* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ggtree/new/ggtree.Rcheck/ggtree’
+
+```
+### CRAN
+
+```
+* installing *source* package ‘ggtree’ ...
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error : object ‘as_data_frame’ is not exported by 'namespace:tidytree'
+ERROR: lazy loading failed for package ‘ggtree’
+* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ggtree/old/ggtree.Rcheck/ggtree’
+
+```
 # gitlabr
 
 Version: 0.9
@@ -1748,6 +1820,34 @@ Version: 0.9
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘devtools’
+    ```
+
+# googledrive
+
+Version: 0.1.2
+
+## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      14: abort(msg) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmphmLsVj/R.INSTALLe86e71f0f301/purrr/R/as_mapper.R:137
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 239 SKIPPED: 61 FAILED: 8
+      1. Failure: drive_mkdir() catches invalid parameters (@test-drive_mkdir.R#119) 
+      2. Error: generate_request() basically works (@test-generate_request.R#5) 
+      3. Failure: generate_request() errors for unrecognized parameters (@test-generate_request.R#15) 
+      4. Error: generate_request() and build_request() can deliver same result (@test-generate_request.R#26) 
+      5. Error: generate_request() sends no API key if token is non-NULL (@test-generate_request.R#41) 
+      6. Error: generate_request() adds built-in API key when token = NULL (@test-generate_request.R#50) 
+      7. Error: generate_request() prefers explicit API key to built-in (@test-generate_request.R#59) 
+      8. Error: key argument overrides key in params of generate_request() (@test-generate_request.R#76) 
+      
+      Error: testthat unit tests failed
+      Execution halted
     ```
 
 # googlesheets
@@ -1847,6 +1947,8 @@ Version: 2.2.0
      ERROR
     Running the tests in ‘tests/testthat-5.R’ failed.
     Last 13 lines of output:
+      3: recipes::prep(recipe, training = d) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/healthcareai/new/healthcareai.Rcheck/00_pkg_src/healthcareai/R/prep_data.R:432
+      4: prep.recipe(recipe, training = d)
       5: bake(x$steps[[i]], new_data = training)
       6: bake.step_missing(x$steps[[i]], new_data = training)
       7: lapply(newdata[vars], function(x) {
@@ -1859,16 +1961,7 @@ Version: 2.2.0
       1. Error: the fundamentals work (@test-cran_only.R#4) 
       
       Error: testthat unit tests failed
-      In addition: Warning message:
-      replacing previous import 'recipes::tidy' by 'broom::tidy' when loading 'healthcareai' 
       Execution halted
-    ```
-
-*   checking whether package ‘healthcareai’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘recipes::tidy’ by ‘broom::tidy’ when loading ‘healthcareai’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/healthcareai/new/healthcareai.Rcheck/00install.out’ for details.
     ```
 
 # highcharter
@@ -1876,32 +1969,6 @@ Version: 2.2.0
 Version: 0.5.0
 
 ## In both
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    ...
-    downloaded 39 KB
-    
-    trying URL 'https://code.highcharts.com/mapdata/countries/us/us-all.js'
-    Content type 'application/x-javascript' length 66923 bytes (65 KB)
-    ==================================================
-    downloaded 65 KB
-    
-    trying URL 'https://code.highcharts.com/mapdata/countries/us/us-all.js'
-    Content type 'application/x-javascript' length 66923 bytes (65 KB)
-    ==================================================
-    downloaded 65 KB
-    
-    trying URL 'https://code.highcharts.com/mapdata/countries/fj/fj-all.js'
-    Content type 'application/x-javascript' length 20412 bytes (19 KB)
-    ==================================================
-    downloaded 19 KB
-    
-    Quitting from lines 110-132 (charting-maps.Rmd) 
-    Error: processing vignette 'charting-maps.Rmd' failed with diagnostics:
-    Please install xml2 package
-    Execution halted
-    ```
 
 *   checking installed package size ... NOTE
     ```
@@ -1926,11 +1993,6 @@ Version: 0.2.0
 # HURDAT
 
 Version: 0.2.0
-
-## Newly fixed
-
-*   R CMD check timed out
-    
 
 ## In both
 
@@ -1961,8 +2023,8 @@ Version: 0.41.1
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -Dcimg_r_mode -fpermissive -I/usr/X11R6/include -I/opt/X11/include  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/imager/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/checks.noindex/imager/new/imager.Rcheck/imager/include" -I"/private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmptY7nwW/sourceCpp-x86_64-apple-darwin15.6.0-1.0.0" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c file15bf61f0f3e9a.cpp -o file15bf61f0f3e9a.o
-      clang++ -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o sourceCpp_2.so file15bf61f0f3e9a.o -lX11 -L/usr/X11R6/lib -L/opt/X11/include -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+      clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -Dcimg_r_mode -fpermissive -I/usr/X11R6/include -I/opt/X11/include  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/imager/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/checks.noindex/imager/new/imager.Rcheck/imager/include" -I"/private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpstCOW6/sourceCpp-x86_64-apple-darwin15.6.0-1.0.0" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c file31ff41341ac7.cpp -o file31ff41341ac7.o
+      clang++ -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o sourceCpp_2.so file31ff41341ac7.o -lX11 -L/usr/X11R6/lib -L/opt/X11/include -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
       ── 1. Error: cpp_plugin (@test_cpp_api.R#14)  ──────────────────────────────────
       Error 1 occurred building shared library.
       1: cppFunction(foo.inline, depends = "imager") at testthat/test_cpp_api.R:14
@@ -2008,11 +2070,11 @@ Version: 0.1.1
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.7Mb
+      installed size is  5.2Mb
       sub-directories of 1Mb or more:
-        data   3.5Mb
-        help   1.1Mb
         R      1.0Mb
+        data   3.0Mb
+        help   1.1Mb
     ```
 
 # interplot
@@ -2146,10 +2208,10 @@ Version: 1.0.0
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  8.4Mb
+      installed size is  8.6Mb
       sub-directories of 1Mb or more:
-        data   5.8Mb
         R      2.1Mb
+        data   5.9Mb
     ```
 
 # listarrays
@@ -2217,27 +2279,22 @@ Version: 2.0.0
 
 *   checking re-building of vignette outputs ... WARNING
     ```
-    ...
+    Error in re-building vignettes:
+      ...
+    ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
+    ✔ ggplot2 3.1.0          ✔ purrr   0.2.5.9000
+    ✔ tibble  1.4.2          ✔ dplyr   0.7.8     
+    ✔ tidyr   0.8.2          ✔ stringr 1.3.1     
+    ✔ readr   1.3.0          ✔ forcats 0.3.0     
+    ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+    ✖ ggplot2::Position() masks BiocGenerics::Position(), base::Position()
     ✖ dplyr::combine()    masks Biobase::combine(), BiocGenerics::combine()
     ✖ dplyr::filter()     masks stats::filter()
     ✖ dplyr::lag()        masks stats::lag()
-    ✖ ggplot2::Position() masks BiocGenerics::Position(), base::Position()
-    ggtree v1.12.7  For help: https://guangchuangyu.github.io/software/ggtree
-    
-    If you use ggtree in published research, please cite:
-    Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. Methods in Ecology and Evolution 2017, 8(1):28-36, doi:10.1111/2041-210X.12628
-    
-    Attaching package: 'ggtree'
-    
-    The following object is masked from 'package:tidyr':
-    
-        expand
-    
-    Found more than one class "phylo" in cache; using the first, from namespace 'metagenomeFeatures'
-    Also defined by 'tidytree'
-    Quitting from lines 132-134 (database-explore.Rmd) 
+    Quitting from lines 106-120 (database-explore.Rmd) 
     Error: processing vignette 'database-explore.Rmd' failed with diagnostics:
-    there is no package called 'devtools'
+    package or namespace load failed for 'ggtree':
+     object 'as_data_frame' is not exported by 'namespace:tidytree'
     Execution halted
     ```
 
@@ -2264,7 +2321,7 @@ Version: 2.0.0
     get_gg13.8_85MgDb: no visible binding for global variable ‘metadata’
       (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/metagenomeFeatures/new/metagenomeFeatures.Rcheck/00_pkg_src/metagenomeFeatures/R/gg13.8_85MgDb.R:23-25)
     Undefined global functions or variables:
-      . identifier Keys metadata
+      . Keys identifier metadata
     ```
 
 # MetamapsDB
@@ -2285,9 +2342,6 @@ Version: 0.0.2
 Version: 0.1.2
 
 ## In both
-
-*   R CMD check timed out
-    
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -2345,8 +2399,8 @@ Version: 2.13
     ```
       installed size is  8.5Mb
       sub-directories of 1Mb or more:
-        data   2.3Mb
         R      5.1Mb
+        data   2.3Mb
     ```
 
 *   checking dependencies in R code ... NOTE
@@ -2536,18 +2590,18 @@ Version: 0.5.0
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-             test_error <<- e
          }, "object 'boxes' not found", quote(eval(code, test_env))) at testthat/test_phenomena.R:30
       2: eval(code, test_env)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 10 SKIPPED: 35 FAILED: 6
+      OK: 9 SKIPPED: 35 FAILED: 7
       1. Error: osem_box_to_archive_name works for one box (@test_archive.R#23) 
       2. Error: osem_box_to_archive_name works for multiple boxes (@test_archive.R#29) 
       3. Error: osem_measurements_archive works for one box (@test_archive.R#41) 
       4. Error: osem_measurements_archive fails for multiple boxes (@test_archive.R#47) 
       5. Error: summary.sensebox outputs all metrics for a single box (@test_box.R#42) 
-      6. Error: phenomena from a not sensebox data.frame returns error (@test_phenomena.R#30) 
+      6. Failure: data.frame can be converted to measurements data.frame (@test_measurements.R#128) 
+      7. Error: phenomena from a not sensebox data.frame returns error (@test_phenomena.R#30) 
       
       Error: testthat unit tests failed
       Execution halted
@@ -2676,7 +2730,7 @@ Version: 0.0.1
       14: abort(paste0(...))
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 455 SKIPPED: 77 FAILED: 1
+      OK: 453 SKIPPED: 77 FAILED: 1
       1. Error: recipe parameters (@test_varying.R#99) 
       
       Error: testthat unit tests failed
@@ -2717,7 +2771,7 @@ Version: 18.4.17
 
 # pkgdown
 
-Version: 1.2.0
+Version: 1.3.0
 
 ## In both
 
@@ -2735,7 +2789,7 @@ Version: 1.2.0
       Lengths differ: 5 is not 6
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 285 SKIPPED: 9 FAILED: 1
+      OK: 281 SKIPPED: 9 FAILED: 1
       1. Failure: intermediate files cleaned up automatically (@test-build_home.R#22) 
       
       Error: testthat unit tests failed
@@ -2792,10 +2846,38 @@ Version: 4.8.0
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  7.0Mb
+      installed size is  7.1Mb
       sub-directories of 1Mb or more:
-        htmlwidgets   3.1Mb
         R             2.3Mb
+        htmlwidgets   3.1Mb
+    ```
+
+# pmatch
+
+Version: 0.1.4
+
+## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      36: callbacks$call(expr, params = params, topdown = topdown, wflags = wflags, ...)
+      37: next_cb(expr, env = env, params = params, wflags = wflags, ...)
+      38: next_cb(expr, env = env, params = params, wflags = wflags, ...)
+      39: next_cb(expr, env = env, params = params, wflags = wflags, ...)
+      40: fn(expr, next_cb = next_cb, ...)
+      41: rlang::call_name(expr)
+      42: abort_call_input_type("call") at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/Rtmp89aLxK/R.INSTALLe8197c354434/rlang/R/call.R:707
+      43: abort(sprintf("`%s` must be a quoted call", arg)) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/Rtmp89aLxK/R.INSTALLe8197c354434/rlang/R/call.R:584
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 165 SKIPPED: 0 FAILED: 1
+      1. Error: we can translate a function that call cases into one that doesn't (@test-transforms.R#34) 
+      
+      Error: testthat unit tests failed
+      Execution halted
     ```
 
 # PopED
@@ -2821,13 +2903,13 @@ Version: 0.1.0
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      17: .f(.x[[i]], ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpmrHkDH/R.INSTALL9c415c2c1d4e/purrr/R/map.R:118
+      17: .f(.x[[i]], ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmphmLsVj/R.INSTALLe86e71f0f301/purrr/R/map.R:134
       18: readr::write_csv(this, write_to, append = TRUE, col_names = FALSE) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/postal/new/postal.Rcheck/00_pkg_src/postal/R/fetch_zones_all.R:57
       19: write_delim(x, path, delim = ",", na = na, append = append, col_names = col_names, 
-             quote_escape = quote_escape)
+             quote_escape = quote_escape) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpEGCpJR/R.INSTALLec16439bbe3e/readr/R/write.R:86
       20: stream_delim(x, path, delim = delim, col_names = col_names, append = append, na = na, 
-             quote_escape = quote_escape)
-      21: open(path, "ab")
+             quote_escape = quote_escape) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpEGCpJR/R.INSTALLec16439bbe3e/readr/R/write.R:76
+      21: open(path, "ab") at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpEGCpJR/R.INSTALLec16439bbe3e/readr/R/write.R:213
       22: open.connection(path, "ab")
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
@@ -2867,15 +2949,26 @@ Version: 2.2.1
 
 ## In both
 
-*   checking re-building of vignette outputs ... WARNING
+*   checking whether the package can be loaded ... ERROR
     ```
-    Error in re-building vignettes:
-      ...
-    pandoc-citeproc: when expecting a product (:*:), encountered Object instead
-    Error running filter /usr/local/bin/pandoc-citeproc:
-    Filter returned error status 1
-    Error: processing vignette 'overview.Rmd' failed with diagnostics:
-    pandoc document conversion failed with error 83
+    Loading this package had a fatal error status code 1
+    Loading log:
+    -----------------------------------------------------  psychmeta version 2.2.1  --
+    
+    Please report any bugs to github.com/psychmeta/psychmeta/issues
+    or issues@psychmeta.com
+    
+    We work hard to produce these open-source tools for the R community, 
+    please cite psychmeta when you use it in your research: 
+      Dahlke, J. A., & Wiernik, B. M. (2018). psychmeta: An R package for 
+         psychometric meta-analysis. Applied Psychological Measurement. 
+         Advance online publication. https://doi.org/10.1177/0146621618795933
+    
+    Find info about psychmeta on the web at psychmeta.com and twitter.com/psychmetaR
+    Error: package or namespace load failed for ‘psychmeta’:
+     .onAttach failed in attachNamespace() for 'psychmeta', details:
+      call: open.connection(x, "rb")
+      error: HTTP error 502.
     Execution halted
     ```
 
@@ -2883,7 +2976,7 @@ Version: 2.2.1
     ```
       installed size is  8.8Mb
       sub-directories of 1Mb or more:
-        R   7.1Mb
+        R   7.0Mb
     ```
 
 # psycho
@@ -2961,9 +3054,9 @@ Version: 1.3.14
     ```
       installed size is  6.5Mb
       sub-directories of 1Mb or more:
+        R      3.0Mb
         data   1.3Mb
         libs   1.3Mb
-        R      3.0Mb
     ```
 
 *   checking data for non-ASCII characters ... NOTE
@@ -2980,7 +3073,7 @@ Version: 0.1.0
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
-      ‘gridExtra’ ‘knitr’ ‘MCMCpack’
+      ‘MCMCpack’ ‘gridExtra’ ‘knitr’
       All declared Imports should be used.
     ```
 
@@ -2992,11 +3085,11 @@ Version: 1.3-7
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is  6.5Mb
       sub-directories of 1Mb or more:
+        R      2.1Mb
         doc    1.9Mb
         libs   2.2Mb
-        R      1.1Mb
     ```
 
 *   checking for GNU extensions in Makefiles ... NOTE
@@ -3017,7 +3110,7 @@ Version: 1.0.2
 
 # Rdrools
 
-Version: 1.1.0
+Version: 1.1.1
 
 ## In both
 
@@ -3114,7 +3207,7 @@ Version: 0.1.4
       21: value[[3L]](cond)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 1121 SKIPPED: 9 FAILED: 1
+      OK: 1118 SKIPPED: 9 FAILED: 1
       1. Error: printing (@test_ica.R#127) 
       
       Error: testthat unit tests failed
@@ -3172,7 +3265,7 @@ Version: 0.1.0
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
-      ‘nnet’ ‘purrr’ ‘R6’
+      ‘R6’ ‘nnet’ ‘purrr’
       All declared Imports should be used.
     ```
 
@@ -3185,37 +3278,6 @@ Version: 0.1.0
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 8 marked UTF-8 strings
-    ```
-
-# reReg
-
-Version: 1.1.6
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘reReg-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: plot.reReg
-    > ### Title: Plotting Baseline Cumulative Rate Function and Baseline
-    > ###   Cumulative Hazard Function
-    > ### Aliases: plot.reReg
-    > ### Keywords: Plots
-    > 
-    > ### ** Examples
-    > 
-    > data(readmission, package = "frailtypack")
-    Error in find.package(package, lib.loc, verbose = verbose) : 
-      there is no package called ‘frailtypack’
-    Calls: data -> find.package
-    Execution halted
-    ```
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘frailtypack’
     ```
 
 # rfbCNPJ
@@ -3235,9 +3297,6 @@ Version: 3.0.0
 
 ## In both
 
-*   R CMD check timed out
-    
-
 *   checking package dependencies ... NOTE
     ```
     Package suggested but not available for checking: ‘devtools’
@@ -3256,27 +3315,16 @@ Version: 1.1.0
 
 *   checking re-building of vignette outputs ... WARNING
     ```
-    ...
-      failed to tidy R code in chunk <unnamed-chunk-11>
-    reason: Error in loadNamespace(name) : there is no package called 'formatR'
-    
+    Error in re-building vignettes:
+      ...
     Warning in block_exec(params) :
-      failed to tidy R code in chunk <unnamed-chunk-12>
-    reason: Error in loadNamespace(name) : there is no package called 'formatR'
+      Failed to tidy R code in chunk 'unnamed-chunk-1'. Reason:
+    Error in loadNamespace(name) : there is no package called 'formatR'
     
-    Warning in block_exec(params) :
-      failed to tidy R code in chunk <unnamed-chunk-13>
-    reason: Error in loadNamespace(name) : there is no package called 'formatR'
-    
-    Warning in block_exec(params) :
-      failed to tidy R code in chunk <unnamed-chunk-14>
-    reason: Error in loadNamespace(name) : there is no package called 'formatR'
-    
-    pandoc-citeproc: when expecting a product (:*:), encountered Object instead
-    Error running filter /usr/local/bin/pandoc-citeproc:
-    Filter returned error status 1
+    Quitting from lines 40-46 (introduction.Rmd) 
     Error: processing vignette 'introduction.Rmd' failed with diagnostics:
-    pandoc document conversion failed with error 83
+    package or namespace load failed for 'ggtree':
+     object 'as_data_frame' is not exported by 'namespace:tidytree'
     Execution halted
     ```
 
@@ -3314,20 +3362,41 @@ Version: 0.0.0.2
     Missing or unexported object: ‘base::shell.exec’
     ```
 
-# roadoi
+# rnoaa
 
-Version: 0.5.2
+Version: 0.8.0
+
+## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      3: tibble::as_data_frame(stats::setNames(cbind(expand.grid(longs, lats), res), c("lon", 
+             "lat", "precip"))) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/rnoaa/new/rnoaa.Rcheck/00_pkg_src/rnoaa/R/arc2.R:78
+      4: stats::setNames(cbind(expand.grid(longs, lats), res), c("lon", "lat", "precip")) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/rnoaa/new/rnoaa.Rcheck/00_pkg_src/rnoaa/R/arc2.R:78
+      5: cbind(expand.grid(longs, lats), res) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/rnoaa/new/rnoaa.Rcheck/00_pkg_src/rnoaa/R/arc2.R:78
+      6: cbind(deparse.level, ...)
+      7: data.frame(..., check.names = FALSE)
+      8: stop(gettextf("arguments imply differing number of rows: %s", paste(unique(nrows), 
+             collapse = ", ")), domain = NA)
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 93 SKIPPED: 50 FAILED: 1
+      1. Error: arc2 returns the expected output (@test-arc2.R#4) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
 
 ## In both
 
-*   checking re-building of vignette outputs ... WARNING
+*   checking installed package size ... NOTE
     ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 148-155 (intro.Rmd) 
-    Error: processing vignette 'intro.Rmd' failed with diagnostics:
-    Timeout was reached: Operation timed out after 10000 milliseconds with 0 out of 0 bytes received
-    Execution halted
+      installed size is  5.0Mb
+      sub-directories of 1Mb or more:
+        vign   1.2Mb
     ```
 
 # roxygen2
@@ -3544,6 +3613,48 @@ ERROR: lazy loading failed for package ‘SCORPIUS’
 
 Version: 1.0.0
 
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘scriptName-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: current_filename
+    > ### Title: Determine a script's filename from within the script itself
+    > ### Aliases: current_filename current_source_filename current_cli_filename
+    > 
+    > ### ** Examples
+    > 
+    > # Put this in example.R and try running source("example.R")
+    > # and `Rscript example.R`
+    > filename <- current_filename()
+    Error: Predicate functions must return a single logical `TRUE` or `FALSE`, not a logical vector of length 0
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      ── 6. Failure: functions work under Rscript (@test.all.R#45)  ──────────────────
+      run_rscript("current_source_filename.R") not identical to " NULL".
+      Lengths differ: 0 is not 1
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 12 SKIPPED: 0 FAILED: 6
+      1. Failure: functions work under R --file (@test.all.R#22) 
+      2. Failure: functions work under R --file (@test.all.R#23) 
+      3. Failure: functions work under R -f (@test.all.R#33) 
+      4. Failure: functions work under R -f (@test.all.R#34) 
+      5. Failure: functions work under Rscript (@test.all.R#44) 
+      6. Failure: functions work under Rscript (@test.all.R#45) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
 ## In both
 
 *   checking package dependencies ... NOTE
@@ -3631,6 +3742,81 @@ Version: 0.1.2
       Note: found 28 marked UTF-8 strings
     ```
 
+# simTool
+
+Version: 1.1.0
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    ...
+    > presever_rownames = function(mat)
+    + {
+    +   rn = rownames(mat)
+    +   ret = tibble::as_tibble(mat)
+    +   ret$term = rn
+    +   ret
+    + }
+    > 
+    > eg <- eval_tibbles(
+    +   expand_tibble(fun="regData", n=5L, SD=1:2),
+    +   expand_tibble(proc="lm", formula=c("y~x", "y~I(x^2)")),
+    +   post_analyze = purrr::compose(presever_rownames, coef, summary),
+    +   #post_analyze = broom::tidy, # is a nice out of the box alternative
+    +   summary_fun = list(mean = mean, sd = sd),
+    +   group_for_summary = "term",
+    +   replications=3
+    + )
+    Error in bind_rows_(x, .id) : 
+      Argument 1 must be a data frame or a named atomic vector, not a summary.lm
+    Calls: eval_tibbles ... bind_or_combine -> do.call -> bind_rows -> bind_rows_
+    Execution halted
+    ```
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      [1] "Estimated replications per hour:  3016339"
+      [1] "Estimated replications per hour:  368852"
+      [1] "Estimated replications per hour:  3440382"
+      [1] "Estimated replications per hour:  373471"
+      ── 1. Failure: Post analyze function works (@test_eval_tibbles.R#239)  ─────────
+      eg$simulation not identical to `expected_df`.
+      Cols in y but not x: `max`, `min`. 
+      Cols in x but not y: `results`. 
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 56 SKIPPED: 0 FAILED: 1
+      1. Failure: Post analyze function works (@test_eval_tibbles.R#239) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error in re-building vignettes:
+      ...
+    
+    Attaching package: 'dplyr'
+    
+    The following objects are masked from 'package:stats':
+    
+        filter, lag
+    
+    The following objects are masked from 'package:base':
+    
+        intersect, setdiff, setequal, union
+    
+    Quitting from lines 244-252 (simTool.Rmd) 
+    Error: processing vignette 'simTool.Rmd' failed with diagnostics:
+    Argument 1 must be a data frame or a named atomic vector, not a summary.lm
+    Execution halted
+    ```
+
 # SingleCaseES
 
 Version: 0.4.0
@@ -3660,9 +3846,37 @@ Version: 0.17.2
     Package unavailable to check Rd xrefs: ‘arm’
     ```
 
+# skimr
+
+Version: 1.0.3
+
+## Newly broken
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      6: (function (..., na.rm = FALSE) 
+         .Primitive("min")(..., na.rm))(na.rm = ~TRUE, ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/Rtmp89aLxK/R.INSTALLe8197c354434/rlang/R/eval-tidy.R:153
+      7: Summary.difftime(structure(c(-30, NA, -10, 0, 10, 20, 30, 40, 50, 60), class = "difftime", units = "secs"), 
+             TRUE, na.rm = FALSE)
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 421 SKIPPED: 2 FAILED: 5
+      1. Failure: skim_v returns expected response for Date vectors (@test-skim_v.R#162) 
+      2. Failure: skim_v handles objects with multiple classes (@test-skim_v.R#180) 
+      3. Failure: skim_v returns expected response for ts vectors (@test-skim_v.R#233) 
+      4. Failure: skim_v returns expected response for POSIXct vectors (@test-skim_v.R#252) 
+      5. Error: skim_v returns expected response for difftime vectors (@test-skim_v.R#318) 
+      
+      Error: testthat unit tests failed
+      Execution halted
+    ```
+
 # sparklyr
 
-Version: 0.9.2
+Version: 0.9.3
 
 ## In both
 
@@ -3670,8 +3884,8 @@ Version: 0.9.2
     ```
       installed size is  7.1Mb
       sub-directories of 1Mb or more:
-        java   1.9Mb
         R      4.1Mb
+        java   1.9Mb
     ```
 
 # sperrorest
@@ -3754,6 +3968,19 @@ Version: 0.5.8
     Package suggested but not available for checking: ‘STRaitRazoR’
     ```
 
+# suropt
+
+Version: 0.1.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘DiceOptim’ ‘GPareto’ ‘rgenoud’ ‘tidyr’
+      All declared Imports should be used.
+    ```
+
 # survivalAnalysis
 
 Version: 0.1.0
@@ -3777,8 +4004,8 @@ Version: 0.4.3
     ```
       installed size is  6.4Mb
       sub-directories of 1Mb or more:
-        doc   5.1Mb
         R     1.0Mb
+        doc   5.1Mb
     ```
 
 # sweep
@@ -3812,6 +4039,18 @@ Version: 1.1.0
     Package unavailable to check Rd xrefs: ‘parsedate’
     ```
 
+# textfeatures
+
+Version: 0.3.0
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘utils’
+      All declared Imports should be used.
+    ```
+
 # tidybayes
 
 Version: 1.0.3
@@ -3833,7 +4072,7 @@ Version: 1.0.3
              call. = FALSE)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 263 SKIPPED: 2 FAILED: 1
+      OK: 260 SKIPPED: 2 FAILED: 1
       1. Error: tidy_draws works with runjags (@test.tidy_draws.R#87) 
       
       Error: testthat unit tests failed
@@ -3856,7 +4095,7 @@ Version: 0.2.1
       14: tidyselect::vars_select(names(reduced_tab), !!!quos(...)) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/tidyinftheo/new/tidyinftheo.Rcheck/00_pkg_src/tidyinftheo/R/inftheo.R:26
       15: vars_select_eval(.vars, quos)
       16: map_lgl(quos, quo_is_helper)
-      17: .f(.x[[i]], ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpmrHkDH/R.INSTALL9c415c2c1d4e/purrr/R/map.R:148
+      17: .f(.x[[i]], ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmphmLsVj/R.INSTALLe86e71f0f301/purrr/R/map.R:170
       18: extract_expr(quo)
       19: is_call(expr, paren_sym)
       
@@ -3900,15 +4139,14 @@ Version: 0.2.3
 
 # tidymodels
 
-Version: 0.0.1
+Version: 0.0.2
 
 ## In both
 
 *   checking dependencies in R code ... NOTE
     ```
     Namespaces in Imports field not imported from:
-      ‘broom’ ‘ggplot2’ ‘infer’ ‘pillar’ ‘recipes’ ‘rsample’
-      ‘tidyposterior’ ‘tidypredict’ ‘tidytext’ ‘yardstick’
+      ‘broom’ ‘dials’ ‘parsnip’
       All declared Imports should be used.
     ```
 
@@ -4041,7 +4279,7 @@ Version: 0.1.1
 
 # totalcensus
 
-Version: 0.5.0
+Version: 0.5.1
 
 ## In both
 
@@ -4071,9 +4309,9 @@ Version: 3.8.5
     ```
       installed size is 15.1Mb
       sub-directories of 1Mb or more:
+        R              2.1Mb
         data           1.9Mb
         example_data   8.0Mb
-        R              2.1Mb
         test_data      1.9Mb
     ```
 
@@ -4106,7 +4344,7 @@ Version: 3.8.5
 
 # tsibble
 
-Version: 0.5.3
+Version: 0.6.2
 
 ## In both
 
@@ -4171,6 +4409,18 @@ Version: 1.1.0
 
 Version: 0.1.2
 
+## Newly broken
+
+*   checking for missing documentation entries ... WARNING
+    ```
+    Undocumented code objects:
+      ‘vld_done_box’
+    All user-level objects in a package should have documentation
+    entries.
+    See chapter ‘Writing R documentation files’ in the ‘Writing R
+    Extensions’ manual.
+    ```
+
 ## In both
 
 *   checking dependencies in R code ... NOTE
@@ -4223,31 +4473,9 @@ Version: 0.1.0
 
 # visdat
 
-Version: 0.5.1
+Version: 0.5.2
 
 ## In both
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      ── 6. Failure: vis_guess creates the right plot (@test-vis-guess.R#13)  ────────
-      Figures don't match: vis-guess-default.svg
-      
-      
-      nrows =  1000 ncols =  1000══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 28 SKIPPED: 6 FAILED: 6
-      1. Failure: guess_element correctly identifies individual elements (@test-guess-type.R#9) 
-      2. Failure: guess_element correctly identifies individual elements (@test-guess-type.R#10) 
-      3. Failure: vis_guess creates the right plot (@test-vis-guess.R#10) 
-      4. Failure: vis_guess creates the right plot (@test-vis-guess.R#11) 
-      5. Failure: vis_guess creates the right plot (@test-vis-guess.R#12) 
-      6. Failure: vis_guess creates the right plot (@test-vis-guess.R#13) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -4303,9 +4531,9 @@ Version: 0.2.0
 Checking to see if libmagic is available...
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
+clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c wand.cpp -o wand.o
 clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
 clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
-clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c wand.cpp -o wand.o
 clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
 clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
 clang++ -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o wand.so RcppExports.o wand.o -L/usr/local/lib -L/opt/local/lib -L/usr/lib -lmagic -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
@@ -4324,10 +4552,10 @@ ERROR: compilation failed for package ‘wand’
 Checking to see if libmagic is available...
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
-clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c wand.cpp -o wand.o
 clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
 clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
 clang++ -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o wand.so RcppExports.o wand.o -L/usr/local/lib -L/opt/local/lib -L/usr/lib -lmagic -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
 ld: library not found for -lmagic
@@ -4457,6 +4685,34 @@ Version: 0.3.0
     ```
     Namespace in Imports field not imported from: ‘dbplyr’
       All declared Imports should be used.
+    ```
+
+# xpose
+
+Version: 0.4.3
+
+## In both
+
+*   checking tests ...
+    ```
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+          filter
+      
+      > 
+      > test_check("xpose")
+      ── 1. Failure: dot arguments are properly passed to readr (@test-read_nm_tables.
+      nrow(...) not equal to 3.
+      1/1 mismatches
+      [1] 2 - 3 == -1
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 523 SKIPPED: 6 FAILED: 1
+      1. Failure: dot arguments are properly passed to readr (@test-read_nm_tables.R#57) 
+      
+      Error: testthat unit tests failed
+      Execution halted
     ```
 
 # zeligverse
