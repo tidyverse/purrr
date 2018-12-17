@@ -170,7 +170,9 @@ and has an assignment variant.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>) <span class='kw'>%@%</span> <span class='st'>"levels"</span></div><div class='output co'>#&gt; [1] "1" "2" "3"</div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%@%</span> <span class='st'>"class"</span></div><div class='output co'>#&gt; [1] "data.frame"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>) <span class='kw'>%@%</span> <span class='st'>"levels"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `%@%` is soft-deprecated as of purrr 0.3.0.</span>
+#&gt; <span class='warning'>Please use the operator provided in rlang instead.</span>
+#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; [1] "1" "2" "3"</div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%@%</span> <span class='st'>"class"</span></div><div class='output co'>#&gt; [1] "data.frame"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
