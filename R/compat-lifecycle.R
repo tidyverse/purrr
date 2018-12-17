@@ -64,7 +64,7 @@ signal_soft_deprecated <- function(msg, id = msg, env = caller_env(2)) {
   }
 
   if (rlang::is_true(rlang::peek_option("lifecycle_verbose_soft_deprecation")) ||
-      rlang::is_reference(env, rlang::global_env())) {
+      rlang::is_reference(topenv(env), rlang::global_env())) {
     warn_deprecated(msg, id)
     return(invisible(NULL))
   }
