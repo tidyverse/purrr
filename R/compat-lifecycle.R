@@ -143,7 +143,7 @@ scoped_lifecycle_errors <- function(frame = rlang::caller_env()) {
     lifecycle_warnings_as_errors = TRUE
   )
 }
-with_lifecycle_warnings <- function(expr) {
+with_lifecycle_errors <- function(expr) {
   scoped_lifecycle_errors()
   expr
 }
