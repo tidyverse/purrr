@@ -21,3 +21,9 @@ rlang::zap
 #' @export
 #' @name null-default
 rlang::`%||%`
+
+#' Done box
+#' @keywords NULL
+#' @export
+#' @name done
+rlang::done
