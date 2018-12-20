@@ -205,20 +205,20 @@ if you weren't using <code>partial</code>.</p>
 
 <span class='co'># and the generated source code is very similar to what we made by hand</span>
 <span class='no'>compact1</span></div><div class='output co'>#&gt; function(x) discard(x, is.null)
-#&gt; &lt;environment: 0x6be2b80&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
+#&gt; &lt;environment: 0x6aa69c8&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
 #&gt; discard(.p = is.null, ...)
-#&gt; &lt;environment: 0x6be2b80&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x6aa69c8&gt;</div><div class='input'>
 <span class='co'># Note that the evaluation occurs "lazily" so that arguments will be</span>
 <span class='co'># repeatedly evaluated</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
 <span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
 #&gt; runif(n = rpois(1, 5), ...)
-#&gt; &lt;environment: 0x6be2b80&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.14756622 0.08511037 0.53481760 0.71291548 0.43088884 0.51382668</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1603507 0.5395570 0.4671824 0.1538388</div><div class='input'>
+#&gt; &lt;environment: 0x6aa69c8&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.14756622 0.08511037 0.53481760 0.71291548 0.43088884 0.51382668</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1603507 0.5395570 0.4671824 0.1538388</div><div class='input'>
 <span class='co'># You can override this by saying .lazy = FALSE</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
 #&gt; runif(n = 8L, ...)
-#&gt; &lt;environment: 0x6be2b80&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.6664174 0.5214033 0.9335608 0.7669166 0.3932875 0.6779559 0.8082745
+#&gt; &lt;environment: 0x6aa69c8&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.6664174 0.5214033 0.9335608 0.7669166 0.3932875 0.6779559 0.8082745
 #&gt; [8] 0.5269752</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.11193650 0.95423720 0.02919632 0.15478720 0.20542960 0.89996393 0.77390892
 #&gt; [8] 0.96767273</div><div class='input'>
 <span class='co'># This also means that partial works fine with functions that do</span>
