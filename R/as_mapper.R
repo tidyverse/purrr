@@ -51,10 +51,10 @@ as_mapper <- function(.f, ...) {
 #' @rdname as_mapper
 #' @usage NULL
 as_function <- function(...) {
-  warning(
-    "`as_function()` is deprecated; please use `as_mapper()` or `rlang::as_function()` instead",
-    call. = FALSE
-  )
+  stop_defunct(paste_line(
+    "`as_function()` is defunct as of purrr 0.3.0.",
+    "Please use `as_mapper()` or `rlang::as_function()` instead"
+  ))
   as_mapper(...)
 }
 
