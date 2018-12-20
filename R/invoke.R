@@ -1,8 +1,9 @@
 #' Invoke functions.
 #'
+#' @keywords internal
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("retired")}
 #'
 #' This pair of functions make it easier to combine a function and list
 #' of parameters to get a result. `invoke` is a wrapper around
@@ -25,10 +26,13 @@
 #'
 #' @section Life cycle:
 #'
-#' * `invoke()` is soft-deprecated as of purrr 0.3.0 and replaced by
-#'   the simpler `exec()` function reexported from rlang. `exec()`
-#'   evaluates a function call built from its inputs and supports tidy
-#'   dots:
+#' These functions are retired in favour of [exec()]. They are no
+#' longer under active development but we will maintain them in the
+#' package undefinitely.
+#'
+#' * `invoke()` is retired in favour of the simpler `exec()` function
+#'   reexported from rlang. `exec()` evaluates a function call built
+#'   from its inputs and supports tidy dots:
 #'
 #'   ```
 #'   # Before:
@@ -38,9 +42,9 @@
 #'   exec(mean, 1:10, !!!list(na.rm = TRUE))
 #'   ```
 #'
-#' * `invoke_map()` is soft-deprecated as of purrr 0.3.0 without
-#'   replacement because it is more complex to understand than the
-#'   corresponding code using `map()`, `map2()` and `exec()`:
+#' * `invoke_map()` is is retired without replacement because it is
+#'   more complex to understand than the corresponding code using
+#'   `map()`, `map2()` and `exec()`:
 #'
 #'   ```
 #'   # Before:
@@ -52,7 +56,6 @@
 #'   map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
 #'   ```
 #'
-#' @export
 #' @family map variants
 #' @examples
 #' # Invoke a function with a list of arguments
@@ -99,20 +102,9 @@
 #'   df
 #'   invoke_map(df$f, df$params)
 #' }
+#' @export
 invoke <- function(.f, .x = NULL, ..., .env = NULL) {
-  signal_soft_deprecated(paste_line(
-    "`invoke()` is soft-deprecated as of purrr 0.3.0.",
-    "Please use `purrr::exec()` (reexported from rlang) instead.",
-    "",
-    "  # Before:",
-    "  invoke(mean, list(na.rm = TRUE), x = 1:10)",
-    "",
-    "  # After:",
-    "  exec(mean, 1:10, !!!list(na.rm = TRUE))",
-    ""
-  ))
   .env <- .env %||% parent.frame()
-
   args <- c(as.list(.x), list(...))
   do.call(.f, args, envir = .env)
 }
@@ -128,7 +120,6 @@ as_invoke_function <- function(f) {
 #' @rdname invoke
 #' @export
 invoke_map <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2(.f, .x, invoke, ..., .env = .env)
@@ -136,7 +127,6 @@ invoke_map <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_lgl <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_lgl", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_lgl(.f, .x, invoke, ..., .env = .env)
@@ -144,7 +134,6 @@ invoke_map_lgl <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_int <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_int", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_int(.f, .x, invoke, ..., .env = .env)
@@ -152,7 +141,6 @@ invoke_map_int <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_dbl <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_dbl", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_dbl(.f, .x, invoke, ..., .env = .env)
@@ -160,7 +148,6 @@ invoke_map_dbl <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_chr <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_chr", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_chr(.f, .x, invoke, ..., .env = .env)
@@ -168,7 +155,6 @@ invoke_map_chr <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_raw <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_raw", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_raw(.f, .x, invoke, ..., .env = .env)
@@ -177,7 +163,6 @@ invoke_map_raw <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_dfr <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_dfr", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_dfr(.f, .x, invoke, ..., .env = .env)
@@ -185,7 +170,6 @@ invoke_map_dfr <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_dfc <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  signal_soft_deprecated_invoke_map("_dfc", caller_env())
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
   map2_dfc(.f, .x, invoke, ..., .env = .env)
@@ -194,25 +178,6 @@ invoke_map_dfc <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @export
 #' @usage NULL
 invoke_map_df <- invoke_map_dfr
-
-signal_soft_deprecated_invoke_map <- function(suffix, env) {
-  signal_soft_deprecated(env = env, paste_line(
-    sprintf("`invoke_map%s()` is soft-deprecated as of purrr 0.3.0.", suffix),
-    "Please use `exec()` and `map()` or `map2()` instead.",
-    "",
-    "  # Before:",
-    "  invoke_map(fns, list(args))",
-    "  invoke_map(fns, list(args1, args2))",
-    "",
-    "  # After:",
-    "  map(fns, exec, !!!args)",
-    "  map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))"
-  ))
-
-  # Disable invoke() deprecation warning
-  scoped_lifecycle_silence(frame = caller_env())
-}
-
 
 #' @rdname invoke
 #' @export

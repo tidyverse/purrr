@@ -1,19 +1,5 @@
 context("invoke")
 
-
-test_that("invoke() is soft-deprecated", {
-  scoped_lifecycle_warnings()
-  expect_warning(invoke(mean, list(), x = 1:10), "soft-deprecated")
-})
-
-test_that("invoke_map() is soft-deprecated", {
-  scoped_lifecycle_warnings()
-  expect_warning(invoke_map(list(mean), list(x = 1:10)), "soft-deprecated")
-})
-
-scoped_lifecycle_silence()
-
-
 # invoke ------------------------------------------------------------------
 
 test_that("invoke() evaluates expressions in the right environment", {

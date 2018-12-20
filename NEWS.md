@@ -115,9 +115,9 @@
   future, `NULL` will set an element to `NULL` rather than removing
   the element.
 
-* `invoke()` is soft-deprecated and replaced by the `exec()` function,
-  reexported from rlang. `exec()` evaluates a function call built from
-  its inputs and supports tidy dots:
+* `invoke()` is retired in favour of the `exec()` function, reexported
+  from rlang. `exec()` evaluates a function call built from its inputs
+  and supports tidy dots:
 
   ```r
   # Before:
@@ -127,9 +127,12 @@
   exec(mean, 1:10, !!!list(na.rm = TRUE))
   ```
 
-* `invoke_map()` is soft-deprecated without replacement because it is
-  more complex to understand than the corresponding code using
-  `map()`, `map2()` and `exec()`:
+  Note that retired functions are not removed from the package and
+  will be maintained undefinitely.
+
+* `invoke_map()` is retired without replacement because it is more
+  complex to understand than the corresponding code using `map()`,
+  `map2()` and `exec()`:
 
   ```r
   # Before:
