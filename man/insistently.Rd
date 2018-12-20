@@ -2,51 +2,44 @@
 % Please edit documentation in R/rate.R
 \name{insistently}
 \alias{insistently}
-\title{Transform a function to make it run insistently}
+\alias{slowly}
+\title{Transform a function to make it run insistently or slowly}
 \usage{
-insistently(.f, quiet = TRUE, max_attempts = 5, wait_seconds = 0.1)
+insistently(f, rate = rate_backoff(), quiet = TRUE)
+
+slowly(f, rate = rate_delay(), quiet = TRUE)
 }
 \arguments{
-\item{.f}{A function, formula, or vector (not necessarily atomic).
+\item{f}{A function to modify.}
 
-If a \strong{function}, it is used as is.
+\item{rate}{A \link[=rate_backoff]{rate} object determining the waiting time.}
 
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
-\itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
-
-This syntax allows you to create very compact anonymous functions.
-
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
-
-\item{quiet}{Hide errors (\code{TRUE}, the default), or display them
-as they occur?}
-
-\item{max_attempts}{Positive integer. Functions wrapped by \code{insistently()}
-will try to run this many times before giving up.}
-
-\item{wait_seconds}{Positive number. Base multiplier for time in seconds to
-wait between attempts. The time increases exponentially, with a wait time
-randomly chosen from a uniform distribution between \code{0} and
-\code{wait_seconds * 2 ^ (i - 1)} seconds, between the \code{i}th and
-\code{i + 1}th attempts.}
-}
-\value{
-Wrapped function attempts to run \code{max_attempts} times; an
-error occurs if all attempts fail.
+\item{quiet}{If \code{FALSE}, prints a message displaying how long until
+the next request.}
 }
 \description{
-Transform a function to make it run insistently
+\itemize{
+\item \code{insistently()} takes a function and modifies it to retry a given
+amount of time on error.
+\item \code{slowly()} takes a function and modifies it to wait a given
+amount of time between each call.
+}
+
+The number and rate of attempts is determined by a
+\link[=rate-helpers]{rate} object (by default a jittered exponential
+backoff rate for \code{insistently()}, and a constant rate for
+\code{slowly()}).
 }
 \examples{
+# For the purpose of this example, we first create a custom rate
+# object with a low waiting time between attempts:
+rate <- rate_delay(0.1)
+
+# slowly() causes a function to sleep for a given time between calls:
+slow_runif <- slowly(~ runif(1), rate = rate, quiet = FALSE)
+map(1:5, slow_runif)
+
+
 # insistently() makes a function repeatedly try to work
 risky_runif <- function(lo = 0, hi = 1) {
   y <- runif(1, lo, hi)
@@ -55,24 +48,43 @@ risky_runif <- function(lo = 0, hi = 1) {
   }
   y
 }
-insistent_risky_runif <- insistently(
-  risky_runif, quiet = FALSE, wait_seconds = 0.01)
-set.seed(1)
+
+# Let's now create an exponential backoff rate with a low waiting
+# time between attempts:
+rate <- rate_backoff(pause_base = 0.1, pause_min = 0.005, max_times = 4)
+
+# Modify your function to run insistently.
+insistent_risky_runif <- insistently(risky_runif, rate, quiet = FALSE)
+
+set.seed(6) # Succeeding seed
 insistent_risky_runif()
-set.seed(3)
+
+set.seed(3) # Failing seed
 try(insistent_risky_runif())
 
-# insistently() and possibly() are a useful combination
-possibly_insistent_risky_runif <- possibly(
-  insistently(risky_runif, quiet = FALSE, wait_seconds = 0.01),
-  otherwise = -99)
 
-set.seed(1)
+# You can also use other types of rate settings, like a delay rate
+# that waits for a fixed amount of time. Be aware that a delay rate
+# has an infinite amount of attempts by default:
+rate <- rate_delay(0.2, max_times = 3)
+insistent_risky_runif <- insistently(risky_runif, rate = rate, quiet = FALSE)
+try(insistent_risky_runif())
+
+
+# insistently() and possibly() are a useful combination
+rate <- rate_backoff(pause_base = 0.1, pause_min = 0.005)
+possibly_insistent_risky_runif <- possibly(insistent_risky_runif, otherwise = -99)
+
+set.seed(6)
 possibly_insistent_risky_runif()
+
 set.seed(3)
 possibly_insistent_risky_runif()
 }
 \seealso{
-\code{\link[httr:RETRY]{httr::RETRY()}} is a special case of \code{\link[=insistently]{insistently()}}
-for HTTP verbs.
+\code{\link[httr:RETRY]{httr::RETRY()}} is a special case of \code{\link[=insistently]{insistently()}} for
+HTTP verbs. \code{\link[=rate_backoff]{rate_backoff()}} and \code{\link[=rate_delay]{rate_delay()}} for creating
+custom backoff rates. \code{\link[=rate_sleep]{rate_sleep()}} for the function powering
+\code{insistently()} and \code{slowly()}. \code{\link[=safely]{safely()}} for another useful
+function operator.
 }

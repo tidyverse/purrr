@@ -1,0 +1,11 @@
+<rate: delay>
+Attempts: 0/Inf
+Fields:
+ * `pause`: 20.00
+
+<rate: backoff>
+Attempts: 0/3
+Fields:
+ * `pause_base`: 1
+ * `pause_cap`: 60
+ * `pause_min`: 1
