@@ -243,6 +243,12 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap</span>(<span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $a1
 #&gt; [1] 1 2 3 4
 #&gt; 
+#&gt; $b1
+#&gt; [1] "e" "f" "g"
+#&gt; 
+#&gt; $b2
+#&gt; [1] "e" "f" "g"
+#&gt; 
 #&gt; $c1
 #&gt; [1] 8 9
 #&gt; 
@@ -250,9 +256,6 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] 8 9
 #&gt; 
 #&gt; $c3
-#&gt; [1] 8 9
-#&gt; 
-#&gt; $c4
 #&gt; [1] 8 9
 #&gt; 
 #&gt; $d1
@@ -268,10 +271,7 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] "j"
 #&gt; </div><div class='input'>
 <span class='co'># We can apply f() on a selected subset of x</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"d"</span>), <span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $a1
-#&gt; [1] 1 2 3 4
-#&gt; 
-#&gt; $b
+<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"d"</span>), <span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $b
 #&gt; [1] "e" "f" "g"
 #&gt; 
 #&gt; $c
@@ -281,9 +281,6 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] "j"
 #&gt; 
 #&gt; $d2
-#&gt; [1] "j"
-#&gt; 
-#&gt; $d3
 #&gt; [1] "j"
 #&gt; </div><div class='input'>
 <span class='co'># Or only where a condition is satisfied</span>
@@ -299,19 +296,19 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; $b3
 #&gt; [1] "e" "f" "g"
 #&gt; 
+#&gt; $b4
+#&gt; [1] "e" "f" "g"
+#&gt; 
+#&gt; $b5
+#&gt; [1] "e" "f" "g"
+#&gt; 
+#&gt; $b6
+#&gt; [1] "e" "f" "g"
+#&gt; 
 #&gt; $c
 #&gt; [1] 8 9
 #&gt; 
 #&gt; $d1
-#&gt; [1] "j"
-#&gt; 
-#&gt; $d2
-#&gt; [1] "j"
-#&gt; 
-#&gt; $d3
-#&gt; [1] "j"
-#&gt; 
-#&gt; $d4
 #&gt; [1] "j"
 #&gt; </div><div class='input'>
 

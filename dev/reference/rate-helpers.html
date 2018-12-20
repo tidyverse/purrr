@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Re-run expressions multiple times. — rerun • purrr</title>
+<title>Create delaying rate settings — rate-helpers • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -29,11 +29,11 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
-<meta property="og:title" content="Re-run expressions multiple times. — rerun" />
+<meta property="og:title" content="Create delaying rate settings — rate-helpers" />
 
-<meta property="og:description" content="
-This is a convenient way of generating sample data. It works similarly to
-replicate(..., simplify = FALSE)." />
+<meta property="og:description" content="These helpers create rate settings that you can pass to
+insistently(). You can also use them in your own functions with
+rate_sleep()." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -138,95 +138,79 @@ replicate(..., simplify = FALSE)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Re-run expressions multiple times.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/rerun.R'><code>R/rerun.R</code></a></small>
-    <div class="hidden name"><code>rerun.Rd</code></div>
+    <h1>Create delaying rate settings</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/rate.R'><code>R/rate.R</code></a></small>
+    <div class="hidden name"><code>rate-helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a></p>
-<p>This is a convenient way of generating sample data. It works similarly to
-<code><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a>(..., simplify = FALSE)</code>.</p>
+    <p>These helpers create rate settings that you can pass to
+<code><a href='insistently.html'>insistently()</a></code>. You can also use them in your own functions with
+<code><a href='rate_sleep.html'>rate_sleep()</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rerun</span>(<span class='no'>.n</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rate_delay</span>(<span class='kw'>pause</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
+
+<span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pause_cap</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>is_rate</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.n</th>
-      <td><p>Number of times to run expressions</p></td>
+      <th>pause</th>
+      <td><p>Delay between attempts in seconds.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Expressions to re-run.</p></td>
+      <th>max_times</th>
+      <td><p>Maximum number of requests to attempt.</p></td>
+    </tr>
+    <tr>
+      <th>pause_base, pause_cap</th>
+      <td><p><code>rate_backoff()</code> uses an exponential
+back-off so that each request waits <code>pause_base * 2^i</code> seconds,
+up to a maximum of <code>pause_cap</code> seconds.</p></td>
+    </tr>
+    <tr>
+      <th>pause_min</th>
+      <td><p>Minimum time to wait in the backoff; generally
+only necessary if you need pauses less than one second (which may
+not be kind to the server, use with caution!).</p></td>
+    </tr>
+    <tr>
+      <th>jitter</th>
+      <td><p>Whether to introduce a random jitter in the waiting time.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An object to test.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>A list of length <code>.n</code>. Each element of <code>...</code> will be
-re-run once for each <code>.n</code>.</p>
-<p>There is one special case: if there's a single unnamed input, the second
-level list will be dropped. In this case, <code>rerun(n, x)</code> behaves like
-<code><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate(n, x, simplify = FALSE)</a></code>.</p>
-    
-    <h2 class="hasAnchor" id="lifecycle"><a class="anchor" href="#lifecycle"></a>Lifecycle</h2>
-
-    
-    <p><code>rerun()</code> is in the questioning lifecycle stage because we are no
-longer convinced NSE functions are a good fit for purrr. Also,
-<code>rerun(n, x)</code> can just as easily be expressed as <code><a href='map.html'>map(1:n, ~ x)</a></code>
-(with the added benefit of being passed the current index as
-argument to the lambda).</p>
+    <div class='dont-index'><p><code><a href='rate_sleep.html'>rate_sleep()</a></code>, <code><a href='insistently.html'>insistently()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] -0.93015122 -0.62373043  1.13978607  1.52506783 -0.08140044
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] -0.4132552  0.1779261 -1.6117598  0.9343846  0.7797665
-#&gt; 
-#&gt; [[3]]
-#&gt; [1]  0.9488591 -0.2789342 -1.4534763  0.9851275  0.2641752
-#&gt; 
-#&gt; [[4]]
-#&gt; [1]  0.1818199 -0.4894290 -0.1439310  1.3542750  0.3486849
-#&gt; 
-#&gt; [[5]]
-#&gt; [1]  0.8532997  1.0120865 -0.9288807  0.7960816 -0.8027995
-#&gt; 
-#&gt; [[6]]
-#&gt; [1] -0.4582456  0.6862764 -0.5953003 -0.4073832 -0.3809501
-#&gt; 
-#&gt; [[7]]
-#&gt; [1] -0.5792708 -1.3558871 -0.1130526  1.0127046 -0.1814063
-#&gt; 
-#&gt; [[8]]
-#&gt; [1] -1.46927526 -1.89541834 -1.01599702 -0.08470884 -0.78864002
-#&gt; 
-#&gt; [[9]]
-#&gt; [1]  1.4490190  0.4195211  0.4069906 -0.4760313  0.5650942
-#&gt; 
-#&gt; [[10]]
-#&gt; [1] -1.12164088 -0.06941162  0.17233952 -0.03840447  1.17758361
-#&gt; </div><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>rerun</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1] -0.16402777  0.66719522 -0.60475011  0.80931643 -0.78612387  0.58286546
-#&gt;  [7]  0.21078318  0.68374824 -0.07276605 -0.56310568</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># A delay rate waits the same amount of time:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_delay</span>(<span class='fl'>0.02</span>)
+<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='input'>
+<span class='co'># A backoff rate waits exponentially longer each time, with random</span>
+<span class='co'># jitter by default:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
+<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.3 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.6 seconds.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#lifecycle">Lifecycle</a></li>
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

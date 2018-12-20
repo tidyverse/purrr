@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform a function to make it run insistently — insistently • purrr</title>
+<title>Transform a function to make it run insistently or slowly — insistently • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -29,9 +29,19 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
-<meta property="og:title" content="Transform a function to make it run insistently — insistently" />
+<meta property="og:title" content="Transform a function to make it run insistently or slowly — insistently" />
 
-<meta property="og:description" content="Transform a function to make it run insistently" />
+<meta property="og:description" content="
+insistently() takes a function and modifies it to retry a given
+amount of time on error.
+slowly() takes a function and modifies it to wait a given
+amount of time between each call.
+" />
+
+<meta property="og:description" content="The number and rate of attempts is determined by a
+rate object (by default a jittered exponential
+backoff rate for insistently(), and a constant rate for
+slowly())." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -136,73 +146,82 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform a function to make it run insistently</h1>
+    <h1>Transform a function to make it run insistently or slowly</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/rate.R'><code>R/rate.R</code></a></small>
     <div class="hidden name"><code>insistently.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Transform a function to make it run insistently</p>
+    <ul>
+<li><p><code>insistently()</code> takes a function and modifies it to retry a given
+amount of time on error.</p></li>
+<li><p><code>slowly()</code> takes a function and modifies it to wait a given
+amount of time between each call.</p></li>
+</ul>
+
+    <p>The number and rate of attempts is determined by a
+<a href='rate-helpers.html'>rate</a> object (by default a jittered exponential
+backoff rate for <code>insistently()</code>, and a constant rate for
+<code>slowly()</code>).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>insistently</span>(<span class='no'>.f</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>max_attempts</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>wait_seconds</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</pre>
+    <pre class="usage"><span class='fu'>insistently</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>slowly</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_delay</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.f</th>
-      <td><p>A function, formula, or vector (not necessarily atomic).</p>
-<p>If a <strong>function</strong>, it is used as is.</p>
-<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
-are three ways to refer to the arguments:</p><ul>
-<li><p>For a single argument function, use <code>.</code></p></li>
-<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
-<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
-</ul>
-
-<p>This syntax allows you to create very compact anonymous functions.</p>
-<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of <code>.default</code> will be returned.</p></td>
+      <th>f</th>
+      <td><p>A function to modify.</p></td>
+    </tr>
+    <tr>
+      <th>rate</th>
+      <td><p>A <a href='rate-helpers.html'>rate</a> object determining the waiting time.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Hide errors (<code>TRUE</code>, the default), or display them
-as they occur?</p></td>
-    </tr>
-    <tr>
-      <th>max_attempts</th>
-      <td><p>Positive integer. Functions wrapped by <code>insistently()</code>
-will try to run this many times before giving up.</p></td>
-    </tr>
-    <tr>
-      <th>wait_seconds</th>
-      <td><p>Positive number. Base multiplier for time in seconds to
-wait between attempts. The time increases exponentially, with a wait time
-randomly chosen from a uniform distribution between <code>0</code> and
-<code>wait_seconds * 2 ^ (i - 1)</code> seconds, between the <code>i</code>th and
-<code>i + 1</code>th attempts.</p></td>
+      <td><p>If <code>FALSE</code>, prints a message displaying how long until
+the next request.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Wrapped function attempts to run <code>max_attempts</code> times; an
-error occurs if all attempts fail.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/httr/topics/RETRY'>httr::RETRY()</a></code> is a special case of <code>insistently()</code>
-for HTTP verbs.</p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/httr/topics/RETRY'>httr::RETRY()</a></code> is a special case of <code>insistently()</code> for
+HTTP verbs. <code><a href='rate-helpers.html'>rate_backoff()</a></code> and <code><a href='rate-helpers.html'>rate_delay()</a></code> for creating
+custom backoff rates. <code><a href='rate_sleep.html'>rate_sleep()</a></code> for the function powering
+<code>insistently()</code> and <code>slowly()</code>. <code><a href='safely.html'>safely()</a></code> for another useful
+function operator.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># insistently() makes a function repeatedly try to work</span>
+    <pre class="examples"><div class='input'><span class='co'># For the purpose of this example, we first create a custom rate</span>
+<span class='co'># object with a low waiting time between attempts:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rate-helpers.html'>rate_delay</a></span>(<span class='fl'>0.1</span>)
+
+<span class='co'># slowly() causes a function to sleep for a given time between calls:</span>
+<span class='no'>slow_runif</span> <span class='kw'>&lt;-</span> <span class='fu'>slowly</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>1</span>), <span class='kw'>rate</span> <span class='kw'>=</span> <span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='map.html'>map</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='no'>slow_runif</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 0.3887013
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 0.9755478
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 0.2898923
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 0.6783804
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 0.7353196
+#&gt; </div><div class='input'>
+
+<span class='co'># insistently() makes a function repeatedly try to work</span>
 <span class='no'>risky_runif</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>lo</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>hi</span> <span class='kw'>=</span> <span class='fl'>1</span>) {
   <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>1</span>, <span class='no'>lo</span>, <span class='no'>hi</span>)
   <span class='kw'>if</span>(<span class='no'>y</span> <span class='kw'>&lt;</span> <span class='fl'>0.9</span>) {
@@ -210,27 +229,40 @@ for HTTP verbs.</p></div>
   }
   <span class='no'>y</span>
 }
-<span class='no'>insistent_risky_runif</span> <span class='kw'>&lt;-</span> <span class='fu'>insistently</span>(
-  <span class='no'>risky_runif</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wait_seconds</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='fu'>insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.2655086631421 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.00372 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.572853363351896 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0182 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.201681931037456 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0359 seconds.</span></div><div class='output co'>#&gt; [1] 0.9446753</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>3</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.00808 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.00655 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.602100674761459 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0242 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.124633444240317 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0236 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.577609919011593 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.101 seconds.</span></div><div class='output co'>#&gt; <span class='message'>insistent_risky_runif() failed after 5 tries</span></div><div class='input'>
-<span class='co'># insistently() and possibly() are a useful combination</span>
-<span class='no'>possibly_insistent_risky_runif</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='safely.html'>possibly</a></span>(
-  <span class='fu'>insistently</span>(<span class='no'>risky_runif</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wait_seconds</span> <span class='kw'>=</span> <span class='fl'>0.01</span>),
-  <span class='kw'>otherwise</span> <span class='kw'>=</span> -<span class='fl'>99</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='fu'>possibly_insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.2655086631421 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.00372 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.572853363351896 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0182 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.201681931037456 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0359 seconds.</span></div><div class='output co'>#&gt; [1] 0.9446753</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>3</span>)
-<span class='fu'>possibly_insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.00808 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.00655 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.602100674761459 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0242 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.124633444240317 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.0236 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.577609919011593 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.101 seconds.</span></div><div class='output co'>#&gt; <span class='message'>.f() failed after 5 tries</span></div><div class='output co'>#&gt; [1] -99</div></pre>
+<span class='co'># Let's now create an exponential backoff rate with a low waiting</span>
+<span class='co'># time between attempts:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+
+<span class='co'># Modify your function to run insistently.</span>
+<span class='no'>insistent_risky_runif</span> <span class='kw'>&lt;-</span> <span class='fu'>insistently</span>(<span class='no'>risky_runif</span>, <span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>6</span>) <span class='co'># Succeeding seed</span>
+<span class='fu'>insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.606268297648057 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.264352067606524 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.807483389042318 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.8 seconds.</span></div><div class='output co'>#&gt; [1] 0.9579337</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>3</span>) <span class='co'># Failing seed</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.602100674761459 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.5 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.124633444240317 is too small</span></div><div class='input'>
+
+<span class='co'># You can also use other types of rate settings, like a delay rate</span>
+<span class='co'># that waits for a fixed amount of time. Be aware that a delay rate</span>
+<span class='co'># has an infinite amount of attempts by default:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rate-helpers.html'>rate_delay</a></span>(<span class='fl'>0.2</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>insistent_risky_runif</span> <span class='kw'>&lt;-</span> <span class='fu'>insistently</span>(<span class='no'>risky_runif</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.294600924244151 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.577609919011593 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.630979274399579 is too small</span></div><div class='input'>
+
+<span class='co'># insistently() and possibly() are a useful combination</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
+<span class='no'>possibly_insistent_risky_runif</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='safely.html'>possibly</a></span>(<span class='no'>insistent_risky_runif</span>, <span class='kw'>otherwise</span> <span class='kw'>=</span> -<span class='fl'>99</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>6</span>)
+<span class='fu'>possibly_insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.606268297648057 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; [1] 0.937642</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>3</span>)
+<span class='fu'>possibly_insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.807516399072483 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; [1] -99</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
