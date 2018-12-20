@@ -155,13 +155,17 @@
 
 ## Minor improvements and fixes
 
-* New `rate_backoff()` constructor creates a rate object. Pass it to
-  `rate_sleep()` to wait for a given amount of time with exponential
-  backoff (increasingly larger waiting times). Or pass it to
-  insistently to configure the waiting time between attempts.
+* New `rate_backoff()` and `rate_delay()` functions to create rate
+  objects. You can pass rates to `insistently()`, `slowly()`, or the
+  lower level function `rate_sleep()`. This will cause a function to
+  wait for a given amount of time with exponential backoff
+  (increasingly larger waiting times) or for a constant delay.
 
 * `insistently(f)` modifies a function, `f`, so that it is repeatedly
   called until it succeeds (@richierocks, @ijlyttle).
+
+  `slowly()` modifies a function so that it waits for a given amount
+  of time between calls.
 
 * `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` now
   terminate early when the function returns a value wrapped in a
