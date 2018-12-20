@@ -216,7 +216,7 @@ whenever an error occurs.</p>
 #&gt; NULL
 #&gt; 
 #&gt; $error
-#&gt; &lt;simpleError in log(x = x, base = base): non-numeric argument to mathematical function&gt;
+#&gt; &lt;simpleError in .Primitive("log")(x, base): non-numeric argument to mathematical function&gt;
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"a"</span>, <span class='fl'>10</span>, <span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>safe_log</span>) <span class='kw'>%&gt;%</span>
@@ -233,7 +233,7 @@ whenever an error occurs.</p>
 #&gt; 
 #&gt; $error
 #&gt; $error[[1]]
-#&gt; &lt;simpleError in log(x = x, base = base): non-numeric argument to mathematical function&gt;
+#&gt; &lt;simpleError in .Primitive("log")(x, base): non-numeric argument to mathematical function&gt;
 #&gt; 
 #&gt; $error[[2]]
 #&gt; NULL
@@ -253,7 +253,7 @@ whenever an error occurs.</p>
 #&gt; 
 #&gt; $error
 #&gt; $error[[1]]
-#&gt; &lt;simpleError in log(x = x, base = base): non-numeric argument to mathematical function&gt;
+#&gt; &lt;simpleError in .Primitive("log")(x, base): non-numeric argument to mathematical function&gt;
 #&gt; 
 #&gt; $error[[2]]
 #&gt; NULL

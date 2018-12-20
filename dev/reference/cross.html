@@ -275,16 +275,8 @@ result.</p>
 <span class='co'># because applying a function to the combinations requires a loop</span>
 <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/vector'>vector</a></span>(<span class='st'>"list"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>args</span>))
 <span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_along</a></span>(<span class='no'>out</span>))
-  <span class='no'>out</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>args</span>, <span class='no'>i</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='invoke.html'>invoke</a></span>(<span class='no'>paste</span>, <span class='no'>.</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `invoke()` is soft-deprecated as of purrr 0.3.0.</span>
-#&gt; <span class='warning'>Please use `purrr::exec()` (reexported from rlang) instead.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # Before:</span>
-#&gt; <span class='warning'>  invoke(mean, list(na.rm = TRUE), x = 1:10)</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # After:</span>
-#&gt; <span class='warning'>  exec(mean, 1:10, !!!list(na.rm = TRUE))</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='input'><span class='no'>out</span></div><div class='output co'>#&gt; [[1]]
+  <span class='no'>out</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>args</span>, <span class='no'>i</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='invoke.html'>invoke</a></span>(<span class='no'>paste</span>, <span class='no'>.</span>)
+<span class='no'>out</span></div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "John! Hello."
 #&gt; 
 #&gt; [[2]]

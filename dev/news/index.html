@@ -213,15 +213,16 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <p>This change is motivated by the ambiguity of <code>NULL</code> as a deletion sentinel because <code>NULL</code> is also a valid value in lists. In the future, <code>NULL</code> will set an element to <code>NULL</code> rather than removing the element.</p>
 </li>
 <li>
-<p><code><a href="../reference/invoke.html">invoke()</a></code> is soft-deprecated and replaced by the <code><a href="../reference/exec.html">exec()</a></code> function, reexported from rlang. <code><a href="../reference/exec.html">exec()</a></code> evaluates a function call built from its inputs and supports tidy dots:</p>
+<p><code><a href="../reference/invoke.html">invoke()</a></code> is retired in favour of the <code><a href="../reference/exec.html">exec()</a></code> function, reexported from rlang. <code><a href="../reference/exec.html">exec()</a></code> evaluates a function call built from its inputs and supports tidy dots:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Before:</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke</a></span>(mean, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># After</span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="kw"><a href="../reference/exec.html">exec</a></span>(mean, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">!!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<p>Note that retired functions are not removed from the package and will be maintained undefinitely.</p>
 </li>
 <li>
-<p><code><a href="../reference/invoke.html">invoke_map()</a></code> is soft-deprecated without replacement because it is more complex to understand than the corresponding code using <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code> and <code><a href="../reference/exec.html">exec()</a></code>:</p>
+<p><code><a href="../reference/invoke.html">invoke_map()</a></code> is retired without replacement because it is more complex to understand than the corresponding code using <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code> and <code><a href="../reference/exec.html">exec()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Before:</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(args))</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(args1, args2))</a>
