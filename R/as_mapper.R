@@ -124,7 +124,7 @@ as_predicate <- function(.fn, ..., .mapper, .deprecate = FALSE) {
 
     if (!is_bool(out)) {
       msg <- sprintf(
-        "Predicate functions must return a single logical `TRUE` or `FALSE`, not %s",
+        "Predicate functions must return a single `TRUE` or `FALSE`, not %s",
         as_predicate_friendly_type_of(out)
       )
       if (.deprecate) {
