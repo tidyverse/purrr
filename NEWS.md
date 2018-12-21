@@ -38,6 +38,14 @@
 
 ## Life cycle
 
+* We had to rename `...f` to `.f` in `partial()` in order to support
+  `... = ` argument (which would otherwise partial-match on
+  `...f`). This also makes `partial()` more consistent with other
+  purrr function signatures.
+
+* The `.lazy` argument of `partial()` is soft-deprecated in favour of
+  quasiquotation.
+
 * `%@%` is soft-deprecated, please use the operator exported in rlang
   instead. The latter features an interface more consistent with `@`
   as it uses NSE, supports S4 fields, and has an assignment variant.
@@ -154,6 +162,38 @@
 
 
 ## Minor improvements and fixes
+
+* `partial()` now supports empty `... = ` argument to specify the
+  position of future arguments, relative to partialised ones. This
+  syntax is borrowed from (and implemented with) `rlang::call_modify()`.
+
+  To prevent partial matching of `...` on `...f`, the latter has been
+  renamed to `.f`, which is more consistent with other purrr function
+  signatures.
+
+* `partial()` now supports quasiquotation. When you unquote an
+  argument, it is evaluated only once at function creation time. This
+  is more flexible than the `.lazy` argument since you can control the
+  timing of evaluation for each argument. Consequently, `.lazy` is
+  soft-deprecated (#457).
+
+* Fixed an infinite loop when partialised function is given the same
+  name as the original function (#387).
+
+* `partial()` now calls `as_closure()` on primitive functions to
+  ensure argument matching (#360).
+
+* The `.lazy` argument of `partial()` is soft-deprecated in favour of
+  quasiquotation:
+
+  ```r
+  # Before
+  partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)
+
+  # After
+  partial(fn, u = !!runif(1), n = !!rnorm(1))  # All constant
+  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant
+  ```
 
 * New `rate_backoff()` and `rate_delay()` functions to create rate
   objects. You can pass rates to `insistently()`, `slowly()`, or the
