@@ -137,14 +137,14 @@ partial <- function(.f,
 
   structure(
     partialised,
-    class = "purrr_partial_function",
+    class = c("purrr_function_partial", "function"),
     body = call,
     fn = fn_expr
   )
 }
 
 #' @export
-print.purrr_partial_function <- function(x, ...) {
+print.purrr_function_partial <- function(x, ...) {
   cat("<partialised>\n")
 
   body <- quo_squash(partialised_body(x))
