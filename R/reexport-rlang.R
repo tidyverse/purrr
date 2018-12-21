@@ -27,3 +27,9 @@ rlang::`%||%`
 #' @export
 #' @name done
 rlang::done
+
+#' Repeat a value with matching length
+#' @keywords NULL
+#' @export
+#' @name rep_along
+rlang::rep_along

@@ -21,9 +21,3 @@ NULL
 list_along <- function(x) {
   vector("list", length(x))
 }
-
-#' @export
-#' @rdname along
-rep_along <- function(x, y) {
-  rep(y, length.out = length(x))
-}
