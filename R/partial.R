@@ -6,23 +6,22 @@
 #'
 #' @param .f a function. For the output source to read well, this should be a
 #'   named function.
-#' @param ... named arguments to `...f` that should be partially applied.
+#' @param ... named arguments to `.f` that should be partially applied.
 #'
 #'   Pass an empty `... = ` argument to specify the position of future
 #'   arguments relative to partialised ones. See
 #'   [rlang::call_modify()] to learn more about this syntax.
 #'
 #'   These dots support quasiquotation and quosures. If you unquote a
-#'   value, it is evaluated once and for all when the argument is
-#'   partialised. Otherwise, it is evaluated each time the function is
-#'   called.
+#'   value, it is evaluated only once at function creation time.
+#'   Otherwise, it is evaluated each time the function is called.
 #' @param .env Soft-deprecated as of purrr 0.3.0. The environments are
 #'   now captured via quosures.
 #' @param .first Soft-deprecated as of purrr 0.3.0. Please pass an
 #'   empty argument `... = ` to specify the position of future
 #'   arguments.
 #' @param .lazy Soft-deprecated as of purrr 0.3.0. Please unquote the
-#'   arguments that should be evaluated once and for all.
+#'   arguments that should be evaluated once at function creation time.
 #'
 #' @examples
 #' # Partial is designed to replace the use of anonymous functions for
@@ -43,7 +42,8 @@
 #' f()
 #' f()
 #'
-#' # If you unquote an argument, it is evaluated once and for all:
+#' # If you unquote an argument, it is evaluated only once at function
+#' # creation time:
 #' f <- partial(runif, n = !!rpois(1, 5))
 #' f
 #' f()

@@ -44,7 +44,7 @@
   purrr function signatures.
 
 * The `.lazy` argument of `partial()` is soft-deprecated in favour of
-  quasiquotation:
+  quasiquotation.
 
 * `%@%` is soft-deprecated, please use the operator exported in rlang
   instead. The latter features an interface more consistent with `@`
@@ -165,17 +165,16 @@
 
 * `partial()` now supports empty `... = ` argument to specify the
   position of future arguments, relative to partialised ones. This
-  syntax is borrowed from (and implemented with)
-  `rlang::call_modify()`.
+  syntax is borrowed from (and implemented with) `rlang::call_modify()`.
 
   To prevent partial matching of `...` on `...f`, the latter has been
   renamed to `.f`, which is more consistent with other purrr function
   signatures.
 
 * `partial()` now supports quasiquotation. When you unquote an
-  argument, it is evaluated once and for all. This is more flexible
-  than the `.lazy` argument since you can control the timing of
-  evaluation for each argument. Consequently, `.lazy` is
+  argument, it is evaluated only once at function creation time. This
+  is more flexible than the `.lazy` argument since you can control the
+  timing of evaluation for each argument. Consequently, `.lazy` is
   soft-deprecated (#457).
 
 * Fixed an infinite loop when partialised function is given the same
