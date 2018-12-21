@@ -170,6 +170,8 @@
 <h2 class="hasAnchor">
 <a href="#life-cycle" class="anchor"></a>Life cycle</h2>
 <ul>
+<li><p>We had to rename <code>...f</code> to <code>.f</code> in <code><a href="../reference/partial.html">partial()</a></code> in order to support <code>... =</code> argument (which would otherwise partial-match on <code>...f</code>). This also makes <code><a href="../reference/partial.html">partial()</a></code> more consistent with other purrr function signatures.</p></li>
+<li><p>The <code>.lazy</code> argument of <code><a href="../reference/partial.html">partial()</a></code> is soft-deprecated in favour of quasiquotation.</p></li>
 <li><p><code>%@%</code> is soft-deprecated, please use the operator exported in rlang instead. The latter features an interface more consistent with <code>@</code> as it uses NSE, supports S4 fields, and has an assignment variant.</p></li>
 <li>
 <p><code><a href="../reference/reduce_right.html">reduce_right()</a></code> is soft-deprecated and replaced by a new <code>.dir</code> argument of <code><a href="../reference/reduce.html">reduce()</a></code>:</p>
@@ -239,6 +241,22 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <h2 class="hasAnchor">
 <a href="#minor-improvements-and-fixes" class="anchor"></a>Minor improvements and fixes</h2>
 <ul>
+<li>
+<p><code><a href="../reference/partial.html">partial()</a></code> now supports empty <code>... =</code> argument to specify the position of future arguments, relative to partialised ones. This syntax is borrowed from (and implemented with) <code><a href="https://rlang.r-lib.org/reference/call_modify.html">rlang::call_modify()</a></code>.</p>
+<p>To prevent partial matching of <code>...</code> on <code>...f</code>, the latter has been renamed to <code>.f</code>, which is more consistent with other purrr function signatures.</p>
+</li>
+<li><p><code><a href="../reference/partial.html">partial()</a></code> now supports quasiquotation. When you unquote an argument, it is evaluated only once at function creation time. This is more flexible than the <code>.lazy</code> argument since you can control the timing of evaluation for each argument. Consequently, <code>.lazy</code> is soft-deprecated (<a href='https://github.com/tidyverse/purrr/issues/457'>#457</a>).</p></li>
+<li><p>Fixed an infinite loop when partialised function is given the same name as the original function (<a href='https://github.com/tidyverse/purrr/issues/387'>#387</a>).</p></li>
+<li><p><code><a href="../reference/partial.html">partial()</a></code> now calls <code>as_closure()</code> on primitive functions to ensure argument matching (<a href='https://github.com/tidyverse/purrr/issues/360'>#360</a>).</p></li>
+<li>
+<p>The <code>.lazy</code> argument of <code><a href="../reference/partial.html">partial()</a></code> is soft-deprecated in favour of quasiquotation:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Before</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>), <span class="dt">.lazy =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># After</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="op">!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>))  <span class="co"># All constant</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>))    <span class="co"># First constant</span></a></code></pre></div>
+</li>
 <li><p>New <code><a href="../reference/rate-helpers.html">rate_backoff()</a></code> and <code><a href="../reference/rate-helpers.html">rate_delay()</a></code> functions to create rate objects. You can pass rates to <code><a href="../reference/insistently.html">insistently()</a></code>, <code><a href="../reference/insistently.html">slowly()</a></code>, or the lower level function <code><a href="../reference/rate_sleep.html">rate_sleep()</a></code>. This will cause a function to wait for a given amount of time with exponential backoff (increasingly larger waiting times) or for a constant delay.</p></li>
 <li>
 <p><code><a href="../reference/insistently.html">insistently(f)</a></code> modifies a function, <code>f</code>, so that it is repeatedly called until it succeeds (<a href='https://github.com/richierocks'>@richierocks</a>, <a href='https://github.com/ijlyttle'>@ijlyttle</a>).</p>
