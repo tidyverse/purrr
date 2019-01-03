@@ -24,7 +24,7 @@ Suggests:
     testthat,
     tibble
 Remotes:
-    r-lib/rlang
+    r-lib/rlang@rc-0.3.1
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
