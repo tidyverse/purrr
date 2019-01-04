@@ -12,43 +12,215 @@
   truncates the vector with a warning, `[[<-` fails with an error (as
   is appropriate).
 
-* In `reduce2_right()`, `.y` and `.f` are now correctly passed through
-  internal `reduce2_impl()`, in keeping with the documentation and
-  `reduce_right()`.  Previously, and incorrectly, `.y` and `.f` had
-  their behavior reversed. If you inverted `.y` and `.f` to make it
-  works, you should now revert back the order.
+* `modify()` and variants now return the same type as the input when
+  the input is an atomic vector.
+
+* All functionals taking predicate functions (like `keep()`,
+  `detect()`, `some()`) got stricter. Predicate functions must now
+  return a single `TRUE` or `FALSE`.
+
+  This change is meant to detect problems early with a more meaningful
+  error message.
+
+
+## Plucking
+
+* New `chuck()` function. This is a strict variant of `pluck()` that
+  throws errors when an element does not exist instead of returning
+  `NULL` (@daniel-barnett, #482).
+
+* New `assign_in()` and `pluck<-` functions. They modify a data
+  structure at an existing pluck location.
+
+* New `modify_in()` function to map a function at a pluck location.
+
+* `pluck()` now dispatches properly with S3 vectors. The vector class
+  must implement a `length()` method for numeric indexing and a
+  `names()` method for string indexing.
+
+* `pluck()` now supports primitive functions (#404).
+
+
+## Mapping
+
+* New `.else` argument for `map_if()` and `modify_if()`. They take an
+  alternative function that is mapped over elements of the input for
+  which the predicate function returns `FALSE` (#324).
+
+* `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` now
+  terminate early when the function returns a value wrapped with
+  `done()` (#253). When an empty `done()` is returned, the
+  value at the last iteration is returned instead.
+
+* Functions taking predicates (`map_if()`, `keep()`, `some()`,
+  `every()`, `keep()`, etc) now fail with an informative message when
+  the return value is not `TRUE` or `FALSE` (#470).
+
+  This is a breaking change for `every()` and `some()` which were
+  documented to be more liberal in the values they accepted as logical
+  (any vector was considered `TRUE` if not a single `FALSE` value, no
+  matter its length). These functions signal soft-deprecation warnings
+  instead of a hard failure.
+
+* `modify()` and variants are now implemented using `length()`, `[[`,
+  and `[[<-` methods. This implementation should be compatible with
+  most vector classes.
+
+* New `modify2()` and `imodify()` functions. These work like `map()`
+  and `imap()` but preserve the type of `.x` in the return value.
+
+* `pmap()` and `pwalk()` now preserve class for inputs of `factor`,
+  `Date`, `POSIXct` and other atomic S3 classes with an appropriate
+  `[[` method (#358, @mikmart).
+
+* `modify()`, `modify_if()` and `modify_at()` now preserve the class of atomic
+  vectors instead of promoting them to lists. New S3 methods are provided for
+  character, logical, double, and integer classes (@t-kalinowski, #417).
+
+* By popular request, `at_depth()` has been brought back as
+  `map_depth()`. Like `modify_depth()`, it applies a function at a
+  specified level of a data structure. However, it transforms all
+  traversed vectors up to `.depth` to bare lists (#381).
+
+* `map_at()`, `modify_at()` and `lmap_at()` accept negative values for
+  `.at`, ignoring elements at those positions.
+
+* `map()` and `modify()` now work with calls and pairlists (#412).
+
+* `modify_depth()` now modifies atomic leaves as well. This makes
+  `modify_depth(x, 1, fn)` equivalent to `modify(x, fn)` (#359).
+
+* New `accumulate2()` function which is to `accumulate()` what
+  `reduce2()` is to `reduce()`.
+
+
+## Rates
+
+* New `rate_backoff()` and `rate_delay()` functions to create rate
+  objects. You can pass rates to `insistently()`, `slowly()`, or the
+  lower level function `rate_sleep()`. This will cause a function to
+  wait for a given amount of time with exponential backoff
+  (increasingly larger waiting times) or for a constant delay.
+
+* `insistently(f)` modifies a function, `f`, so that it is repeatedly
+  called until it succeeds (@richierocks, @ijlyttle).
+
+  `slowly()` modifies a function so that it waits for a given amount
+  of time between calls.
+
+
+## `partial()`
+
+The interface of `partial()` has been simplified. It now supports
+quasiquotation to control the timing of evaluation, and the
+`rlang::call_modify()` syntax to control the position of partialised
+arguments.
+
+* `partial()` now supports empty `... = ` argument to specify the
+  position of future arguments, relative to partialised ones. This
+  syntax is borrowed from (and implemented with) `rlang::call_modify()`.
+
+  To prevent partial matching of `...` on `...f`, the latter has been
+  renamed to `.f`, which is more consistent with other purrr function
+  signatures.
+
+* `partial()` now supports quasiquotation. When you unquote an
+  argument, it is evaluated only once at function creation time. This
+  is more flexible than the `.lazy` argument since you can control the
+  timing of evaluation for each argument. Consequently, `.lazy` is
+  soft-deprecated (#457).
+
+* Fixed an infinite loop when partialised function is given the same
+  name as the original function (#387).
+
+* `partial()` now calls `as_closure()` on primitive functions to
+  ensure argument matching (#360).
+
+* The `.lazy` argument of `partial()` is soft-deprecated in favour of
+  quasiquotation:
 
   ```r
-  paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
+  # Before
+  partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)
 
-  ## with purrr > 2.5
-  reduce2_right(letters[1:4], c("-", ".", "-"), paste2)
-
-  ## with purrr <= 2.5
-  # error
-  reduce2_right(.x = letters[1:4], .y = c("-", ".", "-"), .f = paste2) # error
-  # working
-  reduce2_right(.x = letters[1:4], .y = paste2, .f = c("-", ".", "-")) # working
+  # After
+  partial(fn, u = !!runif(1), n = !!rnorm(1))  # All constant
+  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant
   ```
 
+
+## Minor improvements and fixes
+
+* The tibble package is now in Suggests rather than Imports. This
+  brings the hard dependency of purrr to just rlang and magrittr.
+
+* `compose()` now returns an identity function when called without
+  inputs.
+
+* Functions created with `compose()` now have the same formal
+  parameters as the first function to be called. They also feature a
+  more informative print method that prints all composed functions in
+  turn (@egnha, #366).
+
+* New `.dir` argument in `compose()`. When set to `"forward"`, the
+  functions are composed from left to right rather than right to left.
+
+* `list_modify()` now supports the `zap()` sentinel (reexported from
+  rlang) to remove elements from lists. Consequently, removing
+  elements with the ambiguous sentinel `NULL` is soft-deprecated.
+
+* The requirements of `list_modify()` and `list_merge()` have been
+  relaxed. Previously it required both the modified lists and the
+  inputs to be either named or unnamed. This restriction now only
+  applies to inputs in `...`. When inputs are all named, they are
+  matched to the list by name. When they are all unnamed, they are
+  matched positionally. Otherwise, this is an error.
+
+* Fixed ordering of names returned by `accumulate_right()`
+  output. They now correspond to the order of inputs.
+
+* Fixed names of `accumulate()` output when `.init` is supplied.
+
+* `compose()` now supports composition with lambdas (@ColinFay, #556)
+
+* Fixed a `pmap()` crash with empty lists on the Win32 platform (#565).
+
+* `modify_depth` now has `.ragged` argument evaluates correctly to
+  `TRUE` by default when `.depth < 0` (@cderv, #530).
+
+* `accumulate()` now inherits names from their first input (@AshesITR, #446).
+
+* `attr_getter()` no longer uses partial matching. For example, if an
+  `x` object has a `labels` attribute but no `label` attribute,
+  `attr_getter("label")(x)` will no longer extract the `labels`
+  attribute (#460, @huftis).
+
+* `flatten_dfr()` and `flatten_dfc()` now aborts if dplyr is not installed. (#454)
+
+* `imap_dfr()` now works with `.id` argument is provided (#429)
+
+* `list_modify()`, `update_list()` and `list_merge()` now handle duplicate
+  duplicate argument names correctly (#441, @mgirlich).
+
+* `map_raw`, `imap_raw`, `flatten_raw`, `invoke_map_raw`, `map2_raw` and `pmap_raw`
+  added to support raw vectors. (#455, @romainfrancois)
+
+* `flatten()` now supports raw and complex elements.
+
+* `array_branch()` and `array_tree()` now retain the `dimnames()` of the input
+  array (#584, @flying-sheep)
+
 * `pluck()` no longer flattens lists of arguments. You can still do it
-  manually with `!!!`. This breaking change is for consistency with
-  other dots-collecting functions of the tidyverse.
+  manually with `!!!`. This change is for consistency with other
+  dots-collecting functions of the tidyverse.
 
 
 ## Life cycle
 
-* We had to rename `...f` to `.f` in `partial()` in order to support
-  `... = ` argument (which would otherwise partial-match on
-  `...f`). This also makes `partial()` more consistent with other
-  purrr function signatures.
+### `.dir` arguments
 
-* The `.lazy` argument of `partial()` is soft-deprecated in favour of
-  quasiquotation.
-
-* `%@%` is soft-deprecated, please use the operator exported in rlang
-  instead. The latter features an interface more consistent with `@`
-  as it uses NSE, supports S4 fields, and has an assignment variant.
+We have standardised the purrr API for reverse iteration with a common
+`.dir` argument.
 
 * `reduce_right()` is soft-deprecated and replaced by a new `.dir`
   argument of `reduce()`:
@@ -106,22 +278,26 @@
   detect(x, f, .dir = "backward")
   ```
 
-* Removing elements from lists using `NULL` in `list_modify()` is
-  soft-deprecated. Please use the new `zap()` sentinel reexported from
-  rlang instead:
 
-  ```{r}
-    # Before:
-    list_modify(x, foo = NULL)
+### Simplification of `partial()`
 
-    # After:
-    list_modify(x, foo = zap())
-  ```
+The interface of `partial()` has been simplified (see more about
+`partial()` below):
 
-  This change is motivated by the ambiguity of `NULL` as a deletion
-  sentinel because `NULL` is also a valid value in lists. In the
-  future, `NULL` will set an element to `NULL` rather than removing
-  the element.
+* The `.lazy` argument of `partial()` is soft-deprecated in favour of
+  quasiquotation.
+
+* We had to rename `...f` to `.f` in `partial()` in order to support
+  `... = ` argument (which would otherwise partial-match on
+  `...f`). This also makes `partial()` more consistent with other
+  purrr function signatures.
+
+
+### Retirement of `invoke()`
+
+`invoke()` and `invoke_map()` are retired in favour of `exec()`. Note
+that retired functions are no longer under active development, but
+continue to be maintained undefinitely in the package.
 
 * `invoke()` is retired in favour of the `exec()` function, reexported
   from rlang. `exec()` evaluates a function call built from its inputs
@@ -152,192 +328,39 @@
   map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
   ```
 
+
+### Other lifecycle changes
+
+* `%@%` is soft-deprecated, please use the operator exported in rlang
+  instead. The latter features an interface more consistent with `@`
+  as it uses NSE, supports S4 fields, and has an assignment variant.
+
+* Removing elements from lists using `NULL` in `list_modify()` is
+  soft-deprecated. Please use the new `zap()` sentinel reexported from
+  rlang instead:
+
+  ```{r}
+    # Before:
+    list_modify(x, foo = NULL)
+
+    # After:
+    list_modify(x, foo = zap())
+  ```
+
+  This change is motivated by the ambiguity of `NULL` as a deletion
+  sentinel because `NULL` is also a valid value in lists. In the
+  future, `NULL` will set an element to `NULL` rather than removing
+  the element.
+
 * `rerun()` is now in the questioning stage because we are no longer
-   convinced NSE functions are a good fit for purrr. Also, `rerun(n,
-   x)` can just as easily be expressed as `map(1:n, ~ x)` (with the
-   added benefit of being passed the current index as argument to the
-   lambda).
+  convinced NSE functions are a good fit for purrr. Also, `rerun(n,
+  x)` can just as easily be expressed as `map(1:n, ~ x)` (with the
+  added benefit of being passed the current index as argument to the
+  lambda).
 
 * `map_call()` is defunct.
 
 
-## Minor improvements and fixes
-
-* `partial()` now supports empty `... = ` argument to specify the
-  position of future arguments, relative to partialised ones. This
-  syntax is borrowed from (and implemented with) `rlang::call_modify()`.
-
-  To prevent partial matching of `...` on `...f`, the latter has been
-  renamed to `.f`, which is more consistent with other purrr function
-  signatures.
-
-* `partial()` now supports quasiquotation. When you unquote an
-  argument, it is evaluated only once at function creation time. This
-  is more flexible than the `.lazy` argument since you can control the
-  timing of evaluation for each argument. Consequently, `.lazy` is
-  soft-deprecated (#457).
-
-* Fixed an infinite loop when partialised function is given the same
-  name as the original function (#387).
-
-* `partial()` now calls `as_closure()` on primitive functions to
-  ensure argument matching (#360).
-
-* The `.lazy` argument of `partial()` is soft-deprecated in favour of
-  quasiquotation:
-
-  ```r
-  # Before
-  partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)
-
-  # After
-  partial(fn, u = !!runif(1), n = !!rnorm(1))  # All constant
-  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant
-  ```
-
-* New `rate_backoff()` and `rate_delay()` functions to create rate
-  objects. You can pass rates to `insistently()`, `slowly()`, or the
-  lower level function `rate_sleep()`. This will cause a function to
-  wait for a given amount of time with exponential backoff
-  (increasingly larger waiting times) or for a constant delay.
-
-* `insistently(f)` modifies a function, `f`, so that it is repeatedly
-  called until it succeeds (@richierocks, @ijlyttle).
-
-  `slowly()` modifies a function so that it waits for a given amount
-  of time between calls.
-
-* `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` now
-  terminate early when the function returns a value wrapped in a
-  `done()` (#253). When an empty `done()` is returned, the
-  value at the last iteration is returned instead.
-
-* New `done()` function. Use it to wrap a value and signal early
-  termination to a caller.
-
-* New `accumulate2()` function which is to `accumulate()` what
-  `reduce2()` is to `reduce()`.
-
-* `flatten()` now supports raw and complex elements.
-
-* By popular request, `at_depth()` has been brought back as
-  `map_depth()`. Like `modify_depth()`, it applies a function at a
-  specified level of a data structure. However, it transforms all
-  traversed vectors up to `.depth` to bare lists (#381).
-
-* `modify_depth()` now modifies atomic leaves as well. This makes
-  `modify_depth(x, 1, fn)` equivalent to `modify(x, fn)` (#359).
-
-* `compose()` now returns an identity function when called without
-  inputs.
-
-* Functions created with `compose()` now have the same formal
-  parameters as the first function to be called. They also feature a
-  more informative print method that prints all composed functions in
-  turn (@egnha, #366).
-
-* `list_modify()` now supports the `zap()` sentinel (reexported from
-  rlang) to remove elements from lists. Consequently, removing
-  elements with the ambiguous sentinel `NULL` is soft-deprecated.
-
-* The requirements of `list_modify()` and `list_merge()` have been
-  relaxed. Previously it required both the modified lists and the
-  inputs to be either named or unnamed. This restriction now only
-  applies to inputs in `...`. When inputs are all named, they are
-  matched to the list by name. When they are all unnamed, they are
-  matched positionally. Otherwise, this is an error.
-
-* `pluck()` now dispatches properly with S3 vectors. The vector class
-  must implement a `length()` method for numeric indexing and a
-  `names()` method for string indexing.
-
-* New `.else` argument for `map_if()` and `modify_if()`. They take an
-  alternative function that is mapped over elements of the input for
-  which the predicate function returns `FALSE` (#324).
-
-* New `assign_in()` and `pluck<-` functions. They modify a data
-  structure at an existing pluck location.
-
-* New `modify_in()` function to map a function at a pluck location.
-
-* Functions taking predicates (`map_if()`, `keep()`, `some()`,
-  `every()`, `keep()`, etc) now fail with an informative message when
-  the return value is not `TRUE` or `FALSE` (#470).
-
-  This is a breaking change for `every()` and `some()` which were
-  documented to be more liberal in the values they accepted as logical
-  (any vector was considered `TRUE` if not a single `FALSE` value, no
-  matter its length). These functions signal soft-deprecation warnings
-  instead of a hard failure.
-
-* `pluck()` now supports primitive functions (#404).
-
-* New `.dir` argument in `compose()`. When set to `"forward"`, the
-  functions are composed from left to right rather than right to left.
-
-* New `chuck()` function. This is a strict variant of `pluck()` that
-  throws errors when an element does not exist instead of returning
-  `NULL` (@daniel-barnett, #482).
-
-* The tibble package is now in Suggests rather than Imports. This
-  brings the hard dependency of purrr to just rlang and magrittr.
-
-* Fixed ordering of names returned by `accumulate_right()`
-  output. They now correspond to the order of inputs.
-
-* Fixed names of `accumulate()` output when `.init` is supplied.
-
-* New `modify2()` and `imodify()` functions. These work like `map()`
-  and `imap()` but preserve the type of `.x` in the return value.
-
-* `modify()` and variants are now implemented using `length()`, `[[`,
-  and `[[<-` methods. This implementation should be compatible with
-  most vector classes.
-
-* In `reduce2_right()`, `.y` and `.f` are now correctly passed through internal
-`reduce2_impl()`, in keeping with the documentation and `reduce_right()` (#500, @cderv).
-
-* `pmap()` and `pwalk()` now preserve class for inputs of `factor`, `Date`, `POSIXct`
-  and other atomic S3 classes with an appropriate `[[` method (#358, @mikmart).
-
-* `compose()` now supports composition with lambdas (@ColinFay, #556)
-
-* Fixed a `pmap()` crash with empty lists on the Win32 platform (#565).
-
-* `modify_depth` now has `.ragged` argument evaluates correctly to `TRUE` by
-default when `.depth < 0` (@cderv, #530)
-
-* `accumulate()` and `accumulate_right()` now inherit names from their first input (@AshesITR, #446)
-
-* `attr_getter()` no longer uses partial matching. For example,
-  if an `x` object has a `labels` attribute but no `label` attribute,
-  `attr_getter("label")(x)` will no longer extract the `labels`
-  attribute (#460, @huftis).
-
-* `flatten_dfr()` and `flatten_dfc()` now aborts if dplyr is not installed. (#454)
-
-* `imap_dfr()` now works with `.id` argument is provided (#429)
-
-* `map_at()`, `modify_at()` and `lmap_at()` accept negative values for `.at`, 
-  ignoring elements at those positions.
-
-* `map()` and `modify()` now work with calls and pairlists (#412).
-
-* `modify()`, `modify_if()` and `modify_at()` now preserve the class of atomic
-  vectors instead of promoting them to lists. New S3 methods are provided for
-  character, logical, double, and integer classes (@t-kalinowski, #417).
-
-* `list_modify()`, `update_list()` and `list_merge()` now handle duplicate
-  duplicate argument names correctly (#441, @mgirlich).
-  
-* `map_raw`, `imap_raw`, `flatten_raw`, `invoke_map_raw`, `map2_raw` and `pmap_raw`
-  added to support raw vectors. (#455, @romainfrancois)
-  
-* `some()` now returns `NA` only after it has checked all other predicates are 
-  either `NA` or `FALSE` (@daniel-barnett, #514).
-
-* `array_branch()` and `array_tree()` now retain the `dimnames()` of the input
-  array (#584, @flying-sheep)
 
 # purrr 0.2.5
 
