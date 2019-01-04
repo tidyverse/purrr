@@ -36,30 +36,6 @@ Version: 0.2.1
 
 Version: 0.1.0
 
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      2: stop(content, call. = F) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/alphavantager/new/alphavantager.Rcheck/00_pkg_src/alphavantager/R/av_get.R:103
-      
-      ── 3. Error: call Technical Indicators (@test_av_get.R#57)  ────────────────────
-      Thank you for using Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day. Please visit https://www.alphavantage.co/premium/ if you would like to target a higher API call frequency.. API parameters used: symbol=MSFT, function=SMA, interval=monthly, time_period=60, series_type=close, apikey=HIDDEN_FOR_YOUR_SAFETY
-      1: av_get(symbol, av_fun, interval = interval, time_period = time_period, series_type = series_type) at testthat/test_av_get.R:57
-      2: stop(content, call. = F) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/alphavantager/new/alphavantager.Rcheck/00_pkg_src/alphavantager/R/av_get.R:103
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 7 SKIPPED: 0 FAILED: 3
-      1. Error: call TIMES_SERIES_INTRADAY (@test_av_get.R#22) 
-      2. Error: call SECTOR (@test_av_get.R#38) 
-      3. Error: call Technical Indicators (@test_av_get.R#57) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 ## In both
 
 *   checking dependencies in R code ... NOTE
@@ -1135,34 +1111,6 @@ Version: 0.1.0
     Error: processing vignette 'eesim.Rmd' failed with diagnostics:
     pandoc document conversion failed with error 83
     Execution halted
-    ```
-
-# egor
-
-Version: 0.18.08-02
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        survey::svydesign(~1, data = egor)
-      Alter survey design:
-        Maximum nominations: Inf 
-      EI-Index: age
-      EI-Index: sex
-      EI-Index: sex
-      EI-Index: int_var
-      EI-Index: female
-      EI-Index: female
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 71 SKIPPED: 0 FAILED: 1
-      1. Failure: Methods work (properly) with NAs in grouping variable. (@test_clustered_graphs.R#67) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
 # emuR
@@ -2554,34 +2502,6 @@ Version: 2.0.2
     Execution halted
     ```
 
-# parsnip
-
-Version: 0.0.1
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      7: tibble(name = names(res), varying = unname(res), id = id, type = caller_method(cl)) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/parsnip/new/parsnip.Rcheck/00_pkg_src/parsnip/R/varying.R:120
-      8: as_tibble(lst_quos(xs, expand = TRUE))
-      9: as_tibble.list(lst_quos(xs, expand = TRUE))
-      10: list_to_tibble(x, validate)
-      11: check_tibble(x)
-      12: invalid_df("must be [a] 1d atomic vector(s) or [a] list(s)", x, !is_1d)
-      13: stopc(pluralise_msg("Column(s) ", vars), " ", pluralise(problem, vars))
-      14: abort(paste0(...))
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 453 SKIPPED: 77 FAILED: 1
-      1. Error: recipe parameters (@test_varying.R#99) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # pcr
 
 Version: 1.1.2
@@ -3560,18 +3480,18 @@ Version: 1.1.0
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      [1] "Estimated replications per hour:  3005771"
-      [1] "Estimated replications per hour:  395027"
-      [1] "Estimated replications per hour:  3597858"
-      [1] "Estimated replications per hour:  389273"
-      ── 1. Failure: Post analyze function works (@test_eval_tibbles.R#239)  ─────────
-      eg$simulation not identical to `expected_df`.
-      Cols in y but not x: `max`, `min`. 
-      Cols in x but not y: `results`. 
+      ── 2. Error: (unknown) (@test_eval_tibbles.R#68)  ──────────────────────────────
+      cannot open the connection
+      1: parallel::makeCluster(rep("localhost", 2), type = "PSOCK") at testthat/test_eval_tibbles.R:68
+      2: makePSOCKcluster(names = spec, ...)
+      3: newPSOCKnode(names[[i]], options = options, rank = i)
+      4: socketConnection("localhost", port = port, server = TRUE, blocking = TRUE, open = "a+b", 
+             timeout = timeout)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 56 SKIPPED: 0 FAILED: 1
-      1. Failure: Post analyze function works (@test_eval_tibbles.R#239) 
+      OK: 30 SKIPPED: 0 FAILED: 2
+      1. Error: (unknown) (@test_evalGrids.R#3) 
+      2. Error: (unknown) (@test_eval_tibbles.R#68) 
       
       Error: testthat unit tests failed
       Execution halted

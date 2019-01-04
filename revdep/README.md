@@ -47,24 +47,21 @@
 |[TPP](problems.md#tpp)                             |3.10.0  |1     |        |3    |
 |[wand](problems.md#wand)                           |0.2.0   |1     |        |     |
 
-## Broken (14)
+## Broken (11)
 
-|package                                          |version    |error  |warning |note |
-|:------------------------------------------------|:----------|:------|:-------|:----|
-|[abjutils](problems.md#abjutils)                 |0.2.1      |__+1__ |        |1    |
-|[alphavantager](problems.md#alphavantager)       |0.1.0      |__+1__ |        |1    |
-|[congressbr](problems.md#congressbr)             |0.1.7      |__+1__ |        |1    |
-|[egor](problems.md#egor)                         |0.18.08-02 |__+1__ |        |     |
-|[frite](problems.md#frite)                       |0.1.0      |__+2__ |__+1__  |     |
-|[ggeffects](problems.md#ggeffects)               |0.7.0      |__+1__ |__+1__  |1    |
-|[googledrive](problems.md#googledrive)           |0.1.2      |__+1__ |        |     |
-|[nonet](problems.md#nonet)                       |0.3.0      |__+1__ |        |-1   |
-|[parsnip](problems.md#parsnip)                   |0.0.1      |__+1__ |        |     |
-|[scriptName](problems.md#scriptname)             |1.0.0      |__+2__ |        |     |
-|[simTool](problems.md#simtool)                   |1.1.0      |__+2__ |__+1__  |     |
-|[survivalAnalysis](problems.md#survivalanalysis) |0.1.0      |       |__+1__  |     |
-|[tidytidbits](problems.md#tidytidbits)           |0.1.0      |       |__+1__  |     |
-|[valaddin](problems.md#valaddin)                 |0.1.2      |       |__+1__  |1    |
+|package                                          |version |error  |warning |note |
+|:------------------------------------------------|:-------|:------|:-------|:----|
+|[abjutils](problems.md#abjutils)                 |0.2.1   |__+1__ |        |1    |
+|[congressbr](problems.md#congressbr)             |0.1.7   |__+1__ |        |1    |
+|[frite](problems.md#frite)                       |0.1.0   |__+2__ |__+1__  |     |
+|[ggeffects](problems.md#ggeffects)               |0.7.0   |__+1__ |__+1__  |1    |
+|[googledrive](problems.md#googledrive)           |0.1.2   |__+1__ |        |     |
+|[nonet](problems.md#nonet)                       |0.3.0   |__+1__ |        |-1   |
+|[scriptName](problems.md#scriptname)             |1.0.0   |__+2__ |        |     |
+|[simTool](problems.md#simtool)                   |1.1.0   |__+2__ |__+1__  |     |
+|[survivalAnalysis](problems.md#survivalanalysis) |0.1.0   |       |__+1__  |     |
+|[tidytidbits](problems.md#tidytidbits)           |0.1.0   |       |__+1__  |     |
+|[valaddin](problems.md#valaddin)                 |0.1.2   |       |__+1__  |1    |
 
 ## All (440)
 
@@ -73,7 +70,7 @@
 |[abjutils](problems.md#abjutils)                         |0.2.1      |__+1__ |        |1    |
 |adaptalint                                               |0.2.3      |       |        |     |
 |ahnr                                                     |0.3.1      |       |        |     |
-|[alphavantager](problems.md#alphavantager)               |0.1.0      |__+1__ |        |1    |
+|[alphavantager](problems.md#alphavantager)               |0.1.0      |       |        |1    |
 |[amt](problems.md#amt)                                   |0.0.5.0    |       |        |1    |
 |[anomalize](problems.md#anomalize)                       |0.1.1      |       |        |1    |
 |[anomalyDetection](problems.md#anomalydetection)         |0.2.5      |1      |        |     |
@@ -172,7 +169,7 @@
 |edgarWebR                                                |1.0.0      |       |        |     |
 |[eechidna](problems.md#eechidna)                         |1.1        |       |        |1    |
 |[eesim](problems.md#eesim)                               |0.1.0      |       |1       |     |
-|[egor](problems.md#egor)                                 |0.18.08-02 |__+1__ |        |     |
+|egor                                                     |0.18.08-02 |       |        |     |
 |embed                                                    |0.0.2      |       |        |     |
 |[emuR](problems.md#emur)                                 |1.1.1      |       |1       |1    |
 |[enrichplot](problems.md#enrichplot)                     |1.2.0      |1      |        |1    |
@@ -321,7 +318,7 @@
 |[openVA](problems.md#openva)                             |1.0.7      |1      |        |     |
 |[optiSel](problems.md#optisel)                           |2.0.2      |       |1       |     |
 |pammtools                                                |0.1.8      |       |        |     |
-|[parsnip](problems.md#parsnip)                           |0.0.1      |__+1__ |        |     |
+|parsnip                                                  |0.0.1      |       |        |     |
 |patrick                                                  |0.0.1      |       |        |     |
 |patternize                                               |0.0.2      |       |        |     |
 |[pcr](problems.md#pcr)                                   |1.1.2      |       |1       |     |
