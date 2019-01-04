@@ -166,7 +166,7 @@ named function.</p></td>
       <td><p>named arguments to <code>.f</code> that should be partially applied.</p>
 <p>Pass an empty <code>... = </code> argument to specify the position of future
 arguments relative to partialised ones. See
-<code><a href='https://rlang.r-lib.org/reference/call_modify.html'>rlang::call_modify()</a></code> to learn more about this syntax.</p>
+<code><a href='https://www.rdocumentation.org/packages/rlang/topics/call_modify'>rlang::call_modify()</a></code> to learn more about this syntax.</p>
 <p>These dots support quasiquotation and quosures. If you unquote a
 value, it is evaluated only once at function creation time.
 Otherwise, it is evaluated each time the function is called.</p></td>
@@ -200,7 +200,7 @@ arguments.</p></td>
 
 <span class='co'># and the generated source code is very similar to what we made by hand</span>
 <span class='no'>compact1</span></div><div class='output co'>#&gt; function(x) discard(x, is.null)
-#&gt; &lt;environment: 0x58fdd18&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; &lt;partialised&gt;
+#&gt; &lt;environment: 0x45fc128&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; &lt;partialised&gt;
 #&gt; function (...) 
 #&gt; discard(.p = is.null, ...)</div><div class='input'>
 <span class='co'># Note that the evaluation occurs "lazily" so that arguments will be</span>

@@ -290,7 +290,7 @@ map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
 <span class='co'># If you have pairs of function name and arguments, it's natural</span>
 <span class='co'># to store them in a data frame. Here we use a tibble because</span>
 <span class='co'># it has better support for list-columns</span>
-<span class='kw'>if</span> (<span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/is_installed.html'>is_installed</a></span>(<span class='st'>"tibble"</span>)) {
+<span class='kw'>if</span> (<span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rlang/topics/is_installed'>is_installed</a></span>(<span class='st'>"tibble"</span>)) {
   <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></span>(
     <span class='kw'>f</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"runif"</span>, <span class='st'>"rpois"</span>, <span class='st'>"rnorm"</span>),
     <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
