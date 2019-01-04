@@ -49,3 +49,13 @@ test_that("map2 takes only names from x", {
 test_that("map2 always returns a list", {
   expect_is(map2(mtcars, 0, ~mtcars), "list")
 })
+
+test_that("map2() with empty input copies names", {
+  named_list <- named(list())
+  expect_identical(    map2(named_list, list(), identity), named(list()))
+  expect_identical(map2_lgl(named_list, list(), identity), named(lgl()))
+  expect_identical(map2_int(named_list, list(), identity), named(int()))
+  expect_identical(map2_dbl(named_list, list(), identity), named(dbl()))
+  expect_identical(map2_chr(named_list, list(), identity), named(chr()))
+  expect_identical(map2_raw(named_list, list(), identity), named(raw()))
+})

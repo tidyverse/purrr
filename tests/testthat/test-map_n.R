@@ -80,3 +80,13 @@ test_that("map2() and pmap() don't evaluate symbolic objects", {
   map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
   pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
+
+test_that("pmap() with empty input copies names", {
+  named_list <- list(named(list()))
+  expect_identical(    pmap(named_list, identity), named(list()))
+  expect_identical(pmap_lgl(named_list, identity), named(lgl()))
+  expect_identical(pmap_int(named_list, identity), named(int()))
+  expect_identical(pmap_dbl(named_list, identity), named(dbl()))
+  expect_identical(pmap_chr(named_list, identity), named(chr()))
+  expect_identical(pmap_raw(named_list, identity), named(raw()))
+})

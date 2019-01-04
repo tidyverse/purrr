@@ -146,3 +146,13 @@ test_that("error message follows style guide when result is not length 1", {
     "Result 2 must be a single integer, not an integer vector of length 2"
   )
 })
+
+test_that("map() with empty input copies names", {
+  named_list <- named(list())
+  expect_identical(    map(named_list, identity), named(list()))
+  expect_identical(map_lgl(named_list, identity), named(lgl()))
+  expect_identical(map_int(named_list, identity), named(int()))
+  expect_identical(map_dbl(named_list, identity), named(dbl()))
+  expect_identical(map_chr(named_list, identity), named(chr()))
+  expect_identical(map_raw(named_list, identity), named(raw()))
+})
