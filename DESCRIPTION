@@ -14,7 +14,7 @@ Depends:
     R (>= 3.1)
 Imports: 
     magrittr (>= 1.5),
-    rlang (>= 0.3.0.9002)
+    rlang (>= 0.3.1)
 Suggests: 
     covr,
     crayon,
@@ -23,8 +23,6 @@ Suggests:
     rmarkdown,
     testthat,
     tibble
-Remotes:
-    r-lib/rlang@rc-0.3.1
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
