@@ -13,10 +13,8 @@ home:
     href: http://r4ds.had.co.nz/iteration.html
 
 navbar:
-  structure:
-    left:  [home, reference, news]
-    right: [github]
   components:
+    home: ~
     news:
       text: News
       menu:
