@@ -1,24 +1,37 @@
-context("list_modify")
+context("list-modify")
 
 # list_modify -------------------------------------------------------------
 
 test_that("named lists have values replaced by name", {
   expect_equal(list_modify(list(a = 1), b = 2), list(a = 1, b = 2))
   expect_equal(list_modify(list(a = 1), a = 2), list(a = 2))
-  expect_equal(list_modify(list(a = 1, b = 2), b = NULL), list(a = 1))
+  expect_equal(list_modify(list(a = 1, b = 2), b = zap()), list(a = 1))
 })
 
 test_that("unnamed lists are replaced by position", {
   expect_equal(list_modify(list(3), 1, 2), list(1, 2))
   expect_equal(list_modify(list(1, 2, 3), 4), list(4, 2, 3))
-  expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })
 
-test_that("error if one named and the other is not", {
+test_that("can remove elements with `zap()`", {
+  expect_equal(list_modify(list(1, 2, 3), zap(), zap()), list(3))
+  expect_equal(list_modify(list(a = 1, b = 2, c = 3), b = zap(), a = zap()), list(c = 3))
+})
+
+test_that("error if inputs are not all named or unnamed", {
   expect_error(
-    list_modify(list(a = 1), 2),
-    "must be either both named or both unnamed"
+    list_modify(list(a = 1), 2, a = 2),
+    "must be either all named, or all unnamed"
   )
+})
+
+test_that("can update unnamed lists with named inputs", {
+  expect_identical(list_modify(list(1), a = 2), list(1, a = 2))
+})
+
+test_that("can update named lists with unnamed inputs", {
+  expect_identical(list_modify(list(a = 1, b = 2), 2), list(a = 2, b = 2))
+  expect_identical(list_modify(list(a = 1, b = 2), 2, 3, 4), list(a = 2, b = 3, 4))
 })
 
 test_that("lists are replaced recursively", {
@@ -66,7 +79,7 @@ test_that("list_merge concatenates without needing names", {
 
 test_that("list_merge returns the non-empty list", {
   expect_equal(list_merge(list(3)), list(3))
-  expect_equal(list_merge(list(), 2), set_names(list(2), ""))
+  expect_equal(list_merge(list(), 2), list(2))
 })
 
 test_that("list_merge handles duplicate names", {
@@ -82,4 +95,17 @@ test_that("can modify element called x", {
 test_that("quosures and formulas are evaluated", {
   expect_identical(update_list(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
   expect_identical(update_list(list(x = 1), y = ~x + 1), list(x = 1, y = 2))
+})
+
+
+# Life cycle --------------------------------------------------------------
+
+test_that("removing elements with `NULL` is deprecated", {
+  scoped_lifecycle_warnings()
+  expect_warning(list_modify(list(1, 2, 3), NULL, NULL), list(3), "deprecated")
+})
+
+test_that("can still remove elements with `NULL`", {
+  scoped_lifecycle_silence()
+  expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })

@@ -24,7 +24,7 @@ head_while <- function(.x, .p, ...) {
 #' @rdname head_while
 tail_while <- function(.x, .p, ...) {
   # Find location of last FALSE
-  loc <- detect_index(.x, negate(.p), ..., .right = TRUE)
+  loc <- detect_index(.x, negate(.p), ..., .dir = "backward")
   if (loc == 0) return(.x)
 
   .x[-seq_len(loc)]

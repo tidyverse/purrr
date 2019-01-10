@@ -45,11 +45,19 @@
 #' # margin argument:
 #' array_tree(x, c(3, 1)) %>% str()
 array_branch <- function(array, margin = NULL) {
-  dim(array) <- dim(array) %||% length(array)
-  margin <- margin %||% seq_along(dim(array))
+  dims <- dim(array) %||% length(array)
+  margin <- margin %||% seq_along(dims)
 
   if (length(margin) == 0) {
     list(array)
+  } else if (is.null(dim(array))) {
+    if (!identical(as.integer(margin), 1L)) {
+      abort(sprintf(
+        "`margin` must be `NULL` or `1` with 1D arrays, not `%s`",
+        toString(margin)
+      ))
+    }
+    as.list(array)
   } else {
     flatten(apply(array, margin, list))
   }
@@ -58,8 +66,8 @@ array_branch <- function(array, margin = NULL) {
 #' @rdname array-coercion
 #' @export
 array_tree <- function(array, margin = NULL) {
-  dim(array) <- dim(array) %||% length(array)
-  margin <- margin %||% seq_along(dim(array))
+  dims <- dim(array) %||% length(array)
+  margin <- margin %||% seq_along(dims)
 
   if (length(margin) > 1) {
     new_margin <- ifelse(margin[-1] > margin[[1]], margin[-1] - 1, margin[-1])

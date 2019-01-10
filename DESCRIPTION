@@ -1,6 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.2.4.9000
+Version: 0.2.99.9000
 Authors@R: c(
     person("Lionel", "Henry", , "lionel@rstudio.com", c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
@@ -14,17 +14,17 @@ Depends:
     R (>= 3.1)
 Imports: 
     magrittr (>= 1.5),
-    rlang (>= 0.1),
-    tibble
+    rlang (>= 0.3.1)
 Suggests: 
     covr,
-    dplyr (>= 0.7.4.9003),
+    crayon,
+    dplyr (>= 0.7.8),
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    tibble
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-Remotes: tidyverse/dplyr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

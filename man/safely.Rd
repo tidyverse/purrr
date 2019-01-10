@@ -30,12 +30,11 @@ are three ways to refer to the arguments:
 
 This syntax allows you to create very compact anonymous functions.
 
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
-is converted to an extractor function. Character vectors index by name
-and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in \code{\link[=get-attr]{get-attr()}}
-to extract named attributes. If a component is not present, the value of
-\code{.default} will be returned.}
+If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
+converted to an extractor function. Character vectors index by
+name and numeric vectors index by position; use a list to index
+by position and name at different levels. If a component is not
+present, the value of \code{.default} will be returned.}
 
 \item{otherwise}{Default value to use when an error occurs.}
 
@@ -44,7 +43,9 @@ as they occur?}
 }
 \value{
 \code{safely}: wrapped function instead returns a list with
-components \code{result} and \code{error}. One value is always \code{NULL}.
+components \code{result} and \code{error}. If an error occurred, \code{error} is
+an \code{error} object and \code{result} has a default value (\code{otherwise}).
+Else \code{error} is \code{NULL}.
 
 \code{quietly}: wrapped function instead returns a list with components
 \code{result}, \code{output}, \code{messages} and \code{warnings}.

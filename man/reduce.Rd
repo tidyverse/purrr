@@ -2,63 +2,138 @@
 % Please edit documentation in R/reduce.R
 \name{reduce}
 \alias{reduce}
-\alias{reduce_right}
 \alias{reduce2}
-\alias{reduce2_right}
-\title{Reduce a list to a single value by iteratively applying a binary function.}
+\title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
-reduce(.x, .f, ..., .init)
-
-reduce_right(.x, .f, ..., .init)
+reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
 
 reduce2(.x, .y, .f, ..., .init)
-
-reduce2_right(.x, .y, .f, ..., .init)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, a 2-argument function. The function will be
-passed the accumulated value as the first argument and the "next" value
-as the second argument.
+\item{.f}{For \code{reduce()}, and \code{accumulate()}, a 2-argument
+function. The function will be passed the accumulated value as
+the first argument and the "next" value as the second argument.
 
-For \code{reduce2()}, a 3-argument function. The function will be passed the
-accumulated value as the first argument, the next value of \code{.x} as the
-second argument, and the next value of \code{.y} as the third argument.}
+For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
+function will be passed the accumulated value as the first
+argument, the next value of \code{.x} as the second argument, and the
+next value of \code{.y} as the third argument.
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+The reduction terminates early if \code{.f} returns a value wrapped in
+a \code{\link[=done]{done()}}.}
+
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
 
-\item{.y}{For \code{reduce2()}, an additional argument that is passed to
-\code{.f}. If \code{init} is not set, \code{.y} should be 1 element shorter than
-\code{.x}.}
+\item{.dir}{The direction of reduction as a string, one of
+\code{"forward"} (the default) or \code{"backward"}. See the section about
+direction below.}
+
+\item{.y}{For \code{reduce2()} and \code{accumulate2()}, an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \description{
-\code{reduce()} combines from the left, \code{reduce_right()} combines from
-the right. \code{reduce(list(x1, x2, x3), f)} is equivalent to
-\code{f(f(x1, x2), x3)}; \code{reduce_right(list(x1, x2, x3), f)} is equivalent to
-\code{f(f(x3, x2), x1)}.
+\code{reduce()} is an operation that combines the elements of a vector
+into a single value. The combination is driven by \code{.f}, a binary
+function that takes two values and returns a single value: reducing
+\code{f} over \code{1:3} computes the value \code{f(f(1, 2), 3)}.
 }
+\section{Direction}{
+
+
+When \code{.f} is an associative operation like \code{+} or \code{c()}, the
+direction of reduction does not matter. For instance, reducing the
+vector \code{1:3} with the binary function \code{+} computes the sum \code{((1 + 2) + 3)} from the left, and the same sum \code{(1 + (2 + 3))} from the
+right.
+
+In other cases, the direction has important consequences on the
+reduced value. For instance, reducing a vector with \code{list()} from
+the left produces a left-leaning nested list (or tree), while
+reducing \code{list()} from the right produces a right-leaning list.
+}
+
+\section{Life cycle}{
+
+
+\code{reduce_right()} is soft-deprecated as of purrr 0.3.0. Please use
+the \code{.dir} argument of \code{reduce()} instead. Note that the algorithm
+has changed. Whereas \code{reduce_right()} computed \code{f(f(3, 2), 1)},
+\code{reduce(.dir = \"backward\")} computes \code{f(1, f(2, 3))}. This is the
+standard way of reducing from the right.
+
+To update your code with the same reduction as \code{reduce_right()},
+simply reverse your vector and use a left reduction:\preformatted{# Before:
+reduce_right(1:3, f)
+
+# After:
+reduce(rev(1:3), f)
+}
+
+\code{reduce2_right()} is soft-deprecated as of purrr 0.3.0 without
+replacement. It is not clear what algorithmic properties should a
+right reduction have in this case. Please reach out if you know
+about a use case for a right reduction with a ternary function.
+}
+
 \examples{
+# Reducing `+` computes the sum of a vector while reducing `*`
+# computes the product:
 1:3 \%>\% reduce(`+`)
 1:10 \%>\% reduce(`*`)
 
+# When the operation is associative, the direction of reduction
+# does not matter:
+reduce(1:4, `+`)
+reduce(1:4, `+`, .dir = "backward")
+
+# However with non-associative operations, the reduced value will
+# be different as a function of the direction. For instance,
+# `list()` will create left-leaning lists when reducing from the
+# right, and right-leaning lists otherwise:
+str(reduce(1:4, list))
+str(reduce(1:4, list, .dir = "backward"))
+
+# reduce2() takes a ternary function and a second vector that is
+# one element smaller than the first vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% reduce(paste2)
 letters[1:4] \%>\% reduce2(c("-", ".", "-"), paste2)
 
-samples <- rerun(2, sample(10, 5))
-samples
-reduce(samples, union)
-reduce(samples, intersect)
-
 x <- list(c(0, 1), c(2, 3), c(4, 5))
-x \%>\% reduce(c)
-x \%>\% reduce_right(c)
-# Equivalent to:
-x \%>\% rev() \%>\% reduce(c)
+y <- list(c(6, 7), c(8, 9))
+reduce2(x, y, paste)
+
+
+# You can shortcircuit a reduction and terminate it early by
+# returning a value wrapped in a done(). In the following example
+# we return early if the result-so-far, which is passed on the LHS,
+# meets a condition:
+paste3 <- function(out, input, sep = ".") {
+  if (nchar(out) > 4) {
+    return(done(out))
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% reduce(paste3)
+
+# Here the early return branch checks the incoming inputs passed on
+# the RHS:
+paste4 <- function(out, input, sep = ".") {
+  if (input == "j") {
+    return(done(out))
+  }
+  paste(out, input, sep = sep)
+}
+letters \%>\% reduce(paste4)
+}
+\seealso{
+\code{\link[=accumulate]{accumulate()}} for a version that returns all intermediate
+values of the reduction.
 }

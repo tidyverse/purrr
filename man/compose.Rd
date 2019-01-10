@@ -4,10 +4,19 @@
 \alias{compose}
 \title{Compose multiple functions}
 \usage{
-compose(...)
+compose(..., .dir = c("backward", "forward"))
 }
 \arguments{
-\item{...}{n functions to apply in order from right to left.}
+\item{...}{Functions to apply in order (from right to left by
+default). Formulas are converted to functions in the usual way.
+
+These dots support \link[rlang:list2]{tidy dots} features. In
+particular, if your functions are stored in a list, you can
+splice that in with \code{!!!}.}
+
+\item{.dir}{If \code{"backward"} (the default), the functions are called
+in the reverse order, from right to left, as is conventional in
+mathematics. If \code{"forward"}, they are called from left to right.}
 }
 \value{
 A function
@@ -22,4 +31,16 @@ not_null(NULL)
 
 add1 <- function(x) x + 1
 compose(add1, add1)(8)
+
+# You can use the formula shortcut for functions:
+fn <- compose(~ paste(.x, "foo"), ~ paste(.x, "bar"))
+fn("input")
+
+# Lists of functions can be spliced with !!!
+fns <- list(
+  function(x) paste(x, "foo"),
+  ~ paste(.x, "bar")
+)
+fn <- compose(!!!fns)
+fn("input")
 }

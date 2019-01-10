@@ -1,12 +1,12 @@
 context("pmap")
 
 test_that("input must be a list of vectors", {
-  expect_error(pmap(environment(), identity), "not a list")
-  expect_error(pmap(list(environment()), identity), "not a vector")
+  expect_error(pmap(environment(), identity), "`.l` must be a list, not an environment")
+  expect_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
 })
 
 test_that("elements must be same length", {
-  expect_error(pmap(list(1:2, 1:3), identity), "has length 2")
+  expect_error(pmap(list(1:2, 1:3), identity), "Element 1 of `.l` must have length 1 or 3, not 2")
 })
 
 test_that("handles any length 0 input", {
@@ -63,4 +63,30 @@ test_that("pmap on data frames performs rowwise operations", {
 
 test_that("pmap works with empty lists", {
   expect_identical(pmap(list(), identity), list())
+})
+
+test_that("preserves S3 class of input vectors (#358)", {
+  date <- as.Date("2018-09-27")
+  expect_equal(pmap(list(date), identity), list(date))
+  expect_output(pwalk(list(date), print), format(date))
+})
+
+test_that("walk2() and pwalk() don't evaluate symbolic objects", {
+  walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+  pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
+})
+
+test_that("map2() and pmap() don't evaluate symbolic objects", {
+  map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+  pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
+})
+
+test_that("pmap() with empty input copies names", {
+  named_list <- list(named(list()))
+  expect_identical(    pmap(named_list, identity), named(list()))
+  expect_identical(pmap_lgl(named_list, identity), named(lgl()))
+  expect_identical(pmap_int(named_list, identity), named(int()))
+  expect_identical(pmap_dbl(named_list, identity), named(dbl()))
+  expect_identical(pmap_chr(named_list, identity), named(chr()))
+  expect_identical(pmap_raw(named_list, identity), named(raw()))
 })

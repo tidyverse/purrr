@@ -3,6 +3,8 @@
 #include <Rversion.h>
 #include <Rinternals.h>
 #include "coerce.h"
+#include "conditions.h"
+#include "utils.h"
 
 void copy_names(SEXP from, SEXP to) {
   if (Rf_length(from) != Rf_length(to))
@@ -16,15 +18,11 @@ void copy_names(SEXP from, SEXP to) {
 }
 
 void check_vector(SEXP x, const char *name) {
-  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x))
+  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
     return;
+  }
 
-  Rf_errorcall(
-    R_NilValue,
-    "`%s` is not a vector (%s)",
-    name,
-    Rf_type2char(TYPEOF(x))
-  );
+  stop_bad_type(x, "a vector", NULL, name);
 }
 
 // call must involve i
@@ -46,8 +44,10 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
 #else
     SEXP res = PROTECT(Rf_eval(call, env));
 #endif
-    if (type != VECSXP && Rf_length(res) != 1)
-      Rf_errorcall(R_NilValue, "Result %i is not a length 1 atomic vector", i + 1);
+    if (type != VECSXP && Rf_length(res) != 1) {
+      SEXP ptype = PROTECT(Rf_allocVector(type, 0));
+      stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);
+    }
 
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);
@@ -71,7 +71,10 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
 
   int n = Rf_length(x_val);
   if (n == 0) {
-    return Rf_allocVector(type, 0);
+    SEXP out = PROTECT(Rf_allocVector(type, 0));
+    copy_names(x_val, out);
+    UNPROTECT(1);
+    return out;
   }
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
@@ -106,11 +109,18 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx == 0 || ny == 0) {
-    UNPROTECT(2);
-    return Rf_allocVector(type, 0);
+    SEXP out = PROTECT(Rf_allocVector(type, 0));
+    copy_names(x_val, out);
+    UNPROTECT(3);
+    return out;
   }
   if (nx != ny && !(nx == 1 || ny == 1)) {
-    Rf_errorcall(R_NilValue, "`.x` (%i) and `.y` (%i) are different lengths", nx, ny);
+    Rf_errorcall(R_NilValue,
+                 "Mapped vectors must have consistent lengths:\n"
+                 "* `.x` has length %d\n"
+                 "* `.y` has length %d",
+                 nx,
+                 ny);
   }
   int n = (nx > ny) ? nx : ny;
 
@@ -133,8 +143,9 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   SEXP l_val = PROTECT(Rf_eval(l, env));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  if (!Rf_isVectorList(l_val))
-    Rf_errorcall(R_NilValue, "`.x` is not a list (%s)", Rf_type2char(TYPEOF(l_val)));
+  if (!Rf_isVectorList(l_val)) {
+    stop_bad_type(l_val, "a list", NULL, l_name);
+  }
 
   // Check all elements are lists and find maximum length
   int m = Rf_length(l_val);
@@ -143,15 +154,19 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
-      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", j + 1, Rf_type2char(TYPEOF(j_val)));
+      stop_bad_element_type(j_val, j + 1, "a vector", NULL, l_name);
     }
 
     int nj = Rf_length(j_val);
 
     if (nj == 0) {
-      UNPROTECT(1);
-      return Rf_allocVector(type, 0);
-    } else if (nj > n) {
+      SEXP out = PROTECT(Rf_allocVector(type, 0));
+      copy_names(j_val, out);
+      UNPROTECT(2);
+      return out;
+    }
+
+    if (nj > n) {
       n = nj;
     }
 
@@ -162,8 +177,9 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     SEXP j_val = VECTOR_ELT(l_val, j);
     int nj = Rf_length(j_val);
 
-    if (nj != 1 && nj != n)
-      Rf_errorcall(R_NilValue, "Element %i has length %i, not 1 or %i.", j + 1, nj, n);
+    if (nj != 1 && nj != n) {
+      stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
+    }
   }
 
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));
@@ -174,7 +190,11 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   SEXP i = Rf_install("i");
   SEXP one = PROTECT(Rf_ScalarInteger(1));
 
-  // Construct call like f(.x[[c(1, i)]], .x[[c(2, i)]], ...)
+  // Construct call like f(.l[[1]][[i]], .l[[2]][[i]], ...)
+  //
+  // Currently accessing S3 vectors in a list like .l[[c(1, i)]] will not
+  // preserve the class (cf. #358).
+  //
   // We construct the call backwards because can only add to the front of a
   // linked list. That makes PROTECTion tricky because we need to update it
   // each time to point to the start of the linked list.
@@ -186,10 +206,10 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
   for (int j = m - 1; j >= 0; --j) {
     int nj = Rf_length(VECTOR_ELT(l_val, j));
 
-    // Construct call like .l[[c(j, i)]]
+    // Construct call like .l[[j]][[i]]
     SEXP j_ = PROTECT(Rf_ScalarInteger(j + 1));
-    SEXP ji_ = PROTECT(Rf_lang3(Rf_install("c"), j_, nj == 1 ? one : i));
-    SEXP l_ji = PROTECT(Rf_lang3(R_Bracket2Symbol, l, ji_));
+    SEXP l_j = PROTECT(Rf_lang3(R_Bracket2Symbol, l, j_));
+    SEXP l_ji = PROTECT(Rf_lang3(R_Bracket2Symbol, l_j, nj == 1 ? one : i));
 
     REPROTECT(f_call = Rf_lcons(l_ji, f_call), fi);
     if (has_names && CHAR(STRING_ELT(l_names, j))[0] != '\0')

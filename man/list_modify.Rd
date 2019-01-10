@@ -13,9 +13,15 @@ list_merge(.x, ...)
 \arguments{
 \item{.x}{List to modify.}
 
-\item{...}{New values of a list. Use \code{NULL} to remove values.
-Use a formula to evaluate in the context of the list values.
-These dots have \link[rlang:dots_list]{splicing semantics}.}
+\item{...}{New values of a list. Use \code{zap()} to remove values.
+
+These values should be either all named or all unnamed. When
+inputs are all named, they are matched to \code{.x} by name. When they
+are all unnamed, they are matched positionally.
+
+These dots support \link[rlang:list2]{tidy dots} features. In
+particular, if your functions are stored in a list, you can
+splice that in with \code{!!!}.}
 }
 \description{
 \code{list_modify()} and \code{list_merge()} recursively combine two lists, matching
@@ -37,21 +43,16 @@ str(list_modify(x, a = 1))
 # Replace values
 str(list_modify(x, z = 5))
 str(list_modify(x, z = list(a = 1:5)))
+
 # Remove values
-str(list_modify(x, z = NULL))
+str(list_modify(x, z = zap()))
 
 # Combine values
 str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 
 
-# All these functions take dots with splicing. Use !!! or UQS() to
-# splice a list of arguments:
-l <- list(new = 1, y = NULL, z = 5)
-str(list_modify(x, !!! l))
-
-# In update_list() you can also use quosures and formulas to
-# compute new values. This function is likely to be deprecated in
-# the future
-str(update_list(x, z1 = ~z[[1]]))
-str(update_list(x, z = rlang::quo(x + y)))
+# All these functions support tidy dots features. Use !!! to splice
+# a list of arguments:
+l <- list(new = 1, y = zap(), z = 5)
+str(list_modify(x, !!!l))
 }

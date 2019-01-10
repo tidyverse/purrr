@@ -1,9 +1,5 @@
 context("utils")
 
-test_that("%@% is an infix attribute accessor", {
-  expect_identical(mtcars %@% "names", attr(mtcars, "names"))
-})
-
 test_that("rbernoulli is a special case of rbinom", {
   set.seed(1)
   x <- rbernoulli(10)
@@ -28,4 +24,11 @@ test_that("rdunif fails if a and b are not unit length numbers", {
 test_that("has_names returns vector of logicals", {
   expect_equal(has_names(letters %>% set_names()), rep_along(letters, TRUE))
   expect_equal(has_names(letters), rep_along(letters, FALSE))
+})
+
+# Lifecycle ---------------------------------------------------------------
+
+test_that("%@% is an infix attribute accessor", {
+  scoped_lifecycle_silence()
+  expect_identical(mtcars %@% "names", attr(mtcars, "names"))
 })

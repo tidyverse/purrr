@@ -1,39 +1,63 @@
 #' Modify elements selectively
 #'
-#' `modify()` is a short-cut for `x[] <- map(x, .f); return(x)`. `modify_if()`
-#' only modifies the elements of `x` that satisfy a predicate and leaves the
-#' others unchanged. `modify_at()` only modifies elements given by names or
-#' positions. `modify_depth()` only modifies elements at a given level of a
-#' nested data structure.
+#' @description
+#'
+#' Unlike [map()] and its variants which always return a fixed object
+#' type (list for `map()`, integer vector for `map_int()`, etc), the
+#' `modify()` family always returns the same type as the input object.
+#'
+#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]);
+#'   return(x)`.
+#'
+#' * `modify_if()` only modifies the elements of `x` that satisfy a
+#'   predicate and leaves the others unchanged. `modify_at()` only
+#'   modifies elements given by names or positions.
+#'
+#' * `modify2()` modifies the elements of `.x` but also passes the
+#'   elements of `.y` to `.f`, just like [map2()]. `imodify()` passes
+#'   the names or the indices to `.f` like [imap()] does.
+#'
+#' * `modify_depth()` only modifies elements at a given level of a
+#'   nested data structure.
+#'
+#' @inheritParams map
+#' @inheritParams map2
+#' @param .depth Level of `.x` to map on. Use a negative value to count up
+#'   from the lowest level of the list.
+#'
+#'   * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`.
+#'   * `modify_depth(x, 1, fun)` is equivalent to `x <- modify(x, fun)`
+#'   * `modify_depth(x, 2, fun)` is equivalent to `x <- modify(x, ~ modify(., fun))`
+#' @return An object the same class as `.x`
+#'
+#' @details
 #'
 #' Since the transformation can alter the structure of the input; it's
 #' your responsibility to ensure that the transformation produces a
 #' valid output. For example, if you're modifying a data frame, `.f`
 #' must preserve the length of the input.
 #'
-#'
 #' @section Genericity:
 #'
-#' All these functions are S3 generic. However, the default method is
-#' sufficient in many cases. It should be suitable for any data type
-#' that implements the subset-assignment method `[<-`. Methods are provided
-#' for character, logical, integer and double classes (counterparts to `map_chr`,
-#' `map_lgl`, `map_int`, and `map_dbl`)
+#' `modify()` and variants are generic over classes that implement
+#' `length()`, `[[` and `[[<-` methods. If the default implementation
+#' is not compatible for your class, you can override them with your
+#' own methods.
 #'
-#' In some cases it may make sense to provide a custom implementation
-#' with a method suited to your S3 class. For example, a `grouped_df`
-#' method might take into account the grouped nature of a data frame.
+#' If you implement your own `modify()` method, make sure it satisfies
+#' the following invariants:
 #'
-#' @inheritParams map
-#' @param .depth Level of `.x` to map on. Use a negative value to count up
-#'  from the lowest level of the list.
+#' ```
+#' modify(x, identity) === x
+#' modify(x, compose(f, g)) === modify(x, g) %>% modify(f)
+#' ```
 #'
-#'  * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`
-#'  * `modify_depth(x, 1, fun)` is equivalent to `x[] <- map(x, fun)`
-#'  * `modify_depth(x, 2, fun)` is equivalent to `x[] <- map(x, ~ map(., fun))`
-#' @return An object the same class as `.x`
+#' These invariants are known as the [functor
+#' laws](https://wiki.haskell.org/Functor#Functor_Laws) in computer
+#' science.
+#'
+#'
 #' @family map variants
-#' @export
 #' @examples
 #' # Convert factors to characters
 #' iris %>%
@@ -52,6 +76,19 @@
 #'   transpose() %>%
 #'   simplify_all()
 #'
+#' # Use modify2() to map over two vectors and preserve the type of
+#' # the first one:
+#' x <- c(foo = 1L, bar = 2L)
+#' y <- c(TRUE, FALSE)
+#' modify2(x, y, ~ if (.y) .x else 0L)
+#'
+#' # Use a predicate function to decide whether to map a function:
+#' modify_if(iris, is.factor, as.character)
+#'
+#' # Specify an alternative with the `.else` argument:
+#' modify_if(iris, is.factor, as.character, .else = as.integer)
+#'
+#'
 #' # Modify at specified depth ---------------------------
 #' l1 <- list(
 #'   obj1 = list(
@@ -68,6 +105,13 @@
 #' # is level 3. To apply sum() on all params, we map it at depth 3:
 #' l1 %>% modify_depth(3, sum) %>% str()
 #'
+#' # Note that vectorised operations will yield the same result when
+#' # applied at the list level as when applied at the atomic result.
+#' # The former is more efficient because it takes advantage of
+#' # vectorisation.
+#' l1 %>% modify_depth(3, `+`, 100L)
+#' l1 %>% modify_depth(4, `+`, 100L)
+#'
 #' # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
 #' l1 %>% modify(c("prop1", "param2")) %>% str()
 #'
@@ -80,15 +124,63 @@
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
 #' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
+#' @export
 modify <- function(.x, .f, ...) {
   UseMethod("modify")
 }
 #' @rdname modify
 #' @export
 modify.default <- function(.x, .f, ...) {
-  .x[] <- map(.x, .f, ...)
+  .f <- as_mapper(.f, ...)
+
+  for (i in seq_along(.x)) {
+    .x[[i]] <- .f(.x[[i]], ...)
+  }
+
   .x
 }
+
+#' @rdname modify
+#' @export
+modify_if <- function(.x, .p, .f, ..., .else = NULL) {
+  UseMethod("modify_if")
+}
+#' @rdname modify
+#' @export
+modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
+  sel <- probe(.x, .p)
+  index <- seq_along(.x)
+
+  .f <- as_mapper(.f, ...)
+  for (i in index[sel]) {
+    .x[[i]] <- .f(.x[[i]], ...)
+  }
+
+  if (!is_null(.else)) {
+    .else <- as_mapper(.else, ...)
+    for (i in index[!sel]) {
+      .x[[i]] <- .else(.x[[i]], ...)
+    }
+  }
+
+  .x
+}
+
+#' @rdname modify
+#' @export
+modify_at <- function(.x, .at, .f, ...) {
+  UseMethod("modify_at")
+}
+#' @rdname modify
+#' @export
+modify_at.default <- function(.x, .at, .f, ...) {
+  sel <- inv_which(.x, .at)
+  modify_if(.x, sel, .f, ...)
+}
+
+# TODO: Replace all the following methods with a generic strategy that
+# implements sane coercion rules for base vectors
+
 #' @export
 modify.integer  <- function (.x, .f, ...) {
   .x[] <- map_int(.x, .f, ...)
@@ -109,25 +201,11 @@ modify.logical  <- function (.x, .f, ...) {
   .x[] <- map_lgl(.x, .f, ...)
   .x
 }
-
 #' @export
 modify.pairlist <- function(.x, .f, ...) {
   as.pairlist(map(.x, .f, ...))
 }
 
-
-#' @rdname modify
-#' @export
-modify_if <- function(.x, .p, .f, ...) {
-  UseMethod("modify_if")
-}
-#' @rdname modify
-#' @export
-modify_if.default <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map(.x[sel], .f, ...)
-  .x
-}
 #' @export
 modify_if.integer <- function(.x, .p, .f, ...) {
   sel <- probe(.x, .p)
@@ -153,18 +231,6 @@ modify_if.logical <- function(.x, .p, .f, ...) {
   .x
 }
 
-#' @rdname modify
-#' @export
-modify_at <- function(.x, .at, .f, ...) {
-  UseMethod("modify_at")
-}
-#' @rdname modify
-#' @export
-modify_at.default <- function(.x, .at, .f, ...) {
-  sel <- inv_which(.x, .at)
-  .x[sel] <- map(.x[sel], .f, ...)
-  .x
-}
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
   sel <- inv_which(.x, .at)
@@ -190,18 +256,126 @@ modify_at.logical <- function(.x, .at, .f, ...) {
   .x
 }
 
+#' Modify a pluck location
+#'
+#' @description
+#'
+#' * `assign_in()` takes a data structure and a [pluck][pluck] location,
+#'   assigns a value there, and returns the modified data structure.
+#'
+#' * `modify_in()` applies a function to a pluck location, assigns the
+#'   result back to that location with [assign_in()], and returns the
+#'   modified data structure.
+#'
+#' The pluck location must exist.
+#'
+#' @inheritParams pluck
+#' @param .f A function to apply at the pluck location given by `.where`.
+#' @param ... Arguments passed to `.f`.
+#' @param .where,where A pluck location, as a numeric vector of
+#'   positions, a character vector of names, or a list combining both.
+#'   The location must exist in the data structure.
+#'
+#' @seealso [pluck()]
+#' @examples
+#' # Recall that pluck() returns a component of a data structure that
+#' # might be arbitrarily deep
+#' x <- list(list(bar = 1, foo = 2))
+#' pluck(x, 1, "foo")
+#'
+#' # Use assign_in() to modify the pluck location:
+#' assign_in(x, list(1, "foo"), 100)
+#'
+#' # modify_in() applies a function to that location and update the
+#' # element in place:
+#' modify_in(x, list(1, "foo"), ~ .x * 200)
+#'
+#' # Additional arguments are passed to the function in the ordinary way:
+#' modify_in(x, list(1, "foo"), `+`, 100)
+#' @export
+modify_in <- function(.x, .where, .f, ...) {
+  .where <- as.list(.where)
+  .f <- rlang::as_function(.f)
+
+  value <- .f(chuck(.x, !!!.where), ...)
+  assign_in(.x, .where, value)
+}
+#' @rdname modify_in
+#' @param value A value to replace in `.x` at the pluck location.
+#' @export
+assign_in <- function(x, where, value) {
+  # Check value exists at pluck location
+  chuck(x, !!!where)
+
+  call <- reduce_subset_call(quote(x), as.list(where))
+  call <- call("<-", call, value)
+  eval_bare(call)
+  x
+}
+
 #' @rdname modify
 #' @export
-#' @param .ragged If `TRUE`, will apply to leaves, even if they're not
-#'   at depth `.depth`. If `FALSE`, will throw an error if there are
-#'   no elements at depth `.depth`.
+modify2 <- function(.x, .y, .f, ...) {
+  UseMethod("modify2")
+}
+#' @export
+modify2.default <- function(.x, .y, .f, ...) {
+  .f <- as_mapper(.f, ...)
+
+  args <- recycle_args(list(.x, .y))
+  .x <- args[[1]]
+  .y <- args[[2]]
+
+  for (i in seq_along(.x)) {
+    .x[[i]] <- .f(.x[[i]], .y[[i]], ...)
+  }
+
+  .x
+}
+#' @rdname modify
+#' @export
+imodify <- function(.x, .f, ...) {
+  modify2(.x, vec_index(.x), .f, ...)
+}
+
+# TODO: Improve genericity (see above)
+#' @export
+modify2.integer  <- function(.x, .y, .f, ...) {
+  modify_base(map2_int, .x, .y, .f, ...)
+}
+#' @export
+modify2.double  <- function(.x, .y, .f, ...) {
+  modify_base(map2_dbl, .x, .y, .f, ...)
+}
+#' @export
+modify2.character  <- function(.x, .y, .f, ...) {
+  modify_base(map2_chr, .x, .y, .f, ...)
+}
+#' @export
+modify2.logical  <- function(.x, .y, .f, ...) {
+  modify_base(map2_lgl, .x, .y, .f, ...)
+}
+
+modify_base <- function(mapper, .x, .y, .f, ...) {
+  args <- recycle_args(list(.x, .y))
+  .x <- args[[1]]
+  .y <- args[[2]]
+
+  .x[] <- mapper(.x, .y, .f, ...)
+  .x
+}
+
+#' @rdname modify
+#' @export
 modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
+  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
+    abort("`.depth` must be a single number")
+  }
   UseMethod("modify_depth")
 }
 #' @rdname modify
 #' @export
 modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  stopifnot(is_integerish(.depth, n = 1))
   force(.ragged)
 
   if (.depth < 0) {
@@ -209,41 +383,48 @@ modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   }
 
   .f <- as_mapper(.f, ...)
-  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged)
+  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
 }
 
-modify_depth_rec <- function(.x, .depth, .f, ..., .ragged = FALSE) {
-  if (.depth == 0) {
-    .x[] <- .f(.x, ...)
-  } else if (.depth == 1) {
-    if (!is.list(.x)) {
-      if (.ragged) {
-        .x[] <- .f(.x, ...)
-      } else {
-        stop("List not deep enough", call. = FALSE)
-      }
-    } else {
-      .x[] <- map(.x, .f, ...)
-    }
-  } else if (.depth > 1) {
-    .x[] <- map(.x, function(x) {
-      modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged)
-    })
-  } else {
-    stop("Invalid `depth`", call. = FALSE)
+modify_depth_rec <- function(.x, .depth, .f,
+                             ...,
+                             .ragged = FALSE,
+                             .atomic = FALSE) {
+  if (.depth < 0) {
+    abort("Invalid depth")
   }
-  .x
+
+  if (.atomic) {
+    if (!.ragged) {
+      abort("List not deep enough")
+    }
+    return(modify(.x, .f, ...))
+  }
+
+  if (.depth == 0) {
+    # TODO vctrs: Use `vec_cast()` on result?
+    .x[] <- .f(.x, ...)
+    return(.x)
+  }
+
+  if (.depth == 1) {
+    return(modify(.x, .f, ...))
+  }
+
+  # Should this be replaced with a generic way of figuring out atomic
+  # types?
+  .atomic <- is_atomic(.x)
+
+  modify(.x, function(x) {
+    modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
+  })
 }
 
 #' @export
 #' @usage NULL
 #' @rdname modify
 at_depth <- function(.x, .depth, .f, ...) {
-  warning(
-    "at_depth() is deprecated, please use `modify_depth()` instead",
-    call. = FALSE
-  )
-  modify_depth(.x, .depth, .f, ...)
+  stop_defunct("at_depth() is defunct, please use `map_depth()` instead")
 }
 
 # Internal version of map_lgl() that works with logical vectors
@@ -252,6 +433,7 @@ probe <- function(.x, .p, ...) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
+    .p <- as_predicate(.p, ..., .mapper = TRUE)
     map_lgl(.x, .p, ...)
   }
 }

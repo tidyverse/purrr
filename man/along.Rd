@@ -3,12 +3,9 @@
 \name{along}
 \alias{along}
 \alias{list_along}
-\alias{rep_along}
 \title{Helper to create vectors with matching length.}
 \usage{
 list_along(x)
-
-rep_along(x, y)
 }
 \arguments{
 \item{x}{A vector.}

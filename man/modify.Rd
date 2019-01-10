@@ -7,6 +7,8 @@
 \alias{modify_if.default}
 \alias{modify_at}
 \alias{modify_at.default}
+\alias{modify2}
+\alias{imodify}
 \alias{modify_depth}
 \alias{modify_depth.default}
 \alias{at_depth}
@@ -16,13 +18,17 @@ modify(.x, .f, ...)
 
 \method{modify}{default}(.x, .f, ...)
 
-modify_if(.x, .p, .f, ...)
+modify_if(.x, .p, .f, ..., .else = NULL)
 
-\method{modify_if}{default}(.x, .p, .f, ...)
+\method{modify_if}{default}(.x, .p, .f, ..., .else = NULL)
 
 modify_at(.x, .at, .f, ...)
 
 \method{modify_at}{default}(.x, .at, .f, ...)
+
+modify2(.x, .y, .f, ...)
+
+imodify(.x, .f, ...)
 
 modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 
@@ -45,14 +51,13 @@ are three ways to refer to the arguments:
 
 This syntax allows you to create very compact anonymous functions.
 
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it
-is converted to an extractor function. Character vectors index by name
-and numeric vectors index by position; use a list to index by position
-and name at different levels. Within a list, wrap strings in \code{\link[=get-attr]{get-attr()}}
-to extract named attributes. If a component is not present, the value of
-\code{.default} will be returned.}
+If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
+converted to an extractor function. Character vectors index by
+name and numeric vectors index by position; use a list to index
+by position and name at different levels. If a component is not
+present, the value of \code{.default} will be returned.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -61,16 +66,22 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
+\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
+returns \code{FALSE}.}
+
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.}
 
+\item{.y}{Vectors of the same length. A vector of length 1 will
+be recycled.}
+
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
 \itemize{
-\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] <- fun(x)}
-\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x[] <- map(x, fun)}
-\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x[] <- map(x, ~ map(., fun))}
+\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] <- fun(x)}.
+\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x <- modify(x, fun)}
+\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x <- modify(x, ~ modify(., fun))}
 }}
 
 \item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
@@ -81,11 +92,20 @@ no elements at depth \code{.depth}.}
 An object the same class as \code{.x}
 }
 \description{
-\code{modify()} is a short-cut for \code{x[] <- map(x, .f); return(x)}. \code{modify_if()}
-only modifies the elements of \code{x} that satisfy a predicate and leaves the
-others unchanged. \code{modify_at()} only modifies elements given by names or
-positions. \code{modify_depth()} only modifies elements at a given level of a
+Unlike \code{\link[=map]{map()}} and its variants which always return a fixed object
+type (list for \code{map()}, integer vector for \code{map_int()}, etc), the
+\code{modify()} family always returns the same type as the input object.
+\itemize{
+\item \code{modify()} is a shortcut for \code{x[[i]] <- f(x[[i]]); return(x)}.
+\item \code{modify_if()} only modifies the elements of \code{x} that satisfy a
+predicate and leaves the others unchanged. \code{modify_at()} only
+modifies elements given by names or positions.
+\item \code{modify2()} modifies the elements of \code{.x} but also passes the
+elements of \code{.y} to \code{.f}, just like \code{\link[=map2]{map2()}}. \code{imodify()} passes
+the names or the indices to \code{.f} like \code{\link[=imap]{imap()}} does.
+\item \code{modify_depth()} only modifies elements at a given level of a
 nested data structure.
+}
 }
 \details{
 Since the transformation can alter the structure of the input; it's
@@ -96,15 +116,18 @@ must preserve the length of the input.
 \section{Genericity}{
 
 
-All these functions are S3 generic. However, the default method is
-sufficient in many cases. It should be suitable for any data type
-that implements the subset-assignment method \code{[<-}. Methods are provided
-for character, logical, integer and double classes (counterparts to \code{map_chr},
-\code{map_lgl}, \code{map_int}, and \code{map_dbl})
+\code{modify()} and variants are generic over classes that implement
+\code{length()}, \code{[[} and \code{[[<-} methods. If the default implementation
+is not compatible for your class, you can override them with your
+own methods.
 
-In some cases it may make sense to provide a custom implementation
-with a method suited to your S3 class. For example, a \code{grouped_df}
-method might take into account the grouped nature of a data frame.
+If you implement your own \code{modify()} method, make sure it satisfies
+the following invariants:\preformatted{modify(x, identity) === x
+modify(x, compose(f, g)) === modify(x, g) \%>\% modify(f)
+}
+
+These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
+science.
 }
 
 \examples{
@@ -125,6 +148,19 @@ list(x = rbernoulli(100), y = 1:100) \%>\%
   transpose() \%>\%
   simplify_all()
 
+# Use modify2() to map over two vectors and preserve the type of
+# the first one:
+x <- c(foo = 1L, bar = 2L)
+y <- c(TRUE, FALSE)
+modify2(x, y, ~ if (.y) .x else 0L)
+
+# Use a predicate function to decide whether to map a function:
+modify_if(iris, is.factor, as.character)
+
+# Specify an alternative with the `.else` argument:
+modify_if(iris, is.factor, as.character, .else = as.integer)
+
+
 # Modify at specified depth ---------------------------
 l1 <- list(
   obj1 = list(
@@ -140,6 +176,13 @@ l1 <- list(
 # In the above list, "obj" is level 1, "prop" is level 2 and "param"
 # is level 3. To apply sum() on all params, we map it at depth 3:
 l1 \%>\% modify_depth(3, sum) \%>\% str()
+
+# Note that vectorised operations will yield the same result when
+# applied at the list level as when applied at the atomic result.
+# The former is more efficient because it takes advantage of
+# vectorisation.
+l1 \%>\% modify_depth(3, `+`, 100L)
+l1 \%>\% modify_depth(4, `+`, 100L)
 
 # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
 l1 \%>\% modify(c("prop1", "param2")) \%>\% str()

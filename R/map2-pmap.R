@@ -147,7 +147,7 @@ map2_df <- map2_dfr
 #' @export
 #' @rdname map2
 walk2 <- function(.x, .y, .f, ...) {
-  pwalk(list(.x, .y), .f, ...)
+  map2(.x, .y, .f, ...)
   invisible(.x)
 }
 
@@ -245,10 +245,6 @@ pmap_df <- pmap_dfr
 #' @export
 #' @rdname map2
 pwalk <- function(.l, .f, ...) {
-  .f <- as_mapper(.f, ...)
-  args_list <- transpose(recycle_args(.l))
-  for (args in args_list) {
-    do.call(".f", c(args, list(...)))
-  }
+  pmap(.l, .f, ...)
   invisible(.l)
 }

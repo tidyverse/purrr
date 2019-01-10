@@ -18,12 +18,11 @@
 #'
 #'   This syntax allows you to create very compact anonymous functions.
 #'
-#'   If __character vector__, __numeric vector__, or __list__, it
-#'   is converted to an extractor function. Character vectors index by name
-#'   and numeric vectors index by position; use a list to index by position
-#'   and name at different levels. Within a list, wrap strings in [get-attr()]
-#'   to extract named attributes. If a component is not present, the value of
-#'   `.default` will be returned.
+#'   If __character vector__, __numeric vector__, or __list__, it is
+#'   converted to an extractor function. Character vectors index by
+#'   name and numeric vectors index by position; use a list to index
+#'   by position and name at different levels. If a component is not
+#'   present, the value of `.default` will be returned.
 #' @param .default,.null Optional additional argument for extractor functions
 #'   (i.e. when `.f` is character, integer, or list). Returned when
 #'   value is absent (does not exist) or empty (has length 0).
@@ -52,16 +51,27 @@ as_mapper <- function(.f, ...) {
 #' @rdname as_mapper
 #' @usage NULL
 as_function <- function(...) {
-  warning(
-    "`as_function()` is deprecated; please use `as_mapper()` or `rlang::as_function()` instead",
-    call. = FALSE
-  )
+  stop_defunct(paste_line(
+    "`as_function()` is defunct as of purrr 0.3.0.",
+    "Please use `as_mapper()` or `rlang::as_function()` instead"
+  ))
   as_mapper(...)
 }
 
 #' @export
 as_mapper.default <- function(.f, ...) {
-  rlang::as_closure(.f)
+  if (typeof(.f) %in% c("special", "builtin")) {
+    .f <- rlang::as_closure(.f)
+
+    # Workaround until fixed in rlang
+    if (is_reference(fn_env(.f), base_env())) {
+      environment(.f) <- global_env()
+    }
+
+    .f
+  } else {
+    rlang::as_function(.f)
+  }
 }
 
 #' @export
@@ -98,8 +108,44 @@ plucker <- function(i, default) {
   x <- NULL # supress global variables check NOTE
 
   new_function(
-    exprs(x = , ... = , .ignore_empty = "none"),
-    expr(pluck(x, !!i, .default = !!default)),
+    exprs(x = , ... = ),
+    expr(pluck(x, !!!i, .default = !!default)),
     env = caller_env()
   )
+}
+
+as_predicate <- function(.fn, ..., .mapper, .deprecate = FALSE) {
+  if (.mapper) {
+    .fn <- as_mapper(.fn, ...)
+  }
+
+  function(...) {
+    out <- .fn(...)
+
+    if (!is_bool(out)) {
+      msg <- sprintf(
+        "Predicate functions must return a single `TRUE` or `FALSE`, not %s",
+        as_predicate_friendly_type_of(out)
+      )
+      if (.deprecate) {
+        msg <- paste_line(
+          "Returning complex values from a predicate function is soft-deprecated as of purrr 0.3.0.",
+          msg
+        )
+        signal_soft_deprecated(msg)
+      } else {
+        abort(msg)
+      }
+    }
+
+    out
+  }
+}
+
+as_predicate_friendly_type_of <- function(x) {
+  if (is_na(x)) {
+    "a missing value"
+  } else {
+    friendly_type_of(x, length = TRUE)
+  }
 }

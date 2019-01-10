@@ -1,0 +1,10 @@
+Single input:
+
+<composed>
+1. function(x) x + 1
+Multiple inputs:
+
+<composed>
+1. function(x) x / 1
+
+2. function(x) x + 1

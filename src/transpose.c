@@ -1,10 +1,13 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
+#include "conditions.h"
+#include "utils.h"
 
 SEXP transpose_impl(SEXP x, SEXP names_template) {
-  if (TYPEOF(x) != VECSXP)
-    Rf_errorcall(R_NilValue, "`.l` is not a list (%s)", Rf_type2char(TYPEOF(x)));
+  if (TYPEOF(x) != VECSXP) {
+    stop_bad_type(x, "a list", NULL, ".l");
+  }
 
   int n = Rf_length(x);
   if (n == 0) {
@@ -14,8 +17,9 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
   int has_template = !Rf_isNull(names_template);
 
   SEXP x1 = VECTOR_ELT(x, 0);
-  if (!Rf_isVector(x1))
-    Rf_errorcall(R_NilValue, "Element 1 is not a vector (%s)", Rf_type2char(TYPEOF(x1)));
+  if (!Rf_isVector(x1)) {
+    stop_bad_element_type(x1, 1, "a vector", NULL, NULL);
+  }
   int m = has_template ? Rf_length(names_template) : Rf_length(x1);
 
   // Create space for output
@@ -39,8 +43,9 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
   // Fill output
   for (int i = 0; i < n; ++i) {
     SEXP xi = VECTOR_ELT(x, i);
-    if (!Rf_isVector(xi))
-      Rf_errorcall(R_NilValue, "Element %i is not a vector (%s)", i + 1, Rf_type2char(TYPEOF(x1)));
+    if (!Rf_isVector(xi)) {
+      stop_bad_element_type(xi, i + 1, "a vector", NULL, NULL);
+    }
 
 
     // find mapping between names and index. Use -1 to indicate not found
@@ -57,7 +62,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
       int mi = Rf_length(xi);
 
       if (m != mi) {
-        Rf_warningcall(R_NilValue, "Element %i has length %i not %i", i + 1, mi, m);
+        Rf_warningcall(R_NilValue, "Element %d must be length %d, not %d", i + 1, m, mi);
       }
       for (int i = 0; i < m; ++i) {
         INTEGER(index)[i] = (i < mi) ? i : -1;
@@ -88,7 +93,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
         SET_VECTOR_ELT(VECTOR_ELT(out, j), i, VECTOR_ELT(xi, pos));
         break;
       default:
-        Rf_errorcall(R_NilValue, "Unsupported type %s", Rf_type2char(TYPEOF(xi)));
+        stop_bad_type(xi, "a vector", "Transposed element", NULL);
       }
     }
 

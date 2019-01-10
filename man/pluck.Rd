@@ -2,63 +2,118 @@
 % Please edit documentation in R/pluck.R
 \name{pluck}
 \alias{pluck}
-\alias{attr_getter}
-\title{Pluck out a single element from a vector or environment}
+\alias{chuck}
+\alias{pluck<-}
+\title{Pluck or chuck a single element from a vector or environment}
 \usage{
 pluck(.x, ..., .default = NULL)
 
-attr_getter(attr)
+chuck(.x, ...)
+
+pluck(.x, ...) <- value
 }
 \arguments{
-\item{.x}{A vector or environment}
+\item{.x, x}{A vector or environment}
 
 \item{...}{A list of accessors for indexing into the object. Can be
-an integer position, a string name, or an accessor function. If
-the object being indexed is an S4 object, accessing it by name
-will return the corresponding slot.
+an integer position, a string name, or an accessor function
+(except for the assignment variants which only support names and
+positions). If the object being indexed is an S4 object,
+accessing it by name will return the corresponding slot.
 
-These dots \link[rlang:dots_splice]{splice lists automatically}. This
-means you can supply arguments and lists of arguments
-indistinctly.}
+These dots support \link[rlang:list2]{tidy dots} features. In
+particular, if your accessors are stored in a list, you can
+splice that in with \code{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
 
-\item{attr}{An attribute name as string.}
+\item{value}{A value to replace in \code{.x} at the pluck location.}
 }
 \description{
-This is a generalised form of \code{[[} which allows you to index deeply
-and flexibly into data structures. It supports R standard accessors
-like integer positions and string names, and also accepts arbitrary
-accessor functions, i.e. functions that take an object and return
-some internal piece.
-
-\code{pluck()} is often more readable than a mix of operators and
-accessors because it reads linearly and is free of syntactic
-cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo")}.
-
-Furthermore, \code{pluck()} never partial-matches unlike \code{$} which will
-select the \code{disp} object if you write \code{mtcars$di}.
-
-\code{attr_getter()} generates an attribute accessor function;
-i.e., it generates a function for extracting an attribute with
-a given name. Unlike the base R \code{attr()} function with default
-options, it doesn't use partial matching.
+\code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
+allow you to index deeply and flexibly into data structures.
+\code{pluck()} consistently returns \code{NULL} when an element does not
+exist, \code{chuck()} always throws an error in that case.
 }
 \details{
-Since it handles arbitrary accessor functions, \code{pluck()} is a type
-of composition operator. However, it is indexing-oriented thanks to
-its handling of strings and integers. By the same token is also
-explicit regarding the intent of the composition (e.g. extraction).
+\itemize{
+\item You can pluck or chuck with standard accessors like integer
+positions and string names, and also accepts arbitrary accessor
+functions, i.e. functions that take an object and return some
+internal piece.
+
+This is often more readable than a mix of operators and accessors
+because it reads linearly and is free of syntactic
+cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo")}.
+\item These accessors never partial-match. This is unlike \code{$} which
+will select the \code{disp} object if you write \code{mtcars$di}.
+}
 }
 \examples{
-# pluck() supports integer positions, string names, and functions.
-# Using functions, you can easily extend pluck(). Let's create a
-# list of data structures:
-obj1 <- list("a", list(1, elt = "foobar"))
-obj2 <- list("b", list(2, elt = "foobaz"))
+# Let's create a list of data structures:
+obj1 <- list("a", list(1, elt = "foo"))
+obj2 <- list("b", list(2, elt = "bar"))
 x <- list(obj1, obj2)
 
-# And now an accessor for these complex data structures:
+
+# pluck() provides a way of retrieving objects from such data
+# structures using a combination of numeric positions, vector or
+# list names, and accessor functions.
+
+# Numeric positions index into the list by position, just like `[[`:
+pluck(x, 1)
+x[[1]]
+
+pluck(x, 1, 2)
+x[[1]][[2]]
+
+# Supply names to index into named vectors:
+pluck(x, 1, 2, "elt")
+x[[1]][[2]][["elt"]]
+
+
+# By default, pluck() consistently returns `NULL` when an element
+# does not exist:
+pluck(x, 10, .default = NA)
+try(x[[10]])
+
+# You can also supply a default value for non-existing elements:
+pluck(x, 10, .default = NA)
+
+# If you prefer to consistently fail for non-existing elements, use
+# the opinionated variant chuck():
+chuck(x, 1)
+try(chuck(x, 10))
+try(chuck(x, 1, 10))
+
+
+# The map() functions use pluck() by default to retrieve multiple
+# values from a list:
+map(x, 2)
+
+# Pass multiple indexes with a list:
+map(x, list(2, "elt"))
+
+# This is equivalent to:
+map(x, pluck, 2, "elt")
+
+# You can also supply a default:
+map(x, list(2, "elt", 10), .default = "superb default")
+
+# Or use the strict variant:
+try(map(x, chuck, 2, "elt", 10))
+
+
+# You can also assign a value in a pluck location with pluck<-:
+pluck(x, 2, 2, "elt") <- "quuux"
+x
+
+# This is a shortcut for the prefix function assign_in():
+y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
+y
+
+
+# pluck() also supports accessor functions:
 my_element <- function(x) x[[2]]$elt
 
 # The accessor can then be passed to pluck:
@@ -72,22 +127,12 @@ pluck(x, 2, my_element)
 my_element(x[[1]])
 
 
-# This technique is used for plucking into attributes with
-# attr_getter(). It takes an attribute name and returns a function
-# to access the attribute:
-obj1 <- structure("obj", obj_attr = "foo")
-obj2 <- structure("obj", obj_attr = "bar")
-x <- list(obj1, obj2)
-
-# pluck() is handy for extracting deeply into a data structure.
-# Here we'll first extract by position, then by attribute:
-pluck(x, 1, attr_getter("obj_attr"))  # From first object
-pluck(x, 2, attr_getter("obj_attr"))  # From second object
-
-
-# pluck() splices lists of arguments automatically. The following
-# pluck is equivalent to the one above:
-idx <- list(1, attr_getter("obj_attr"))
-pluck(x, idx)
+# If you have a list of accessors, you can splice those in with `!!!`:
+idx <- list(1, my_element)
+pluck(x, !!!idx)
 }
-\keyword{internal}
+\seealso{
+\code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable
+for use with \code{pluck()} and \code{chuck()}. \code{\link[=modify_in]{modify_in()}} for
+applying a function to a pluck location.
+}

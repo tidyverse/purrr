@@ -8,7 +8,7 @@
 \usage{
 lmap(.x, .f, ...)
 
-lmap_if(.x, .p, .f, ...)
+lmap_if(.x, .p, .f, ..., .else = NULL)
 
 lmap_at(.x, .at, .f, ...)
 }
@@ -17,7 +17,7 @@ lmap_at(.x, .at, .f, ...)
 
 \item{.f}{A function that takes and returns a list or data frame.}
 
-\item{...}{Additional arguments passed on to \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -25,6 +25,9 @@ Alternatively, if the elements of \code{.x} are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
+
+\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
+returns \code{FALSE}.}
 
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
@@ -96,7 +99,7 @@ disjoin <- function(x, sep = "_") {
   })
 
   names(out) <- paste(name, levels(x), sep = sep)
-  tibble::as_tibble(out)
+  out
 }
 
 # Now, we are ready to map disjoin() on each categorical variable of a

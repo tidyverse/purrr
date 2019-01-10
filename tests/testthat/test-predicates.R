@@ -12,3 +12,8 @@ test_that("predicate-based functionals work with logical vectors", {
     list("1", 2, "3")
   )
 })
+
+test_that("keep() and discard() require predicate functions", {
+  expect_error(keep(1:3, ~ NA), ", not a missing value")
+  expect_error(discard(1:3, ~ 1:3), ", not an integer vector of length 3")
+})
