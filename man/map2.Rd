@@ -182,7 +182,7 @@ pmap_dbl(df, min)
 # If you want to bind the results of your function rowwise, use map2_dfr() or pmap_dfr()
 ex_fun <- function(arg1, arg2){
 col <- arg1 + arg2
-x <- dplyr::as_data_frame(col)
+x <- as.data.frame(col)
 }
 arg1 <- seq(1, 10, by = 3)
 arg2 <- seq(2, 11, by = 3)
