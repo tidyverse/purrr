@@ -100,7 +100,7 @@ lmap_at <- function(.x, .at, .f, ...) {
     .f <- as_mapper(.f, ...)
   }
 
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
 
   out <- vector("list", length(.x))

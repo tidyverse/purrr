@@ -37,7 +37,7 @@
 #' @param .at A character vector of names, positive numeric vector of
 #'   positions to include, or a negative numeric vector of positions to
 #'   exlude. Only those elements corresponding to `.at` will be modified.
-#'   If the `tidyselect` package is installed, you can use `vars()` &
+#'   If the `tidyselect` package is installed, you can use `vars()` and
 #'   the `tidyselect` helpers to select elements.
 #' @param ... Additional arguments passed on to the mapped function.
 #' @return All functions return a vector the same length as `.x`.
@@ -158,7 +158,7 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @export
 map_at <- function(.x, .at, .f, ...) {
 
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
 
   out <- list_along(.x)

@@ -174,7 +174,7 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @rdname modify
 #' @export
 modify_at.default <- function(.x, .at, .f, ...) {
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
   modify_if(.x, sel, .f, ...)
 }
@@ -234,28 +234,28 @@ modify_if.logical <- function(.x, .p, .f, ...) {
 
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_int(.x[sel], .f, ...)
   .x
 }
 #' @export
 modify_at.double <- function(.x, .at, .f, ...) {
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_dbl(.x[sel], .f, ...)
   .x
 }
 #' @export
 modify_at.character <- function(.x, .at, .f, ...) {
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_chr(.x[sel], .f, ...)
   .x
 }
 #' @export
 modify_at.logical <- function(.x, .at, .f, ...) {
-  where <- at_selection( names(.x), .at)
+  where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_lgl(.x[sel], .f, ...)
   .x
