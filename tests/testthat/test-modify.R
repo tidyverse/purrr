@@ -131,3 +131,14 @@ test_that("vectorised operations on the recursive and atomic levels yield same r
   expect_identical(modify_depth(x, 4, `+`, 10L), exp)
   expect_error(modify_depth(x, 5, `+`, 10L), "not deep enough")
 })
+
+test_that("modify_at() can use tidyselect", {
+  skip_if_not_installed("tidyselect")
+  one <-  modify_at(mtcars, vars(cyl, am), as.character)
+  expect_is(one$cyl, "character")
+  expect_is(one$am, "character")
+  two <- modify_at(mtcars, vars(tidyselect::contains("cyl")), as.character)
+  expect_is(two$cyl, "character")
+})
+
+
