@@ -103,7 +103,8 @@ All functions return a vector the same length as \code{.x}.
 
 \code{map()} returns a list, \code{map_lgl()} a logical vector, \code{map_int()} an
 integer vector, \code{map_dbl()} a double vector, and \code{map_chr()} a character
-vector. The output of \code{.f} will be automatically typed upwards,
+vector. \code{map_df()}, \code{map_dfc()}, \code{map_dfr()} all return a data frame.
+The output of \code{.f} will be automatically typed upwards,
 e.g. logical -> integer -> double -> character.
 
 If \code{.x} has \code{names()}, the return value preserves those names.

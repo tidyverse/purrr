@@ -12,7 +12,7 @@ named function.}
 
 \item{...}{named arguments to \code{.f} that should be partially applied.
 
-Pass an empty \code{... = } argument to specify the position of future
+Pass an empty \code{... =} argument to specify the position of future
 arguments relative to partialised ones. See
 \code{\link[rlang:call_modify]{rlang::call_modify()}} to learn more about this syntax.
 
@@ -27,7 +27,7 @@ now captured via quosures.}
 arguments that should be evaluated once at function creation time.}
 
 \item{.first}{Soft-deprecated as of purrr 0.3.0. Please pass an
-empty argument \code{... = } to specify the position of future
+empty argument \code{... =} to specify the position of future
 arguments.}
 }
 \description{
