@@ -22,7 +22,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    tibble
+    tibble, 
+    tidyselect
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true

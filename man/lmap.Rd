@@ -31,7 +31,9 @@ returns \code{FALSE}.}
 
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to \code{.at} will be modified.}
+exlude. Only those elements corresponding to \code{.at} will be modified.
+If the \code{tidyselect} package is installed, you can use \code{vars()} &
+the \code{tidyselect} helpers to select elements.}
 }
 \value{
 If \code{.x} is a list, a list. If \code{.x} is a data
