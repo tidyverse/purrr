@@ -301,12 +301,38 @@ seq_len2 <- function(start, end) {
 #'
 #' @description
 #'
-#' `accumulate()` [reduces][reduce] a vector with a binary function,
-#' keeping all intermediate results, from the initial value to the
-#' final reduced value, i.e. the result you'd have gotten if you used
-#' [reduce()] instead of `accumulate()`.
+#' `accumulate()` sequentially applies a function to elements of a vector taken
+#'  in pairs. The results of each application are returned in a list. The
+#'  accumulation can optionally terminate before processing the whole vector
+#'  in response to a `done()` signal returned by the accumulation function.
 #'
-#' @inheritParams reduce
+#' @inheritParams map
+#'
+#' @param .y For `accumulate2()` `.y` is the second argument of the pair. It
+#'     needs to be 1 element shorter than the vector to be accumulated (`.x`).
+#'     If `.init` is set, `.y` needs to be one element shorted than the
+#'     concatenation of the initial value and `.x`.
+#' 
+#' @param .f For `accumulate()` `.f` is 2-argument function. The function will
+#'     be passed the accumulated result or initial value as the first argument.
+#'     The next value in sequence is passed as the second argument.
+#'
+#'   For `accumulate2()`, a 3-argument function. The
+#'   function will be passed the accumulated result as the first
+#'   argument. The next value in sequence from `.x` is passed as the second argument. The
+#'   next value in sequence from `.y` is passed as the third argument.
+#'
+#'   The reduction terminates early if `.f` returns a value wrapped in
+#'   a [done()].
+#'
+#' @param .init If supplied, will be used as the first value to start
+#'   the accumulation, rather than using `x[[1]]`. This is useful if
+#'   you want to ensure that `reduce` returns a correct value when `.x`
+#'   is empty. If missing, and `x` is empty, will throw an error.
+#'
+#' @param .dir The direction of accumulation as a string, one of
+#'   `"forward"` (the default) or `"backward"`. See the section about
+#'   direction below.
 #'
 #' @return A vector the same length of `.x` with the same names as `.x`.
 #'
@@ -325,6 +351,8 @@ seq_len2 <- function(start, end) {
 #'   includes the initial value, even when terminating at the first
 #'   iteration).
 #'
+#' @inheritSection reduce Direction
+#' 
 #' @section Life cycle:
 #'
 #' `accumulate_right()` is soft-deprecated in favour of the `.dir`
@@ -335,8 +363,9 @@ seq_len2 <- function(start, end) {
 #' @seealso [reduce()] when you only need the final reduced value.
 #' @examples
 #' # With an associative operation, the final value is always the
-#' # same, no matter the direction. You'll find it in the last element
-#' # for a left accumulation, and in the first element for a right one:
+#' # same, no matter the direction. You'll find it in the last element for a
+#' # backward (left) accumulation, and in the first element for forward
+#' # (right) one:
 #' 1:5 %>% accumulate(`+`)
 #' 1:5 %>% accumulate(`+`, .dir = "backward")
 #'
@@ -352,7 +381,7 @@ seq_len2 <- function(start, end) {
 #' accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 #'
 #' # `accumulate2()` is a version of `accumulate()` that works with
-#' # ternary functions and one additional vector:
+#' # 3-argument functions and one additional vector:
 #' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 #' letters[1:4] %>% accumulate(paste2)
 #' letters[1:4] %>% accumulate2(c("-", ".", "-"), paste2)
