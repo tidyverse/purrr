@@ -79,6 +79,17 @@ test_that("map_if() and map_at() always return a list", {
   expect_identical(map_at(df, 1, ~"out"), list(x = "out", y = "a"))
 })
 
+test_that("map_at() works with tidyselect", {
+  skip_if_not_installed("tidyselect")
+  x <- list(a = "b", b = "c", aa = "bb")
+  one <- map_at(x, vars(a), toupper)
+  expect_identical(one$a, "B")
+  expect_identical(one$aa, "bb")
+  two <- map_at(x, vars(tidyselect::contains("a")), toupper)
+  expect_identical(two$a, "B")
+  expect_identical(two$aa, "BB")
+})
+
 test_that("negative .at omits locations", {
   x <- c(1, 2, 3)
   out <- map_at(x, -1, ~ .x * 2)
