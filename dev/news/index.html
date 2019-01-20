@@ -242,6 +242,7 @@
 <li><p><code><a href="../reference/flatten.html">flatten()</a></code> now supports raw and complex elements.</p></li>
 <li><p><code><a href="../reference/array-coercion.html">array_branch()</a></code> and <code><a href="../reference/array-coercion.html">array_tree()</a></code> now retain the <code><a href="https://www.rdocumentation.org/packages/base/topics/dimnames">dimnames()</a></code> of the input array (<a href='https://github.com/tidyverse/purrr/issues/584'>#584</a>, <a href='https://github.com/flying-sheep'>@flying-sheep</a>)</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> no longer flattens lists of arguments. You can still do it manually with <code>!!!</code>. This change is for consistency with other dots-collecting functions of the tidyverse.</p></li>
+<li><p><code><a href="../reference/map.html">map_at()</a></code>, <code><a href="../reference/lmap.html">lmap_at()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> now supports selection using <code><a href="../reference/vars.html">vars()</a></code> and <code>tidyselect</code> (<a href='https://github.com/ColinFay'>@ColinFay</a>, <a href='https://github.com/tidyverse/purrr/issues/608'>#608</a>)</p></li>
 </ul>
 </div>
 <div id="life-cycle" class="section level2">
