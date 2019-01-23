@@ -12,14 +12,14 @@ accumulate2(.x, .y, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, and \code{accumulate()}, a 2-argument
-function. The function will be passed the accumulated value as
-the first argument and the "next" value as the second argument.
+\item{.f}{For \code{accumulate()} \code{.f} is 2-argument function. The function will
+be passed the accumulated result or initial value as the first argument.
+The next value in sequence is passed as the second argument.
 
-For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
-function will be passed the accumulated value as the first
-argument, the next value of \code{.x} as the second argument, and the
-next value of \code{.y} as the third argument.
+For \code{accumulate2()}, a 3-argument function. The
+function will be passed the accumulated result as the first
+argument. The next value in sequence from \code{.x} is passed as the second argument. The
+next value in sequence from \code{.y} is passed as the third argument.
 
 The reduction terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}
@@ -31,13 +31,14 @@ the accumulation, rather than using \code{x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{x} is empty, will throw an error.}
 
-\item{.dir}{The direction of reduction as a string, one of
+\item{.dir}{The direction of accumulation as a string, one of
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
 
-\item{.y}{For \code{reduce2()} and \code{accumulate2()}, an additional
-argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
-should be 1 element shorter than \code{.x}.}
+\item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
+needs to be 1 element shorter than the vector to be accumulated (\code{.x}).
+If \code{.init} is set, \code{.y} needs to be one element shorted than the
+concatenation of the initial value and \code{.x}.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.
@@ -58,10 +59,10 @@ includes the initial value, even when terminating at the first
 iteration).
 }
 \description{
-\code{accumulate()} \link[=reduce]{reduces} a vector with a binary function,
-keeping all intermediate results, from the initial value to the
-final reduced value, i.e. the result you'd have gotten if you used
-\code{\link[=reduce]{reduce()}} instead of \code{accumulate()}.
+\code{accumulate()} sequentially applies a function to elements of a vector taken
+in pairs. The results of each application are returned in a list. The
+accumulation can optionally terminate before processing the whole vector
+in response to a \code{done()} signal returned by the accumulation function.
 }
 \section{Life cycle}{
 
@@ -72,10 +73,25 @@ slightly changed: the accumulated value is passed to the right
 rather than the left, which is consistent with a right reduction.
 }
 
+\section{Direction}{
+
+
+When \code{.f} is an associative operation like \code{+} or \code{c()}, the
+direction of reduction does not matter. For instance, reducing the
+vector \code{1:3} with the binary function \code{+} computes the sum \code{((1 + 2) + 3)} from the left, and the same sum \code{(1 + (2 + 3))} from the
+right.
+
+In other cases, the direction has important consequences on the
+reduced value. For instance, reducing a vector with \code{list()} from
+the left produces a left-leaning nested list (or tree), while
+reducing \code{list()} from the right produces a right-leaning list.
+}
+
 \examples{
 # With an associative operation, the final value is always the
-# same, no matter the direction. You'll find it in the last element
-# for a left accumulation, and in the first element for a right one:
+# same, no matter the direction. You'll find it in the last element for a
+# backward (left) accumulation, and in the first element for forward
+# (right) one:
 1:5 \%>\% accumulate(`+`)
 1:5 \%>\% accumulate(`+`, .dir = "backward")
 
@@ -91,7 +107,7 @@ accumulate(letters[1:5], paste, sep = ".")
 accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 
 # `accumulate2()` is a version of `accumulate()` that works with
-# ternary functions and one additional vector:
+# 3-argument functions and one additional vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
 letters[1:4] \%>\% accumulate(paste2)
 letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
