@@ -44,7 +44,8 @@
 #'
 #'   `map()` returns a list, `map_lgl()` a logical vector, `map_int()` an
 #'   integer vector, `map_dbl()` a double vector, and `map_chr()` a character
-#'   vector. The output of `.f` will be automatically typed upwards,
+#'   vector. `map_df()`, `map_dfc()`, `map_dfr()` all return a data frame.
+#'   The output of `.f` will be automatically typed upwards,
 #'   e.g. logical -> integer -> double -> character.
 #'
 #'   If `.x` has `names()`, the return value preserves those names.

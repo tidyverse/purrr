@@ -7,7 +7,9 @@
 #' `map2()` and `walk2()` are specialised for the two argument case; `pmap()`
 #' and `pwalk()` allow you to provide any number of arguments in a list. Note
 #' that a data frame is a very important special case, in which case `pmap()`
-#' and `pwalk()` apply the function `.f` to each row.
+#' and `pwalk()` apply the function `.f` to each row. `map_dfr()`, `pmap_dfr()`
+#' and `map2_dfc()`, `pmap_dfc()` return data frames created by row-binding
+#' and column-binding respectively. They require dplyr to be installed.
 #'
 #' Note that arguments to be vectorised over come before `.f`,
 #' and arguments that are supplied to every call come after `.f`.
@@ -84,6 +86,18 @@
 #' pmin(df$x, df$y)
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
+#'
+#' # If you want to bind the results of your function rowwise, use map2_dfr() or pmap_dfr()
+#' ex_fun <- function(arg1, arg2){
+#' col <- arg1 + arg2
+#' x <- as.data.frame(col)
+#' }
+#' arg1 <- seq(1, 10, by = 3)
+#' arg2 <- seq(2, 11, by = 3)
+#' df <- map2_dfr(arg1, arg2, ex_fun)
+#' # If instead you want to bind by columns, use map2_dfc() or pmap_dfc()
+#' df2 <- map2_dfc(arg1, arg2, ex_fun)
+
 map2 <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "list")

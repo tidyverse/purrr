@@ -112,7 +112,9 @@ share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and
 \code{map2()} and \code{walk2()} are specialised for the two argument case; \code{pmap()}
 and \code{pwalk()} allow you to provide any number of arguments in a list. Note
 that a data frame is a very important special case, in which case \code{pmap()}
-and \code{pwalk()} apply the function \code{.f} to each row.
+and \code{pwalk()} apply the function \code{.f} to each row. \code{map_dfr()}, \code{pmap_dfr()}
+and \code{map2_dfc()}, \code{pmap_dfc()} return data frames created by row-binding
+and column-binding respectively. They require dplyr to be installed.
 }
 \details{
 Note that arguments to be vectorised over come before \code{.f},
@@ -176,6 +178,17 @@ df <- data.frame(
 pmin(df$x, df$y)
 map2_dbl(df$x, df$y, min)
 pmap_dbl(df, min)
+
+# If you want to bind the results of your function rowwise, use map2_dfr() or pmap_dfr()
+ex_fun <- function(arg1, arg2){
+col <- arg1 + arg2
+x <- as.data.frame(col)
+}
+arg1 <- seq(1, 10, by = 3)
+arg2 <- seq(2, 11, by = 3)
+df <- map2_dfr(arg1, arg2, ex_fun)
+# If instead you want to bind by columns, use map2_dfc() or pmap_dfc()
+df2 <- map2_dfc(arg1, arg2, ex_fun)
 }
 \seealso{
 Other map variants: \code{\link{imap}},
