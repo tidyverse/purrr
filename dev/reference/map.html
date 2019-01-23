@@ -280,7 +280,8 @@ no elements at depth <code>.depth</code>.</p></td>
     <p>All functions return a vector the same length as <code>.x</code>.</p>
 <p><code>map()</code> returns a list, <code>map_lgl()</code> a logical vector, <code>map_int()</code> an
 integer vector, <code>map_dbl()</code> a double vector, and <code>map_chr()</code> a character
-vector. The output of <code>.f</code> will be automatically typed upwards,
+vector. <code>map_df()</code>, <code>map_dfc()</code>, <code>map_dfr()</code> all return a data frame.
+The output of <code>.f</code> will be automatically typed upwards,
 e.g. logical -&gt; integer -&gt; double -&gt; character.</p>
 <p>If <code>.x</code> has <code><a href='https://www.rdocumentation.org/packages/base/topics/names'>names()</a></code>, the return value preserves those names.</p>
 <p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
