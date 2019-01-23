@@ -214,9 +214,13 @@ arguments.
 * `pluck()` no longer flattens lists of arguments. You can still do it
   manually with `!!!`. This change is for consistency with other
   dots-collecting functions of the tidyverse.
-  
+
 * `map_at()`, `lmap_at()` and `modify_at()` now supports selection using `vars()` 
   and `tidyselect` (@ColinFay, #608)
+
+* `detect()` now has a .default argument to specify the value returned when 
+  nothing is detected (#622, @ColinFay).
+
 
 ## Life cycle
 

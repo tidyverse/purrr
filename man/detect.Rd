@@ -5,7 +5,8 @@
 \alias{detect_index}
 \title{Find the value or position of the first match}
 \usage{
-detect(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL)
+detect(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL,
+  .default = NULL)
 
 detect_index(.x, .f, ..., .dir = c("forward", "backward"),
   .right = NULL)
@@ -40,6 +41,8 @@ the vector and move towards the end; if \code{"backward"}, starts at
 the end of the vector and moves towards the beginning.}
 
 \item{.right}{Soft-deprecated. Please use \code{.dir} instead.}
+
+\item{.default}{The value returned when nothing is detected.}
 }
 \value{
 \code{detect} the value of the first item that matches the

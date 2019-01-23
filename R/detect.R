@@ -6,6 +6,7 @@
 #'   the vector and move towards the end; if `"backward"`, starts at
 #'   the end of the vector and moves towards the beginning.
 #' @param .right Soft-deprecated. Please use `.dir` instead.
+#' @param .default The value returned when nothing is detected.
 #' @return `detect` the value of the first item that matches the
 #'  predicate; `detect_index` the position of the matching item.
 #'  If not found, `detect` returns `NULL` and `detect_index`
@@ -40,7 +41,7 @@
 #'
 #' # If you need to find all positions, use map_lgl():
 #' which(map_lgl(x, "foo"))
-detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) {
+detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, .default = NULL) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
   .dir <- arg_match(.dir, c("forward", "backward"))
 
@@ -50,7 +51,7 @@ detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) 
     }
   }
 
-  NULL
+  .default
 }
 
 #' @export
