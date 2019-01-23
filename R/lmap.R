@@ -99,7 +99,9 @@ lmap_at <- function(.x, .at, .f, ...) {
   if (is_formula(.f)) {
     .f <- as_mapper(.f, ...)
   }
-  sel <- inv_which(.x, .at)
+
+  where <- at_selection(names(.x), .at)
+  sel <- inv_which(.x, where)
 
   out <- vector("list", length(.x))
   for (i in seq_along(.x)) {
