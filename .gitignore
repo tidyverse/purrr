@@ -5,3 +5,4 @@ inst/doc
 revdep/checks
 revdep/library
 TAGS
+.httr-oauth

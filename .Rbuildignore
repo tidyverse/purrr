@@ -16,3 +16,4 @@
 ^CODE_OF_CONDUCT\.md$
 ^\.github$
 ^TAGS$
+^\.httr-oauth$
