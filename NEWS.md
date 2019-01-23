@@ -216,7 +216,7 @@ arguments.
   dots-collecting functions of the tidyverse.
   
 * `detect()` now has a .default argument to specify the value returned when 
-  nothing is detected (#622, @ColinFay)
+  nothing is detected (#622, @ColinFay).
 
 
 ## Life cycle
