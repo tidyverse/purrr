@@ -197,27 +197,27 @@ value is absent (does not exist) or empty (has length 0).
     <pre class="examples"><div class='input'><span class='fu'>as_mapper</span>(~ <span class='no'>.</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; . + 1
-#&gt; &lt;environment: 0x59f03d0&gt;
+#&gt; &lt;environment: 0x5536250&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function"</div><div class='input'><span class='fu'>as_mapper</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, .default = NULL)
-#&gt; &lt;environment: 0x714f238&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x66044d8&gt;</div><div class='input'>
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NULL)
-#&gt; &lt;environment: 0x6155d20&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
+#&gt; &lt;environment: 0x552ef38&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"a"</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, "a", 2, .default = NULL)
-#&gt; &lt;environment: 0x66480e0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
+#&gt; &lt;environment: 0x4ccbcf0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='attr_getter.html'>attr_getter</a></span>(<span class='st'>"a"</span>)))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, function (x) 
 #&gt; attr(x, attr, exact = TRUE), .default = NULL)
-#&gt; &lt;environment: 0x7748e80&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
+#&gt; &lt;environment: 0x63cc428&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>), <span class='kw'>.null</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NA)
-#&gt; &lt;environment: 0x64a5ef8&gt;</div></pre>
+#&gt; &lt;environment: 0x543ddb0&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

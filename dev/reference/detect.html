@@ -141,7 +141,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>detect</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"forward"</span>, <span class='st'>"backward"</span>), <span class='kw'>.right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>detect</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"forward"</span>, <span class='st'>"backward"</span>), <span class='kw'>.right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>.default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>detect_index</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"forward"</span>, <span class='st'>"backward"</span>),
   <span class='kw'>.right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -184,6 +185,10 @@ the end of the vector and moves towards the beginning.</p></td>
     <tr>
       <th>.right</th>
       <td><p>Soft-deprecated. Please use <code>.dir</code> instead.</p></td>
+    </tr>
+    <tr>
+      <th>.default</th>
+      <td><p>The value returned when nothing is detected.</p></td>
     </tr>
     </table>
     
