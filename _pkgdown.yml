@@ -91,6 +91,7 @@ reference:
   - negate
   - partial
   - safely
+  - insistently
 
 - title: Misc
   contents:
