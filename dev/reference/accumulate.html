@@ -31,10 +31,17 @@
 
 <meta property="og:title" content="Accumulate intermediate results of a vector reduction — accumulate" />
 
-<meta property="og:description" content="accumulate() sequentially applies a function to elements of a vector taken
-in pairs. The results of each application are returned in a list. The
-accumulation can optionally terminate before processing the whole vector
-in response to a done() signal returned by the accumulation function." />
+<meta property="og:description" content="accumulate() sequentially applies a 2-argument function to elements of a
+vector. Each application of the function uses the initial value or result
+of the previous application as the first argument. The second argument is
+the next value of the vector. The results of each application are
+returned in a list. The accumulation can optionally terminate before
+processing the whole vector in response to a done() signal returned by
+the accumulation function.
+By contrast to accumulate(), reduce() applies a 2-argument function in
+the same way, but discards all results except that of the final function
+application.
+accumulate2() sequentially applies a function to elements of two lists, .x and .y." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -140,10 +147,17 @@ in response to a done() signal returned by the accumulation function." />
 
     <div class="ref-description">
     
-    <p><code>accumulate()</code> sequentially applies a function to elements of a vector taken
-in pairs. The results of each application are returned in a list. The
-accumulation can optionally terminate before processing the whole vector
-in response to a <code><a href='done.html'>done()</a></code> signal returned by the accumulation function.</p>
+    <p><code>accumulate()</code> sequentially applies a 2-argument function to elements of a
+vector. Each application of the function uses the initial value or result
+of the previous application as the first argument. The second argument is
+the next value of the vector. The results of each application are
+returned in a list. The accumulation can optionally terminate before
+processing the whole vector in response to a <code><a href='done.html'>done()</a></code> signal returned by
+the accumulation function.</p>
+<p>By contrast to <code>accumulate()</code>, <code><a href='reduce.html'>reduce()</a></code> applies a 2-argument function in
+the same way, but discards all results except that of the final function
+application.</p>
+<p><code>accumulate2()</code> sequentially applies a function to elements of two lists, <code>.x</code> and <code>.y</code>.</p>
     
     </div>
 
@@ -167,7 +181,7 @@ The next value in sequence is passed as the second argument.</p>
 function will be passed the accumulated result as the first
 argument. The next value in sequence from <code>.x</code> is passed as the second argument. The
 next value in sequence from <code>.y</code> is passed as the third argument.</p>
-<p>The reduction terminates early if <code>.f</code> returns a value wrapped in
+<p>The accumulation terminates early if <code>.f</code> returns a value wrapped in
 a <code><a href='done.html'>done()</a></code>.</p></td>
     </tr>
     <tr>
@@ -177,9 +191,9 @@ a <code><a href='done.html'>done()</a></code>.</p></td>
     <tr>
       <th>.init</th>
       <td><p>If supplied, will be used as the first value to start
-the accumulation, rather than using <code>x[[1]]</code>. This is useful if
+the accumulation, rather than using <code>.x[[1]]</code>. This is useful if
 you want to ensure that <code>reduce</code> returns a correct value when <code>.x</code>
-is empty. If missing, and <code>x</code> is empty, will throw an error.</p></td>
+is empty. If missing, and <code>.x</code> is empty, will throw an error.</p></td>
     </tr>
     <tr>
       <th>.dir</th>
