@@ -30,9 +30,9 @@ a \code{\link[=done]{done()}}.}
 \item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.init}{If supplied, will be used as the first value to start
-the accumulation, rather than using \code{x[[1]]}. This is useful if
+the accumulation, rather than using \code{.x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
-is empty. If missing, and \code{x} is empty, will throw an error.}
+is empty. If missing, and \code{.x} is empty, will throw an error.}
 
 \item{.y}{For \code{reduce2()} and \code{accumulate2()}, an additional
 argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}

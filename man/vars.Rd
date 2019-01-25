@@ -7,10 +7,13 @@
 vars(...)
 }
 \arguments{
-\item{...}{The variable to include in the selection. You can use bare name or helpers from the \code{tidyselect} package.}
+\item{...}{The variable to include in the selection. You can use bare name or
+helpers from the \code{tidyselect} package.}
 }
 \description{
-This helper function is intended to provide a semantic equivalent to the one from \code{dplyr::mutate_at()}. It can be used in the \code{*_at} functions of \code{purrr} like \code{map_at()}. Note that the \code{tidyselect} package has to be installed.
+This helper function is intended to provide a semantic equivalent to the one
+from \code{dplyr::mutate_at()}. It can be used in the \code{*_at} functions of \code{purrr}
+like \code{map_at()}. Note that the \code{tidyselect} package has to be installed.
 }
 \examples{
 \dontrun{

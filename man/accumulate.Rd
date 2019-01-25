@@ -21,15 +21,15 @@ function will be passed the accumulated result as the first
 argument. The next value in sequence from \code{.x} is passed as the second argument. The
 next value in sequence from \code{.y} is passed as the third argument.
 
-The reduction terminates early if \code{.f} returns a value wrapped in
+The accumulation terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.init}{If supplied, will be used as the first value to start
-the accumulation, rather than using \code{x[[1]]}. This is useful if
+the accumulation, rather than using \code{.x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
-is empty. If missing, and \code{x} is empty, will throw an error.}
+is empty. If missing, and \code{.x} is empty, will throw an error.}
 
 \item{.dir}{The direction of accumulation as a string, one of
 \code{"forward"} (the default) or \code{"backward"}. See the section about
@@ -59,10 +59,19 @@ includes the initial value, even when terminating at the first
 iteration).
 }
 \description{
-\code{accumulate()} sequentially applies a function to elements of a vector taken
-in pairs. The results of each application are returned in a list. The
-accumulation can optionally terminate before processing the whole vector
-in response to a \code{done()} signal returned by the accumulation function.
+\code{accumulate()} sequentially applies a 2-argument function to elements of a
+vector. Each application of the function uses the initial value or result
+of the previous application as the first argument. The second argument is
+the next value of the vector. The results of each application are
+returned in a list. The accumulation can optionally terminate before
+processing the whole vector in response to a \code{done()} signal returned by
+the accumulation function.
+
+By contrast to \code{accumulate()}, \code{reduce()} applies a 2-argument function in
+the same way, but discards all results except that of the final function
+application.
+
+\code{accumulate2()} sequentially applies a function to elements of two lists, \code{.x} and \code{.y}.
 }
 \section{Life cycle}{
 
