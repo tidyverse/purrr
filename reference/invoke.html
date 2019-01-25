@@ -78,20 +78,26 @@ makes it easier to call lists of functions with lists of parameters." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -107,18 +113,6 @@ makes it easier to call lists of functions with lists of parameters." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -141,13 +135,13 @@ makes it easier to call lists of functions with lists of parameters." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Invoke functions.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/invoke.R'><code>R/invoke.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/retired-invoke.R'><code>R/retired-invoke.R</code></a></small>
     <div class="hidden name"><code>invoke.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><img src='figures/lifecycle-soft-deprecated.svg' alt='Soft-deprecated lifecycle' /></p>
+    <p><a href='https://www.tidyverse.org/lifecycle/#retired'><img src='figures/lifecycle-retired.svg' alt='Retired lifecycle'></a></p>
 <p>This pair of functions make it easier to combine a function and list
 of parameters to get a result. <code>invoke</code> is a wrapper around
 <code>do.call</code> that makes it easy to use in a pipe. <code>invoke_map</code>
@@ -205,18 +199,19 @@ as <code>.f</code> the name of a function rather than its value, or as
     <h2 class="hasAnchor" id="life-cycle"><a class="anchor" href="#life-cycle"></a>Life cycle</h2>
 
     
-    <ul>
-<li><p><code>invoke()</code> is soft-deprecated as of purrr 0.3.0 and replaced by
-the simpler <code><a href='exec.html'>exec()</a></code> function reexported from rlang. <code><a href='exec.html'>exec()</a></code>
-evaluates a function call built from its inputs and supports tidy
-dots:</p><pre># Before:
+    <p>These functions are retired in favour of <code><a href='exec.html'>exec()</a></code>. They are no
+longer under active development but we will maintain them in the
+package undefinitely.</p><ul>
+<li><p><code>invoke()</code> is retired in favour of the simpler <code><a href='exec.html'>exec()</a></code> function
+reexported from rlang. <code><a href='exec.html'>exec()</a></code> evaluates a function call built
+from its inputs and supports tidy dots:</p><pre># Before:
 invoke(mean, list(na.rm = TRUE), x = 1:10)
     # After
 exec(mean, 1:10, !!!list(na.rm = TRUE))
 </pre></li>
-<li><p><code>invoke_map()</code> is soft-deprecated as of purrr 0.3.0 without
-replacement because it is more complex to understand than the
-corresponding code using <code><a href='map.html'>map()</a></code>, <code><a href='map2.html'>map2()</a></code> and <code><a href='exec.html'>exec()</a></code>:</p><pre># Before:
+<li><p><code>invoke_map()</code> is is retired without replacement because it is
+more complex to understand than the corresponding code using
+<code><a href='map.html'>map()</a></code>, <code><a href='map2.html'>map2()</a></code> and <code><a href='exec.html'>exec()</a></code>:</p><pre># Before:
 invoke_map(fns, list(args))
 invoke_map(fns, list(args1, args2))
     # After:
@@ -234,63 +229,63 @@ map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Invoke a function with a list of arguments</span>
-<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.38870131 0.97554784 0.28989230 0.67838043 0.73531960 0.19595673
-#&gt;  [7] 0.98053967 0.74152153 0.05144628 0.53021246</div><div class='input'><span class='co'># Invoke a function with named arguments</span>
-<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.69582388 0.68855600 0.03123033 0.22556253 0.30083081 0.63646561
-#&gt;  [7] 0.47902455 0.43217126 0.70643384 0.94857658</div><div class='input'>
+<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>))</div><div class='output co'>#&gt;  [1] 0.3277343 0.6021007 0.6043941 0.1246334 0.2946009 0.5776099 0.6309793
+#&gt;  [8] 0.5120159 0.5050239 0.5340354</div><div class='input'><span class='co'># Invoke a function with named arguments</span>
+<span class='fu'>invoke</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt;  [1] 0.55724944 0.86791949 0.82970869 0.11144915 0.70368836 0.89748826
+#&gt;  [7] 0.27973255 0.22820188 0.01532989 0.12898156</div><div class='input'>
 <span class='co'># Combine the two:</span>
 <span class='fu'>invoke</span>(<span class='no'>paste</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"01a"</span>, <span class='st'>"01b"</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "01a-01b"</div><div class='input'><span class='co'># That's more natural as part of a pipeline:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"01a"</span>, <span class='st'>"01b"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>invoke</span>(<span class='no'>paste</span>, <span class='no'>.</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"-"</span>)</div><div class='output co'>#&gt; [1] "01a-01b"</div><div class='input'>
 <span class='co'># Invoke a list of functions, each with different arguments</span>
 <span class='fu'>invoke_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>runif</span>, <span class='no'>rnorm</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)))</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] 0.18033877 0.21689988 0.68016292 0.49884561 0.64167935 0.66028435
-#&gt;  [7] 0.09602416 0.76560016 0.76967480 0.99071231
+#&gt;  [1] 0.09338193 0.23688501 0.79114741 0.59973157 0.91014771 0.56042455
+#&gt;  [7] 0.75570477 0.37917189 0.37328098 0.17029064
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  1.88850493 -0.09744510 -0.93584735 -0.01595031 -0.82678895
+#&gt; [1] -0.1173097 -0.4226757 -0.8346894 -0.8146651  0.7935841
 #&gt; </div><div class='input'><span class='co'># Or with the same inputs:</span>
 <span class='fu'>invoke_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>runif</span>, <span class='no'>rnorm</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.06521611 0.35420680 0.82519942 0.27381825 0.57004495
+#&gt; [1] 0.57074752 0.41928296 0.26762217 0.04780944 0.10349305
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] -0.4241750 -0.8723159  0.1066846 -0.5870140 -0.3278536
+#&gt; [1] -0.48445511 -0.74107266  1.16061578  1.01206712 -0.07207847
 #&gt; </div><div class='input'><span class='fu'>invoke_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>runif</span>, <span class='no'>rnorm</span>), <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.46598719 0.39003139 0.02006522 0.37697093 0.55991284
+#&gt; [1] 0.12781466 0.27968351 0.81610606 0.05761299 0.80282925
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  1.06730788  0.07003485 -0.63912332 -0.04996490 -0.25148344
+#&gt; [1] -1.2569391 -0.5106143  0.1020858 -1.3251728  0.7089426
 #&gt; </div><div class='input'><span class='co'># Or the same function with different inputs:</span>
 <span class='fu'>invoke_map</span>(<span class='st'>"runif"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.67176682 0.05861411 0.99706914 0.14903547 0.51855664
+#&gt; [1] 0.9662828 0.5152566 0.5494807 0.1637199 0.1645970
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] 0.84612005 0.71826972 0.24131402 0.54704337 0.83480182 0.02795603
-#&gt;  [7] 0.46938430 0.80568003 0.81405131 0.40391100
+#&gt;  [1] 0.786332777 0.751113420 0.784214704 0.654354915 0.378104397 0.008566967
+#&gt;  [7] 0.955329554 0.838616148 0.213424938 0.494713556
 #&gt; </div><div class='input'>
 <span class='co'># Or as a pipeline</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span> <span class='fu'>invoke_map</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; $m1
-#&gt; [1] -17.1555
+#&gt; [1] 1.375921
 #&gt; 
 #&gt; $m2
-#&gt; [1] -0.2478571
+#&gt; [1] 0.1906799
 #&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span> <span class='fu'>invoke_map_dbl</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt;         m1         m2 
-#&gt; -1.0554082 -0.1491601 </div><div class='input'>
+#&gt; 0.13422742 0.05007979 </div><div class='input'>
 <span class='co'># Note that you can also match by position by explicitly omitting `.x`.</span>
 <span class='co'># This can be useful when the argument names of the functions are not</span>
 <span class='co'># identical</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>m1</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>m2</span> <span class='kw'>=</span> <span class='no'>median</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>invoke_map</span>(, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Cauchy'>rcauchy</a></span>(<span class='fl'>100</span>))</div><div class='output co'>#&gt; $m1
-#&gt; [1] -0.634837
+#&gt; [1] 0.8621935
 #&gt; 
 #&gt; $m2
-#&gt; [1] -0.1482912
+#&gt; [1] -0.06702543
 #&gt; </div><div class='input'>
 <span class='co'># If you have pairs of function name and arguments, it's natural</span>
 <span class='co'># to store them in a data frame. Here we use a tibble because</span>
 <span class='co'># it has better support for list-columns</span>
 <span class='kw'>if</span> (<span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/is_installed.html'>is_installed</a></span>(<span class='st'>"tibble"</span>)) {
-  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/tibble/topics/tibble'>tibble</a></span>(
+  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
     <span class='kw'>f</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"runif"</span>, <span class='st'>"rpois"</span>, <span class='st'>"rnorm"</span>),
     <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
       <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>),
@@ -301,15 +296,15 @@ map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
   <span class='no'>df</span>
   <span class='fu'>invoke_map</span>(<span class='no'>df</span>$<span class='no'>f</span>, <span class='no'>df</span>$<span class='no'>params</span>)
 }</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] 0.204329063 0.471755611 0.385183100 0.392751929 0.218338430 0.007208941
-#&gt;  [7] 0.363712143 0.526106730 0.844163393 0.135991171
+#&gt;  [1] 0.99628168 0.33100748 0.08520752 0.85446765 0.52302976 0.99703446
+#&gt;  [7] 0.42188735 0.22862927 0.10356121 0.89888084
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 9 9 5 6 9
+#&gt; [1]  7 12 10  8  7
 #&gt; 
 #&gt; [[3]]
-#&gt;  [1]  -3.240840  12.844975  -2.943244  -9.482045  15.586632   5.283032
-#&gt;  [7]   8.990353   3.000512  -2.412399 -15.897635
+#&gt;  [1]  11.611718 -19.725326  12.610960 -17.933706 -14.824491  -6.565869
+#&gt;  [7] -12.156401   5.494855  -7.896072   4.279832
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

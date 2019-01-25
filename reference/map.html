@@ -91,20 +91,26 @@ walk() calls .f for its side-effect and returns the input .x.
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -120,18 +126,6 @@ walk() calls .f for its side-effect and returns the input .x.
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -252,7 +246,9 @@ returns <code>FALSE</code>.</p></td>
       <th>.at</th>
       <td><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to <code>.at</code> will be modified.</p></td>
+exlude. Only those elements corresponding to <code>.at</code> will be modified.
+If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
+the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
     <tr>
       <th>.id</th>
@@ -284,7 +280,8 @@ no elements at depth <code>.depth</code>.</p></td>
     <p>All functions return a vector the same length as <code>.x</code>.</p>
 <p><code>map()</code> returns a list, <code>map_lgl()</code> a logical vector, <code>map_int()</code> an
 integer vector, <code>map_dbl()</code> a double vector, and <code>map_chr()</code> a character
-vector. The output of <code>.f</code> will be automatically typed upwards,
+vector. <code>map_df()</code>, <code>map_dfc()</code>, <code>map_dfr()</code> all return a data frame.
+The output of <code>.f</code> will be automatically typed upwards,
 e.g. logical -&gt; integer -&gt; double -&gt; character.</p>
 <p>If <code>.x</code> has <code><a href='https://www.rdocumentation.org/packages/base/topics/names'>names()</a></code>, the return value preserves those names.</p>
 <p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
@@ -300,91 +297,91 @@ use in pipe.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>map</span>(<span class='no'>rnorm</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map_dbl</span>(<span class='no'>mean</span>)</div><div class='output co'>#&gt;  [1]  0.9714714  2.3044667  3.3578648  4.0606456  5.2247875  6.6328310
-#&gt;  [7]  6.6803245  8.1763451  9.2655661 10.2225539</div><div class='input'>
+  <span class='fu'>map_dbl</span>(<span class='no'>mean</span>)</div><div class='output co'>#&gt;  [1] 1.134771 1.439643 2.536815 4.281336 5.131663 6.925450 6.672975 7.782296
+#&gt;  [9] 8.441613 9.746304</div><div class='input'>
 <span class='co'># Or use an anonymous function</span>
 <span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>map</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>10</span>, <span class='no'>x</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] -0.4960537 -0.1848187  1.6302344  3.1012525  0.3862632 -0.6346383
-#&gt;  [7]  0.9895589  0.3434939  0.3304666  0.5214110
+#&gt;  [1] -1.9212732  2.3345591  2.5717445  0.5222654  1.5595033  0.4046254
+#&gt;  [7]  2.3041093  0.5400051  1.3382973  2.0815181
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] 3.3194563 2.6365628 2.5143278 0.2486249 2.8935975 2.2230384 2.5808166
-#&gt;  [8] 1.8221786 2.7409667 1.0025569
+#&gt;  [1]  2.300762  2.103314  3.101992  1.746213  1.223091 -0.285402  3.717469
+#&gt;  [8]  1.935019  3.055381  2.510736
 #&gt; 
 #&gt; [[3]]
-#&gt;  [1] 0.06102244 3.71901566 2.30199496 1.10587416 3.07629925 3.87530850
-#&gt;  [7] 3.45382739 2.14928309 3.56620161 4.15221195
+#&gt;  [1] 3.441893 2.599967 1.683426 2.689465 4.425771 5.412640 2.616133 1.367615
+#&gt;  [9] 2.030274 1.771552
 #&gt; 
 #&gt; [[4]]
-#&gt;  [1] 3.243803 3.510742 2.833948 3.520331 4.115348 2.231952 2.592361 4.709178
-#&gt;  [9] 2.759157 3.631673
+#&gt;  [1] 4.845892 4.860111 5.415508 5.003876 3.671635 3.469743 4.306567 3.601047
+#&gt;  [9] 3.537190 4.601926
 #&gt; 
 #&gt; [[5]]
-#&gt;  [1] 5.462080 4.677167 3.712785 3.969960 6.514089 5.346904 6.779442 5.386631
-#&gt;  [9] 4.081305 3.415664
+#&gt;  [1] 3.320165 4.031204 4.684637 4.636041 4.589475 4.882947 5.685277 4.861452
+#&gt;  [9] 4.718697 5.841020
 #&gt; 
 #&gt; [[6]]
-#&gt;  [1] 5.915941 3.914929 6.003568 5.644229 7.146360 5.778812 7.018179 5.736281
-#&gt;  [9] 7.658542 5.225913
+#&gt;  [1] 4.246810 4.919041 6.167942 5.263133 5.918789 6.508736 5.216942 6.128173
+#&gt;  [9] 8.428031 6.799355
 #&gt; 
 #&gt; [[7]]
-#&gt;  [1] 6.076062 6.724467 6.406600 6.877714 8.179784 7.641037 6.370411 6.192265
-#&gt;  [9] 6.139510 4.830761
+#&gt;  [1] 7.223523 6.232092 7.085557 7.550274 8.023162 9.024083 7.514186 6.080235
+#&gt;  [9] 6.071218 7.288740
 #&gt; 
 #&gt; [[8]]
-#&gt;  [1] 6.624163 7.506868 7.418348 7.832771 8.485993 6.666604 7.738034 8.652386
-#&gt;  [9] 8.748855 8.896560
+#&gt;  [1] 8.143478 8.439365 8.044262 8.999850 8.122501 7.424881 7.919893 7.956319
+#&gt;  [9] 9.137929 6.505915
 #&gt; 
 #&gt; [[9]]
-#&gt;  [1] 10.489300  8.340597  9.537283  9.746803 10.896317  6.939929  9.064544
-#&gt;  [8]  8.734853  8.552655  7.589299
+#&gt;  [1]  7.212710  9.341394 11.733964 10.154294  7.005580  9.437616  9.270275
+#&gt;  [8]  7.339835  9.113426  9.736630
 #&gt; 
 #&gt; [[10]]
-#&gt;  [1]  9.493581  9.730238  8.914845 10.362159  9.664328 11.363804  9.288476
-#&gt;  [8] 10.662179 10.291130 10.197958
+#&gt;  [1] 10.097831 10.386212 10.352851 11.279395 10.937042  9.847974  9.457611
+#&gt;  [8]  8.871598 10.225599  8.889781
 #&gt; </div><div class='input'>
 <span class='co'># Or a formula</span>
 <span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>map</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>10</span>, <span class='no'>.x</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] -0.2035661  0.9601830  1.6869825  1.7052670  1.9914417  2.1442490
-#&gt;  [7] -0.2389102  3.6548983  0.8430828  0.5765099
+#&gt;  [1] -1.277381350  0.180109191  1.045686590  1.075177270 -0.009152789
+#&gt;  [6]  0.913989698  0.608053472  0.059511857  1.938670634 -0.440581903
 #&gt; 
 #&gt; [[2]]
-#&gt;  [1] 1.8016129 1.1051976 2.9042691 2.0796492 0.7411728 3.0256851 1.2692214
-#&gt;  [8] 1.8098545 2.5288647 2.5502105
+#&gt;  [1] 1.431864 2.233176 2.138606 2.916264 2.831297 1.122666 1.920924 1.611978
+#&gt;  [9] 2.887876 2.370502
 #&gt; 
 #&gt; [[3]]
-#&gt;  [1] 3.5496843 2.3404576 3.0574217 0.1919895 2.0877402 2.2176208 2.3358951
-#&gt;  [8] 3.6263098 2.4927518 3.2703613
+#&gt;  [1] 1.15242306 0.91632297 3.47541341 3.01548414 2.71951092 0.09070225
+#&gt;  [7] 3.67487262 2.51516972 1.63026559 3.54230359
 #&gt; 
 #&gt; [[4]]
-#&gt;  [1] 4.467477 4.723995 4.613837 3.382131 4.220725 5.127927 5.813454 3.916174
-#&gt;  [9] 5.367707 3.372565
+#&gt;  [1] 5.053414 5.322603 3.912702 4.647517 3.342681 4.145057 5.149783 4.661671
+#&gt;  [9] 4.428057 2.860268
 #&gt; 
 #&gt; [[5]]
-#&gt;  [1] 4.783371 4.316286 4.555297 5.606490 5.624183 4.304569 4.216361 4.046876
-#&gt;  [9] 6.792756 5.348977
+#&gt;  [1] 5.969342 5.400718 5.616287 5.424801 6.595332 4.924648 4.771398 5.085583
+#&gt;  [9] 3.950685 3.968975
 #&gt; 
 #&gt; [[6]]
-#&gt;  [1] 6.259104 5.194048 6.105665 5.666400 7.641848 5.356094 6.587021 5.849597
-#&gt;  [9] 4.289178 7.431033
+#&gt;  [1] 5.549948 6.893061 6.176134 5.371122 5.862740 6.238757 5.328407 5.441108
+#&gt;  [9] 6.942307 6.243776
 #&gt; 
 #&gt; [[7]]
-#&gt;  [1] 4.354788 5.967543 6.292534 6.299440 7.537885 6.683668 6.160377 5.645072
-#&gt;  [9] 6.182432 6.365600
+#&gt;  [1] 6.972958 5.792386 6.683212 7.422046 6.267013 6.504570 7.783662 6.608725
+#&gt;  [9] 6.170206 6.500425
 #&gt; 
 #&gt; [[8]]
-#&gt;  [1] 8.815949 8.302796 9.807087 7.105973 7.953572 7.528821 7.473307 7.904865
-#&gt;  [9] 5.504635 8.166889
+#&gt;  [1] 10.071588  8.502481  6.053161  8.704480  7.630803  9.967160  7.274310
+#&gt;  [8]  7.872336  9.245665  9.153672
 #&gt; 
 #&gt; [[9]]
-#&gt;  [1]  9.350492 10.433701  9.765907 10.167521  8.863057  8.485098 10.519744
-#&gt;  [8]  8.671508  8.946328  8.436475
+#&gt;  [1] 9.545571 7.659837 9.646695 9.025130 8.913479 9.132289 8.537969 9.131020
+#&gt;  [9] 9.472515 8.236522
 #&gt; 
 #&gt; [[10]]
-#&gt;  [1]  9.256091  9.890958  9.439171 10.188002 10.748851  8.083462 10.236096
-#&gt;  [8] 10.628953 10.417926 11.976758
+#&gt;  [1]  8.970660  9.217738  9.917837 10.218194  9.067140  7.599998  9.569683
+#&gt;  [8]  9.532446  8.345580 10.631674
 #&gt; </div><div class='input'>
 <span class='co'># The names of the input are preserved in the output:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span> <span class='fu'>map</span>(<span class='no'>`+`</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; $foo

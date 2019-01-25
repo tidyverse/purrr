@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Execute a function — exec • purrr</title>
+<title>Create delaying rate settings — rate-helpers • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -29,13 +29,11 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
-<meta property="og:title" content="Execute a function — exec" />
+<meta property="og:title" content="Create delaying rate settings — rate-helpers" />
 
-<meta property="og:description" content="These objects are imported from other packages. Follow the links
-below to see their documentation.
-
-  rlangexec
-" />
+<meta property="og:description" content="These helpers create rate settings that you can pass to
+insistently(). You can also use them in your own functions with
+rate_sleep()." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -134,28 +132,82 @@ below to see their documentation.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Execute a function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/reexport-rlang.R'><code>R/reexport-rlang.R</code></a></small>
-    <div class="hidden name"><code>exec.Rd</code></div>
+    <h1>Create delaying rate settings</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/rate.R'><code>R/rate.R</code></a></small>
+    <div class="hidden name"><code>rate-helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p>
-<dl class='dl-horizontal'>
-  <dt>rlang</dt><dd><p><code><a href='https://rlang.r-lib.org/reference/exec.html'>exec</a></code></p></dd>
-</dl>
+    <p>These helpers create rate settings that you can pass to
+<code><a href='insistently.html'>insistently()</a></code>. You can also use them in your own functions with
+<code><a href='rate_sleep.html'>rate_sleep()</a></code>.</p>
     
     </div>
 
-        
+    <pre class="usage"><span class='fu'>rate_delay</span>(<span class='kw'>pause</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
 
+<span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pause_cap</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>is_rate</span>(<span class='no'>x</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pause</th>
+      <td><p>Delay between attempts in seconds.</p></td>
+    </tr>
+    <tr>
+      <th>max_times</th>
+      <td><p>Maximum number of requests to attempt.</p></td>
+    </tr>
+    <tr>
+      <th>pause_base, pause_cap</th>
+      <td><p><code>rate_backoff()</code> uses an exponential
+back-off so that each request waits <code>pause_base * 2^i</code> seconds,
+up to a maximum of <code>pause_cap</code> seconds.</p></td>
+    </tr>
+    <tr>
+      <th>pause_min</th>
+      <td><p>Minimum time to wait in the backoff; generally
+only necessary if you need pauses less than one second (which may
+not be kind to the server, use with caution!).</p></td>
+    </tr>
+    <tr>
+      <th>jitter</th>
+      <td><p>Whether to introduce a random jitter in the waiting time.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>An object to test.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='rate_sleep.html'>rate_sleep()</a></code>, <code><a href='insistently.html'>insistently()</a></code></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># A delay rate waits the same amount of time:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_delay</span>(<span class='fl'>0.02</span>)
+<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='input'>
+<span class='co'># A backoff rate waits exponentially longer each time, with random</span>
+<span class='co'># jitter by default:</span>
+<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
+<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.01 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.4 seconds.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

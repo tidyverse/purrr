@@ -76,20 +76,26 @@ replicate(..., simplify = FALSE)." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -105,18 +111,6 @@ replicate(..., simplify = FALSE)." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -186,38 +180,38 @@ argument to the lambda).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] -0.06956080  0.51562199  1.39296654  1.01856317  0.05301056
+#&gt; [1] -1.7805787  2.0119122  0.7423579  0.3025405 -0.9301512
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  0.5802748 -0.5941795 -0.3718553 -1.4230352 -1.1404838
+#&gt; [1] -0.62373043  1.13978607  1.52506783 -0.08140044 -0.41325523
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  1.2685047 -0.2801044  0.9110540  2.0043945  0.2471404
+#&gt; [1]  0.1779261 -1.6117598  0.9343846  0.7797665  0.9488591
 #&gt; 
 #&gt; [[4]]
-#&gt; [1] -0.4290761 -2.1837551 -0.1236349  0.2873839 -0.3715993
+#&gt; [1] -0.2789342 -1.4534763  0.9851275  0.2641752  0.1818199
 #&gt; 
 #&gt; [[5]]
-#&gt; [1]  1.6265623  0.3099083 -1.5640407 -1.2306235 -1.3701975
+#&gt; [1] -0.4894290 -0.1439310  1.3542750  0.3486849  0.8532997
 #&gt; 
 #&gt; [[6]]
-#&gt; [1]  0.1065558 -0.3988255 -0.3534061  0.2345011  1.7697899
+#&gt; [1]  1.0120865 -0.9288807  0.7960816 -0.8027995 -0.4582456
 #&gt; 
 #&gt; [[7]]
-#&gt; [1]  0.45787638  1.14375811 -1.30772262 -0.94254960 -0.09496125
+#&gt; [1]  0.6862764 -0.5953003 -0.4073832 -0.3809501 -0.5792708
 #&gt; 
 #&gt; [[8]]
-#&gt; [1] -1.130047 -1.456208 -1.698718 -1.240827 -1.058299
+#&gt; [1] -1.3558871 -0.1130526  1.0127046 -0.1814063 -1.4692753
 #&gt; 
 #&gt; [[9]]
-#&gt; [1] -0.75437857 -0.58510694  0.55814208 -0.01900658 -0.16935602
+#&gt; [1] -1.89541834 -1.01599702 -0.08470884 -0.78864002  1.44901896
 #&gt; 
 #&gt; [[10]]
-#&gt; [1]  1.295331 -1.426060  1.754104 -2.115575  1.009702
+#&gt; [1]  0.4195211  0.4069906 -0.4760313  0.5650942 -1.1216409
 #&gt; </div><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>rerun</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1]  0.002596342  0.673652978  0.261856431  0.270511553 -0.566697593
-#&gt;  [6] -0.591663103  0.564532598  0.005869156 -0.064905322 -0.079221444</div></pre>
+  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1]  0.2697595  0.2129175 -0.7301116 -0.4566670 -0.7496882  0.6329846
+#&gt;  [7] -0.3548520 -0.1585561 -0.9328431 -0.4759514</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

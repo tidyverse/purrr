@@ -38,7 +38,9 @@ share the same notion of &quot;parallel&quot; as base::pmax() and base::pmin().
 map2() and walk2() are specialised for the two argument case; pmap()
 and pwalk() allow you to provide any number of arguments in a list. Note
 that a data frame is a very important special case, in which case pmap()
-and pwalk() apply the function .f to each row." />
+and pwalk() apply the function .f to each row. map_dfr(), pmap_dfr()
+and map2_dfc(), pmap_dfc() return data frames created by row-binding
+and column-binding respectively. They require dplyr to be installed." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -81,20 +83,26 @@ and pwalk() apply the function .f to each row." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -110,18 +118,6 @@ and pwalk() apply the function .f to each row." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -157,7 +153,9 @@ share the same notion of "parallel" as <code><a href='https://www.rdocumentation
 <code>map2()</code> and <code>walk2()</code> are specialised for the two argument case; <code>pmap()</code>
 and <code>pwalk()</code> allow you to provide any number of arguments in a list. Note
 that a data frame is a very important special case, in which case <code>pmap()</code>
-and <code>pwalk()</code> apply the function <code>.f</code> to each row.</p>
+and <code>pwalk()</code> apply the function <code>.f</code> to each row. <code><a href='map.html'>map_dfr()</a></code>, <code>pmap_dfr()</code>
+and <code>map2_dfc()</code>, <code>pmap_dfc()</code> return data frames created by row-binding
+and column-binding respectively. They require dplyr to be installed.</p>
     
     </div>
 
@@ -378,7 +376,17 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>8</span>)
 )
 <span class='co'># all produce the same result</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>pmin</a></span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>map2_dbl</span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>pmin</a></span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>map2_dbl</span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'>
+<span class='co'># If you want to bind the results of your function rowwise, use map2_dfr() or pmap_dfr()</span>
+<span class='no'>ex_fun</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>){
+<span class='no'>col</span> <span class='kw'>&lt;-</span> <span class='no'>arg1</span> + <span class='no'>arg2</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>col</span>)
+}
+<span class='no'>arg1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>arg2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>2</span>, <span class='fl'>11</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>map2_dfr</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)
+<span class='co'># If instead you want to bind by columns, use map2_dfc() or pmap_dfc()</span>
+<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'>map2_dfc</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

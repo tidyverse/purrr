@@ -33,7 +33,8 @@
 
 <meta property="og:description" content="Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
-functionals and other function operators." />
+functionals and other function operators.
+Note that an argument can only be partialised once." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -76,20 +77,26 @@ functionals and other function operators." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -105,18 +112,6 @@ functionals and other function operators." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -148,51 +143,47 @@ functionals and other function operators." />
     <p>Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.</p>
+<p>Note that an argument can only be partialised once.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>partial</span>(<span class='no'>...f</span>, <span class='no'>...</span>, <span class='kw'>.env</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>(), <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>.first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>partial</span>(<span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.env</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.first</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...f</th>
+      <th>.f</th>
       <td><p>a function. For the output source to read well, this should be a
 named function.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>named arguments to <code>...f</code> that should be partially applied.</p></td>
+      <td><p>named arguments to <code>.f</code> that should be partially applied.</p>
+<p>Pass an empty <code>... = </code> argument to specify the position of future
+arguments relative to partialised ones. See
+<code><a href='https://rlang.r-lib.org/reference/call_modify.html'>rlang::call_modify()</a></code> to learn more about this syntax.</p>
+<p>These dots support quasiquotation and quosures. If you unquote a
+value, it is evaluated only once at function creation time.
+Otherwise, it is evaluated each time the function is called.</p></td>
     </tr>
     <tr>
       <th>.env</th>
-      <td><p>the environment of the created function. Defaults to
-<code><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame()</a></code> and you should rarely need to modify this.</p></td>
+      <td><p>Soft-deprecated as of purrr 0.3.0. The environments are
+now captured via quosures.</p></td>
     </tr>
     <tr>
       <th>.lazy</th>
-      <td><p>If <code>TRUE</code> arguments evaluated lazily, if <code>FALSE</code>,
-evaluated when <code>partial</code> is called.</p></td>
+      <td><p>Soft-deprecated as of purrr 0.3.0. Please unquote the
+arguments that should be evaluated once at function creation time.</p></td>
     </tr>
     <tr>
       <th>.first</th>
-      <td><p>If <code>TRUE</code>, the partialized arguments are placed
-to the front of the function signature. If <code>FALSE</code>, they are
-moved to the back. Only useful to control position matching of
-arguments when the partialized arguments are not named.</p></td>
+      <td><p>Soft-deprecated as of purrr 0.3.0. Please pass an
+empty argument <code>... = </code> to specify the position of future
+arguments.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="design-choices"><a class="anchor" href="#design-choices"></a>Design choices</h2>
-
-    
-    <p>There are many ways to implement partial function application in R.
-(see e.g. <code>dots</code> in <a href='https://github.com/crowding/ptools'>https://github.com/crowding/ptools</a> for another
-approach.)  This implementation is based on creating functions that are as
-similar as possible to the anonymous functions that you'd create by hand,
-if you weren't using <code>partial</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -203,35 +194,59 @@ if you weren't using <code>partial</code>.</p>
 <span class='co'># we can write:</span>
 <span class='no'>compact2</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>discard</span>, <span class='kw'>.p</span> <span class='kw'>=</span> <span class='no'>is.null</span>)
 
-<span class='co'># and the generated source code is very similar to what we made by hand</span>
-<span class='no'>compact1</span></div><div class='output co'>#&gt; function(x) discard(x, is.null)
-#&gt; &lt;environment: 0x8794648&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; function (...) 
-#&gt; discard(.p = is.null, ...)
-#&gt; &lt;environment: 0x8794648&gt;</div><div class='input'>
-<span class='co'># Note that the evaluation occurs "lazily" so that arguments will be</span>
-<span class='co'># repeatedly evaluated</span>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
-<span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
-#&gt; runif(n = rpois(1, 5), ...)
-#&gt; &lt;environment: 0x8794648&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.17635011 0.11075900 0.93834241 0.84647114 0.57114358 0.67909341 0.08932224</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2269574 0.4481785 0.1612276 0.1761117 0.1982281 0.3576113 0.1813332</div><div class='input'>
-<span class='co'># You can override this by saying .lazy = FALSE</span>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>), <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>f</span></div><div class='output co'>#&gt; function (...) 
-#&gt; runif(n = 5L, ...)
-#&gt; &lt;environment: 0x8794648&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.659083010 0.660253409 0.002400788 0.993446034 0.627489231</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.01463034 0.20517822 0.66307666 0.46374403 0.36034816</div><div class='input'>
-<span class='co'># This also means that partial works fine with functions that do</span>
-<span class='co'># non-standard evaluation</span>
+<span class='co'># partial() works fine with functions that do non-standard</span>
+<span class='co'># evaluation</span>
 <span class='no'>my_long_variable</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='no'>plot2</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>plot</span>, <span class='no'>my_long_variable</span>)
-<span class='fu'>plot2</span>()</div><div class='img'><img src='partial-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot2</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>10</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='img'><img src='partial-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plot2</span>()</div><div class='img'><img src='partial-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>plot2</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>10</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='img'><img src='partial-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'># Note that you currently can't partialise arguments multiple times:</span>
+<span class='no'>my_mean</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>my_mean</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>my_mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>my_mean</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+
+
+<span class='co'># The evaluation of arguments normally occurs "lazily". Concretely,</span>
+<span class='co'># this means that arguments are repeatedly evaluated across invokations:</span>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
+<span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
+#&gt; function (...) 
+#&gt; runif(n = rpois(1, 5), ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1538388 0.9316670 0.6664174 0.5214033 0.9335608</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.39328750 0.67795588 0.80827452 0.52697525 0.11193650 0.95423720 0.02919632</div><div class='input'>
+<span class='co'># You can unquote an argument to fix it to a particular value.</span>
+<span class='co'># Unquoted arguments are evaluated only once when the function is created:</span>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> !!<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
+<span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
+#&gt; function (...) 
+#&gt; runif(n = 3L, ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2054296 0.8999639 0.7739089</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.9676727 0.7804088 0.9705454</div><div class='input'>
+
+<span class='co'># By default, partialised arguments are passed before new ones:</span>
+<span class='no'>my_list</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>list</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
+<span class='fu'>my_list</span>(<span class='st'>"foo"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 2
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] "foo"
+#&gt; </div><div class='input'>
+<span class='co'># Control the position of these arguments by passing an empty</span>
+<span class='co'># `... = ` argument:</span>
+<span class='no'>my_list</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>list</span>, <span class='fl'>1</span>, <span class='kw'>...</span> <span class='kw'>=</span> , <span class='fl'>2</span>)
+<span class='fu'>my_list</span>(<span class='st'>"foo"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "foo"
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 2
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#design-choices">Design choices</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

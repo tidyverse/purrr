@@ -75,20 +75,26 @@ wrapper that removes all empty elements." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -104,18 +110,6 @@ wrapper that removes all empty elements." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -189,38 +183,46 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>sample</span>, <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>keep</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1]  9  6 10  2  7
+#&gt; [1] 4 9 6 5 7
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  2  9  8 10  6
-#&gt; 
-#&gt; [[3]]
-#&gt; [1]  1  8  4 10  9
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] 10  8  5  9  3
+#&gt; [1] 9 8 3 6 7
 #&gt; </div><div class='input'>
 <span class='co'># Or use a formula</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>sample</span>, <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>keep</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>.x</span>) <span class='kw'>&gt;</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; list()</div><div class='input'>
+  <span class='fu'>keep</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>.x</span>) <span class='kw'>&gt;</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1]  4  8  9  7 10
+#&gt; 
+#&gt; [[2]]
+#&gt; [1]  8  4  9 10  5
+#&gt; 
+#&gt; [[3]]
+#&gt; [1]  9  7 10  8  5
+#&gt; 
+#&gt; [[4]]
+#&gt; [1]  3 10  8  9  4
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 10  7  9  6  2
+#&gt; </div><div class='input'>
 <span class='co'># Using a string instead of a function will select all list elements</span>
 <span class='co'># where that subelement is TRUE</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>1</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>10</span>))
 <span class='no'>x</span></div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$a
-#&gt; [1] TRUE
+#&gt; [1] FALSE
 #&gt; 
 #&gt; [[1]]$b
-#&gt;  [1]  6  4  5  1 10  9  8  2  3  7
+#&gt;  [1]  4  3  7 10  8  9  1  5  2  6
 #&gt; 
 #&gt; 
 #&gt; [[2]]
 #&gt; [[2]]$a
-#&gt; [1] TRUE
+#&gt; [1] FALSE
 #&gt; 
 #&gt; [[2]]$b
-#&gt;  [1]  7  4  3  6  8  1  9 10  5  2
+#&gt;  [1]  5  9  3  1  6  4  7 10  2  8
 #&gt; 
 #&gt; 
 #&gt; [[3]]
@@ -228,15 +230,15 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[3]]$b
-#&gt;  [1]  7 10  9  2  8  1  3  4  6  5
+#&gt;  [1]  4  6  7  9 10  1  3  2  5  8
 #&gt; 
 #&gt; 
 #&gt; [[4]]
 #&gt; [[4]]$a
-#&gt; [1] FALSE
+#&gt; [1] TRUE
 #&gt; 
 #&gt; [[4]]$b
-#&gt;  [1]  1  4  6  3  9 10  5  7  2  8
+#&gt;  [1]  1  6  9  4  8  3 10  5  2  7
 #&gt; 
 #&gt; 
 #&gt; [[5]]
@@ -244,14 +246,14 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[5]]$b
-#&gt;  [1]  1  7 10  8  5  3  6  2  4  9
+#&gt;  [1]  4  9  7  2  6 10  5  1  8  3
 #&gt; 
 #&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>keep</span>(<span class='st'>"a"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$a
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[1]]$b
-#&gt;  [1]  6  4  5  1 10  9  8  2  3  7
+#&gt;  [1]  4  6  7  9 10  1  3  2  5  8
 #&gt; 
 #&gt; 
 #&gt; [[2]]
@@ -259,7 +261,7 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[2]]$b
-#&gt;  [1]  7  4  3  6  8  1  9 10  5  2
+#&gt;  [1]  1  6  9  4  8  3 10  5  2  7
 #&gt; 
 #&gt; 
 #&gt; [[3]]
@@ -267,22 +269,22 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[3]]$b
-#&gt;  [1]  7 10  9  2  8  1  3  4  6  5
-#&gt; 
-#&gt; 
-#&gt; [[4]]
-#&gt; [[4]]$a
-#&gt; [1] TRUE
-#&gt; 
-#&gt; [[4]]$b
-#&gt;  [1]  1  7 10  8  5  3  6  2  4  9
+#&gt;  [1]  4  9  7  2  6 10  5  1  8  3
 #&gt; 
 #&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>discard</span>(<span class='st'>"a"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$a
 #&gt; [1] FALSE
 #&gt; 
 #&gt; [[1]]$b
-#&gt;  [1]  1  4  6  3  9 10  5  7  2  8
+#&gt;  [1]  4  3  7 10  8  9  1  5  2  6
+#&gt; 
+#&gt; 
+#&gt; [[2]]
+#&gt; [[2]]$a
+#&gt; [1] FALSE
+#&gt; 
+#&gt; [[2]]$b
+#&gt;  [1]  5  9  3  1  6  4  7 10  2  8
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># compact() discards elements that are NULL or that have length zero</span>

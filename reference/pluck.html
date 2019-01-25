@@ -77,20 +77,26 @@ exist, chuck() always throws an error in that case." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -106,18 +112,6 @@ exist, chuck() always throws an error in that case." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -209,26 +203,116 @@ applying a function to a pluck location.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># pluck() supports integer positions, string names, and functions.</span>
-<span class='co'># Using functions, you can easily extend pluck(). Let's create a</span>
-<span class='co'># list of data structures:</span>
-<span class='no'>obj1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"a"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='kw'>elt</span> <span class='kw'>=</span> <span class='st'>"foobar"</span>))
-<span class='no'>obj2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"b"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>2</span>, <span class='kw'>elt</span> <span class='kw'>=</span> <span class='st'>"foobaz"</span>))
+    <pre class="examples"><div class='input'><span class='co'># Let's create a list of data structures:</span>
+<span class='no'>obj1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"a"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='kw'>elt</span> <span class='kw'>=</span> <span class='st'>"foo"</span>))
+<span class='no'>obj2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"b"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>2</span>, <span class='kw'>elt</span> <span class='kw'>=</span> <span class='st'>"bar"</span>))
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='no'>obj1</span>, <span class='no'>obj2</span>)
 
-<span class='co'># And now an accessor for these complex data structures:</span>
-<span class='no'>my_element</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span><span class='kw'>[[</span><span class='fl'>2</span>]]$<span class='no'>elt</span>
 
-<span class='co'># The accessor can then be passed to pluck:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='no'>my_element</span>)</div><div class='output co'>#&gt; [1] "foobar"</div><div class='input'><span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='no'>my_element</span>)</div><div class='output co'>#&gt; [1] "foobaz"</div><div class='input'>
-<span class='co'># Even for this simple data structure, this is more readable than</span>
-<span class='co'># the alternative form because it requires you to read both from</span>
-<span class='co'># right-to-left and from left-to-right in different parts of the</span>
-<span class='co'># expression:</span>
-<span class='fu'>my_element</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt; [1] "foobar"</div><div class='input'>
-<span class='co'># If you have a list of accessors, you can splice those in with `!!!`:</span>
-<span class='no'>idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='no'>my_element</span>)
-<span class='fu'>pluck</span>(<span class='no'>x</span>, !!!<span class='no'>idx</span>)</div><div class='output co'>#&gt; [1] "foobar"</div><div class='input'>
+<span class='co'># pluck() provides a way of retrieving objects from such data</span>
+<span class='co'># structures using a combination of numeric positions, vector or</span>
+<span class='co'># list names, and accessor functions.</span>
+
+<span class='co'># Numeric positions index into the list by position, just like `[[`:</span>
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "a"
+#&gt; 
+#&gt; [[2]]
+#&gt; [[2]][[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[2]]$elt
+#&gt; [1] "foo"
+#&gt; 
+#&gt; </div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "a"
+#&gt; 
+#&gt; [[2]]
+#&gt; [[2]][[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[2]]$elt
+#&gt; [1] "foo"
+#&gt; 
+#&gt; </div><div class='input'>
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; $elt
+#&gt; [1] "foo"
+#&gt; </div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]<span class='kw'>[[</span><span class='fl'>2</span>]]</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; $elt
+#&gt; [1] "foo"
+#&gt; </div><div class='input'>
+<span class='co'># Supply names to index into named vectors:</span>
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>)</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]<span class='kw'>[[</span><span class='fl'>2</span>]]<span class='kw'>[[</span><span class='st'>"elt"</span>]]</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'>
+
+<span class='co'># By default, pluck() consistently returns `NULL` when an element</span>
+<span class='co'># does not exist:</span>
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>10</span>]])
+
+<span class='co'># You can also supply a default value for non-existing elements:</span>
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA</div><div class='input'>
+<span class='co'># If you prefer to consistently fail for non-existing elements, use</span>
+<span class='co'># the opinionated variant chuck():</span>
+<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "a"
+#&gt; 
+#&gt; [[2]]
+#&gt; [[2]][[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[2]]$elt
+#&gt; [1] "foo"
+#&gt; 
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>10</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>10</span>))
+
+
+<span class='co'># The map() functions use pluck() by default to retrieve multiple</span>
+<span class='co'># values from a list:</span>
+<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [[1]][[1]]
+#&gt; [1] 1
+#&gt; 
+#&gt; [[1]]$elt
+#&gt; [1] "foo"
+#&gt; 
+#&gt; 
+#&gt; [[2]]
+#&gt; [[2]][[1]]
+#&gt; [1] 2
+#&gt; 
+#&gt; [[2]]$elt
+#&gt; [1] "bar"
+#&gt; 
+#&gt; </div><div class='input'>
+<span class='co'># Pass multiple indexes with a list:</span>
+<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>2</span>, <span class='st'>"elt"</span>))</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "foo"
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "bar"
+#&gt; </div><div class='input'>
+<span class='co'># This is equivalent to:</span>
+<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>pluck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "foo"
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "bar"
+#&gt; </div><div class='input'>
+<span class='co'># You can also supply a default:</span>
+<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='st'>"superb default"</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] "superb default"
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] "superb default"
+#&gt; </div><div class='input'>
+<span class='co'># Or use the strict variant:</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>chuck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span>))
+
 
 <span class='co'># You can also assign a value in a pluck location with pluck&lt;-:</span>
 <span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>) <span class='kw'>&lt;-</span> <span class='st'>"quuux"</span>
@@ -241,7 +325,7 @@ applying a function to a pluck location.</p></div>
 #&gt; [1] 1
 #&gt; 
 #&gt; [[1]][[2]]$elt
-#&gt; [1] "foobar"
+#&gt; [1] "foo"
 #&gt; 
 #&gt; 
 #&gt; 
@@ -269,7 +353,7 @@ applying a function to a pluck location.</p></div>
 #&gt; [1] 1
 #&gt; 
 #&gt; [[1]][[2]]$elt
-#&gt; [1] "foobar"
+#&gt; [1] "foo"
 #&gt; 
 #&gt; 
 #&gt; 
@@ -285,7 +369,22 @@ applying a function to a pluck location.</p></div>
 #&gt; [1] "QUUUX"
 #&gt; 
 #&gt; 
-#&gt; </div></pre>
+#&gt; </div><div class='input'>
+
+<span class='co'># pluck() also supports accessor functions:</span>
+<span class='no'>my_element</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span><span class='kw'>[[</span><span class='fl'>2</span>]]$<span class='no'>elt</span>
+
+<span class='co'># The accessor can then be passed to pluck:</span>
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='no'>my_element</span>)</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'><span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='no'>my_element</span>)</div><div class='output co'>#&gt; [1] "quuux"</div><div class='input'>
+<span class='co'># Even for this simple data structure, this is more readable than</span>
+<span class='co'># the alternative form because it requires you to read both from</span>
+<span class='co'># right-to-left and from left-to-right in different parts of the</span>
+<span class='co'># expression:</span>
+<span class='fu'>my_element</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'>
+
+<span class='co'># If you have a list of accessors, you can splice those in with `!!!`:</span>
+<span class='no'>idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='no'>my_element</span>)
+<span class='fu'>pluck</span>(<span class='no'>x</span>, !!!<span class='no'>idx</span>)</div><div class='output co'>#&gt; [1] "foo"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

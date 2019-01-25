@@ -31,6 +31,9 @@
     <loc>https://purrr.tidyverse.org/reference/detect.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/reference/done.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/reference/every.html</loc>
   </url>
   <url>
@@ -50,6 +53,9 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/imap.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/reference/insistently.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/invoke.html</loc>
@@ -103,6 +109,12 @@
     <loc>https://purrr.tidyverse.org/reference/purrr-package.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/reference/rate-helpers.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/reference/rate_sleep.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/reference/rbernoulli.html</loc>
   </url>
   <url>
@@ -116,6 +128,9 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/reference/rep_along.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/rerun.html</loc>

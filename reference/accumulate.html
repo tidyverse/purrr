@@ -31,10 +31,17 @@
 
 <meta property="og:title" content="Accumulate intermediate results of a vector reduction — accumulate" />
 
-<meta property="og:description" content="accumulate() reduces a vector with a binary function,
-keeping all intermediate results, from the initial value to the
-final reduced value, i.e. the result you'd have gotten if you used
-reduce() instead of accumulate()." />
+<meta property="og:description" content="accumulate() sequentially applies a 2-argument function to elements of a
+vector. Each application of the function uses the initial value or result
+of the previous application as the first argument. The second argument is
+the next value of the vector. The results of each application are
+returned in a list. The accumulation can optionally terminate before
+processing the whole vector in response to a done() signal returned by
+the accumulation function.
+By contrast to accumulate(), reduce() applies a 2-argument function in
+the same way, but discards all results except that of the final function
+application.
+accumulate2() sequentially applies a function to elements of two lists, .x and .y." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -77,20 +84,26 @@ reduce() instead of accumulate()." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -106,18 +119,6 @@ reduce() instead of accumulate()." />
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -146,10 +147,17 @@ reduce() instead of accumulate()." />
 
     <div class="ref-description">
     
-    <p><code>accumulate()</code> <a href='reduce.html'>reduces</a> a vector with a binary function,
-keeping all intermediate results, from the initial value to the
-final reduced value, i.e. the result you'd have gotten if you used
-<code><a href='reduce.html'>reduce()</a></code> instead of <code>accumulate()</code>.</p>
+    <p><code>accumulate()</code> sequentially applies a 2-argument function to elements of a
+vector. Each application of the function uses the initial value or result
+of the previous application as the first argument. The second argument is
+the next value of the vector. The results of each application are
+returned in a list. The accumulation can optionally terminate before
+processing the whole vector in response to a <code><a href='done.html'>done()</a></code> signal returned by
+the accumulation function.</p>
+<p>By contrast to <code>accumulate()</code>, <code><a href='reduce.html'>reduce()</a></code> applies a 2-argument function in
+the same way, but discards all results except that of the final function
+application.</p>
+<p><code>accumulate2()</code> sequentially applies a function to elements of two lists, <code>.x</code> and <code>.y</code>.</p>
     
     </div>
 
@@ -166,13 +174,15 @@ final reduced value, i.e. the result you'd have gotten if you used
     </tr>
     <tr>
       <th>.f</th>
-      <td><p>For <code><a href='reduce.html'>reduce()</a></code>, and <code>accumulate()</code>, a 2-argument
-function. The function will be passed the accumulated value as
-the first argument and the "next" value as the second argument.</p>
-<p>For <code><a href='reduce.html'>reduce2()</a></code> and <code>accumulate2()</code>, a 3-argument function. The
-function will be passed the accumulated value as the first
-argument, the next value of <code>.x</code> as the second argument, and the
-next value of <code>.y</code> as the third argument.</p></td>
+      <td><p>For <code>accumulate()</code> <code>.f</code> is 2-argument function. The function will
+be passed the accumulated result or initial value as the first argument.
+The next value in sequence is passed as the second argument.</p>
+<p>For <code>accumulate2()</code>, a 3-argument function. The
+function will be passed the accumulated result as the first
+argument. The next value in sequence from <code>.x</code> is passed as the second argument. The
+next value in sequence from <code>.y</code> is passed as the third argument.</p>
+<p>The accumulation terminates early if <code>.f</code> returns a value wrapped in
+a <code><a href='done.html'>done()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -181,21 +191,22 @@ next value of <code>.y</code> as the third argument.</p></td>
     <tr>
       <th>.init</th>
       <td><p>If supplied, will be used as the first value to start
-the accumulation, rather than using <code>x[[1]]</code>. This is useful if
+the accumulation, rather than using <code>.x[[1]]</code>. This is useful if
 you want to ensure that <code>reduce</code> returns a correct value when <code>.x</code>
-is empty. If missing, and <code>x</code> is empty, will throw an error.</p></td>
+is empty. If missing, and <code>.x</code> is empty, will throw an error.</p></td>
     </tr>
     <tr>
       <th>.dir</th>
-      <td><p>The direction of reduction as a string, one of
+      <td><p>The direction of accumulation as a string, one of
 <code>"forward"</code> (the default) or <code>"backward"</code>. See the section about
 direction below.</p></td>
     </tr>
     <tr>
       <th>.y</th>
-      <td><p>For <code><a href='reduce.html'>reduce2()</a></code> and <code>accumulate2()</code>, an additional
-argument that is passed to <code>.f</code>. If <code>init</code> is not set, <code>.y</code>
-should be 1 element shorter than <code>.x</code>.</p></td>
+      <td><p>For <code>accumulate2()</code> <code>.y</code> is the second argument of the pair. It
+needs to be 1 element shorter than the vector to be accumulated (<code>.x</code>).
+If <code>.init</code> is set, <code>.y</code> needs to be one element shorted than the
+concatenation of the initial value and <code>.x</code>.</p></td>
     </tr>
     </table>
     
@@ -209,6 +220,11 @@ the returned vector is kept unnamed.</p>
 initial value (<code>.init</code> if supplied, or the first element of <code>.x</code>)
 and the last element is the final reduced value. In case of a
 right accumulation, this order is reversed.</p>
+<p>The accumulation terminates early if <code>.f</code> returns a value wrapped
+in a <code><a href='done.html'>done()</a></code>. If the done box is empty, the last value is
+used instead and the result is one element shorter (but always
+includes the initial value, even when terminating at the first
+iteration).</p>
     
     <h2 class="hasAnchor" id="life-cycle"><a class="anchor" href="#life-cycle"></a>Life cycle</h2>
 
@@ -218,6 +234,18 @@ argument as of rlang 0.3.0. Note that the algorithm has
 slightly changed: the accumulated value is passed to the right
 rather than the left, which is consistent with a right reduction.</p>
     
+    <h2 class="hasAnchor" id="direction"><a class="anchor" href="#direction"></a>Direction</h2>
+
+    
+    <p>When <code>.f</code> is an associative operation like <code>+</code> or <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c()</a></code>, the
+direction of reduction does not matter. For instance, reducing the
+vector <code>1:3</code> with the binary function <code>+</code> computes the sum <code>((1 + 2) + 3)</code> from the left, and the same sum <code>(1 + (2 + 3))</code> from the
+right.</p>
+<p>In other cases, the direction has important consequences on the
+reduced value. For instance, reducing a vector with <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> from
+the left produces a left-leaning nested list (or tree), while
+reducing <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> from the right produces a right-leaning list.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='reduce.html'>reduce()</a></code> when you only need the final reduced value.</p></div>
@@ -225,8 +253,9 @@ rather than the left, which is consistent with a right reduction.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># With an associative operation, the final value is always the</span>
-<span class='co'># same, no matter the direction. You'll find it in the last element</span>
-<span class='co'># for a left accumulation, and in the first element for a right one:</span>
+<span class='co'># same, no matter the direction. You'll find it in the last element for a</span>
+<span class='co'># backward (left) accumulation, and in the first element for forward</span>
+<span class='co'># (right) one:</span>
 <span class='fl'>1</span>:<span class='fl'>5</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>`+`</span>)</div><div class='output co'>#&gt; [1]  1  3  6 10 15</div><div class='input'><span class='fl'>1</span>:<span class='fl'>5</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>`+`</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='st'>"backward"</span>)</div><div class='output co'>#&gt; [1] 15 14 12  9  5</div><div class='input'>
 <span class='co'># The final value is always equal to the equivalent reduction:</span>
 <span class='fl'>1</span>:<span class='fl'>5</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='reduce.html'>reduce</a></span>(<span class='no'>`+`</span>)</div><div class='output co'>#&gt; [1] 15</div><div class='input'>
@@ -237,7 +266,7 @@ rather than the left, which is consistent with a right reduction.</p>
 <span class='co'># with a left reduction, and to the right otherwise:</span>
 <span class='fu'>accumulate</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>paste</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='st'>"backward"</span>)</div><div class='output co'>#&gt; [1] "a.b.c.d.e" "b.c.d.e"   "c.d.e"     "d.e"       "e"        </div><div class='input'>
 <span class='co'># `accumulate2()` is a version of `accumulate()` that works with</span>
-<span class='co'># ternary functions and one additional vector:</span>
+<span class='co'># 3-argument functions and one additional vector:</span>
 <span class='no'>paste2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
 <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste2</span>)</div><div class='output co'>#&gt; [1] "a"       "a.b"     "a.b.c"   "a.b.c.d"</div><div class='input'><span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>accumulate2</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"-"</span>, <span class='st'>"."</span>, <span class='st'>"-"</span>), <span class='no'>paste2</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "a"
@@ -251,6 +280,39 @@ rather than the left, which is consistent with a right reduction.</p>
 #&gt; [[4]]
 #&gt; [1] "a-b.c-d"
 #&gt; </div><div class='input'>
+
+<span class='co'># You can shortcircuit an accumulation and terminate it early by</span>
+<span class='co'># returning a value wrapped in a done(). In the following example</span>
+<span class='co'># we return early if the result-so-far, which is passed on the LHS,</span>
+<span class='co'># meets a condition:</span>
+<span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>(<span class='no'>out</span>))
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a"     "a.b"   "a.b.c" "a.b.c"</div><div class='input'>
+<span class='co'># Note how we get twice the same value in the accumulation. That's</span>
+<span class='co'># because we have returned it twice. To prevent this, return an empty</span>
+<span class='co'># done box to signal to accumulate() that it should terminate with the</span>
+<span class='co'># value of the last iteration:</span>
+<span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a"     "a.b"   "a.b.c"</div><div class='input'>
+<span class='co'># Here the early return branch checks the incoming inputs passed on</span>
+<span class='co'># the RHS:</span>
+<span class='no'>paste4</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
+  <span class='kw'>if</span> (<span class='no'>input</span> <span class='kw'>==</span> <span class='st'>"f"</span>) {
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
+  }
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+}
+<span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste4</span>)</div><div class='output co'>#&gt; [1] "a"         "a.b"       "a.b.c"     "a.b.c.d"   "a.b.c.d.e"</div><div class='input'>
+
 # Simulating stochastic processes with drift
 </div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
@@ -259,7 +321,7 @@ rather than the left, which is consistent with a right reduction.</p>
 <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"sim"</span>, <span class='fl'>1</span>:<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(~ <span class='fu'>accumulate</span>(<span class='no'>.</span>, ~ <span class='fl'>.05</span> + <span class='no'>.x</span> + <span class='no'>.y</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map_dfr</a></span>(~ <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>data_frame</a></span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>.x</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>), <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"simulation"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map_dfr</a></span>(~ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>.x</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>), <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"simulation"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>step</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'>geom_line</span>(<span class='fu'>aes</span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>simulation</span>)) +
     <span class='fu'>ggtitle</span>(<span class='st'>"Simulations of a random walk with drift"</span>)
@@ -273,6 +335,8 @@ rather than the left, which is consistent with a right reduction.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#life-cycle">Life cycle</a></li>
+
+      <li><a href="#direction">Direction</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

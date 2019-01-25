@@ -80,20 +80,26 @@ function .f to each subset of size 1 of that list (as in
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -109,18 +115,6 @@ function .f to each subset of size 1 of that list (as in
     <li class="divider"></li>
     <li>
       <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -198,7 +192,9 @@ returns <code>FALSE</code>.</p></td>
       <th>.at</th>
       <td><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to <code>.at</code> will be modified.</p></td>
+exlude. Only those elements corresponding to <code>.at</code> will be modified.
+If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
+the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
     </table>
     
@@ -252,32 +248,10 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; $c1
 #&gt; [1] 8 9
 #&gt; 
-#&gt; $d1
-#&gt; [1] "j"
+#&gt; $c2
+#&gt; [1] 8 9
 #&gt; 
-#&gt; $d2
-#&gt; [1] "j"
-#&gt; 
-#&gt; $d3
-#&gt; [1] "j"
-#&gt; </div><div class='input'>
-<span class='co'># We can apply f() on a selected subset of x</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"d"</span>), <span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $a1
-#&gt; [1] 1 2 3 4
-#&gt; 
-#&gt; $a2
-#&gt; [1] 1 2 3 4
-#&gt; 
-#&gt; $a3
-#&gt; [1] 1 2 3 4
-#&gt; 
-#&gt; $a4
-#&gt; [1] 1 2 3 4
-#&gt; 
-#&gt; $b
-#&gt; [1] "e" "f" "g"
-#&gt; 
-#&gt; $c
+#&gt; $c3
 #&gt; [1] 8 9
 #&gt; 
 #&gt; $d1
@@ -287,6 +261,22 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] "j"
 #&gt; 
 #&gt; $d3
+#&gt; [1] "j"
+#&gt; 
+#&gt; $d4
+#&gt; [1] "j"
+#&gt; </div><div class='input'>
+<span class='co'># We can apply f() on a selected subset of x</span>
+<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"d"</span>), <span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $b
+#&gt; [1] "e" "f" "g"
+#&gt; 
+#&gt; $c
+#&gt; [1] 8 9
+#&gt; 
+#&gt; $d1
+#&gt; [1] "j"
+#&gt; 
+#&gt; $d2
 #&gt; [1] "j"
 #&gt; </div><div class='input'>
 <span class='co'># Or only where a condition is satisfied</span>
@@ -303,6 +293,12 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] "e" "f" "g"
 #&gt; 
 #&gt; $b4
+#&gt; [1] "e" "f" "g"
+#&gt; 
+#&gt; $b5
+#&gt; [1] "e" "f" "g"
+#&gt; 
+#&gt; $b6
 #&gt; [1] "e" "f" "g"
 #&gt; 
 #&gt; $c
@@ -349,7 +345,7 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt;  8          5           3.4          1.5         0.2              1
 #&gt;  9          4.4         2.9          1.4         0.2              1
 #&gt; 10          4.9         3.1          1.5         0.1              1
-#&gt; # ... with 140 more rows, and 2 more variables: Species_versicolor &lt;dbl&gt;,
+#&gt; # … with 140 more rows, and 2 more variables: Species_versicolor &lt;dbl&gt;,
 #&gt; #   Species_virginica &lt;dbl&gt;</div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; # A tibble: 32 x 15
 #&gt;      mpg cyl_4 cyl_6 cyl_8  disp    hp  drat    wt  qsec  vs_0  vs_1  am_0  am_1
 #&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -363,7 +359,7 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt;  8  24.4     1     0     0  147.    62  3.69  3.19  20       0     1     1     0
 #&gt;  9  22.8     1     0     0  141.    95  3.92  3.15  22.9     0     1     1     0
 #&gt; 10  19.2     0     1     0  168.   123  3.92  3.44  18.3     0     1     1     0
-#&gt; # ... with 22 more rows, and 2 more variables: gear &lt;dbl&gt;, carb &lt;dbl&gt;</div></pre>
+#&gt; # … with 22 more rows, and 2 more variables: gear &lt;dbl&gt;, carb &lt;dbl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
