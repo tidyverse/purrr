@@ -1,8 +1,12 @@
 #' Partial apply a function, filling in some arguments.
 #'
+#' @description
+#'
 #' Partial function application allows you to modify a function by pre-filling
 #' some of the arguments.  It is particularly useful in conjunction with
 #' functionals and other function operators.
+#'
+#' Note that an argument can only be partialised once.
 #'
 #' @param .f a function. For the output source to read well, this should be a
 #'   named function.
@@ -31,30 +35,32 @@
 #' # we can write:
 #' compact2 <- partial(discard, .p = is.null)
 #'
-#' # and the generated source code is very similar to what we made by hand
-#' compact1
-#' compact2
+#' # partial() works fine with functions that do non-standard
+#' # evaluation
+#' my_long_variable <- 1:10
+#' plot2 <- partial(plot, my_long_variable)
+#' plot2()
+#' plot2(runif(10), type = "l")
 #'
-#' # Note that the evaluation occurs "lazily" so that arguments will be
-#' # repeatedly evaluated
+#' # Note that you currently can't partialise arguments multiple times:
+#' my_mean <- partial(mean, na.rm = TRUE)
+#' my_mean <- partial(my_mean, na.rm = FALSE)
+#' try(my_mean(1:10))
+#'
+#'
+#' # The evaluation of arguments normally occurs "lazily". Concretely,
+#' # this means that arguments are repeatedly evaluated across invokations:
 #' f <- partial(runif, n = rpois(1, 5))
 #' f
 #' f()
 #' f()
 #'
-#' # If you unquote an argument, it is evaluated only once at function
-#' # creation time:
+#' # You can unquote an argument to fix it to a particular value.
+#' # Unquoted arguments are evaluated only once when the function is created:
 #' f <- partial(runif, n = !!rpois(1, 5))
 #' f
 #' f()
 #' f()
-#'
-#' # This also means that partial works fine with functions that do
-#' # non-standard evaluation
-#' my_long_variable <- 1:10
-#' plot2 <- partial(plot, my_long_variable)
-#' plot2()
-#' plot2(runif(10), type = "l")
 #'
 #'
 #' # By default, partialised arguments are passed before new ones:
@@ -131,8 +137,15 @@ partial <- function(.f,
     call <- call_modify(call2(fn), !!!args, ... = )
   }
 
+  # Unwrap quosured arguments if possible
+  call <- quo_invert(call)
+
+  # Derive a mask where dots can be forwarded
+  mask <- new_data_mask(env())
+
   partialised <- function(...) {
-    eval_tidy(call)
+    env_bind(mask, ... = env_get(current_env(), "..."))
+    eval_tidy(call, mask)
   }
 
   structure(

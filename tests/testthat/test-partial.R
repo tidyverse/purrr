@@ -2,7 +2,7 @@ context("partial")
 
 test_that("dots are correctly placed in the signature", {
   out <- partialised_body(partial(runif, n = rpois(1, 5)))
-  exp <- expr((!!runif)(n = !!quo(rpois(1, 5)), ...))
+  exp <- quo((!!runif)(n = rpois(1, 5), ...))
   expect_identical(out, exp)
 })
 
@@ -92,6 +92,12 @@ test_that("partial() handles `... =` arguments", {
   expect_identical(before(1), list(1, "partial"))
 })
 
+test_that("partial() supports substituted arguments", {
+  fn <- function(x) substitute(x)
+  fn <- partial(fn, letters)
+  expect_identical(fn(), quote(letters))
+})
+
 
 # Life cycle --------------------------------------------------------------
 
@@ -113,7 +119,7 @@ test_that("`.lazy` still works", {
 test_that("`.first` still works", {
   scoped_options(lifecycle_disable_warnings = TRUE)
   out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
-  exp <- expr((!!runif)(..., n = !!quo(rpois(1, 5))))
+  exp <- quo((!!runif)(..., n = rpois(1, 5)))
   expect_identical(out, exp)
 
   # partial() also works without partialised arguments
