@@ -215,10 +215,14 @@ arguments.
   manually with `!!!`. This change is for consistency with other
   dots-collecting functions of the tidyverse.
 
-* `map_at()`, `lmap_at()` and `modify_at()` now supports selection using `vars()` 
-  and `tidyselect` (@ColinFay, #608)
+* `map_at()`, `lmap_at()` and `modify_at()` now supports selection
+  using `vars()` and `tidyselect` (@ColinFay, #608).
 
-* `detect()` now has a .default argument to specify the value returned when 
+  Note that for now you need to import `vars()` from dplyr or call it
+  qualified like `dplyr::vars()`. It will be reexported from rlang in
+  a future release.
+
+* `detect()` now has a .default argument to specify the value returned when
   nothing is detected (#622, @ColinFay).
 
 

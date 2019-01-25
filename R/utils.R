@@ -29,27 +29,6 @@ check_tidyselect <- function(){
   }
 }
 
-#' Select names
-#'
-#' This helper function is intended to provide a semantic equivalent to the one
-#' from `dplyr::mutate_at()`. It can be used in the `*_at` functions of `purrr`
-#' like `map_at()`. Note that the `tidyselect` package has to be installed.
-#'
-#' @param ... The variable to include in the selection. You can use bare name or
-#'   helpers from the `tidyselect` package.
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' library(tidyselect)
-#' x <- list(a = "b", b = "c", aa = "bb")
-#' map_at(x, vars(contains("a")), toupper)
-#'}
-vars <- function (...) {
-  quos(...)
-}
-
 at_selection <- function(nm, .at){
   if (is_quosures(.at)){
     check_tidyselect()

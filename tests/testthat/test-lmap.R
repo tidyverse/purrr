@@ -13,7 +13,6 @@ test_that("lmap output is list if input is list", {
     out
   }
   expect_is(lmap_at(x, vars(tidyselect::contains("a")), maybe_rep), "list")
-
 })
 
 test_that("lmap output is tibble if input is data frame", {
