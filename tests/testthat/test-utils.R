@@ -57,6 +57,17 @@ test_that("quo_invert() supports quosures in function position", {
   expect_identical(quo_invert(call), new_quosure(expr(list(!!quo(foo), bar)), env))
 })
 
+test_that("quo_invert() supports quosures", {
+  bar <- local(quo(bar))
+  call <- quo(list(!!quo(foo), !!bar))
+  expect_identical(quo_invert(call), quo(list(foo, !!bar)))
+
+  foo <- quo(foo)
+  call <- local(quo(list(!!foo, !!bar)))
+  expect_identical(quo_invert(call), new_quosure(expr(list(!!foo, !!bar)), quo_get_env(call)))
+})
+
+
 # Lifecycle ---------------------------------------------------------------
 
 test_that("%@% is an infix attribute accessor", {

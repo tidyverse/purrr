@@ -250,7 +250,11 @@ quo_invert <- function(call) {
   }
   call <- duplicate(call, shallow = TRUE)
 
-  first <- call
+  if (is_quosure(call)) {
+    first <- quo_get_expr(call)
+  } else {
+    first <- call
+  }
   while (!is_null(first)) {
     if (is_quosure(node_car(first))) {
       break
@@ -261,13 +265,18 @@ quo_invert <- function(call) {
   if (is_null(first)) {
     return(call)
   }
-
   first_quo <- node_car(first)
-  env <- quo_get_env(first_quo)
 
-  node_poke_car(first, quo_get_expr(first_quo))
-  rest <- node_cdr(first)
+  # Take the wrapping quosure env as reference if there is one.
+  # Otherwise, take the first quosure detected in arguments.
+  if (is_quosure(call)) {
+    env <- quo_get_env(call)
+    call <- quo_get_expr(call)
+  } else {
+    env <- quo_get_env(first_quo)
+  }
 
+  rest <- first
   while (!is_null(rest)) {
     cur <- node_car(rest)
 
