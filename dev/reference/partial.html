@@ -33,7 +33,8 @@
 
 <meta property="og:description" content="Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
-functionals and other function operators." />
+functionals and other function operators.
+Note that an argument can only be partialised once." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -142,6 +143,7 @@ functionals and other function operators." />
     <p>Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.</p>
+<p>Note that an argument can only be partialised once.</p>
     
     </div>
 
@@ -192,30 +194,29 @@ arguments.</p></td>
 <span class='co'># we can write:</span>
 <span class='no'>compact2</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>discard</span>, <span class='kw'>.p</span> <span class='kw'>=</span> <span class='no'>is.null</span>)
 
-<span class='co'># and the generated source code is very similar to what we made by hand</span>
-<span class='no'>compact1</span></div><div class='output co'>#&gt; function(x) discard(x, is.null)
-#&gt; &lt;environment: 0x5af4c20&gt;</div><div class='input'><span class='no'>compact2</span></div><div class='output co'>#&gt; &lt;partialised&gt;
-#&gt; function (...) 
-#&gt; discard(.p = is.null, ...)</div><div class='input'>
-<span class='co'># Note that the evaluation occurs "lazily" so that arguments will be</span>
-<span class='co'># repeatedly evaluated</span>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
-<span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
-#&gt; function (...) 
-#&gt; runif(n = rpois(1, 5), ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.14756622 0.08511037 0.53481760 0.71291548 0.43088884 0.51382668</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1603507 0.5395570 0.4671824 0.1538388</div><div class='input'>
-<span class='co'># If you unquote an argument, it is evaluated only once at function</span>
-<span class='co'># creation time:</span>
-<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> !!<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
-<span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
-#&gt; function (...) 
-#&gt; runif(n = 8L, ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.6664174 0.5214033 0.9335608 0.7669166 0.3932875 0.6779559 0.8082745
-#&gt; [8] 0.5269752</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.11193650 0.95423720 0.02919632 0.15478720 0.20542960 0.89996393 0.77390892
-#&gt; [8] 0.96767273</div><div class='input'>
-<span class='co'># This also means that partial works fine with functions that do</span>
-<span class='co'># non-standard evaluation</span>
+<span class='co'># partial() works fine with functions that do non-standard</span>
+<span class='co'># evaluation</span>
 <span class='no'>my_long_variable</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='no'>plot2</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>plot</span>, <span class='no'>my_long_variable</span>)
 <span class='fu'>plot2</span>()</div><div class='img'><img src='partial-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>plot2</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>10</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)</div><div class='img'><img src='partial-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'># Note that you currently can't partialise arguments multiple times:</span>
+<span class='no'>my_mean</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>my_mean</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>my_mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>my_mean</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+
+
+<span class='co'># The evaluation of arguments normally occurs "lazily". Concretely,</span>
+<span class='co'># this means that arguments are repeatedly evaluated across invokations:</span>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
+<span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
+#&gt; function (...) 
+#&gt; runif(n = rpois(1, 5), ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1538388 0.9316670 0.6664174 0.5214033 0.9335608</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.39328750 0.67795588 0.80827452 0.52697525 0.11193650 0.95423720 0.02919632</div><div class='input'>
+<span class='co'># You can unquote an argument to fix it to a particular value.</span>
+<span class='co'># Unquoted arguments are evaluated only once when the function is created:</span>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> !!<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
+<span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
+#&gt; function (...) 
+#&gt; runif(n = 3L, ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2054296 0.8999639 0.7739089</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.9676727 0.7804088 0.9705454</div><div class='input'>
 
 <span class='co'># By default, partialised arguments are passed before new ones:</span>
 <span class='no'>my_list</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>list</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
