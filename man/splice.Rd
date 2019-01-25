@@ -13,9 +13,19 @@ splice(...)
 A list.
 }
 \description{
+\Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+
 This splices all arguments into a list. Non-list objects and lists
 with a S3 class are encapsulated in a list before concatenation.
 }
+\section{Life cycle}{
+
+
+\code{splice()} is in the questioning lifecycle stage as of purrr
+0.3.0. We are now favouring the \code{!!!} syntax enabled by
+\code{\link[rlang:list2]{rlang::list2()}}.
+}
+
 \examples{
 inputs <- list(arg1 = "a", arg2 = "b")
 
