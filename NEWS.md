@@ -1,7 +1,7 @@
 
-# purrr 0.2.99.9000
+# purrr 0.3.0
 
-## Breaking change
+## Breaking changes
 
 * `modify()` and variants are now wrapping `[[<-` instead of
   `[<-`. This change increases the genericity of these functions but
