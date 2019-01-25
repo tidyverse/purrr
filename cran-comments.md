@@ -1,4 +1,6 @@
 
+The rchk issues on the CRAN page should be fixed.
+
 ## Test environments
 
 * local OS X install, R-release
