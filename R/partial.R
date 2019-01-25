@@ -131,8 +131,15 @@ partial <- function(.f,
     call <- call_modify(call2(fn), !!!args, ... = )
   }
 
+  # Unwrap quosured arguments if possible
+  call <- quo_invert(call)
+
+  # Derive a mask where dots can be forwarded
+  mask <- new_data_mask(env())
+
   partialised <- function(...) {
-    eval_tidy(call)
+    env_bind(mask, ... = env_get(current_env(), "..."))
+    eval_tidy(call, mask)
   }
 
   structure(
