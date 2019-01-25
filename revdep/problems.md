@@ -32,24 +32,11 @@ Version: 0.2.1
       All declared Imports should be used.
     ```
 
-# adaptalint
-
-Version: 0.2.3
-
-## Newly broken
-
-*   checking whether package ‘adaptalint’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘adaptalint’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/adaptalint/new/adaptalint.Rcheck/00install.out’ for details.
-    ```
-
 # alphavantager
 
 Version: 0.1.0
 
-## Newly broken
+## In both
 
 *   checking tests ...
     ```
@@ -64,16 +51,14 @@ Version: 0.1.0
       2: stop(content, call. = F) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/alphavantager/new/alphavantager.Rcheck/00_pkg_src/alphavantager/R/av_get.R:103
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 5 SKIPPED: 0 FAILED: 3
-      1. Error: call TIMES_SERIES_INTRADAY (@test_av_get.R#13) 
+      OK: 7 SKIPPED: 0 FAILED: 3
+      1. Error: call TIMES_SERIES_INTRADAY (@test_av_get.R#22) 
       2. Error: call SECTOR (@test_av_get.R#38) 
       3. Error: call Technical Indicators (@test_av_get.R#57) 
       
       Error: testthat unit tests failed
       Execution halted
     ```
-
-## In both
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -281,35 +266,6 @@ Version: 0.2.0
     Package unavailable to check Rd xrefs: ‘lmtest’
     ```
 
-# blscrapeR
-
-Version: 3.1.5
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘blscrapeR-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: bls_api
-    > ### Title: Basic Request Mechanism for BLS Tables
-    > ### Aliases: bls_api
-    > ### Keywords: api bls cpi economics inflation unemployment
-    > 
-    > ### ** Examples
-    > 
-    > 
-    > 
-    > ## API Version 1.0 R Script Sample Code
-    > ## Single Series request
-    > df <- bls_api("LAUCN040010000000005")
-    Error in is.response(x) : 
-      Timeout was reached: Operation timed out after 10001 milliseconds with 0 out of 0 bytes received
-    Calls: bls_api ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
-    Execution halted
-    ```
-
 # BradleyTerryScalable
 
 Version: 0.1.0
@@ -510,9 +466,9 @@ Calls: :: ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c circular.cpp -o circular.o
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c parameters.cpp -o parameters.o
-clang: error: unsupported option '-fopenmp'
-clang: error: unsupported option '-fopenmp'
-clang: error: unsupported option '-fopenmp'
+clang: error: unsupported option '-fopenmp'clang: error: unsupported option '-fopenmp'clang: error: unsupported option '-fopenmp'
+
+
 make: *** [parameters.o] Error 1
 make: *** Waiting for unfinished jobs....
 make: *** [circular.o] Error 1
@@ -533,8 +489,8 @@ clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/inc
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c circular.cpp -o circular.o
 clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -I/usr/local/include  -fopenmp  -fPIC  -Wall -g -O2 -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c parameters.cpp -o parameters.o
 clang: error: unsupported option '-fopenmp'
-clang: clang: error: unsupported option '-fopenmp'
-error: unsupported option '-fopenmp'
+clang: error: unsupported option '-fopenmp'clang: error: 
+unsupported option '-fopenmp'
 make: *** [parameters.o] Error 1
 make: *** Waiting for unfinished jobs....
 make: *** [circular.o] Error 1
@@ -660,10 +616,10 @@ clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/User
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c noise.cpp -o noise.o
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -I/usr/local/include  -fopenmp -fPIC  -mtune=core2 -O3 -c simulation.cpp -o simulation.o
 clang: error: unsupported option '-fopenmp'
+clang: error: unsupported option '-fopenmp'
+clang: error: unsupported option '-fopenmp'
 make: *** [noise.o] Error 1
 make: *** Waiting for unfinished jobs....
-clang: clang: error: unsupported option '-fopenmp'
-error: unsupported option '-fopenmp'
 make: *** [simulation.o] Error 1
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘colorednoise’
@@ -684,9 +640,9 @@ clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/User
 clang: error: unsupported option '-fopenmp'
 clang: error: unsupported option '-fopenmp'
 clang: error: unsupported option '-fopenmp'
-make: *** [noise.o] Error 1
-make: *** Waiting for unfinished jobs....
 make: *** [simulation.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [noise.o] Error 1
 make: *** [RcppExports.o] Error 1
 ERROR: compilation failed for package ‘colorednoise’
 * removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/colorednoise/old/colorednoise.Rcheck/colorednoise’
@@ -848,19 +804,6 @@ Version: 2.2.1
       All declared Imports should be used.
     ```
 
-# crimedata
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking whether package ‘crimedata’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘crimedata’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/crimedata/new/crimedata.Rcheck/00install.out’ for details.
-    ```
-
 # CrossClustering
 
 Version: 4.0.3
@@ -908,22 +851,6 @@ Version: 0.7.1.0
     Namespaces in Imports field not imported from:
       ‘rlang’ ‘tidyselect’
       All declared Imports should be used.
-    ```
-
-# cutpointr
-
-Version: 0.7.4
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 250-259 (cutpointr.Rmd) 
-    Error: processing vignette 'cutpointr.Rmd' failed with diagnostics:
-    cannot open the connection
-    Execution halted
     ```
 
 # d3r
@@ -1178,33 +1105,20 @@ Version: 1.0.0
 
 ## In both
 
-*   R CMD check timed out
-    
-
-*   checking R code for possible problems ... NOTE
+*   checking package dependencies ... ERROR
     ```
-    ...
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:98-112)
-    plot_timing: no visible binding for global variable ‘norm.time’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:98-112)
-    plot_timing: no visible binding for global variable ‘dataset’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:115-128)
-    plot_timing: no visible binding for global variable ‘filtering’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:115-128)
-    plot_timing: no visible binding for global variable ‘method’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:115-128)
-    plot_timing: no visible binding for global variable ‘k’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:115-128)
-    plot_timing: no visible binding for global variable ‘elapsed’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:115-128)
-    plot_timing: no visible binding for global variable ‘medianelapsed’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/DuoClustering2018/new/DuoClustering2018.Rcheck/00_pkg_src/DuoClustering2018/R/plot_timing.R:115-128)
-    Undefined global functions or variables:
-      ARI ari.stab cell cluster data.wide dataset ds ds.norm elapsed
-      entropy est_k estnclust filtering k k_diff med.t medARI
-      median.elapsed median.stability medianARI medianelapsed method
-      norm.time run s s.norm s.true s.true.norm sce stability trueclass
-      truenclust
+    Packages required but not available:
+      ‘ExperimentHub’ ‘dplyr’ ‘tidyr’ ‘mclust’ ‘ggplot2’ ‘reshape2’
+      ‘viridis’ ‘ggthemes’
+    
+    Packages suggested but not available for checking:
+      ‘knitr’ ‘rmarkdown’ ‘BiocStyle’ ‘iSEE’ ‘scater’
+      ‘SingleCellExperiment’ ‘SummarizedExperiment’ ‘plyr’
+    
+    VignetteBuilder package required for checking but not installed: ‘knitr’
+    
+    See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+    manual.
     ```
 
 # dynutils
@@ -1218,46 +1132,6 @@ Version: 1.0.0
     Namespaces in Imports field not imported from:
       ‘Rcpp’ ‘processx’
       All declared Imports should be used.
-    ```
-
-# easyalluvial
-
-Version: 0.1.8
-
-## Newly broken
-
-*   checking whether package ‘easyalluvial’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘easyalluvial’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/easyalluvial/new/easyalluvial.Rcheck/00install.out’ for details.
-    ```
-
-# echarts4r
-
-Version: 0.2.1
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  6.0Mb
-      sub-directories of 1Mb or more:
-        R             2.0Mb
-        htmlwidgets   3.6Mb
-    ```
-
-# edeaR
-
-Version: 0.8.1
-
-## Newly broken
-
-*   checking whether package ‘edeaR’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘edeaR’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/edeaR/new/edeaR.Rcheck/00install.out’ for details.
     ```
 
 # eechidna
@@ -1528,10 +1402,12 @@ Version: 0.0.3
 
 Version: 0.2.0
 
-## In both
+## Newly fixed
 
 *   R CMD check timed out
     
+
+## In both
 
 *   checking dependencies in R code ... NOTE
     ```
@@ -1631,8 +1507,8 @@ Version: 0.1.0
     Last 13 lines of output:
              reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
          })(.x, .f, ..., .init, .dir)
-      7: reduce_impl(.x, .f, ..., .init = .init, .dir = .dir) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpLI4Nzu/R.INSTALL54e23c042928/purrr/R/reduce.R:125
-      8: fn(out, elt, ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpLI4Nzu/R.INSTALL54e23c042928/purrr/R/reduce.R:158
+      7: reduce_impl(.x, .f, ..., .init = .init, .dir = .dir) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/Rtmpxfifhm/R.INSTALL8d7f400dcfc5/purrr/R/reduce.R:125
+      8: fn(out, elt, ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/Rtmpxfifhm/R.INSTALL8d7f400dcfc5/purrr/R/reduce.R:158
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
       OK: 14 SKIPPED: 0 FAILED: 5
@@ -1870,19 +1746,6 @@ Version: 0.2
     Package unavailable to check Rd xrefs: ‘FactoMineR’
     ```
 
-# ggraptR
-
-Version: 1.1
-
-## Newly broken
-
-*   checking whether package ‘ggraptR’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘ggraptR’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ggraptR/new/ggraptR.Rcheck/00install.out’ for details.
-    ```
-
 # ggthemes
 
 Version: 4.0.1
@@ -1979,19 +1842,6 @@ Version: 0.1.4
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 13617 marked UTF-8 strings
-    ```
-
-# healthcareai
-
-Version: 2.3.0
-
-## Newly broken
-
-*   checking whether package ‘healthcareai’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘healthcareai’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/healthcareai/new/healthcareai.Rcheck/00install.out’ for details.
     ```
 
 # highcharter
@@ -2157,15 +2007,6 @@ Version: 0.3.0
 
 Version: 1.0.0
 
-## Newly broken
-
-*   checking whether package ‘irteQ’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘irteQ’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/irteQ/new/irteQ.Rcheck/00install.out’ for details.
-    ```
-
 ## In both
 
 *   checking Rd cross-references ... NOTE
@@ -2252,19 +2093,6 @@ Version: 0.1.3
     ```
     Namespace in Imports field not imported from: ‘dplyr’
       All declared Imports should be used.
-    ```
-
-# meetupapi
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking whether package ‘meetupapi’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘meetupapi’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/meetupapi/new/meetupapi.Rcheck/00install.out’ for details.
     ```
 
 # memery
@@ -2644,15 +2472,6 @@ Version: 2.7.8
 
 Version: 2.6-1
 
-## Newly broken
-
-*   checking whether package ‘openair’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘openair’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/openair/new/openair.Rcheck/00install.out’ for details.
-    ```
-
 ## In both
 
 *   checking installed package size ... NOTE
@@ -2802,19 +2621,6 @@ Version: 2.0.2
     Execution halted
     ```
 
-# pammtools
-
-Version: 0.1.8
-
-## Newly broken
-
-*   checking whether package ‘pammtools’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘pammtools’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/pammtools/new/pammtools.Rcheck/00install.out’ for details.
-    ```
-
 # pcr
 
 Version: 1.1.2
@@ -2845,19 +2651,6 @@ Version: 1.1.2
     Error: processing vignette 'qpcr_analysis.Rmd' failed with diagnostics:
     pandoc document conversion failed with error 83
     Execution halted
-    ```
-
-# petrinetR
-
-Version: 0.2.0
-
-## Newly broken
-
-*   checking whether package ‘petrinetR’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘petrinetR’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/petrinetR/new/petrinetR.Rcheck/00install.out’ for details.
     ```
 
 # pivot
@@ -2940,34 +2733,6 @@ Version: 0.4.0
     ```
     Namespace in Imports field not imported from: ‘tidyr’
       All declared Imports should be used.
-    ```
-
-# postal
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      17: .f(.x[[i]], ...) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpLI4Nzu/R.INSTALL54e23c042928/purrr/R/map.R:137
-      18: readr::write_csv(this, write_to, append = TRUE, col_names = FALSE) at /Users/lionel/Desktop/lowliner/revdep/checks.noindex/postal/new/postal.Rcheck/00_pkg_src/postal/R/fetch_zones_all.R:57
-      19: write_delim(x, path, delim = ",", na = na, append = append, col_names = col_names, 
-             quote_escape = quote_escape) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpvD5aJZ/R.INSTALL97c27da5a21/readr/R/write.R:86
-      20: stream_delim(x, path, delim = delim, col_names = col_names, append = append, na = na, 
-             quote_escape = quote_escape) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpvD5aJZ/R.INSTALL97c27da5a21/readr/R/write.R:76
-      21: open(path, "ab") at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpvD5aJZ/R.INSTALL97c27da5a21/readr/R/write.R:213
-      22: open.connection(path, "ab")
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 108 SKIPPED: 0 FAILED: 1
-      1. Error: (unknown) (@test_fetch_zones.R#144) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
 # primirTSS
@@ -3658,32 +3423,6 @@ Version: 0.2.0
       Note: found 988 marked UTF-8 strings
     ```
 
-# rtypeform
-
-Version: 2.0.0
-
-## Newly broken
-
-*   checking whether package ‘rtypeform’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘rtypeform’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/rtypeform/new/rtypeform.Rcheck/00install.out’ for details.
-    ```
-
-# sampler
-
-Version: 0.2.2
-
-## Newly broken
-
-*   checking whether package ‘sampler’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘sampler’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/sampler/new/sampler.Rcheck/00install.out’ for details.
-    ```
-
 # SanzCircos
 
 Version: 0.1.0
@@ -3892,9 +3631,9 @@ Version: 1.1.1
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      [1] "Estimated replications per hour:  375688"
-      [1] "Estimated replications per hour:  3185614"
-      [1] "Estimated replications per hour:  361391"
+      [1] "Estimated replications per hour:  433944"
+      [1] "Estimated replications per hour:  3789463"
+      [1] "Estimated replications per hour:  504888"
       ── 1. Failure: Post analyze function works (@test_eval_tibbles.R#404)  ─────────
       eg$simulation[[col]] not identical to expected_df[[col]].
       Modes: list, NULL
@@ -4000,19 +3739,6 @@ Version: 2.1.5
     Error: processing vignette 'spatial-modeling-use-case.Rmd' failed with diagnostics:
     pandoc document conversion failed with error 83
     Execution halted
-    ```
-
-# spotifyr
-
-Version: 1.0.0
-
-## Newly broken
-
-*   checking whether package ‘spotifyr’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘spotifyr’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/spotifyr/new/spotifyr.Rcheck/00install.out’ for details.
     ```
 
 # ssdtools
@@ -4124,7 +3850,6 @@ Version: 0.1.0
 *   checking whether package ‘survivalAnalysis’ can be installed ... WARNING
     ```
     Found the following significant warnings:
-      Warning: replacing previous import ‘ggplot2::vars’ by ‘purrr::vars’ when loading ‘survivalAnalysis’
       Warning: replacing previous import ‘purrr::flatten_raw’ by ‘rlang::flatten_raw’ when loading ‘survivalAnalysis’
     See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/survivalAnalysis/new/survivalAnalysis.Rcheck/00install.out’ for details.
     ```
@@ -4154,19 +3879,6 @@ Version: 0.2.1.1
     Namespaces in Imports field not imported from:
       ‘devtools’ ‘lazyeval’ ‘lubridate’ ‘tidyr’
       All declared Imports should be used.
-    ```
-
-# syllabifyr
-
-Version: 0.1.0
-
-## Newly broken
-
-*   checking whether package ‘syllabifyr’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘syllabifyr’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/syllabifyr/new/syllabifyr.Rcheck/00install.out’ for details.
     ```
 
 # tableschema.r
@@ -4376,19 +4088,6 @@ Version: 1.2.7
       All declared Imports should be used.
     ```
 
-# tidystats
-
-Version: 0.3
-
-## Newly broken
-
-*   checking whether package ‘tidystats’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘tidystats’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/tidystats/new/tidystats.Rcheck/00install.out’ for details.
-    ```
-
 # tidytext
 
 Version: 0.2.0
@@ -4410,7 +4109,6 @@ Version: 0.1.0
 *   checking whether package ‘tidytidbits’ can be installed ... WARNING
     ```
     Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘tidytidbits’
       Warning: replacing previous import ‘purrr::flatten_raw’ by ‘rlang::flatten_raw’ when loading ‘tidytidbits’
     See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/tidytidbits/new/tidytidbits.Rcheck/00install.out’ for details.
     ```
@@ -4505,14 +4203,11 @@ Version: 3.10.1
 
 ## In both
 
-*   R CMD check timed out
-    
-
 *   checking installed package size ... NOTE
     ```
       installed size is 15.1Mb
       sub-directories of 1Mb or more:
-        R              2.1Mb
+        R              2.0Mb
         data           1.9Mb
         example_data   8.0Mb
         test_data      1.9Mb
@@ -4592,19 +4287,6 @@ Version: 0.11.0
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 5 marked UTF-8 strings
-    ```
-
-# understandBPMN
-
-Version: 1.1.0
-
-## Newly broken
-
-*   checking whether package ‘understandBPMN’ can be installed ... WARNING
-    ```
-    Found the following significant warnings:
-      Warning: replacing previous import ‘dplyr::vars’ by ‘purrr::vars’ when loading ‘understandBPMN’
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/understandBPMN/new/understandBPMN.Rcheck/00install.out’ for details.
     ```
 
 # valaddin
@@ -4725,8 +4407,8 @@ Checking to see if libmagic is available...
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c wand.cpp -o wand.o
 clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
-clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
 clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
 clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
 clang++ -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o wand.so RcppExports.o wand.o -L/usr/local/lib -L/opt/local/lib -L/usr/lib -lmagic -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
 ld: library not found for -lmagic
@@ -4747,10 +4429,10 @@ Checking to see if libmagic is available...
 ** libs
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
 clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -L/usr/local/include -L/opt/local/include -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/wand/Rcpp/include" -I/usr/local/include   -fPIC  -mtune=core2 -O3 -c wand.cpp -o wand.o
-clang: warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
-clangclang: warning: : warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
+clangclang: warning: : warning: argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
 argument unused during compilation: '-L/usr/local/include' [-Wunused-command-line-argument]
-clang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
+clangclang: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]: warning: argument unused during compilation: '-L/opt/local/include' [-Wunused-command-line-argument]
+
 clang++ -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/lib -o wand.so RcppExports.o wand.o -L/usr/local/lib -L/opt/local/lib -L/usr/lib -lmagic -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
 ld: library not found for -lmagic
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
