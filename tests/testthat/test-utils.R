@@ -26,6 +26,37 @@ test_that("has_names returns vector of logicals", {
   expect_equal(has_names(letters), rep_along(letters, FALSE))
 })
 
+test_that("quo_invert() inverts quosured arguments", {
+  call <- expr(list(!!quo(foo), !!quo(bar)))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+
+  call <- expr(list(foo, !!quo(bar)))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+
+  call <- expr(list(!!quo(foo), bar))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+})
+
+test_that("quo_invert() detects local quosures", {
+  foo <- local(quo(foo))
+  call <- expr(list(!!foo, !!quo(bar)))
+  expect_identical(quo_invert(call), new_quosure(expr(list(foo, !!quo(bar))), quo_get_env(foo)))
+
+  bar <- local(quo(bar))
+  call <- expr(list(!!quo(foo), !!bar))
+  expect_identical(quo_invert(call), quo(list(foo, !!bar)))
+})
+
+test_that("quo_invert() supports quosures in function position", {
+  call <- expr((!!quo(list))(!!quo(foo), !!quo(bar)))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+
+  fn <- local(quo(list))
+  env <- quo_get_env(fn)
+  call <- expr((!!fn)(!!quo(foo), !!new_quosure(quote(bar), env)))
+  expect_identical(quo_invert(call), new_quosure(expr(list(!!quo(foo), bar)), env))
+})
+
 # Lifecycle ---------------------------------------------------------------
 
 test_that("%@% is an infix attribute accessor", {
