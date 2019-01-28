@@ -99,6 +99,8 @@ reference:
   - partial
   - safely
   - insistently
+  - rate_sleep
+  - rate-helpers
 
 - title: Misc
   contents:
