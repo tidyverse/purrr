@@ -67,6 +67,15 @@ reference:
   - negate
   - prepend
 
+- title: Plucking
+  desc: >
+    Getting or setting a single element.
+  contents:
+  - pluck
+  - modify_in
+  - attr_getter
+  - "`%@%`"
+
 - title: Other vector transforms
   desc: >
     A grab bag of useful tools for manipulating vectors.
@@ -94,7 +103,6 @@ reference:
 - title: Misc
   contents:
   - "`%||%`"
-  - "`%@%`"
   - array_tree
   - as_vector
   - rbernoulli
