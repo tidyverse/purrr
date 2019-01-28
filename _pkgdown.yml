@@ -49,7 +49,7 @@ reference:
     `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`.
   contents:
   - map2
-  - starts_with("modify")
+  - modify
   - starts_with("imap")
   - starts_with("lmap")
 
