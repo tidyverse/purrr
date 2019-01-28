@@ -46,14 +46,12 @@ reference:
     `modify()` modifies "in place", returning a vector the same type as `.x`;
     `map2()` iterates over two vectors in parallel;
     `pmap()` (parallel map) iterates over a list of vectors;
-    `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`;
-    `invoke()` calls each function in a list.
+    `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`.
   contents:
   - map2
   - starts_with("modify")
   - starts_with("imap")
   - starts_with("lmap")
-  - starts_with("invoke")
 
 - title: Predicate functionals
   desc: >
