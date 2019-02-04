@@ -19,7 +19,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -28,6 +28,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+
 
 <meta property="og:title" content="Convert an object into a mapper function — as_mapper" />
 
@@ -197,27 +199,27 @@ value is absent (does not exist) or empty (has length 0).
     <pre class="examples"><div class='input'><span class='fu'>as_mapper</span>(~ <span class='no'>.</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; . + 1
-#&gt; &lt;environment: 0x5dc8810&gt;
+#&gt; &lt;environment: 0x7ff48f8&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function"</div><div class='input'><span class='fu'>as_mapper</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, .default = NULL)
-#&gt; &lt;environment: 0x75e9018&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x6d88c30&gt;</div><div class='input'>
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NULL)
-#&gt; &lt;environment: 0x760a1f0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
+#&gt; &lt;environment: 0x74f0248&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"a"</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, "a", 2, .default = NULL)
-#&gt; &lt;environment: 0x64e6828&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
+#&gt; &lt;environment: 0x5f56dd0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='attr_getter.html'>attr_getter</a></span>(<span class='st'>"a"</span>)))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, function (x) 
 #&gt; attr(x, attr, exact = TRUE), .default = NULL)
-#&gt; &lt;environment: 0x64e4000&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
+#&gt; &lt;environment: 0x6034000&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>), <span class='kw'>.null</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NA)
-#&gt; &lt;environment: 0x64fa8d0&gt;</div></pre>
+#&gt; &lt;environment: 0x81fc5d8&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
