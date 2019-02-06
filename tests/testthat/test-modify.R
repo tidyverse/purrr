@@ -69,6 +69,10 @@ test_that("modify2() and imodify() preserve type of first input", {
   y <- c(TRUE, FALSE)
   expect_identical(modify2(x, y, ~ if (.y) .x else 0L), c(foo = 1L, bar = 0L))
 
+  # do not recycle 1-length object (#632)
+  x <- data.frame(x = 1)
+  expect_identical(modify2(x, 1, ~ .x), x)
+
   out <- imodify(mtcars, paste)
   expect_is(out, "data.frame")
   expect_identical(out$vs, paste(mtcars$vs, "vs"))
@@ -76,9 +80,12 @@ test_that("modify2() and imodify() preserve type of first input", {
 
 test_that("modify2() recycles arguments", {
   expect_identical(modify2(1:3, 1L, `+`), int(2, 3, 4))
-  expect_identical(modify2(1, 1:3, `+`), dbl(2, 3, 4))
+  expect_identical(modify2(dbl(1:3), 1L, `+`), dbl(2, 3, 4))
   expect_identical(modify2(mtcars, seq_along(mtcars), `+`)$carb, mtcars$carb + ncol(mtcars))
   expect_identical(modify2(mtcars, 1, `+`)$carb, mtcars$carb + 1L)
+
+  # do not recycle first argument (#632)
+  expect_error(modify2(1, 1:3, `+`))
 })
 
 test_that("modify_if() requires predicate functions", {

@@ -327,8 +327,7 @@ modify2 <- function(.x, .y, .f, ...) {
 modify2.default <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  args <- recycle_args(list(.x, .y))
-  .x <- args[[1]]
+  args <- recycle_args(list(.x, .y), n = length(.x))
   .y <- args[[2]]
 
   for (i in seq_along(.x)) {
@@ -362,8 +361,7 @@ modify2.logical  <- function(.x, .y, .f, ...) {
 }
 
 modify_base <- function(mapper, .x, .y, .f, ...) {
-  args <- recycle_args(list(.x, .y))
-  .x <- args[[1]]
+  args <- recycle_args(list(.x, .y), n = length(.x))
   .y <- args[[2]]
 
   .x[] <- mapper(.x, .y, .f, ...)
