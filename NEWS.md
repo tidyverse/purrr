@@ -1,6 +1,9 @@
 
 # purrr 0.3.0.9000
 
+* `modify2()` and `imodify()` now don't recycle the first argument, so the
+  result always has the same type as the input object (@yutannihilation,
+  #632).
 
 # purrr 0.3.0
 
