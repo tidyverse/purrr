@@ -47,6 +47,11 @@ test_that("outputs are suffixes have correct type", {
   expect_is(pmap_dbl(list(x), mean), "numeric")
   expect_is(pmap_chr(list(x), paste), "character")
   expect_is(pmap_raw(list(x), as.raw), "raw")
+})
+
+test_that("outputs are suffixes have correct type for data frames", {
+  skip_if_not_installed("dplyr")
+  x <- 1:3
   expect_is(pmap_dfr(list(x), as.data.frame), "data.frame")
   expect_is(pmap_dfc(list(x), as.data.frame), "data.frame")
 })

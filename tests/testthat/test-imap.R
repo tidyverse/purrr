@@ -19,6 +19,7 @@ test_that("atomic vector imap works", {
 })
 
 test_that("data frame imap works", {
+  skip_if_not_installed("dplyr")
   expect_identical(imap_dfc(x, paste), imap_dfr(x, paste))
 })
 
