@@ -207,8 +207,8 @@ arguments.</p></td>
 <span class='co'># Note that you currently can't partialise arguments multiple times:</span>
 <span class='no'>my_mean</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>my_mean</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>my_mean</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>my_mean</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>my_mean</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))</div><div class='output co'>#&gt; Error in mean.default(na.rm = TRUE, ...) : 
+#&gt;   formal argument "na.rm" matched by multiple actual arguments</div><div class='input'>
 
 <span class='co'># The evaluation of arguments normally occurs "lazily". Concretely,</span>
 <span class='co'># this means that arguments are repeatedly evaluated across invokations:</span>

@@ -256,8 +256,7 @@ applying a function to a pluck location.</p></div>
 
 <span class='co'># By default, pluck() consistently returns `NULL` when an element</span>
 <span class='co'># does not exist:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>10</span>]])
-
+<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>10</span>]])</div><div class='output co'>#&gt; Error in x[[10]] : subscript out of bounds</div><div class='input'>
 <span class='co'># You can also supply a default value for non-existing elements:</span>
 <span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA</div><div class='input'>
 <span class='co'># If you prefer to consistently fail for non-existing elements, use</span>
@@ -272,9 +271,7 @@ applying a function to a pluck location.</p></div>
 #&gt; [[2]]$elt
 #&gt; [1] "foo"
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>10</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>10</span>))
-
+#&gt; </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; Error : Index 1 exceeds the length of plucked object (10 &gt; 2)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; Error : Index 2 exceeds the length of plucked object (10 &gt; 2)</div><div class='input'>
 
 <span class='co'># The map() functions use pluck() by default to retrieve multiple</span>
 <span class='co'># values from a list:</span>
@@ -316,8 +313,7 @@ applying a function to a pluck location.</p></div>
 #&gt; [1] "superb default"
 #&gt; </div><div class='input'>
 <span class='co'># Or use the strict variant:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>chuck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span>))
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>chuck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; Error : Index 3 exceeds the length of plucked object (10 &gt; 1)</div><div class='input'>
 
 <span class='co'># You can also assign a value in a pluck location with pluck&lt;-:</span>
 <span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>) <span class='kw'>&lt;-</span> <span class='st'>"quuux"</span>
