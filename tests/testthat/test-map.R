@@ -61,6 +61,7 @@ test_that("map forces arguments in same way as base R", {
 })
 
 test_that("row and column binding work", {
+  skip_if_not_installed("dplyr")
   mtcar_mod <- mtcars %>%
     split(.$cyl) %>%
     map(~ lm(mpg ~ wt, data = .x))
