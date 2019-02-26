@@ -16,7 +16,9 @@ test_that("lmap output is list if input is list", {
 })
 
 test_that("lmap output is tibble if input is data frame", {
+  skip_if_not_installed("tibble")
   expect_is(lmap(mtcars, as.list), "tbl_df")
+
   skip_if_not_installed("tidyselect")
   expect_is(lmap_at(mtcars, vars(tidyselect::contains("mpg")), ~ .x * 10), "tbl_df")
 })

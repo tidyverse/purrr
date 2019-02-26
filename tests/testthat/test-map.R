@@ -75,6 +75,7 @@ test_that("walk is used for side-effects", {
 })
 
 test_that("map_if() and map_at() always return a list", {
+  skip_if_not_installed("tibble")
   df <- tibble::tibble(x = 1, y = "a")
   expect_identical(map_if(df, is.character, ~"out"), list(x = 1, y = "out"))
   expect_identical(map_at(df, 1, ~"out"), list(x = "out", y = "a"))

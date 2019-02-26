@@ -1,6 +1,8 @@
 context("cross")
 
 test_that("long format corresponds to expand.grid output", {
+  skip_if_not_installed("tibble")
+
   x <- list(a = 1:3, b = 4:9)
 
   out1 <- cross_df(x)
