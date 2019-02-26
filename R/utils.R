@@ -251,21 +251,35 @@ quo_invert <- function(call) {
   call <- duplicate(call, shallow = TRUE)
 
   if (is_quosure(call)) {
-    first <- quo_get_expr(call)
+    rest <- quo_get_expr(call)
   } else {
-    first <- call
-  }
-  while (!is_null(first)) {
-    if (is_quosure(node_car(first))) {
-      break
-    }
-    first <- node_cdr(first)
+    rest <- call
   }
 
-  if (is_null(first)) {
+  first_quo <- NULL
+
+  # Find first quosured argument. We unwrap constant quosures which
+  # add no scoping information.
+  while (!is_null(rest)) {
+    elt <- node_car(rest)
+
+    if (is_quosure(elt)) {
+      if (quo_is_constant(elt)) {
+        # Unwrap constant quosures
+        node_poke_car(rest, quo_get_expr(elt))
+      } else if (is_null(first_quo)) {
+        # Record first quosured argument
+        first_quo <- elt
+        first_node <- rest
+      }
+    }
+
+    rest <- node_cdr(rest)
+  }
+
+  if (is_null(first_quo)) {
     return(call)
   }
-  first_quo <- node_car(first)
 
   # Take the wrapping quosure env as reference if there is one.
   # Otherwise, take the first quosure detected in arguments.
@@ -276,7 +290,7 @@ quo_invert <- function(call) {
     env <- quo_get_env(first_quo)
   }
 
-  rest <- first
+  rest <- first_node
   while (!is_null(rest)) {
     cur <- node_car(rest)
 
@@ -288,4 +302,8 @@ quo_invert <- function(call) {
   }
 
   new_quosure(call, env)
+}
+
+quo_is_constant <- function(quo) {
+  is_reference(quo_get_env(quo), empty_env())
 }

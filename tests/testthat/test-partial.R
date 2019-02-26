@@ -98,6 +98,13 @@ test_that("partial() supports substituted arguments", {
   expect_identical(fn(), quote(letters))
 })
 
+test_that("partial() supports generics (#647)", {
+  expect_identical(partial(mean, na.rm = TRUE)(1), 1)
+
+  foo <- TRUE
+  expect_identical(partial(mean, na.rm = foo)(1), 1)
+})
+
 
 # Life cycle --------------------------------------------------------------
 
