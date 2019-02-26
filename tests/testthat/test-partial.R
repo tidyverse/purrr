@@ -105,6 +105,16 @@ test_that("partial() supports generics (#647)", {
   expect_identical(partial(mean, na.rm = foo)(1), 1)
 })
 
+test_that("partial() supports lexically defined methods in the def env", {
+  local({
+    mean.purrr__foobar <- function(...) TRUE
+    foobar <- structure(list(), class = "purrr__foobar")
+
+    expect_true(partial(mean, na.rm = TRUE)(foobar))
+    expect_true(partial(mean, trim = letters, na.rm = TRUE)(foobar))
+  })
+})
+
 
 # Life cycle --------------------------------------------------------------
 
@@ -130,8 +140,8 @@ test_that("`.first` still works", {
   expect_identical(out, exp)
 
   # partial() also works without partialised arguments
-  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr((!!runif)(...)))
-  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr((!!runif)(...)))
+  expect_identical(partialised_body(partial(runif, .first = TRUE)), quo((!!runif)(...)))
+  expect_identical(partialised_body(partial(runif, .first = FALSE)), quo((!!runif)(...)))
 })
 
 test_that("`...f` still works", {

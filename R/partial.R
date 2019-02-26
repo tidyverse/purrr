@@ -137,6 +137,10 @@ partial <- function(.f,
     call <- call_modify(call2(fn), !!!args, ... = )
   }
 
+  # Forward caller environment where S3 methods might be defined.
+  # See design note below.
+  call <- new_quosure(call, caller_env())
+
   # Unwrap quosured arguments if possible
   call <- quo_invert(call)
 
@@ -172,3 +176,33 @@ print.purrr_function_partial <- function(x, ...) {
 
 partialised_body <- function(x) attr(x, "body")
 partialised_fn <- function(x) attr(x, "fn")
+
+
+# Lexical dispatch
+#
+# We evaluate in the definition environment rather than the caller
+# environment in order to support lexically scoped methods. This
+# helps with this case:
+#
+# ```
+# local({
+#   mean.foobar <- function(...) "foobar"
+#   foobar <- structure(list(), class = "foobar")
+#
+#   mean(foobar) == partial(mean)(foobar)
+# })
+# ```
+#
+# These are not standard dispatch semantics, ideally we'd dispatch in
+# the caller environment rather than the definition environment. The
+# issue is that there's a fundamental conflict between these goals:
+#
+# (a) Evaluating arguments in their environment (typically def env)
+# (b) Allowing substitution of partialised arguments
+# (c) Lexical dispatch in caller env rather than def env
+#
+# It might just be that partialised functions are meant to be private or
+# even anonymous (and thus local). Also lexical dispatch in the global
+# env should work anyway because most envs inherit from the search
+# path. And if in a package, registration will take care of dispatch.
+# Let's not worry about this too much.
