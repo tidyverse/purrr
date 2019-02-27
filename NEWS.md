@@ -1,5 +1,5 @@
 
-# purrr 0.3.0.9000
+# purrr 0.3.1
 
 * `reduce()` now forces arguments (#643).
 

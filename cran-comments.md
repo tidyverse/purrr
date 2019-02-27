@@ -1,5 +1,5 @@
 
-The rchk issues on the CRAN page should be fixed.
+The rchk issues on the CRAN page should be fixed by <https://github.com/tidyverse/purrr/commit/d920b29>
 
 ## Test environments
 
@@ -13,24 +13,6 @@ The rchk issues on the CRAN page should be fixed.
 
 ## revdepcheck results
 
-We checked 452 reverse dependencies (433 from CRAN + 19 from BioConductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 469 reverse dependencies (451 from CRAN + 18 from BioConductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 9 new problems
- * We failed to check 9 packages
-
-Please find the summary at https://github.com/tidyverse/purrr/tree/master/revdep
-
-We notified the maintainers of these problems on January 4th.
-
-
-### Failed to check
-
-* anomalyDetection (failed to install)
-* circumplex       (failed to install)
-* clustermq        (check timed out)
-* colorednoise     (failed to install)
-* fingertipscharts (check timed out)
-* mlbgameday       (check timed out)
-* openVA           (failed to install)
-* Rdrools          (failed to install)
-* wand             (failed to install)
+We failed to check 10 packages. There were no new problems.
