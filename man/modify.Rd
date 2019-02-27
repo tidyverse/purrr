@@ -11,7 +11,6 @@
 \alias{imodify}
 \alias{modify_depth}
 \alias{modify_depth.default}
-\alias{at_depth}
 \title{Modify elements selectively}
 \usage{
 modify(.x, .f, ...)

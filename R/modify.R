@@ -427,9 +427,15 @@ modify_depth_rec <- function(.x, .depth, .f,
   })
 }
 
+#' Map at depth
+#'
+#' This function is defunct and has been replaced by [map_depth()].
+#' See also [modify_depth()] for a version that preserves the types of
+#' the elements of the tree.
+#'
+#' @inheritParams map
 #' @export
-#' @usage NULL
-#' @rdname modify
+#' @keywords internal
 at_depth <- function(.x, .depth, .f, ...) {
   stop_defunct("at_depth() is defunct, please use `map_depth()` instead")
 }
