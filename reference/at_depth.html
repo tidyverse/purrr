@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compose multiple functions — compose • purrr</title>
+<title>Map at depth — at_depth • purrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,9 +31,11 @@
 
 
 
-<meta property="og:title" content="Compose multiple functions — compose" />
+<meta property="og:title" content="Map at depth — at_depth" />
 
-<meta property="og:description" content="Compose multiple functions" />
+<meta property="og:description" content="This function is defunct and has been replaced by map_depth().
+See also modify_depth() for a version that preserves the types of
+the elements of the tree." />
 
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,68 +137,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compose multiple functions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/compose.R'><code>R/compose.R</code></a></small>
-    <div class="hidden name"><code>compose.Rd</code></div>
+    <h1>Map at depth</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/modify.R'><code>R/modify.R</code></a></small>
+    <div class="hidden name"><code>at_depth.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compose multiple functions</p>
+    <p>This function is defunct and has been replaced by <code><a href='map.html'>map_depth()</a></code>.
+See also <code><a href='modify.html'>modify_depth()</a></code> for a version that preserves the types of
+the elements of the tree.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>compose</span>(<span class='no'>...</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"backward"</span>, <span class='st'>"forward"</span>))</pre>
+    <pre class="usage"><span class='fu'>at_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Functions to apply in order (from right to left by
-default). Formulas are converted to functions in the usual way.</p>
-<p>These dots support <a href='https://rlang.r-lib.org/reference/tidy-dots.html'>tidy dots</a> features. In
-particular, if your functions are stored in a list, you can
-splice that in with <code>!!!</code>.</p></td>
+      <th>.x</th>
+      <td><p>A list or atomic vector.</p></td>
     </tr>
     <tr>
-      <th>.dir</th>
-      <td><p>If <code>"backward"</code> (the default), the functions are called
-in the reverse order, from right to left, as is conventional in
-mathematics. If <code>"forward"</code>, they are called from left to right.</p></td>
+      <th>.depth</th>
+      <td><p>Level of <code>.x</code> to map on. Use a negative value to count up
+from the lowest level of the list.</p><ul>
+<li><p><code><a href='map.html'>map_depth(x, 0, fun)</a></code> is equivalent to <code>fun(x)</code>.</p></li>
+<li><p><code><a href='map.html'>map_depth(x, 1, fun)</a></code> is equivalent to <code>x &lt;- map(x, fun)</code></p></li>
+<li><p><code><a href='map.html'>map_depth(x, 2, fun)</a></code> is equivalent to <code>x &lt;- map(x, ~ map(., fun))</code></p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>.f</th>
+      <td><p>A function, formula, or vector (not necessarily atomic).</p>
+<p>If a <strong>function</strong>, it is used as is.</p>
+<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
+are three ways to refer to the arguments:</p><ul>
+<li><p>For a single argument function, use <code>.</code></p></li>
+<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
+<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
+</ul>
+
+<p>This syntax allows you to create very compact anonymous functions.</p>
+<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
+converted to an extractor function. Character vectors index by
+name and numeric vectors index by position; use a list to index
+by position and name at different levels. If a component is not
+present, the value of <code>.default</code> will be returned.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed on to the mapped function.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A function</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>not_null</span> <span class='kw'>&lt;-</span> <span class='fu'>compose</span>(<span class='no'>`!`</span>, <span class='no'>is.null</span>)
-<span class='fu'>not_null</span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>not_null</span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='no'>add1</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> + <span class='fl'>1</span>
-<span class='fu'>compose</span>(<span class='no'>add1</span>, <span class='no'>add1</span>)(<span class='fl'>8</span>)</div><div class='output co'>#&gt; [1] 10</div><div class='input'>
-<span class='co'># You can use the formula shortcut for functions:</span>
-<span class='no'>fn</span> <span class='kw'>&lt;-</span> <span class='fu'>compose</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"foo"</span>), ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"bar"</span>))
-<span class='fu'>fn</span>(<span class='st'>"input"</span>)</div><div class='output co'>#&gt; [1] "input bar foo"</div><div class='input'>
-<span class='co'># Lists of functions can be spliced with !!!</span>
-<span class='no'>fns</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-  <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>x</span>, <span class='st'>"foo"</span>),
-  ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"bar"</span>)
-)
-<span class='no'>fn</span> <span class='kw'>&lt;-</span> <span class='fu'>compose</span>(!!!<span class='no'>fns</span>)
-<span class='fu'>fn</span>(<span class='st'>"input"</span>)</div><div class='output co'>#&gt; [1] "input bar foo"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>
