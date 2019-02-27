@@ -201,6 +201,9 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     stop_bad_type(index, "a list", NULL, "where");
   }
 
+  PROTECT_INDEX idx;
+  PROTECT_WITH_INDEX(x, &idx);
+
   int n = Rf_length(index);
   bool strict = Rf_asLogical(strict_arg);
 
@@ -209,11 +212,13 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
     if (is_function(index_i)) {
       x = extract_fn(x, index_i);
+      REPROTECT(x, idx);
       continue;
     }
     // Assume all S3 objects implement the vector interface
     if (OBJECT(x) && TYPEOF(x) != S4SXP) {
       x = extract_vector(x, index_i, i, strict);
+      REPROTECT(x, idx);
       continue;
     }
 
@@ -247,6 +252,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   }
 
  end:
+  UNPROTECT(1);
   return (Rf_length(x) == 0) ? missing : x;
 }
 

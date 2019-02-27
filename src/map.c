@@ -66,14 +66,14 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP x_val = Rf_eval(x, env);
+  SEXP x_val = PROTECT(Rf_eval(x, env));
   check_vector(x_val, ".x");
 
   int n = Rf_length(x_val);
   if (n == 0) {
     SEXP out = PROTECT(Rf_allocVector(type, 0));
     copy_names(x_val, out);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return out;
   }
 
@@ -86,7 +86,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXP out = PROTECT(call_loop(env, f_call, n, type, 1));
   copy_names(x_val, out);
 
-  UNPROTECT(3);
+  UNPROTECT(4);
 
   return out;
 }
