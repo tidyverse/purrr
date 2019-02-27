@@ -1,6 +1,8 @@
 
 # purrr 0.3.0.9000
 
+* Fixed an issue in `partial()` with generic functions (#647).
+
 * `negate()` now works with generic functions and functions with early
   returns.
 

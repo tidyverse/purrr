@@ -67,6 +67,15 @@ test_that("quo_invert() supports quosures", {
   expect_identical(quo_invert(call), new_quosure(expr(list(!!foo, !!bar)), quo_get_env(call)))
 })
 
+test_that("quo_invert() unwraps constants", {
+  call <- expr(foo(!!quo(NULL)))
+  expect_identical(quo_invert(call), quote(foo(NULL)))
+
+  foo <- local(quo(foo))
+  call <- expr(foo(!!foo, !!quo(NULL)))
+  expect_identical(quo_invert(call), new_quosure(quote(foo(foo, NULL)), quo_get_env(foo)))
+})
+
 
 # Lifecycle ---------------------------------------------------------------
 
