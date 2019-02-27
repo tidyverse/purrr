@@ -14,6 +14,6 @@
 #' x %>% keep(negate("y")) %>% length()
 #' # Same as
 #' x %>% discard("y") %>% length()
-negate <- function(.p, .default = FALSE) {
+negate <- function(.p) {
   compose(`!`, as_mapper(.p))
 }

@@ -4,7 +4,7 @@
 \alias{negate}
 \title{Negate a predicate function.}
 \usage{
-negate(.p, .default = FALSE)
+negate(.p)
 }
 \arguments{
 \item{.p}{A single predicate function, a formula describing such a
@@ -13,11 +13,6 @@ Alternatively, if the elements of \code{.x} are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
-
-\item{.default}{Optional additional argument for extractor functions
-(i.e. when \code{.f} is character, integer, or list). Returned when
-value is absent (does not exist) or empty (has length 0).
-\code{.null} is deprecated; please use \code{.default} instead.}
 }
 \value{
 A new predicate function.
