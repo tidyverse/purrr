@@ -20,6 +20,8 @@
 #' * `modify_depth()` only modifies elements at a given level of a
 #'   nested data structure.
 #'
+#' * [modify_in()] modifies a single element in a [pluck()] location.
+#'
 #' @inheritParams map
 #' @inheritParams map2
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
