@@ -53,10 +53,10 @@ compose <- function(..., .dir = c("backward", "forward")) {
 
     call <- sys.call()
     call[[1]] <- first_fn
-    out <- eval_bare(call, frame)
+    out <- .Call(purrr_eval, call, frame)
 
     for (fn in fns) {
-      out <- eval_bare(call2(fn, out), frame)
+      out <- .Call(purrr_eval, call2(fn, out), frame)
     }
 
     out
