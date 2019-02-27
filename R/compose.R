@@ -49,17 +49,20 @@ compose <- function(..., .dir = c("backward", "forward")) {
   }
 
   composed <- function() {
-    frame <- caller_env()
+    env <- env(caller_env(), `_fn` = first_fn)
 
-    call <- sys.call()
-    call[[1]] <- first_fn
-    out <- .Call(purrr_eval, call, frame)
+    first_call <- sys.call()
+    first_call[[1]] <- quote(`_fn`)
+    env$`_out` <- .Call(purrr_eval, first_call, env)
+
+    call <- quote(`_fn`(`_out`))
 
     for (fn in fns) {
-      out <- .Call(purrr_eval, call2(fn, out), frame)
+      env$`_fn` <- fn
+      env$`_out` <- .Call(purrr_eval, call, env)
     }
 
-    out
+    env$`_out`
   }
   formals(composed) <- formals(first_fn)
 
