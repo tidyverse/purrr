@@ -49,12 +49,14 @@ compose <- function(..., .dir = c("backward", "forward")) {
   }
 
   composed <- function() {
+    frame <- caller_env()
+
     call <- sys.call()
     call[[1]] <- first_fn
-    out <- eval_bare(call, caller_env())
+    out <- eval_bare(call, frame)
 
     for (fn in fns) {
-      out <- fn(out)
+      out <- eval_bare(call2(fn, out), frame)
     }
 
     out

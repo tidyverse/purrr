@@ -69,20 +69,14 @@ test_that("compose() with 1 input is a noop", {
 test_that("compose() works with generic functions (#629)", {
   purrr__gen <- function(x) UseMethod("purrr__gen")
 
-  # Can pass lexical context of methods through lambdas
   local({
     purrr__gen.default <- function(x) x + 1
     expect_identical(compose(~ purrr__gen(.x))(0), 1)
     expect_identical(compose(~ purrr__gen(.x), ~ purrr__gen(.x))(0), 2)
+
+    expect_identical(compose(purrr__gen)(0), 1)
+    expect_identical(compose(purrr__gen, purrr__gen)(0), 2)
   })
-
-  # Why doesn't this work locally?
-  scoped_bindings(.env = global_env(),
-    purrr__gen.default = function(x) x + 1
-  )
-
-  expect_identical(compose(purrr__gen)(0), 1)
-  expect_identical(compose(purrr__gen, purrr__gen)(0), 2)
 })
 
 test_that("compose() works with generic functions (#639)", {
