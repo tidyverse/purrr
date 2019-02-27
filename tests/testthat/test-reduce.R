@@ -30,6 +30,12 @@ test_that("can shortcircuit reduction with done()", {
   expect_identical(out2, out)
 })
 
+test_that("reduce() forces arguments (#643)", {
+  skip_if(!has_force_and_call)
+  compose <- function(f, g) function(x) f(g(x))
+  expect_identical(reduce(list(identity, identity), compose)(1), 1)
+})
+
 
 # accumulate --------------------------------------------------------------
 
@@ -96,6 +102,14 @@ test_that("can terminate accumulate() early with an empty box", {
   expect_equal(accumulate(c("b", "c"), paste2), "b")
 })
 
+test_that("accumulate() forces arguments (#643)", {
+  skip_if(!has_force_and_call)
+  compose <- function(f, g) function(x) f(g(x))
+  fns <- accumulate(list(identity, identity), compose)
+  expect_true(every(fns, function(f) identical(f(1), 1)))
+})
+
+
 # reduce2 -----------------------------------------------------------------
 
 test_that("basic application works", {
@@ -115,6 +129,13 @@ test_that("can shortcircuit reduce2() with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
   out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
   expect_identical(out, c("foo", "foo"))
+})
+
+test_that("reduce2() forces arguments (#643)", {
+  skip_if(!has_force_and_call)
+  compose <- function(f, g, ...) function(x) f(g(x))
+  fns <- reduce2(list(identity, identity), "foo", compose)
+  expect_identical(fns(1), 1)
 })
 
 # accumulate2 -------------------------------------------------------------
@@ -140,6 +161,13 @@ test_that("can terminate accumulate2() early", {
   x <- c("a", "b", "c")
   expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b"))
   expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b"))
+})
+
+test_that("accumulate2() forces arguments (#643)", {
+  skip_if(!has_force_and_call)
+  compose <- function(f, g, ...) function(x) f(g(x))
+  fns <- accumulate2(list(identity, identity), "foo", compose)
+  expect_true(every(fns, function(f) identical(f(1), 1)))
 })
 
 
