@@ -48,19 +48,26 @@ compose <- function(..., .dir = c("backward", "forward")) {
     fns <- fns[-1]
   }
 
-  body <- expr({
-    out <- !!fn_body(first_fn)
+  composed <- function() {
+    env <- env(caller_env(), `_fn` = first_fn)
 
-    fns <- !!fns
+    first_call <- sys.call()
+    first_call[[1]] <- quote(`_fn`)
+    env$`_out` <- .Call(purrr_eval, first_call, env)
+
+    call <- quote(`_fn`(`_out`))
+
     for (fn in fns) {
-      out <- fn(out)
+      env$`_fn` <- fn
+      env$`_out` <- .Call(purrr_eval, call, env)
     }
 
-    out
-  })
+    env$`_out`
+  }
+  formals(composed) <- formals(first_fn)
 
   structure(
-    new_function(formals(first_fn), body, fn_env(first_fn)),
+    composed,
     class = c("purrr_function_compose", "function"),
     first_fn = first_fn,
     fns = fns

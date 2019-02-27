@@ -65,3 +65,82 @@ test_that("compose() with 0 inputs returns the identity", {
 test_that("compose() with 1 input is a noop", {
   expect_identical(compose(toupper)(letters), toupper(letters))
 })
+
+test_that("compose() works with generic functions (#629)", {
+  purrr__gen <- function(x) UseMethod("purrr__gen")
+
+  local({
+    purrr__gen.default <- function(x) x + 1
+    expect_identical(compose(~ purrr__gen(.x))(0), 1)
+    expect_identical(compose(~ purrr__gen(.x), ~ purrr__gen(.x))(0), 2)
+
+    expect_identical(compose(purrr__gen)(0), 1)
+    expect_identical(compose(purrr__gen, purrr__gen)(0), 2)
+  })
+})
+
+test_that("compose() works with generic functions (#639)", {
+  n_unique <- purrr::compose(length, unique)
+  expect_identical(n_unique(iris$Species), 3L)
+})
+
+test_that("compose() works with argument matching functions", {
+  # They inspect their dynamic context via sys.function()
+  fn <- function(x = c("foo", "bar")) match.arg(x)
+  expect_identical(compose(fn)("f"), "foo")
+  expect_identical(compose(fn, fn)("f"), "foo")
+})
+
+test_that("compose() works with non-local exits", {
+  fn <- function(x) return(x)
+  expect_identical(compose(fn)("foo"), "foo")
+  expect_identical(compose(fn, fn)("foo"), "foo")
+  expect_identical(compose(~ return(paste(.x, "foo")), ~ return("bar"))(), "bar foo")
+})
+
+test_that("compose() preserves lexical environment", {
+  fn <- local({
+    `_foo` <- "foo"
+    function(...) `_foo`
+  })
+  expect_identical(compose(fn)(), "foo")
+  expect_identical(compose(fn, fn)(), "foo")
+})
+
+test_that("compose() can take dots from multiple environments", {
+  f <- function(...) {
+    `_foo` <- "foo"
+    g(`_foo`, ...)
+  }
+  g <- function(...) {
+    `_bar` <- "bar"
+    h(`_bar`, ...)
+  }
+  h <- function(...) {
+    `_baz` <- "baz"
+    fn(`_baz`, ...)
+  }
+  `_quux` <- "quux"
+
+  # By value
+  fn <- compose(function(...) c(...))
+  expect_identical(f(`_quux`), c("baz", "bar", "foo", "quux"))
+
+  # By expression (base)
+  fn <- compose(function(...) substitute(...()))
+  expect_identical(f(`_quux`), as.pairlist(exprs(`_baz`, `_bar`, `_foo`, `_quux`)))
+
+  # By expression (rlang)
+  fn <- compose(function(...) enquos(...))
+  quos <- f(`_quux`)
+
+  frame <- current_env()
+  expect_true(is_reference(quo_get_env(quos[[4]]), frame))
+  expect_false(is_reference(quo_get_env(quos[[3]]), frame))
+
+  expect_identical(unname(map_chr(quos, as_name)), c("_baz", "_bar", "_foo", "_quux"))
+})
+
+test_that("compose() does not inline functions in call stack", {
+  expect_identical(compose(~ sys.call())(), quote(`_fn`()))
+})
