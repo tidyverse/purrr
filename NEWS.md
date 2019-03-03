@@ -21,6 +21,8 @@
 * `compose()` now works with generic functions again (#629, #639). Its
   set of unit tests was expanded to cover many edge cases.
 
+* `prepend()` now works with empty lists (@czeildi, #637)
+
 
 # purrr 0.3.0
 
