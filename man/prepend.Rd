@@ -4,14 +4,15 @@
 \alias{prepend}
 \title{Prepend a vector}
 \usage{
-prepend(x, values, before = 1)
+prepend(x, values, before = NULL)
 }
 \arguments{
 \item{x}{the vector to be modified.}
 
 \item{values}{to be included in the modified vector.}
 
-\item{before}{a subscript, before which the values are to be appended.}
+\item{before}{a subscript, before which the values are to be appended. If
+\code{NULL}, values will be appended at the beginning even for \code{x} of length 0.}
 }
 \value{
 A merged vector.
@@ -28,4 +29,5 @@ x <- as.list(1:3)
 x \%>\% append("a")
 x \%>\% prepend("a")
 x \%>\% prepend(list("a", "b"), before = 3)
+prepend(list(), x)
 }
