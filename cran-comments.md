@@ -1,5 +1,5 @@
 
-The rchk issues on the CRAN page should be fixed by <https://github.com/tidyverse/purrr/commit/d920b29>
+The rchk issues on the CRAN page should be fixed by <https://github.com/tidyverse/purrr/commit/ba0f02f>
 
 ## Test environments
 
@@ -13,6 +13,4 @@ The rchk issues on the CRAN page should be fixed by <https://github.com/tidyvers
 
 ## revdepcheck results
 
-We checked 469 reverse dependencies (451 from CRAN + 18 from BioConductor), comparing R CMD check results across CRAN and dev versions of this package.
-
-We failed to check 10 packages. There were no new problems.
+I haven't checked the reverse dependencies because the only changes are additional `PROTECT()`.

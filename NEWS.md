@@ -1,4 +1,9 @@
 
+# purrr 0.3.2
+
+* Fix protection issues reported by rchk.
+
+
 # purrr 0.3.1
 
 * `reduce()` now forces arguments (#643).
