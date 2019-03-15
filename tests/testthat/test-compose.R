@@ -142,5 +142,5 @@ test_that("compose() can take dots from multiple environments", {
 })
 
 test_that("compose() does not inline functions in call stack", {
-  expect_identical(compose(~ sys.call())(), quote(`_fn`()))
+  expect_equal(compose(~ sys.call())(), quote(`_fn`()))
 })
