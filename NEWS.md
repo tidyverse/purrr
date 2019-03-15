@@ -1,4 +1,6 @@
 
+# purrr 0.3.2.9000
+
 # purrr 0.3.2
 
 * Fix protection issues reported by rchk.
