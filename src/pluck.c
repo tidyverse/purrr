@@ -238,12 +238,15 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     case VECSXP:
     case EXPRSXP:
       x = extract_vector(x, index_i, i, strict);
+      REPROTECT(x, idx);
       break;
     case ENVSXP:
       x = extract_env(x, index_i, i, strict);
+      REPROTECT(x, idx);
       break;
     case S4SXP:
       x = extract_s4(x, index_i, i, strict);
+      REPROTECT(x, idx);
       break;
     default:
       Rf_errorcall(R_NilValue, "Can't pluck from a %s", Rf_type2char(TYPEOF(x)));
