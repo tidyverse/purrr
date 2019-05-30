@@ -215,13 +215,13 @@ arguments.</p></td>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
 <span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
 #&gt; function (...) 
-#&gt; runif(n = rpois(1, 5), ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1538388 0.9316670 0.6664174 0.5214033 0.9335608</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.39328750 0.67795588 0.80827452 0.52697525 0.11193650 0.95423720 0.02919632</div><div class='input'>
+#&gt; runif(n = rpois(1, 5), ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.6999514 0.5723157 0.6044262 0.6568407 0.3489132 0.4725317 0.3447801</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.58984497 0.21393130 0.27054784 0.08642937 0.70562574 0.75334296</div><div class='input'>
 <span class='co'># You can unquote an argument to fix it to a particular value.</span>
 <span class='co'># Unquoted arguments are evaluated only once when the function is created:</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> !!<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Poisson'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
 <span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
 #&gt; function (...) 
-#&gt; runif(n = 3L, ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2054296 0.8999639 0.7739089</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.9676727 0.7804088 0.9705454</div><div class='input'>
+#&gt; runif(n = 7L, ...)</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.9411215 0.9202303 0.4968767 0.2249484 0.8148729 0.4917854 0.7158358</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.5548239 0.8256550 0.1783842 0.5351147 0.7178693 0.9787211 0.6174894</div><div class='input'>
 
 <span class='co'># By default, partialised arguments are passed before new ones:</span>
 <span class='no'>my_list</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>list</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)

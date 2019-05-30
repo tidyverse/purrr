@@ -188,38 +188,35 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>sample</span>, <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>keep</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 4 9 6 5 7
+#&gt; [1]  6 10  7  8  5
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 9 8 3 6 7
+#&gt; [1]  5 10  6  9  2
+#&gt; 
+#&gt; [[3]]
+#&gt; [1]  9 10  2  7  5
+#&gt; 
+#&gt; [[4]]
+#&gt; [1]  9  7  2 10  5
 #&gt; </div><div class='input'>
 <span class='co'># Or use a formula</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>sample</span>, <span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>keep</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>.x</span>) <span class='kw'>&gt;</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1]  4  8  9  7 10
+#&gt; [1] 10  9  6  4  7
 #&gt; 
 #&gt; [[2]]
-#&gt; [1]  8  4  9 10  5
-#&gt; 
-#&gt; [[3]]
-#&gt; [1]  9  7 10  8  5
-#&gt; 
-#&gt; [[4]]
-#&gt; [1]  3 10  8  9  4
-#&gt; 
-#&gt; [[5]]
-#&gt; [1] 10  7  9  6  2
+#&gt; [1]  8  2  7  5 10
 #&gt; </div><div class='input'>
 <span class='co'># Using a string instead of a function will select all list elements</span>
 <span class='co'># where that subelement is TRUE</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>1</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>10</span>))
 <span class='no'>x</span></div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$a
-#&gt; [1] FALSE
+#&gt; [1] TRUE
 #&gt; 
 #&gt; [[1]]$b
-#&gt;  [1]  4  3  7 10  8  9  1  5  2  6
+#&gt;  [1]  1  9  5  8  7  2  4  6 10  3
 #&gt; 
 #&gt; 
 #&gt; [[2]]
@@ -227,7 +224,7 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] FALSE
 #&gt; 
 #&gt; [[2]]$b
-#&gt;  [1]  5  9  3  1  6  4  7 10  2  8
+#&gt;  [1]  3  8  7  6  9  2  1  4 10  5
 #&gt; 
 #&gt; 
 #&gt; [[3]]
@@ -235,7 +232,7 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[3]]$b
-#&gt;  [1]  4  6  7  9 10  1  3  2  5  8
+#&gt;  [1]  9 10  3  6  2  1  7  8  4  5
 #&gt; 
 #&gt; 
 #&gt; [[4]]
@@ -243,7 +240,7 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[4]]$b
-#&gt;  [1]  1  6  9  4  8  3 10  5  2  7
+#&gt;  [1]  7  4  3  8 10  5  2  9  6  1
 #&gt; 
 #&gt; 
 #&gt; [[5]]
@@ -251,14 +248,14 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[5]]$b
-#&gt;  [1]  4  9  7  2  6 10  5  1  8  3
+#&gt;  [1]  7  6  2  9  5  8 10  1  3  4
 #&gt; 
 #&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>keep</span>(<span class='st'>"a"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$a
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[1]]$b
-#&gt;  [1]  4  6  7  9 10  1  3  2  5  8
+#&gt;  [1]  1  9  5  8  7  2  4  6 10  3
 #&gt; 
 #&gt; 
 #&gt; [[2]]
@@ -266,7 +263,7 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[2]]$b
-#&gt;  [1]  1  6  9  4  8  3 10  5  2  7
+#&gt;  [1]  9 10  3  6  2  1  7  8  4  5
 #&gt; 
 #&gt; 
 #&gt; [[3]]
@@ -274,22 +271,22 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 #&gt; [1] TRUE
 #&gt; 
 #&gt; [[3]]$b
-#&gt;  [1]  4  9  7  2  6 10  5  1  8  3
+#&gt;  [1]  7  4  3  8 10  5  2  9  6  1
+#&gt; 
+#&gt; 
+#&gt; [[4]]
+#&gt; [[4]]$a
+#&gt; [1] TRUE
+#&gt; 
+#&gt; [[4]]$b
+#&gt;  [1]  7  6  2  9  5  8 10  1  3  4
 #&gt; 
 #&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>discard</span>(<span class='st'>"a"</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$a
 #&gt; [1] FALSE
 #&gt; 
 #&gt; [[1]]$b
-#&gt;  [1]  4  3  7 10  8  9  1  5  2  6
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]]$a
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[2]]$b
-#&gt;  [1]  5  9  3  1  6  4  7 10  2  8
+#&gt;  [1]  3  8  7  6  9  2  1  4 10  5
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># compact() discards elements that are NULL or that have length zero</span>

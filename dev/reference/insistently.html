@@ -205,19 +205,19 @@ function operator.</p></div>
 <span class='co'># slowly() causes a function to sleep for a given time between calls:</span>
 <span class='no'>slow_runif</span> <span class='kw'>&lt;-</span> <span class='fu'>slowly</span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>1</span>), <span class='kw'>rate</span> <span class='kw'>=</span> <span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'><a href='map.html'>map</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='no'>slow_runif</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.3887013
+#&gt; [1] 0.7353196
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 0.9755478
+#&gt; [1] 0.1959567
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 0.2898923
+#&gt; [1] 0.9805397
 #&gt; 
 #&gt; [[4]]
-#&gt; [1] 0.6783804
+#&gt; [1] 0.7415215
 #&gt; 
 #&gt; [[5]]
-#&gt; [1] 0.7353196
+#&gt; [1] 0.05144628
 #&gt; </div><div class='input'>
 
 <span class='co'># insistently() makes a function repeatedly try to work</span>
