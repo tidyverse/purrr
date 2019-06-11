@@ -4,8 +4,8 @@
 #' [unlist()], but they only ever remove a single layer of hierarchy and they
 #' are type-stable, so you always know what the type of the output is.
 #'
-#' @param .x A list of flatten. The contents of the list can be anything for
-#'   `flatten` (as a list is returned), but the contents must match the
+#' @param .x A list to flatten. The contents of the list can be anything for
+#'   `flatten()` (as a list is returned), but the contents must match the
 #'   type for the other functions.
 #' @return `flatten()` returns a list, `flatten_lgl()` a logical
 #'   vector, `flatten_int()` an integer vector, `flatten_dbl()` a
