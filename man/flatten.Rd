@@ -29,8 +29,8 @@ flatten_dfr(.x, .id = NULL)
 flatten_dfc(.x)
 }
 \arguments{
-\item{.x}{A list of flatten. The contents of the list can be anything for
-\code{flatten} (as a list is returned), but the contents must match the
+\item{.x}{A list to flatten. The contents of the list can be anything for
+\code{flatten()} (as a list is returned), but the contents must match the
 type for the other functions.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
