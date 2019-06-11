@@ -171,30 +171,30 @@ inner lists. Only those elements where <code>.p</code> evaluates to
     <pre class="examples"><div class='input'><span class='fu'>negate</span>(<span class='st'>"x"</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. function (x, ...) 
 #&gt; pluck(x, "x", .default = NULL)
-#&gt; &lt;environment: 0x74f1490&gt;
+#&gt; &lt;environment: 0x7c55350&gt;
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x4902970&gt;
-#&gt; &lt;environment: 0x700c0f0&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
+#&gt; &lt;bytecode: 0x4a0e8c8&gt;
+#&gt; &lt;environment: 0x7881780&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. function (x) 
 #&gt; .Primitive("is.null")(x)
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x4902970&gt;
-#&gt; &lt;environment: 0x7a08a80&gt;</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
+#&gt; &lt;bytecode: 0x4a0e8c8&gt;
+#&gt; &lt;environment: 0x78e0fc0&gt;</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; .x &gt; 0
-#&gt; &lt;environment: 0x7786768&gt;
+#&gt; &lt;environment: 0x7da6910&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function"
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x4902970&gt;
-#&gt; &lt;environment: 0x6b3fa60&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x4a0e8c8&gt;
+#&gt; &lt;environment: 0x4f86ab0&gt;</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div></pre>
