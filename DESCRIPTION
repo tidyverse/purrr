@@ -14,7 +14,8 @@ Depends:
     R (>= 3.2)
 Imports: 
     magrittr (>= 1.5),
-    rlang (>= 0.3.1)
+    rlang (>= 0.3.1),
+    vctrs (>= 0.1.0.9004)
 Suggests: 
     covr,
     crayon,
@@ -29,3 +30,5 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
+Remotes:
+    r-lib/vctrs
