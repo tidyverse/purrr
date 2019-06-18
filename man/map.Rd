@@ -9,6 +9,7 @@
 \alias{map_int}
 \alias{map_dbl}
 \alias{map_raw}
+\alias{map_vec}
 \alias{map_dfr}
 \alias{map_df}
 \alias{map_dfc}
@@ -31,6 +32,8 @@ map_int(.x, .f, ...)
 map_dbl(.x, .f, ...)
 
 map_raw(.x, .f, ...)
+
+map_vec(.x, .f, ..., .ptype = NULL)
 
 map_dfr(.x, .f, ..., .id = NULL)
 
@@ -80,6 +83,14 @@ positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.
 If the \code{tidyselect} package is installed, you can use \code{vars()} and
 the \code{tidyselect} helpers to select elements.}
+
+\item{.ptype}{If \code{NULL}, the default, the output type is determined by
+computing the common type of the result elements. If no common type is
+found, a list is returned.
+
+Alternatively, you can supply \code{.ptype} to give the output a known type.
+If \code{getOption("vctrs.no_guessing")} is \code{TRUE} you must supply this value:
+this is a convenient way to make production code demand fixed types.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or
@@ -131,6 +142,9 @@ The return value of \code{.f} must be of length one for each element of
 \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
 can be specified to handle values that are absent or empty.  See
 \code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
+\item \code{map_vec()} attempts to compute the common type of the result
+elements, and simplifies the result to the common type automatically
+if one can be found. If no common type is found, a list is returned.
 \item \code{map_dfr()} and \code{map_dfc()} return data frames created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.

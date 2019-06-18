@@ -20,6 +20,10 @@
 #'    can be specified to handle values that are absent or empty.  See
 #'    [as_mapper()] for more on `.default`.
 #'
+#' * `map_vec()` attempts to compute the common type of the result
+#'   elements, and simplifies the result to the common type automatically
+#'   if one can be found. If no common type is found, a list is returned.
+#'
 #' * `map_dfr()` and `map_dfc()` return data frames created by
 #'   row-binding and column-binding respectively. They require dplyr
 #'   to be installed.
@@ -202,6 +206,44 @@ map_dbl <- function(.x, .f, ...) {
 map_raw <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "raw")
+}
+
+#' @rdname map
+#' @param .ptype If `NULL`, the default, the output type is determined by
+#'   computing the common type of the result elements. If no common type is
+#'   found, a list is returned.
+#'
+#'   Alternatively, you can supply `.ptype` to give the output a known type.
+#'   If `getOption("vctrs.no_guessing")` is `TRUE` you must supply this value:
+#'   this is a convenient way to make production code demand fixed types.
+#' @importFrom vctrs vec_assert vec_is vec_c vec_size
+#' @importFrom vctrs vec_type_common vec_recycle_common
+#' @export
+map_vec <- function(.x, .f, ..., .ptype = NULL) {
+  vec_assert(.x)
+  out <- map(.x, .f, ...)
+  vec_simplify(out, .ptype = .ptype)
+}
+
+vec_simplify <- function(x, .ptype = NULL) {
+  .ptype <- tryCatch(
+    vec_type_common(!!!x, .ptype = .ptype),
+    vctrs_error_incompatible_type = function(e) {
+      list()
+    }
+  )
+
+  if (vec_is(.ptype, ptype = list())) {
+    return(x)
+  }
+
+  for (i in seq_along(x)) {
+    if (vec_size(x[[i]]) != 1L) {
+      stop_bad_element_vector(x[[i]], i, .ptype, 1L, what = "Result")
+    }
+  }
+
+  vec_c(!!!x, .ptype = .ptype)
 }
 
 #' @rdname map
