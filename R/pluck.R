@@ -5,7 +5,7 @@
 #' `pluck()` consistently returns `NULL` when an element does not
 #' exist, `chuck()` always throws an error in that case.
 #'
-#' @param .x,x A vector or environment
+#' @param .x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
 #'   an integer position, a string name, or an accessor function
 #'   (except for the assignment variants which only support names and
