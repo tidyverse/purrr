@@ -436,6 +436,8 @@ modify_depth_rec <- function(.x, .depth, .f,
 #' the elements of the tree.
 #'
 #' @inheritParams map
+#' @inheritParams map_if
+
 #' @export
 #' @keywords internal
 at_depth <- function(.x, .depth, .f, ...) {
