@@ -110,7 +110,7 @@ df_oops
 
 Passing the dataframe as it is is not going to work !
 
-```{r eval = F}
+```{r error = T}
 set.seed(123)
 pmap(df_oops, runif)
 ```
@@ -122,9 +122,11 @@ set.seed(123)
 df_oops %>%
   select(n, min, max) %>% ## if it's easier to say what to keep
   pmap(runif)
+```
 
-# OR
+One can also omit columns if it turns out to be easier.
 
+```{r eval=F}
 set.seed(123)
 df_oops %>%
   select(-oops) %>%       ## if it's easier to say what to omit
