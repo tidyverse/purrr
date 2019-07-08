@@ -23,9 +23,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, include=F}
-library(dplyr)
+```{r setup}
 library(purrr)
+```
+
+```{r include=F}
+library(dplyr)
 ```
 
 ### Generate numbers with different parameters  via `runif()`
