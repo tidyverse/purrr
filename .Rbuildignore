@@ -18,3 +18,4 @@
 ^\.github$
 ^TAGS$
 ^\.httr-oauth$
+^vignettes/runif-via-pmap\.Rmd$

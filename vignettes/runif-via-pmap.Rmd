@@ -1,0 +1,200 @@
+---
+title: "Generate data from different distributions via pmap()"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(purrr)
+```
+
+### Generate numbers with different parameters  via `runif()`
+
+Use `pmap()` in order to iterate over several arguments rowwise. This function comes in handy when one needs to generate numbers from a distribution while passing different argument each time the function gets called.
+
+The following chunk of code r `runif(n, min = 0, max = 1)` generates n numbers from the uniform distribution. The same operation can be done for several triples. 
+The first step is to store triples in a dataframe and then iterate over rows.
+
+```{r include=FALSE}
+library(tidyverse)
+```
+
+```{r}
+# Notice how df's variable names are the same as runif's argument names.
+df <- tribble(
+  ~ n, ~ min, ~ max,
+   1L,     0,     1,
+   2L,    10,   100,
+   3L,   100,  1000
+)
+df
+```
+
+Let us first set the seed and practice on single rows. Setting the seed will make the result reproducible and practicing on single rows will allow us to check if the results we get with `pmap()` are what we truly expect to get.
+
+```{r}
+set.seed(123)
+(x <- df[1, ])
+
+runif(n = x$n, min = x$min, max = x$max)
+
+x <- df[2, ]
+runif(n = x$n, min = x$min, max = x$max)
+
+x <- df[3, ]
+runif(n = x$n, min = x$min, max = x$max)
+
+```
+
+Now, let us try to do the same thing with `pmap()`.
+
+```{r}
+set.seed(123)
+pmap(df, runif)
+```
+
+### Finessing variable and argument names
+
+It is not mandatory for variable names to be the same as the argument names of the function. This can be arranged on the fly.In the example below, we do exactly this.
+
+```{r}
+# Create a tibble with three columns whose names are different from runif argument names
+foofy <- tibble(
+  alpha = 1:3,            ## was: n
+  beta = c(0, 10, 100),   ## was: min
+  gamma = c(1, 100, 1000) ## was: max
+)
+```
+
+Let us rename variables on the fly using the pipe operator.
+
+```{r}
+set.seed(123)
+foofy %>%
+  rename(n = alpha, min = beta, max = gamma) %>%
+  pmap(runif)
+```
+
+One can also create a wrapper around `runif()` that does the correspondance between column names and argument names on the fly.
+
+```{r}
+# 1st option of the wrapper
+my_runif <- function(...) {
+  l <- list(...)
+  runif(n = l$alpha, min = l$beta, max = l$gamma)
+}
+
+set.seed(123)
+pmap(foofy, my_runif)
+```
+
+One can also pass the arguments directly as vectors.
+
+```{r}
+my_runif <- function(alpha, beta, gamma, ...) {
+  runif(n = alpha, min = beta, max = gamma)
+}
+set.seed(123)
+pmap(foofy, my_runif)
+```
+ 
+A third option that comes in handy is to refer to inputs by their position `..i`. Yet, one should be careful when inputting the column numbers
+
+```{r}
+set.seed(123)
+pmap(foofy, ~ runif(n = ..1, min = ..2, max = ..3))
+```
+
+### Extra variables in the data frame
+
+One situation that comes up so often is having a dataframe that includes columns that shouldn't be passed to the function `.f()`. Let us create a tibble to illustrate this.
+
+```{r}
+df_oops <- tibble(
+  n = 1:3,
+  min = c(0, 10, 100),
+  max = c(1, 100, 1000),
+  oops = c("please", "ignore", "me")
+)
+df_oops
+```
+
+Passing the dataframe as it is is not going to work !
+
+```{r error=TRUE}
+set.seed(123)
+pmap(df_oops, runif)
+```
+
+Selecting the specific columns that should be passed to `.f()` or ommitting the columns that shouldn't be passed is a good way of doing. This can be done using `dplyr::select()`.
+
+```{r}
+set.seed(123)
+df_oops %>%
+  select(n, min, max) %>% ## if it's easier to say what to keep
+  pmap(runif)
+
+# OR
+
+set.seed(123)
+df_oops %>%
+  select(-oops) %>%       ## if it's easier to say what to omit
+  pmap(runif)
+```
+
+A custom wrapper with the dot syntax `...` can also get the job done.
+
+```{r}
+my_runif <- function(n, min, max, ...) runif(n, min, max)
+
+set.seed(123)
+pmap(df_oops, my_runif)
+```
+
+### Add the generated data to the data frame as a list-column
+
+The generated data can be embedded inside the dataframe using `mutate()`.
+
+```{r}
+set.seed(123)
+(df_aug <- df %>%
+    mutate(data = pmap(., runif)))
+```
+
+This can still be done if the name of the columns aren't the same as the name of the function arguments. `list()` should be used instead of the placeholder `.`. Variables can then be renamed inside the list.
+
+```{r}
+foofy <- tibble(
+  alpha = 1:3,            ## was: n
+  beta = c(0, 10, 100),   ## was: min
+  gamma = c(1, 100, 1000) ## was: max
+)
+
+set.seed(123)
+foofy %>%
+  mutate(data = pmap(list(n = alpha, min = beta, max = gamma), runif))
+```
+
+`list()`can also be used to select only the variables that are needed or to exclude only some of the variables.
+
+```{r}
+df_oops <- tibble(
+  n = 1:3,
+  min = c(0, 10, 100),
+  max = c(1, 100, 1000),
+  oops = c("please", "ignore", "me")
+)
+
+set.seed(123)
+df_oops %>%
+  mutate(data = pmap(list(n, min, max), runif))
+
+# Excluding "oops" column
+df_oops %>%
+  mutate(data = pmap(select(., -oops), runif))
+```
