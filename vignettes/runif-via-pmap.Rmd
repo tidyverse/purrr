@@ -1,5 +1,6 @@
 ---
 title: "Generate data from different distributions via pmap()"
+author: Safouane Chergui
 ---
 
 ```{r, include = FALSE}
@@ -198,3 +199,15 @@ df_oops %>%
 df_oops %>%
   mutate(data = pmap(select(., -oops), runif))
 ```
+
+### Review
+
+What have we done ?
+
+- Arranged inputs as rows in a data frame
+- Used `pmap()` to implement a loop over the rows.
+- Used dplyr verbs `rename()` and `select()` to manipulate data on the way into `pmap()`.
+- Wrote custom wrappers around `runif()` to deal with:
+  - df column `!= .f()` argument names
+  - df vars that aren’t formal args of `.f()`
+- Demonstrated all of the above when working inside a data frame and adding generated data as a list-column
