@@ -77,9 +77,9 @@ It is not mandatory for variable names to be the same as the argument names of t
 ```{r}
 # Create a tibble with three columns whose names are different from runif argument names
 foofy <- tibble(
-  alpha = 1:3,            ## was: n
-  beta = c(0, 10, 100),   ## was: min
-  gamma = c(1, 100, 1000) ## was: max
+  num_generated = 1:3,            ## was: n
+  minimum = c(0, 10, 100),   ## was: min
+  maximum = c(1, 100, 1000) ## was: max
 )
 ```
 
@@ -88,7 +88,7 @@ Let us rename variables on the fly using the pipe operator.
 ```{r}
 set.seed(123)
 foofy %>%
-  rename(n = alpha, min = beta, max = gamma) %>%
+  rename(n = num_generated, min = minimum, max = maximum) %>%
   pmap(runif)
 ```
 
