@@ -5,7 +5,7 @@ author: Safouane Chergui
 
 ### Goals
 
-The main goal of this vignette is to show how one can interate over rows using functions from purrr package. We are going to see the following cases:
+The main goal of this vignette is to show how one can interate over rows using functions from purrr package. We are going to:
 
 - Arrange inputs as rows in a data frame
 - Use `pmap()` to implement a loop over the rows.
