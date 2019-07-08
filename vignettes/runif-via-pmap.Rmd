@@ -1,7 +1,21 @@
 ---
-title: "Generate data from different distributions via pmap()"
+title: "Iterating over rows using pmap"
 author: Safouane Chergui
 ---
+
+### Goals
+
+The main goal of this vignette is to show how one can interate over rows using functions from purrr package. We are going to see the following cases:
+
+- Arrange inputs as rows in a data frame
+- Use `pmap()` to implement a loop over the rows.
+- Use dplyr verbs `rename()` and `select()` to manipulate data on the way into `pmap()`.
+- Write custom wrappers around `runif()` to deal with:
+  - df column `!= .f()` argument names
+  - df vars that aren’t formal args of `.f()`
+- Demonstrate all of the above when working inside a data frame and adding generated data as a list-column
+
+The examples in this vignettes make use of `dplyr` and `purrr`. These packages should be attached before running the examples in this vignette.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -10,7 +24,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, include=F}
+library(dplyr)
 library(purrr)
 ```
 
@@ -20,10 +35,6 @@ Use `pmap()` in order to iterate over several arguments rowwise. This function c
 
 The following chunk of code r `runif(n, min = 0, max = 1)` generates n numbers from the uniform distribution. The same operation can be done for several triples. 
 The first step is to store triples in a dataframe and then iterate over rows.
-
-```{r include=FALSE}
-library(tidyverse)
-```
 
 ```{r}
 # Notice how df's variable names are the same as runif's argument names.
@@ -52,7 +63,7 @@ runif(n = x$n, min = x$min, max = x$max)
 
 ```
 
-Now, let us try to do the same thing with `pmap()`.
+Now, let us try to do the same thing with `pmap()`:
 
 ```{r}
 set.seed(123)
@@ -81,36 +92,6 @@ foofy %>%
   pmap(runif)
 ```
 
-One can also create a wrapper around `runif()` that does the correspondance between column names and argument names on the fly.
-
-```{r}
-# 1st option of the wrapper
-my_runif <- function(...) {
-  l <- list(...)
-  runif(n = l$alpha, min = l$beta, max = l$gamma)
-}
-
-set.seed(123)
-pmap(foofy, my_runif)
-```
-
-One can also pass the arguments directly as vectors.
-
-```{r}
-my_runif <- function(alpha, beta, gamma, ...) {
-  runif(n = alpha, min = beta, max = gamma)
-}
-set.seed(123)
-pmap(foofy, my_runif)
-```
- 
-A third option that comes in handy is to refer to inputs by their position `..i`. Yet, one should be careful when inputting the column numbers
-
-```{r}
-set.seed(123)
-pmap(foofy, ~ runif(n = ..1, min = ..2, max = ..3))
-```
-
 ### Extra variables in the data frame
 
 One situation that comes up so often is having a dataframe that includes columns that shouldn't be passed to the function `.f()`. Let us create a tibble to illustrate this.
@@ -127,7 +108,7 @@ df_oops
 
 Passing the dataframe as it is is not going to work !
 
-```{r error=TRUE}
+```{r eval = F}
 set.seed(123)
 pmap(df_oops, runif)
 ```
@@ -148,7 +129,7 @@ df_oops %>%
   pmap(runif)
 ```
 
-A custom wrapper with the dot syntax `...` can also get the job done.
+A custom wrapper that uses `...` to ignore additional arguments can also get the job done.
 
 ```{r}
 my_runif <- function(n, min, max, ...) runif(n, min, max)
@@ -163,6 +144,8 @@ The generated data can be embedded inside the dataframe using `mutate()`.
 
 ```{r}
 set.seed(123)
+# The `.` comes from magrittr. It's only going to work if used in a pipe.
+# Using `.` when df is grouped might give surprising results.
 (df_aug <- df %>%
     mutate(data = pmap(., runif)))
 ```
@@ -200,14 +183,4 @@ df_oops %>%
   mutate(data = pmap(select(., -oops), runif))
 ```
 
-### Review
 
-What have we done ?
-
-- Arranged inputs as rows in a data frame
-- Used `pmap()` to implement a loop over the rows.
-- Used dplyr verbs `rename()` and `select()` to manipulate data on the way into `pmap()`.
-- Wrote custom wrappers around `runif()` to deal with:
-  - df column `!= .f()` argument names
-  - df vars that aren’t formal args of `.f()`
-- Demonstrated all of the above when working inside a data frame and adding generated data as a list-column
