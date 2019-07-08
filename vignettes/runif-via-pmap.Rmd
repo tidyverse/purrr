@@ -12,9 +12,6 @@ In this vignette, we are going to:
 - Arrange inputs as rows in a data frame
 - Use `pmap()` to implement a loop over the rows.
 - Use dplyr verbs `rename()` and `select()` to manipulate data on the way into `pmap()`.
-- Write custom wrappers around `runif()` to deal with:
-  - df column `!= .f()` argument names
-  - df vars that aren’t formal args of `.f()`
 - Demonstrate all of the above when working inside a data frame and adding generated data as a list-column
 
 The examples in this vignettes make use of `dplyr` and `purrr`. These packages should be attached before running the examples in this vignette.
