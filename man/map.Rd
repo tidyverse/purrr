@@ -2,8 +2,6 @@
 % Please edit documentation in R/map.R
 \name{map}
 \alias{map}
-\alias{map_if}
-\alias{map_at}
 \alias{map_lgl}
 \alias{map_chr}
 \alias{map_int}
@@ -13,14 +11,9 @@
 \alias{map_df}
 \alias{map_dfc}
 \alias{walk}
-\alias{map_depth}
 \title{Apply a function to each element of a vector}
 \usage{
 map(.x, .f, ...)
-
-map_if(.x, .p, .f, ..., .else = NULL)
-
-map_at(.x, .at, .f, ...)
 
 map_lgl(.x, .f, ...)
 
@@ -37,8 +30,6 @@ map_dfr(.x, .f, ..., .id = NULL)
 map_dfc(.x, .f, ...)
 
 walk(.x, .f, ...)
-
-map_depth(.x, .depth, .f, ..., .ragged = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -65,76 +56,50 @@ present, the value of \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
-
-\item{.else}{A function applied to elements of \code{.x} for which \code{.p}
-returns \code{FALSE}.}
-
-\item{.at}{A character vector of names, positive numeric vector of
-positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to \code{.at} will be modified.
-If the \code{tidyselect} package is installed, you can use \code{vars()} and
-the \code{tidyselect} helpers to select elements.}
-
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or
 the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
 variable will be created.
 
 Only applies to \code{_dfr} variant.}
-
-\item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
-from the lowest level of the list.
-\itemize{
-\item \code{map_depth(x, 0, fun)} is equivalent to \code{fun(x)}.
-\item \code{map_depth(x, 1, fun)} is equivalent to \code{x <- map(x, fun)}
-\item \code{map_depth(x, 2, fun)} is equivalent to \code{x <- map(x, ~ map(., fun))}
-}}
-
-\item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
-at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
-no elements at depth \code{.depth}.}
 }
 \value{
-All functions return a vector the same length as \code{.x}.
+\itemize{
+\item \code{map()} Returns a list the same length as \code{.x}.
+\item \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
+vector, \code{map_dbl()} a double vector, and \code{map_chr()} a character
+vector.
+\item \code{map_df()}, \code{map_dfc()}, \code{map_dfr()} all return a data frame.
+\item If \code{.x} has \code{names()}, the return value preserves those names.
+\item The output of \code{.f} will be automatically typed upwards, e.g.
+logical -> integer -> double -> character.
+}
 
-\code{map()} returns a list, \code{map_lgl()} a logical vector, \code{map_int()} an
-integer vector, \code{map_dbl()} a double vector, and \code{map_chr()} a character
-vector. \code{map_df()}, \code{map_dfc()}, \code{map_dfr()} all return a data frame.
-The output of \code{.f} will be automatically typed upwards,
-e.g. logical -> integer -> double -> character.
-
-If \code{.x} has \code{names()}, the return value preserves those names.
-
-\code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
+\itemize{
+\item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in pipe.
+}
 }
 \description{
 The map functions transform their input by applying a function to
 each element and returning a vector the same length as the input.
 \itemize{
-\item \code{map()}, \code{map_if()} and \code{map_at()} always return a list. See the
-\code{\link[=modify]{modify()}} family for versions that return an object of the same
-type as the input.
-
-The \code{_if} and \code{_at} variants take a predicate function \code{.p} that
-determines which elements of \code{.x} are transformed with \code{.f}.
-\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} each return
-an atomic vector of the indicated type (or die trying).
-
-The return value of \code{.f} must be of length one for each element of
-\code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
-can be specified to handle values that are absent or empty.  See
-\code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
+\item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}}
+family for versions that return an object of the same type as the input.
+\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an atomic
+vector of the indicated type (or die trying).
 \item \code{map_dfr()} and \code{map_dfc()} return data frames created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.
-\item \code{walk()} calls \code{.f} for its side-effect and returns the input \code{.x}.
+\item The return value of \code{.f} must be of length one for each element of
+\code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
+can be specified to handle values that are absent or empty. See
+\code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
+}
+
+\itemize{
+\item \code{walk()} calls \code{.f} for its side-effect and returns
+the input \code{.x}.
 }
 }
 \examples{
@@ -149,9 +114,6 @@ to be installed.
 # Or a formula
 1:10 \%>\%
   map(~ rnorm(10, .x))
-
-# The names of the input are preserved in the output:
-list(foo = 1, bar = 2) \%>\% map(`+`, 10)
 
 # Using set_names() with character vectors is handy to keep track
 # of the original inputs:
@@ -178,12 +140,6 @@ l2 \%>\% map(list("num", 3))
 l2 \%>\% map_int(list("num", 3), .default = NA)
 
 
-# Use a predicate function to decide whether to map a function:
-map_if(iris, is.factor, as.character)
-
-# Specify an alternative with the `.else` argument:
-map_if(iris, is.factor, as.character, .else = as.integer)
-
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2
 mtcars \%>\%
@@ -192,10 +148,8 @@ mtcars \%>\%
   map(summary) \%>\%
   map_dbl("r.squared")
 
-# Use map_lgl(), map_dbl(), etc to reduce to a vector.
-# * list
-mtcars \%>\% map(sum)
-# * vector
+# Use map_lgl(), map_dbl(), etc to reduce output to a vector instead
+# of a list:
 mtcars \%>\% map_dbl(sum)
 
 # If each element of the output is a data frame, use
@@ -206,19 +160,14 @@ mtcars \%>\%
   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 # (if you also want to preserve the variable names see
 # the broom package)
-
-# Use `map_depth()` to recursively traverse nested vectors and map
-# a function at a certain depth:
-x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
-str(x)
-map_depth(x, 2, paste, collapse = "/")
-
-# Equivalent to:
-map(x, map, paste, collapse = "/")
 }
 \seealso{
+\code{\link[=map_if]{map_if()}} for applying a function to only those elements
+of \code{.x} that meet a specified condition.
+
 Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{modify}}
+  \code{\link{map2}}, \code{\link{map_if}},
+  \code{\link{modify}}
 }
 \concept{map variants}

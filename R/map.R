@@ -5,55 +5,36 @@
 #' The map functions transform their input by applying a function to
 #' each element and returning a vector the same length as the input.
 #'
-#' * `map()`, `map_if()` and `map_at()` always return a list. See the
-#'   [modify()] family for versions that return an object of the same
-#'   type as the input.
-#'
-#'   The `_if` and `_at` variants take a predicate function `.p` that
-#'   determines which elements of `.x` are transformed with `.f`.
-#'
-#' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` each return
-#'    an atomic vector of the indicated type (or die trying).
-#'
-#'    The return value of `.f` must be of length one for each element of
+#'    * `map()` always returns a list. See the [modify()]
+#'    family for versions that return an object of the same type as the input.
+#'    * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an atomic
+#'    vector of the indicated type (or die trying).
+#'    * `map_dfr()` and `map_dfc()` return data frames created by
+#'    row-binding and column-binding respectively. They require dplyr
+#'    to be installed.
+#'    * The return value of `.f` must be of length one for each element of
 #'    `.x`. If `.f` uses an extractor function shortcut, `.default`
-#'    can be specified to handle values that are absent or empty.  See
+#'    can be specified to handle values that are absent or empty. See
 #'    [as_mapper()] for more on `.default`.
-#'
-#' * `map_dfr()` and `map_dfc()` return data frames created by
-#'   row-binding and column-binding respectively. They require dplyr
-#'   to be installed.
-#'
-#' * `walk()` calls `.f` for its side-effect and returns the input `.x`.
 #'
 #' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
-#' @param .p A single predicate function, a formula describing such a
-#'   predicate function, or a logical vector of the same length as `.x`.
-#'   Alternatively, if the elements of `.x` are themselves lists of
-#'   objects, a string indicating the name of a logical element in the
-#'   inner lists. Only those elements where `.p` evaluates to
-#'   `TRUE` will be modified.
-#' @param .at A character vector of names, positive numeric vector of
-#'   positions to include, or a negative numeric vector of positions to
-#'   exlude. Only those elements corresponding to `.at` will be modified.
-#'   If the `tidyselect` package is installed, you can use `vars()` and
-#'   the `tidyselect` helpers to select elements.
 #' @param ... Additional arguments passed on to the mapped function.
-#' @return All functions return a vector the same length as `.x`.
+#' @return * `map()` Returns a list the same length as `.x`.
+#' * `map_lgl()` returns a logical vector, `map_int()` an integer
+#'   vector, `map_dbl()` a double vector, and `map_chr()` a character
+#'   vector.
 #'
-#'   `map()` returns a list, `map_lgl()` a logical vector, `map_int()` an
-#'   integer vector, `map_dbl()` a double vector, and `map_chr()` a character
-#'   vector. `map_df()`, `map_dfc()`, `map_dfr()` all return a data frame.
-#'   The output of `.f` will be automatically typed upwards,
-#'   e.g. logical -> integer -> double -> character.
+#' * `map_df()`, `map_dfc()`, `map_dfr()` all return a data frame.
 #'
-#'   If `.x` has `names()`, the return value preserves those names.
+#' * If `.x` has `names()`, the return value preserves those names.
 #'
-#'   `walk()` returns the input `.x` (invisibly). This makes it easy to
-#'   use in pipe.
+#' * The output of `.f` will be automatically typed upwards, e.g.
+#'   logical -> integer -> double -> character.
 #' @export
 #' @family map variants
+#' @seealso  [map_if()] for applying a function to only those elements
+#' of `.x` that meet a specified condition.
 #' @examples
 #' 1:10 %>%
 #'   map(rnorm, n = 10) %>%
@@ -66,9 +47,6 @@
 #' # Or a formula
 #' 1:10 %>%
 #'   map(~ rnorm(10, .x))
-#'
-#' # The names of the input are preserved in the output:
-#' list(foo = 1, bar = 2) %>% map(`+`, 10)
 #'
 #' # Using set_names() with character vectors is handy to keep track
 #' # of the original inputs:
@@ -95,12 +73,6 @@
 #' l2 %>% map_int(list("num", 3), .default = NA)
 #'
 #'
-#' # Use a predicate function to decide whether to map a function:
-#' map_if(iris, is.factor, as.character)
-#'
-#' # Specify an alternative with the `.else` argument:
-#' map_if(iris, is.factor, as.character, .else = as.integer)
-#'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
 #' mtcars %>%
@@ -109,10 +81,8 @@
 #'   map(summary) %>%
 #'   map_dbl("r.squared")
 #'
-#' # Use map_lgl(), map_dbl(), etc to reduce to a vector.
-#' # * list
-#' mtcars %>% map(sum)
-#' # * vector
+#' # Use map_lgl(), map_dbl(), etc to reduce output to a vector instead
+#' # of a list:
 #' mtcars %>% map_dbl(sum)
 #'
 #' # If each element of the output is a data frame, use
@@ -123,23 +93,38 @@
 #'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
-#'
-#' # Use `map_depth()` to recursively traverse nested vectors and map
-#' # a function at a certain depth:
-#' x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
-#' str(x)
-#' map_depth(x, 2, paste, collapse = "/")
-#'
-#' # Equivalent to:
-#' map(x, map, paste, collapse = "/")
 map <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
 }
-#' @rdname map
+
+#' Apply a function to each element of a vector conditionally
+#'
+#' @description
+#'
+#' The functions `map_if()` and `map_at()` take `.x` as input, apply the function `.f` to some of the elements of `.x`, and return a list of the same length as the input.
+#'
+#' * `map_if()` takes a predicate function `.p` as input to determine which elements of `.x` are transformed with `.f`.
+#' * `map_at()` takes a vector of names or positions `.at` to specify which elements of `.x` are transformed with `.f`.
+#'
+#' @inheritParams map
+#' @param .p A single predicate function, a formula describing such a
+#'   predicate function, or a logical vector of the same length as `.x`.
+#'   Alternatively, if the elements of `.x` are themselves lists of
+#'   objects, a string indicating the name of a logical element in the
+#'   inner lists. Only those elements where `.p` evaluates to
+#'   `TRUE` will be modified.
 #' @param .else A function applied to elements of `.x` for which `.p`
-#'   returns `FALSE`.
+#' returns `FALSE`.
 #' @export
+#' @family map variants
+#' @examples
+#' # Use a predicate function to decide whether to map a function:
+#' map_if(iris, is.factor, as.character)
+#'
+#' # Specify an alternative with the `.else` argument:
+#' map_if(iris, is.factor, as.character, .else = as.integer)
+#'
 map_if <- function(.x, .p, .f, ..., .else = NULL) {
   sel <- probe(.x, .p)
 
@@ -154,8 +139,19 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 
   set_names(out, names(.x))
 }
-
-#' @rdname map
+#' @rdname map_if
+#' @param .at A character vector of names, positive numeric vector of
+#'   positions to include, or a negative numeric vector of positions to
+#'   exlude. Only those elements corresponding to `.at` will be modified.
+#'   If the `tidyselect` package is installed, you can use `vars()` and
+#'   the `tidyselect` helpers to select elements.
+#' @examples
+#' # Use numeric vector of positions select elements to change:
+#' iris %>% map_at(c(4, 5), is.numeric)
+#'
+#' # Use vector of names to specify which elements to change:
+#' iris %>% map_at("Species", toupper)
+#
 #' @export
 map_at <- function(.x, .at, .f, ...) {
 
@@ -239,16 +235,24 @@ map_dfc <- function(.x, .f, ...) {
   dplyr::bind_cols(res)
 }
 
-#' @export
 #' @rdname map
+#' @description * `walk()` calls `.f` for its side-effect and returns
+#' the input `.x`.
+#' @return
+#'
+#' * `walk()` returns the input `.x` (invisibly). This makes it easy to
+#'    use in pipe.
+#' @export
 walk <- function(.x, .f, ...) {
   map(.x, .f, ...)
   invisible(.x)
 }
 
-#' @rdname map
+#' @rdname map_if
+#' @description * `map_depth()` allows to apply `.f` to a specific
+#' depth level of a nested vector.
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
-#'   from the lowest level of the list.
+#' from the lowest level of the list.
 #'
 #'   * `map_depth(x, 0, fun)` is equivalent to `fun(x)`.
 #'   * `map_depth(x, 1, fun)` is equivalent to `x <- map(x, fun)`
@@ -256,6 +260,16 @@ walk <- function(.x, .f, ...) {
 #' @param .ragged If `TRUE`, will apply to leaves, even if they're not
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
+#' @examples
+#'
+#' # Use `map_depth()` to recursively traverse nested vectors and map
+#' # a function at a certain depth:
+#' x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
+#' str(x)
+#' map_depth(x, 2, paste, collapse = "/")
+#'
+#' # Equivalent to:
+#' map(x, map, paste, collapse = "/")
 #' @export
 map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   if (!is_integerish(.depth, n = 1, finite = TRUE)) {

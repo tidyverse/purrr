@@ -59,8 +59,8 @@ is_even <- function(x) x \%\% 2 == 0
 3:10 \%>\% detect(is_even)
 3:10 \%>\% detect_index(is_even)
 
-3:10 \%>\% detect(is_even, .right = TRUE)
-3:10 \%>\% detect_index(is_even, .right = TRUE)
+3:10 \%>\% detect(is_even, .dir = "backward")
+3:10 \%>\% detect_index(is_even, .dir = "backward")
 
 
 # Since `.f` is passed to as_mapper(), you can supply a

@@ -143,6 +143,7 @@ modify.default <- function(.x, .f, ...) {
 }
 
 #' @rdname modify
+#' @inheritParams map_if
 #' @export
 modify_if <- function(.x, .p, .f, ..., .else = NULL) {
   UseMethod("modify_if")
@@ -169,6 +170,7 @@ modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
 }
 
 #' @rdname modify
+#' @inheritParams map_at
 #' @export
 modify_at <- function(.x, .at, .f, ...) {
   UseMethod("modify_at")

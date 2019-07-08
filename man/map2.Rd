@@ -193,6 +193,7 @@ df2 <- map2_dfc(arg1, arg2, ex_fun)
 \seealso{
 Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map}}, \code{\link{modify}}
+  \code{\link{map_if}}, \code{\link{map}},
+  \code{\link{modify}}
 }
 \concept{map variants}

@@ -202,6 +202,7 @@ l1 \%>\% modify_depth(2, ~ pmap(., paste, sep = " / ")) \%>\% str()
 \seealso{
 Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map}}
+  \code{\link{map2}}, \code{\link{map_if}},
+  \code{\link{map}}
 }
 \concept{map variants}
