@@ -216,34 +216,23 @@ map_raw <- function(.x, .f, ...) {
 #'   Alternatively, you can supply `.ptype` to give the output a known type.
 #'   If `getOption("vctrs.no_guessing")` is `TRUE` you must supply this value:
 #'   this is a convenient way to make production code demand fixed types.
-#' @importFrom vctrs vec_assert vec_is vec_c vec_size
-#' @importFrom vctrs vec_type_common vec_recycle_common
+#' @importFrom vctrs vec_assert vec_c vec_size
+#' @importFrom vctrs vec_ptype_common vec_recycle_common
 #' @export
 map_vec <- function(.x, .f, ..., .ptype = NULL) {
   vec_assert(.x)
+
   out <- map(.x, .f, ...)
-  vec_simplify(out, .ptype = .ptype)
-}
 
-vec_simplify <- function(x, .ptype = NULL) {
-  .ptype <- tryCatch(
-    vec_type_common(!!!x, .ptype = .ptype),
-    vctrs_error_incompatible_type = function(e) {
-      list()
-    }
-  )
+  .ptype <- vec_ptype_common(!!!out, .ptype = .ptype)
 
-  if (vec_is(.ptype, ptype = list())) {
-    return(x)
-  }
-
-  for (i in seq_along(x)) {
-    if (vec_size(x[[i]]) != 1L) {
-      stop_bad_element_vector(x[[i]], i, .ptype, 1L, what = "Result")
+  for (i in seq_along(out)) {
+    if (vec_size(out[[i]]) != 1L) {
+      stop_bad_element_vector(out[[i]], i, .ptype, 1L, what = "Result")
     }
   }
 
-  vec_c(!!!x, .ptype = .ptype)
+  vec_c(!!!out, .ptype = .ptype)
 }
 
 #' @rdname map
