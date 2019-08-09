@@ -89,7 +89,7 @@ partial <- function(.f,
       as_closure(.f),
     closure =
       .f,
-    abort(sprintf("`.f` must be a function, not a %s", friendly_type_of(.f)))
+    abort(sprintf("`.f` must be a function, not %s", friendly_type_of(.f)))
   )
 
   if (!is_null(.env)) {
