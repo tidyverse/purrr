@@ -34,7 +34,7 @@ name and numeric vectors index by position; use a list to index
 by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
-\item{...}{Additional arguments passed on to \code{.p}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.dir}{If \code{"forward"}, the default, starts at the beginning of
 the vector and move towards the end; if \code{"backward"}, starts at
@@ -59,8 +59,8 @@ is_even <- function(x) x \%\% 2 == 0
 3:10 \%>\% detect(is_even)
 3:10 \%>\% detect_index(is_even)
 
-3:10 \%>\% detect(is_even, .right = TRUE)
-3:10 \%>\% detect_index(is_even, .right = TRUE)
+3:10 \%>\% detect(is_even, .dir = "backward")
+3:10 \%>\% detect_index(is_even, .dir = "backward")
 
 
 # Since `.f` is passed to as_mapper(), you can supply a

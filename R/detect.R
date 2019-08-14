@@ -1,7 +1,7 @@
 #' Find the value or position of the first match
 #'
-#' @inheritParams every
 #' @inheritParams map
+#' @inheritParams every
 #' @param .dir If `"forward"`, the default, starts at the beginning of
 #'   the vector and move towards the end; if `"backward"`, starts at
 #'   the end of the vector and moves towards the beginning.
