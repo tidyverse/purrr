@@ -9,21 +9,31 @@
 <title>Match/validate a set of conditions for an object and continue with the action
 associated with the first valid match. — when • purrr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -34,34 +44,27 @@ associated with the first valid match. — when • purrr</title>
 
 <meta property="og:title" content="Match/validate a set of conditions for an object and continue with the action
 associated with the first valid match. — when" />
-
 <meta property="og:description" content="when is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets. When a
 valid match/condition is found the action is executed and the result of the
 action is returned." />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
 
- gtag('config', 'UA-115082821-1');
-</script>
+
   </head>
 
   <body>
@@ -124,7 +127,7 @@ action is returned." />
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,6 +138,7 @@ action is returned." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -147,16 +151,14 @@ associated with the first valid match.</h1>
     </div>
 
     <div class="ref-description">
-    
     <p><code>when</code> is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets. When a
 valid match/condition is found the action is executed and the result of the
 action is returned.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>when</span>(<span class='no'>.</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -170,38 +172,37 @@ action is returned.</p>
 named arguments will define additional values.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The value resulting from the action of the first valid
 match/condition is returned. If no matches are found, and no default is
 given, NULL will be returned.</p>
 <p>Validity of the conditions are tested with <code>isTRUE</code>, or equivalently
-with <code><a href='https://www.rdocumentation.org/packages/base/topics/identical'>identical(condition, TRUE)</a></code>.
+with <code><a href='https://rdrr.io/r/base/identical.html'>identical(condition, TRUE)</a></code>.
 In other words conditions resulting in more than one logical will never
 be valid. Note that the input value is always treated as a single object,
 as opposed to the <code>ifelse</code> function.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>when</span>(
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span>  <span class='fl'>50</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>),
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span> <span class='fl'>100</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>)/<span class='fl'>2</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span>  <span class='fl'>50</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>),
+    <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span> <span class='fl'>100</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>)/<span class='fl'>2</span>,
     ~ <span class='fl'>0</span>
   )</div><div class='output co'>#&gt; [1] 27.5</div><div class='input'>
 <span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>when</span>(
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span>   <span class='no'>x</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>),
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span> <span class='fl'>2</span>*<span class='no'>x</span> ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>)/<span class='fl'>2</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span>   <span class='no'>x</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>),
+    <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;=</span> <span class='fl'>2</span>*<span class='no'>x</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>.</span>)/<span class='fl'>2</span>,
     ~ <span class='fl'>0</span>,
     <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>60</span>
   )</div><div class='output co'>#&gt; [1] 55</div><div class='input'>
 <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span>(<span class='no'>Sepal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>Sepal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>when</span>(
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>.</span>) <span class='kw'>&gt;</span> <span class='fl'>0</span> ~ <span class='no'>.</span>,
-    ~ <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fl'>10</span>)
+    <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>.</span>) <span class='kw'>&gt;</span> <span class='fl'>0</span> ~ <span class='no'>.</span>,
+    ~ <span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fl'>10</span>)
   )</div><div class='output co'>#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #&gt; 1           5.1         3.5          1.4         0.2  setosa
 #&gt; 2           4.9         3.0          1.4         0.2  setosa
@@ -215,8 +216,8 @@ as opposed to the <code>ifelse</code> function.</p>
 #&gt; 10          4.9         3.1          1.5         0.1  setosa</div><div class='input'>
 <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
   <span class='no'>head</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>when</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;</span> <span class='fl'>10</span> ~ <span class='no'>.</span>,
-       ~ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>stop</a></span>(<span class='st'>"Expected fewer than 10 rows."</span>))</div><div class='output co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+  <span class='fu'>when</span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>.</span>) <span class='kw'>&lt;</span> <span class='fl'>10</span> ~ <span class='no'>.</span>,
+       ~ <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>(<span class='st'>"Expected fewer than 10 rows."</span>))</div><div class='output co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #&gt; 1          5.1         3.5          1.4         0.2  setosa
 #&gt; 2          4.9         3.0          1.4         0.2  setosa
 #&gt; 3          4.7         3.2          1.3         0.2  setosa
@@ -228,14 +229,13 @@ as opposed to the <code>ifelse</code> function.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="tidyverse">
@@ -248,11 +248,14 @@ as opposed to the <code>ifelse</code> function.</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

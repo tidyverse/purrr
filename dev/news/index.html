@@ -8,21 +8,31 @@
 
 <title>Changelog • purrr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,29 +42,23 @@
 
 
 <meta property="og:title" content="Changelog" />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 <meta name="robots" content="noindex">
 
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
 
- gtag('config', 'UA-115082821-1');
-</script>
+
   </head>
 
   <body>
@@ -117,7 +121,7 @@
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,6 +132,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -190,7 +195,7 @@
 <li><p>New <code><a href="../reference/pluck.html">chuck()</a></code> function. This is a strict variant of <code><a href="../reference/pluck.html">pluck()</a></code> that throws errors when an element does not exist instead of returning <code>NULL</code> (<a href='https://github.com/daniel-barnett'>@daniel-barnett</a>, <a href='https://github.com/tidyverse/purrr/issues/482'>#482</a>).</p></li>
 <li><p>New <code><a href="../reference/modify_in.html">assign_in()</a></code> and <code>pluck&lt;-</code> functions. They modify a data structure at an existing pluck location.</p></li>
 <li><p>New <code><a href="../reference/modify_in.html">modify_in()</a></code> function to map a function at a pluck location.</p></li>
-<li><p><code><a href="../reference/pluck.html">pluck()</a></code> now dispatches properly with S3 vectors. The vector class must implement a <code><a href="https://www.rdocumentation.org/packages/base/topics/length">length()</a></code> method for numeric indexing and a <code><a href="https://www.rdocumentation.org/packages/base/topics/names">names()</a></code> method for string indexing.</p></li>
+<li><p><code><a href="../reference/pluck.html">pluck()</a></code> now dispatches properly with S3 vectors. The vector class must implement a <code><a href="https://rdrr.io/r/base/length.html">length()</a></code> method for numeric indexing and a <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> method for string indexing.</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> now supports primitive functions (<a href='https://github.com/tidyverse/purrr/issues/404'>#404</a>).</p></li>
 </ul>
 </div>
@@ -204,9 +209,9 @@
 <p>Functions taking predicates (<code><a href="../reference/map.html">map_if()</a></code>, <code><a href="../reference/keep.html">keep()</a></code>, <code><a href="../reference/every.html">some()</a></code>, <code><a href="../reference/every.html">every()</a></code>, <code><a href="../reference/keep.html">keep()</a></code>, etc) now fail with an informative message when the return value is not <code>TRUE</code> or <code>FALSE</code> (<a href='https://github.com/tidyverse/purrr/issues/470'>#470</a>).</p>
 <p>This is a breaking change for <code><a href="../reference/every.html">every()</a></code> and <code><a href="../reference/every.html">some()</a></code> which were documented to be more liberal in the values they accepted as logical (any vector was considered <code>TRUE</code> if not a single <code>FALSE</code> value, no matter its length). These functions signal soft-deprecation warnings instead of a hard failure.</p>
 </li>
-<li><p><code><a href="../reference/modify.html">modify()</a></code> and variants are now implemented using <code><a href="https://www.rdocumentation.org/packages/base/topics/length">length()</a></code>, <code>[[</code>, and <code>[[&lt;-</code> methods. This implementation should be compatible with most vector classes.</p></li>
+<li><p><code><a href="../reference/modify.html">modify()</a></code> and variants are now implemented using <code><a href="https://rdrr.io/r/base/length.html">length()</a></code>, <code><a href="https://rdrr.io/r/base/Extract.html">[[</a></code>, and <code>[[&lt;-</code> methods. This implementation should be compatible with most vector classes.</p></li>
 <li><p>New <code><a href="../reference/modify.html">modify2()</a></code> and <code><a href="../reference/modify.html">imodify()</a></code> functions. These work like <code><a href="../reference/map.html">map()</a></code> and <code><a href="../reference/imap.html">imap()</a></code> but preserve the type of <code>.x</code> in the return value.</p></li>
-<li><p><code><a href="../reference/map2.html">pmap()</a></code> and <code><a href="../reference/map2.html">pwalk()</a></code> now preserve class for inputs of <code>factor</code>, <code>Date</code>, <code>POSIXct</code> and other atomic S3 classes with an appropriate <code>[[</code> method (<a href='https://github.com/tidyverse/purrr/issues/358'>#358</a>, <a href='https://github.com/mikmart'>@mikmart</a>).</p></li>
+<li><p><code><a href="../reference/map2.html">pmap()</a></code> and <code><a href="../reference/map2.html">pwalk()</a></code> now preserve class for inputs of <code>factor</code>, <code>Date</code>, <code>POSIXct</code> and other atomic S3 classes with an appropriate <code><a href="https://rdrr.io/r/base/Extract.html">[[</a></code> method (<a href='https://github.com/tidyverse/purrr/issues/358'>#358</a>, <a href='https://github.com/mikmart'>@mikmart</a>).</p></li>
 <li><p><code><a href="../reference/modify.html">modify()</a></code>, <code><a href="../reference/modify.html">modify_if()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> now preserve the class of atomic vectors instead of promoting them to lists. New S3 methods are provided for character, logical, double, and integer classes (<a href='https://github.com/t-kalinowski'>@t-kalinowski</a>, <a href='https://github.com/tidyverse/purrr/issues/417'>#417</a>).</p></li>
 <li><p>By popular request, <code><a href="../reference/at_depth.html">at_depth()</a></code> has been brought back as <code><a href="../reference/map.html">map_depth()</a></code>. Like <code><a href="../reference/modify.html">modify_depth()</a></code>, it applies a function at a specified level of a data structure. However, it transforms all traversed vectors up to <code>.depth</code> to bare lists (<a href='https://github.com/tidyverse/purrr/issues/381'>#381</a>).</p></li>
 <li><p><code><a href="../reference/map.html">map_at()</a></code>, <code><a href="../reference/modify.html">modify_at()</a></code> and <code><a href="../reference/lmap.html">lmap_at()</a></code> accept negative values for <code>.at</code>, ignoring elements at those positions.</p></li>
@@ -228,7 +233,7 @@
 </div>
 <div id="partial" class="section level2">
 <h2 class="hasAnchor">
-<a href="#partial" class="anchor"></a><code><a href="../reference/partial.html">partial()</a></code>
+<a href="#partial" class="anchor"></a><code>partial()</code>
 </h2>
 <p>The interface of <code><a href="../reference/partial.html">partial()</a></code> has been simplified. It now supports quasiquotation to control the timing of evaluation, and the <code><a href="https://rlang.r-lib.org/reference/call_modify.html">rlang::call_modify()</a></code> syntax to control the position of partialised arguments.</p>
 <ul>
@@ -242,11 +247,11 @@
 <li>
 <p>The <code>.lazy</code> argument of <code><a href="../reference/partial.html">partial()</a></code> is soft-deprecated in favour of quasiquotation:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Before</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>), <span class="dt">.lazy =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>), <span class="dt">.lazy =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># After</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="op">!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>))  <span class="co"># All constant</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1</span>))    <span class="co"># First constant</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>))  <span class="co"># All constant</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>))    <span class="co"># First constant</span></a></code></pre></div>
 </li>
 </ul>
 </div>
@@ -272,7 +277,7 @@
 <li><p><code><a href="../reference/list_modify.html">list_modify()</a></code>, <code><a href="../reference/list_modify.html">update_list()</a></code> and <code><a href="../reference/list_modify.html">list_merge()</a></code> now handle duplicate duplicate argument names correctly (<a href='https://github.com/tidyverse/purrr/issues/441'>#441</a>, <a href='https://github.com/mgirlich'>@mgirlich</a>).</p></li>
 <li><p><code>map_raw</code>, <code>imap_raw</code>, <code>flatten_raw</code>, <code>invoke_map_raw</code>, <code>map2_raw</code> and <code>pmap_raw</code> added to support raw vectors. (<a href='https://github.com/tidyverse/purrr/issues/455'>#455</a>, <a href='https://github.com/romainfrancois'>@romainfrancois</a>)</p></li>
 <li><p><code><a href="../reference/flatten.html">flatten()</a></code> now supports raw and complex elements.</p></li>
-<li><p><code><a href="../reference/array-coercion.html">array_branch()</a></code> and <code><a href="../reference/array-coercion.html">array_tree()</a></code> now retain the <code><a href="https://www.rdocumentation.org/packages/base/topics/dimnames">dimnames()</a></code> of the input array (<a href='https://github.com/tidyverse/purrr/issues/584'>#584</a>, <a href='https://github.com/flying-sheep'>@flying-sheep</a>)</p></li>
+<li><p><code><a href="../reference/array-coercion.html">array_branch()</a></code> and <code><a href="../reference/array-coercion.html">array_tree()</a></code> now retain the <code><a href="https://rdrr.io/r/base/dimnames.html">dimnames()</a></code> of the input array (<a href='https://github.com/tidyverse/purrr/issues/584'>#584</a>, <a href='https://github.com/flying-sheep'>@flying-sheep</a>)</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> no longer flattens lists of arguments. You can still do it manually with <code>!!!</code>. This change is for consistency with other dots-collecting functions of the tidyverse.</p></li>
 <li>
 <p><code><a href="../reference/map.html">map_at()</a></code>, <code><a href="../reference/lmap.html">lmap_at()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> now supports selection using <code>vars()</code> and <code>tidyselect</code> (<a href='https://github.com/ColinFay'>@ColinFay</a>, <a href='https://github.com/tidyverse/purrr/issues/608'>#608</a>).</p>
@@ -325,7 +330,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 </div>
 <div id="simplification-of-partial" class="section level3">
 <h3 class="hasAnchor">
-<a href="#simplification-of-partial" class="anchor"></a>Simplification of <code><a href="../reference/partial.html">partial()</a></code>
+<a href="#simplification-of-partial" class="anchor"></a>Simplification of <code>partial()</code>
 </h3>
 <p>The interface of <code><a href="../reference/partial.html">partial()</a></code> has been simplified (see more about <code><a href="../reference/partial.html">partial()</a></code> below):</p>
 <ul>
@@ -335,28 +340,28 @@ detect(x, f, .dir = "backward")</a></code></pre>
 </div>
 <div id="retirement-of-invoke" class="section level3">
 <h3 class="hasAnchor">
-<a href="#retirement-of-invoke" class="anchor"></a>Retirement of <code><a href="../reference/invoke.html">invoke()</a></code>
+<a href="#retirement-of-invoke" class="anchor"></a>Retirement of <code>invoke()</code>
 </h3>
 <p><code><a href="../reference/invoke.html">invoke()</a></code> and <code><a href="../reference/invoke.html">invoke_map()</a></code> are retired in favour of <code><a href="../reference/exec.html">exec()</a></code>. Note that retired functions are no longer under active development, but continue to be maintained undefinitely in the package.</p>
 <ul>
 <li>
 <p><code><a href="../reference/invoke.html">invoke()</a></code> is retired in favour of the <code><a href="../reference/exec.html">exec()</a></code> function, reexported from rlang. <code><a href="../reference/exec.html">exec()</a></code> evaluates a function call built from its inputs and supports tidy dots:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Before:</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke</a></span>(mean, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke</a></span>(mean, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># After</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="../reference/exec.html">exec</a></span>(mean, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">!!!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="../reference/exec.html">exec</a></span>(mean, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">!!!</span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <p>Note that retired functions are not removed from the package and will be maintained undefinitely.</p>
 </li>
 <li>
 <p><code><a href="../reference/invoke.html">invoke_map()</a></code> is retired without replacement because it is more complex to understand than the corresponding code using <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code> and <code><a href="../reference/exec.html">exec()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Before:</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(args))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(args1, args2))</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args1, args2))</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># After:</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../reference/map.html">map</a></span>(fns, exec, <span class="op">!!!</span>args)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="../reference/map2.html">map2</a></span>(fns, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(args1, args2), <span class="cf">function</span>(fn, args) <span class="kw"><a href="../reference/exec.html">exec</a></span>(fn, <span class="op">!!!</span>args))</a></code></pre></div>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="../reference/map2.html">map2</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args1, args2), <span class="cf">function</span>(fn, args) <span class="kw"><a href="../reference/exec.html">exec</a></span>(fn, <span class="op">!!!</span>args))</a></code></pre></div>
 </li>
 </ul>
 </div>
@@ -364,7 +369,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <h3 class="hasAnchor">
 <a href="#other-lifecycle-changes" class="anchor"></a>Other lifecycle changes</h3>
 <ul>
-<li><p><code>%@%</code> is soft-deprecated, please use the operator exported in rlang instead. The latter features an interface more consistent with <code>@</code> as it uses NSE, supports S4 fields, and has an assignment variant.</p></li>
+<li><p><code><a href="../reference/get-attr.html">%@%</a></code> is soft-deprecated, please use the operator exported in rlang instead. The latter features an interface more consistent with <code>@</code> as it uses NSE, supports S4 fields, and has an assignment variant.</p></li>
 <li>
 <p>Removing elements from lists using <code>NULL</code> in <code><a href="../reference/list_modify.html">list_modify()</a></code> is soft-deprecated. Please use the new <code><a href="../reference/zap.html">zap()</a></code> sentinel reexported from rlang instead:</p>
 <pre class="{r}"><code><a href="../reference/list_modify.html">  # Before:
@@ -433,7 +438,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <ul>
 <li>
 <p><code><a href="../reference/as_mapper.html">as_function()</a></code> is now <code><a href="../reference/as_mapper.html">as_mapper()</a></code> because it is a tranformation that makes sense primarily for mapping functions, not in general (<a href='https://github.com/tidyverse/purrr/issues/298'>#298</a>). <code>.null</code> has been renamed to <code>.default</code> to better reflect its intent (<a href='https://github.com/tidyverse/purrr/issues/298'>#298</a>). <code>.default</code> is returned whenever an element is absent or empty (<a href='https://github.com/tidyverse/purrr/issues/231'>#231</a>, <a href='https://github.com/tidyverse/purrr/issues/254'>#254</a>).</p>
-<p><code><a href="../reference/as_mapper.html">as_mapper()</a></code> sanitises primitive functions by transforming them to closures with standardised argument names (using <code><a href="https://rlang.r-lib.org/reference/as_function.html">rlang::as_closure()</a></code>). For instance <code>+</code> is transformed to <code>function(.x, .y) .x + .y</code>. This results in proper argument matching so that <code>map(1:10, partial(</code>-<code>, .x = 5))</code> produces <code><a href="https://www.rdocumentation.org/packages/base/topics/list">list(5 - 1, 5 - 2, ...)</a></code>.</p>
+<p><code><a href="../reference/as_mapper.html">as_mapper()</a></code> sanitises primitive functions by transforming them to closures with standardised argument names (using <code><a href="https://rlang.r-lib.org/reference/as_function.html">rlang::as_closure()</a></code>). For instance <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> is transformed to <code>function(.x, .y) .x + .y</code>. This results in proper argument matching so that <code>map(1:10, partial(</code>-<code>, .x = 5))</code> produces <code><a href="https://rdrr.io/r/base/list.html">list(5 - 1, 5 - 2, ...)</a></code>.</p>
 </li>
 <li><p>Recursive indexing can now extract objects out of environments (<a href='https://github.com/tidyverse/purrr/issues/213'>#213</a>) and S4 objects (<a href='https://github.com/tidyverse/purrr/issues/200'>#200</a>), as well as lists.</p></li>
 <li><p><code><a href="../reference/attr_getter.html">attr_getter()</a></code> makes it possible to extract from attributes like <code><a href="../reference/map.html">map(list(iris, mtcars), attr_getter("row.names"))</a></code>.</p></li>
@@ -446,7 +451,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <a href="#map-functions" class="anchor"></a>Map functions</h2>
 <ul>
 <li><p>All map functions now treat <code>NULL</code> the same way as an empty vector (<a href='https://github.com/tidyverse/purrr/issues/199'>#199</a>), and return an empty vector if any input is an empty vector.</p></li>
-<li><p>All <code><a href="../reference/map.html">map()</a></code> functions now force their arguments in the same way that base R does for <code><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/191'>#191</a>). This makes <code><a href="../reference/map.html">map()</a></code> etc easier to use when generating functions.</p></li>
+<li><p>All <code><a href="../reference/map.html">map()</a></code> functions now force their arguments in the same way that base R does for <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/191'>#191</a>). This makes <code><a href="../reference/map.html">map()</a></code> etc easier to use when generating functions.</p></li>
 <li><p>A new family of “indexed” map functions, <code><a href="../reference/imap.html">imap()</a></code>, <code><a href="../reference/imap.html">imap_lgl()</a></code> etc, provide a short-hand for <code><a href="../reference/map2.html">map2(x, names(x))</a></code> or <code><a href="../reference/map2.html">map2(x, seq_along(x))</a></code> (<a href='https://github.com/tidyverse/purrr/issues/240'>#240</a>).</p></li>
 <li><p>The data frame suffix <code>_df</code> has been (soft) deprecated in favour of <code>_dfr</code> to more clearly indicate that it’s a row-bind. All variants now also have a <code>_dfc</code> for column binding (<a href='https://github.com/tidyverse/purrr/issues/167'>#167</a>). (These will not be terribly useful until <code><a href="https://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_rows()</a></code>/<code><a href="https://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_cols()</a></code> have better semantics for vectors.)</p></li>
 </ul>
@@ -465,7 +470,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
-<li><p><code><a href="../reference/safely.html">auto_browse(f)</a></code> returns a new function that automatically calls <code><a href="https://www.rdocumentation.org/packages/base/topics/browser">browser()</a></code> if <code>f</code> throws an error (<a href='https://github.com/tidyverse/purrr/issues/281'>#281</a>).</p></li>
+<li><p><code><a href="../reference/safely.html">auto_browse(f)</a></code> returns a new function that automatically calls <code><a href="https://rdrr.io/r/base/browser.html">browser()</a></code> if <code>f</code> throws an error (<a href='https://github.com/tidyverse/purrr/issues/281'>#281</a>).</p></li>
 <li><p><code><a href="../reference/vec_depth.html">vec_depth()</a></code> computes the depth (i.e. the number of levels of indexing) or a vector (<a href='https://github.com/tidyverse/purrr/issues/243'>#243</a>).</p></li>
 <li><p><code><a href="../reference/reduce.html">reduce2()</a></code> and <code><a href="../reference/reduce_right.html">reduce2_right()</a></code> make it possible to reduce with a 3 argument function where the first argument is the accumulated value, the second argument is <code>.x</code>, and the third argument is <code>.y</code> (<a href='https://github.com/tidyverse/purrr/issues/163'>#163</a>).</p></li>
 <li><p><code><a href="../reference/list_modify.html">list_modify()</a></code> extends <code>stats::modifyList()</code> to replace by position if the list is not named.(<a href='https://github.com/tidyverse/purrr/issues/201'>#201</a>). <code><a href="../reference/list_modify.html">list_merge()</a></code> operates similarly to <code><a href="../reference/list_modify.html">list_modify()</a></code> but combines instead of replacing (<a href='https://github.com/tidyverse/purrr/issues/322'>#322</a>).</p></li>
@@ -538,19 +543,19 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <li>
 <code>x %||% y</code> is shorthand for <code>if (is.null(x)) y else x</code> (<a href='https://github.com/tidyverse/purrr/issues/109'>#109</a>).</li>
 <li>
-<code>x %@% "a"</code> is shorthand for <code><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr(x, "a", exact = TRUE)</a></code> (<a href='https://github.com/tidyverse/purrr/issues/69'>#69</a>).</li>
+<code>x %@% "a"</code> is shorthand for <code><a href="https://rdrr.io/r/base/attr.html">attr(x, "a", exact = TRUE)</a></code> (<a href='https://github.com/tidyverse/purrr/issues/69'>#69</a>).</li>
 </ul>
 </li>
-<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> has been added to handle recursive folding. It is shortand for <code><a href="https://www.rdocumentation.org/packages/base/topics/funprog">Reduce(f, .x, accumulate = TRUE)</a></code> and follows a similar syntax to <code><a href="../reference/reduce.html">reduce()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/145'>#145</a>). A right-hand version <code><a href="../reference/reduce_right.html">accumulate_right()</a></code> was also added.</p></li>
+<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> has been added to handle recursive folding. It is shortand for <code><a href="https://rdrr.io/r/base/funprog.html">Reduce(f, .x, accumulate = TRUE)</a></code> and follows a similar syntax to <code><a href="../reference/reduce.html">reduce()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/145'>#145</a>). A right-hand version <code><a href="../reference/reduce_right.html">accumulate_right()</a></code> was also added.</p></li>
 <li><p><code><a href="../reference/map.html">map_df()</a></code> row-binds output together. It’s the equivalent of <code>plyr::ldply()</code> (<a href='https://github.com/tidyverse/purrr/issues/127'>#127</a>)</p></li>
 <li><p><code><a href="../reference/flatten.html">flatten()</a></code> is now type-stable and always returns a list. To return a simpler vector, use <code><a href="../reference/flatten.html">flatten_lgl()</a></code>, <code><a href="../reference/flatten.html">flatten_int()</a></code>, <code><a href="../reference/flatten.html">flatten_dbl()</a></code>, <code><a href="../reference/flatten.html">flatten_chr()</a></code>, or <code><a href="../reference/flatten.html">flatten_df()</a></code>.</p></li>
 <li><p><code><a href="../reference/invoke.html">invoke()</a></code> has been overhauled to be more useful: it now works similarly to <code><a href="../reference/invoke.html">map_call()</a></code> when <code>.x</code> is NULL, and hence <code><a href="../reference/invoke.html">map_call()</a></code> has been deprecated. <code><a href="../reference/invoke.html">invoke_map()</a></code> is a vectorised complement to <code><a href="../reference/invoke.html">invoke()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/125'>#125</a>), and comes with typed variants <code><a href="../reference/invoke.html">invoke_map_lgl()</a></code>, <code><a href="../reference/invoke.html">invoke_map_int()</a></code>, <code><a href="../reference/invoke.html">invoke_map_dbl()</a></code>, <code><a href="../reference/invoke.html">invoke_map_chr()</a></code>, and <code><a href="../reference/invoke.html">invoke_map_df()</a></code>.</p></li>
 <li><p><code><a href="../reference/transpose.html">transpose()</a></code> replaces <code>zip2()</code>, <code>zip3()</code>, and <code>zip_n()</code> (<a href='https://github.com/tidyverse/purrr/issues/128'>#128</a>). The name more clearly reflects the intent (transposing the first and second levels of list). It no longer has fields argument or the <code>.simplify</code> argument; instead use the new <code><a href="../reference/as_vector.html">simplify_all()</a></code> function.</p></li>
-<li><p><code><a href="../reference/safely.html">safely()</a></code>, <code><a href="../reference/safely.html">quietly()</a></code>, and <code><a href="../reference/safely.html">possibly()</a></code> are experimental functions for working with functions with side-effects (e.g. printed output, messages, warnings, and errors) (<a href='https://github.com/tidyverse/purrr/issues/120'>#120</a>). <code><a href="../reference/safely.html">safely()</a></code> is a version of <code><a href="https://www.rdocumentation.org/packages/base/topics/try">try()</a></code> that modifies a function (rather than an expression), and always returns a list with two components, <code>result</code> and <code>error</code>.</p></li>
-<li><p><code><a href="../reference/along.html">list_along()</a></code> and <code><a href="../reference/rep_along.html">rep_along()</a></code> generalise the idea of <code><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_along()</a></code>. (<a href='https://github.com/tidyverse/purrr/issues/122'>#122</a>).</p></li>
-<li><p><code><a href="https://rlang.r-lib.org/reference/type-predicates.html">is_null()</a></code> is the snake-case version of <code><a href="https://www.rdocumentation.org/packages/base/topics/NULL">is.null()</a></code>.</p></li>
+<li><p><code><a href="../reference/safely.html">safely()</a></code>, <code><a href="../reference/safely.html">quietly()</a></code>, and <code><a href="../reference/safely.html">possibly()</a></code> are experimental functions for working with functions with side-effects (e.g. printed output, messages, warnings, and errors) (<a href='https://github.com/tidyverse/purrr/issues/120'>#120</a>). <code><a href="../reference/safely.html">safely()</a></code> is a version of <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> that modifies a function (rather than an expression), and always returns a list with two components, <code>result</code> and <code>error</code>.</p></li>
+<li><p><code><a href="../reference/along.html">list_along()</a></code> and <code><a href="../reference/rep_along.html">rep_along()</a></code> generalise the idea of <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code>. (<a href='https://github.com/tidyverse/purrr/issues/122'>#122</a>).</p></li>
+<li><p><code><a href="https://rlang.r-lib.org/reference/type-predicates.html">is_null()</a></code> is the snake-case version of <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code>.</p></li>
 <li><p><code><a href="../reference/map2.html">pmap()</a></code> (parallel map) replaces <code>map_n()</code> (<a href='https://github.com/tidyverse/purrr/issues/132'>#132</a>), and has typed-variants suffixed <code><a href="../reference/map2.html">pmap_lgl()</a></code>, <code><a href="../reference/map2.html">pmap_int()</a></code>, <code><a href="../reference/map2.html">pmap_dbl()</a></code>, <code><a href="../reference/map2.html">pmap_chr()</a></code>, and <code><a href="../reference/map2.html">pmap_df()</a></code>.</p></li>
-<li><p><code><a href="../reference/set_names.html">set_names()</a></code> is a snake-case alternative to <code><a href="https://www.rdocumentation.org/packages/stats/topics/setNames">setNames()</a></code> with stricter equality checking, and more convenient defaults for pipes: <code>x %&gt;% set_names()</code> is equivalent to <code><a href="https://www.rdocumentation.org/packages/stats/topics/setNames">setNames(x, x)</a></code> (<a href='https://github.com/tidyverse/purrr/issues/119'>#119</a>).</p></li>
+<li><p><code><a href="../reference/set_names.html">set_names()</a></code> is a snake-case alternative to <code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> with stricter equality checking, and more convenient defaults for pipes: <code>x %&gt;% set_names()</code> is equivalent to <code><a href="https://rdrr.io/r/stats/setNames.html">setNames(x, x)</a></code> (<a href='https://github.com/tidyverse/purrr/issues/119'>#119</a>).</p></li>
 </ul>
 </div>
 <div id="row-based-functionals" class="section level2">
@@ -570,7 +575,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <li><p><code><a href="../reference/as_mapper.html">as_function()</a></code>, which converts formulas etc to functions, is now exported (<a href='https://github.com/tidyverse/purrr/issues/123'>#123</a>).</p></li>
 <li><p><code><a href="../reference/rerun.html">rerun()</a></code> is correctly scoped (<a href='https://github.com/tidyverse/purrr/issues/95'>#95</a>)</p></li>
 <li><p><code><a href="../reference/list_modify.html">update_list()</a></code> can now modify an element called <code>x</code> (<a href='https://github.com/tidyverse/purrr/issues/98'>#98</a>).</p></li>
-<li><p><code>map*()</code> now use custom C code, rather than relying on <code><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/mapply">mapply()</a></code> etc. The performance characteristcs are very similar, but it allows us greater control over the output (<a href='https://github.com/tidyverse/purrr/issues/118'>#118</a>).</p></li>
+<li><p><code>map*()</code> now use custom C code, rather than relying on <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html">mapply()</a></code> etc. The performance characteristcs are very similar, but it allows us greater control over the output (<a href='https://github.com/tidyverse/purrr/issues/118'>#118</a>).</p></li>
 <li><p><code><a href="../reference/map.html">map_lgl()</a></code> now has second argument <code>.f</code>, not <code>.p</code> (<a href='https://github.com/tidyverse/purrr/issues/134'>#134</a>).</p></li>
 </ul>
 </div>
@@ -608,6 +613,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 
 </div>
 
+
       <footer>
       <div class="tidyverse">
   <p>purrr is a part of the <strong>tidyverse</strong>, an ecosystem of packages designed with common APIs and a shared philosophy. Learn more at <a href="https://tidyverse.org">tidyverse.org</a>.</p>
@@ -619,11 +625,14 @@ detect(x, f, .dir = "backward")</a></code></pre>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
