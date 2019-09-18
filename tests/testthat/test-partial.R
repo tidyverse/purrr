@@ -145,5 +145,5 @@ test_that("`.first` still works", {
 })
 
 test_that("`...f` still works", {
-  expect_error(partial(...f = list, x = "foo"), "renamed")
+  expect_error(partial(...f = list, x = "foo"), "renamed", class = "defunctError")
 })
