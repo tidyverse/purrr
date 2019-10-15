@@ -42,7 +42,7 @@
 #' as_mapper(list(1, attr_getter("a")))
 #' # Equivalent to function(x) attr(x[[1]], "a")
 #'
-#' as_mapper(c("a", "b", "c"), .null = NA)
+#' as_mapper(c("a", "b", "c"), .default = NA)
 as_mapper <- function(.f, ...) {
   UseMethod("as_mapper")
 }
