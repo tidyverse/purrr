@@ -70,7 +70,7 @@ returns \code{FALSE}.}
 
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
-exclude. Only those elements corresponding to \code{.at} will be modified.
+exlude. Only those elements corresponding to \code{.at} will be modified.
 If the \code{tidyselect} package is installed, you can use \code{vars()} and
 the \code{tidyselect} helpers to select elements.}
 
@@ -202,6 +202,7 @@ l1 \%>\% modify_depth(2, ~ pmap(., paste, sep = " / ")) \%>\% str()
 \seealso{
 Other map variants: \code{\link{imap}},
   \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map}}
+  \code{\link{map2}}, \code{\link{map_if}},
+  \code{\link{map}}
 }
 \concept{map variants}

@@ -9,8 +9,8 @@ at_depth(.x, .depth, .f, ...)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
-from the lowest level of the list.
+\item{.depth}{Level of \code{.x} to map on. Use a negative value to
+count up from the lowest level of the list.
 \itemize{
 \item \code{map_depth(x, 0, fun)} is equivalent to \code{fun(x)}.
 \item \code{map_depth(x, 1, fun)} is equivalent to \code{x <- map(x, fun)}
