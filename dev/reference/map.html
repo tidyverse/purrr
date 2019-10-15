@@ -44,21 +44,22 @@
 <meta property="og:title" content="Apply a function to each element of a vector — map" />
 <meta property="og:description" content="The map functions transform their input by applying a function to
 each element and returning a vector the same length as the input.
-map(), map_if() and map_at() always return a list. See the
-modify() family for versions that return an object of the same
-type as the input.
-The _if and _at variants take a predicate function .p that
-determines which elements of .x are transformed with .f.
-map_lgl(), map_int(), map_dbl() and map_chr() each return
-an atomic vector of the indicated type (or die trying).
-The return value of .f must be of length one for each element of
-.x. If .f uses an extractor function shortcut, .default
-can be specified to handle values that are absent or empty.  See
-as_mapper() for more on .default.
+map() always returns a list. See the modify() family for
+versions that return an object of the same type as the input.
+map_lgl(), map_int(), map_dbl() and map_chr() return an
+atomic vector of the indicated type (or die trying).
 map_dfr() and map_dfc() return data frames created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.
-walk() calls .f for its side-effect and returns the input .x.
+The return value of .f must be of length one for each element
+of .x. If .f uses an extractor function shortcut, .default
+can be specified to handle values that are absent or empty. See
+as_mapper() for more on .default.
+
+
+
+walk() calls .f for its side-effect and returns
+the input .x.
 
 " />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
@@ -165,30 +166,27 @@ walk() calls .f for its side-effect and returns the input .x.
     <div class="ref-description">
     <p>The map functions transform their input by applying a function to
 each element and returning a vector the same length as the input.</p><ul>
-<li><p><code>map()</code>, <code>map_if()</code> and <code>map_at()</code> always return a list. See the
-<code><a href='modify.html'>modify()</a></code> family for versions that return an object of the same
-type as the input.</p>
-<p>The <code>_if</code> and <code>_at</code> variants take a predicate function <code>.p</code> that
-determines which elements of <code>.x</code> are transformed with <code>.f</code>.</p></li>
-<li><p><code>map_lgl()</code>, <code>map_int()</code>, <code>map_dbl()</code> and <code>map_chr()</code> each return
-an atomic vector of the indicated type (or die trying).</p>
-<p>The return value of <code>.f</code> must be of length one for each element of
-<code>.x</code>. If <code>.f</code> uses an extractor function shortcut, <code>.default</code>
-can be specified to handle values that are absent or empty.  See
-<code><a href='as_mapper.html'>as_mapper()</a></code> for more on <code>.default</code>.</p></li>
+<li><p><code>map()</code> always returns a list. See the <code><a href='modify.html'>modify()</a></code> family for
+versions that return an object of the same type as the input.</p></li>
+<li><p><code>map_lgl()</code>, <code>map_int()</code>, <code>map_dbl()</code> and <code>map_chr()</code> return an
+atomic vector of the indicated type (or die trying).</p></li>
 <li><p><code>map_dfr()</code> and <code>map_dfc()</code> return data frames created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.</p></li>
-<li><p><code>walk()</code> calls <code>.f</code> for its side-effect and returns the input <code>.x</code>.</p></li>
+<li><p>The return value of <code>.f</code> must be of length one for each element
+of <code>.x</code>. If <code>.f</code> uses an extractor function shortcut, <code>.default</code>
+can be specified to handle values that are absent or empty. See
+<code><a href='as_mapper.html'>as_mapper()</a></code> for more on <code>.default</code>.</p></li>
+</ul>
+
+<ul>
+<li><p><code>walk()</code> calls <code>.f</code> for its side-effect and returns
+the input <code>.x</code>.</p></li>
 </ul>
 
     </div>
 
     <pre class="usage"><span class='fu'>map</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
-
-<span class='fu'>map_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>map_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>map_lgl</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
@@ -204,9 +202,7 @@ to be installed.</p></li>
 
 <span class='fu'>map_dfc</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
-<span class='fu'>walk</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
-
-<span class='fu'>map_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>walk</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -238,28 +234,6 @@ present, the value of <code>.default</code> will be returned.</p></td>
       <td><p>Additional arguments passed on to the mapped function.</p></td>
     </tr>
     <tr>
-      <th>.p</th>
-      <td><p>A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as <code>.x</code>.
-Alternatively, if the elements of <code>.x</code> are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where <code>.p</code> evaluates to
-<code>TRUE</code> will be modified.</p></td>
-    </tr>
-    <tr>
-      <th>.else</th>
-      <td><p>A function applied to elements of <code>.x</code> for which <code>.p</code>
-returns <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>.at</th>
-      <td><p>A character vector of names, positive numeric vector of
-positions to include, or a negative numeric vector of positions to
-exclude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
-the <code>tidyselect</code> helpers to select elements.</p></td>
-    </tr>
-    <tr>
       <th>.id</th>
       <td><p>Either a string or <code>NULL</code>. If a string, the output will contain
 a variable with that name, storing either the name (if <code>.x</code> is named) or
@@ -267,39 +241,35 @@ the index (if <code>.x</code> is unnamed) of the input. If <code>NULL</code>, th
 variable will be created.</p>
 <p>Only applies to <code>_dfr</code> variant.</p></td>
     </tr>
-    <tr>
-      <th>.depth</th>
-      <td><p>Level of <code>.x</code> to map on. Use a negative value to count up
-from the lowest level of the list.</p><ul>
-<li><p><code>map_depth(x, 0, fun)</code> is equivalent to <code>fun(x)</code>.</p></li>
-<li><p><code>map_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- map(x, fun)</code></p></li>
-<li><p><code>map_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- map(x, ~ map(., fun))</code></p></li>
-</ul></td>
-    </tr>
-    <tr>
-      <th>.ragged</th>
-      <td><p>If <code>TRUE</code>, will apply to leaves, even if they're not
-at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if there are
-no elements at depth <code>.depth</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>All functions return a vector the same length as <code>.x</code>.</p>
-<p><code>map()</code> returns a list, <code>map_lgl()</code> a logical vector, <code>map_int()</code> an
-integer vector, <code>map_dbl()</code> a double vector, and <code>map_chr()</code> a character
-vector. <code>map_df()</code>, <code>map_dfc()</code>, <code>map_dfr()</code> all return a data frame.
-The output of <code>.f</code> will be automatically typed upwards,
-e.g. logical -&gt; integer -&gt; double -&gt; character.</p>
-<p>If <code>.x</code> has <code><a href='https://rdrr.io/r/base/names.html'>names()</a></code>, the return value preserves those names.</p>
-<p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
-use in pipe.</p>
+    
+<ul>
+<li><p><code>map()</code> Returns a list the same length as <code>.x</code>.</p></li>
+<li><p><code>map_lgl()</code> returns a logical vector, <code>map_int()</code> an integer
+vector, <code>map_dbl()</code> a double vector, and <code>map_chr()</code> a character
+vector.</p></li>
+<li><p><code>map_df()</code>, <code>map_dfc()</code>, <code>map_dfr()</code> all return a data frame.</p></li>
+<li><p>If <code>.x</code> has <code><a href='https://rdrr.io/r/base/names.html'>names()</a></code>, the return value preserves those names.</p></li>
+<li><p>The output of <code>.f</code> will be automatically typed upwards, e.g.
+logical -&gt; integer -&gt; double -&gt; character.</p></li>
+</ul>
+
+<ul>
+<li><p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
+use in pipe.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
+    <div class='dont-index'><p><code><a href='map_if.html'>map_if()</a></code> for applying a function to only those elements
+of <code>.x</code> that meet a specified condition.</p>
+<p>Other map variants: <code><a href='imap.html'>imap</a></code>,
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
-  <code><a href='map2.html'>map2</a></code>, <code><a href='modify.html'>modify</a></code></p></div>
+  <code><a href='map2.html'>map2</a></code>, <code><a href='map_if.html'>map_if</a></code>,
+  <code><a href='modify.html'>modify</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
@@ -390,13 +360,6 @@ use in pipe.</p>
 #&gt;  [1] 10.828820 10.622347 10.276298 11.267222 11.296271 10.312032  9.472046
 #&gt;  [8]  8.413754 10.447023 10.225880
 #&gt; </div><div class='input'>
-<span class='co'># The names of the input are preserved in the output:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span> <span class='fu'>map</span>(<span class='no'>`+`</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; $foo
-#&gt; [1] 11
-#&gt; 
-#&gt; $bar
-#&gt; [1] 12
-#&gt; </div><div class='input'>
 <span class='co'># Using set_names() with character vectors is handy to keep track</span>
 <span class='co'># of the original inputs:</span>
 <span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>map_chr</span>(<span class='no'>paste0</span>, <span class='st'>":suffix"</span>)</div><div class='output co'>#&gt;          foo          bar 
@@ -440,144 +403,6 @@ use in pipe.</p>
 #&gt; NULL
 #&gt; </div><div class='input'><span class='no'>l2</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_int</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"num"</span>, <span class='fl'>3</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1]   3 103  NA</div><div class='input'>
 
-<span class='co'># Use a predicate function to decide whether to map a function:</span>
-<span class='fu'>map_if</span>(<span class='no'>iris</span>, <span class='no'>is.factor</span>, <span class='no'>as.character</span>)</div><div class='output co'>#&gt; $Sepal.Length
-#&gt;   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1
-#&gt;  [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0
-#&gt;  [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5
-#&gt;  [55] 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8 6.2 5.6 5.9 6.1
-#&gt;  [73] 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4 6.0 6.7 6.3 5.6 5.5
-#&gt;  [91] 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8 7.1 6.3 6.5 7.6 4.9 7.3
-#&gt; [109] 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7 6.0 6.9 5.6 7.7 6.3 6.7 7.2
-#&gt; [127] 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8
-#&gt; [145] 6.7 6.7 6.3 6.5 6.2 5.9
-#&gt; 
-#&gt; $Sepal.Width
-#&gt;   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9 3.5
-#&gt;  [19] 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2 3.1 3.2
-#&gt;  [37] 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2 3.2 3.1 2.3
-#&gt;  [55] 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7 2.2 2.5 3.2 2.8
-#&gt;  [73] 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0 3.4 3.1 2.3 3.0 2.5
-#&gt;  [91] 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7 3.0 2.9 3.0 3.0 2.5 2.9
-#&gt; [109] 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6 2.2 3.2 2.8 2.8 2.7 3.3 3.2
-#&gt; [127] 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2
-#&gt; [145] 3.3 3.0 2.5 3.0 3.4 3.0
-#&gt; 
-#&gt; $Petal.Length
-#&gt;   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3 1.4
-#&gt;  [19] 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4 1.5 1.2
-#&gt;  [37] 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7 4.5 4.9 4.0
-#&gt;  [55] 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1 4.5 3.9 4.8 4.0
-#&gt;  [73] 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5 4.5 4.7 4.4 4.1 4.0
-#&gt;  [91] 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1 5.9 5.6 5.8 6.6 4.5 6.3
-#&gt; [109] 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9 5.0 5.7 4.9 6.7 4.9 5.7 6.0
-#&gt; [127] 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9
-#&gt; [145] 5.7 5.2 5.0 5.2 5.4 5.1
-#&gt; 
-#&gt; $Petal.Width
-#&gt;   [1] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4 0.3
-#&gt;  [19] 0.3 0.3 0.2 0.4 0.2 0.5 0.2 0.2 0.4 0.2 0.2 0.2 0.2 0.4 0.1 0.2 0.2 0.2
-#&gt;  [37] 0.2 0.1 0.2 0.2 0.3 0.3 0.2 0.6 0.4 0.3 0.2 0.2 0.2 0.2 1.4 1.5 1.5 1.3
-#&gt;  [55] 1.5 1.3 1.6 1.0 1.3 1.4 1.0 1.5 1.0 1.4 1.3 1.4 1.5 1.0 1.5 1.1 1.8 1.3
-#&gt;  [73] 1.5 1.2 1.3 1.4 1.4 1.7 1.5 1.0 1.1 1.0 1.2 1.6 1.5 1.6 1.5 1.3 1.3 1.3
-#&gt;  [91] 1.2 1.4 1.2 1.0 1.3 1.2 1.3 1.3 1.1 1.3 2.5 1.9 2.1 1.8 2.2 2.1 1.7 1.8
-#&gt; [109] 1.8 2.5 2.0 1.9 2.1 2.0 2.4 2.3 1.8 2.2 2.3 1.5 2.3 2.0 2.0 1.8 2.1 1.8
-#&gt; [127] 1.8 1.8 2.1 1.6 1.9 2.0 2.2 1.5 1.4 2.3 2.4 1.8 1.8 2.1 2.4 2.3 1.9 2.3
-#&gt; [145] 2.5 2.3 1.9 2.0 2.3 1.8
-#&gt; 
-#&gt; $Species
-#&gt;   [1] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;   [6] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [11] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [16] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [21] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [26] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [31] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [36] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [41] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [46] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [51] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [56] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [61] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [66] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [71] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [76] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [81] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [86] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [91] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [96] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt; [101] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [106] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [111] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [116] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [121] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [126] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [131] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [136] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; </div><div class='input'>
-<span class='co'># Specify an alternative with the `.else` argument:</span>
-<span class='fu'>map_if</span>(<span class='no'>iris</span>, <span class='no'>is.factor</span>, <span class='no'>as.character</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='no'>as.integer</span>)</div><div class='output co'>#&gt; $Sepal.Length
-#&gt;   [1] 5 4 4 4 5 5 4 5 4 4 5 4 4 4 5 5 5 5 5 5 5 5 4 5 4 5 5 5 5 4 4 5 5 5 4 5 5
-#&gt;  [38] 4 4 5 5 4 4 5 5 4 5 4 5 5 7 6 6 5 6 5 6 4 6 5 5 5 6 6 5 6 5 5 6 5 5 6 6 6
-#&gt;  [75] 6 6 6 6 6 5 5 5 5 6 5 6 6 6 5 5 5 6 5 5 5 5 5 6 5 5 6 5 7 6 6 7 4 7 6 7 6
-#&gt; [112] 6 6 5 5 6 6 7 7 6 6 5 7 6 6 7 6 6 6 7 7 7 6 6 6 7 6 6 6 6 6 6 5 6 6 6 6 6
-#&gt; [149] 6 5
-#&gt; 
-#&gt; $Sepal.Width
-#&gt;   [1] 3 3 3 3 3 3 3 3 2 3 3 3 3 3 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4 3 3 3
-#&gt;  [38] 3 3 3 3 2 3 3 3 3 3 3 3 3 3 3 3 2 2 2 3 2 2 2 2 3 2 2 2 3 3 2 2 2 3 2 2 2
-#&gt;  [75] 2 3 2 3 2 2 2 2 2 2 3 3 3 2 3 2 2 3 2 2 2 3 2 2 2 2 3 2 3 2 3 3 2 2 2 3 3
-#&gt; [112] 2 3 2 2 3 3 3 2 2 3 2 2 2 3 3 2 3 2 3 2 3 2 2 2 3 3 3 3 3 3 3 2 3 3 3 2 3
-#&gt; [149] 3 3
-#&gt; 
-#&gt; $Petal.Length
-#&gt;   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-#&gt;  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 4 4 4 4 4 4 4 3 4 3 3 4 4 4 3 4 4 4 4 3 4 4 4 4
-#&gt;  [75] 4 4 4 5 4 3 3 3 3 5 4 4 4 4 4 4 4 4 4 3 4 4 4 4 3 4 6 5 5 5 5 6 4 6 5 6 5
-#&gt; [112] 5 5 5 5 5 5 6 6 5 5 4 6 4 5 6 4 4 5 5 6 6 5 5 5 6 5 5 4 5 5 5 5 5 5 5 5 5
-#&gt; [149] 5 5
-#&gt; 
-#&gt; $Petal.Width
-#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-#&gt;  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 2 1 2 2 1 1 1 2 2
-#&gt; [112] 1 2 2 2 2 1 2 2 1 2 2 2 1 2 1 1 1 2 1 1 2 2 1 1 2 2 1 1 2 2 2 1 2 2 2 1 2
-#&gt; [149] 2 1
-#&gt; 
-#&gt; $Species
-#&gt;   [1] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;   [6] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [11] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [16] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [21] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [26] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [31] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [36] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [41] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [46] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    
-#&gt;  [51] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [56] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [61] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [66] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [71] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [76] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [81] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [86] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [91] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt;  [96] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"
-#&gt; [101] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [106] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [111] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [116] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [121] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [126] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [131] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [136] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
-#&gt; </div><div class='input'>
 <span class='co'># A more realistic example: split a data frame into pieces, fit a</span>
 <span class='co'># model to each piece, summarise and extract R^2</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
@@ -586,41 +411,8 @@ use in pipe.</p>
   <span class='fu'>map</span>(<span class='no'>summary</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>map_dbl</span>(<span class='st'>"r.squared"</span>)</div><div class='output co'>#&gt;         4         6         8 
 #&gt; 0.5086326 0.4645102 0.4229655 </div><div class='input'>
-<span class='co'># Use map_lgl(), map_dbl(), etc to reduce to a vector.</span>
-<span class='co'># * list</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map</span>(<span class='no'>sum</span>)</div><div class='output co'>#&gt; $mpg
-#&gt; [1] 642.9
-#&gt; 
-#&gt; $cyl
-#&gt; [1] 198
-#&gt; 
-#&gt; $disp
-#&gt; [1] 7383.1
-#&gt; 
-#&gt; $hp
-#&gt; [1] 4694
-#&gt; 
-#&gt; $drat
-#&gt; [1] 115.09
-#&gt; 
-#&gt; $wt
-#&gt; [1] 102.952
-#&gt; 
-#&gt; $qsec
-#&gt; [1] 571.16
-#&gt; 
-#&gt; $vs
-#&gt; [1] 14
-#&gt; 
-#&gt; $am
-#&gt; [1] 13
-#&gt; 
-#&gt; $gear
-#&gt; [1] 118
-#&gt; 
-#&gt; $carb
-#&gt; [1] 90
-#&gt; </div><div class='input'><span class='co'># * vector</span>
+<span class='co'># Use map_lgl(), map_dbl(), etc to reduce output to a vector instead</span>
+<span class='co'># of a list:</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_dbl</span>(<span class='no'>sum</span>)</div><div class='output co'>#&gt;      mpg      cyl     disp       hp     drat       wt     qsec       vs 
 #&gt;  642.900  198.000 7383.100 4694.000  115.090  102.952  571.160   14.000 
 #&gt;       am     gear     carb 
@@ -633,44 +425,9 @@ use in pipe.</p>
   <span class='fu'>map_dfr</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>.</span>)))))</div><div class='output co'>#&gt;   (Intercept)        wt
 #&gt; 1    39.57120 -5.647025
 #&gt; 2    28.40884 -2.780106
-#&gt; 3    23.86803 -2.192438</div><div class='input'><span class='co'># (if you also want to preserve the variable names see</span>
-<span class='co'># the broom package)</span>
-
-<span class='co'># Use `map_depth()` to recursively traverse nested vectors and map</span>
-<span class='co'># a function at a certain depth:</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>4</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>baz</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>6</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; List of 2
-#&gt;  $ a:List of 2
-#&gt;   ..$ foo: int [1:2] 1 2
-#&gt;   ..$ bar: int [1:2] 3 4
-#&gt;  $ b:List of 1
-#&gt;   ..$ baz: int [1:2] 5 6</div><div class='input'><span class='fu'>map_depth</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='no'>paste</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"/"</span>)</div><div class='output co'>#&gt; $a
-#&gt; $a$foo
-#&gt; [1] "1/2"
-#&gt; 
-#&gt; $a$bar
-#&gt; [1] "3/4"
-#&gt; 
-#&gt; 
-#&gt; $b
-#&gt; $b$baz
-#&gt; [1] "5/6"
-#&gt; 
-#&gt; </div><div class='input'>
-<span class='co'># Equivalent to:</span>
-<span class='fu'>map</span>(<span class='no'>x</span>, <span class='no'>map</span>, <span class='no'>paste</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"/"</span>)</div><div class='output co'>#&gt; $a
-#&gt; $a$foo
-#&gt; [1] "1/2"
-#&gt; 
-#&gt; $a$bar
-#&gt; [1] "3/4"
-#&gt; 
-#&gt; 
-#&gt; $b
-#&gt; $b$baz
-#&gt; [1] "5/6"
-#&gt; 
-#&gt; </div></pre>
+#&gt; 3    23.86803 -2.192438</div><div class='input'># (if you also want to preserve the variable names see
+# the broom package)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

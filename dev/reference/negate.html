@@ -172,30 +172,30 @@ inner lists. Only those elements where <code>.p</code> evaluates to
     <pre class="examples"><div class='input'><span class='fu'>negate</span>(<span class='st'>"x"</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. function (x, ...) 
 #&gt; pluck(x, "x", .default = NULL)
-#&gt; &lt;environment: 0x664dac8&gt;
+#&gt; &lt;environment: 0x23eeac0&gt;
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x577fe68&gt;
-#&gt; &lt;environment: 0x782f5b0&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
+#&gt; &lt;bytecode: 0x4c9a940&gt;
+#&gt; &lt;environment: 0x24e17f8&gt;</div><div class='input'><span class='fu'>negate</span>(<span class='no'>is.null</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. function (x) 
 #&gt; .Primitive("is.null")(x)
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x577fe68&gt;
-#&gt; &lt;environment: 0x6124088&gt;</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
+#&gt; &lt;bytecode: 0x4c9a940&gt;
+#&gt; &lt;environment: 0x2152078&gt;</div><div class='input'><span class='fu'>negate</span>(~ <span class='no'>.x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; .x &gt; 0
-#&gt; &lt;environment: 0x7184568&gt;
+#&gt; &lt;environment: 0x1b55138&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function" "function"             
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x577fe68&gt;
-#&gt; &lt;environment: 0x6d2e050&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x4c9a940&gt;
+#&gt; &lt;environment: 0x197d7e8&gt;</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>10</span>)))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span>(<span class='fu'>negate</span>(<span class='st'>"y"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='co'># Same as</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='keep.html'>discard</a></span>(<span class='st'>"y"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>()</div><div class='output co'>#&gt; [1] 5</div></pre>

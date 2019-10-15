@@ -152,7 +152,7 @@ function .f to each subset of size 1 of that list (as in
 
     <div class="ref-description">
     <p><code>lmap()</code>, <code>lmap_at()</code> and <code>lmap_if()</code> are similar to
-<code><a href='map.html'>map()</a></code>, <code><a href='map.html'>map_at()</a></code> and <code><a href='map.html'>map_if()</a></code>, with the
+<code><a href='map.html'>map()</a></code>, <code><a href='map_if.html'>map_at()</a></code> and <code><a href='map_if.html'>map_if()</a></code>, with the
 difference that they operate exclusively on functions that take
 <em>and</em> return a list (or data frame). Thus, instead of mapping
 the elements of a list (as in <code>.x[[i]]</code>), they apply a
@@ -199,7 +199,7 @@ returns <code>FALSE</code>.</p></td>
       <th>.at</th>
       <td><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
-exclude. Only those elements corresponding to <code>.at</code> will be modified.
+exlude. Only those elements corresponding to <code>.at</code> will be modified.
 If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
 the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
@@ -223,7 +223,8 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 
     <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='map2.html'>map2</a></code>,
-  <code><a href='map.html'>map</a></code>, <code><a href='modify.html'>modify</a></code></p></div>
+  <code><a href='map_if.html'>map_if</a></code>, <code><a href='map.html'>map</a></code>,
+  <code><a href='modify.html'>modify</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Let's write a function that returns a larger list or an empty list</span>
