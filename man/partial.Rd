@@ -59,7 +59,7 @@ try(my_mean(1:10))
 
 
 # The evaluation of arguments normally occurs "lazily". Concretely,
-# this means that arguments are repeatedly evaluated across invokations:
+# this means that arguments are repeatedly evaluated across invocations:
 f <- partial(runif, n = rpois(1, 5))
 f
 f()

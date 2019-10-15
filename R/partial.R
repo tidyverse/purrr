@@ -49,7 +49,7 @@
 #'
 #'
 #' # The evaluation of arguments normally occurs "lazily". Concretely,
-#' # this means that arguments are repeatedly evaluated across invokations:
+#' # this means that arguments are repeatedly evaluated across invocations:
 #' f <- partial(runif, n = rpois(1, 5))
 #' f
 #' f()
@@ -89,7 +89,7 @@ partial <- function(.f,
       as_closure(.f),
     closure =
       .f,
-    abort(sprintf("`.f` must be a function, not a %s", friendly_type_of(.f)))
+    abort(sprintf("`.f` must be a function, not %s", friendly_type_of(.f)))
   )
 
   if (!is_null(.env)) {

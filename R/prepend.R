@@ -7,7 +7,8 @@
 #'
 #' @param x the vector to be modified.
 #' @param values to be included in the modified vector.
-#' @param before a subscript, before which the values are to be appended.
+#' @param before a subscript, before which the values are to be appended. If
+#'   `NULL`, values will be appended at the beginning even for `x` of length 0.
 #' @return A merged vector.
 #' @export
 #' @examples
@@ -16,11 +17,12 @@
 #' x %>% append("a")
 #' x %>% prepend("a")
 #' x %>% prepend(list("a", "b"), before = 3)
-prepend <- function(x, values, before = 1) {
+#' prepend(list(), x)
+prepend <- function(x, values, before = NULL) {
   n <- length(x)
-  stopifnot(before > 0 && before <= n)
+  stopifnot(is.null(before) || (before > 0 && before <= n))
 
-  if (before == 1) {
+  if (is.null(before) || before == 1) {
     c(values, x)
   } else {
     c(x[1:(before - 1)], values, x[before:n])

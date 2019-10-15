@@ -21,7 +21,7 @@ test_that("special indexes raise errors", {
   expect_error(chuck(x, Inf), "must be finite")
   expect_error(chuck(x, -Inf), "must be finite")
 
-  expect_error(chuck(x, integer(0)), "must have length 1")
+  expect_bad_element_length_error(chuck(x, integer(0)), "must have length 1")
 })
 
 test_that("halts on named vector errors", {

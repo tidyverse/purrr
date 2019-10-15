@@ -245,15 +245,15 @@ bullet <- function(...) paste0(bold(silver(" * ")), sprintf(...))
 
 
 quo_invert <- function(call) {
-  if (!is_call(call)) {
-    abort("Internal error: Expected call in `quo_invert()`")
-  }
   call <- duplicate(call, shallow = TRUE)
 
   if (is_quosure(call)) {
     rest <- quo_get_expr(call)
   } else {
     rest <- call
+  }
+  if (!is_call(rest)) {
+    abort("Internal error: Expected call in `quo_invert()`")
   }
 
   first_quo <- NULL

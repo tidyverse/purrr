@@ -1,13 +1,13 @@
 context("flatten")
 
 test_that("input must be a list", {
-  expect_error(flatten(1), "`.x` must be a list, not a double vector")
-  expect_error(flatten_dbl(1), "`.x` must be a list, not a double vector")
+  expect_bad_type_error(flatten(1), "`.x` must be a list, not a double vector")
+  expect_bad_type_error(flatten_dbl(1), "`.x` must be a list, not a double vector")
 })
 
 test_that("contents of list must be supported types", {
-  expect_error(flatten(list(quote(a))), "Element 1 of `.x` must be a vector, not a symbol")
-  expect_error(flatten(list(expression(a))), "Element 1 of `.x` must be a vector, not an expression vector")
+  expect_bad_element_type_error(flatten(list(quote(a))), "Element 1 of `.x` must be a vector, not a symbol")
+  expect_bad_element_type_error(flatten(list(expression(a))), "Element 1 of `.x` must be a vector, not an expression vector")
 })
 
 test_that("each second level element becomes first level element", {
@@ -56,7 +56,7 @@ test_that("child names beat parent names", {
 # atomic flatten ----------------------------------------------------------
 
 test_that("must be a list", {
-  expect_error(flatten_lgl(1), "must be a list")
+  expect_bad_type_error(flatten_lgl(1), "must be a list")
 })
 
 test_that("can flatten all atomic vectors", {

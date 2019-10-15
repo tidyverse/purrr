@@ -42,8 +42,8 @@ test_that("can pluck by name and position", {
 
 
 test_that("require length 1 vectors", {
-  expect_error(pluck(1, letters), "must have length 1")
-  expect_error(pluck(1, TRUE), "Index 1 must be a character or numeric vector")
+  expect_bad_element_length_error(pluck(1, letters), "must have length 1")
+  expect_bad_element_type_error(pluck(1, TRUE), "Index 1 must be a character or numeric vector")
 })
 
 test_that("special indexes never match", {
@@ -152,8 +152,8 @@ test_that("attr_getter() uses exact (non-partial) matching", {
 # environments ------------------------------------------------------------
 
 test_that("pluck errors with invalid indices", {
-  expect_error(pluck(environment(), 1), "Index 1 must be a single string, not a single double")
-  expect_error(pluck(environment(), letters), "Index 1 must be a single string, not a character vector of length 26")
+  expect_bad_element_vector_error(pluck(environment(), 1), "Index 1 must be a single string, not a single double")
+  expect_bad_element_vector_error(pluck(environment(), letters), "Index 1 must be a single string, not a character vector of length 26")
 })
 
 test_that("pluck returns missing with missing index", {
@@ -174,8 +174,8 @@ newA <- methods::setClass("A", list(a = "numeric", b = "numeric"))
 A <- newA(a = 1, b = 10)
 
 test_that("pluck errors with invalid indices", {
-  expect_error(pluck(A, 1), "Index 1 must be a single string, not a single double")
-  expect_error(pluck(A, letters), "Index 1 must be a single string, not a character vector of length 26")
+  expect_bad_element_vector_error(pluck(A, 1), "Index 1 must be a single string, not a single double")
+  expect_bad_element_vector_error(pluck(A, letters), "Index 1 must be a single string, not a character vector of length 26")
 })
 
 test_that("pluck returns missing with missing index", {
