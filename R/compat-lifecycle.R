@@ -112,7 +112,11 @@ warn_deprecated <- function(msg, id = msg) {
 deprecation_env <- new.env(parent = emptyenv())
 
 stop_defunct <- function(msg) {
-  .Defunct(msg = msg)
+  if (getRversion() < "3.6") {
+    abort(msg, "defunctError")
+  } else {
+    .Defunct(msg = msg)
+  }
 }
 
 scoped_lifecycle_silence <- function(frame = rlang::caller_env()) {
