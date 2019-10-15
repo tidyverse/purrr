@@ -213,23 +213,7 @@ returns 0.</p>
     <pre class="examples"><div class='input'><span class='no'>is_even</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> <span class='kw'>%%</span> <span class='fl'>2</span> <span class='kw'>==</span> <span class='fl'>0</span>
 
 <span class='fl'>3</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>detect</span>(<span class='no'>is_even</span>)</div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='fl'>3</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>detect_index</span>(<span class='no'>is_even</span>)</div><div class='output co'>#&gt; [1] 2</div><div class='input'>
-<span class='fl'>3</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>detect</span>(<span class='no'>is_even</span>, <span class='kw'>.right</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The `.right` argument of `detect` is soft-deprecated as of purrr 0.3.0.</span>
-#&gt; <span class='warning'>Please use the new `.dir` argument instead:</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # Before</span>
-#&gt; <span class='warning'>  detect(x, f, .right = TRUE)</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # After</span>
-#&gt; <span class='warning'>  detect(x, f, .dir = "backward")</span>
-#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='fl'>3</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>detect_index</span>(<span class='no'>is_even</span>, <span class='kw'>.right</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The `.right` argument of `detect_index` is soft-deprecated as of purrr 0.3.0.</span>
-#&gt; <span class='warning'>Please use the new `.dir` argument instead:</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # Before</span>
-#&gt; <span class='warning'>  detect_index(x, f, .right = TRUE)</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>  # After</span>
-#&gt; <span class='warning'>  detect_index(x, f, .dir = "backward")</span>
-#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; [1] 8</div><div class='input'>
+<span class='fl'>3</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>detect</span>(<span class='no'>is_even</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='st'>"backward"</span>)</div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='fl'>3</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>detect_index</span>(<span class='no'>is_even</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='st'>"backward"</span>)</div><div class='output co'>#&gt; [1] 8</div><div class='input'>
 
 <span class='co'># Since `.f` is passed to as_mapper(), you can supply a</span>
 <span class='co'># lambda-formula or a pluck object:</span>
