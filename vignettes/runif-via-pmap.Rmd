@@ -7,7 +7,7 @@ author:
 
 ### Goals
 
-The main goal of this vignette is to show how one can interate over rows using functions from purrr package. 
+The main goal of this vignette is to show how one can interate over rows using functions from purrr package. [Jenny Bryan's repository](https://github.com/jennybc/row-oriented-workflows) is the main inspiration of this vignette. The reader is encouraged to check Jenny Bryan's github repository after reading this vignette as it has more examples and goes into more details.
 
 In this vignette, we are going to:
 
