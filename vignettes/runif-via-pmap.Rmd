@@ -1,6 +1,8 @@
 ---
 title: "Iterating over rows using pmap"
-author: Safouane Chergui
+author:
+- Safouane Chergui
+- Jenny Bryan
 ---
 
 ### Goals
