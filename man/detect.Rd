@@ -34,7 +34,7 @@ name and numeric vectors index by position; use a list to index
 by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
-\item{...}{Additional arguments passed on to \code{.p}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.dir}{If \code{"forward"}, the default, starts at the beginning of
 the vector and move towards the end; if \code{"backward"}, starts at
