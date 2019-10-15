@@ -5,22 +5,27 @@
 #' The map functions transform their input by applying a function to
 #' each element and returning a vector the same length as the input.
 #'
-#'    * `map()` always returns a list. See the [modify()]
-#'    family for versions that return an object of the same type as the input.
-#'    * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an atomic
-#'    vector of the indicated type (or die trying).
-#'    * `map_dfr()` and `map_dfc()` return data frames created by
-#'    row-binding and column-binding respectively. They require dplyr
-#'    to be installed.
-#'    * The return value of `.f` must be of length one for each element of
-#'    `.x`. If `.f` uses an extractor function shortcut, `.default`
-#'    can be specified to handle values that are absent or empty. See
-#'    [as_mapper()] for more on `.default`.
+#' * `map()` always returns a list. See the [modify()] family for
+#'   versions that return an object of the same type as the input.
+#'
+#' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
+#'   atomic vector of the indicated type (or die trying).
+#'
+#' * `map_dfr()` and `map_dfc()` return data frames created by
+#'   row-binding and column-binding respectively. They require dplyr
+#'   to be installed.
+#'
+#' * The return value of `.f` must be of length one for each element
+#'   of `.x`. If `.f` uses an extractor function shortcut, `.default`
+#'   can be specified to handle values that are absent or empty. See
+#'   [as_mapper()] for more on `.default`.
 #'
 #' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to the mapped function.
-#' @return * `map()` Returns a list the same length as `.x`.
+#' @return
+#' * `map()` Returns a list the same length as `.x`.
+#'
 #' * `map_lgl()` returns a logical vector, `map_int()` an integer
 #'   vector, `map_dbl()` a double vector, and `map_chr()` a character
 #'   vector.
@@ -33,8 +38,8 @@
 #'   logical -> integer -> double -> character.
 #' @export
 #' @family map variants
-#' @seealso  [map_if()] for applying a function to only those elements
-#' of `.x` that meet a specified condition.
+#' @seealso [map_if()] for applying a function to only those elements
+#'   of `.x` that meet a specified condition.
 #' @examples
 #' 1:10 %>%
 #'   map(rnorm, n = 10) %>%
@@ -102,10 +107,15 @@ map <- function(.x, .f, ...) {
 #'
 #' @description
 #'
-#' The functions `map_if()` and `map_at()` take `.x` as input, apply the function `.f` to some of the elements of `.x`, and return a list of the same length as the input.
+#' The functions `map_if()` and `map_at()` take `.x` as input, apply
+#' the function `.f` to some of the elements of `.x`, and return a
+#' list of the same length as the input.
 #'
-#' * `map_if()` takes a predicate function `.p` as input to determine which elements of `.x` are transformed with `.f`.
-#' * `map_at()` takes a vector of names or positions `.at` to specify which elements of `.x` are transformed with `.f`.
+#' * `map_if()` takes a predicate function `.p` as input to determine
+#'   which elements of `.x` are transformed with `.f`.
+#'
+#' * `map_at()` takes a vector of names or positions `.at` to specify
+#'   which elements of `.x` are transformed with `.f`.
 #'
 #' @inheritParams map
 #' @param .p A single predicate function, a formula describing such a
@@ -237,7 +247,7 @@ map_dfc <- function(.x, .f, ...) {
 
 #' @rdname map
 #' @description * `walk()` calls `.f` for its side-effect and returns
-#' the input `.x`.
+#'   the input `.x`.
 #' @return
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
@@ -250,9 +260,9 @@ walk <- function(.x, .f, ...) {
 
 #' @rdname map_if
 #' @description * `map_depth()` allows to apply `.f` to a specific
-#' depth level of a nested vector.
-#' @param .depth Level of `.x` to map on. Use a negative value to count up
-#' from the lowest level of the list.
+#'   depth level of a nested vector.
+#' @param .depth Level of `.x` to map on. Use a negative value to
+#'   count up from the lowest level of the list.
 #'
 #'   * `map_depth(x, 0, fun)` is equivalent to `fun(x)`.
 #'   * `map_depth(x, 1, fun)` is equivalent to `x <- map(x, fun)`

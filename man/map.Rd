@@ -84,15 +84,15 @@ use in pipe.
 The map functions transform their input by applying a function to
 each element and returning a vector the same length as the input.
 \itemize{
-\item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}}
-family for versions that return an object of the same type as the input.
-\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an atomic
-vector of the indicated type (or die trying).
+\item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}} family for
+versions that return an object of the same type as the input.
+\item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
+atomic vector of the indicated type (or die trying).
 \item \code{map_dfr()} and \code{map_dfc()} return data frames created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.
-\item The return value of \code{.f} must be of length one for each element of
-\code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
+\item The return value of \code{.f} must be of length one for each element
+of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
 can be specified to handle values that are absent or empty. See
 \code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
 }

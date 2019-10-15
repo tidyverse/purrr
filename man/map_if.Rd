@@ -53,8 +53,8 @@ exlude. Only those elements corresponding to \code{.at} will be modified.
 If the \code{tidyselect} package is installed, you can use \code{vars()} and
 the \code{tidyselect} helpers to select elements.}
 
-\item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
-from the lowest level of the list.
+\item{.depth}{Level of \code{.x} to map on. Use a negative value to
+count up from the lowest level of the list.
 \itemize{
 \item \code{map_depth(x, 0, fun)} is equivalent to \code{fun(x)}.
 \item \code{map_depth(x, 1, fun)} is equivalent to \code{x <- map(x, fun)}
@@ -66,10 +66,14 @@ at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
 no elements at depth \code{.depth}.}
 }
 \description{
-The functions \code{map_if()} and \code{map_at()} take \code{.x} as input, apply the function \code{.f} to some of the elements of \code{.x}, and return a list of the same length as the input.
+The functions \code{map_if()} and \code{map_at()} take \code{.x} as input, apply
+the function \code{.f} to some of the elements of \code{.x}, and return a
+list of the same length as the input.
 \itemize{
-\item \code{map_if()} takes a predicate function \code{.p} as input to determine which elements of \code{.x} are transformed with \code{.f}.
-\item \code{map_at()} takes a vector of names or positions \code{.at} to specify which elements of \code{.x} are transformed with \code{.f}.
+\item \code{map_if()} takes a predicate function \code{.p} as input to determine
+which elements of \code{.x} are transformed with \code{.f}.
+\item \code{map_at()} takes a vector of names or positions \code{.at} to specify
+which elements of \code{.x} are transformed with \code{.f}.
 }
 
 \itemize{
