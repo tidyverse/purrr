@@ -1,5 +1,7 @@
 
-# purrr 0.3.2.9000
+# purrr 0.3.3
+
+* Maintenance release.
 
 * The documentation of `map()` and its variants has been improved by
   @surdina as part of the Tidyverse Developer Day (@surdina, #671).
