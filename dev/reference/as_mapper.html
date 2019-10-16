@@ -204,27 +204,27 @@ value is absent (does not exist) or empty (has length 0).
     <pre class="examples"><div class='input'><span class='fu'>as_mapper</span>(~ <span class='no'>.</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; . + 1
-#&gt; &lt;environment: 0x1b6be30&gt;
+#&gt; &lt;environment: 0x2f56038&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function" "function"             </div><div class='input'><span class='fu'>as_mapper</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, .default = NULL)
-#&gt; &lt;environment: 0x24e0d08&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x32cefc8&gt;</div><div class='input'>
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NULL)
-#&gt; &lt;environment: 0x22b4ad0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
+#&gt; &lt;environment: 0x31d8160&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"a"</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, "a", 2, .default = NULL)
-#&gt; &lt;environment: 0x1d5e3d0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
+#&gt; &lt;environment: 0x2cbcc20&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='attr_getter.html'>attr_getter</a></span>(<span class='st'>"a"</span>)))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, function (x) 
 #&gt; attr(x, attr, exact = TRUE), .default = NULL)
-#&gt; &lt;environment: 0x4ac8858&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
+#&gt; &lt;environment: 0x267cbf8&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NA)
-#&gt; &lt;environment: 0x4b4fca8&gt;</div></pre>
+#&gt; &lt;environment: 0x599e390&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
