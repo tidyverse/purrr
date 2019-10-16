@@ -8,21 +8,31 @@
 
 <title>Re-run expressions multiple times. — rerun • purrr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,33 +42,26 @@
 
 
 <meta property="og:title" content="Re-run expressions multiple times. — rerun" />
-
 <meta property="og:description" content="
 This is a convenient way of generating sample data. It works similarly to
 replicate(..., simplify = FALSE)." />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
 
+
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
 
- gtag('config', 'UA-115082821-1');
-</script>
+
   </head>
 
   <body>
@@ -78,7 +81,7 @@ replicate(..., simplify = FALSE)." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
         </div>
       </div>
     </div>
@@ -121,7 +124,7 @@ replicate(..., simplify = FALSE)." />
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,6 +135,7 @@ replicate(..., simplify = FALSE)." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -143,15 +147,13 @@ replicate(..., simplify = FALSE)." />
     </div>
 
     <div class="ref-description">
-    
     <p><a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a></p>
 <p>This is a convenient way of generating sample data. It works similarly to
-<code><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a>(..., simplify = FALSE)</code>.</p>
-    
+<code><a href='https://rdrr.io/r/base/lapply.html'>replicate</a>(..., simplify = FALSE)</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>rerun</span>(<span class='no'>.n</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -164,74 +166,72 @@ replicate(..., simplify = FALSE)." />
       <td><p>Expressions to re-run.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of length <code>.n</code>. Each element of <code>...</code> will be
 re-run once for each <code>.n</code>.</p>
 <p>There is one special case: if there's a single unnamed input, the second
 level list will be dropped. In this case, <code>rerun(n, x)</code> behaves like
-<code><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate(n, x, simplify = FALSE)</a></code>.</p>
-    
+<code><a href='https://rdrr.io/r/base/lapply.html'>replicate(n, x, simplify = FALSE)</a></code>.</p>
     <h2 class="hasAnchor" id="lifecycle"><a class="anchor" href="#lifecycle"></a>Lifecycle</h2>
 
     
-    <p><code>rerun()</code> is in the questioning lifecycle stage because we are no
+
+
+<p><code>rerun()</code> is in the questioning lifecycle stage because we are no
 longer convinced NSE functions are a good fit for purrr. Also,
 <code>rerun(n, x)</code> can just as easily be expressed as <code><a href='map.html'>map(1:n, ~ x)</a></code>
 (with the added benefit of being passed the current index as
 argument to the lambda).</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] -1.7805787  2.0119122  0.7423579  0.3025405 -0.9301512
+    <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
+#&gt; [1]  1.48643701  0.74245965 -0.02958559 -1.40699491  1.09164048
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] -0.62373043  1.13978607  1.52506783 -0.08140044 -0.41325523
+#&gt; [1] -1.0385714 -1.3429057 -0.7959764  2.1244429 -0.5499333
 #&gt; 
 #&gt; [[3]]
-#&gt; [1]  0.1779261 -1.6117598  0.9343846  0.7797665  0.9488591
+#&gt; [1]  1.99479777 -0.37637955  1.57523440 -0.02104012 -2.15554360
 #&gt; 
 #&gt; [[4]]
-#&gt; [1] -0.2789342 -1.4534763  0.9851275  0.2641752  0.1818199
+#&gt; [1]  1.3795233 -0.1293130  2.2500494  0.8972059 -1.2189534
 #&gt; 
 #&gt; [[5]]
-#&gt; [1] -0.4894290 -0.1439310  1.3542750  0.3486849  0.8532997
+#&gt; [1]  0.2176338  0.1120140 -0.9150514 -1.1933988  0.8365308
 #&gt; 
 #&gt; [[6]]
-#&gt; [1]  1.0120865 -0.9288807  0.7960816 -0.8027995 -0.4582456
+#&gt; [1]  1.4909572 -1.7275138  0.3668783  0.1306008 -1.0811151
 #&gt; 
 #&gt; [[7]]
-#&gt; [1]  0.6862764 -0.5953003 -0.4073832 -0.3809501 -0.5792708
+#&gt; [1] -1.6264912  0.6093191 -0.3837559  0.2647067 -1.0759165
 #&gt; 
 #&gt; [[8]]
-#&gt; [1] -1.3558871 -0.1130526  1.0127046 -0.1814063 -1.4692753
+#&gt; [1] -1.7049200 -0.0900827  0.2846788 -0.4430617 -0.2991162
 #&gt; 
 #&gt; [[9]]
-#&gt; [1] -1.89541834 -1.01599702 -0.08470884 -0.78864002  1.44901896
+#&gt; [1] -0.7739517  0.2410810 -0.3375843  1.2491336  0.7086719
 #&gt; 
 #&gt; [[10]]
-#&gt; [1]  0.4195211  0.4069906 -0.4760313  0.5650942 -1.1216409
+#&gt; [1]  1.3185074  3.4585513 -0.1949492  0.4287486 -1.4925215
 #&gt; </div><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>rerun</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1]  0.2697595  0.2129175 -0.7301116 -0.4566670 -0.7496882  0.6329846
-#&gt;  [7] -0.3548520 -0.1585561 -0.9328431 -0.4759514</div></pre>
+  <span class='fu'>rerun</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1]  0.5839396 -0.3419190 -0.8133030 -0.6915704 -0.6448143  0.7800958
+#&gt;  [7] -0.3354932  0.4527590  0.6328682  0.8522864</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#lifecycle">Lifecycle</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="tidyverse">
@@ -244,11 +244,14 @@ argument to the lambda).</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

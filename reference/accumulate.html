@@ -8,21 +8,31 @@
 
 <title>Accumulate intermediate results of a vector reduction — accumulate • purrr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,7 +42,6 @@
 
 
 <meta property="og:title" content="Accumulate intermediate results of a vector reduction — accumulate" />
-
 <meta property="og:description" content="accumulate() sequentially applies a 2-argument function to elements of a
 vector. Each application of the function uses the initial value or result
 of the previous application as the first argument. The second argument is
@@ -44,29 +53,23 @@ By contrast to accumulate(), reduce() applies a 2-argument function in
 the same way, but discards all results except that of the final function
 application.
 accumulate2() sequentially applies a function to elements of two lists, .x and .y." />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
 
+
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
 
- gtag('config', 'UA-115082821-1');
-</script>
+
   </head>
 
   <body>
@@ -86,7 +89,7 @@ accumulate2() sequentially applies a function to elements of two lists, .x and .
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
         </div>
       </div>
     </div>
@@ -129,7 +132,7 @@ accumulate2() sequentially applies a function to elements of two lists, .x and .
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -140,6 +143,7 @@ accumulate2() sequentially applies a function to elements of two lists, .x and .
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -151,7 +155,6 @@ accumulate2() sequentially applies a function to elements of two lists, .x and .
     </div>
 
     <div class="ref-description">
-    
     <p><code>accumulate()</code> sequentially applies a 2-argument function to elements of a
 vector. Each application of the function uses the initial value or result
 of the previous application as the first argument. The second argument is
@@ -163,13 +166,12 @@ the accumulation function.</p>
 the same way, but discards all results except that of the final function
 application.</p>
 <p><code>accumulate2()</code> sequentially applies a function to elements of two lists, <code>.x</code> and <code>.y</code>.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>accumulate</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"forward"</span>, <span class='st'>"backward"</span>))
+    <pre class="usage"><span class='fu'>accumulate</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"forward"</span>, <span class='st'>"backward"</span>))
 
 <span class='fu'>accumulate2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -214,7 +216,7 @@ If <code>.init</code> is set, <code>.y</code> needs to be one element shorted th
 concatenation of the initial value and <code>.x</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector the same length of <code>.x</code> with the same names as <code>.x</code>.</p>
@@ -230,31 +232,31 @@ in a <code><a href='done.html'>done()</a></code>. If the done box is empty, the 
 used instead and the result is one element shorter (but always
 includes the initial value, even when terminating at the first
 iteration).</p>
-    
     <h2 class="hasAnchor" id="life-cycle"><a class="anchor" href="#life-cycle"></a>Life cycle</h2>
 
     
-    <p><code><a href='reduce_right.html'>accumulate_right()</a></code> is soft-deprecated in favour of the <code>.dir</code>
+
+
+<p><code><a href='reduce_right.html'>accumulate_right()</a></code> is soft-deprecated in favour of the <code>.dir</code>
 argument as of rlang 0.3.0. Note that the algorithm has
 slightly changed: the accumulated value is passed to the right
 rather than the left, which is consistent with a right reduction.</p>
-    
     <h2 class="hasAnchor" id="direction"><a class="anchor" href="#direction"></a>Direction</h2>
 
     
-    <p>When <code>.f</code> is an associative operation like <code>+</code> or <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c()</a></code>, the
+
+
+<p>When <code>.f</code> is an associative operation like <code>+</code> or <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>, the
 direction of reduction does not matter. For instance, reducing the
 vector <code>1:3</code> with the binary function <code>+</code> computes the sum <code>((1 + 2) + 3)</code> from the left, and the same sum <code>(1 + (2 + 3))</code> from the
 right.</p>
 <p>In other cases, the direction has important consequences on the
-reduced value. For instance, reducing a vector with <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> from
+reduced value. For instance, reducing a vector with <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> from
 the left produces a left-leaning nested list (or tree), while
-reducing <code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code> from the right produces a right-leaning list.</p>
-    
+reducing <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> from the right produces a right-leaning list.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='reduce.html'>reduce()</a></code> when you only need the final reduced value.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># With an associative operation, the final value is always the</span>
@@ -272,8 +274,8 @@ reducing <code><a href='https://www.rdocumentation.org/packages/base/topics/list
 <span class='fu'>accumulate</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>paste</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='st'>"backward"</span>)</div><div class='output co'>#&gt; [1] "a.b.c.d.e" "b.c.d.e"   "c.d.e"     "d.e"       "e"        </div><div class='input'>
 <span class='co'># `accumulate2()` is a version of `accumulate()` that works with</span>
 <span class='co'># 3-argument functions and one additional vector:</span>
-<span class='no'>paste2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
-<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste2</span>)</div><div class='output co'>#&gt; [1] "a"       "a.b"     "a.b.c"   "a.b.c.d"</div><div class='input'><span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>accumulate2</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"-"</span>, <span class='st'>"."</span>, <span class='st'>"-"</span>), <span class='no'>paste2</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='no'>paste2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste2</span>)</div><div class='output co'>#&gt; [1] "a"       "a.b"     "a.b.c"   "a.b.c.d"</div><div class='input'><span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>] <span class='kw'>%&gt;%</span> <span class='fu'>accumulate2</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"-"</span>, <span class='st'>"."</span>, <span class='st'>"-"</span>), <span class='no'>paste2</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "a"
 #&gt; 
 #&gt; [[2]]
@@ -291,10 +293,10 @@ reducing <code><a href='https://www.rdocumentation.org/packages/base/topics/list
 <span class='co'># we return early if the result-so-far, which is passed on the LHS,</span>
 <span class='co'># meets a condition:</span>
 <span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
-  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>(<span class='no'>out</span>))
+  <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>(<span class='no'>out</span>))
   }
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
 }
 <span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a"     "a.b"   "a.b.c" "a.b.c"</div><div class='input'>
 <span class='co'># Note how we get twice the same value in the accumulation. That's</span>
@@ -302,54 +304,50 @@ reducing <code><a href='https://www.rdocumentation.org/packages/base/topics/list
 <span class='co'># done box to signal to accumulate() that it should terminate with the</span>
 <span class='co'># value of the last iteration:</span>
 <span class='no'>paste3</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
-  <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nchar'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
+  <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>4</span>) {
+    <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
   }
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
 }
 <span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste3</span>)</div><div class='output co'>#&gt; [1] "a"     "a.b"   "a.b.c"</div><div class='input'>
 <span class='co'># Here the early return branch checks the incoming inputs passed on</span>
 <span class='co'># the RHS:</span>
 <span class='no'>paste4</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"."</span>) {
   <span class='kw'>if</span> (<span class='no'>input</span> <span class='kw'>==</span> <span class='st'>"f"</span>) {
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/function'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
+    <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='fu'><a href='done.html'>done</a></span>())
   }
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>out</span>, <span class='no'>input</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
 }
 <span class='no'>letters</span> <span class='kw'>%&gt;%</span> <span class='fu'>accumulate</span>(<span class='no'>paste4</span>)</div><div class='output co'>#&gt; [1] "a"         "a.b"       "a.b.c"     "a.b.c.d"   "a.b.c.d.e"</div><div class='input'>
 
-# Simulating stochastic processes with drift
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='co'># Simulating stochastic processes with drift</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 
-<span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"sim"</span>, <span class='fl'>1</span>:<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"sim"</span>, <span class='fl'>1</span>:<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map</a></span>(~ <span class='fu'>accumulate</span>(<span class='no'>.</span>, ~ <span class='fl'>.05</span> + <span class='no'>.x</span> + <span class='no'>.y</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='map.html'>map_dfr</a></span>(~ <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>.x</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>), <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"simulation"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>step</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>)) +
     <span class='fu'>geom_line</span>(<span class='fu'>aes</span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>simulation</span>)) +
     <span class='fu'>ggtitle</span>(<span class='st'>"Simulations of a random walk with drift"</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#life-cycle">Life cycle</a></li>
-
       <li><a href="#direction">Direction</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="tidyverse">
@@ -362,11 +360,14 @@ reducing <code><a href='https://www.rdocumentation.org/packages/base/topics/list
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

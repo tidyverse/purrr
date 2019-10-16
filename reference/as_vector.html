@@ -8,21 +8,31 @@
 
 <title>Coerce a list to a vector — as_vector • purrr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,35 +42,28 @@
 
 
 <meta property="og:title" content="Coerce a list to a vector — as_vector" />
-
 <meta property="og:description" content="as_vector() collapses a list of vectors into one vector. It
 checks that the type of each vector is consistent with
 .type. If the list can not be simplified, it throws an error.
 simplify will simplify a vector if possible; simplify_all
 will apply simplify to every element of a list." />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
 
+
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
 
- gtag('config', 'UA-115082821-1');
-</script>
+
   </head>
 
   <body>
@@ -80,7 +83,7 @@ will apply simplify to every element of a list." />
         <a class="navbar-brand" href="../index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
         </div>
       </div>
     </div>
@@ -123,7 +126,7 @@ will apply simplify to every element of a list." />
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,6 +137,7 @@ will apply simplify to every element of a list." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -145,13 +149,11 @@ will apply simplify to every element of a list." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>as_vector()</code> collapses a list of vectors into one vector. It
 checks that the type of each vector is consistent with
 <code>.type</code>. If the list can not be simplified, it throws an error.
 <code>simplify</code> will simplify a vector if possible; <code>simplify_all</code>
 will apply <code>simplify</code> to every element of a list.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>as_vector</span>(<span class='no'>.x</span>, <span class='kw'>.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -159,7 +161,7 @@ will apply <code>simplify</code> to every element of a list.</p>
 <span class='fu'>simplify</span>(<span class='no'>.x</span>, <span class='kw'>.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>simplify_all</span>(<span class='no'>.x</span>, <span class='kw'>.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -171,30 +173,29 @@ will apply <code>simplify</code> to every element of a list.</p>
       <th>.type</th>
       <td><p>A vector mold or a string describing the type of the
 input vectors. The latter can be any of the types returned by
-<code><a href='https://www.rdocumentation.org/packages/base/topics/typeof'>typeof()</a></code>, or "numeric" as a shorthand for either
+<code><a href='https://rdrr.io/r/base/typeof.html'>typeof()</a></code>, or "numeric" as a shorthand for either
 "double" or "integer".</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>.type</code> can be a vector mold specifying both the type and the
-length of the vectors to be concatenated, such as <code><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>numeric(1)</a></code>
-or <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(4)</a></code>. Alternatively, it can be a string describing
+length of the vectors to be concatenated, such as <code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>
+or <code><a href='https://rdrr.io/r/base/integer.html'>integer(4)</a></code>. Alternatively, it can be a string describing
 the type, one of: "logical", "integer", "double", "complex",
 "character" or "raw".</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Supply the type either with a string:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>as.list</a></span>(<span class='no'>letters</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='st'>"character"</span>)</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+<span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span>(<span class='no'>letters</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='st'>"character"</span>)</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 #&gt; [20] "t" "u" "v" "w" "x" "y" "z"</div><div class='input'>
 <span class='co'># Or with a vector mold:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>as.list</a></span>(<span class='no'>letters</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(<span class='fl'>1</span>))</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+<span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span>(<span class='no'>letters</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>1</span>))</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 #&gt; [20] "t" "u" "v" "w" "x" "y" "z"</div><div class='input'>
 <span class='co'># Vector molds are more flexible because they also specify the</span>
 <span class='co'># length of the concatenated vectors:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>, <span class='fl'>5</span>:<span class='fl'>6</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer</a></span>(<span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 1 2 3 4 5 6</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>, <span class='fl'>5</span>:<span class='fl'>6</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(<span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 1 2 3 4 5 6</div><div class='input'>
 # Note that unlike vapply(), as_vector() never adds dimension
 # attributes. So when you specify a vector mold of size > 1, you
 # always get a vector and not a matrix
@@ -204,14 +205,13 @@ the type, one of: "logical", "integer", "double", "complex",
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="tidyverse">
@@ -224,11 +224,14 @@ the type, one of: "logical", "integer", "double", "complex",
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
