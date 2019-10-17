@@ -69,7 +69,7 @@ This example illustrates some of the advantages of purrr functions over the equi
   generating anonymous functions), a character vector (used to extract 
   components by name), or a numeric vector (used to extract by position).
 
-## Code of conduct
+-----
 
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+Please note that this project is released with a [Contributor Code of Conduct](https://purrr.tidyverse.org/CODE_OF_CONDUCT).
 By participating in this project you agree to abide by its terms.
