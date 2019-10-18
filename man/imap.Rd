@@ -69,13 +69,23 @@ A vector the same length as \code{.x}.
 \code{imap_xxx(x, ...)}, an indexed map, is short hand for
 \code{map2(x, names(x), ...)} if \code{x} has names, or \code{map2(x, seq_along(x), ...)}
 if it does not. This is useful if you need to compute on both the value
-and the position of an element.
+and the position of an element. The first paramter of the supplied function
+recieves the values being iterated through and the second positional
+parameter recieves the index; this is true when using anonymous or named
+functions.
 }
 \examples{
 # Note that when using the formula shortcut, the first argument
 # is the value, and the second is the position
 imap_chr(sample(10), ~ paste0(.y, ": ", .x))
 iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\\n", sep = ""))
+
+# This positional assignment also works when massing a function by name.
+value_plus_index <- function(value, index) {
+  return(value + index)
+}
+imap_dbl(c(1, 2, 3, 4, 5), value_plus_index)
+
 }
 \seealso{
 Other map variants: \code{\link{invoke}},
