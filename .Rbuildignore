@@ -18,3 +18,4 @@
 ^\.github$
 ^TAGS$
 ^\.httr-oauth$
+^LICENSE\.md$
