@@ -6,21 +6,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate random sample from a discrete uniform distribution — rdunif • purrr</title>
+<title>Getting help with purrr • purrr</title>
 
 <!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
-<link href="../tidyverse.css" rel="stylesheet">
+<link href="tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -35,14 +35,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script>
-<link href="../tidyverse-2.css" rel="stylesheet">
+<link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script>
+<link href="tidyverse-2.css" rel="stylesheet">
 
 
 
-<meta property="og:title" content="Generate random sample from a discrete uniform distribution — rdunif" />
-<meta property="og:description" content="Generate random sample from a discrete uniform distribution" />
+<meta property="og:title" content="Getting help with purrr" />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -71,7 +70,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -84,7 +83,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="navbar-brand" href="../index.html">purrr</a>
+        <a class="navbar-brand" href="index.html">purrr</a>
         <div class="info">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.3.9000</span>
@@ -94,7 +93,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -104,7 +103,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/other-langs.html">Functional programming in other languages</a>
+      <a href="articles/other-langs.html">Functional programming in other languages</a>
     </li>
   </ul>
 </li>
@@ -124,7 +123,7 @@
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="news/index.html">Change log</a>
     </li>
   </ul>
 </li>
@@ -145,49 +144,41 @@
       </header>
 
 <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-9">
     <div class="page-header">
-    <h1>Generate random sample from a discrete uniform distribution</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>rdunif.Rd</code></div>
+      <h1>Getting help with purrr</h1>
     </div>
 
-    <div class="ref-description">
-    <p>Generate random sample from a discrete uniform distribution</p>
-    </div>
+<div id="getting-help-with-purrr" class="section level1">
 
-    <pre class="usage"><span class='fu'>rdunif</span>(<span class='no'>n</span>, <span class='no'>b</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>n</th>
-      <td><p>Number of samples to draw.</p></td>
-    </tr>
-    <tr>
-      <th>a, b</th>
-      <td><p>Range of the distribution (inclusive).</p></td>
-    </tr>
-    </table>
-
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>rdunif</span>(<span class='fl'>1e3</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; 
-#&gt;   1   2   3   4   5   6   7   8   9  10 
-#&gt;  91 109 101 108  84 115  87  98  99 108 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>rdunif</span>(<span class='fl'>1e3</span>, <span class='fl'>10</span>, -<span class='fl'>5</span>))</div><div class='output co'>#&gt; 
-#&gt; -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9 10 
-#&gt; 49 72 83 62 59 50 56 68 54 73 65 63 73 47 67 59 </div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-  </div>
+<p>Thanks for using purrr! Before filing an issue, there are a few places to explore and pieces to put together to make the process as smooth as possible.</p>
+<div id="make-a-reprex" class="section level2">
+<h2 class="hasAnchor">
+<a href="#make-a-reprex" class="anchor"></a>Make a reprex</h2>
+<p>Start by making a minimal <strong>repr</strong>oducible <strong>ex</strong>ample using the <a href="https://reprex.tidyverse.org/">reprex</a> package. If you haven’t heard of or used reprex before, you’re in for a treat! Seriously, reprex will make all of your R-question-asking endeavors easier (which is a pretty insane ROI for the five to ten minutes it’ll take you to learn what it’s all about). For additional reprex pointers, check out the <a href="https://www.tidyverse.org/help/">Get help!</a> section of the tidyverse site.</p>
 </div>
+<div id="where-to-ask" class="section level2">
+<h2 class="hasAnchor">
+<a href="#where-to-ask" class="anchor"></a>Where to ask?</h2>
+<p>Armed with your reprex, the next step is to figure out <a href="https://www.tidyverse.org/help/#where-to-ask">where to ask</a>.</p>
+<ul>
+<li><p>If it’s a question: start with <a href="https://community.rstudio.com/">community.rstudio.com</a>, and/or StackOverflow. There are more people there to answer questions.</p></li>
+<li><p>If it’s a bug: you’re in the right place, <a href="https://github.com/batpigandme/purrr/issues/new">file an issue</a>.</p></li>
+<li><p>If you’re not sure: let the community help you figure it out! If your problem <em>is</em> a bug or a feature request, you can easily return here and report it.</p></li>
+</ul>
+<p>Before opening a new issue, be sure to <a href="https://github.com/batpigandme/purrr/issues">search issues and pull requests</a> to make sure the bug hasn’t been reported and/or already fixed in the development version. By default, the search will be pre-populated with <code>is:issue is:open</code>. You can <a href="https://help.github.com/articles/searching-issues-and-pull-requests/">edit the qualifiers</a> (e.g. <code>is:pr</code>, <code>is:closed</code>) as needed. For example, you’d simply remove <code>is:open</code> to search <em>all</em> issues in the repo, open or closed.</p>
+</div>
+<div id="what-happens-next" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-happens-next" class="anchor"></a>What happens next?</h2>
+<p>To be as efficient as possible, development of tidyverse packages tends to be very bursty, so you shouldn’t worry if you don’t get an immediate response. Typically we don’t look at a repo until a sufficient quantity of issues accumulates, then there’s a burst of intense activity as we focus our efforts. That makes development more efficient because it avoids expensive context switching between problems, at the cost of taking longer to get back to you. This process makes a good reprex particularly important because it might be multiple months between your initial report and when we start working on it. If we can’t reproduce the bug, we can’t fix it!</p>
+</div>
+</div>
+
+  </div>
+
+</div>
+
 
 
       <footer>
