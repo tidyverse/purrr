@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,6 +41,7 @@
 
 
 <meta property="og:title" content="Apply a function to list-elements of a list — lmap" />
+
 <meta property="og:description" content="lmap(), lmap_at() and lmap_if() are similar to
 map(), map_at() and map_if(), with the
 difference that they operate exclusively on functions that take
@@ -49,9 +49,9 @@ and return a list (or data frame). Thus, instead of mapping
 the elements of a list (as in .x[[i]]), they apply a
 function .f to each subset of size 1 of that list (as in
 .x[i]). We call those elements list-elements)." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -64,7 +64,15 @@ function .f to each subset of size 1 of that list (as in
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -151,6 +159,7 @@ function .f to each subset of size 1 of that list (as in
     </div>
 
     <div class="ref-description">
+    
     <p><code>lmap()</code>, <code>lmap_at()</code> and <code>lmap_if()</code> are similar to
 <code><a href='map.html'>map()</a></code>, <code><a href='map_if.html'>map_at()</a></code> and <code><a href='map_if.html'>map_if()</a></code>, with the
 difference that they operate exclusively on functions that take
@@ -158,6 +167,7 @@ difference that they operate exclusively on functions that take
 the elements of a list (as in <code>.x[[i]]</code>), they apply a
 function <code>.f</code> to each subset of size 1 of that list (as in
 <code>.x[i]</code>). We call those elements <code>list-elements</code>).</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>lmap</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
@@ -165,7 +175,7 @@ function <code>.f</code> to each subset of size 1 of that list (as in
 <span class='fu'>lmap_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>lmap_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -204,11 +214,12 @@ If the <code>tidyselect</code> package is installed, you can use <code>vars()</c
 the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If <code>.x</code> is a list, a list. If <code>.x</code> is a data
 frame, a data frame.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Mapping the list-elements <code>.x[i]</code> has several advantages. It
@@ -219,12 +230,14 @@ receives. It also enables <code>.f</code> to return a larger list than
 the list-element of size 1 it got as input. Conversely, <code>.f</code>
 can also return empty lists. In these cases, the output list is
 reshaped with a different size than the input list <code>.x</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='map2.html'>map2</a></code>,
   <code><a href='map_if.html'>map_if</a></code>, <code><a href='map.html'>map</a></code>,
   <code><a href='modify.html'>modify</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Let's write a function that returns a larger list or an empty list</span>
@@ -307,42 +320,46 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 
 <span class='co'># Now, we are ready to map disjoin() on each categorical variable of a</span>
 <span class='co'># data frame:</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_if</span>(<span class='no'>is.factor</span>, <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; # A tibble: 150 x 7
+<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_if</span>(<span class='no'>is.factor</span>, <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 7</span><span>
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species_setosa
-#&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
-#&gt;  1          5.1         3.5          1.4         0.2              1
-#&gt;  2          4.9         3            1.4         0.2              1
-#&gt;  3          4.7         3.2          1.3         0.2              1
-#&gt;  4          4.6         3.1          1.5         0.2              1
-#&gt;  5          5           3.6          1.4         0.2              1
-#&gt;  6          5.4         3.9          1.7         0.4              1
-#&gt;  7          4.6         3.4          1.4         0.3              1
-#&gt;  8          5           3.4          1.5         0.2              1
-#&gt;  9          4.4         2.9          1.4         0.2              1
-#&gt; 10          4.9         3.1          1.5         0.1              1
-#&gt; # … with 140 more rows, and 2 more variables: Species_versicolor &lt;dbl&gt;,
-#&gt; #   Species_virginica &lt;dbl&gt;</div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; # A tibble: 32 x 15
+#&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>          5.1         3.5          1.4         0.2              1
+#&gt; </span><span style='color: #555555;'> 2</span><span>          4.9         3            1.4         0.2              1
+#&gt; </span><span style='color: #555555;'> 3</span><span>          4.7         3.2          1.3         0.2              1
+#&gt; </span><span style='color: #555555;'> 4</span><span>          4.6         3.1          1.5         0.2              1
+#&gt; </span><span style='color: #555555;'> 5</span><span>          5           3.6          1.4         0.2              1
+#&gt; </span><span style='color: #555555;'> 6</span><span>          5.4         3.9          1.7         0.4              1
+#&gt; </span><span style='color: #555555;'> 7</span><span>          4.6         3.4          1.4         0.3              1
+#&gt; </span><span style='color: #555555;'> 8</span><span>          5           3.4          1.5         0.2              1
+#&gt; </span><span style='color: #555555;'> 9</span><span>          4.4         2.9          1.4         0.2              1
+#&gt; </span><span style='color: #555555;'>10</span><span>          4.9         3.1          1.5         0.1              1
+#&gt; </span><span style='color: #555555;'># … with 140 more rows, and 2 more variables: Species_versicolor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   Species_virginica </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 15</span><span>
 #&gt;      mpg cyl_4 cyl_6 cyl_8  disp    hp  drat    wt  qsec  vs_0  vs_1  am_0  am_1
-#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1  21       0     1     0  160    110  3.9   2.62  16.5     1     0     0     1
-#&gt;  2  21       0     1     0  160    110  3.9   2.88  17.0     1     0     0     1
-#&gt;  3  22.8     1     0     0  108     93  3.85  2.32  18.6     0     1     0     1
-#&gt;  4  21.4     0     1     0  258    110  3.08  3.22  19.4     0     1     1     0
-#&gt;  5  18.7     0     0     1  360    175  3.15  3.44  17.0     1     0     1     0
-#&gt;  6  18.1     0     1     0  225    105  2.76  3.46  20.2     0     1     1     0
-#&gt;  7  14.3     0     0     1  360    245  3.21  3.57  15.8     1     0     1     0
-#&gt;  8  24.4     1     0     0  147.    62  3.69  3.19  20       0     1     1     0
-#&gt;  9  22.8     1     0     0  141.    95  3.92  3.15  22.9     0     1     1     0
-#&gt; 10  19.2     0     1     0  168.   123  3.92  3.44  18.3     0     1     1     0
-#&gt; # … with 22 more rows, and 2 more variables: gear &lt;dbl&gt;, carb &lt;dbl&gt;</div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>  21       0     1     0  160    110  3.9   2.62  16.5     1     0     0     1
+#&gt; </span><span style='color: #555555;'> 2</span><span>  21       0     1     0  160    110  3.9   2.88  17.0     1     0     0     1
+#&gt; </span><span style='color: #555555;'> 3</span><span>  22.8     1     0     0  108     93  3.85  2.32  18.6     0     1     0     1
+#&gt; </span><span style='color: #555555;'> 4</span><span>  21.4     0     1     0  258    110  3.08  3.22  19.4     0     1     1     0
+#&gt; </span><span style='color: #555555;'> 5</span><span>  18.7     0     0     1  360    175  3.15  3.44  17.0     1     0     1     0
+#&gt; </span><span style='color: #555555;'> 6</span><span>  18.1     0     1     0  225    105  2.76  3.46  20.2     0     1     1     0
+#&gt; </span><span style='color: #555555;'> 7</span><span>  14.3     0     0     1  360    245  3.21  3.57  15.8     1     0     1     0
+#&gt; </span><span style='color: #555555;'> 8</span><span>  24.4     1     0     0  147.    62  3.69  3.19  20       0     1     1     0
+#&gt; </span><span style='color: #555555;'> 9</span><span>  22.8     1     0     0  141.    95  3.92  3.15  22.9     0     1     1     0
+#&gt; </span><span style='color: #555555;'>10</span><span>  19.2     0     1     0  168.   123  3.92  3.44  18.3     0     1     1     0
+#&gt; </span><span style='color: #555555;'># … with 22 more rows, and 2 more variables: gear </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, carb </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

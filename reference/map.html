@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,6 +41,7 @@
 
 
 <meta property="og:title" content="Apply a function to each element of a vector — map" />
+
 <meta property="og:description" content="The map functions transform their input by applying a function to
 each element and returning a vector the same length as the input.
 map() always returns a list. See the modify() family for
@@ -62,9 +62,9 @@ walk() calls .f for its side-effect and returns
 the input .x.
 
 " />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -77,7 +77,15 @@ the input .x.
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -164,6 +172,7 @@ the input .x.
     </div>
 
     <div class="ref-description">
+    
     <p>The map functions transform their input by applying a function to
 each element and returning a vector the same length as the input.</p><ul>
 <li><p><code>map()</code> always returns a list. See the <code><a href='modify.html'>modify()</a></code> family for
@@ -184,6 +193,7 @@ can be specified to handle values that are absent or empty. See
 the input <code>.x</code>.</p></li>
 </ul>
 
+    
     </div>
 
     <pre class="usage"><span class='fu'>map</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
@@ -203,7 +213,7 @@ the input <code>.x</code>.</p></li>
 <span class='fu'>map_dfc</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>walk</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -242,7 +252,7 @@ variable will be created.</p>
 <p>Only applies to <code>_dfr</code> variant.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
@@ -262,6 +272,7 @@ logical -&gt; integer -&gt; double -&gt; character.</p></li>
 use in pipe.</p></li>
 </ul>
 
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='map_if.html'>map_if()</a></code> for applying a function to only those elements
@@ -270,6 +281,7 @@ of <code>.x</code> that meet a specified condition.</p>
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
   <code><a href='map2.html'>map2</a></code>, <code><a href='map_if.html'>map_if</a></code>,
   <code><a href='modify.html'>modify</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
@@ -433,8 +445,11 @@ of <code>.x</code> that meet a specified condition.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

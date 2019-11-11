@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,13 +41,14 @@
 
 
 <meta property="og:title" content="Reduce from the right (retired) — reduce_right" />
+
 <meta property="og:description" content="
 These functions are retired as of purrr 0.3.0. Please use the
 .dir argument of reduce() instead, or reverse your vectors
 and use a left reduction." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -61,7 +61,15 @@ and use a left reduction." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -148,10 +156,12 @@ and use a left reduction." />
     </div>
 
     <div class="ref-description">
+    
     <p><img src='figures/lifecycle-soft-deprecated.svg' alt='Soft-deprecated lifecycle' /></p>
 <p>These functions are retired as of purrr 0.3.0. Please use the
 <code>.dir</code> argument of <code><a href='reduce.html'>reduce()</a></code> instead, or reverse your vectors
 and use a left reduction.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>reduce_right</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>)
@@ -159,7 +169,7 @@ and use a left reduction.</p>
 <span class='fu'>reduce2_right</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>)
 
 <span class='fu'>accumulate_right</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='no'>.init</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -197,14 +207,14 @@ argument that is passed to <code>.f</code>. If <code>init</code> is not set, <co
 should be 1 element shorter than <code>.x</code>.</p></td>
     </tr>
     </table>
-
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

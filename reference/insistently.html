@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,6 +41,7 @@
 
 
 <meta property="og:title" content="Transform a function to make it run insistently or slowly — insistently" />
+
 <meta property="og:description" content="
 
 insistently() takes a function and modifies it to retry a given
@@ -54,9 +54,9 @@ The number and rate of attempts is determined by a
 rate object (by default a jittered exponential
 backoff rate for insistently(), and a constant rate for
 slowly())." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -69,7 +69,15 @@ slowly())." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -157,6 +165,7 @@ slowly())." />
 
     <div class="ref-description">
     
+    
 <ul>
 <li><p><code>insistently()</code> takes a function and modifies it to retry a given
 amount of time on error.</p></li>
@@ -168,12 +177,13 @@ amount of time between each call.</p></li>
 <a href='rate-helpers.html'>rate</a> object (by default a jittered exponential
 backoff rate for <code>insistently()</code>, and a constant rate for
 <code>slowly()</code>).</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>insistently</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>slowly</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_delay</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -191,14 +201,15 @@ backoff rate for <code>insistently()</code>, and a constant rate for
 the next request.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://httr.r-lib.org/reference/RETRY.html'>httr::RETRY()</a></code> is a special case of <code>insistently()</code> for
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/httr/man/RETRY.html'>httr::RETRY()</a></code> is a special case of <code>insistently()</code> for
 HTTP verbs. <code><a href='rate-helpers.html'>rate_backoff()</a></code> and <code><a href='rate-helpers.html'>rate_delay()</a></code> for creating
 custom backoff rates. <code><a href='rate_sleep.html'>rate_sleep()</a></code> for the function powering
 <code>insistently()</code> and <code>slowly()</code>. <code><a href='safely.html'>safely()</a></code> for another useful
 function operator.</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># For the purpose of this example, we first create a custom rate</span>
@@ -242,100 +253,14 @@ function operator.</p></div>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>6</span>) <span class='co'># Succeeding seed</span>
 <span class='fu'>insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.606268297648057 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.264352067606524 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.807483389042318 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.8 seconds.</span></div><div class='output co'>#&gt; [1] 0.9579337</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>3</span>) <span class='co'># Failing seed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.602100674761459 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.5 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.124633444240317 is too small</span></div><div class='output co'>#&gt; Error : Request failed after 4 attempts
-#&gt; Backtrace:
-#&gt;      █
-#&gt;   1. ├─base::tryCatch(...)
-#&gt;   2. │ └─base:::tryCatchList(expr, classes, parentenv, handlers)
-#&gt;   3. │   ├─base:::tryCatchOne(...)
-#&gt;   4. │   │ └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;   5. │   └─base:::tryCatchList(expr, names[-nh], parentenv, handlers[-nh])
-#&gt;   6. │     └─base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-#&gt;   7. │       └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;   8. ├─base::withCallingHandlers(...)
-#&gt;   9. ├─base::saveRDS(...)
-#&gt;  10. ├─base::do.call(...)
-#&gt;  11. ├─(function (what, args, quote = FALSE, envir = parent.frame()) ...
-#&gt;  12. └─(function (..., crayon_enabled, crayon_colors, pkgdown_internet) ...
-#&gt;  13.   └─pkgdown::build_site(...)
-#&gt;  14.     └─pkgdown:::build_site_local(...)
-#&gt;  15.       └─pkgdown::build_reference(...)
-#&gt;  16.         └─purrr::map(...)
-#&gt;  17.           └─pkgdown:::.f(.x[[i]], ...)
-#&gt;  18.             └─pkgdown:::data_reference_topic(...)
-#&gt;  19.               └─pkgdown:::run_examples(...)
-#&gt;  20.                 └─pkgdown:::highlight_examples(code, topic, env = env)
-#&gt;  21.                   └─evaluate::evaluate(x, child_env(env), new_device = TRUE)
-#&gt;  22.                     └─evaluate:::evaluate_call(...)
-#&gt;  23.                       ├─evaluate:::timing_fn(...)
-#&gt;  24.                       ├─evaluate:::handle(...)
-#&gt;  25.                       │ └─base::try(f, silent = TRUE)
-#&gt;  26.                       │   └─base::tryCatch(...)
-#&gt;  27.                       │     └─base:::tryCatchList(expr, classes, parentenv, handlers)
-#&gt;  28.                       │       └─base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-#&gt;  29.                       │         └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;  30.                       ├─base::withCallingHandlers(...)
-#&gt;  31.                       ├─base::withVisible(eval(expr, envir, enclos))
-#&gt;  32.                       └─base::eval(expr, envir, enclos)
-#&gt;  33.                         └─base::eval(expr, envir, enclos)
-#&gt;  34.                           ├─base::try(insistent_risky_runif())
-#&gt;  35.                           │ └─base::tryCatch(...)
-#&gt;  36.                           │   └─base:::tryCatchList(expr, classes, parentenv, handlers)
-#&gt;  37.                           │     └─base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-#&gt;  38.                           │       └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;  39.                           └─purrr:::insistent_risky_runif()
-#&gt;  40.                             └─purrr::rate_sleep(rate, quiet = quiet)
-#&gt;  41.                               └─purrr:::stop_rate_excess(rate)</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.1 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.602100674761459 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.5 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.124633444240317 is too small</span></div><div class='output co'>#&gt; Error : Request failed after 4 attempts</div><div class='input'>
 
 <span class='co'># You can also use other types of rate settings, like a delay rate</span>
 <span class='co'># that waits for a fixed amount of time. Be aware that a delay rate</span>
 <span class='co'># has an infinite amount of attempts by default:</span>
 <span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rate-helpers.html'>rate_delay</a></span>(<span class='fl'>0.2</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='no'>insistent_risky_runif</span> <span class='kw'>&lt;-</span> <span class='fu'>insistently</span>(<span class='no'>risky_runif</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.294600924244151 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.577609919011593 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.630979274399579 is too small</span></div><div class='output co'>#&gt; Error : Request failed after 3 attempts
-#&gt; Backtrace:
-#&gt;      █
-#&gt;   1. ├─base::tryCatch(...)
-#&gt;   2. │ └─base:::tryCatchList(expr, classes, parentenv, handlers)
-#&gt;   3. │   ├─base:::tryCatchOne(...)
-#&gt;   4. │   │ └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;   5. │   └─base:::tryCatchList(expr, names[-nh], parentenv, handlers[-nh])
-#&gt;   6. │     └─base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-#&gt;   7. │       └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;   8. ├─base::withCallingHandlers(...)
-#&gt;   9. ├─base::saveRDS(...)
-#&gt;  10. ├─base::do.call(...)
-#&gt;  11. ├─(function (what, args, quote = FALSE, envir = parent.frame()) ...
-#&gt;  12. └─(function (..., crayon_enabled, crayon_colors, pkgdown_internet) ...
-#&gt;  13.   └─pkgdown::build_site(...)
-#&gt;  14.     └─pkgdown:::build_site_local(...)
-#&gt;  15.       └─pkgdown::build_reference(...)
-#&gt;  16.         └─purrr::map(...)
-#&gt;  17.           └─pkgdown:::.f(.x[[i]], ...)
-#&gt;  18.             └─pkgdown:::data_reference_topic(...)
-#&gt;  19.               └─pkgdown:::run_examples(...)
-#&gt;  20.                 └─pkgdown:::highlight_examples(code, topic, env = env)
-#&gt;  21.                   └─evaluate::evaluate(x, child_env(env), new_device = TRUE)
-#&gt;  22.                     └─evaluate:::evaluate_call(...)
-#&gt;  23.                       ├─evaluate:::timing_fn(...)
-#&gt;  24.                       ├─evaluate:::handle(...)
-#&gt;  25.                       │ └─base::try(f, silent = TRUE)
-#&gt;  26.                       │   └─base::tryCatch(...)
-#&gt;  27.                       │     └─base:::tryCatchList(expr, classes, parentenv, handlers)
-#&gt;  28.                       │       └─base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-#&gt;  29.                       │         └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;  30.                       ├─base::withCallingHandlers(...)
-#&gt;  31.                       ├─base::withVisible(eval(expr, envir, enclos))
-#&gt;  32.                       └─base::eval(expr, envir, enclos)
-#&gt;  33.                         └─base::eval(expr, envir, enclos)
-#&gt;  34.                           ├─base::try(insistent_risky_runif())
-#&gt;  35.                           │ └─base::tryCatch(...)
-#&gt;  36.                           │   └─base:::tryCatchList(expr, classes, parentenv, handlers)
-#&gt;  37.                           │     └─base:::tryCatchOne(expr, names, parentenv, handlers[[1L]])
-#&gt;  38.                           │       └─base:::doTryCatch(return(expr), name, parentenv, handler)
-#&gt;  39.                           └─purrr:::insistent_risky_runif()
-#&gt;  40.                             └─purrr::rate_sleep(rate, quiet = quiet)
-#&gt;  41.                               └─purrr:::stop_rate_excess(rate)</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>insistent_risky_runif</span>())</div><div class='output co'>#&gt; <span class='message'>Error: 0.294600924244151 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.577609919011593 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.630979274399579 is too small</span></div><div class='output co'>#&gt; Error : Request failed after 3 attempts</div><div class='input'>
 
 <span class='co'># insistently() and possibly() are a useful combination</span>
 <span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
@@ -350,7 +275,9 @@ function operator.</p></div>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

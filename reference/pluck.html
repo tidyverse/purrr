@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,13 +41,14 @@
 
 
 <meta property="og:title" content="Pluck or chuck a single element from a vector or environment — pluck" />
+
 <meta property="og:description" content="pluck() and chuck() implement a generalised form of [[ that
 allow you to index deeply and flexibly into data structures.
 pluck() consistently returns NULL when an element does not
 exist, chuck() always throws an error in that case." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -61,7 +61,15 @@ exist, chuck() always throws an error in that case." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -148,10 +156,12 @@ exist, chuck() always throws an error in that case." />
     </div>
 
     <div class="ref-description">
+    
     <p><code>pluck()</code> and <code>chuck()</code> implement a generalised form of <code>[[</code> that
 allow you to index deeply and flexibly into data structures.
 <code>pluck()</code> consistently returns <code>NULL</code> when an element does not
 exist, <code>chuck()</code> always throws an error in that case.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>pluck</span>(<span class='no'>.x</span>, <span class='no'>...</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -159,7 +169,7 @@ exist, <code>chuck()</code> always throws an error in that case.</p>
 <span class='fu'>chuck</span>(<span class='no'>.x</span>, <span class='no'>...</span>)
 
 <span class='fu'>pluck</span>(<span class='no'>.x</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -187,7 +197,7 @@ splice that in with <code>!!!</code>.</p></td>
       <td><p>A value to replace in <code>.x</code> at the pluck location.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -203,11 +213,13 @@ cruft. Compare: <code>accessor(x[[1]])$foo</code> to <code>pluck(x, 1, accessor,
 will select the <code>disp</code> object if you write <code>mtcars$di</code>.</p></li>
 </ul>
 
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='attr_getter.html'>attr_getter()</a></code> for creating attribute getters suitable
 for use with <code>pluck()</code> and <code>chuck()</code>. <code><a href='modify_in.html'>modify_in()</a></code> for
 applying a function to a pluck location.</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Let's create a list of data structures:</span>
@@ -393,8 +405,11 @@ applying a function to a pluck location.</p></div>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

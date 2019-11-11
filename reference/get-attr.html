@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,13 +41,14 @@
 
 
 <meta property="og:title" content="Infix attribute accessor — get-attr" />
+
 <meta property="og:description" content="
 Please use the %@% operator exported in rlang. It has an
 interface more consistent with @: uses NSE, supports S4 fields,
 and has an assignment variant." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -61,7 +61,15 @@ and has an assignment variant." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -148,14 +156,16 @@ and has an assignment variant." />
     </div>
 
     <div class="ref-description">
+    
     <p><img src='figures/lifecycle-soft-deprecated.svg' alt='Soft-deprecated lifecycle' /></p>
 <p>Please use the <code>%@%</code> operator exported in rlang. It has an
 interface more consistent with <code>@</code>: uses NSE, supports S4 fields,
 and has an assignment variant.</p>
+    
     </div>
 
     <pre class="usage"><span class='no'>x</span> <span class='kw'>%@%</span> <span class='no'>name</span></pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -168,17 +178,18 @@ and has an assignment variant.</p>
       <td><p>Attribute name</p></td>
     </tr>
     </table>
-
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>) <span class='kw'>%@%</span> <span class='st'>"levels"</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `%@%` is soft-deprecated as of purrr 0.3.0.</span>
 #&gt; <span class='warning'>Please use the operator provided in rlang instead.</span>
-#&gt; <span class='warning'>This warning is displayed once per session.</span></div><div class='output co'>#&gt; [1] "1" "2" "3"</div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%@%</span> <span class='st'>"class"</span></div><div class='output co'>#&gt; [1] "data.frame"</div></pre>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span><span></span></div><div class='output co'>#&gt; [1] "1" "2" "3"</div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%@%</span> <span class='st'>"class"</span></div><div class='output co'>#&gt; [1] "data.frame"</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

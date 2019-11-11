@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,6 +41,7 @@
 
 
 <meta property="og:title" content="Map over multiple inputs simultaneously. — map2" />
+
 <meta property="og:description" content="These functions are variants of map() that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
@@ -52,9 +52,9 @@ that a data frame is a very important special case, in which case pmap()
 and pwalk() apply the function .f to each row. map_dfr(), pmap_dfr()
 and map2_dfc(), pmap_dfc() return data frames created by row-binding
 and column-binding respectively. They require dplyr to be installed." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -67,7 +67,15 @@ and column-binding respectively. They require dplyr to be installed." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -154,6 +162,7 @@ and column-binding respectively. They require dplyr to be installed." />
     </div>
 
     <div class="ref-description">
+    
     <p>These functions are variants of <code><a href='map.html'>map()</a></code> that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
@@ -164,6 +173,7 @@ that a data frame is a very important special case, in which case <code>pmap()</
 and <code>pwalk()</code> apply the function <code>.f</code> to each row. <code><a href='map.html'>map_dfr()</a></code>, <code>pmap_dfr()</code>
 and <code>map2_dfc()</code>, <code>pmap_dfc()</code> return data frames created by row-binding
 and column-binding respectively. They require dplyr to be installed.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>map2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
@@ -201,7 +211,7 @@ and column-binding respectively. They require dplyr to be installed.</p>
 <span class='fu'>pmap_dfc</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>pwalk</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -247,7 +257,7 @@ determines the number of arguments that <code>.f</code> will be called with. Lis
 names will be used if present.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An atomic vector, list, or data frame, depending on the suffix.
@@ -255,16 +265,19 @@ Atomic vectors and lists will be named if <code>.x</code> or the first
 element of <code>.l</code> is named.</p>
 <p>If all input is length 0, the output will be length 0. If any
 input is length 1, it will be recycled to the length of the longest.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that arguments to be vectorised over come before <code>.f</code>,
 and arguments that are supplied to every call come after <code>.f</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
   <code><a href='map_if.html'>map_if</a></code>, <code><a href='map.html'>map</a></code>,
   <code><a href='modify.html'>modify</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>)
@@ -399,9 +412,13 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

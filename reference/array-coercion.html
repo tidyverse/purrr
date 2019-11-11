@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,6 +41,7 @@
 
 
 <meta property="og:title" content="Coerce array to list — array-coercion" />
+
 <meta property="og:description" content="array_branch() and array_tree() enable arrays to be
 used with purrr's functionals by turning them into lists. The
 details of the coercion are controlled by the margin
@@ -49,9 +49,9 @@ argument. array_tree() creates an hierarchical list (a tree)
 that has as many levels as dimensions specified in margin,
 while array_branch() creates a flat list (by analogy, a
 branch) along all mentioned dimensions." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -64,7 +64,15 @@ branch) along all mentioned dimensions." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -151,6 +159,7 @@ branch) along all mentioned dimensions." />
     </div>
 
     <div class="ref-description">
+    
     <p><code>array_branch()</code> and <code>array_tree()</code> enable arrays to be
 used with purrr's functionals by turning them into lists. The
 details of the coercion are controlled by the <code>margin</code>
@@ -158,12 +167,13 @@ argument. <code>array_tree()</code> creates an hierarchical list (a tree)
 that has as many levels as dimensions specified in <code>margin</code>,
 while <code>array_branch()</code> creates a flat list (by analogy, a
 branch) along all mentioned dimensions.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>array_branch</span>(<span class='no'>array</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>array_tree</span>(<span class='no'>array</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -179,12 +189,13 @@ used. If <code><a href='https://rdrr.io/r/base/numeric.html'>numeric(0)</a></cod
 list.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When no margin is specified, all dimensions are used by
 default. When <code>margin</code> is a numeric vector of length zero, the
 whole array is wrapped in a list.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># We create an array with 3 dimensions</span>
@@ -260,7 +271,9 @@ whole array is wrapped in a list.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

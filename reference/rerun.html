@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,12 +41,13 @@
 
 
 <meta property="og:title" content="Re-run expressions multiple times. — rerun" />
+
 <meta property="og:description" content="
 This is a convenient way of generating sample data. It works similarly to
 replicate(..., simplify = FALSE)." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -60,7 +60,15 @@ replicate(..., simplify = FALSE)." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -147,13 +155,15 @@ replicate(..., simplify = FALSE)." />
     </div>
 
     <div class="ref-description">
+    
     <p><a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a></p>
 <p>This is a convenient way of generating sample data. It works similarly to
 <code><a href='https://rdrr.io/r/base/lapply.html'>replicate</a>(..., simplify = FALSE)</code>.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>rerun</span>(<span class='no'>.n</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -166,7 +176,7 @@ replicate(..., simplify = FALSE)." />
       <td><p>Expressions to re-run.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of length <code>.n</code>. Each element of <code>...</code> will be
@@ -174,6 +184,7 @@ re-run once for each <code>.n</code>.</p>
 <p>There is one special case: if there's a single unnamed input, the second
 level list will be dropped. In this case, <code>rerun(n, x)</code> behaves like
 <code><a href='https://rdrr.io/r/base/lapply.html'>replicate(n, x, simplify = FALSE)</a></code>.</p>
+    
     <h2 class="hasAnchor" id="lifecycle"><a class="anchor" href="#lifecycle"></a>Lifecycle</h2>
 
     
@@ -184,6 +195,7 @@ longer convinced NSE functions are a good fit for purrr. Also,
 <code>rerun(n, x)</code> can just as easily be expressed as <code><a href='map.html'>map(1:n, ~ x)</a></code>
 (with the added benefit of being passed the current index as
 argument to the lambda).</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
@@ -224,8 +236,11 @@ argument to the lambda).</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#lifecycle">Lifecycle</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

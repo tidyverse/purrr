@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,6 +41,7 @@
 
 
 <meta property="og:title" content="Modify elements selectively — modify" />
+
 <meta property="og:description" content="Unlike map() and its variants which always return a fixed object
 type (list for map(), integer vector for map_int(), etc), the
 modify() family always returns the same type as the input object.
@@ -57,9 +57,9 @@ nested data structure.
 modify_in() modifies a single element in a pluck() location.
 
 " />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -72,7 +72,15 @@ modify_in() modifies a single element in a pluck() location.
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -159,6 +167,7 @@ modify_in() modifies a single element in a pluck() location.
     </div>
 
     <div class="ref-description">
+    
     <p>Unlike <code><a href='map.html'>map()</a></code> and its variants which always return a fixed object
 type (list for <code><a href='map.html'>map()</a></code>, integer vector for <code><a href='map.html'>map_int()</a></code>, etc), the
 <code>modify()</code> family always returns the same type as the input object.</p><ul>
@@ -174,6 +183,7 @@ nested data structure.</p></li>
 <li><p><code><a href='modify_in.html'>modify_in()</a></code> modifies a single element in a <code><a href='pluck.html'>pluck()</a></code> location.</p></li>
 </ul>
 
+    
     </div>
 
     <pre class="usage"><span class='fu'>modify</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
@@ -199,7 +209,7 @@ nested data structure.</p></li>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>modify_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='no'>.depth</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -272,16 +282,18 @@ at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if ther
 no elements at depth <code>.depth</code>.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object the same class as <code>.x</code></p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Since the transformation can alter the structure of the input; it's
 your responsibility to ensure that the transformation produces a
 valid output. For example, if you're modifying a data frame, <code>.f</code>
 must preserve the length of the input.</p>
+    
     <h2 class="hasAnchor" id="genericity"><a class="anchor" href="#genericity"></a>Genericity</h2>
 
     
@@ -298,12 +310,14 @@ modify(x, compose(f, g)) === modify(x, g) %&gt;% modify(f)
 
 <p>These invariants are known as the <a href='https://wiki.haskell.org/Functor#Functor_Laws'>functor laws</a> in computer
 science.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
   <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
   <code><a href='map2.html'>map2</a></code>, <code><a href='map_if.html'>map_if</a></code>,
   <code><a href='map.html'>map</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Convert factors to characters</span>
@@ -820,10 +834,15 @@ science.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#genericity">Genericity</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

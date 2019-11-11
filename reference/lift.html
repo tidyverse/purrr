@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -42,14 +41,15 @@
 
 
 <meta property="og:title" content="Lift the domain of a function — lift" />
+
 <meta property="og:description" content="lift_xy() is a composition helper. It helps you compose
 functions by lifting their domain from a kind of input to another
 kind. The domain can be changed from and to a list (l), a vector
 (v) and dots (d). For example, lift_ld(fun) transforms a
 function taking a list to a function taking dots." />
+
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -62,7 +62,15 @@ function taking a list to a function taking dots." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'UA-115082821-1');
+</script>
 
   </head>
 
@@ -149,11 +157,13 @@ function taking a list to a function taking dots." />
     </div>
 
     <div class="ref-description">
+    
     <p><code>lift_xy()</code> is a composition helper. It helps you compose
 functions by lifting their domain from a kind of input to another
 kind. The domain can be changed from and to a list (l), a vector
 (v) and dots (d). For example, <code>lift_ld(fun)</code> transforms a
 function taking a list to a function taking dots.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>lift</span>(<span class='no'>..f</span>, <span class='no'>...</span>, <span class='kw'>.unnamed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -169,7 +179,7 @@ function taking a list to a function taking dots.</p>
 <span class='fu'>lift_ld</span>(<span class='no'>..f</span>, <span class='no'>...</span>)
 
 <span class='fu'>lift_lv</span>(<span class='no'>..f</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -197,10 +207,11 @@ input vectors. The latter can be any of the types returned by
 "double" or "integer".</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A function.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The most important of those helpers is probably <code>lift_dl()</code>
@@ -208,6 +219,7 @@ because it allows you to transform a regular function to one that
 takes a list. This is often essential for composition with purrr
 functional tools. Since this is such a common function,
 <code>lift()</code> is provided as an alias for that operation.</p>
+    
     <h2 class="hasAnchor" id="from-to-list-or-c-"><a class="anchor" href="#from-to-list-or-c-"></a>from ... to <code><a href='https://rdrr.io/r/base/list.html'>list(...)</a></code> or <code><a href='https://rdrr.io/r/base/c.html'>c(...)</a></code></h2>
 
     
@@ -220,6 +232,7 @@ vector which will be interpreted as its arguments.  This is
 particularly useful when you want to pass a row of a data frame
 or a list to a function and don't want to manually pull it apart
 in your function.</p>
+    
     <h2 class="hasAnchor" id="from-c-to-list-or-"><a class="anchor" href="#from-c-to-list-or-"></a>from <code><a href='https://rdrr.io/r/base/c.html'>c(...)</a></code> to <code><a href='https://rdrr.io/r/base/list.html'>list(...)</a></code> or <code>...</code></h2>
 
     
@@ -231,6 +244,7 @@ casting rules (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(1, "2")</a>
 vector) and will produce an error if the types are not
 compatible. Additionally, you can enforce a particular vector
 type by supplying <code>.type</code>.</p>
+    
     <h2 class="hasAnchor" id="from-list-to-c-or-"><a class="anchor" href="#from-list-to-c-or-"></a>from list(...) to c(...) or ...</h2>
 
     
@@ -242,9 +256,11 @@ the inverse operations of <code>lift_dl()</code> and <code>lift_dv()</code>.</p>
 <p><code>lift_vd()</code> internally coerces the inputs of <code>..f</code> to
 an atomic vector. The details of this coercion can be controlled
 with <code>.type</code>.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='invoke.html'>invoke()</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"></pre>
@@ -253,12 +269,19 @@ with <code>.type</code>.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#from-to-list-or-c-">from ... to <code><a href='https://rdrr.io/r/base/list.html'>list(...)</a></code> or <code><a href='https://rdrr.io/r/base/c.html'>c(...)</a></code></a></li>
+
       <li><a href="#from-c-to-list-or-">from <code><a href='https://rdrr.io/r/base/c.html'>c(...)</a></code> to <code><a href='https://rdrr.io/r/base/list.html'>list(...)</a></code> or <code>...</code></a></li>
+
       <li><a href="#from-list-to-c-or-">from list(...) to c(...) or ...</a></li>
+
       <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
