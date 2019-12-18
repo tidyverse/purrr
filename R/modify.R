@@ -212,27 +212,30 @@ modify.pairlist <- function(.x, .f, ...) {
 }
 
 #' @export
-modify_if.integer <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_int(.x[sel], .f, ...)
-  .x
+modify_if.logical <- function (.x, .p, .f, ..., .else = NULL) {
+  modify_if_helper(.x, .p, .f, ..., .else = .else, ..f_map = map_lgl)
 }
 #' @export
-modify_if.double <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_dbl(.x[sel], .f, ...)
-  .x
+modify_if.integer <- function (.x, .p, .f, ..., .else = NULL) {
+  modify_if_helper(.x, .p, .f, ..., .else = .else, ..f_map = map_int)
 }
 #' @export
-modify_if.character <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_chr(.x[sel], .f, ...)
-  .x
+modify_if.double <- function (.x, .p, .f, ..., .else = NULL) {
+  modify_if_helper(.x, .p, .f, ..., .else = .else, ..f_map = map_dbl)
 }
 #' @export
-modify_if.logical <- function(.x, .p, .f, ...) {
+modify_if.character <- function (.x, .p, .f, ..., .else = NULL) {
+  modify_if_helper(.x, .p, .f, ..., .else = .else, ..f_map = map_chr)
+}
+
+modify_if_helper <- function(.x, .p, .f, ..., .else, ..f_map) {
   sel <- probe(.x, .p)
-  .x[sel] <- map_lgl(.x[sel], .f, ...)
+  .x[sel] <- ..f_map(.x[sel], .f, ...)
+
+  if (!is_null(.else)) {
+    .x[!sel] <- ..f_map(.x[!sel], .else, ...)
+  }
+
   .x
 }
 

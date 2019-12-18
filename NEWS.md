@@ -1,6 +1,8 @@
 
 # purrr (development version)
 
+* Fixes `.else` argument not being evaluated in `modify_if()` for atomic
+  vectors (@mgirlich, #701).
 
 # purrr 0.3.3
 

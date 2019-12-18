@@ -90,6 +90,8 @@ test_that("`.else` modifies false elements", {
   exp <- modify_if(iris, negate(is.factor), as.integer)
   exp <- modify_if(exp, is.factor, as.character)
   expect_identical(modify_if(iris, is.factor, as.character, .else = as.integer), exp)
+
+  expect_identical(modify_if(1:2, ~ .x == 1, ~ 3L, .else = ~ 4L), c(3L, 4L))
 })
 
 # modify_depth ------------------------------------------------------------
