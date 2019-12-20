@@ -1,6 +1,8 @@
 
 # purrr (development version)
 
+* `silently()` is a new function that combines the functionality of `safely()`
+  and `quietly()` (@billdenney, #426)
 
 # purrr 0.3.3
 

@@ -1,9 +1,9 @@
 #' Capture side effects.
 #'
 #' These functions wrap functions so that instead of generating side effects
-#' through printed output, messages, warnings, and errors, they return enhanced
-#' output. They are all adverbs because they modify the action of a verb (a
-#' function).
+#' through printed output, conditions, messages, warnings, and errors, they
+#' return enhanced output. They are all adverbs because they modify the action
+#' of a verb (a function).
 #'
 #' @inheritParams map
 #' @param quiet Hide errors (`TRUE`, the default), or display them
@@ -19,6 +19,11 @@
 #'
 #'   `possibly`: wrapped function uses a default value (`otherwise`)
 #'   whenever an error occurs.
+#'   
+#'   `silently`: wrapped function returns a list with components `result`,
+#'   `output`, `messages`, `warnings` and `errors` using a default value
+#'   (`otherwise`) for `result` if there are any errors.  `silently` is similar
+#'   the combination of `safely` and `quietly`.
 #' @export
 #' @examples
 #' safe_log <- safely(log)
@@ -86,6 +91,26 @@ possibly <- function(.f, otherwise, quiet = TRUE) {
       interrupt = function(e) {
         stop("Terminated by user", call. = FALSE)
       }
+    )
+  }
+}
+
+#' @export
+#' @rdname safely
+silently <- function(.f, otherwise = NULL) {
+  .f <- as_mapper(.f)
+  function(...) {
+    ret <-
+      capture_output(
+        capture_error(.f(...), otherwise, quiet=TRUE)
+      )
+    # reformat output to an un-nested list
+    list(
+      result = ret$result$result,
+      output = ret$output,
+      messages = ret$messages,
+      warnings = ret$warnings,
+      error = ret$result$error
     )
   }
 }
