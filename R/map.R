@@ -1,9 +1,9 @@
-#' Apply a function to each element of a vector
+#' Apply a function to each element of a list or atomic vector
 #'
 #' @description
 #'
 #' The map functions transform their input by applying a function to
-#' each element and returning a vector the same length as the input.
+#' each element of a list or atomic vector and returning an object of the same length as the input.
 #'
 #' * `map()` always returns a list. See the [modify()] family for
 #'   versions that return an object of the same type as the input.
@@ -11,7 +11,7 @@
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
 #'   atomic vector of the indicated type (or die trying).
 #'
-#' * `map_dfr()` and `map_dfc()` return data frames created by
+#' * `map_dfr()` and `map_dfc()` return a data frame created by
 #'   row-binding and column-binding respectively. They require dplyr
 #'   to be installed.
 #'
