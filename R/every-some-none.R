@@ -1,4 +1,4 @@
-#' Do every, some or none of the elements of a list satisfy a predicate?
+#' Do every, some, or none of the elements of a list satisfy a predicate?
 #'
 #' @inheritParams map
 #' @param .p A predicate function to apply on each element of `.x`.

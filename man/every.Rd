@@ -4,7 +4,7 @@
 \alias{every}
 \alias{some}
 \alias{none}
-\title{Do every, some or none of the elements of a list satisfy a predicate?}
+\title{Do every, some, or none of the elements of a list satisfy a predicate?}
 \usage{
 every(.x, .p, ...)
 
@@ -27,7 +27,7 @@ elements.`}
 A logical vector of length 1.
 }
 \description{
-Do every, some or none of the elements of a list satisfy a predicate?
+Do every, some, or none of the elements of a list satisfy a predicate?
 }
 \examples{
 y <- list(0:10, 5.5)
