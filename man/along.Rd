@@ -3,7 +3,7 @@
 \name{along}
 \alias{along}
 \alias{list_along}
-\title{Helper to create a new empty list of a given length.}
+\title{Create a list of given length}
 \usage{
 list_along(x)
 }
@@ -11,14 +11,14 @@ list_along(x)
 \item{x}{A vector.}
 }
 \value{
-A vector of the same length as \code{x}.
+A list of the same length as \code{x}.
 }
 \description{
 \Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
 
-It can be useful to create empty lists that you later fill through iterate.
-This is similar to the idea of \code{\link[=seq_along]{seq_along()}}, which creates a vector of the
-same length as its input.
+It can be useful to create an empty list that you plant to fill later. This is
+similar to the idea of \code{\link[=seq_along]{seq_along()}}, which creates a vector of the same
+length as its input.
 }
 \details{
 This function might change to \code{\link[vctrs:vec_init]{vctrs::vec_init()}}.
