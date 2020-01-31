@@ -64,7 +64,7 @@
 #'
 #' # Working with lists
 #' favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
-#' favorite_desserts %>% map_chr(~paste(.x, "rocks!"))
+#' favorite_desserts %>% map_chr(~ paste(.x, "rocks!"))
 #'
 #' # Extract by name or position
 #' # .default specifies value for elements that are missing or NULL
