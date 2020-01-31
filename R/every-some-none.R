@@ -1,4 +1,4 @@
-#' Do every, some, or none of the elements of a list satisfy a predicate?
+#' Do every, some or none of the elements of a list satisfy a predicate?
 #'
 #' @inheritParams map
 #' @param .p A predicate function to apply on each element of `.x`.
@@ -13,6 +13,8 @@
 #' y <- list(0:10, 5.5)
 #' y %>% every(is.numeric)
 #' y %>% every(is.integer)
+#' y %>% some(is.integer)
+#' y %>% none(is.character)
 every <- function(.x, .p, ...) {
   .p <- as_predicate(.p, ..., .mapper = TRUE, .deprecate = TRUE)
 
