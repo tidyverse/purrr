@@ -41,11 +41,11 @@
 #' @seealso [map_if()] for applying a function to only those elements
 #'   of `.x` that meet a specified condition.
 #' @examples
+#' # Compute normal distributions from an atomic vector
 #' 1:10 %>%
-#'   map(rnorm, n = 10) %>%
-#'   map_dbl(mean)
+#'   map(rnorm, n = 10)
 #'
-#' # Or use an anonymous function
+#' # You can also use an anonymous function
 #' 1:10 %>%
 #'   map(function(x) rnorm(10, x))
 #'
@@ -53,9 +53,18 @@
 #' 1:10 %>%
 #'   map(~ rnorm(10, .x))
 #'
+#' # Reduce output to a vector instead of a list by computing the mean of the distributions
+#' 1:10 %>%
+#'   map(rnorm, n = 10) %>%
+#'   map_dbl(mean)
+#'
 #' # Using set_names() with character vectors is handy to keep track
 #' # of the original inputs:
 #' set_names(c("foo", "bar")) %>% map_chr(paste0, ":suffix")
+#'
+#' # Working with lists
+#' favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
+#' favorite_desserts %>% map_chr(~paste(.x, "rocks!"))
 #'
 #' # Extract by name or position
 #' # .default specifies value for elements that are missing or NULL
@@ -77,6 +86,9 @@
 #' l2 %>% map(list("num", 3))
 #' l2 %>% map_int(list("num", 3), .default = NA)
 #'
+#' # Working with data frames
+#' # Use map_lgl(), map_dbl(), etc to reduce output to a vector instead of a list:
+#' mtcars %>% map_dbl(sum)
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
@@ -85,10 +97,6 @@
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
 #'   map_dbl("r.squared")
-#'
-#' # Use map_lgl(), map_dbl(), etc to reduce output to a vector instead
-#' # of a list:
-#' mtcars %>% map_dbl(sum)
 #'
 #' # If each element of the output is a data frame, use
 #' # map_dfr to row-bind them together:
