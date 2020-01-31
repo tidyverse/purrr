@@ -6,7 +6,7 @@
 \alias{purrr-package}
 \title{purrr: Functional Programming Tools}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 A complete and consistent functional programming toolkit for R.
 }

@@ -97,7 +97,7 @@ Unlike \code{\link[=map]{map()}} and its variants which always return a fixed ob
 type (list for \code{map()}, integer vector for \code{map_int()}, etc), the
 \code{modify()} family always returns the same type as the input object.
 \itemize{
-\item \code{modify()} is a shortcut for \code{x[[i]] <- f(x[[i]]); return(x)}.
+\item \code{modify()} is a shortcut for \verb{x[[i]] <- f(x[[i]]); return(x)}.
 \item \code{modify_if()} only modifies the elements of \code{x} that satisfy a
 predicate and leaves the others unchanged. \code{modify_at()} only
 modifies elements given by names or positions.
@@ -119,7 +119,7 @@ must preserve the length of the input.
 
 
 \code{modify()} and variants are generic over classes that implement
-\code{length()}, \code{[[} and \code{[[<-} methods. If the default implementation
+\code{length()}, \code{[[} and \verb{[[<-} methods. If the default implementation
 is not compatible for your class, you can override them with your
 own methods.
 
@@ -200,9 +200,12 @@ l1 \%>\% modify_depth(2, "param2") \%>\% str()
 l1 \%>\% modify_depth(2, ~ pmap(., paste, sep = " / ")) \%>\% str()
 }
 \seealso{
-Other map variants: \code{\link{imap}},
-  \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map_if}},
-  \code{\link{map}}
+Other map variants: 
+\code{\link{imap}()},
+\code{\link{invoke}()},
+\code{\link{lmap}()},
+\code{\link{map2}()},
+\code{\link{map_if}()},
+\code{\link{map}()}
 }
 \concept{map variants}

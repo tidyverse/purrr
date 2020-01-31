@@ -15,7 +15,7 @@ x \%@\% name
 \description{
 \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
 
-Please use the \code{\%@\%} operator exported in rlang. It has an
+Please use the \verb{\%@\%} operator exported in rlang. It has an
 interface more consistent with \code{@}: uses NSE, supports S4 fields,
 and has an assignment variant.
 }

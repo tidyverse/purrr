@@ -90,7 +90,7 @@ a variable with that name, storing either the name (if \code{.x} is named) or
 the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
 variable will be created.
 
-Only applies to \code{_dfr} variant.}
+Only applies to \verb{_dfr} variant.}
 
 \item{.l}{A list of vectors, such as a data frame. The length of \code{.l}
 determines the number of arguments that \code{.f} will be called with. List
@@ -191,9 +191,12 @@ df <- map2_dfr(arg1, arg2, ex_fun)
 df2 <- map2_dfc(arg1, arg2, ex_fun)
 }
 \seealso{
-Other map variants: \code{\link{imap}},
-  \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map_if}}, \code{\link{map}},
-  \code{\link{modify}}
+Other map variants: 
+\code{\link{imap}()},
+\code{\link{invoke}()},
+\code{\link{lmap}()},
+\code{\link{map_if}()},
+\code{\link{map}()},
+\code{\link{modify}()}
 }
 \concept{map variants}
