@@ -17,7 +17,6 @@
 #'   `.x`. Only those elements where `.p` evaluates to an empty vector
 #'   will be discarded.
 #' @param ... Additional arguments passed on to `.p`.
-#' @inheritParams map_if
 #' @export
 #' @examples
 #' rep(10, 10) %>%
