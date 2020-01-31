@@ -53,10 +53,10 @@
 #' 1:10 %>%
 #'   map(~ rnorm(10, .x))
 #'
-#' # Reduce output to a vector instead of a list by computing the mean of the distributions
+#' # Simplify output to a vector instead of a list by computing the mean of the distributions
 #' 1:10 %>%
-#'   map(rnorm, n = 10) %>%
-#'   map_dbl(mean)
+#'   map(rnorm, n = 10) %>%  # output a list
+#'   map_dbl(mean)           # output an atomic vector
 #'
 #' # Using set_names() with character vectors is handy to keep track
 #' # of the original inputs:
