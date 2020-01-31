@@ -234,13 +234,12 @@ has changed. Whereas <code><a href='reduce_right.html'>reduce_right()</a></code>
 <code>reduce(.dir = \"backward\")</code> computes <code>f(1, f(2, 3))</code>. This is the
 standard way of reducing from the right.</p>
 <p>To update your code with the same reduction as <code><a href='reduce_right.html'>reduce_right()</a></code>,
-simply reverse your vector and use a left reduction:</p><pre># Before:
+simply reverse your vector and use a left reduction:<div class="{r}"></p><pre># Before:
 reduce_right(1:3, f)
 
 # After:
 reduce(rev(1:3), f)
-</pre>
-
+</pre><p></div></p>
 <p><code><a href='reduce_right.html'>reduce2_right()</a></code> is soft-deprecated as of purrr 0.3.0 without
 replacement. It is not clear what algorithmic properties should a
 right reduction have in this case. Please reach out if you know

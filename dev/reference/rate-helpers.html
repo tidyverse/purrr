@@ -162,8 +162,13 @@ rate_sleep()." />
 
     <pre class="usage"><span class='fu'>rate_delay</span>(<span class='kw'>pause</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
 
-<span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pause_cap</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>rate_backoff</span>(
+  <span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>pause_cap</span> <span class='kw'>=</span> <span class='fl'>60</span>,
+  <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
 <span class='fu'>is_rate</span>(<span class='no'>x</span>)</pre>
 
