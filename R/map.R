@@ -87,7 +87,7 @@
 #' l2 %>% map_int(list("num", 3), .default = NA)
 #'
 #' # Working with data frames
-#' # Use map_lgl(), map_dbl(), etc to reduce output to a vector instead of a list:
+#' # Use map_lgl(), map_dbl(), etc to return a vector instead of a list:
 #' mtcars %>% map_dbl(sum)
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
