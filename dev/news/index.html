@@ -158,9 +158,9 @@
 <li>Adds a <code>none</code> function, which tests that a predicate is false for all elements (the opposite of <code>every</code>). Added as part of Tidyverse Developer Day (<a href='https://github.com/AliciaSchep'>@AliciaSchep</a>, <a href='https://github.com/tidyverse/purrr/issues/735'>#735</a>)</li>
 </ul>
 </div>
-    <div id="purrr-0-3-3" class="section level1">
+    <div id="purrr-033" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-3-3" class="anchor"></a>purrr 0.3.3<small> 2019-10-18 </small>
+<a href="#purrr-033" class="anchor"></a>purrr 0.3.3<small> 2019-10-18 </small>
 </h1>
 <ul>
 <li><p>Maintenance release.</p></li>
@@ -168,17 +168,17 @@
 <li><p>purrr now depends on R 3.2 or greater.</p></li>
 </ul>
 </div>
-    <div id="purrr-0-3-2" class="section level1">
+    <div id="purrr-032" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-3-2" class="anchor"></a>purrr 0.3.2<small> 2019-03-15 </small>
+<a href="#purrr-032" class="anchor"></a>purrr 0.3.2<small> 2019-03-15 </small>
 </h1>
 <ul>
 <li>Fix protection issues reported by rchk.</li>
 </ul>
 </div>
-    <div id="purrr-0-3-1" class="section level1">
+    <div id="purrr-031" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-3-1" class="anchor"></a>purrr 0.3.1<small> 2019-03-03 </small>
+<a href="#purrr-031" class="anchor"></a>purrr 0.3.1<small> 2019-03-03 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/reduce.html">reduce()</a></code> now forces arguments (<a href='https://github.com/tidyverse/purrr/issues/643'>#643</a>).</p></li>
@@ -188,9 +188,9 @@
 <li><p><code><a href="../reference/prepend.html">prepend()</a></code> now works with empty lists (<a href='https://github.com/czeildi'>@czeildi</a>, <a href='https://github.com/tidyverse/purrr/issues/637'>#637</a>)</p></li>
 </ul>
 </div>
-    <div id="purrr-0-3-0" class="section level1">
+    <div id="purrr-030" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-3-0" class="anchor"></a>purrr 0.3.0<small> 2019-01-27 </small>
+<a href="#purrr-030" class="anchor"></a>purrr 0.3.0<small> 2019-01-27 </small>
 </h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -265,12 +265,12 @@
 <li><p><code><a href="../reference/partial.html">partial()</a></code> now calls <code>as_closure()</code> on primitive functions to ensure argument matching (<a href='https://github.com/tidyverse/purrr/issues/360'>#360</a>).</p></li>
 <li>
 <p>The <code>.lazy</code> argument of <code><a href="../reference/partial.html">partial()</a></code> is soft-deprecated in favour of quasiquotation:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Before</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>), <span class="dt">.lazy =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># After</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>))  <span class="co"># All constant</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>))    <span class="co"># First constant</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Before</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>), <span class="dt">.lazy =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># After</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>))  <span class="co"># All constant</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw"><a href="../reference/partial.html">partial</a></span>(fn, <span class="dt">u =</span> <span class="op">!!</span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>), <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1</span>))    <span class="co"># First constant</span></span></code></pre></div>
 </li>
 </ul>
 </div>
@@ -365,22 +365,22 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <ul>
 <li>
 <p><code><a href="../reference/invoke.html">invoke()</a></code> is retired in favour of the <code><a href="../reference/exec.html">exec()</a></code> function, reexported from rlang. <code><a href="../reference/exec.html">exec()</a></code> evaluates a function call built from its inputs and supports tidy dots:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Before:</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke</a></span>(mean, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># After</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="../reference/exec.html">exec</a></span>(mean, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">!!!</span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Before:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="../reference/invoke.html">invoke</a></span>(mean, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># After</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="kw"><a href="../reference/exec.html">exec</a></span>(mean, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">!!!</span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 <p>Note that retired functions are not removed from the package and will be maintained undefinitely.</p>
 </li>
 <li>
 <p><code><a href="../reference/invoke.html">invoke_map()</a></code> is retired without replacement because it is more complex to understand than the corresponding code using <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code> and <code><a href="../reference/exec.html">exec()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Before:</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args1, args2))</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># After:</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../reference/map.html">map</a></span>(fns, exec, <span class="op">!!!</span>args)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="../reference/map2.html">map2</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args1, args2), <span class="cf">function</span>(fn, args) <span class="kw"><a href="../reference/exec.html">exec</a></span>(fn, <span class="op">!!!</span>args))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Before:</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args))</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw"><a href="../reference/invoke.html">invoke_map</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args1, args2))</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># After:</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="../reference/map.html">map</a></span>(fns, exec, <span class="op">!!!</span>args)</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="kw"><a href="../reference/map2.html">map2</a></span>(fns, <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(args1, args2), <span class="cf">function</span>(fn, args) <span class="kw"><a href="../reference/exec.html">exec</a></span>(fn, <span class="op">!!!</span>args))</span></code></pre></div>
 </li>
 </ul>
 </div>
@@ -404,25 +404,25 @@ detect(x, f, .dir = "backward")</a></code></pre>
 </div>
 </div>
 </div>
-    <div id="purrr-0-2-5" class="section level1">
+    <div id="purrr-025" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-5" class="anchor"></a>purrr 0.2.5<small> 2018-05-29 </small>
+<a href="#purrr-025" class="anchor"></a>purrr 0.2.5<small> 2018-05-29 </small>
 </h1>
 <ul>
 <li>This is a maintenance release following the release of dplyr 0.7.5.</li>
 </ul>
 </div>
-    <div id="purrr-0-2-4" class="section level1">
+    <div id="purrr-024" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-4" class="anchor"></a>purrr 0.2.4<small> 2017-10-18 </small>
+<a href="#purrr-024" class="anchor"></a>purrr 0.2.4<small> 2017-10-18 </small>
 </h1>
 <ul>
 <li>Fixes for R 3.1.</li>
 </ul>
 </div>
-    <div id="purrr-0-2-3" class="section level1">
+    <div id="purrr-023" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-3" class="anchor"></a>purrr 0.2.3<small> 2017-08-02 </small>
+<a href="#purrr-023" class="anchor"></a>purrr 0.2.3<small> 2017-08-02 </small>
 </h1>
 <div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -518,18 +518,18 @@ detect(x, f, .dir = "backward")</a></code></pre>
 </ul>
 </div>
 </div>
-    <div id="purrr-0-2-2-1" class="section level1">
+    <div id="purrr-0221" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-2-1" class="anchor"></a>purrr 0.2.2.1<small> Unreleased </small>
+<a href="#purrr-0221" class="anchor"></a>purrr 0.2.2.1<small> Unreleased </small>
 </h1>
 <p>This is a compatibility release with dplyr 0.6.0.</p>
 <ul>
 <li>All data-frame based mappers have been removed in favour of new functions and idioms in the tidyverse. <code>dmap()</code>, <code>dmap_at()</code>, <code>dmap_if()</code>, <code>invoke_rows()</code>, <code>slice_rows()</code>, <code>map_rows()</code>, <code>by_slice()</code>, <code>by_row()</code>, and <code>unslice()</code> have been moved to purrrlyr. This is a bit of an aggresive change but it allows us to make the dependencies much lighter.</li>
 </ul>
 </div>
-    <div id="purrr-0-2-2" class="section level1">
+    <div id="purrr-022" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-2" class="anchor"></a>purrr 0.2.2<small> 2016-06-18 </small>
+<a href="#purrr-022" class="anchor"></a>purrr 0.2.2<small> 2016-06-18 </small>
 </h1>
 <ul>
 <li><p>Fix for dev tibble support.</p></li>
@@ -537,20 +537,20 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <li><p><code>accumulate</code> and <code>reduce</code> correctly pass extra arguments to the worker function.</p></li>
 </ul>
 </div>
-    <div id="purrr-0-2-1" class="section level1">
+    <div id="purrr-021" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-1" class="anchor"></a>purrr 0.2.1<small> 2016-02-13 </small>
+<a href="#purrr-021" class="anchor"></a>purrr 0.2.1<small> 2016-02-13 </small>
 </h1>
 <ul>
-<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> gains a <code>.null</code> argument that for character and numeric values allows you to specify what to return for null/absent elements (<a href='https://github.com/tidyverse/purrr/issues/110'>#110</a>). This can be used with any map function, e.g. <code><a href="../reference/map.html">map_int(x, 1, .null = NA)</a></code></p></li>
+<li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> gains a <code>.null</code> argument that for character and numeric values allows you to specify what to return for null/absent elements (<a href='https://github.com/tidyverse/purrr/issues/110'>#110</a>). This can be used with any map function, e.g. <code><a href="../reference/map.html">map_int(x, 1, .null = NA)</a></code></p></li>
 <li><p><code><a href="../reference/as_mapper.html">as_function()</a></code> is now generic.</p></li>
 <li><p>New <code><a href="https://rlang.r-lib.org/reference/is_function.html">is_function()</a></code> that returns <code>TRUE</code> only for regular functions.</p></li>
 <li><p>Fix crash on GCC triggered by <code>invoke_rows()</code>.</p></li>
 </ul>
 </div>
-    <div id="purrr-0-2-0" class="section level1">
+    <div id="purrr-020" class="section level1">
 <h1 class="page-header">
-<a href="#purrr-0-2-0" class="anchor"></a>purrr 0.2.0<small> 2016-01-04 </small>
+<a href="#purrr-020" class="anchor"></a>purrr 0.2.0<small> 2016-01-04 </small>
 </h1>
 <div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
@@ -616,17 +616,17 @@ detect(x, f, .dir = "backward")</a></code></pre>
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#purrr-development-version">development version</a></li>
-        <li><a href="#purrr-0-3-3">0.3.3</a></li>
-        <li><a href="#purrr-0-3-2">0.3.2</a></li>
-        <li><a href="#purrr-0-3-1">0.3.1</a></li>
-        <li><a href="#purrr-0-3-0">0.3.0</a></li>
-        <li><a href="#purrr-0-2-5">0.2.5</a></li>
-        <li><a href="#purrr-0-2-4">0.2.4</a></li>
-        <li><a href="#purrr-0-2-3">0.2.3</a></li>
-        <li><a href="#purrr-0-2-2-1">0.2.2.1</a></li>
-        <li><a href="#purrr-0-2-2">0.2.2</a></li>
-        <li><a href="#purrr-0-2-1">0.2.1</a></li>
-        <li><a href="#purrr-0-2-0">0.2.0</a></li>
+        <li><a href="#purrr-033">0.3.3</a></li>
+        <li><a href="#purrr-032">0.3.2</a></li>
+        <li><a href="#purrr-031">0.3.1</a></li>
+        <li><a href="#purrr-030">0.3.0</a></li>
+        <li><a href="#purrr-025">0.2.5</a></li>
+        <li><a href="#purrr-024">0.2.4</a></li>
+        <li><a href="#purrr-023">0.2.3</a></li>
+        <li><a href="#purrr-0221">0.2.2.1</a></li>
+        <li><a href="#purrr-022">0.2.2</a></li>
+        <li><a href="#purrr-021">0.2.1</a></li>
+        <li><a href="#purrr-020">0.2.0</a></li>
       </ul>
     </div>
   </div>

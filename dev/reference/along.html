@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper to create vectors with matching length. — along • purrr</title>
+<title>Create a list of given length — along • purrr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,10 +41,11 @@
 
 
 
-<meta property="og:title" content="Helper to create vectors with matching length. — along" />
-<meta property="og:description" content="These functions take the idea of seq_along() and generalise
-it to creating lists (list_along) and repeating values
-(rep_along)." />
+<meta property="og:title" content="Create a list of given length — along" />
+<meta property="og:description" content="
+It can be useful to create an empty list that you plan to fill later. This is
+similar to the idea of seq_along(), which creates a vector of the same
+length as its input." />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -149,15 +150,16 @@ it to creating lists (list_along) and repeating values
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper to create vectors with matching length.</h1>
+    <h1>Create a list of given length</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/along.R'><code>R/along.R</code></a></small>
     <div class="hidden name"><code>along.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions take the idea of <code><a href='https://rdrr.io/r/base/seq.html'>seq_along()</a></code> and generalise
-it to creating lists (<code>list_along</code>) and repeating values
-(<code>rep_along</code>).</p>
+    <p><a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a></p>
+<p>It can be useful to create an empty list that you plan to fill later. This is
+similar to the idea of <code><a href='https://rdrr.io/r/base/seq.html'>seq_along()</a></code>, which creates a vector of the same
+length as its input.</p>
     </div>
 
     <pre class="usage"><span class='fu'>list_along</span>(<span class='no'>x</span>)</pre>
@@ -169,19 +171,18 @@ it to creating lists (<code>list_along</code>) and repeating values
       <th>x</th>
       <td><p>A vector.</p></td>
     </tr>
-    <tr>
-      <th>y</th>
-      <td><p>Values to repeat.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of the same length as <code>x</code>.</p>
+    <p>A list of the same length as <code>x</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function might change to <code><a href='https://rdrr.io/pkg/vctrs/man/vec_init.html'>vctrs::vec_init()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>5</span>
-<span class='fu'><a href='rep_along.html'>rep_along</a></span>(<span class='no'>x</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 1 2 1 2 1</div><div class='input'><span class='fu'><a href='rep_along.html'>rep_along</a></span>(<span class='no'>x</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 1 1 1 1 1</div><div class='input'><span class='fu'>list_along</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 1 2 3 4 5</div><div class='input'><span class='fu'>list_along</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; NULL
 #&gt; 
 #&gt; [[2]]
@@ -202,6 +203,7 @@ it to creating lists (<code>list_along</code>) and repeating values
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

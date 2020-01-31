@@ -108,7 +108,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="purrr" class="section level1">
+<div id="purrr-" class="section level1">
 
 
 <div id="overview" class="section level2">
@@ -119,15 +119,15 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># The easiest way to get purrr is to install the whole tidyverse:</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidyverse"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Alternatively, install just purrr:</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"purrr"</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Or the the development version from GitHub:</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"tidyverse/purrr"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># The easiest way to get purrr is to install the whole tidyverse:</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Alternatively, install just purrr:</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"purrr"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># Or the the development version from GitHub:</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># install.packages("devtools")</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"tidyverse/purrr"</span>)</span></code></pre></div>
 </div>
 <div id="cheatsheet" class="section level2">
 <h2 class="hasAnchor">
@@ -138,26 +138,23 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, compute the summary, then extract the R<sup>2</sup>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">mtcars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/split.html">split</a></span>(.<span class="op">$</span>cyl) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># from base R</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="reference/map.html">map</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> .)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="reference/map.html">map</a></span>(summary) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="reference/map.html">map_dbl</a></span>(<span class="st">"r.squared"</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;         4         6         8 </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/split.html">split</a></span>(.<span class="op">$</span>cyl) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># from base R</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="kw"><a href="reference/map.html">map</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> .)) <span class="op">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="st">  </span><span class="kw"><a href="reference/map.html">map</a></span>(summary) <span class="op">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="st">  </span><span class="kw"><a href="reference/map.html">map_dbl</a></span>(<span class="st">"r.squared"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;         4         6         8 </span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></span></code></pre></div>
 <p>This example illustrates some of the advantages of purrr functions over the equivalents in base R:</p>
 <ul>
 <li><p>The first argument is always the data, so purrr works naturally with the pipe.</p></li>
 <li><p>All purrr functions are type-stable. They always return the advertised output type (<code><a href="reference/map.html">map()</a></code> returns lists; <code><a href="reference/map.html">map_dbl()</a></code> returns double vectors), or they throw an error.</p></li>
 <li><p>All <code><a href="reference/map.html">map()</a></code> functions either accept function, formulas (used for succinctly generating anonymous functions), a character vector (used to extract components by name), or a numeric vector (used to extract by position).</p></li>
 </ul>
-</div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that the purrr project is released with a <a href="https://purrr.tidyverse.org/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<hr>
+<p>Please note that this project is released with a <a href="https://purrr.tidyverse.org/CODE_OF_CONDUCT">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
   </div>
@@ -205,8 +202,7 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=purrr"><img src="https://www.r-pkg.org/badges/version/purrr" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/tidyverse/purrr"><img src="https://travis-ci.org/tidyverse/purrr.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/tidyverse/purrr"><img src="https://ci.appveyor.com/api/projects/status/github/tidyverse/purrr?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://github.com/tidyverse/purrr"><img src="https://github.com/tidyverse/purrr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://codecov.io/github/tidyverse/purrr?branch=master"><img src="https://img.shields.io/codecov/c/github/tidyverse/purrr/master.svg" alt="Coverage Status"></a></li>
 </ul>
 </div>
