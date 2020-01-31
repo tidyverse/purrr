@@ -104,9 +104,12 @@ map_depth(x, 2, paste, collapse = "/")
 map(x, map, paste, collapse = "/")
 }
 \seealso{
-Other map variants: \code{\link{imap}},
-  \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map}},
-  \code{\link{modify}}
+Other map variants: 
+\code{\link{imap}()},
+\code{\link{invoke}()},
+\code{\link{lmap}()},
+\code{\link{map2}()},
+\code{\link{map}()},
+\code{\link{modify}()}
 }
 \concept{map variants}

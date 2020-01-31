@@ -61,7 +61,7 @@ a variable with that name, storing either the name (if \code{.x} is named) or
 the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
 variable will be created.
 
-Only applies to \code{_dfr} variant.}
+Only applies to \verb{_dfr} variant.}
 }
 \value{
 \itemize{
@@ -165,9 +165,12 @@ mtcars \%>\%
 \code{\link[=map_if]{map_if()}} for applying a function to only those elements
 of \code{.x} that meet a specified condition.
 
-Other map variants: \code{\link{imap}},
-  \code{\link{invoke}}, \code{\link{lmap}},
-  \code{\link{map2}}, \code{\link{map_if}},
-  \code{\link{modify}}
+Other map variants: 
+\code{\link{imap}()},
+\code{\link{invoke}()},
+\code{\link{lmap}()},
+\code{\link{map2}()},
+\code{\link{map_if}()},
+\code{\link{modify}()}
 }
 \concept{map variants}

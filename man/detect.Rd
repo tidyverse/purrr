@@ -5,11 +5,16 @@
 \alias{detect_index}
 \title{Find the value or position of the first match}
 \usage{
-detect(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL,
-  .default = NULL)
+detect(
+  .x,
+  .f,
+  ...,
+  .dir = c("forward", "backward"),
+  .right = NULL,
+  .default = NULL
+)
 
-detect_index(.x, .f, ..., .dir = c("forward", "backward"),
-  .right = NULL)
+detect_index(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

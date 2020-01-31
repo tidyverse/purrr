@@ -65,16 +65,16 @@ reducing \code{list()} from the right produces a right-leaning list.
 \code{reduce_right()} is soft-deprecated as of purrr 0.3.0. Please use
 the \code{.dir} argument of \code{reduce()} instead. Note that the algorithm
 has changed. Whereas \code{reduce_right()} computed \code{f(f(3, 2), 1)},
-\code{reduce(.dir = \"backward\")} computes \code{f(1, f(2, 3))}. This is the
+\verb{reduce(.dir = \\"backward\\")} computes \code{f(1, f(2, 3))}. This is the
 standard way of reducing from the right.
 
 To update your code with the same reduction as \code{reduce_right()},
-simply reverse your vector and use a left reduction:\preformatted{# Before:
+simply reverse your vector and use a left reduction:\if{html}{\out{<div class="{r}">}}\preformatted{# Before:
 reduce_right(1:3, f)
 
 # After:
 reduce(rev(1:3), f)
-}
+}\if{html}{\out{</div>}}
 
 \code{reduce2_right()} is soft-deprecated as of purrr 0.3.0 without
 replacement. It is not clear what algorithmic properties should a

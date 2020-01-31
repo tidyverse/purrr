@@ -23,7 +23,7 @@ accessing it by name will return the corresponding slot.
 
 These dots support \link[rlang:list2]{tidy dots} features. In
 particular, if your accessors are stored in a list, you can
-splice that in with \code{!!!}.}
+splice that in with \verb{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
 
