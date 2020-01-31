@@ -64,7 +64,7 @@
 #'
 #' # Working with lists
 #' favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
-#' favorite_desserts %>% map_chr(~paste(.x, "rocks!"))
+#' favorite_desserts %>% map_chr(~ paste(.x, "rocks!"))
 #'
 #' # Extract by name or position
 #' # .default specifies value for elements that are missing or NULL
@@ -87,7 +87,7 @@
 #' l2 %>% map_int(list("num", 3), .default = NA)
 #'
 #' # Working with data frames
-#' # Use map_lgl(), map_dbl(), etc to reduce output to a vector instead of a list:
+#' # Use map_lgl(), map_dbl(), etc to return a vector instead of a list:
 #' mtcars %>% map_dbl(sum)
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
