@@ -1,9 +1,9 @@
-#' Apply a function to each element of a vector
+#' Apply a function to each element of a list or atomic vector
 #'
 #' @description
 #'
 #' The map functions transform their input by applying a function to
-#' each element and returning a vector the same length as the input.
+#' each element of a list or atomic vector and returning an object of the same length as the input.
 #'
 #' * `map()` always returns a list. See the [modify()] family for
 #'   versions that return an object of the same type as the input.
@@ -11,11 +11,11 @@
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
 #'   atomic vector of the indicated type (or die trying).
 #'
-#' * `map_dfr()` and `map_dfc()` return data frames created by
+#' * `map_dfr()` and `map_dfc()` return a data frame created by
 #'   row-binding and column-binding respectively. They require dplyr
 #'   to be installed.
 #'
-#' * The return value of `.f` must be of length one for each element
+#' * The returned values of `.f` must be of length one for each element
 #'   of `.x`. If `.f` uses an extractor function shortcut, `.default`
 #'   can be specified to handle values that are absent or empty. See
 #'   [as_mapper()] for more on `.default`.
@@ -41,11 +41,11 @@
 #' @seealso [map_if()] for applying a function to only those elements
 #'   of `.x` that meet a specified condition.
 #' @examples
+#' # Compute normal distributions from an atomic vector
 #' 1:10 %>%
-#'   map(rnorm, n = 10) %>%
-#'   map_dbl(mean)
+#'   map(rnorm, n = 10)
 #'
-#' # Or use an anonymous function
+#' # You can also use an anonymous function
 #' 1:10 %>%
 #'   map(function(x) rnorm(10, x))
 #'
@@ -53,9 +53,18 @@
 #' 1:10 %>%
 #'   map(~ rnorm(10, .x))
 #'
+#' # Simplify output to a vector instead of a list by computing the mean of the distributions
+#' 1:10 %>%
+#'   map(rnorm, n = 10) %>%  # output a list
+#'   map_dbl(mean)           # output an atomic vector
+#'
 #' # Using set_names() with character vectors is handy to keep track
 #' # of the original inputs:
 #' set_names(c("foo", "bar")) %>% map_chr(paste0, ":suffix")
+#'
+#' # Working with lists
+#' favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
+#' favorite_desserts %>% map_chr(~ paste(.x, "rocks!"))
 #'
 #' # Extract by name or position
 #' # .default specifies value for elements that are missing or NULL
@@ -77,6 +86,9 @@
 #' l2 %>% map(list("num", 3))
 #' l2 %>% map_int(list("num", 3), .default = NA)
 #'
+#' # Working with data frames
+#' # Use map_lgl(), map_dbl(), etc to return a vector instead of a list:
+#' mtcars %>% map_dbl(sum)
 #'
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
@@ -85,10 +97,6 @@
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
 #'   map_dbl("r.squared")
-#'
-#' # Use map_lgl(), map_dbl(), etc to reduce output to a vector instead
-#' # of a list:
-#' mtcars %>% map_dbl(sum)
 #'
 #' # If each element of the output is a data frame, use
 #' # map_dfr to row-bind them together:
