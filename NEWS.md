@@ -1,6 +1,7 @@
 
 # purrr (development version)
 
+* Adds a `none` function, which tests that a predicate is false for all elements (the opposite of `every`). Added as part of Tidyverse Developer Day (@AliciaSchep, #735)
 
 # purrr 0.3.3
 

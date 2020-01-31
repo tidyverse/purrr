@@ -12,6 +12,11 @@ test_that("some returns FALSE if all elements are FALSE", {
   expect_true(some(x[1], negate(isTRUE)))
 })
 
+test_that("none returns TRUE if all elements are FALSE", {
+  x <- list(1, 0, TRUE)
+  expect_false(none(x, isTRUE))
+  expect_true(none(x[1], isTRUE))
+})
 
 # Life cycle --------------------------------------------------------------
 
