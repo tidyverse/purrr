@@ -1,23 +1,28 @@
-#' Helper to create vectors with matching length.
+#' Helper to create a new empty list of a given length.
 #'
-#' These functions take the idea of [seq_along()] and generalise
-#' it to creating lists (`list_along`) and repeating values
-#' (`rep_along`).
+#' @description
+#'
+#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+#'
+#' It can be useful to create empty lists that you later fill through iterate.
+#' This is similar to the idea of [seq_along()], which creates a vector of the
+#' same length as its input.
+#'
+#' @details
+#'
+#' This function might change to [vctrs::vec_init()].
 #'
 #' @param x A vector.
-#' @param y Values to repeat.
 #' @return A vector of the same length as `x`.
 #' @keywords internal
 #' @examples
 #' x <- 1:5
-#' rep_along(x, 1:2)
-#' rep_along(x, 1)
+#' seq_along(x)
 #' list_along(x)
 #' @name along
-NULL
-
-#' @export
 #' @rdname along
+#' @export
 list_along <- function(x) {
   vector("list", length(x))
 }
+

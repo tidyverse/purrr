@@ -3,27 +3,29 @@
 \name{along}
 \alias{along}
 \alias{list_along}
-\title{Helper to create vectors with matching length.}
+\title{Helper to create a new empty list of a given length.}
 \usage{
 list_along(x)
 }
 \arguments{
 \item{x}{A vector.}
-
-\item{y}{Values to repeat.}
 }
 \value{
 A vector of the same length as \code{x}.
 }
 \description{
-These functions take the idea of \code{\link[=seq_along]{seq_along()}} and generalise
-it to creating lists (\code{list_along}) and repeating values
-(\code{rep_along}).
+\Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+
+It can be useful to create empty lists that you later fill through iterate.
+This is similar to the idea of \code{\link[=seq_along]{seq_along()}}, which creates a vector of the
+same length as its input.
+}
+\details{
+This function might change to \code{\link[vctrs:vec_init]{vctrs::vec_init()}}.
 }
 \examples{
 x <- 1:5
-rep_along(x, 1:2)
-rep_along(x, 1)
+seq_along(x)
 list_along(x)
 }
 \keyword{internal}
