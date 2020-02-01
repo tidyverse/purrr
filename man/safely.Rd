@@ -59,6 +59,10 @@ through printed output, messages, warnings, and errors, they return enhanced
 output. They are all adverbs because they modify the action of a verb (a
 function).
 }
+\details{
+If you would like to include a function created with \code{safely}, \code{slowly}, or
+\code{insistently} in a package, see \link{exporting-adverbs}.
+}
 \examples{
 safe_log <- safely(log)
 safe_log(10)

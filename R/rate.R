@@ -13,6 +13,9 @@
 #' backoff rate for `insistently()`, and a constant rate for
 #' `slowly()`).
 #'
+#' If you would like to include a function created with `safely`, `slowly`, or
+#' `insistently` in a package, see [exporting-adverbs].
+#'
 #' @param f A function to modify.
 #' @inheritParams rate_sleep
 #'

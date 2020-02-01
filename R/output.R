@@ -5,6 +5,9 @@
 #' output. They are all adverbs because they modify the action of a verb (a
 #' function).
 #'
+#' If you would like to include a function created with `safely`, `slowly`, or
+#' `insistently` in a package, see [exporting-adverbs].
+#'
 #' @inheritParams map
 #' @param quiet Hide errors (`TRUE`, the default), or display them
 #'   as they occur?

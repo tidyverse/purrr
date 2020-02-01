@@ -29,6 +29,9 @@ The number and rate of attempts is determined by a
 \link[=rate-helpers]{rate} object (by default a jittered exponential
 backoff rate for \code{insistently()}, and a constant rate for
 \code{slowly()}).
+
+If you would like to include a function created with \code{safely}, \code{slowly}, or
+\code{insistently} in a package, see \link{exporting-adverbs}.
 }
 \examples{
 # For the purpose of this example, we first create a custom rate
