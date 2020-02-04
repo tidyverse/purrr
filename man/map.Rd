@@ -11,7 +11,7 @@
 \alias{map_df}
 \alias{map_dfc}
 \alias{walk}
-\title{Apply a function to each element of a vector}
+\title{Apply a function to each element of a list or atomic vector}
 \usage{
 map(.x, .f, ...)
 
@@ -82,16 +82,16 @@ use in pipe.
 }
 \description{
 The map functions transform their input by applying a function to
-each element and returning a vector the same length as the input.
+each element of a list or atomic vector and returning an object of the same length as the input.
 \itemize{
 \item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}} family for
 versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
 atomic vector of the indicated type (or die trying).
-\item \code{map_dfr()} and \code{map_dfc()} return data frames created by
+\item \code{map_dfr()} and \code{map_dfc()} return a data frame created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.
-\item The return value of \code{.f} must be of length one for each element
+\item The returned values of \code{.f} must be of length one for each element
 of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
 can be specified to handle values that are absent or empty. See
 \code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
@@ -103,11 +103,11 @@ the input \code{.x}.
 }
 }
 \examples{
+# Compute normal distributions from an atomic vector
 1:10 \%>\%
-  map(rnorm, n = 10) \%>\%
-  map_dbl(mean)
+  map(rnorm, n = 10)
 
-# Or use an anonymous function
+# You can also use an anonymous function
 1:10 \%>\%
   map(function(x) rnorm(10, x))
 
@@ -115,9 +115,18 @@ the input \code{.x}.
 1:10 \%>\%
   map(~ rnorm(10, .x))
 
+# Simplify output to a vector instead of a list by computing the mean of the distributions
+1:10 \%>\%
+  map(rnorm, n = 10) \%>\%  # output a list
+  map_dbl(mean)           # output an atomic vector
+
 # Using set_names() with character vectors is handy to keep track
 # of the original inputs:
 set_names(c("foo", "bar")) \%>\% map_chr(paste0, ":suffix")
+
+# Working with lists
+favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
+favorite_desserts \%>\% map_chr(~ paste(.x, "rocks!"))
 
 # Extract by name or position
 # .default specifies value for elements that are missing or NULL
@@ -139,6 +148,9 @@ l2 \%>\% map(c(2, 2))
 l2 \%>\% map(list("num", 3))
 l2 \%>\% map_int(list("num", 3), .default = NA)
 
+# Working with data frames
+# Use map_lgl(), map_dbl(), etc to return a vector instead of a list:
+mtcars \%>\% map_dbl(sum)
 
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2
@@ -147,10 +159,6 @@ mtcars \%>\%
   map(~ lm(mpg ~ wt, data = .x)) \%>\%
   map(summary) \%>\%
   map_dbl("r.squared")
-
-# Use map_lgl(), map_dbl(), etc to reduce output to a vector instead
-# of a list:
-mtcars \%>\% map_dbl(sum)
 
 # If each element of the output is a data frame, use
 # map_dfr to row-bind them together:
