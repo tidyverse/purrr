@@ -14,7 +14,7 @@
 #' `slowly()`).
 #'
 #' If you would like to include a function created with `safely`, `slowly`, or
-#' `insistently` in a package, see [exporting-adverbs].
+#' `insistently` in a package, see [faq-adverbs-export].
 #'
 #' @param f A function to modify.
 #' @inheritParams rate_sleep

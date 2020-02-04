@@ -6,7 +6,7 @@
 #' function).
 #'
 #' If you would like to include a function created with `safely`, `slowly`, or
-#' `insistently` in a package, see [exporting-adverbs].
+#' `insistently` in a package, see [faq-adverbs-export].
 #'
 #' @inheritParams map
 #' @param quiet Hide errors (`TRUE`, the default), or display them

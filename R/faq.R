@@ -38,5 +38,5 @@
 #' }
 #'```
 #'
-#' @name exporting-adverbs
+#' @name faq-adverbs-export
 NULL

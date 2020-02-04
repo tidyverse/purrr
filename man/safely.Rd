@@ -61,7 +61,7 @@ function).
 }
 \details{
 If you would like to include a function created with \code{safely}, \code{slowly}, or
-\code{insistently} in a package, see \link{exporting-adverbs}.
+\code{insistently} in a package, see \link{faq-adverbs-export}.
 }
 \examples{
 safe_log <- safely(log)
