@@ -53,7 +53,9 @@ amount of time between each call.
 The number and rate of attempts is determined by a
 rate object (by default a jittered exponential
 backoff rate for insistently(), and a constant rate for
-slowly())." />
+slowly()).
+If you would like to include a function created with safely, slowly, or
+insistently in a package, see faq-adverbs-export." />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -176,6 +178,8 @@ amount of time between each call.</p></li>
 <a href='rate-helpers.html'>rate</a> object (by default a jittered exponential
 backoff rate for <code>insistently()</code>, and a constant rate for
 <code>slowly()</code>).</p>
+<p>If you would like to include a function created with <code>safely</code>, <code>slowly</code>, or
+<code>insistently</code> in a package, see <a href='faq-adverbs-export.html'>faq-adverbs-export</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>insistently</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

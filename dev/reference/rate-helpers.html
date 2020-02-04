@@ -216,7 +216,7 @@ not be kind to the server, use with caution!).</p></td>
 <span class='co'># A backoff rate waits exponentially longer each time, with random</span>
 <span class='co'># jitter by default:</span>
 <span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div></pre>
+<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.4 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.7 seconds.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

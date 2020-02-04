@@ -197,48 +197,48 @@ input by transposing it twice.</p>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>1</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>5</span>))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.554
-#&gt;   ..$ y: num [1:5] 0.113 0.0391 0.9627 0.7334 0.5532
+#&gt;   ..$ x: num 0.589
+#&gt;   ..$ y: num [1:5] 0.704 0.93 0.98 0.415 0.563
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.402
-#&gt;   ..$ y: num [1:5] 0.656 0.537 0.49 0.509 0.794
+#&gt;   ..$ x: num 0.366
+#&gt;   ..$ y: num [1:5] 0.422 0.293 0.857 0.881 0.234
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.119
-#&gt;   ..$ y: num [1:5] 0.13 0.528 0.191 0.716 0.267
+#&gt;   ..$ x: num 0.103
+#&gt;   ..$ y: num [1:5] 0.289 0.403 0.786 0.744 0.5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.953
-#&gt;   ..$ y: num [1:5] 0.781 0.789 0.4591 0.196 0.0605
+#&gt;   ..$ x: num 0.573
+#&gt;   ..$ y: num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.518
-#&gt;   ..$ y: num [1:5] 0.6462 0.4103 0.0575 0.0914 0.8357</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;   ..$ x: num 0.11
+#&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x:List of 5
-#&gt;   ..$ : num 0.554
-#&gt;   ..$ : num 0.402
-#&gt;   ..$ : num 0.119
-#&gt;   ..$ : num 0.953
-#&gt;   ..$ : num 0.518
+#&gt;   ..$ : num 0.589
+#&gt;   ..$ : num 0.366
+#&gt;   ..$ : num 0.103
+#&gt;   ..$ : num 0.573
+#&gt;   ..$ : num 0.11
 #&gt;  $ y:List of 5
-#&gt;   ..$ : num [1:5] 0.113 0.0391 0.9627 0.7334 0.5532
-#&gt;   ..$ : num [1:5] 0.656 0.537 0.49 0.509 0.794
-#&gt;   ..$ : num [1:5] 0.13 0.528 0.191 0.716 0.267
-#&gt;   ..$ : num [1:5] 0.781 0.789 0.4591 0.196 0.0605
-#&gt;   ..$ : num [1:5] 0.6462 0.4103 0.0575 0.0914 0.8357</div><div class='input'><span class='co'># Back to where we started</span>
+#&gt;   ..$ : num [1:5] 0.704 0.93 0.98 0.415 0.563
+#&gt;   ..$ : num [1:5] 0.422 0.293 0.857 0.881 0.234
+#&gt;   ..$ : num [1:5] 0.289 0.403 0.786 0.744 0.5
+#&gt;   ..$ : num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
+#&gt;   ..$ : num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='co'># Back to where we started</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.554
-#&gt;   ..$ y: num [1:5] 0.113 0.0391 0.9627 0.7334 0.5532
+#&gt;   ..$ x: num 0.589
+#&gt;   ..$ y: num [1:5] 0.704 0.93 0.98 0.415 0.563
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.402
-#&gt;   ..$ y: num [1:5] 0.656 0.537 0.49 0.509 0.794
+#&gt;   ..$ x: num 0.366
+#&gt;   ..$ y: num [1:5] 0.422 0.293 0.857 0.881 0.234
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.119
-#&gt;   ..$ y: num [1:5] 0.13 0.528 0.191 0.716 0.267
+#&gt;   ..$ x: num 0.103
+#&gt;   ..$ y: num [1:5] 0.289 0.403 0.786 0.744 0.5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.953
-#&gt;   ..$ y: num [1:5] 0.781 0.789 0.4591 0.196 0.0605
+#&gt;   ..$ x: num 0.573
+#&gt;   ..$ y: num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.518
-#&gt;   ..$ y: num [1:5] 0.6462 0.4103 0.0575 0.0914 0.8357</div><div class='input'>
+#&gt;   ..$ x: num 0.11
+#&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'>
 <span class='co'># transpose() is useful in conjunction with safely() &amp; quietly()</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='safely.html'>safely</a></span>(<span class='no'>log</span>))
