@@ -17,8 +17,10 @@
 #'   an `error` object and `result` has a default value (`otherwise`).
 #'   Else `error` is `NULL`.
 #'
-#'   `quietly`: wrapped function instead returns a list with components
-#'   `result`, `output`, `messages` and `warnings`.
+#'   `quietly`: wrapped function instead returns a list with components. 
+#'   `result`, `output`, `messages` and `warnings`. This function does 
+#'   not provide error handling, instead it acts to capture what would
+#'   have been printed output.
 #'
 #'   `possibly`: wrapped function uses a default value (`otherwise`)
 #'   whenever an error occurs.
