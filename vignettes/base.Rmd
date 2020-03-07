@@ -1,8 +1,8 @@
 ---
-title: "Translating between `purrr` and base R"
+title: "purrr <-> base R"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Translating between `purrr` and base R}
+  %\VignetteIndexEntry{purrr <-> base R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
