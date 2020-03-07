@@ -2,24 +2,23 @@ on:
   push:
     branches: master
 
-name: Pkgdown
+name: pkgdown
 
 jobs:
   pkgdown:
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages("remotes")' \
-                  -e 'remotes::install_deps(dependencies = TRUE)' \
-                  -e 'remotes::install_github("tidyverse/tidytemplate")' \
-                  -e 'remotes::install_github("jimhester/pkgdown@github-actions-deploy")'
+          install.packages("remotes")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_dev("pkgdown")
+        shell: Rscript {0}
       - name: Install package
         run: R CMD INSTALL .
       - name: Deploy package
-        run: |
-          pkgdown:::deploy_local(new_process = FALSE, remote_url = 'https://x-access-token:${{secrets.DEPLOY_PAT}}@github.com/${{github.repository}}.git')
+        run: pkgdown::deploy_to_branch(new_process = FALSE)
         shell: Rscript {0}

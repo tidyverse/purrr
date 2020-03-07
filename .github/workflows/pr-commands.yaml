@@ -8,7 +8,7 @@ jobs:
     name: document
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: r-lib/actions/pr-fetch@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -26,22 +26,22 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
   style:
     if: startsWith(github.event.comment.body, '/style')
-    name: document
+    name: style
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - uses: r-lib/actions/pr-fetch@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: r-lib/actions/setup-r@master
       - name: Install dependencies
         run: Rscript -e 'install.packages("styler")'
-      - name: style
+      - name: Style
         run: Rscript -e 'styler::style_pkg()'
       - name: commit
         run: |
           git add \*.R
-          git commit -m 'style'
+          git commit -m 'Style'
       - uses: r-lib/actions/pr-push@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
