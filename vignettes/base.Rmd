@@ -86,7 +86,7 @@ Description | base R | purrr
 Find the value or position of the first match | `X[.p(X)][1]`, `which(.p(X))[1]` | `detect()`, `detect_index()`
 Do every or some elements of a list satisfy a predicate? | For atomic vectors, `all/any(.p(X))`; for lists, `all/any(sapply(X, .p))` | `every()`, `some()`
 Does a list contain an object? | `any(sapply(X, function(x) x == object))` | `has_element()`
-Keep or discard elements using a predicate function | For atomic vectors, `X[.p(X)]`, `X[!.p(X)]`; for lists, `X[sapply(X, .p)]`, `X[~sapply(X, .p)]`, `X[sapply(X, function(x) length(.p(x)) > 0)]` | `keep()`, `discard()`, `compact()`
+Keep or discard elements using a predicate function | For atomic vectors, `X[.p(X)]`, `X[!.p(X)]`; for lists, `X[sapply(X, .p)]`, `X[!sapply(X, .p)]`, `X[sapply(X, function(x) length(.p(x)) > 0)]` | `keep()`, `discard()`, `compact()`
 Negate a predicate function | `function(x) !.p(x)` | `negate()`
 
 ### Plucking
