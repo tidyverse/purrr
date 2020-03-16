@@ -20,7 +20,7 @@ options(tibble.print_min = 6, tibble.print_max = 6)
 
 # Introduction
 
-This vignette compares purrr functions to their base R equivalents. This helps those familiar with base R understand better what purrr does, and shows purrr users how you might express the same ideas in base R code. We’ll start with a rough overview of the major differences, give a rough translation guide, and then show a few examples.
+This vignette compares purrr functionals to their base R equivalents, focussing primarily on the map family and related functions. This helps those familiar with base R understand better what purrr does, and shows purrr users how you might express the same ideas in base R code. We’ll start with a rough overview of the major differences, give a rough translation guide, and then show a few examples.
 
 ```{r setup}
 library(purrr)
@@ -29,11 +29,28 @@ library(tibble)
 
 ## Key differences
 
-However, the base R `*apply()` functions have inconsistent user interfaces. When a function (`FUN`) is applied to each element of one vector (`X`) and each element of the vector fills one argument of `FUN`, i.e. in `lapply()`, `sapply()`, and `vapply()`, the call to the `*apply()` function takes the form `*apply(X, FUN, ...)`, with the vector coming before the function. In contrast, when a function (`FUN`) needs to be applied concurrently to each element of multiple vectors, with the vectors filling multiple arguments of `FUN`, i.e. in `mapply()` and `Map`, we would write instead `mapply(FUN, ...)` and `Map(FUN, ...)`, with the function coming before the vectors.
+There are two primary differences between the base apply family and the purrr map family: purrr functions are named more consistently, and more fully explore the space of input and output variants.
 
-Furthermore, base R's `sapply()` and `mapply()` (with `simpify = TRUE` or `SIMPLIFY = TRUE`, again, inconsistent argument naming), the output is not type stable. Depending on the type of output, a list, vector, or matrix may be returned, making downstream code more fragile. Type and length of output can be specified in `vapply` with the argument `FUN.VALUE`, but how `FUN.VALUE` should be specified is not very straightforward.
+* purrr functions consistently use `.` as prefix to avoid function arguments
+  mismatches. Base functions use a variety of techniques including upper case
+  (e.g. `lapply(X, FUN, ...)`) or require anonymous functions (e.g. `Map()`). 
+  See <https://adv-r.hadley.nz/functionals.html#argument-names> for more 
+  details.
 
-The purrr package implements the `map()` family of functions that aim to solve similar problems to the `apply()` family, but with more a consistent user interface, type stability, and helpful shorthands. In addition, purrr simplifies some functional programming tasks that would have been cumbersome or difficult to implement in base R. This vignette shows base R commands and the corresponding purrr functions, if such correspondence exists. Then some common base R and corresponding purrr operations will be compared side by side in examples.
+* All map functions are type stable: you can predict the type of the output
+  using little information about the inputs. In contrast, the base functions
+  `sapply()` and `mapply()` automatically simplify.
+
+* The map family functions all start with the data, followed by the function, 
+  then any additional constant argument. Most apply functions also follow this
+  pattern, but `mapply()` starts with the function, and `Map()` has no way
+  to supply additional constant arguments.
+  
+* purrr functions provide all combinations of input and output variants, and
+  include variants specifically for the common two argument case. 
+
+* The map family all support an alternative succinct function definition syntax 
+  that helps with the most common cases.
 
 
 ## Direct translations
