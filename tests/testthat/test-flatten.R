@@ -79,5 +79,11 @@ test_that("preserves inner names", {
 test_that("can flatten to a data frame with named lists", {
   skip_if_not_installed("dplyr")
   expect_is(flatten_dfr(list(c(a = 1), c(b = 2))), "data.frame")
-  expect_equal(flatten_dfc(list(1)), tibble::tibble(V1 = 1))
+
+  res <- flatten_dfc(list(1))
+  expect_is(res, "data.frame")
+  expect_equal(res[[1L]], 1)
+
+  skip_if_not_installed("dplyr", minimum_version = "0.8.99.9000")
+  expect_equal(res, data.frame(...1 = 1))
 })
