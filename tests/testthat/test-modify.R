@@ -92,6 +92,24 @@ test_that("`.else` modifies false elements", {
   expect_identical(modify_if(iris, is.factor, as.character, .else = as.integer), exp)
 })
 
+test_that("modify family preserves NULLs", {
+  l <- list(a = 1, b = NULL, c = 3)
+  expect_identical(modify(l, identity), l)
+  expect_identical(modify_at(l, "b", identity), l)
+  expect_identical(modify_if(l, is.null, identity), l)
+  expect_identical(modify(l, ~ if(!is.null(.x)) .x + .y, 10),
+                   list(a = 11, b = NULL, c = 13))
+  expect_identical(modify_if(list(1, 2), ~ .x == 2, ~ NULL),
+                   list(1, NULL))
+})
+
+test_that("modify() fails on NULL assignment to data.frames", {
+  df <- data.frame(a = 1, b = 2, c = 3)
+  expect_error(modify(df, function(x) NULL))
+  expect_error(modify_at(df, "b", function(x) NULL))
+  expect_error(modify_if(df, is.numeric, function(x) NULL))
+})
+
 # modify_depth ------------------------------------------------------------
 
 test_that("modify_depth modifies values at specified depth", {
@@ -141,4 +159,10 @@ test_that("modify_at() can use tidyselect", {
   expect_is(two$cyl, "character")
 })
 
+test_that("modify_depth() treats NULLs correctly", {
+  ll <- list(a = NULL, b = list(b1 = NULL, b2 = "hello"))
+  expect_identical(modify_depth(ll, .depth = 2, identity, .ragged = TRUE), ll)
+  expect_identical(modify_depth(ll, .depth = 2, is.character, .ragged = TRUE),
+                   list(a = NULL, b = list(b1 = FALSE, b2 = TRUE)))
+})
 

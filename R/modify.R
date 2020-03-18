@@ -135,8 +135,12 @@ modify <- function(.x, .f, ...) {
 modify.default <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  for (i in seq_along(.x)) {
-    .x[[i]] <- .f(.x[[i]], ...)
+  if (is.recursive(.x)) {
+    .x <- modify_list_with_ix(.x, seq_along(.x), .f, ...)
+  } else {
+    for (i in seq_along(.x)) {
+      .x[[i]] <- .f(.x[[i]], ...)
+    }
   }
 
   .x
@@ -155,12 +159,18 @@ modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
   index <- seq_along(.x)
 
   .f <- as_mapper(.f, ...)
-  for (i in index[sel]) {
-    .x[[i]] <- .f(.x[[i]], ...)
+  if (is.recursive(.x)) {
+    .x <- modify_list_with_ix(.x, index[sel], .f, ...)
+  } else {
+    for (i in index[sel]) {
+      .x[[i]] <- .f(.x[[i]], ...)
+    }
   }
 
   if (!is_null(.else)) {
     .else <- as_mapper(.else, ...)
+    if (is.recursive(.x))
+      .x <- modify_list_with_ix(.x, index[!sel], .f, ...)
     for (i in index[!sel]) {
       .x[[i]] <- .else(.x[[i]], ...)
     }
@@ -473,3 +483,23 @@ inv_which <- function(x, sel) {
     stop("unrecognised index type", call. = FALSE)
   }
 }
+
+# protected list modifier
+modify_list_with_ix <- function(x, ix, f, ...) {
+  orig_len <- length(x)
+  for (i in ix) {
+    elt <- f(x[[i]], ...)
+    if (is.null(elt)) {
+      ## this might break if [] is unwisely overloaded
+      x[i] <- list(NULL)
+      if (length(x) != orig_len)
+        stop(sprintf("Modifier returned NULL. Cannot assin NULLs into %s",
+                     friendly_type_of(x)), call. = FALSE)
+    } else {
+      x[[i]] <- elt
+    }
+  }
+  x
+}
+
+
