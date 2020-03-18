@@ -84,6 +84,6 @@ test_that("can flatten to a data frame with named lists", {
   expect_is(res, "data.frame")
   expect_equal(res[[1L]], 1)
 
-  skip_if_not_installed("dplyr", minimum_version = "0.8.99.9000")
-  expect_equal(res, data.frame(...1 = 1))
+  skip_if_not_installed("dplyr", minimum_version = "0.8.99.9001")
+  expect_equal(res, tibble::tibble(...1 = 1))
 })
