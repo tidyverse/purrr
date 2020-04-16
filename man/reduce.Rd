@@ -69,7 +69,7 @@ has changed. Whereas \code{reduce_right()} computed \code{f(f(3, 2), 1)},
 standard way of reducing from the right.
 
 To update your code with the same reduction as \code{reduce_right()},
-simply reverse your vector and use a left reduction:\if{html}{\out{<div class="{r}">}}\preformatted{# Before:
+simply reverse your vector and use a left reduction:\if{html}{\out{<div class="r">}}\preformatted{# Before:
 reduce_right(1:3, f)
 
 # After:
