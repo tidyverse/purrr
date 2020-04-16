@@ -101,6 +101,12 @@ rlang::as_function()." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -122,7 +128,7 @@ rlang::as_function()." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
+    <li class="dropdown-header">Releases</li>
     <li>
       <a href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     </li>
@@ -131,7 +137,7 @@ rlang::as_function()." />
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
@@ -216,27 +222,27 @@ value is absent (does not exist) or empty (has length 0).
     <pre class="examples"><div class='input'><span class='fu'>as_mapper</span>(~ <span class='no'>.</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; . + 1
-#&gt; &lt;environment: 0x7fcbe907ff08&gt;
+#&gt; &lt;environment: 0x7fac88af07f0&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function" "function"             </div><div class='input'><span class='fu'>as_mapper</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, .default = NULL)
-#&gt; &lt;environment: 0x7fcbe9a83f58&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x7fac88bd0f98&gt;</div><div class='input'>
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NULL)
-#&gt; &lt;environment: 0x7fcbea0f23b0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
+#&gt; &lt;environment: 0x7fac88c5bc80&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"a"</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, "a", 2, .default = NULL)
-#&gt; &lt;environment: 0x7fcbe8dcbde0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
+#&gt; &lt;environment: 0x7fac88cd5318&gt;</div><div class='input'><span class='co'># Equivalent to function(x) x[[1]][["a"]][[2]]</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='attr_getter.html'>attr_getter</a></span>(<span class='st'>"a"</span>)))</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, 1, function (x) 
 #&gt; attr(x, attr, exact = TRUE), .default = NULL)
-#&gt; &lt;environment: 0x7fcbe8a78bb8&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
+#&gt; &lt;environment: 0x7fac88d38be0&gt;</div><div class='input'><span class='co'># Equivalent to function(x) attr(x[[1]], "a")</span>
 
 <span class='fu'>as_mapper</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; function (x, ...) 
 #&gt; pluck(x, "a", "b", "c", .default = NA)
-#&gt; &lt;environment: 0x7fcbe7a8bde8&gt;</div></pre>
+#&gt; &lt;environment: 0x7fac84da6618&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
