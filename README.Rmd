@@ -1,7 +1,5 @@
 ---
-output:
-  github_document:
-    html_preview: false
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -20,7 +18,6 @@ knitr::opts_chunk$set(
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/purrr)](https://cran.r-project.org/package=purrr)
 [![R build status](https://github.com/tidyverse/purrr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/purrr)
 [![Codecov test coverage](https://codecov.io/gh/tidyverse/purrr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/purrr?branch=master)
-[![R build status](https://github.com/tidyverse/purrr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/purrr/actions)
 <!-- badges: end -->
 
 ## Overview

@@ -10,8 +10,6 @@
 status](https://github.com/tidyverse/purrr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/purrr)
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/purrr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/purrr?branch=master)
-[![R build
-status](https://github.com/tidyverse/purrr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/purrr/actions)
 <!-- badges: end -->
 
 ## Overview
