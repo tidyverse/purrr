@@ -1,6 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.3.3.9000
+Version: 0.3.4
 Authors@R: 
     c(person(given = "Lionel",
              family = "Henry",
