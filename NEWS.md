@@ -1,3 +1,5 @@
+# purrr (development version)
+
 # purrr 0.3.4
 
 * Added documentation for exporting functions created with purrr
