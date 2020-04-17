@@ -3,7 +3,7 @@ pkgdown: 1.5.1.9000
 pkgdown_sha: fcc120d996055519db89f37f0097af7ce25d6641
 articles:
   other-langs: other-langs.html
-last_built: 2020-04-16T17:50Z
+last_built: 2020-04-17T12:29Z
 urls:
   reference: https://purrr.tidyverse.org/reference
   article: https://purrr.tidyverse.org/articles
