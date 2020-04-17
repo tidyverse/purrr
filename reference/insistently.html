@@ -15,23 +15,28 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,7 +46,6 @@
 
 
 <meta property="og:title" content="Transform a function to make it run insistently or slowly — insistently" />
-
 <meta property="og:description" content="
 
 insistently() takes a function and modifies it to retry a given
@@ -53,10 +57,12 @@ amount of time between each call.
 The number and rate of attempts is determined by a
 rate object (by default a jittered exponential
 backoff rate for insistently(), and a constant rate for
-slowly())." />
-
+slowly()).
+If you would like to include a function created with safely, slowly, or
+insistently in a package, see faq-adverbs-export." />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -81,7 +87,7 @@ slowly())." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -96,15 +102,21 @@ slowly())." />
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">purrr</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -126,7 +138,7 @@ slowly())." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
+    <li class="dropdown-header">Releases</li>
     <li>
       <a href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     </li>
@@ -135,12 +147,12 @@ slowly())." />
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/purrr">
+  <a href="https://github.com/tidyverse/purrr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -165,7 +177,6 @@ slowly())." />
 
     <div class="ref-description">
     
-    
 <ul>
 <li><p><code>insistently()</code> takes a function and modifies it to retry a given
 amount of time on error.</p></li>
@@ -177,13 +188,14 @@ amount of time between each call.</p></li>
 <a href='rate-helpers.html'>rate</a> object (by default a jittered exponential
 backoff rate for <code>insistently()</code>, and a constant rate for
 <code>slowly()</code>).</p>
-    
+<p>If you would like to include a function created with <code>safely</code>, <code>slowly</code>, or
+<code>insistently</code> in a package, see <a href='faq-adverbs-export.html'>faq-adverbs-export</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>insistently</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_backoff</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>slowly</span>(<span class='no'>f</span>, <span class='kw'>rate</span> <span class='kw'>=</span> <span class='fu'><a href='rate-helpers.html'>rate_delay</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -201,15 +213,14 @@ backoff rate for <code>insistently()</code>, and a constant rate for
 the next request.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/httr/man/RETRY.html'>httr::RETRY()</a></code> is a special case of <code>insistently()</code> for
+    <div class='dont-index'><p><code><a href='https://httr.r-lib.org/reference/RETRY.html'>httr::RETRY()</a></code> is a special case of <code>insistently()</code> for
 HTTP verbs. <code><a href='rate-helpers.html'>rate_backoff()</a></code> and <code><a href='rate-helpers.html'>rate_delay()</a></code> for creating
 custom backoff rates. <code><a href='rate_sleep.html'>rate_sleep()</a></code> for the function powering
 <code>insistently()</code> and <code>slowly()</code>. <code><a href='safely.html'>safely()</a></code> for another useful
 function operator.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># For the purpose of this example, we first create a custom rate</span>
@@ -271,16 +282,10 @@ function operator.</p></div>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>3</span>)
 <span class='fu'>possibly_insistent_risky_runif</span>()</div><div class='output co'>#&gt; <span class='message'>Error: 0.168041526339948 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.807516399072483 is too small</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.2 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Error: 0.384942351374775 is too small</span></div><div class='output co'>#&gt; [1] -99</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

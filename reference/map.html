@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply a function to each element of a vector — map • purrr</title>
+<title>Apply a function to each element of a list or atomic vector — map • purrr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -15,23 +15,28 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -40,18 +45,17 @@
 
 
 
-<meta property="og:title" content="Apply a function to each element of a vector — map" />
-
+<meta property="og:title" content="Apply a function to each element of a list or atomic vector — map" />
 <meta property="og:description" content="The map functions transform their input by applying a function to
-each element and returning a vector the same length as the input.
+each element of a list or atomic vector and returning an object of the same length as the input.
 map() always returns a list. See the modify() family for
 versions that return an object of the same type as the input.
 map_lgl(), map_int(), map_dbl() and map_chr() return an
 atomic vector of the indicated type (or die trying).
-map_dfr() and map_dfc() return data frames created by
+map_dfr() and map_dfc() return a data frame created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.
-The return value of .f must be of length one for each element
+The returned values of .f must be of length one for each element
 of .x. If .f uses an extractor function shortcut, .default
 can be specified to handle values that are absent or empty. See
 as_mapper() for more on .default.
@@ -62,9 +66,9 @@ walk() calls .f for its side-effect and returns
 the input .x.
 
 " />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -89,7 +93,7 @@ the input .x.
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -104,15 +108,21 @@ the input .x.
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">purrr</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -134,7 +144,7 @@ the input .x.
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
+    <li class="dropdown-header">Releases</li>
     <li>
       <a href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     </li>
@@ -143,12 +153,12 @@ the input .x.
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/purrr">
+  <a href="https://github.com/tidyverse/purrr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -166,23 +176,22 @@ the input .x.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply a function to each element of a vector</h1>
+    <h1>Apply a function to each element of a list or atomic vector</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidyverse/purrr/blob/master/R/map.R'><code>R/map.R</code></a></small>
     <div class="hidden name"><code>map.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>The map functions transform their input by applying a function to
-each element and returning a vector the same length as the input.</p><ul>
+each element of a list or atomic vector and returning an object of the same length as the input.</p><ul>
 <li><p><code>map()</code> always returns a list. See the <code><a href='modify.html'>modify()</a></code> family for
 versions that return an object of the same type as the input.</p></li>
 <li><p><code>map_lgl()</code>, <code>map_int()</code>, <code>map_dbl()</code> and <code>map_chr()</code> return an
 atomic vector of the indicated type (or die trying).</p></li>
-<li><p><code>map_dfr()</code> and <code>map_dfc()</code> return data frames created by
+<li><p><code>map_dfr()</code> and <code>map_dfc()</code> return a data frame created by
 row-binding and column-binding respectively. They require dplyr
 to be installed.</p></li>
-<li><p>The return value of <code>.f</code> must be of length one for each element
+<li><p>The returned values of <code>.f</code> must be of length one for each element
 of <code>.x</code>. If <code>.f</code> uses an extractor function shortcut, <code>.default</code>
 can be specified to handle values that are absent or empty. See
 <code><a href='as_mapper.html'>as_mapper()</a></code> for more on <code>.default</code>.</p></li>
@@ -193,7 +202,6 @@ can be specified to handle values that are absent or empty. See
 the input <code>.x</code>.</p></li>
 </ul>
 
-    
     </div>
 
     <pre class="usage"><span class='fu'>map</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
@@ -213,7 +221,7 @@ the input <code>.x</code>.</p></li>
 <span class='fu'>map_dfc</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>walk</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -252,7 +260,7 @@ variable will be created.</p>
 <p>Only applies to <code>_dfr</code> variant.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     
@@ -272,23 +280,62 @@ logical -&gt; integer -&gt; double -&gt; character.</p></li>
 use in pipe.</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='map_if.html'>map_if()</a></code> for applying a function to only those elements
 of <code>.x</code> that meet a specified condition.</p>
-<p>Other map variants: <code><a href='imap.html'>imap</a></code>,
-  <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
-  <code><a href='map2.html'>map2</a></code>, <code><a href='map_if.html'>map_if</a></code>,
-  <code><a href='modify.html'>modify</a></code></p></div>
-    
+<p>Other map variants: 
+<code><a href='imap.html'>imap</a>()</code>,
+<code><a href='invoke.html'>invoke</a>()</code>,
+<code><a href='lmap.html'>lmap</a>()</code>,
+<code><a href='map2.html'>map2</a>()</code>,
+<code><a href='map_if.html'>map_if</a>()</code>,
+<code><a href='modify.html'>modify</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(<span class='no'>rnorm</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map_dbl</span>(<span class='no'>mean</span>)</div><div class='output co'>#&gt;  [1]  0.563577  2.129543  3.130876  4.867189  4.576340  6.061074  6.218290
-#&gt;  [8]  7.734047  9.169893 10.197936</div><div class='input'>
-<span class='co'># Or use an anonymous function</span>
+    <pre class="examples"><div class='input'><span class='co'># Compute normal distributions from an atomic vector</span>
+<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>map</span>(<span class='no'>rnorm</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt;  [1] -0.33005266  1.16938020  0.51461548  0.50764934  0.77118524  0.59358665
+#&gt;  [7]  2.05278168 -0.84082226 -0.03995567  1.23740174
+#&gt; 
+#&gt; [[2]]
+#&gt;  [1] 0.4023269 1.3600169 1.6765932 0.4165575 3.0479110 2.9257833 2.8297412
+#&gt;  [8] 3.8556399 2.6632916 2.1175712
+#&gt; 
+#&gt; [[3]]
+#&gt;  [1] 2.920256 2.148360 3.190512 2.869541 3.932535 3.722460 3.688649 2.996824
+#&gt;  [9] 2.447696 3.391930
+#&gt; 
+#&gt; [[4]]
+#&gt;  [1] 3.928121 4.124139 5.690892 6.342451 4.331546 6.202030 4.418203 4.626108
+#&gt;  [9] 4.362771 4.645633
+#&gt; 
+#&gt; [[5]]
+#&gt;  [1] 5.510729 2.440301 4.987308 3.030024 3.565450 5.124508 4.282498 6.967879
+#&gt;  [9] 3.656479 6.198227
+#&gt; 
+#&gt; [[6]]
+#&gt;  [1] 7.477078 6.960283 4.990668 6.675381 5.092740 6.191480 6.937200 4.670206
+#&gt;  [9] 5.554705 6.060998
+#&gt; 
+#&gt; [[7]]
+#&gt;  [1] 5.689300 5.971133 4.787184 6.665550 6.901558 7.104542 5.073075 6.597985
+#&gt;  [9] 6.549152 6.843425
+#&gt; 
+#&gt; [[8]]
+#&gt;  [1] 8.922526 7.873473 6.377009 7.740205 8.399335 8.134439 6.814899 8.459502
+#&gt;  [9] 7.263681 7.355401
+#&gt; 
+#&gt; [[9]]
+#&gt;  [1] 10.045095  6.078727 10.334559 10.571744  8.522265  9.559503  8.404625
+#&gt;  [8] 10.304109  8.540005  9.338297
+#&gt; 
+#&gt; [[10]]
+#&gt;  [1] 11.081518 10.300762 10.103314 11.101992  9.746213  9.223091  7.714598
+#&gt;  [8] 11.717469  9.935019 11.055381
+#&gt; </div><div class='input'>
+<span class='co'># You can also use an anonymous function</span>
 <span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>map</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>, <span class='no'>x</span>))</div><div class='output co'>#&gt; [[1]]
 #&gt;  [1]  1.51073576  1.44189335  0.59996713 -0.31657382  0.68946511  2.42577099
@@ -372,10 +419,19 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt;  [1] 10.828820 10.622347 10.276298 11.267222 11.296271 10.312032  9.472046
 #&gt;  [8]  8.413754 10.447023 10.225880
 #&gt; </div><div class='input'>
+<span class='co'># Simplify output to a vector instead of a list by computing the mean of the distributions</span>
+<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>map</span>(<span class='no'>rnorm</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>  <span class='co'># output a list</span>
+  <span class='fu'>map_dbl</span>(<span class='no'>mean</span>)           <span class='co'># output an atomic vector</span></div><div class='output co'>#&gt;  [1]  1.169039  2.476506  2.779545  4.039582  5.367765  6.500865  7.203717
+#&gt;  [8]  8.242913  8.844403 10.140176</div><div class='input'>
 <span class='co'># Using set_names() with character vectors is handy to keep track</span>
 <span class='co'># of the original inputs:</span>
 <span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>map_chr</span>(<span class='no'>paste0</span>, <span class='st'>":suffix"</span>)</div><div class='output co'>#&gt;          foo          bar 
 #&gt; "foo:suffix" "bar:suffix" </div><div class='input'>
+<span class='co'># Working with lists</span>
+<span class='no'>favorite_desserts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Sophia</span> <span class='kw'>=</span> <span class='st'>"banana bread"</span>, <span class='kw'>Eliott</span> <span class='kw'>=</span> <span class='st'>"pancakes"</span>, <span class='kw'>Karina</span> <span class='kw'>=</span> <span class='st'>"chocolate cake"</span>)
+<span class='no'>favorite_desserts</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_chr</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"rocks!"</span>))</div><div class='output co'>#&gt;                  Sophia                  Eliott                  Karina 
+#&gt;   "banana bread rocks!"       "pancakes rocks!" "chocolate cake rocks!" </div><div class='input'>
 <span class='co'># Extract by name or position</span>
 <span class='co'># .default specifies value for elements that are missing or NULL</span>
 <span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1L</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2L</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>3L</span>))
@@ -414,7 +470,12 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt; [[3]]
 #&gt; NULL
 #&gt; </div><div class='input'><span class='no'>l2</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_int</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"num"</span>, <span class='fl'>3</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1]   3 103  NA</div><div class='input'>
-
+<span class='co'># Working with data frames</span>
+<span class='co'># Use map_lgl(), map_dbl(), etc to return a vector instead of a list:</span>
+<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_dbl</span>(<span class='no'>sum</span>)</div><div class='output co'>#&gt;      mpg      cyl     disp       hp     drat       wt     qsec       vs 
+#&gt;  642.900  198.000 7383.100 4694.000  115.090  102.952  571.160   14.000 
+#&gt;       am     gear     carb 
+#&gt;   13.000  118.000   90.000 </div><div class='input'>
 <span class='co'># A more realistic example: split a data frame into pieces, fit a</span>
 <span class='co'># model to each piece, summarise and extract R^2</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
@@ -423,12 +484,6 @@ of <code>.x</code> that meet a specified condition.</p>
   <span class='fu'>map</span>(<span class='no'>summary</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>map_dbl</span>(<span class='st'>"r.squared"</span>)</div><div class='output co'>#&gt;         4         6         8 
 #&gt; 0.5086326 0.4645102 0.4229655 </div><div class='input'>
-<span class='co'># Use map_lgl(), map_dbl(), etc to reduce output to a vector instead</span>
-<span class='co'># of a list:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_dbl</span>(<span class='no'>sum</span>)</div><div class='output co'>#&gt;      mpg      cyl     disp       hp     drat       wt     qsec       vs 
-#&gt;  642.900  198.000 7383.100 4694.000  115.090  102.952  571.160   14.000 
-#&gt;       am     gear     carb 
-#&gt;   13.000  118.000   90.000 </div><div class='input'>
 <span class='co'># If each element of the output is a data frame, use</span>
 <span class='co'># map_dfr to row-bind them together:</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
@@ -441,18 +496,10 @@ of <code>.x</code> that meet a specified condition.</p>
 # the broom package)
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

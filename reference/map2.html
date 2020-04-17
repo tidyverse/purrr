@@ -15,23 +15,28 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,7 +46,6 @@
 
 
 <meta property="og:title" content="Map over multiple inputs simultaneously. — map2" />
-
 <meta property="og:description" content="These functions are variants of map() that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
@@ -52,9 +56,9 @@ that a data frame is a very important special case, in which case pmap()
 and pwalk() apply the function .f to each row. map_dfr(), pmap_dfr()
 and map2_dfc(), pmap_dfc() return data frames created by row-binding
 and column-binding respectively. They require dplyr to be installed." />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -79,7 +83,7 @@ and column-binding respectively. They require dplyr to be installed." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -94,15 +98,21 @@ and column-binding respectively. They require dplyr to be installed." />
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">purrr</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -124,7 +134,7 @@ and column-binding respectively. They require dplyr to be installed." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
+    <li class="dropdown-header">Releases</li>
     <li>
       <a href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     </li>
@@ -133,12 +143,12 @@ and column-binding respectively. They require dplyr to be installed." />
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/purrr">
+  <a href="https://github.com/tidyverse/purrr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -162,7 +172,6 @@ and column-binding respectively. They require dplyr to be installed." />
     </div>
 
     <div class="ref-description">
-    
     <p>These functions are variants of <code><a href='map.html'>map()</a></code> that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
@@ -173,7 +182,6 @@ that a data frame is a very important special case, in which case <code>pmap()</
 and <code>pwalk()</code> apply the function <code>.f</code> to each row. <code><a href='map.html'>map_dfr()</a></code>, <code>pmap_dfr()</code>
 and <code>map2_dfc()</code>, <code>pmap_dfc()</code> return data frames created by row-binding
 and column-binding respectively. They require dplyr to be installed.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>map2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
@@ -211,7 +219,7 @@ and column-binding respectively. They require dplyr to be installed.</p>
 <span class='fu'>pmap_dfc</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
 
 <span class='fu'>pwalk</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -257,7 +265,7 @@ determines the number of arguments that <code>.f</code> will be called with. Lis
 names will be used if present.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An atomic vector, list, or data frame, depending on the suffix.
@@ -265,72 +273,72 @@ Atomic vectors and lists will be named if <code>.x</code> or the first
 element of <code>.l</code> is named.</p>
 <p>If all input is length 0, the output will be length 0. If any
 input is length 1, it will be recycled to the length of the longest.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that arguments to be vectorised over come before <code>.f</code>,
 and arguments that are supplied to every call come after <code>.f</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other map variants: <code><a href='imap.html'>imap</a></code>,
-  <code><a href='invoke.html'>invoke</a></code>, <code><a href='lmap.html'>lmap</a></code>,
-  <code><a href='map_if.html'>map_if</a></code>, <code><a href='map.html'>map</a></code>,
-  <code><a href='modify.html'>modify</a></code></p></div>
-    
+    <div class='dont-index'><p>Other map variants: 
+<code><a href='imap.html'>imap</a>()</code>,
+<code><a href='invoke.html'>invoke</a>()</code>,
+<code><a href='lmap.html'>lmap</a>()</code>,
+<code><a href='map_if.html'>map_if</a>()</code>,
+<code><a href='map.html'>map</a>()</code>,
+<code><a href='modify.html'>modify</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>100</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>)
-<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>5</span>, <span class='fl'>50</span>, <span class='fl'>500</span>)
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>)
+<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>300</span>)
 
 <span class='fu'>map2</span>(<span class='no'>x</span>, <span class='no'>y</span>, ~ <span class='no'>.x</span> + <span class='no'>.y</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 2
+#&gt; [1] 11
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 12
+#&gt; [1] 21
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 103
+#&gt; [1] 31
 #&gt; </div><div class='input'><span class='co'># Or just</span>
 <span class='fu'>map2</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>`+`</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 2
+#&gt; [1] 11
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 12
+#&gt; [1] 21
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 103
+#&gt; [1] 31
 #&gt; </div><div class='input'>
 <span class='fu'>pmap</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>z</span>), <span class='no'>sum</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 7
+#&gt; [1] 111
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 62
+#&gt; [1] 221
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 603
+#&gt; [1] 331
 #&gt; </div><div class='input'>
 <span class='co'># Matching arguments by position</span>
-<span class='fu'>pmap</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>z</span>), <span class='kw'>function</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>c</span>) <span class='no'>a</span> / (<span class='no'>b</span> + <span class='no'>c</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.1666667
+<span class='fu'>pmap</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>z</span>), <span class='kw'>function</span>(<span class='no'>first</span>, <span class='no'>second</span>, <span class='no'>third</span>) (<span class='no'>first</span> + <span class='no'>third</span>) * <span class='no'>second</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1010
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 0.1923077
+#&gt; [1] 4020
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 0.1988072
+#&gt; [1] 9030
 #&gt; </div><div class='input'>
 <span class='co'># Matching arguments by name</span>
 <span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='no'>z</span>)
-<span class='fu'>pmap</span>(<span class='no'>l</span>, <span class='kw'>function</span>(<span class='no'>c</span>, <span class='no'>b</span>, <span class='no'>a</span>) <span class='no'>a</span> / (<span class='no'>b</span> + <span class='no'>c</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.1666667
+<span class='fu'>pmap</span>(<span class='no'>l</span>, <span class='kw'>function</span>(<span class='no'>c</span>, <span class='no'>b</span>, <span class='no'>a</span>) (<span class='no'>a</span> + <span class='no'>c</span>) * <span class='no'>b</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 1010
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] 0.1923077
+#&gt; [1] 4020
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] 0.1988072
+#&gt; [1] 9030
 #&gt; </div><div class='input'>
 <span class='co'># Split into pieces, fit model to each piece, then predict</span>
 <span class='no'>by_cyl</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>.</span>$<span class='no'>cyl</span>)
@@ -363,22 +371,22 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"apple"</span>, <span class='st'>"banana"</span>, <span class='st'>"cherry"</span>),
   <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p"</span>, <span class='st'>"n"</span>, <span class='st'>"h"</span>),
-  <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"f"</span>, <span class='st'>"q"</span>),
+  <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"P"</span>, <span class='st'>"N"</span>, <span class='st'>"H"</span>),
   <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
   )
 <span class='fu'>pmap</span>(<span class='no'>df</span>, <span class='no'>gsub</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] "axxle"
+#&gt; [1] "aPPle"
 #&gt; 
 #&gt; [[2]]
-#&gt; [1] "bafafa"
+#&gt; [1] "baNaNa"
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] "cqerry"
-#&gt; </div><div class='input'><span class='fu'>pmap_chr</span>(<span class='no'>df</span>, <span class='no'>gsub</span>)</div><div class='output co'>#&gt; [1] "axxle"  "bafafa" "cqerry"</div><div class='input'>
+#&gt; [1] "cHerry"
+#&gt; </div><div class='input'><span class='fu'>pmap_chr</span>(<span class='no'>df</span>, <span class='no'>gsub</span>)</div><div class='output co'>#&gt; [1] "aPPle"  "baNaNa" "cHerry"</div><div class='input'>
 <span class='co'># Use `...` to absorb unused components of input list .l</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span> + <span class='fl'>0.1</span>,
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>1</span> - <span class='fl'>0.1</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>,
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>12</span>,
   <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>]
 )
 <span class='no'>plus</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> + <span class='no'>y</span>
@@ -388,7 +396,7 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 }
 <span class='co'># but this will</span>
 <span class='no'>plus2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>) <span class='no'>x</span> + <span class='no'>y</span>
-<span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>plus2</span>)</div><div class='output co'>#&gt; [1] 4 4 4</div><div class='input'>
+<span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>plus2</span>)</div><div class='output co'>#&gt; [1] 11 13 15</div><div class='input'>
 <span class='co'># The "p" for "parallel" in pmap() is the same as in base::pmin()</span>
 <span class='co'># and base::pmax()</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
@@ -397,31 +405,26 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 )
 <span class='co'># all produce the same result</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>map2_dbl</span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'>
-<span class='co'># If you want to bind the results of your function rowwise, use map2_dfr() or pmap_dfr()</span>
+<span class='co'># If you want to bind the results of your function rowwise, use:</span>
+<span class='co'># map2_dfr() or pmap_dfr()</span>
 <span class='no'>ex_fun</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>){
 <span class='no'>col</span> <span class='kw'>&lt;-</span> <span class='no'>arg1</span> + <span class='no'>arg2</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>col</span>)
 }
-<span class='no'>arg1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>arg2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>2</span>, <span class='fl'>11</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>map2_dfr</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)
-<span class='co'># If instead you want to bind by columns, use map2_dfc() or pmap_dfc()</span>
-<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'>map2_dfc</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div></pre>
+<span class='no'>arg1</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>4</span>
+<span class='no'>arg2</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>:<span class='fl'>13</span>
+<span class='fu'>map2_dfr</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div><div class='output co'>#&gt;   col
+#&gt; 1  11
+#&gt; 2  13
+#&gt; 3  15
+#&gt; 4  17</div><div class='input'><span class='co'># If instead you want to bind by columns, use map2_dfc() or pmap_dfc()</span>
+<span class='fu'>map2_dfc</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div><div class='output co'>#&gt;   col col1 col2 col3
+#&gt; 1  11   13   15   17</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

@@ -15,23 +15,28 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,16 +46,15 @@
 
 
 <meta property="og:title" content="Transpose a list. — transpose" />
-
 <meta property="og:description" content="Transpose turns a list-of-lists &quot;inside-out&quot;; it turns a pair of lists into a
 list of pairs, or a list of pairs into pair of lists. For example,
 if you had a list of length n where each component had values a and
 b, transpose() would make a list with elements a and
 b that contained lists of length n. It's called transpose because
 x[[1]][[2]] is equivalent to transpose(x)[[2]][[1]]." />
-
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +79,7 @@ x[[1]][[2]] is equivalent to transpose(x)[[2]][[1]]." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -90,15 +94,21 @@ x[[1]][[2]] is equivalent to transpose(x)[[2]][[1]]." />
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">purrr</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -120,7 +130,7 @@ x[[1]][[2]] is equivalent to transpose(x)[[2]][[1]]." />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
+    <li class="dropdown-header">Releases</li>
     <li>
       <a href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     </li>
@@ -129,12 +139,12 @@ x[[1]][[2]] is equivalent to transpose(x)[[2]][[1]]." />
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/purrr">
+  <a href="https://github.com/tidyverse/purrr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -158,18 +168,16 @@ x[[1]][[2]] is equivalent to transpose(x)[[2]][[1]]." />
     </div>
 
     <div class="ref-description">
-    
     <p>Transpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 list of pairs, or a list of pairs into pair of lists. For example,
 if you had a list of length n where each component had values <code>a</code> and
 <code>b</code>, <code>transpose()</code> would make a list with elements <code>a</code> and
 <code>b</code> that contained lists of length n. It's called transpose because
 <code>x[[1]][[2]]</code> is equivalent to <code>transpose(x)[[2]][[1]]</code>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>transpose</span>(<span class='no'>.l</span>, <span class='kw'>.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -185,64 +193,62 @@ length.</p></td>
 the first component of <code>.l</code> by default. Specify <code>.names</code> to override this.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list with indexing transposed compared to <code>.l</code>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>transpose()</code> is its own inverse, much like the
 transpose operation on a matrix. You can get back the original
 input by transposing it twice.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>1</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>5</span>))
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.554
-#&gt;   ..$ y: num [1:5] 0.113 0.0391 0.9627 0.7334 0.5532
+#&gt;   ..$ x: num 0.589
+#&gt;   ..$ y: num [1:5] 0.704 0.93 0.98 0.415 0.563
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.402
-#&gt;   ..$ y: num [1:5] 0.656 0.537 0.49 0.509 0.794
+#&gt;   ..$ x: num 0.366
+#&gt;   ..$ y: num [1:5] 0.422 0.293 0.857 0.881 0.234
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.119
-#&gt;   ..$ y: num [1:5] 0.13 0.528 0.191 0.716 0.267
+#&gt;   ..$ x: num 0.103
+#&gt;   ..$ y: num [1:5] 0.289 0.403 0.786 0.744 0.5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.953
-#&gt;   ..$ y: num [1:5] 0.781 0.789 0.4591 0.196 0.0605
+#&gt;   ..$ x: num 0.573
+#&gt;   ..$ y: num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.518
-#&gt;   ..$ y: num [1:5] 0.6462 0.4103 0.0575 0.0914 0.8357</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;   ..$ x: num 0.11
+#&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x:List of 5
-#&gt;   ..$ : num 0.554
-#&gt;   ..$ : num 0.402
-#&gt;   ..$ : num 0.119
-#&gt;   ..$ : num 0.953
-#&gt;   ..$ : num 0.518
+#&gt;   ..$ : num 0.589
+#&gt;   ..$ : num 0.366
+#&gt;   ..$ : num 0.103
+#&gt;   ..$ : num 0.573
+#&gt;   ..$ : num 0.11
 #&gt;  $ y:List of 5
-#&gt;   ..$ : num [1:5] 0.113 0.0391 0.9627 0.7334 0.5532
-#&gt;   ..$ : num [1:5] 0.656 0.537 0.49 0.509 0.794
-#&gt;   ..$ : num [1:5] 0.13 0.528 0.191 0.716 0.267
-#&gt;   ..$ : num [1:5] 0.781 0.789 0.4591 0.196 0.0605
-#&gt;   ..$ : num [1:5] 0.6462 0.4103 0.0575 0.0914 0.8357</div><div class='input'><span class='co'># Back to where we started</span>
+#&gt;   ..$ : num [1:5] 0.704 0.93 0.98 0.415 0.563
+#&gt;   ..$ : num [1:5] 0.422 0.293 0.857 0.881 0.234
+#&gt;   ..$ : num [1:5] 0.289 0.403 0.786 0.744 0.5
+#&gt;   ..$ : num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
+#&gt;   ..$ : num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='co'># Back to where we started</span>
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.554
-#&gt;   ..$ y: num [1:5] 0.113 0.0391 0.9627 0.7334 0.5532
+#&gt;   ..$ x: num 0.589
+#&gt;   ..$ y: num [1:5] 0.704 0.93 0.98 0.415 0.563
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.402
-#&gt;   ..$ y: num [1:5] 0.656 0.537 0.49 0.509 0.794
+#&gt;   ..$ x: num 0.366
+#&gt;   ..$ y: num [1:5] 0.422 0.293 0.857 0.881 0.234
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.119
-#&gt;   ..$ y: num [1:5] 0.13 0.528 0.191 0.716 0.267
+#&gt;   ..$ x: num 0.103
+#&gt;   ..$ y: num [1:5] 0.289 0.403 0.786 0.744 0.5
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.953
-#&gt;   ..$ y: num [1:5] 0.781 0.789 0.4591 0.196 0.0605
+#&gt;   ..$ x: num 0.573
+#&gt;   ..$ y: num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
 #&gt;  $ :List of 2
-#&gt;   ..$ x: num 0.518
-#&gt;   ..$ y: num [1:5] 0.6462 0.4103 0.0575 0.0914 0.8357</div><div class='input'>
+#&gt;   ..$ x: num 0.11
+#&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'>
 <span class='co'># transpose() is useful in conjunction with safely() &amp; quietly()</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='safely.html'>safely</a></span>(<span class='no'>log</span>))
@@ -346,18 +352,10 @@ input by transposing it twice.</p>
 #&gt; 
 #&gt; </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
