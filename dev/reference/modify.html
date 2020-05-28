@@ -311,7 +311,7 @@ is not compatible for your class, you can override them with your
 own methods.</p>
 <p>If you implement your own <code>modify()</code> method, make sure it satisfies
 the following invariants:</p><pre>modify(x, identity) === x
-modify(x, compose(f, g)) === modify(x, g) %&amp;gt;% modify(f)
+modify(x, compose(f, g)) === modify(x, g) %&gt;% modify(f)
 </pre>
 
 <p>These invariants are known as the <a href='https://wiki.haskell.org/Functor#Functor_Laws'>functor laws</a> in computer
