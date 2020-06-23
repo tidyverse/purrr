@@ -60,7 +60,7 @@
 #' # just run as.list() after cross_df()
 #' args %>% as.list()
 #'
-#' # This format is often less pratical for functional programming
+#' # This format is often less practical for functional programming
 #' # because applying a function to the combinations requires a loop
 #' out <- vector("list", length = nrow(args))
 #' for (i in seq_along(out))
