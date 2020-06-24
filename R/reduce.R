@@ -55,7 +55,7 @@
 #' To update your code with the same reduction as `reduce_right()`,
 #' simply reverse your vector and use a left reduction:
 #'
-#' ```r
+#' ```{r, eval = FALSE}
 #' # Before:
 #' reduce_right(1:3, f)
 #'
