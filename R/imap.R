@@ -1,6 +1,6 @@
 #' Apply a function to each element of a vector, and its index
 #'
-#' `imap_xxx(x, ...)`, an indexed map, is short hand for
+#' `imap(x, ...)`, an indexed map, is short hand for
 #' `map2(x, names(x), ...)` if `x` has names, or `map2(x, seq_along(x), ...)`
 #' if it does not. This is useful if you need to compute on both the value
 #' and the position of an element.
