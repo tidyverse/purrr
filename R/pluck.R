@@ -60,7 +60,7 @@
 #'
 #' # By default, pluck() consistently returns `NULL` when an element
 #' # does not exist:
-#' pluck(x, 10, .default = NA)
+#' pluck(x, 10)
 #' try(x[[10]])
 #'
 #' # You can also supply a default value for non-existing elements:

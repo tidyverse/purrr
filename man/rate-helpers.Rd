@@ -9,8 +9,13 @@
 \usage{
 rate_delay(pause = 1, max_times = Inf)
 
-rate_backoff(pause_base = 1, pause_cap = 60, pause_min = 1,
-  max_times = 3, jitter = TRUE)
+rate_backoff(
+  pause_base = 1,
+  pause_cap = 60,
+  pause_min = 1,
+  max_times = 3,
+  jitter = TRUE
+)
 
 is_rate(x)
 }

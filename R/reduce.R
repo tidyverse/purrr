@@ -55,7 +55,7 @@
 #' To update your code with the same reduction as `reduce_right()`,
 #' simply reverse your vector and use a left reduction:
 #'
-#' ```{r}
+#' ```{r, eval = FALSE}
 #' # Before:
 #' reduce_right(1:3, f)
 #'
@@ -330,7 +330,7 @@ seq_len2 <- function(start, end) {
 #'     needs to be 1 element shorter than the vector to be accumulated (`.x`).
 #'     If `.init` is set, `.y` needs to be one element shorted than the
 #'     concatenation of the initial value and `.x`.
-#' 
+#'
 #' @param .f For `accumulate()` `.f` is 2-argument function. The function will
 #'     be passed the accumulated result or initial value as the first argument.
 #'     The next value in sequence is passed as the second argument.
@@ -370,7 +370,7 @@ seq_len2 <- function(start, end) {
 #'   iteration).
 #'
 #' @inheritSection reduce Direction
-#' 
+#'
 #' @section Life cycle:
 #'
 #' `accumulate_right()` is soft-deprecated in favour of the `.dir`

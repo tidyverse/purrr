@@ -21,7 +21,7 @@ are all unnamed, they are matched positionally.
 
 These dots support \link[rlang:list2]{tidy dots} features. In
 particular, if your functions are stored in a list, you can
-splice that in with \code{!!!}.}
+splice that in with \verb{!!!}.}
 }
 \description{
 \code{list_modify()} and \code{list_merge()} recursively combine two lists, matching

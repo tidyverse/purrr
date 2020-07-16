@@ -22,7 +22,7 @@ with a S3 class are encapsulated in a list before concatenation.
 
 
 \code{splice()} is in the questioning lifecycle stage as of purrr
-0.3.0. We are now favouring the \code{!!!} syntax enabled by
+0.3.0. We are now favouring the \verb{!!!} syntax enabled by
 \code{\link[rlang:list2]{rlang::list2()}}.
 }
 

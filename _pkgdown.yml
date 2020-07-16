@@ -12,20 +12,12 @@ home:
   - text: Learn more
     href: http://r4ds.had.co.nz/iteration.html
 
-navbar:
-  components:
-    home: ~
-    news:
-      text: News
-      menu:
-      - text: "Release notes"
-      - text: "Version 0.3.0"
-        href: https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/
-      - text: "Version 0.2.3"
-        href: https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/
-      - text: "------------------"
-      - text: "Change log"
-        href: news/index.html
+news:
+  releases:
+  - text: "Version 0.3.0"
+    href: https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/
+  - text: "Version 0.2.3"
+    href: https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/
 
 reference:
 - title: Map family

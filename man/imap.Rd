@@ -60,7 +60,7 @@ a variable with that name, storing either the name (if \code{.x} is named) or
 the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
 variable will be created.
 
-Only applies to \code{_dfr} variant.}
+Only applies to \verb{_dfr} variant.}
 }
 \value{
 A vector the same length as \code{.x}.
@@ -75,12 +75,15 @@ and the position of an element.
 # Note that when using the formula shortcut, the first argument
 # is the value, and the second is the position
 imap_chr(sample(10), ~ paste0(.y, ": ", .x))
-iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\\n", sep = ""))
+iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = ""))
 }
 \seealso{
-Other map variants: \code{\link{invoke}},
-  \code{\link{lmap}}, \code{\link{map2}},
-  \code{\link{map_if}}, \code{\link{map}},
-  \code{\link{modify}}
+Other map variants: 
+\code{\link{invoke}()},
+\code{\link{lmap}()},
+\code{\link{map2}()},
+\code{\link{map_if}()},
+\code{\link{map}()},
+\code{\link{modify}()}
 }
 \concept{map variants}

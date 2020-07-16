@@ -22,8 +22,6 @@
 #'   evaluate a constructed expression. This only matters if you pass
 #'   as `.f` the name of a function rather than its value, or as
 #'   `.x` symbols of objects rather than their values.
-#' @inheritParams map
-#'
 #' @section Life cycle:
 #'
 #' These functions are retired in favour of [exec()]. They are no
