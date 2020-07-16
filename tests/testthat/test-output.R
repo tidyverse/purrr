@@ -48,3 +48,60 @@ test_that("auto_browse() not intended for primitive functions", {
   expect_error(auto_browse(log)(NULL), "primitive functions")
   expect_error(auto_browse(identity)(NULL), NA)
 })
+
+test_that("silently() captures everything", {
+  stopper <- function() {
+    print("bar")
+    message("baz")
+    warning("flop")
+    stop("foo")
+    "bar"
+  }
+  
+  goer <- function() {
+    print("bar")
+    message("baz")
+    warning("flop")
+    # stop('foo')
+    "blop"
+  }
+  
+  expect_equal(
+    silently(goer)(),
+    list(
+      result = "blop",
+      output = "[1] \"bar\"",
+      messages = "baz\n",
+      warnings = "flop",
+      error = NULL
+    )
+  )
+  stopper_error <-
+    tryCatch(
+      stopper(),
+      error = function(e) e
+    )
+  # The call will look different within silently().
+  stopper_error$call <- (~.f(...))[[2]]
+  expect_equal(
+    silently(stopper)(),
+    list(
+      result = NULL,
+      output = "[1] \"bar\"",
+      messages = "baz\n",
+      warnings = "flop",
+      error = stopper_error
+    )
+  )
+  # Respect `otherwise`
+  expect_equal(
+    silently(stopper, otherwise = 1)(),
+    list(
+      result = 1,
+      output = "[1] \"bar\"",
+      messages = "baz\n",
+      warnings = "flop",
+      error = stopper_error
+    )
+  )
+})

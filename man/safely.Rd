@@ -4,6 +4,7 @@
 \alias{safely}
 \alias{quietly}
 \alias{possibly}
+\alias{silently}
 \alias{auto_browse}
 \title{Capture side effects.}
 \usage{
@@ -12,6 +13,8 @@ safely(.f, otherwise = NULL, quiet = TRUE)
 quietly(.f)
 
 possibly(.f, otherwise, quiet = TRUE)
+
+silently(.f, otherwise = NULL)
 
 auto_browse(.f)
 }
@@ -52,12 +55,17 @@ Else \code{error} is \code{NULL}.
 
 \code{possibly}: wrapped function uses a default value (\code{otherwise})
 whenever an error occurs.
+
+\code{silently}: wrapped function returns a list with components \code{result},
+\code{output}, \code{messages}, \code{warnings} and \code{errors} using a default value
+(\code{otherwise}) for \code{result} if there are any errors.  \code{silently} is similar
+the combination of \code{safely} and \code{quietly}.
 }
 \description{
 These functions wrap functions so that instead of generating side effects
-through printed output, messages, warnings, and errors, they return enhanced
-output. They are all adverbs because they modify the action of a verb (a
-function).
+through printed output, conditions, messages, warnings, and errors, they
+return enhanced output. They are all adverbs because they modify the action
+of a verb (a function).
 }
 \details{
 If you would like to include a function created with \code{safely}, \code{slowly}, or
