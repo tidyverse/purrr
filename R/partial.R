@@ -148,7 +148,7 @@ partial <- function(.f,
   mask <- new_data_mask(env())
 
   partialised <- function(...) {
-    env_bind(mask, ... = env_get(current_env(), "..."))
+    mask$... <- environment()$...
     eval_tidy(call, mask)
   }
 
