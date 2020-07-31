@@ -58,7 +58,7 @@ map_lgl(), map_int(), map_dbl() and map_chr() return an
 atomic vector of the indicated type (or die trying).
 map_dfr() and map_dfc() return a data frame created by
 row-binding and column-binding respectively. They require dplyr
-to be installed.
+to be installed. map_df() is an alias for map_dfr().
 The returned values of .f must be of length one for each element
 of .x. If .f uses an extractor function shortcut, .default
 can be specified to handle values that are absent or empty. See
@@ -194,7 +194,7 @@ versions that return an object of the same type as the input.</p></li>
 atomic vector of the indicated type (or die trying).</p></li>
 <li><p><code>map_dfr()</code> and <code>map_dfc()</code> return a data frame created by
 row-binding and column-binding respectively. They require dplyr
-to be installed.</p></li>
+to be installed. <code>map_df()</code> is an alias for <code>map_dfr()</code>.</p></li>
 <li><p>The returned values of <code>.f</code> must be of length one for each element
 of <code>.x</code>. If <code>.f</code> uses an extractor function shortcut, <code>.default</code>
 can be specified to handle values that are absent or empty. See
