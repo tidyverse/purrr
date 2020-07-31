@@ -3,7 +3,7 @@
 #' @keywords internal
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("retired")}
+#' `r lifecycle::badge("superseded")`
 #'
 #' This pair of functions make it easier to combine a function and list
 #' of parameters to get a result. `invoke` is a wrapper around

@@ -495,7 +495,7 @@ accumulate_names <- function(nms, init, dir) {
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#' `r lifecycle::badge("soft-deprecated")`
 #'
 #' These functions are retired as of purrr 0.3.0. Please use the
 #' `.dir` argument of [reduce()] instead, or reverse your vectors

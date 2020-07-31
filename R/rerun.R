@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+#' `r lifecycle::badge("questioning")`
 #'
 #' This is a convenient way of generating sample data. It works similarly to
 #' \code{\link{replicate}(..., simplify = FALSE)}.

@@ -13,7 +13,7 @@ splice(...)
 A list.
 }
 \description{
-\Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a>}}{\strong{Questioning}}
 
 This splices all arguments into a list. Non-list objects and lists
 with a S3 class are encapsulated in a list before concatenation.

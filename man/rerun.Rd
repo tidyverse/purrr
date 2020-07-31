@@ -20,7 +20,7 @@ level list will be dropped. In this case, \code{rerun(n, x)} behaves like
 \code{replicate(n, x, simplify = FALSE)}.
 }
 \description{
-\Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a>}}{\strong{Questioning}}
 
 This is a convenient way of generating sample data. It works similarly to
 \code{\link{replicate}(..., simplify = FALSE)}.

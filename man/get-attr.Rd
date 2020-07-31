@@ -13,7 +13,7 @@ x \%@\% name
 \item{name}{Attribute name}
 }
 \description{
-\Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+\ifelse{html}{\figure{lifecycle-soft-deprecated.svg}{options: alt='Soft-deprecated lifecycle'}}{\strong{Soft-deprecated}}
 
 Please use the \verb{\%@\%} operator exported in rlang. It has an
 interface more consistent with \code{@}: uses NSE, supports S4 fields,

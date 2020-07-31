@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+#' `r lifecycle::badge("questioning")`
 #'
 #' It can be useful to create an empty list that you plan to fill later. This is
 #' similar to the idea of [seq_along()], which creates a vector of the same

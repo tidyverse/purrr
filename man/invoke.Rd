@@ -50,7 +50,7 @@ as \code{.f} the name of a function rather than its value, or as
 \code{.x} symbols of objects rather than their values.}
 }
 \description{
-\Sexpr[results=rd, stage=render]{purrr:::lifecycle("retired")}
+\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#superseded'><img src='figures/lifecycle-superseded.svg' alt='Superseded lifecycle'></a>}}{\strong{Superseded}}
 
 This pair of functions make it easier to combine a function and list
 of parameters to get a result. \code{invoke} is a wrapper around

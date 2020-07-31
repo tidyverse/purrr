@@ -55,7 +55,7 @@ names2 <- function(x) {
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#' `r lifecycle::badge("soft-deprecated")`
 #'
 #' Please use the `%@%` operator exported in rlang. It has an
 #' interface more consistent with `@`: uses NSE, supports S4 fields,

@@ -39,7 +39,7 @@ argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
 should be 1 element shorter than \code{.x}.}
 }
 \description{
-\Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+\ifelse{html}{\figure{lifecycle-soft-deprecated.svg}{options: alt='Soft-deprecated lifecycle'}}{\strong{Soft-deprecated}}
 
 These functions are retired as of purrr 0.3.0. Please use the
 \code{.dir} argument of \code{\link[=reduce]{reduce()}} instead, or reverse your vectors
