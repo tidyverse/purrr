@@ -6,6 +6,9 @@
 
 # purrr 0.3.4
 
+* Fixed issue in `list_modify()` that prevented lists from being
+  removed with `zap()` (@adamroyjones, #777).
+
 * Added documentation for exporting functions created with purrr
   adverb (@njtierney, #668). See `?faq-adverbs-export`.
 

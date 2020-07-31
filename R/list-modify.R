@@ -69,9 +69,10 @@ list_recurse <- function(x, y, base_case) {
     abort("`...` arguments must be either all named, or all unnamed")
   }
 
+  # N.B. is_list(zap()) is TRUE.
   if (is_null(y_names)) {
     for (i in rev(seq_along(y))) {
-      if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]])) {
+      if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
         x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
       } else {
         x[[i]] <- maybe_zap(base_case(x[[i]], y[[i]]))
@@ -80,7 +81,7 @@ list_recurse <- function(x, y, base_case) {
   } else {
     for (i in seq_along(y_names)) {
       nm <- y_names[[i]]
-      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]])) {
+      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
         x[[nm]] <- list_recurse(x[[nm]], y[[i]], base_case)
       } else {
         x[[nm]] <- maybe_zap(base_case(x[[nm]], y[[i]]))

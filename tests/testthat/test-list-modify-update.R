@@ -16,6 +16,10 @@ test_that("unnamed lists are replaced by position", {
 test_that("can remove elements with `zap()`", {
   expect_equal(list_modify(list(1, 2, 3), zap(), zap()), list(3))
   expect_equal(list_modify(list(a = 1, b = 2, c = 3), b = zap(), a = zap()), list(c = 3))
+  expect_equal(
+    list_modify(list(a = list(fst = 1, snd = 2), b = 2, c = 3), b = zap(), a = zap()),
+    list(c = 3)
+  )
 })
 
 test_that("error if inputs are not all named or unnamed", {
