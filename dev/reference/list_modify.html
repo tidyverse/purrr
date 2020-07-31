@@ -234,12 +234,9 @@ splice that in with <code>!!!</code>.</p></td>
 #&gt;   ..$ a: int [1:5] 1 2 3 4 5
 #&gt;   ..$ b: num 2</div><div class='input'>
 <span class='co'># Remove values</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='zap.html'>zap</a></span>()))</div><div class='output co'>#&gt; List of 3
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='zap.html'>zap</a></span>()))</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
-#&gt;  $ y: num 4
-#&gt;  $ z:List of 2
-#&gt;   ..$ a: num 1
-#&gt;   ..$ b: num 2</div><div class='input'>
+#&gt;  $ y: num 4</div><div class='input'>
 <span class='co'># Combine values</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_merge</span>(<span class='no'>x</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>5</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>3</span>)))</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: num [1:11] 1 2 3 4 5 6 7 8 9 10 ...
