@@ -461,13 +461,14 @@ accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
-  # FIXME vctrs: This simplification step is for compatibility with
-  # the `base::Reduce()` implementation in earlier purrr versions
-  if (all(map_int(res, length) == 1L)) {
-    res <- unlist(res, recursive = FALSE)
+  # It would be unappropriate to simplify the result rowwise with
+  # `accumulate()` because it has invariants defined in terms of
+  # `length()` rather than `vec_size()`
+  if (some(res, is.data.frame)) {
+    res
+  } else {
+    vec_simplify(res)
   }
-
-  res
 }
 #' @rdname accumulate
 #' @export

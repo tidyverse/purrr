@@ -1,6 +1,9 @@
 
 # purrr (development version)
 
+* `accumulate()` now uses vctrs for simplifying the output. This
+  ensures a more principled and flexible coercion behaviour.
+
 * Improved performance of `partial()` (#715).
 
 
