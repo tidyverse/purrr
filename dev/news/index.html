@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Changelog" />
@@ -164,6 +168,9 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#purrr-development-version" class="anchor"></a>purrr (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>Improved performance of <code><a href="../reference/partial.html">partial()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/715'>#715</a>).</li>
+</ul>
 </div>
     <div id="purrr-034" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.4">
@@ -588,7 +595,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <li><p><code><a href="../reference/transpose.html">transpose()</a></code> replaces <code>zip2()</code>, <code>zip3()</code>, and <code>zip_n()</code> (<a href='https://github.com/tidyverse/purrr/issues/128'>#128</a>). The name more clearly reflects the intent (transposing the first and second levels of list). It no longer has fields argument or the <code>.simplify</code> argument; instead use the new <code><a href="../reference/as_vector.html">simplify_all()</a></code> function.</p></li>
 <li><p><code><a href="../reference/safely.html">safely()</a></code>, <code><a href="../reference/safely.html">quietly()</a></code>, and <code><a href="../reference/safely.html">possibly()</a></code> are experimental functions for working with functions with side-effects (e.g. printed output, messages, warnings, and errors) (<a href='https://github.com/tidyverse/purrr/issues/120'>#120</a>). <code><a href="../reference/safely.html">safely()</a></code> is a version of <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> that modifies a function (rather than an expression), and always returns a list with two components, <code>result</code> and <code>error</code>.</p></li>
 <li><p><code><a href="../reference/along.html">list_along()</a></code> and <code><a href="../reference/rep_along.html">rep_along()</a></code> generalise the idea of <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code>. (<a href='https://github.com/tidyverse/purrr/issues/122'>#122</a>).</p></li>
-<li><p><code><a href="https://rlang.r-lib.org/reference/type-predicates.html">is_null()</a></code> is the snake-case version of <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code>.</p></li>
+<li><p><code>is_null()</code> is the snake-case version of <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code>.</p></li>
 <li><p><code><a href="../reference/map2.html">pmap()</a></code> (parallel map) replaces <code>map_n()</code> (<a href='https://github.com/tidyverse/purrr/issues/132'>#132</a>), and has typed-variants suffixed <code><a href="../reference/map2.html">pmap_lgl()</a></code>, <code><a href="../reference/map2.html">pmap_int()</a></code>, <code><a href="../reference/map2.html">pmap_dbl()</a></code>, <code><a href="../reference/map2.html">pmap_chr()</a></code>, and <code><a href="../reference/map2.html">pmap_df()</a></code>.</p></li>
 <li><p><code><a href="../reference/set_names.html">set_names()</a></code> is a snake-case alternative to <code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> with stricter equality checking, and more convenient defaults for pipes: <code>x %&gt;% set_names()</code> is equivalent to <code><a href="https://rdrr.io/r/stats/setNames.html">setNames(x, x)</a></code> (<a href='https://github.com/tidyverse/purrr/issues/119'>#119</a>).</p></li>
 </ul>
@@ -643,7 +650,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, Lionel Henry, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Coerce a list to a vector — as_vector" />
@@ -214,9 +218,10 @@ the type, one of: "logical", "integer", "double", "complex",
 <span class='co'># Vector molds are more flexible because they also specify the</span>
 <span class='co'># length of the concatenated vectors:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>2</span>, <span class='fl'>3</span>:<span class='fl'>4</span>, <span class='fl'>5</span>:<span class='fl'>6</span>) <span class='kw'>%&gt;%</span> <span class='fu'>as_vector</span>(<span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(<span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 1 2 3 4 5 6</div><div class='input'>
-<span class='co'># Note that unlike vapply(), as_vector() never adds dimension</span>
-<span class='co'># attributes. So when you specify a vector mold of size &gt; 1, you</span>
-<span class='co'># always get a vector and not a matrix</span></div></pre>
+# Note that unlike vapply(), as_vector() never adds dimension
+# attributes. So when you specify a vector mold of size &gt; 1, you
+# always get a vector and not a matrix
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -233,7 +238,7 @@ the type, one of: "logical", "integer", "double", "complex",
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, Lionel Henry, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

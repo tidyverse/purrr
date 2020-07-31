@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Modify elements selectively — modify" />
@@ -311,7 +315,7 @@ is not compatible for your class, you can override them with your
 own methods.</p>
 <p>If you implement your own <code>modify()</code> method, make sure it satisfies
 the following invariants:</p><pre>modify(x, identity) === x
-modify(x, compose(f, g)) === modify(x, g) %&gt;% modify(f)
+modify(x, compose(f, g)) === modify(x, g) %&amp;gt;% modify(f)
 </pre>
 
 <p>These invariants are known as the <a href='https://wiki.haskell.org/Functor#Functor_Laws'>functor laws</a> in computer
@@ -850,7 +854,7 @@ science.</p>
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, Lionel Henry, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

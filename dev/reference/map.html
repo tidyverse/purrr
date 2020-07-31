@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Apply a function to each element of a list or atomic vector — map" />
@@ -492,8 +496,9 @@ of <code>.x</code> that meet a specified condition.</p>
   <span class='fu'>map_dfr</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>.</span>)))))</div><div class='output co'>#&gt;   (Intercept)        wt
 #&gt; 1    39.57120 -5.647025
 #&gt; 2    28.40884 -2.780106
-#&gt; 3    23.86803 -2.192438</div><div class='input'><span class='co'># (if you also want to preserve the variable names see</span>
-<span class='co'># the broom package)</span></div></pre>
+#&gt; 3    23.86803 -2.192438</div><div class='input'># (if you also want to preserve the variable names see
+# the broom package)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -510,7 +515,7 @@ of <code>.x</code> that meet a specified condition.</p>
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, Lionel Henry, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

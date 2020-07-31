@@ -43,6 +43,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Map over multiple inputs simultaneously. — map2" />
@@ -418,8 +422,12 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; 2  13
 #&gt; 3  15
 #&gt; 4  17</div><div class='input'><span class='co'># If instead you want to bind by columns, use map2_dfc() or pmap_dfc()</span>
-<span class='fu'>map2_dfc</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div><div class='output co'>#&gt;   col col1 col2 col3
-#&gt; 1  11   13   15   17</div></pre>
+<span class='fu'>map2_dfc</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* col -&gt; col...1</span>
+#&gt; <span class='message'>* col -&gt; col...2</span>
+#&gt; <span class='message'>* col -&gt; col...3</span>
+#&gt; <span class='message'>* col -&gt; col...4</span></div><div class='output co'>#&gt;   col...1 col...2 col...3 col...4
+#&gt; 1      11      13      15      17</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -436,7 +444,7 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>, Lionel Henry, <a href='https://www.rstudio.com'><img src='https://www.tidyverse.org/rstudio-logo.svg' alt='RStudio' height='24' /></a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
