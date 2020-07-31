@@ -22,7 +22,8 @@ Depends:
     R (>= 3.2)
 Imports: 
     magrittr (>= 1.5),
-    rlang (>= 0.3.1)
+    rlang (>= 0.4.7),
+    vctrs (>= 0.3.2)
 Suggests: 
     covr,
     crayon,

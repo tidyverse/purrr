@@ -109,6 +109,29 @@ test_that("accumulate() forces arguments (#643)", {
   expect_true(every(fns, function(f) identical(f(1), 1)))
 })
 
+test_that("accumulate() uses vctrs to simplify results", {
+  out <- list("foo", factor("bar")) %>% accumulate(~ .y)
+  expect_identical(out, c("foo", "bar"))
+})
+
+test_that("accumulate() does not fail when input can't be simplified", {
+  expect_identical(accumulate(list(1L, 2:3), ~ .y), list(1L, 2:3))
+  expect_identical(accumulate(list(1, "a"), ~ .y), list(1, "a"))
+  expect_identical(accumulate(1:3, ~ .y), 1:3)
+  expect_identical(accumulate(list(identity), ~ .y), list(identity))
+  expect_identical(accumulate(mtcars, ~ .y), as.list(mtcars))
+})
+
+test_that("accumulate() does not simplify data frame rowwise", {
+  out <- accumulate(
+    1L,
+    ~ data.frame(new = .y),
+    .init = data.frame(new = 0L)
+  )
+  exp <- list(data.frame(new = 0L), data.frame(new = 1L))
+  expect_identical(out, exp)
+})
+
 
 # reduce2 -----------------------------------------------------------------
 
