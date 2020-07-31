@@ -16,9 +16,9 @@
 #'   arguments relative to partialised ones. See
 #'   [rlang::call_modify()] to learn more about this syntax.
 #'
-#'   These dots support quasiquotation and quosures. If you unquote a
-#'   value, it is evaluated only once at function creation time.
-#'   Otherwise, it is evaluated each time the function is called.
+#'   These dots support quasiquotation. If you unquote a value, it is
+#'   evaluated only once at function creation time.  Otherwise, it is
+#'   evaluated each time the function is called.
 #' @param .env Soft-deprecated as of purrr 0.3.0. The environments are
 #'   now captured via quosures.
 #' @param .first Soft-deprecated as of purrr 0.3.0. Please pass an

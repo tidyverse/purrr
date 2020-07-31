@@ -66,7 +66,7 @@ Only applies to \verb{_dfr} variant.}
 A vector the same length as \code{.x}.
 }
 \description{
-\code{imap_xxx(x, ...)}, an indexed map, is short hand for
+\code{imap(x, ...)}, an indexed map, is short hand for
 \code{map2(x, names(x), ...)} if \code{x} has names, or \code{map2(x, seq_along(x), ...)}
 if it does not. This is useful if you need to compute on both the value
 and the position of an element.
