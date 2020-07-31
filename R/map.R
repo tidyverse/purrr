@@ -13,7 +13,7 @@
 #'
 #' * `map_dfr()` and `map_dfc()` return a data frame created by
 #'   row-binding and column-binding respectively. They require dplyr
-#'   to be installed.
+#'   to be installed. `map_df()` is an alias for `map_dfr()`.
 #'
 #' * The returned values of `.f` must be of length one for each element
 #'   of `.x`. If `.f` uses an extractor function shortcut, `.default`
