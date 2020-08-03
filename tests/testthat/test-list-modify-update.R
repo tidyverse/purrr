@@ -20,6 +20,7 @@ test_that("can remove elements with `zap()`", {
     list_modify(list(a = list(fst = 1, snd = 2), b = 2, c = 3), b = zap(), a = zap()),
     list(c = 3)
   )
+  expect_equal(list_modify(list(list(1, 2), 2, 3), zap(), zap()), list(3))
 })
 
 test_that("error if inputs are not all named or unnamed", {
