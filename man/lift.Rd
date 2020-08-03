@@ -16,9 +16,9 @@ lift_dl(..f, ..., .unnamed = FALSE)
 
 lift_dv(..f, ..., .unnamed = FALSE)
 
-lift_vl(..f, ..., .type)
+lift_vl(..f, ..., .type = NULL)
 
-lift_vd(..f, ..., .type)
+lift_vd(..f, ..., .type = NULL)
 
 lift_ld(..f, ...)
 
@@ -35,10 +35,17 @@ name the parameters in the lifted function signature. This
 prevents matching of arguments by name and match by position
 instead.}
 
-\item{.type}{A vector mold or a string describing the type of the
-input vectors. The latter can be any of the types returned by
-\code{\link[=typeof]{typeof()}}, or "numeric" as a shorthand for either
-"double" or "integer".}
+\item{.type}{For \code{as_vector()}, an optional vector prototype of
+\link[=vec_size]{size} 0, e.g. \code{integer(0)}. An error is thrown when
+\code{.type} is supplied and \code{.x} can't be simplified (for example
+because it is a list containing vectors with sizes different than
+1, or vectors incompatible with \code{.type}).
+
+\ifelse{html}{\figure{lifecycle-soft-deprecated.svg}{options: alt='Soft-deprecated lifecycle'}}{\strong{Soft-deprecated}} For \code{simplify()}, this
+argument is now deprecated. For \code{as_vector()}, \code{.type} previously
+could be a string describing a type as returned by \code{typeof()}, or
+a vector of length > 0 to signal the expected length of each
+element. These behaviours are now deprecated.}
 }
 \value{
 A function.

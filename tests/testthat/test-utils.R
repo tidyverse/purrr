@@ -97,6 +97,9 @@ test_that("vec_simplify() ignores complex inputs", {
   expect_identical(vec_simplify(1:3), 1:3)
   expect_identical(vec_simplify(list(identity)), list(identity))
   expect_identical(vec_simplify(mtcars), mtcars)
+
+  x <- list(structure(list(1), foo = TRUE), structure(list(2), bar = TRUE))
+  expect_identical(vec_simplify(x), x)
 })
 
 

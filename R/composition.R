@@ -125,10 +125,9 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #' # vector before passing them to ..f. You can add a check to assert
 #' # the type of vector you expect:
 #' lift_vd(tolower, .type = character(1))("this", "is", "ok")
-lift_vl <- function(..f, ..., .type) {
+lift_vl <- function(..f, ..., .type = NULL) {
   force(..f)
   defaults <- list(...)
-  if (missing(.type)) .type <- NULL
 
   function(.x = list(), ...) {
     x <- as_vector(.x, .type)
@@ -138,10 +137,9 @@ lift_vl <- function(..f, ..., .type) {
 
 #' @rdname lift
 #' @export
-lift_vd <- function(..f, ..., .type) {
+lift_vd <- function(..f, ..., .type = NULL) {
   force(..f)
   defaults <- list(...)
-  if (missing(.type)) .type <- NULL
 
   function(...) {
     x <- as_vector(list(...), .type)

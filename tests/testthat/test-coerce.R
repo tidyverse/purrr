@@ -65,6 +65,7 @@ test_that("can't coerce to expressions", {
 })
 
 test_that("as_vector can be type-specifc", {
+  local_options(lifecycle_verbosity = "quiet")
   expect_identical(as_vector(as.list(letters), "character"), letters)
 })
 

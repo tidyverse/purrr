@@ -21,6 +21,7 @@ BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
     R (>= 3.2)
 Imports: 
+    lifecycle (>= 0.2.0),
     magrittr (>= 1.5),
     rlang (>= 0.4.7),
     vctrs (>= 0.3.2)
@@ -33,6 +34,8 @@ Suggests:
     testthat,
     tibble,
     tidyselect
+Remotes:
+    r-lib/vctrs
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

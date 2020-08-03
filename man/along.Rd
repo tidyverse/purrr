@@ -21,7 +21,7 @@ similar to the idea of \code{\link[=seq_along]{seq_along()}}, which creates a ve
 length as its input.
 }
 \details{
-This function might change to \code{\link[vctrs:vec_init]{vctrs::vec_init()}}.
+This function might change to \code{\link[=vec_init]{vec_init()}}.
 }
 \examples{
 x <- 1:5

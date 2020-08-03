@@ -10,7 +10,7 @@
 #'
 #' @details
 #'
-#' This function might change to [vctrs::vec_init()].
+#' This function might change to [vec_init()].
 #'
 #' @param x A vector.
 #' @return A list of the same length as `x`.

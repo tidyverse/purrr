@@ -1,5 +1,7 @@
 #' @keywords internal
 #' @import rlang
+#' @import vctrs
+#' @importFrom lifecycle deprecated
 #' @useDynLib purrr, .registration = TRUE
 "_PACKAGE"
 

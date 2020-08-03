@@ -1,6 +1,11 @@
 
 # purrr (development version)
 
+* Passing a type name (like `"double"` or `"logical"`) or a vector
+  mould of length > 0 as the `.type` argument of `simplify()` and
+  `as_vector()` is now deprecated. This is part of a transition
+  towards vctrs prototypes.
+
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 
