@@ -1,11 +1,11 @@
 #' Partial apply a function, filling in some arguments.
 #'
 #' @description
-#'
 #' Partial function application allows you to modify a function by pre-filling
 #' some of the arguments.  It is particularly useful in conjunction with
 #' functionals and other function operators.
 #'
+#' @details
 #' Note that an argument can only be partialised once.
 #'
 #' @param .f a function. For the output source to read well, this should be a
