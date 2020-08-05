@@ -5,8 +5,6 @@
 \alias{accumulate2}
 \title{Accumulate intermediate results of a vector reduction}
 \usage{
-
-accumulate2(.x, .y, .f, ..., .init)
 accumulate(
   .x,
   .f,
@@ -15,6 +13,8 @@ accumulate(
   .dir = c("forward", "backward"),
   .simplify = TRUE
 )
+
+accumulate2(.x, .y, .f, ..., .init, .simplify = TRUE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

@@ -11,6 +11,10 @@
   possible to disable the simplification by setting `.simplify` to
   `FALSE`.
 
+* `accumulate2()` gains a `.simplify` argument as well. It did not use
+  to simplify its output, but we've changed this default to
+  automatically simplify for consistency with `accumulate()`.
+
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 

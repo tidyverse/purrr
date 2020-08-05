@@ -476,8 +476,14 @@ accumulate <- function(.x,
 }
 #' @rdname accumulate
 #' @export
-accumulate2 <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
+accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = TRUE) {
+  res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
+
+  if (.simplify) {
+    acc_simplify(res)
+  } else {
+    res
+  }
 }
 
 accumulate_names <- function(nms, init, dir) {
