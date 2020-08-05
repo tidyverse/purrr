@@ -244,7 +244,10 @@ are three ways to refer to the arguments:</p><ul>
 <li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
 </ul>
 
-<p>This syntax allows you to create very compact anonymous functions.</p>
+<p>This syntax allows you to create very compact anonymous
+functions. Note that formula functions conceptually take dots
+(that's why you can use <code>..1</code> etc). They silently ignore
+additional arguments that are not used in the formula expression.</p>
 <p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
 converted to an extractor function. Character vectors index by
 name and numeric vectors index by position; use a list to index
