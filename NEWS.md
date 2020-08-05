@@ -19,6 +19,9 @@
 
 * Improved performance of `partial()` (#715).
 
+* `partial()` no longer inlines the function in the call stack. This
+  fixes issues when `partial()` is used with `lm()` for instance (#707).
+
 
 # purrr 0.3.4
 

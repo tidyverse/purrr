@@ -83,7 +83,7 @@ partial <- function(.f,
   }
 
   fn_expr <- enexpr(.f)
-  fn <- switch(typeof(.f),
+  .fn <- switch(typeof(.f),
     builtin = ,
     special =
       as_closure(.f),
@@ -129,12 +129,12 @@ partial <- function(.f,
 
   if (is_false(.first)) {
     # For compatibility
-    call <- call_modify(call2(fn), ... = , !!!args)
+    call <- call_modify(call2(".fn"), ... = , !!!args)
   } else {
     # Pass on `...` from parent function. It should be last, this way if
     # `args` also contain a `...` argument, the position in `args`
     # prevails.
-    call <- call_modify(call2(fn), !!!args, ... = )
+    call <- call_modify(call2(".fn"), !!!args, ... = )
   }
 
   # Forward caller environment where S3 methods might be defined.
@@ -145,7 +145,7 @@ partial <- function(.f,
   call <- quo_invert(call)
 
   # Derive a mask where dots can be forwarded
-  mask <- new_data_mask(env())
+  mask <- new_data_mask(env(.fn = .fn))
 
   partialised <- function(...) {
     mask$... <- environment()$...
