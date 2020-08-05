@@ -3,6 +3,10 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
+// Compile with `-fvisibility=hidden -DHAVE_VISIBILITY_ATTRIBUTE` if you link to this library
+#include <R_ext/Visibility.h>
+#define export attribute_visible extern
+
 /* .Call calls */
 extern SEXP coerce_impl(SEXP, SEXP);
 extern SEXP pluck_impl(SEXP, SEXP, SEXP, SEXP);
@@ -26,7 +30,7 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-void R_init_purrr(DllInfo *dll)
+export void R_init_purrr(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
