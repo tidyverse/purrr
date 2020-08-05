@@ -132,6 +132,11 @@ test_that("accumulate() does not simplify data frame rowwise", {
   expect_identical(out, exp)
 })
 
+test_that("accumulate() simplifies optionally", {
+  expect_identical(accumulate(1:3, function(x, y) y), 1:3)
+  expect_identical(accumulate(1:3, function(x, y) y, .simplify = FALSE), as.list(1:3))
+})
+
 
 # reduce2 -----------------------------------------------------------------
 

@@ -1,6 +1,16 @@
 
 # purrr (development version)
 
+* Because of historical reasons, `accumulate()` automatically
+  simplifies the accumulated list to an atomic vector if possible. To
+  control this behaviour, `accumulate()` gains a `.simplify` argument
+  which is `TRUE` by default for backward compatibility.
+
+  Ideally the simplification step would be performed with `simplify()`
+  by composition. Since that ship has sailed, we've at least made it
+  possible to disable the simplification by setting `.simplify` to
+  `FALSE`.
+
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 

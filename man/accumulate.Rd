@@ -5,9 +5,16 @@
 \alias{accumulate2}
 \title{Accumulate intermediate results of a vector reduction}
 \usage{
-accumulate(.x, .f, ..., .init, .dir = c("forward", "backward"))
 
 accumulate2(.x, .y, .f, ..., .init)
+accumulate(
+  .x,
+  .f,
+  ...,
+  .init,
+  .dir = c("forward", "backward"),
+  .simplify = TRUE
+)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -35,13 +42,19 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
 
+\item{.simplify}{If \code{TRUE}, the default, the accumulated list of
+results is simplified to an atomic vector if possible. See
+\code{\link[=simplify]{simplify()}}.}
+
 \item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
 needs to be 1 element shorter than the vector to be accumulated (\code{.x}).
 If \code{.init} is set, \code{.y} needs to be one element shorted than the
 concatenation of the initial value and \code{.x}.}
 }
 \value{
-A vector the same length of \code{.x} with the same names as \code{.x}.
+A list the same length of \code{.x} with the same names as \code{.x}.
+If \code{.simplify} is \code{TRUE}, the list is simplified to an atomic
+vector if possible.
 
 If \code{.init} is supplied, the length is extended by 1. If \code{.x} has
 names, the initial value is given the name \code{".init"}, otherwise

@@ -330,7 +330,6 @@ seq_len2 <- function(start, end) {
 #'     needs to be 1 element shorter than the vector to be accumulated (`.x`).
 #'     If `.init` is set, `.y` needs to be one element shorted than the
 #'     concatenation of the initial value and `.x`.
-#'
 #' @param .f For `accumulate()` `.f` is 2-argument function. The function will
 #'     be passed the accumulated result or initial value as the first argument.
 #'     The next value in sequence is passed as the second argument.
@@ -342,17 +341,20 @@ seq_len2 <- function(start, end) {
 #'
 #'   The accumulation terminates early if `.f` returns a value wrapped in
 #'   a [done()].
-#'
 #' @param .init If supplied, will be used as the first value to start
 #'   the accumulation, rather than using `.x[[1]]`. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
 #'   is empty. If missing, and `.x` is empty, will throw an error.
-#'
 #' @param .dir The direction of accumulation as a string, one of
 #'   `"forward"` (the default) or `"backward"`. See the section about
 #'   direction below.
+#' @param .simplify If `TRUE`, the default, the accumulated list of
+#'   results is simplified to an atomic vector if possible. See
+#'   [simplify()].
 #'
-#' @return A vector the same length of `.x` with the same names as `.x`.
+#' @return A list the same length of `.x` with the same names as `.x`.
+#'   If `.simplify` is `TRUE`, the list is simplified to an atomic
+#'   vector if possible.
 #'
 #'   If `.init` is supplied, the length is extended by 1. If `.x` has
 #'   names, the initial value is given the name `".init"`, otherwise
@@ -454,20 +456,22 @@ seq_len2 <- function(start, end) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 #' @export
-accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
+accumulate <- function(.x,
+                       .f,
+                       ...,
+                       .init,
+                       .dir = c("forward", "backward"),
+                       .simplify = TRUE) {
   .dir <- arg_match(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
 
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
-  # It would be unappropriate to simplify the result rowwise with
-  # `accumulate()` because it has invariants defined in terms of
-  # `length()` rather than `vec_size()`
-  if (some(res, is.data.frame)) {
-    res
+  if (.simplify) {
+    acc_simplify(res)
   } else {
-    vec_simplify(res)
+    res
   }
 }
 #' @rdname accumulate
@@ -489,6 +493,17 @@ accumulate_names <- function(nms, init, dir) {
   }
 
   nms
+}
+
+acc_simplify <- function(x) {
+  # It would be unappropriate to simplify the result rowwise with
+  # `accumulate()` because it has invariants defined in terms of
+  # `length()` rather than `vec_size()`
+  if (some(x, is.data.frame)) {
+    x
+  } else {
+    vec_simplify(x)
+  }
 }
 
 #' Reduce from the right (retired)
