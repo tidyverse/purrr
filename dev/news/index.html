@@ -183,6 +183,7 @@
 <li><p><code><a href="../reference/every.html">every()</a></code> and <code><a href="../reference/every.html">some()</a></code> now properly check the return value of their predicate function. It must now return a <code>TRUE</code>, <code>FALSE</code>, or <code>NA</code>.</p></li>
 <li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> now uses vctrs for simplifying the output. This ensures a more principled and flexible coercion behaviour.</p></li>
 <li><p>Improved performance of <code><a href="../reference/partial.html">partial()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/715'>#715</a>).</p></li>
+<li><p><code><a href="../reference/partial.html">partial()</a></code> no longer inlines the function in the call stack. This fixes issues when <code><a href="../reference/partial.html">partial()</a></code> is used with <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> for instance (<a href='https://github.com/tidyverse/purrr/issues/707'>#707</a>).</p></li>
 </ul>
 </div>
 </div>
