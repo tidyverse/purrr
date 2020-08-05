@@ -50,13 +50,28 @@
 
 
 <meta property="og:title" content="Produce all combinations of list elements — cross" />
-<meta property="og:description" content="cross2() returns the product set of the elements of
-.x and .y. cross3() takes an additional
-.z argument. cross() takes a list .l and
-returns the cartesian product of all its elements in a list, with
-one combination by element. cross_df() is like
-cross() but returns a data frame, with one combination by
-row." />
+<meta property="og:description" content="
+These functions have been deprecated in purrr 0.4.0 because they
+are slow and buggy, and we no longer think they are the right
+approach to solving this problem. Please use tidyr::expand_grid()
+instead.
+Here is an example of equivalent usages for cross() and
+expand_grid():data &amp;amp;lt;- list(
+  id = c(&quot;John&quot;, &quot;Jane&quot;),
+  greeting = c(&quot;Hello.&quot;, &quot;Bonjour.&quot;),
+  sep = c(&quot;! &quot;, &quot;... &quot;)
+)
+
+# With deprecated `cross()`
+data %&amp;amp;gt;% cross() %&amp;amp;gt;% map_chr(lift(paste))## [1] &quot;John! Hello.&quot;     &quot;Jane! Hello.&quot;     &quot;John! Bonjour.&quot;   &quot;Jane! Bonjour.&quot;  
+## [5] &quot;John... Hello.&quot;   &quot;Jane... Hello.&quot;   &quot;John... Bonjour.&quot; &quot;Jane... Bonjour.&quot;
+# With `expand_grid()`
+tidyr::expand_grid(!!!data) %&amp;amp;gt;% pmap_chr(paste)## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+## when loading 'dplyr'
+## [1] &quot;John! Hello.&quot;     &quot;John... Hello.&quot;   &quot;John! Bonjour.&quot;   &quot;John... Bonjour.&quot;
+## [5] &quot;Jane! Hello.&quot;     &quot;Jane... Hello.&quot;   &quot;Jane! Bonjour.&quot;   &quot;Jane... Bonjour.&quot;
+
+" />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -173,13 +188,28 @@ row." />
     </div>
 
     <div class="ref-description">
-    <p><code>cross2()</code> returns the product set of the elements of
-<code>.x</code> and <code>.y</code>. <code>cross3()</code> takes an additional
-<code>.z</code> argument. <code>cross()</code> takes a list <code>.l</code> and
-returns the cartesian product of all its elements in a list, with
-one combination by element. <code>cross_df()</code> is like
-<code>cross()</code> but returns a data frame, with one combination by
-row.</p>
+    <p><img src='figures/lifecycle-soft-deprecated.svg' alt='Soft-deprecated lifecycle' /></p>
+<p>These functions have been deprecated in purrr 0.4.0 because they
+are slow and buggy, and we no longer think they are the right
+approach to solving this problem. Please use <code>tidyr::expand_grid()</code>
+instead.</p>
+<p>Here is an example of equivalent usages for <code>cross()</code> and
+<code>expand_grid()</code>:<div class="r"></p><pre><span class='no'>data</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"John"</span>, <span class='st'>"Jane"</span>),
+  <span class='kw'>greeting</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hello."</span>, <span class='st'>"Bonjour."</span>),
+  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"! "</span>, <span class='st'>"... "</span>)
+)
+
+<span class='co'># With deprecated `cross()`</span>
+<span class='no'>data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>cross</span>() <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map.html'>map_chr</a></span>(<span class='fu'><a href='lift.html'>lift</a></span>(<span class='no'>paste</span>))</pre><p></div></p><pre>## [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
+## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+</pre><p><div class="r"></p><pre><span class='co'># With `expand_grid()`</span>
+<span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'>expand_grid</span>(!!!<span class='no'>data</span>) <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map2.html'>pmap_chr</a></span>(<span class='no'>paste</span>)</pre><p></div></p><pre>## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+## when loading 'dplyr'
+</pre><pre>## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
+## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
+</pre>
+
     </div>
 
     <pre class="usage"><span class='fu'>cross</span>(<span class='no'>.l</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -219,7 +249,14 @@ over. <code>cross_df()</code> returns a data frame where each row is one
 combination.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>cross()</code>, <code>cross2()</code> and <code>cross3()</code> return the
+    <p><code>cross2()</code> returns the product set of the elements of
+<code>.x</code> and <code>.y</code>. <code>cross3()</code> takes an additional
+<code>.z</code> argument. <code>cross()</code> takes a list <code>.l</code> and
+returns the cartesian product of all its elements in a list, with
+one combination by element. <code>cross_df()</code> is like
+<code>cross()</code> but returns a data frame, with one combination by
+row.</p>
+<p><code>cross()</code>, <code>cross2()</code> and <code>cross3()</code> return the
 cartesian product is returned in wide format. This makes it more
 amenable to mapping operations. <code>cross_df()</code> returns the output
 in long format just as <code><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid()</a></code> does. This is adapted
@@ -248,7 +285,11 @@ result.</p>
 
 <span class='no'>data</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>cross</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='lift.html'>lift</a></span>(<span class='no'>paste</span>))</div><div class='output co'>#&gt; [[1]]
+  <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='lift.html'>lift</a></span>(<span class='no'>paste</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross()` is deprecated as of purrr 0.4.0.</span>
+#&gt; <span class='warning'>Please use `tidyr::expand_grid()` instead.</span>
+#&gt; <span class='warning'>See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "John! Hello."
 #&gt; 
 #&gt; [[2]]
@@ -277,8 +318,11 @@ result.</p>
 <span class='co'># data frame in long format: crossing three objects produces a data</span>
 <span class='co'># frame of three columns with each row being a particular</span>
 <span class='co'># combination. This is the same format that expand.grid() returns.</span>
-<span class='no'>args</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span> <span class='fu'>cross_df</span>()
-
+<span class='no'>args</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span> <span class='fu'>cross_df</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross_df()` is deprecated as of purrr 0.4.0.</span>
+#&gt; <span class='warning'>Please use `tidyr::expand_grid()` instead.</span>
+#&gt; <span class='warning'>See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
 <span class='co'># In case you need a list in long format (and not a data frame)</span>
 <span class='co'># just run as.list() after cross_df()</span>
 <span class='no'>args</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span>()</div><div class='output co'>#&gt; $id
@@ -325,7 +369,11 @@ result.</p>
 #&gt; [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."</div><div class='input'>
 <span class='co'># Unwanted combinations can be filtered out with a predicate function</span>
 <span class='no'>filter</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> <span class='kw'>&gt;=</span> <span class='no'>y</span>
-<span class='fu'>cross2</span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='no'>filter</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 10
+<span class='fu'>cross2</span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='no'>filter</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross2()` is deprecated as of purrr 0.4.0.</span>
+#&gt; <span class='warning'>Please use `tidyr::expand_grid()` instead.</span>
+#&gt; <span class='warning'>See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; List of 10
 #&gt;  $ :List of 2
 #&gt;   ..$ : int 1
 #&gt;   ..$ : int 2
@@ -459,7 +507,7 @@ result.</p>
 #&gt; [[6]]$y
 #&gt; [1] 3
 #&gt; 
-#&gt; </div></pre>
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

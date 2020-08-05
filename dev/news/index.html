@@ -168,10 +168,22 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#purrr-development-version" class="anchor"></a>purrr (development version)<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code><a href="../reference/cross.html">cross()</a></code> and all its variants have been deprecated in favour of <code>tidyr::expand_grid()</code>. These functions were slow and buggy and we no longer think they are the right approach to solving this problem. See <a href='https://github.com/tidyverse/purrr/issues/768'>#768</a> for more information.</li>
+</ul>
+</div>
+<div id="features-and-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#features-and-fixes" class="anchor"></a>Features and fixes</h2>
 <ul>
 <li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> now uses vctrs for simplifying the output. This ensures a more principled and flexible coercion behaviour.</p></li>
 <li><p>Improved performance of <code><a href="../reference/partial.html">partial()</a></code> (<a href='https://github.com/tidyverse/purrr/issues/715'>#715</a>).</p></li>
 </ul>
+</div>
 </div>
     <div id="purrr-034" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.4">
@@ -217,9 +229,9 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#purrr-030" class="anchor"></a>purrr 0.3.0<small> 2019-01-27 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <p><code><a href="../reference/modify.html">modify()</a></code> and variants are now wrapping <code>[[&lt;-</code> instead of <code>[&lt;-</code>. This change increases the genericity of these functions but might cause different behaviour in some cases.</p>
@@ -449,9 +461,9 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <h1 class="page-header" data-toc-text="0.2.3">
 <a href="#purrr-023" class="anchor"></a>purrr 0.2.3<small> 2017-08-02 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <p>We noticed the following issues during reverse dependencies checks:</p>
 <ul>
 <li><p>If <code><a href="../reference/reduce.html">reduce()</a></code> fails with this message: <code>Error: `.x` is empty, and no `.init` supplied</code>, this is because <code><a href="../reference/reduce.html">reduce()</a></code> now returns <code>.init</code> when <code>.x</code> is empty. Fix the problem by supplying an appropriate argument to <code>.init</code>, or by providing special behaviour when <code>.x</code> has length 0.</p></li>
