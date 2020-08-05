@@ -16,7 +16,10 @@
 #'   * For a two argument function, use `.x` and `.y`
 #'   * For more arguments, use `..1`, `..2`, `..3` etc
 #'
-#'   This syntax allows you to create very compact anonymous functions.
+#'   This syntax allows you to create very compact anonymous
+#'   functions. Note that formula functions conceptually take dots
+#'   (that's why you can use `..1` etc). They silently ignore
+#'   additional arguments that are not used in the formula expression.
 #'
 #'   If __character vector__, __numeric vector__, or __list__, it is
 #'   converted to an extractor function. Character vectors index by
