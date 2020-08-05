@@ -35,6 +35,33 @@ over. \code{cross_df()} returns a data frame where each row is one
 combination.
 }
 \description{
+\ifelse{html}{\figure{lifecycle-soft-deprecated.svg}{options: alt='Soft-deprecated lifecycle'}}{\strong{Soft-deprecated}}
+
+These functions have been deprecated in purrr 0.4.0 because they
+are slow and buggy, and we no longer think they are the right
+approach to solving this problem. Please use \code{tidyr::expand_grid()}
+instead.
+
+Here is an example of equivalent usages for \code{cross()} and
+\code{expand_grid()}:\if{html}{\out{<div class="r">}}\preformatted{data <- list(
+  id = c("John", "Jane"),
+  greeting = c("Hello.", "Bonjour."),
+  sep = c("! ", "... ")
+)
+
+# With deprecated `cross()`
+data \%>\% cross() \%>\% map_chr(lift(paste))
+}\if{html}{\out{</div>}}\preformatted{## [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
+## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+}\if{html}{\out{<div class="r">}}\preformatted{# With `expand_grid()`
+tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
+}\if{html}{\out{</div>}}\preformatted{## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+## when loading 'dplyr'
+}\preformatted{## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
+## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
+}
+}
+\details{
 \code{cross2()} returns the product set of the elements of
 \code{.x} and \code{.y}. \code{cross3()} takes an additional
 \code{.z} argument. \code{cross()} takes a list \code{.l} and
@@ -42,8 +69,7 @@ returns the cartesian product of all its elements in a list, with
 one combination by element. \code{cross_df()} is like
 \code{cross()} but returns a data frame, with one combination by
 row.
-}
-\details{
+
 \code{cross()}, \code{cross2()} and \code{cross3()} return the
 cartesian product is returned in wide format. This makes it more
 amenable to mapping operations. \code{cross_df()} returns the output

@@ -1,5 +1,7 @@
 context("cross")
 
+local_options(lifecycle_verbosity = "quiet")
+
 test_that("long format corresponds to expand.grid output", {
   skip_if_not_installed("tibble")
 

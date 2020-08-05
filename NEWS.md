@@ -1,6 +1,16 @@
 
 # purrr (development version)
 
+## Breaking changes
+
+* `cross()` and all its variants have been deprecated in favour of
+  `tidyr::expand_grid()`. These functions were slow and buggy and we
+  no longer think they are the right approach to solving this problem.
+  See #768 for more information.
+
+
+## Features and fixes
+
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 

@@ -1,5 +1,31 @@
 #' Produce all combinations of list elements
 #'
+#' @description
+#' `r lifecycle::badge("soft-deprecated")`
+#'
+#' These functions have been deprecated in purrr 0.4.0 because they
+#' are slow and buggy, and we no longer think they are the right
+#' approach to solving this problem. Please use `tidyr::expand_grid()`
+#' instead.
+#'
+#' Here is an example of equivalent usages for `cross()` and
+#' `expand_grid()`:
+#'
+#' ```{r}
+#' data <- list(
+#'   id = c("John", "Jane"),
+#'   greeting = c("Hello.", "Bonjour."),
+#'   sep = c("! ", "... ")
+#' )
+#'
+#' # With deprecated `cross()`
+#' data %>% cross() %>% map_chr(lift(paste))
+#'
+#' # With `expand_grid()`
+#' tidyr::expand_grid(!!!data) %>% pmap_chr(paste)
+#' ```
+#'
+#' @details
 #' `cross2()` returns the product set of the elements of
 #' `.x` and `.y`. `cross3()` takes an additional
 #' `.z` argument. `cross()` takes a list `.l` and
@@ -86,6 +112,13 @@
 #'   list(x = ., y = .) %>%
 #'   cross(.filter = `==`)
 cross <- function(.l, .filter = NULL) {
+  lifecycle::deprecate_soft(
+    "0.4.0",
+    "purrr::cross()",
+    "tidyr::expand_grid()",
+    details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
+  )
+
   if (is_empty(.l)) {
     return(.l)
   }
@@ -135,18 +168,36 @@ cross <- function(.l, .filter = NULL) {
 #' @export
 #' @rdname cross
 cross2 <- function(.x, .y, .filter = NULL) {
+  lifecycle::deprecate_soft(
+    "0.4.0",
+    "purrr::cross2()",
+    "tidyr::expand_grid()",
+    details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
+  )
   cross(list(.x, .y), .filter = .filter)
 }
 
 #' @export
 #' @rdname cross
 cross3 <- function(.x, .y, .z, .filter = NULL) {
+  lifecycle::deprecate_soft(
+    "0.4.0",
+    "purrr::cross3()",
+    "tidyr::expand_grid()",
+    details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
+  )
   cross(list(.x, .y, .z), .filter = .filter)
 }
 
 #' @rdname cross
 #' @export
 cross_df <- function(.l, .filter = NULL) {
+  lifecycle::deprecate_soft(
+    "0.4.0",
+    "purrr::cross_df()",
+    "tidyr::expand_grid()",
+    details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
+  )
   check_tibble()
   cross(.l, .filter = .filter) %>%
     transpose() %>%
@@ -158,8 +209,7 @@ cross_df <- function(.l, .filter = NULL) {
 #' @usage NULL
 #' @rdname cross
 cross_n <- function(...) {
-  warning("`cross_n()` is deprecated; please use `cross()` instead.",
-    call. = FALSE)
+  lifecycle::deprecate_stop("0.2.3", "purrr::cross_n()")
   cross(...)
 }
 
@@ -167,7 +217,6 @@ cross_n <- function(...) {
 #' @usage NULL
 #' @rdname cross
 cross_d <- function(...) {
-  warning("`cross_d()` is deprecated; please use `cross_df()` instead.",
-    call. = FALSE)
+  lifecycle::deprecate_stop("0.2.3", "purrr::cross_d()")
   cross_df(...)
 }
