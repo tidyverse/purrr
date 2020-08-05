@@ -22,3 +22,21 @@ test_that("every() requires logical value", {
   expect_error(every(list(1:3), identity), "must return a single")
   expect_error(every(list(function() NULL), identity), "must return a single")
 })
+
+test_that("every() has the same behaviour as `&&` (#751)", {
+  expect_false(every(list(NA, FALSE), identity))
+  expect_false(every(list(FALSE, NA), identity))
+
+  expect_identical(every(list(NA, TRUE), identity), NA)
+  expect_identical(every(list(TRUE, NA), identity), NA)
+  expect_identical(every(list(NA, NA), identity), NA)
+})
+
+test_that("some() has the same behaviour as `||`", {
+  expect_true(some(list(TRUE, NA), identity))
+  expect_true(some(list(NA, TRUE), identity))
+
+  expect_identical(some(list(NA, FALSE), identity), NA)
+  expect_identical(some(list(FALSE, NA), identity), NA)
+  expect_identical(some(list(NA, NA), identity), NA)
+})

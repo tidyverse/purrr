@@ -11,6 +11,12 @@
 
 ## Features and fixes
 
+* `every()` now correctly propagates missing values using the same
+  rules as `&&` (#751). Internally, it has become a wrapper around
+  `&&`. This makes it consistent with `&&` and also with `some()`
+  which has always been a wrapper around `||` with the same
+  propagation rules.
+
 * `every()` and `some()` now properly check the return value of their
   predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
 
