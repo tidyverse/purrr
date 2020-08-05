@@ -52,8 +52,7 @@
 <meta property="og:title" content="Partial apply a function, filling in some arguments. — partial" />
 <meta property="og:description" content="Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
-functionals and other function operators.
-Note that an argument can only be partialised once." />
+functionals and other function operators." />
 <meta property="og:image" content="https://purrr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -173,7 +172,6 @@ Note that an argument can only be partialised once." />
     <p>Partial function application allows you to modify a function by pre-filling
 some of the arguments.  It is particularly useful in conjunction with
 functionals and other function operators.</p>
-<p>Note that an argument can only be partialised once.</p>
     </div>
 
     <pre class="usage"><span class='fu'>partial</span>(<span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.env</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.lazy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.first</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -214,6 +212,9 @@ arguments.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that an argument can only be partialised once.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Partial is designed to replace the use of anonymous functions for</span>
