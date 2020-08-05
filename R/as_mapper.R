@@ -117,7 +117,7 @@ plucker <- function(i, default) {
   )
 }
 
-as_predicate <- function(.fn, ..., .mapper, .deprecate = FALSE) {
+as_predicate <- function(.fn, ..., .mapper, .allow_na = FALSE) {
   if (.mapper) {
     .fn <- as_mapper(.fn, ...)
   }
@@ -126,19 +126,14 @@ as_predicate <- function(.fn, ..., .mapper, .deprecate = FALSE) {
     out <- .fn(...)
 
     if (!is_bool(out)) {
-      msg <- sprintf(
-        "Predicate functions must return a single `TRUE` or `FALSE`, not %s",
-        as_predicate_friendly_type_of(out)
-      )
-      if (.deprecate) {
-        msg <- paste_line(
-          "Returning complex values from a predicate function is soft-deprecated as of purrr 0.3.0.",
-          msg
-        )
-        signal_soft_deprecated(msg)
-      } else {
-        abort(msg)
+      if (is_na(out) && .allow_na) {
+        # Always return a logical NA
+        return(NA)
       }
+      abort(sprintf(
+        "Predicate functions must return a single `TRUE` or `FALSE`, not %s.",
+        as_predicate_friendly_type_of(out)
+      ))
     }
 
     out

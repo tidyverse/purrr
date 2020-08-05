@@ -18,10 +18,7 @@ test_that("none returns TRUE if all elements are FALSE", {
   expect_true(none(x[1], isTRUE))
 })
 
-# Life cycle --------------------------------------------------------------
-
-test_that("return NA if present", {
-  scoped_lifecycle_warnings()
-  expect_warning(expect_equal(some(1:10, ~ NA), NA), "soft-deprecated")
-  expect_warning(expect_equal(every(1:10, ~ NA), NA), "soft-deprecated")
+test_that("every() requires logical value", {
+  expect_error(every(list(1:3), identity), "must return a single")
+  expect_error(every(list(function() NULL), identity), "must return a single")
 })

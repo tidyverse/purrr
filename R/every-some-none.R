@@ -10,13 +10,20 @@
 #' @return A logical vector of length 1.
 #' @export
 #' @examples
-#' y <- list(0:10, 5.5)
-#' y %>% every(is.numeric)
-#' y %>% every(is.integer)
-#' y %>% some(is.integer)
-#' y %>% none(is.character)
+#' x <- list(0:10, 5.5)
+#' x %>% every(is.numeric)
+#' x %>% every(is.integer)
+#' x %>% some(is.integer)
+#' x %>% none(is.character)
+#'
+#' # Missing values are propagated:
+#' some(list(NA, FALSE), identity)
+#'
+#' # If you need to use these functions in a context where missing values are
+#' # unsafe (e.g. in `if ()` conditions), make sure to use safe predicates:
+#' if (some(list(NA, FALSE), rlang::is_true)) "foo" else "bar"
 every <- function(.x, .p, ...) {
-  .p <- as_predicate(.p, ..., .mapper = TRUE, .deprecate = TRUE)
+  .p <- as_predicate(.p, ..., .mapper = TRUE, .allow_na = TRUE)
 
   for (i in seq_along(.x)) {
     val <- .p(.x[[i]], ...)
@@ -35,7 +42,7 @@ every <- function(.x, .p, ...) {
 #' @export
 #' @rdname every
 some <- function(.x, .p, ...) {
-  .p <- as_predicate(.p, ..., .mapper = TRUE, .deprecate = TRUE)
+  .p <- as_predicate(.p, ..., .mapper = TRUE, .allow_na = TRUE)
 
   val <- FALSE
   for (i in seq_along(.x)) {

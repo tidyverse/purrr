@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `every()` and `some()` now properly check the return value of their
+  predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
+
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 
@@ -122,6 +125,13 @@
   (any vector was considered `TRUE` if not a single `FALSE` value, no
   matter its length). These functions signal soft-deprecation warnings
   instead of a hard failure.
+
+  Edit (purr 0.4.0): `every()` and `some()` never issued deprecation
+  warnings because of a technical issue. We didn't fix the warnings in
+  the end, and using predicates returning `NA` is no longer considered
+  deprecated. If you need to use `every()` and `some()` in contexts
+  where `NA` propagation is unsafe, e.g. in `if ()` conditions, make
+  sure to use safe predicate functions like `is_true()`.
 
 * `modify()` and variants are now implemented using `length()`, `[[`,
   and `[[<-` methods. This implementation should be compatible with
