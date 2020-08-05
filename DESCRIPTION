@@ -24,6 +24,8 @@ Imports:
     magrittr (>= 1.5),
     rlang (>= 0.4.7),
     vctrs (>= 0.3.2)
+LinkingTo:
+    vctrs
 Suggests: 
     covr,
     crayon,
