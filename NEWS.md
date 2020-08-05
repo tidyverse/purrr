@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `map2()` and `pmap()` now recycle names of their first input if
+  needed (#783).
+
 * `every()` and `some()` now properly check the return value of their
   predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
 

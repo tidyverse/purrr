@@ -60,9 +60,13 @@ test_that("map2() with empty input copies names", {
   expect_identical(map2_raw(named_list, list(), identity), named(raw()))
 })
 
-test_that("map2() recycle names (#779)", {
+test_that("map2() and pmap() recycle names (#779)", {
   expect_identical(
     map2(c(a = 1), 1:2, ~ .x),
+    list(a = 1, a = 1)
+  )
+  expect_identical(
+    pmap(list(c(a = 1), 1:2), ~ .x),
     list(a = 1, a = 1)
   )
 })
