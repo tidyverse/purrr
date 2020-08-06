@@ -321,3 +321,8 @@ vec_simplify <- function(x) {
     vctrs::vec_c(!!!x)
   )
 }
+
+quo_is_same_env <- function(x, env) {
+  quo_env <- quo_get_env(x)
+  is_reference(quo_env, env) || is_reference(quo_env, empty_env())
+}

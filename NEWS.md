@@ -17,7 +17,8 @@
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 
-* Improved performance of `partial()` (#715).
+* Greatly improved performance of functions created with `partial()` (#715).
+  Their invokation is now as fast as for functions creating manually.
 
 * `partial()` no longer inlines the function in the call stack. This
   fixes issues when `partial()` is used with `lm()` for instance (#707).
