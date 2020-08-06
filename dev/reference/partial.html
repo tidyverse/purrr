@@ -220,6 +220,13 @@ doesn't reuse the function signature of <code>.f</code>. This is because
 <code>partial()</code> explicitly supports NSE functions that use
 <code><a href='https://rdrr.io/r/base/substitute.html'>substitute()</a></code> on their arguments. The only way to support those is
 to forward arguments through dots.</p>
+<p>Other unsupported patterns:</p><ul>
+<li><p>It is not possible to call <code>partial()</code> repeatedly on the same
+argument to pre-fill it with a different expression.</p></li>
+<li><p>It is not possible to refer to other arguments in pre-filled
+argument.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Partial is designed to replace the use of anonymous functions for</span>
@@ -246,14 +253,14 @@ to forward arguments through dots.</p>
 <span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
 #&gt; function (...) 
 #&gt; runif(n = rpois(1, 5), ...)
-#&gt; &lt;environment: 0x7fe4d0366640&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.5647063 0.2041884 0.8266304 0.9647663 0.3472210</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2869449 0.2796939 0.9334609 0.3154934 0.3165879 0.3571670</div><div class='input'>
+#&gt; &lt;environment: 0x7fe2b9b03a20&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.5647063 0.2041884 0.8266304 0.9647663 0.3472210</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.2869449 0.2796939 0.9334609 0.3154934 0.3165879 0.3571670</div><div class='input'>
 <span class='co'># You can unquote an argument to fix it to a particular value.</span>
 <span class='co'># Unquoted arguments are evaluated only once when the function is created:</span>
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>runif</span>, <span class='kw'>n</span> <span class='kw'>=</span> !!<span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>5</span>))
 <span class='no'>f</span></div><div class='output co'>#&gt; &lt;partialised&gt;
 #&gt; function (...) 
 #&gt; runif(n = 3L, ...)
-#&gt; &lt;environment: 0x7fe4d0366640&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.6373880 0.1543250 0.5652254</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1457837 0.2854921 0.2606492</div><div class='input'>
+#&gt; &lt;environment: 0x7fe2b9b03a20&gt;</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.6373880 0.1543250 0.5652254</div><div class='input'><span class='fu'>f</span>()</div><div class='output co'>#&gt; [1] 0.1457837 0.2854921 0.2606492</div><div class='input'>
 
 <span class='co'># By default, partialised arguments are passed before new ones:</span>
 <span class='no'>my_list</span> <span class='kw'>&lt;-</span> <span class='fu'>partial</span>(<span class='no'>list</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
