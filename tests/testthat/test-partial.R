@@ -135,6 +135,15 @@ test_that("partial() still supports quosures and multiple environments", {
   expect_identical(fn(), list(2, x = "foo"))
 })
 
+test_that("partial() preserves visibility when arguments are from the same environment (#656)", {
+  fn <- partial(identity, 1)
+  expect_identical(withVisible(fn()), list(value = 1, visible = TRUE))
+
+  fn <- function(x) invisible(x)
+  fn <- partial(fn, 1)
+  expect_identical(withVisible(fn()), list(value = 1, visible = FALSE))
+})
+
 
 # Life cycle --------------------------------------------------------------
 
