@@ -42,6 +42,14 @@ doesn't reuse the function signature of \code{.f}. This is because
 \code{partial()} explicitly supports NSE functions that use
 \code{substitute()} on their arguments. The only way to support those is
 to forward arguments through dots.
+
+Other unsupported patterns:
+\itemize{
+\item It is not possible to call \code{partial()} repeatedly on the same
+argument to pre-fill it with a different expression.
+\item It is not possible to refer to other arguments in pre-filled
+argument.
+}
 }
 \examples{
 # Partial is designed to replace the use of anonymous functions for

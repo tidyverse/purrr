@@ -13,6 +13,14 @@
 #' `substitute()` on their arguments. The only way to support those is
 #' to forward arguments through dots.
 #'
+#' Other unsupported patterns:
+#'
+#' - It is not possible to call `partial()` repeatedly on the same
+#'   argument to pre-fill it with a different expression.
+#'
+#' - It is not possible to refer to other arguments in pre-filled
+#'   argument.
+#'
 #' @param .f a function. For the output source to read well, this should be a
 #'   named function.
 #' @param ... named arguments to `.f` that should be partially applied.
