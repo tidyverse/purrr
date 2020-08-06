@@ -6,7 +6,12 @@
 #' functionals and other function operators.
 #'
 #' @details
-#' Note that an argument can only be partialised once.
+#' `partial()` creates a function that takes `...` arguments. Unlike
+#' [compose()] and other function operators like [negate()], it
+#' doesn't reuse the function signature of `.f`. This is because
+#' `partial()` explicitly supports NSE functions that use
+#' `substitute()` on their arguments. The only way to support those is
+#' to forward arguments through dots.
 #'
 #' @param .f a function. For the output source to read well, this should be a
 #'   named function.
