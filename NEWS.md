@@ -24,19 +24,15 @@
 
   The switch to vctrs coercions does entail a stricter behaviour.
   `map_chr()` used to succeed with any type by deparsing the
-  inputs. This behaviour lead to unpredictable results:
+  inputs:
 
   ```{r}
   flatten_chr(list("foo", 1))
   #> [1] "foo"      "1.000000"
   ```
 
-  With vctrs coercions, this is now an error:
-
-  ```{r}
-  flatten_chr(list("foo", 1))
-  #> Error: Can't convert <double> to <character>.
-  ```
+  With vctrs coercions, this is now deprecated and will become an
+  error in the future.
 
 
 ## Features and fixes

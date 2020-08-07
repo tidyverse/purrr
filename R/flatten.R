@@ -107,7 +107,27 @@ flatten_dbl <- function(.x) {
 #' @rdname flatten
 flatten_chr <- function(.x) {
   .x <- validate_flatten_vec(.x)
-  vec_unchop(.x, ptype = character())
+
+  deprecate <- FALSE
+  out <- map(.x, function(x) {
+    tryCatch(
+      # Compatibility with historical deparsing behaviour
+      vctrs_error_incompatible_type = function(...) {
+        deprecate <<- TRUE
+        coerce_chr(x)
+      },
+      vec_cast(x, character())
+    )
+  })
+  if (deprecate) {
+    signal_soft_deprecated("Numeric to character coercion is deprecated as of purrr 0.4.0.")
+  }
+
+  vec_unchop(out, ptype = character())
+}
+
+is_chr_coercible <- function(x) {
+  typeof(x) %in% c("logical", "integer", "double", "raw")
 }
 
 #' @export

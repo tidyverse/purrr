@@ -83,6 +83,15 @@ test_that("can flatten data frames for compatibility", {
   expect_identical(flatten_dbl(mtcars), unlist(unstructure(mtcars)))
 })
 
+test_that("can still flatten with historical coercion", {
+  expect_error(
+    with_lifecycle_errors(flatten_chr(list("", 1)))
+  )
+  expect_true(
+    with_lifecycle_silence(is_character(flatten_chr(list("", 1)), n = 2))
+  )
+})
+
 
 # data frame flatten ------------------------------------------------------
 
