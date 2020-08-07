@@ -1,8 +1,16 @@
-#' Flatten a list of lists into a simple vector.
+#' Flatten a list of into a simpler structure
 #'
-#' These functions remove a level hierarchy from a list. They are similar to
-#' [unlist()], but they only ever remove a single layer of hierarchy and they
-#' are type-stable, so you always know what the type of the output is.
+#' @description
+#'
+#' These functions remove a level hierarchy from a list. They are
+#' similar to [unlist()], but:
+#'
+#' - They only ever remove a single layer of hierarchy.
+#'
+#' - They are type-stable, so you always know what the type of the
+#'   output is. On the other hand the final size is not stable and
+#'   depends on the contents of the list.
+#'
 #'
 #' @param .x A list to flatten. The contents of the list can be anything for
 #'   `flatten()` (as a list is returned), but the contents must match the
@@ -15,6 +23,50 @@
 #'   row-binding and column-binding respectively. They require dplyr to
 #'   be installed.
 #' @inheritParams map
+#'
+#'
+#' @section List and atomic flattening:
+#'
+#' The behaviours of `flatten()` and of the atomic variants are a bit
+#' different:
+#'
+#' - `flatten()` accepts lists that contain any kind of elements. The
+#'   elements whose `typeof()` is a list (including data frames) are
+#'   spliced into the containing list. This operation always returns a
+#'   list. If the list contains other lists, one level of nestedness
+#'   removed. If the list doesn't contain other lists, `flatten()`
+#'   doesn't do anything. The final size is equal to the sum of the
+#'   sizes of the list elements, plus the number of non-list elements.
+#'
+#'   These expressions are equivalent:
+#'
+#'   ```
+#'   flatten(list(1, list(2), list(list(3))))
+#'   c(list(1), list(2), list(list(3)))
+#'   list(1, 2, list(3))
+#'   ```
+#'
+#' - The atomic variants like `flatten_int()` expect lists containing
+#'   elements that can be coerced to the target type. For example
+#'   `flatten_int(list(FALSE, 1L, c(2.0, 3.0)))` returns `0:3`. The
+#'   elements are assembled with [vctrs::vec_c()] (via
+#'   [vctrs::vec_unchop()], a wrapper that takes lists of
+#'   vectors). The final size is equal to the sum of the sizes of all
+#'   elements.
+#'
+#'   These expressions are equivalent:
+#'
+#'   ```
+#'   flatten_int(list(1, 2, 3:4))
+#'   c(1, 2, 3:4)
+#'   ```
+#'
+#' Despite these differences, these functions are said to be
+#' "flattening" because of the dependence of the final size on the
+#' contents of the input list. The output is usually larger after
+#' flattening (though it could well be smaller if some of the
+#' flattened elements are empty).
+#'
 #' @export
 #' @examples
 #' x <- rerun(2, sample(4))
@@ -33,31 +85,31 @@ flatten <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_lgl <- function(.x) {
-  .Call(vflatten_impl, .x, "logical")
+  vec_unchop(.x, ptype = logical())
 }
 
 #' @export
 #' @rdname flatten
 flatten_int <- function(.x) {
-  .Call(vflatten_impl, .x, "integer")
+  vec_unchop(.x, ptype = integer())
 }
 
 #' @export
 #' @rdname flatten
 flatten_dbl <- function(.x) {
-  .Call(vflatten_impl, .x, "double")
+  vec_unchop(.x, ptype = double())
 }
 
 #' @export
 #' @rdname flatten
 flatten_chr <- function(.x) {
-  .Call(vflatten_impl, .x, "character")
+  vec_unchop(.x, ptype = character())
 }
 
 #' @export
 #' @rdname flatten
 flatten_raw <- function(.x) {
-  .Call(vflatten_impl, .x, "raw")
+  vec_unchop(.x, ptype = raw())
 }
 
 #' @export

@@ -9,6 +9,36 @@
   See #768 for more information.
 
 
+## Switch to vctrs
+
+* The atomic vector variants of `flatten()`, like `flatten_int()`, now
+  use vctrs for coercion and concatenation. This change improves the
+  performance and makes these functions more flexible and
+  consistent. For instance lists containing factors are properly
+  flattened thanks to vctrs coercions:
+
+  ```r
+  flatten_chr(list("foo", factor("bar")))
+  #> [1] "foo" "bar"
+  ```
+
+  The switch to vctrs coercions does entail a stricter behaviour.
+  `map_chr()` used to succeed with any type by deparsing the
+  inputs. This behaviour lead to unpredictable results:
+
+  ```{r}
+  flatten_chr(list("foo", 1))
+  #> [1] "foo"      "1.000000"
+  ```
+
+  With vctrs coercions, this is now an error:
+
+  ```{r}
+  flatten_chr(list("foo", 1))
+  #> Error: Can't convert <double> to <character>.
+  ```
+
+
 ## Features and fixes
 
 * `every()` and `some()` now properly check the return value of their

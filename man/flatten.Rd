@@ -10,7 +10,7 @@
 \alias{flatten_dfr}
 \alias{flatten_dfc}
 \alias{flatten_df}
-\title{Flatten a list of lists into a simple vector.}
+\title{Flatten a list of into a simpler structure}
 \usage{
 flatten(.x)
 
@@ -50,10 +50,53 @@ row-binding and column-binding respectively. They require dplyr to
 be installed.
 }
 \description{
-These functions remove a level hierarchy from a list. They are similar to
-\code{\link[=unlist]{unlist()}}, but they only ever remove a single layer of hierarchy and they
-are type-stable, so you always know what the type of the output is.
+These functions remove a level hierarchy from a list. They are
+similar to \code{\link[=unlist]{unlist()}}, but:
+\itemize{
+\item They only ever remove a single layer of hierarchy.
+\item They are type-stable, so you always know what the type of the
+output is. On the other hand the final size is not stable and
+depends on the contents of the list.
 }
+}
+\section{List and atomic flattening}{
+
+
+The behaviours of \code{flatten()} and of the atomic variants are a bit
+different:
+\itemize{
+\item \code{flatten()} accepts lists that contain any kind of elements. The
+elements whose \code{typeof()} is a list (including data frames) are
+spliced into the containing list. This operation always returns a
+list. If the list contains other lists, one level of nestedness
+removed. If the list doesn't contain other lists, \code{flatten()}
+doesn't do anything. The final size is equal to the sum of the
+sizes of the list elements, plus the number of non-list elements.
+
+These expressions are equivalent:\preformatted{flatten(list(1, list(2), list(list(3))))
+c(list(1), list(2), list(list(3)))
+list(1, 2, list(3))
+}
+\item The atomic variants like \code{flatten_int()} expect lists containing
+elements that can be coerced to the target type. For example
+\code{flatten_int(list(FALSE, 1L, c(2.0, 3.0)))} returns \code{0:3}. The
+elements are assembled with \code{\link[vctrs:vec_c]{vctrs::vec_c()}} (via
+\code{\link[vctrs:vec_chop]{vctrs::vec_unchop()}}, a wrapper that takes lists of
+vectors). The final size is equal to the sum of the sizes of all
+elements.
+
+These expressions are equivalent:\preformatted{flatten_int(list(1, 2, 3:4))
+c(1, 2, 3:4)
+}
+}
+
+Despite these differences, these functions are said to be
+"flattening" because of the dependence of the final size on the
+contents of the input list. The output is usually larger after
+flattening (though it could well be smaller if some of the
+flattened elements are empty).
+}
+
 \examples{
 x <- rerun(2, sample(4))
 x

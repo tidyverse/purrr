@@ -2,7 +2,7 @@ context("flatten")
 
 test_that("input must be a list", {
   expect_bad_type_error(flatten(1), "`.x` must be a list, not a double vector")
-  expect_bad_type_error(flatten_dbl(1), "`.x` must be a list, not a double vector")
+  expect_error(flatten_dbl(1), "must be")
 })
 
 test_that("contents of list must be supported types", {
@@ -56,7 +56,7 @@ test_that("child names beat parent names", {
 # atomic flatten ----------------------------------------------------------
 
 test_that("must be a list", {
-  expect_bad_type_error(flatten_lgl(1), "must be a list")
+  expect_error(flatten_lgl(1), "must be")
 })
 
 test_that("can flatten all atomic vectors", {
@@ -71,6 +71,12 @@ test_that("preserves inner names", {
     flatten_dbl(list(c(a = 1), c(b = 2))),
     c(a = 1, b = 2)
   )
+})
+
+test_that("uses vctrs coercions", {
+  expect_identical(flatten_int(list(FALSE, 1)), 0:1)
+  expect_identical(flatten_chr(list("foo", factor("bar"))), c("foo", "bar"))
+  expect_error(flatten_int(list(FALSE, 1.5)), class = "vctrs_error_cast_lossy")
 })
 
 
