@@ -79,6 +79,10 @@ test_that("uses vctrs coercions", {
   expect_error(flatten_int(list(FALSE, 1.5)), class = "vctrs_error_cast_lossy")
 })
 
+test_that("can flatten data frames for compatibility", {
+  expect_identical(flatten_dbl(mtcars), unlist(unstructure(mtcars)))
+})
+
 
 # data frame flatten ------------------------------------------------------
 

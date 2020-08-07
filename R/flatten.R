@@ -85,31 +85,45 @@ flatten <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_lgl <- function(.x) {
+  .x <- validate_flatten_vec(.x)
   vec_unchop(.x, ptype = logical())
 }
 
 #' @export
 #' @rdname flatten
 flatten_int <- function(.x) {
+  .x <- validate_flatten_vec(.x)
   vec_unchop(.x, ptype = integer())
 }
 
 #' @export
 #' @rdname flatten
 flatten_dbl <- function(.x) {
+  .x <- validate_flatten_vec(.x)
   vec_unchop(.x, ptype = double())
 }
 
 #' @export
 #' @rdname flatten
 flatten_chr <- function(.x) {
+  .x <- validate_flatten_vec(.x)
   vec_unchop(.x, ptype = character())
 }
 
 #' @export
 #' @rdname flatten
 flatten_raw <- function(.x) {
+  .x <- validate_flatten_vec(.x)
   vec_unchop(.x, ptype = raw())
+}
+
+validate_flatten_vec <- function(x) {
+  if (is.data.frame(x)) {
+    # Do we want to deprecate this historical behaviour?
+    unstructure(x)
+  } else {
+    x
+  }
 }
 
 #' @export
