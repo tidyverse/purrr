@@ -66,9 +66,7 @@ expand_grid():data &amp;amp;lt;- list(
 data %&amp;amp;gt;% cross() %&amp;amp;gt;% map_chr(lift(paste))## [1] &quot;John! Hello.&quot;     &quot;Jane! Hello.&quot;     &quot;John! Bonjour.&quot;   &quot;Jane! Bonjour.&quot;  
 ## [5] &quot;John... Hello.&quot;   &quot;Jane... Hello.&quot;   &quot;John... Bonjour.&quot; &quot;Jane... Bonjour.&quot;
 # With `expand_grid()`
-tidyr::expand_grid(!!!data) %&amp;amp;gt;% pmap_chr(paste)## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-## when loading 'dplyr'
-## [1] &quot;John! Hello.&quot;     &quot;John... Hello.&quot;   &quot;John! Bonjour.&quot;   &quot;John... Bonjour.&quot;
+tidyr::expand_grid(!!!data) %&amp;amp;gt;% pmap_chr(paste)## [1] &quot;John! Hello.&quot;     &quot;John... Hello.&quot;   &quot;John! Bonjour.&quot;   &quot;John... Bonjour.&quot;
 ## [5] &quot;Jane! Hello.&quot;     &quot;Jane... Hello.&quot;   &quot;Jane! Bonjour.&quot;   &quot;Jane... Bonjour.&quot;
 
 " />
@@ -204,9 +202,7 @@ instead.</p>
 <span class='no'>data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>cross</span>() <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map.html'>map_chr</a></span>(<span class='fu'><a href='lift.html'>lift</a></span>(<span class='no'>paste</span>))</pre><p></div></p><pre>## [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
 ## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
 </pre><p><div class="r"></p><pre><span class='co'># With `expand_grid()`</span>
-<span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'>expand_grid</span>(!!!<span class='no'>data</span>) <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map2.html'>pmap_chr</a></span>(<span class='no'>paste</span>)</pre><p></div></p><pre>## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-## when loading 'dplyr'
-</pre><pre>## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
+<span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'>expand_grid</span>(!!!<span class='no'>data</span>) <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map2.html'>pmap_chr</a></span>(<span class='no'>paste</span>)</pre><p></div></p><pre>## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
 ## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
 </pre>
 
