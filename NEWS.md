@@ -12,14 +12,19 @@
 ## Switch to vctrs
 
 * The atomic vector variants of `flatten()`, like `flatten_int()`, now
-  use vctrs for coercion and concatenation. This change improves the
-  performance and makes these functions more flexible and
-  consistent. For instance lists containing factors are properly
-  flattened thanks to vctrs coercions:
+  use vctrs for coercion and concatenation. This change makes these
+  functions more flexible and consistent. For instance lists
+  containing factors are properly flattened thanks to vctrs coercions:
 
   ```r
   flatten_chr(list("foo", factor("bar")))
   #> [1] "foo" "bar"
+  ```
+
+  And you can now flatten double vectors into an integer vector:
+  ```{r}
+  flatten_int(list(1.0, c(2.0, 3.0)))
+  #> [1] 1 2 3
   ```
 
   The switch to vctrs coercions does entail a stricter behaviour.
