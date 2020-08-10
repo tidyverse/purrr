@@ -55,9 +55,7 @@ data \%>\% cross() \%>\% map_chr(lift(paste))
 ## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
 }\if{html}{\out{<div class="r">}}\preformatted{# With `expand_grid()`
 tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
-}\if{html}{\out{</div>}}\preformatted{## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-## when loading 'dplyr'
-}\preformatted{## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
+}\if{html}{\out{</div>}}\preformatted{## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
 ## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
 }
 }
