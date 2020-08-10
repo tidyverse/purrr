@@ -39,6 +39,10 @@
   With vctrs coercions, this is now deprecated and will become an
   error in the future.
 
+* The atomic vector variants of `flatten()` gain a `name_spec`
+  argument to control how the outer list names are merged with the
+  inner vector names.
+
 
 ## Features and fixes
 

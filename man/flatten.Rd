@@ -14,13 +14,13 @@
 \usage{
 flatten(.x)
 
-flatten_lgl(.x)
+flatten_lgl(.x, ..., name_spec = "{inner}")
 
-flatten_int(.x)
+flatten_int(.x, ..., name_spec = "{inner}")
 
-flatten_dbl(.x)
+flatten_dbl(.x, ..., name_spec = "{inner}")
 
-flatten_chr(.x)
+flatten_chr(.x, ..., name_spec = "{inner}")
 
 flatten_raw(.x)
 
@@ -32,6 +32,26 @@ flatten_dfc(.x)
 \item{.x}{A list to flatten. The contents of the list can be anything for
 \code{flatten()} (as a list is returned), but the contents must match the
 type for the other functions.}
+
+\item{...}{These dots are for future extensions and must be empty.}
+
+\item{name_spec}{A name specification for combining
+inner and outer names. This is relevant for inputs passed with a
+name, when these inputs are themselves named, like \code{outer = c(inner = 1)}, or when they have length greater than 1: \code{outer = 1:2}. By default, these cases trigger an error. You can resolve
+the error by providing a specification that describes how to
+combine the names or the indices of the inner vector with the
+name of the input. This specification can be:
+\itemize{
+\item A function of two arguments. The outer name is passed as a
+string to the first argument, and the inner names or positions
+are passed as second argument.
+\item An anonymous function as a purrr-style formula.
+\item A glue specification of the form \code{"{outer}_{inner}"}.
+\item An \code{\link[rlang:zap]{rlang::zap()}} object, in which case both outer and inner
+names are ignored and the result is unnamed.
+}
+
+See the \link[vctrs:name_spec]{name specification topic}.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or

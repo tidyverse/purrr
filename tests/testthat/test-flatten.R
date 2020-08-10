@@ -92,6 +92,17 @@ test_that("can still flatten with historical coercion", {
   )
 })
 
+test_that("outer names are dropped by default for compatibility", {
+  expect_identical(
+    flatten_int(list(x = c(foo = 1L, bar = 2L), baz = 3L)),
+    set_names(1:3, c("foo", "bar", "baz"))
+  )
+  expect_identical(
+    flatten_int(list(x = c(foo = 1L, bar = 2L), baz = 3L), name_spec = "{outer}_{inner}"),
+    set_names(1:3, c("x_foo", "x_bar", "baz"))
+  )
+})
+
 
 # data frame flatten ------------------------------------------------------
 

@@ -22,6 +22,7 @@
 #'   `flatten_dfr()` and `flatten_dfc()` return data frames created by
 #'   row-binding and column-binding respectively. They require dplyr to
 #'   be installed.
+#' @inheritParams ellipsis::dots_empty
 #' @inheritParams map
 #'
 #'
@@ -83,29 +84,34 @@ flatten <- function(.x) {
 }
 
 #' @export
+#' @inheritParams vctrs::vec_unchop
 #' @rdname flatten
-flatten_lgl <- function(.x) {
+flatten_lgl <- function(.x, ..., name_spec = "{inner}") {
+  ellipsis::check_dots_empty()
   .x <- validate_flatten_vec(.x)
-  vec_unchop(.x, ptype = logical())
+  vec_unchop(.x, ptype = logical(), name_spec = name_spec)
 }
 
 #' @export
 #' @rdname flatten
-flatten_int <- function(.x) {
+flatten_int <- function(.x, ..., name_spec = "{inner}") {
+  ellipsis::check_dots_empty()
   .x <- validate_flatten_vec(.x)
-  vec_unchop(.x, ptype = integer())
+  vec_unchop(.x, ptype = integer(), name_spec = name_spec)
 }
 
 #' @export
 #' @rdname flatten
-flatten_dbl <- function(.x) {
+flatten_dbl <- function(.x, ..., name_spec = "{inner}") {
+  ellipsis::check_dots_empty()
   .x <- validate_flatten_vec(.x)
-  vec_unchop(.x, ptype = double())
+  vec_unchop(.x, ptype = double(), name_spec = name_spec)
 }
 
 #' @export
 #' @rdname flatten
-flatten_chr <- function(.x) {
+flatten_chr <- function(.x, ..., name_spec = "{inner}") {
+  ellipsis::check_dots_empty()
   .x <- validate_flatten_vec(.x)
 
   deprecate <- FALSE
@@ -123,7 +129,7 @@ flatten_chr <- function(.x) {
     signal_soft_deprecated("Numeric to character coercion is deprecated as of purrr 0.4.0.")
   }
 
-  vec_unchop(out, ptype = character())
+  vec_unchop(out, ptype = character(), name_spec = name_spec)
 }
 
 is_chr_coercible <- function(x) {
