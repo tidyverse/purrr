@@ -14,15 +14,15 @@
 \usage{
 flatten(.x)
 
-flatten_lgl(.x, ..., name_spec = "{inner}")
+flatten_lgl(.x, ..., name_spec = NULL)
 
-flatten_int(.x, ..., name_spec = "{inner}")
+flatten_int(.x, ..., name_spec = NULL)
 
-flatten_dbl(.x, ..., name_spec = "{inner}")
+flatten_dbl(.x, ..., name_spec = NULL)
 
-flatten_chr(.x, ..., name_spec = "{inner}")
+flatten_chr(.x, ..., name_spec = NULL)
 
-flatten_raw(.x)
+flatten_raw(.x, ..., name_spec = NULL)
 
 flatten_dfr(.x, .id = NULL)
 

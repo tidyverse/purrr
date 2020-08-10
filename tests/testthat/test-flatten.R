@@ -103,6 +103,21 @@ test_that("outer names are dropped by default for compatibility", {
   )
 })
 
+test_that("inner names may be unnamed", {
+  expect_identical(
+    flatten_int(list(c(1L, 2L), 3L)),
+    1:3
+  )
+  expect_identical(
+    flatten_int(list(x = c(1L, 2L), 3L)),
+    named(1:3) # FIXME: Should we allow zapping names from a name-spec?
+  )
+  expect_identical(
+    flatten_int(list(x = c(1L, 2L), baz = 3L)),
+    c(1L, 2L, baz = 3L)
+  )
+})
+
 
 # data frame flatten ------------------------------------------------------
 

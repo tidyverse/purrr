@@ -86,33 +86,44 @@ flatten <- function(.x) {
 #' @export
 #' @inheritParams vctrs::vec_unchop
 #' @rdname flatten
-flatten_lgl <- function(.x, ..., name_spec = "{inner}") {
+flatten_lgl <- function(.x, ..., name_spec = NULL) {
   ellipsis::check_dots_empty()
+
   .x <- validate_flatten_vec(.x)
+  name_spec <- name_spec %||% flatten_name_spec
+
   vec_unchop(.x, ptype = logical(), name_spec = name_spec)
 }
 
 #' @export
 #' @rdname flatten
-flatten_int <- function(.x, ..., name_spec = "{inner}") {
+flatten_int <- function(.x, ..., name_spec = NULL) {
   ellipsis::check_dots_empty()
+
   .x <- validate_flatten_vec(.x)
+  name_spec <- name_spec %||% flatten_name_spec
+
   vec_unchop(.x, ptype = integer(), name_spec = name_spec)
 }
 
 #' @export
 #' @rdname flatten
-flatten_dbl <- function(.x, ..., name_spec = "{inner}") {
+flatten_dbl <- function(.x, ..., name_spec = NULL) {
   ellipsis::check_dots_empty()
+
   .x <- validate_flatten_vec(.x)
+  name_spec <- name_spec %||% flatten_name_spec
+
   vec_unchop(.x, ptype = double(), name_spec = name_spec)
 }
 
 #' @export
 #' @rdname flatten
-flatten_chr <- function(.x, ..., name_spec = "{inner}") {
+flatten_chr <- function(.x, ..., name_spec = NULL) {
   ellipsis::check_dots_empty()
+
   .x <- validate_flatten_vec(.x)
+  name_spec <- name_spec %||% flatten_name_spec
 
   deprecate <- FALSE
   out <- map(.x, function(x) {
@@ -138,11 +149,22 @@ is_chr_coercible <- function(x) {
 
 #' @export
 #' @rdname flatten
-flatten_raw <- function(.x) {
+flatten_raw <- function(.x, ..., name_spec = NULL) {
+  ellipsis::check_dots_empty()
+
   .x <- validate_flatten_vec(.x)
+  name_spec <- name_spec %||% flatten_name_spec
+
   vec_unchop(.x, ptype = raw())
 }
 
+flatten_name_spec <- function(outer, inner) {
+  if (is_character(inner)) {
+    inner
+  } else {
+    rep_along(inner, "")
+  }
+}
 validate_flatten_vec <- function(x) {
   if (is.data.frame(x)) {
     # Do we want to deprecate this historical behaviour?
