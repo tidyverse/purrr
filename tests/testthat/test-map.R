@@ -107,7 +107,7 @@ test_that("map works with calls and pairlists", {
 })
 
 test_that("primitive dispatch correctly", {
-  scoped_bindings(.env = global_env(),
+  local_bindings(.env = global_env(),
     as.character.test_class = function(x) "dispatched!"
   )
   x <- structure(list(), class = "test_class")
