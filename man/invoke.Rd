@@ -66,7 +66,7 @@ package undefinitely.
 \itemize{
 \item \code{invoke()} is retired in favour of the simpler \code{exec()} function
 reexported from rlang. \code{exec()} evaluates a function call built
-from its inputs and supports tidy dots:\preformatted{# Before:
+from its inputs and supports \link[rlang:dyn-dots]{dynamic dots}:\preformatted{# Before:
 invoke(mean, list(na.rm = TRUE), x = 1:10)
 
 # After
