@@ -180,7 +180,7 @@ if you had a list of length n where each component had values <code>a</code> and
 <code>x[[1]][[2]]</code> is equivalent to <code>transpose(x)[[2]][[1]]</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transpose</span>(<span class='no'>.l</span>, <span class='kw'>.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>transpose</span><span class='op'>(</span><span class='va'>.l</span>, .names <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,8 +208,9 @@ transpose operation on a matrix. You can get back the original
 input by transposing it twice.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>5</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>1</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>5</span>))
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 5
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span><span class='op'>(</span><span class='fl'>5</span>, x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
 #&gt;   ..$ x: num 0.589
 #&gt;   ..$ y: num [1:5] 0.704 0.93 0.98 0.415 0.563
@@ -224,7 +225,8 @@ input by transposing it twice.</p>
 #&gt;   ..$ y: num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
 #&gt;  $ :List of 2
 #&gt;   ..$ x: num 0.11
-#&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x:List of 5
 #&gt;   ..$ : num 0.589
 #&gt;   ..$ : num 0.366
@@ -237,7 +239,8 @@ input by transposing it twice.</p>
 #&gt;   ..$ : num [1:5] 0.289 0.403 0.786 0.744 0.5
 #&gt;   ..$ : num [1:5] 0.3783 0.0627 0.3559 0.5603 0.1505
 #&gt;   ..$ : num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'><span class='co'># Back to where we started</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 5
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 5
 #&gt;  $ :List of 2
 #&gt;   ..$ x: num 0.589
 #&gt;   ..$ y: num [1:5] 0.704 0.93 0.98 0.415 0.563
@@ -254,9 +257,10 @@ input by transposing it twice.</p>
 #&gt;   ..$ x: num 0.11
 #&gt;   ..$ y: num [1:5] 0.464 0.435 0.236 0.505 0.699</div><div class='input'>
 <span class='co'># transpose() is useful in conjunction with safely() &amp; quietly()</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='safely.html'>safely</a></span>(<span class='no'>log</span>))
-<span class='no'>y</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 3
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='fu'><a href='safely.html'>safely</a></span><span class='op'>(</span><span class='va'>log</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ :List of 2
 #&gt;   ..$ result: NULL
 #&gt;   ..$ error :List of 2
@@ -268,7 +272,8 @@ input by transposing it twice.</p>
 #&gt;   ..$ error : NULL
 #&gt;  $ :List of 2
 #&gt;   ..$ result: num 0.693
-#&gt;   ..$ error : NULL</div><div class='input'><span class='no'>y</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;   ..$ error : NULL</div><div class='input'><span class='va'>y</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ result:List of 3
 #&gt;   ..$ : NULL
 #&gt;   ..$ : num 0
@@ -281,8 +286,9 @@ input by transposing it twice.</p>
 #&gt;   ..$ : NULL
 #&gt;   ..$ : NULL</div><div class='input'>
 <span class='co'># Use simplify_all() to reduce to atomic vectors where possible</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>6</span>))
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>()</div><div class='output co'>#&gt; $a
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>3</span>, b <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>5</span>, b <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a
 #&gt; $a[[1]]
 #&gt; [1] 1
 #&gt; 
@@ -303,7 +309,8 @@ input by transposing it twice.</p>
 #&gt; $b[[3]]
 #&gt; [1] 6
 #&gt; 
-#&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='as_vector.html'>simplify_all</a></span>()</div><div class='output co'>#&gt; $a
+#&gt; </div><div class='input'><span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='as_vector.html'>simplify_all</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a
 #&gt; [1] 1 3 5
 #&gt; 
 #&gt; $b
@@ -311,11 +318,12 @@ input by transposing it twice.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Provide explicit component names to prevent loss of those that don't</span>
 <span class='co'># appear in first component</span>
-<span class='no'>ll</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"one"</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>z</span> <span class='kw'>=</span> <span class='st'>"deux"</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-)
-<span class='no'>ll</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>()</div><div class='output co'>#&gt; $x
+<span class='va'>ll</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='st'>"one"</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='st'>"deux"</span>, x <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>ll</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $x
 #&gt; $x[[1]]
 #&gt; [1] 1
 #&gt; 
@@ -330,8 +338,9 @@ input by transposing it twice.</p>
 #&gt; $y[[2]]
 #&gt; NULL
 #&gt; 
-#&gt; </div><div class='input'><span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='no'>ll</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>names</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='reduce.html'>reduce</a></span>(<span class='no'>union</span>)
-<span class='no'>ll</span> <span class='kw'>%&gt;%</span> <span class='fu'>transpose</span>(<span class='kw'>.names</span> <span class='kw'>=</span> <span class='no'>nms</span>)</div><div class='output co'>#&gt; $x
+#&gt; </div><div class='input'><span class='va'>nms</span> <span class='op'>&lt;-</span> <span class='va'>ll</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>names</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='reduce.html'>reduce</a></span><span class='op'>(</span><span class='va'>union</span><span class='op'>)</span>
+<span class='va'>ll</span> <span class='op'>%&gt;%</span> <span class='fu'>transpose</span><span class='op'>(</span>.names <span class='op'>=</span> <span class='va'>nms</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $x
 #&gt; $x[[1]]
 #&gt; [1] 1
 #&gt; 

@@ -170,7 +170,7 @@
     <p>Compose multiple functions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compose</span>(<span class='no'>...</span>, <span class='kw'>.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"backward"</span>, <span class='st'>"forward"</span>))</pre>
+    <pre class="usage"><span class='fu'>compose</span><span class='op'>(</span><span class='va'>...</span>, .dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"backward"</span>, <span class='st'>"forward"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,9 +179,9 @@
       <th>...</th>
       <td><p>Functions to apply in order (from right to left by
 default). Formulas are converted to functions in the usual way.</p>
-<p>These dots support <a href='https://rlang.r-lib.org/reference/list2.html'>tidy dots</a> features. In
-particular, if your functions are stored in a list, you can
-splice that in with <code>!!!</code>.</p></td>
+<p><a href='https://rlang.r-lib.org/reference/dyn-dots.html'>Dynamic dots</a> are supported. In particular, if
+your functions are stored in a list, you can splice that in with
+<code>!!!</code>.</p></td>
     </tr>
     <tr>
       <th>.dir</th>
@@ -196,20 +196,25 @@ mathematics. If <code>"forward"</code>, they are called from left to right.</p><
     <p>A function</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>not_null</span> <span class='kw'>&lt;-</span> <span class='fu'>compose</span>(<span class='no'>`!`</span>, <span class='no'>is.null</span>)
-<span class='fu'>not_null</span>(<span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>not_null</span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='no'>add1</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> + <span class='fl'>1</span>
-<span class='fu'>compose</span>(<span class='no'>add1</span>, <span class='no'>add1</span>)(<span class='fl'>8</span>)</div><div class='output co'>#&gt; [1] 10</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>not_null</span> <span class='op'>&lt;-</span> <span class='fu'>compose</span><span class='op'>(</span><span class='va'>`!`</span>, <span class='va'>is.null</span><span class='op'>)</span>
+<span class='fu'>not_null</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>not_null</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>add1</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span>
+<span class='fu'>compose</span><span class='op'>(</span><span class='va'>add1</span>, <span class='va'>add1</span><span class='op'>)</span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 10</div><div class='input'>
 <span class='co'># You can use the formula shortcut for functions:</span>
-<span class='no'>fn</span> <span class='kw'>&lt;-</span> <span class='fu'>compose</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"foo"</span>), ~ <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"bar"</span>))
-<span class='fu'>fn</span>(<span class='st'>"input"</span>)</div><div class='output co'>#&gt; [1] "input bar foo"</div><div class='input'>
+<span class='va'>fn</span> <span class='op'>&lt;-</span> <span class='fu'>compose</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>.x</span>, <span class='st'>"foo"</span><span class='op'>)</span>, <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>.x</span>, <span class='st'>"bar"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>fn</span><span class='op'>(</span><span class='st'>"input"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "input bar foo"</div><div class='input'>
 <span class='co'># Lists of functions can be spliced with !!!</span>
-<span class='no'>fns</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>x</span>, <span class='st'>"foo"</span>),
-  ~ <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"bar"</span>)
-)
-<span class='no'>fn</span> <span class='kw'>&lt;-</span> <span class='fu'>compose</span>(!!!<span class='no'>fns</span>)
-<span class='fu'>fn</span>(<span class='st'>"input"</span>)</div><div class='output co'>#&gt; [1] "input bar foo"</div></pre>
+<span class='va'>fns</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"foo"</span><span class='op'>)</span>,
+  <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>.x</span>, <span class='st'>"bar"</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>fn</span> <span class='op'>&lt;-</span> <span class='fu'>compose</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>fns</span><span class='op'>)</span>
+<span class='fu'>fn</span><span class='op'>(</span><span class='st'>"input"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "input bar foo"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -52,7 +52,7 @@
 <meta property="og:title" content="Modify a list — list_modify" />
 <meta property="og:description" content="list_modify() and list_merge() recursively combine two lists, matching
 elements either by name or position. If a sub-element is present in
-both lists list_modify() takes the value from y, and list_merge()
+both lists, list_modify() takes the value from y, and list_merge()
 concatenates the values together.
 update_list() handles formulas and quosures that can refer to
 values existing within the input list. Note that this function
@@ -176,7 +176,7 @@ method for lists." />
     <div class="ref-description">
     <p><code>list_modify()</code> and <code>list_merge()</code> recursively combine two lists, matching
 elements either by name or position. If a sub-element is present in
-both lists <code>list_modify()</code> takes the value from <code>y</code>, and <code>list_merge()</code>
+both lists, <code>list_modify()</code> takes the value from <code>y</code>, and <code>list_merge()</code>
 concatenates the values together.</p>
 <p><code>update_list()</code> handles formulas and quosures that can refer to
 values existing within the input list. Note that this function
@@ -184,9 +184,9 @@ might be deprecated in the future in favour of a <code><a href='https://dplyr.ti
 method for lists.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>list_modify</span>(<span class='no'>.x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>list_modify</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>list_merge</span>(<span class='no'>.x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>list_merge</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,44 +201,50 @@ method for lists.</p>
 <p>These values should be either all named or all unnamed. When
 inputs are all named, they are matched to <code>.x</code> by name. When they
 are all unnamed, they are matched positionally.</p>
-<p>These dots support <a href='https://rlang.r-lib.org/reference/list2.html'>tidy dots</a> features. In
-particular, if your functions are stored in a list, you can
-splice that in with <code>!!!</code>.</p></td>
+<p><a href='https://rlang.r-lib.org/reference/dyn-dots.html'>Dynamic dots</a> are supported. In particular, if
+your functions are stored in a list, you can splice that in with
+<code>!!!</code>.</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; List of 3
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, y <span class='op'>=</span> <span class='fl'>4</span>, z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
 #&gt;  $ z:List of 2
 #&gt;   ..$ a: num 1
 #&gt;   ..$ b: num 2</div><div class='input'>
 <span class='co'># Update values</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>))</div><div class='output co'>#&gt; List of 4
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>list_modify</span><span class='op'>(</span><span class='va'>x</span>, a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 4
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
 #&gt;  $ z:List of 2
 #&gt;   ..$ a: num 1
 #&gt;   ..$ b: num 2
 #&gt;  $ a: num 1</div><div class='input'><span class='co'># Replace values</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>5</span>))</div><div class='output co'>#&gt; List of 3
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>list_modify</span><span class='op'>(</span><span class='va'>x</span>, z <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
-#&gt;  $ z: num 5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>)))</div><div class='output co'>#&gt; List of 3
+#&gt;  $ z: num 5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>list_modify</span><span class='op'>(</span><span class='va'>x</span>, z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4
 #&gt;  $ z:List of 2
 #&gt;   ..$ a: int [1:5] 1 2 3 4 5
 #&gt;   ..$ b: num 2</div><div class='input'>
 <span class='co'># Remove values</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='zap.html'>zap</a></span>()))</div><div class='output co'>#&gt; List of 2
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>list_modify</span><span class='op'>(</span><span class='va'>x</span>, z <span class='op'>=</span> <span class='fu'><a href='zap.html'>zap</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ y: num 4</div><div class='input'>
 <span class='co'># Combine values</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_merge</span>(<span class='no'>x</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>11</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>5</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>3</span>)))</div><div class='output co'>#&gt; List of 3
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>list_merge</span><span class='op'>(</span><span class='va'>x</span>, x <span class='op'>=</span> <span class='fl'>11</span>, z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span>, c <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x: num [1:11] 1 2 3 4 5 6 7 8 9 10 ...
 #&gt;  $ y: num 4
 #&gt;  $ z:List of 3
@@ -246,10 +252,11 @@ splice that in with <code>!!!</code>.</p></td>
 #&gt;   ..$ b: num 2
 #&gt;   ..$ c: num 3</div><div class='input'>
 
-<span class='co'># All these functions support tidy dots features. Use !!! to splice</span>
+<span class='co'># All these functions support dynamic dots features. Use !!! to splice</span>
 <span class='co'># a list of arguments:</span>
-<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='zap.html'>zap</a></span>(), <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>list_modify</span>(<span class='no'>x</span>, !!!<span class='no'>l</span>))</div><div class='output co'>#&gt; List of 3
+<span class='va'>l</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>new <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fu'><a href='zap.html'>zap</a></span><span class='op'>(</span><span class='op'>)</span>, z <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>list_modify</span><span class='op'>(</span><span class='va'>x</span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>l</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ x  : int [1:10] 1 2 3 4 5 6 7 8 9 10
 #&gt;  $ z  : num 5
 #&gt;  $ new: num 1</div></pre>

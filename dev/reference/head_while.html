@@ -170,9 +170,9 @@
     <p>Find head/tail that all satisfies a predicate.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>head_while</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>head_while</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.p</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>tail_while</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>tail_while</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.p</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,10 +201,14 @@ inner lists. Only those elements where <code>.p</code> evaluates to
     <p>A vector the same type as <code>.x</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>pos</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> <span class='kw'>&gt;=</span> <span class='fl'>0</span>
-<span class='fu'>head_while</span>(<span class='fl'>5</span>:-<span class='fl'>5</span>, <span class='no'>pos</span>)</div><div class='output co'>#&gt; [1] 5 4 3 2 1 0</div><div class='input'><span class='fu'>tail_while</span>(<span class='fl'>5</span>:-<span class='fl'>5</span>, <span class='fu'><a href='negate.html'>negate</a></span>(<span class='no'>pos</span>))</div><div class='output co'>#&gt; [1] -1 -2 -3 -4 -5</div><div class='input'>
-<span class='no'>big</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span> <span class='kw'>&gt;</span> <span class='fl'>100</span>
-<span class='fu'>head_while</span>(<span class='fl'>0</span>:<span class='fl'>10</span>, <span class='no'>big</span>)</div><div class='output co'>#&gt; integer(0)</div><div class='input'><span class='fu'>tail_while</span>(<span class='fl'>0</span>:<span class='fl'>10</span>, <span class='no'>big</span>)</div><div class='output co'>#&gt; integer(0)</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>pos</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='fl'>0</span>
+<span class='fu'>head_while</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>:</span><span class='op'>-</span><span class='fl'>5</span>, <span class='va'>pos</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 5 4 3 2 1 0</div><div class='input'><span class='fu'>tail_while</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>:</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fu'><a href='negate.html'>negate</a></span><span class='op'>(</span><span class='va'>pos</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -1 -2 -3 -4 -5</div><div class='input'>
+<span class='va'>big</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>100</span>
+<span class='fu'>head_while</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>10</span>, <span class='va'>big</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; integer(0)</div><div class='input'><span class='fu'>tail_while</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>10</span>, <span class='va'>big</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; integer(0)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

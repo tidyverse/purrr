@@ -188,9 +188,9 @@ modified data structure.</p></li>
 <p>The pluck location must exist.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>modify_in</span>(<span class='no'>.x</span>, <span class='no'>.where</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>modify_in</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.where</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>assign_in</span>(<span class='no'>x</span>, <span class='no'>where</span>, <span class='no'>value</span>)</pre>
+<span class='fu'>assign_in</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>where</span>, <span class='va'>value</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,10 +230,12 @@ The location must exist in the data structure.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Recall that pluck() returns a component of a data structure that</span>
 <span class='co'># might be arbitrarily deep</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>foo</span> <span class='kw'>=</span> <span class='fl'>2</span>))
-<span class='fu'><a href='pluck.html'>pluck</a></span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='st'>"foo"</span>)</div><div class='output co'>#&gt; [1] 2</div><div class='input'>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>bar <span class='op'>=</span> <span class='fl'>1</span>, foo <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='pluck.html'>pluck</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='st'>"foo"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 2</div><div class='input'>
 <span class='co'># Use assign_in() to modify the pluck location:</span>
-<span class='fu'>assign_in</span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"foo"</span>), <span class='fl'>100</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>assign_in</span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"foo"</span><span class='op'>)</span>, <span class='fl'>100</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$bar
 #&gt; [1] 1
 #&gt; 
@@ -243,7 +245,8 @@ The location must exist in the data structure.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># modify_in() applies a function to that location and update the</span>
 <span class='co'># element in place:</span>
-<span class='fu'>modify_in</span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"foo"</span>), ~ <span class='no'>.x</span> * <span class='fl'>200</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>modify_in</span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"foo"</span><span class='op'>)</span>, <span class='op'>~</span> <span class='va'>.x</span> <span class='op'>*</span> <span class='fl'>200</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$bar
 #&gt; [1] 1
 #&gt; 
@@ -252,7 +255,8 @@ The location must exist in the data structure.</p></td>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># Additional arguments are passed to the function in the ordinary way:</span>
-<span class='fu'>modify_in</span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='st'>"foo"</span>), <span class='no'>`+`</span>, <span class='fl'>100</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>modify_in</span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"foo"</span><span class='op'>)</span>, <span class='va'>`+`</span>, <span class='fl'>100</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$bar
 #&gt; [1] 1
 #&gt; 

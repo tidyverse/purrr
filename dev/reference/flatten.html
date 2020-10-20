@@ -174,21 +174,21 @@ are type-stable, so you always know what the type of the output is." />
 are type-stable, so you always know what the type of the output is.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flatten</span>(<span class='no'>.x</span>)
+    <pre class="usage"><span class='fu'>flatten</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='fu'>flatten_lgl</span>(<span class='no'>.x</span>)
+<span class='fu'>flatten_lgl</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='fu'>flatten_int</span>(<span class='no'>.x</span>)
+<span class='fu'>flatten_int</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='fu'>flatten_dbl</span>(<span class='no'>.x</span>)
+<span class='fu'>flatten_dbl</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='fu'>flatten_chr</span>(<span class='no'>.x</span>)
+<span class='fu'>flatten_chr</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='fu'>flatten_raw</span>(<span class='no'>.x</span>)
+<span class='fu'>flatten_raw</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>
 
-<span class='fu'>flatten_dfr</span>(<span class='no'>.x</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>flatten_dfr</span><span class='op'>(</span><span class='va'>.x</span>, .id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>flatten_dfc</span>(<span class='no'>.x</span>)</pre>
+<span class='fu'>flatten_dfc</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,13 +219,15 @@ row-binding and column-binding respectively. They require dplyr to
 be installed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>4</span>))
-<span class='no'>x</span></div><div class='output co'>#&gt; [[1]]
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rerun.html'>rerun</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1 3 2 4
 #&gt; 
 #&gt; [[2]]
 #&gt; [1] 1 2 4 3
-#&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>flatten</span>()</div><div class='output co'>#&gt; [[1]]
+#&gt; </div><div class='input'><span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>flatten</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1
 #&gt; 
 #&gt; [[2]]
@@ -248,10 +250,13 @@ be installed.</p>
 #&gt; 
 #&gt; [[8]]
 #&gt; [1] 3
-#&gt; </div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>flatten_int</span>()</div><div class='output co'>#&gt; [1] 1 3 2 4 1 2 4 3</div><div class='input'>
+#&gt; </div><div class='input'><span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>flatten_int</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 3 2 4 1 2 4 3</div><div class='input'>
 <span class='co'># You can use flatten in conjunction with map</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='fl'>1L</span>) <span class='kw'>%&gt;%</span> <span class='fu'>flatten_int</span>()</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='co'># But it's more efficient to use the typed map instead.</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map_int</a></span>(<span class='fl'>1L</span>)</div><div class='output co'>#&gt; [1] 1 1</div></pre>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='fl'>1L</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>flatten_int</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='co'># But it's more efficient to use the typed map instead.</span>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map_int</a></span><span class='op'>(</span><span class='fl'>1L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

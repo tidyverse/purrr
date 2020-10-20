@@ -170,7 +170,7 @@
     <p>Generate random sample from a discrete uniform distribution</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rdunif</span>(<span class='no'>n</span>, <span class='no'>b</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>rdunif</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>b</span>, a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,9 +187,11 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>rdunif</span>(<span class='fl'>1e3</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rdunif</span><span class='op'>(</span><span class='fl'>1e3</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   1   2   3   4   5   6   7   8   9  10 
-#&gt;  95  99 101 107  88 111  88 103  97 111 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>rdunif</span>(<span class='fl'>1e3</span>, <span class='fl'>10</span>, -<span class='fl'>5</span>))</div><div class='output co'>#&gt; 
+#&gt;  95  99 101 107  88 111  88 103  97 111 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rdunif</span><span class='op'>(</span><span class='fl'>1e3</span>, <span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9 10 
 #&gt; 54 69 79 67 55 48 54 65 53 72 76 65 63 50 64 66 </div></pre>
   </div>

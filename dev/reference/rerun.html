@@ -174,7 +174,7 @@ replicate(..., simplify = FALSE)." />
 <code><a href='https://rdrr.io/r/base/lapply.html'>replicate</a>(..., simplify = FALSE)</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rerun</span>(<span class='no'>.n</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rerun</span><span class='op'>(</span><span class='va'>.n</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,7 +208,8 @@ longer convinced NSE functions are a good fit for purrr. Also,
 argument to the lambda).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span> <span class='fu'>rerun</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; [[1]]
+    <pre class="examples"><div class='input'><span class='fl'>10</span> <span class='op'>%&gt;%</span> <span class='fu'>rerun</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] -0.1165475 -0.2394815 -1.0777479 -1.6147655  2.2264153
 #&gt; 
 #&gt; [[2]]
@@ -237,9 +238,10 @@ argument to the lambda).</p>
 #&gt; 
 #&gt; [[10]]
 #&gt; [1]  1.36780134 -0.09473477 -1.71740570  0.15306192  1.01317917
-#&gt; </div><div class='input'><span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>rerun</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>5</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map_dbl</a></span>(~ <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>.x</span>$<span class='no'>x</span>, <span class='no'>.x</span>$<span class='no'>y</span>))</div><div class='output co'>#&gt;  [1] -0.89673073  0.76702858 -0.86471325 -0.16389576  0.06149510 -0.34729814
+#&gt; </div><div class='input'><span class='fl'>10</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rerun</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map_dbl</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>.x</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] -0.89673073  0.76702858 -0.86471325 -0.16389576  0.06149510 -0.34729814
 #&gt;  [7] -0.88311137 -0.01305969  0.75752511  0.03675323</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

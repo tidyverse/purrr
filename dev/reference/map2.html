@@ -188,41 +188,41 @@ and <code>map2_dfc()</code>, <code>pmap_dfc()</code> return data frames created 
 and column-binding respectively. They require dplyr to be installed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>map2</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map2_lgl</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map2_lgl</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map2_int</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map2_int</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map2_dbl</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map2_dbl</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map2_chr</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map2_chr</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map2_raw</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map2_raw</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map2_dfr</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>map2_dfr</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>map2_dfc</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map2_dfc</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>walk2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>walk2</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap_lgl</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap_lgl</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap_int</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap_int</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap_dbl</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap_dbl</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap_chr</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap_chr</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap_raw</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap_raw</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pmap_dfr</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>pmap_dfr</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>pmap_dfc</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>pmap_dfc</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pwalk</span>(<span class='no'>.l</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>pwalk</span><span class='op'>(</span><span class='va'>.l</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -295,11 +295,12 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 <code><a href='modify.html'>modify</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>)
-<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>300</span>)
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span><span class='op'>)</span>
+<span class='va'>z</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>300</span><span class='op'>)</span>
 
-<span class='fu'>map2</span>(<span class='no'>x</span>, <span class='no'>y</span>, ~ <span class='no'>.x</span> + <span class='no'>.y</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>map2</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='op'>~</span> <span class='va'>.x</span> <span class='op'>+</span> <span class='va'>.y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 11
 #&gt; 
 #&gt; [[2]]
@@ -308,7 +309,8 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; [[3]]
 #&gt; [1] 31
 #&gt; </div><div class='input'><span class='co'># Or just</span>
-<span class='fu'>map2</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>`+`</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>map2</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>`+`</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 11
 #&gt; 
 #&gt; [[2]]
@@ -317,7 +319,8 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; [[3]]
 #&gt; [1] 31
 #&gt; </div><div class='input'>
-<span class='fu'>pmap</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>z</span>), <span class='no'>sum</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>pmap</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>z</span><span class='op'>)</span>, <span class='va'>sum</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 111
 #&gt; 
 #&gt; [[2]]
@@ -327,7 +330,8 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; [1] 331
 #&gt; </div><div class='input'>
 <span class='co'># Matching arguments by position</span>
-<span class='fu'>pmap</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>z</span>), <span class='kw'>function</span>(<span class='no'>first</span>, <span class='no'>second</span>, <span class='no'>third</span>) (<span class='no'>first</span> + <span class='no'>third</span>) * <span class='no'>second</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>pmap</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>z</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>first</span>, <span class='va'>second</span>, <span class='va'>third</span><span class='op'>)</span> <span class='op'>(</span><span class='va'>first</span> <span class='op'>+</span> <span class='va'>third</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>second</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1010
 #&gt; 
 #&gt; [[2]]
@@ -337,8 +341,9 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; [1] 9030
 #&gt; </div><div class='input'>
 <span class='co'># Matching arguments by name</span>
-<span class='no'>l</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>c</span> <span class='kw'>=</span> <span class='no'>z</span>)
-<span class='fu'>pmap</span>(<span class='no'>l</span>, <span class='kw'>function</span>(<span class='no'>c</span>, <span class='no'>b</span>, <span class='no'>a</span>) (<span class='no'>a</span> + <span class='no'>c</span>) * <span class='no'>b</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='va'>l</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='va'>x</span>, b <span class='op'>=</span> <span class='va'>y</span>, c <span class='op'>=</span> <span class='va'>z</span><span class='op'>)</span>
+<span class='fu'>pmap</span><span class='op'>(</span><span class='va'>l</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>c</span>, <span class='va'>b</span>, <span class='va'>a</span><span class='op'>)</span> <span class='op'>(</span><span class='va'>a</span> <span class='op'>+</span> <span class='va'>c</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>b</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1010
 #&gt; 
 #&gt; [[2]]
@@ -348,9 +353,10 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; [1] 9030
 #&gt; </div><div class='input'>
 <span class='co'># Split into pieces, fit model to each piece, then predict</span>
-<span class='no'>by_cyl</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>.</span>$<span class='no'>cyl</span>)
-<span class='no'>mods</span> <span class='kw'>&lt;-</span> <span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span>(~ <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.</span>))
-<span class='fu'>map2</span>(<span class='no'>mods</span>, <span class='no'>by_cyl</span>, <span class='no'>predict</span>)</div><div class='output co'>#&gt; $`4`
+<span class='va'>by_cyl</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>cyl</span><span class='op'>)</span>
+<span class='va'>mods</span> <span class='op'>&lt;-</span> <span class='va'>by_cyl</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>map2</span><span class='op'>(</span><span class='va'>mods</span>, <span class='va'>by_cyl</span>, <span class='va'>predict</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`4`
 #&gt;     Datsun 710      Merc 240D       Merc 230       Fiat 128    Honda Civic 
 #&gt;       26.47010       21.55719       21.78307       27.14774       30.45125 
 #&gt; Toyota Corolla  Toyota Corona      Fiat X1-9  Porsche 914-2   Lotus Europa 
@@ -375,13 +381,14 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt;            16.91800            16.04103 
 #&gt; </div><div class='input'>
 <span class='co'># Vectorizing a function over multiple arguments</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"apple"</span>, <span class='st'>"banana"</span>, <span class='st'>"cherry"</span>),
-  <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p"</span>, <span class='st'>"n"</span>, <span class='st'>"h"</span>),
-  <span class='kw'>replacement</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"P"</span>, <span class='st'>"N"</span>, <span class='st'>"H"</span>),
-  <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-  )
-<span class='fu'>pmap</span>(<span class='no'>df</span>, <span class='no'>gsub</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"apple"</span>, <span class='st'>"banana"</span>, <span class='st'>"cherry"</span><span class='op'>)</span>,
+  pattern <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p"</span>, <span class='st'>"n"</span>, <span class='st'>"h"</span><span class='op'>)</span>,
+  replacement <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"P"</span>, <span class='st'>"N"</span>, <span class='st'>"H"</span><span class='op'>)</span>,
+  stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span>
+  <span class='op'>)</span>
+<span class='fu'>pmap</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>gsub</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "aPPle"
 #&gt; 
 #&gt; [[2]]
@@ -389,43 +396,50 @@ and arguments that are supplied to every call come after <code>.f</code>.</p>
 #&gt; 
 #&gt; [[3]]
 #&gt; [1] "cHerry"
-#&gt; </div><div class='input'><span class='fu'>pmap_chr</span>(<span class='no'>df</span>, <span class='no'>gsub</span>)</div><div class='output co'>#&gt; [1] "aPPle"  "baNaNa" "cHerry"</div><div class='input'>
+#&gt; </div><div class='input'><span class='fu'>pmap_chr</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>gsub</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "aPPle"  "baNaNa" "cHerry"</div><div class='input'>
 <span class='co'># Use `...` to absorb unused components of input list .l</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>,
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>12</span>,
-  <span class='kw'>z</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>]
-)
-<span class='no'>plus</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> + <span class='no'>y</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>,
+  y <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>12</span>,
+  z <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
+<span class='op'>)</span>
+<span class='va'>plus</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># this won't work</span>
-<span class='fu'>pmap</span>(<span class='no'>df</span>, <span class='no'>plus</span>)
-}
+<span class='fu'>pmap</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>plus</span><span class='op'>)</span>
+<span class='op'>}</span>
 <span class='co'># but this will</span>
-<span class='no'>plus2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>...</span>) <span class='no'>x</span> + <span class='no'>y</span>
-<span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>plus2</span>)</div><div class='output co'>#&gt; [1] 11 13 15</div><div class='input'>
+<span class='va'>plus2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span>
+<span class='fu'>pmap_dbl</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>plus2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 11 13 15</div><div class='input'>
 <span class='co'># The "p" for "parallel" in pmap() is the same as in base::pmin()</span>
 <span class='co'># and base::pmax()</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>5</span>),
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>8</span>)
-)
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>5</span><span class='op'>)</span>,
+  y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>8</span><span class='op'>)</span>
+<span class='op'>)</span>
 <span class='co'># all produce the same result</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>map2_dbl</span>(<span class='no'>df</span>$<span class='no'>x</span>, <span class='no'>df</span>$<span class='no'>y</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>pmap_dbl</span>(<span class='no'>df</span>, <span class='no'>min</span>)</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>pmin</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>map2_dbl</span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>y</span>, <span class='va'>min</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'><span class='fu'>pmap_dbl</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>min</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2 5</div><div class='input'>
 <span class='co'># If you want to bind the results of your function rowwise, use:</span>
 <span class='co'># map2_dfr() or pmap_dfr()</span>
-<span class='no'>ex_fun</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>){
-<span class='no'>col</span> <span class='kw'>&lt;-</span> <span class='no'>arg1</span> + <span class='no'>arg2</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>col</span>)
-}
-<span class='no'>arg1</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>4</span>
-<span class='no'>arg2</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>:<span class='fl'>13</span>
-<span class='fu'>map2_dfr</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div><div class='output co'>#&gt;   col
+<span class='va'>ex_fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>arg1</span>, <span class='va'>arg2</span><span class='op'>)</span><span class='op'>{</span>
+<span class='va'>col</span> <span class='op'>&lt;-</span> <span class='va'>arg1</span> <span class='op'>+</span> <span class='va'>arg2</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>col</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>arg1</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>
+<span class='va'>arg2</span> <span class='op'>&lt;-</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>13</span>
+<span class='fu'>map2_dfr</span><span class='op'>(</span><span class='va'>arg1</span>, <span class='va'>arg2</span>, <span class='va'>ex_fun</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   col
 #&gt; 1  11
 #&gt; 2  13
 #&gt; 3  15
 #&gt; 4  17</div><div class='input'><span class='co'># If instead you want to bind by columns, use map2_dfc() or pmap_dfc()</span>
-<span class='fu'>map2_dfc</span>(<span class='no'>arg1</span>, <span class='no'>arg2</span>, <span class='no'>ex_fun</span>)</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+<span class='fu'>map2_dfc</span><span class='op'>(</span><span class='va'>arg1</span>, <span class='va'>arg2</span>, <span class='va'>ex_fun</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>New names:</span>
 #&gt; <span class='message'>* col -&gt; col...1</span>
 #&gt; <span class='message'>* col -&gt; col...2</span>
 #&gt; <span class='message'>* col -&gt; col...3</span>

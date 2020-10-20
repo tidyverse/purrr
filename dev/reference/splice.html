@@ -174,7 +174,7 @@ with a S3 class are encapsulated in a list before concatenation." />
 with a S3 class are encapsulated in a list before concatenation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>splice</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>splice</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,17 +198,20 @@ with a S3 class are encapsulated in a list before concatenation.</p>
 <code><a href='https://rlang.r-lib.org/reference/list2.html'>rlang::list2()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>inputs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>arg1</span> <span class='kw'>=</span> <span class='st'>"a"</span>, <span class='kw'>arg2</span> <span class='kw'>=</span> <span class='st'>"b"</span>)
+    <pre class="examples"><div class='input'><span class='va'>inputs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>arg1 <span class='op'>=</span> <span class='st'>"a"</span>, arg2 <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span>
 
 <span class='co'># splice() concatenates the elements of inputs with arg3</span>
-<span class='fu'>splice</span>(<span class='no'>inputs</span>, <span class='kw'>arg3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"c1"</span>, <span class='st'>"c2"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 3
+<span class='fu'>splice</span><span class='op'>(</span><span class='va'>inputs</span>, arg3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>, <span class='st'>"c2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 3
 #&gt;  $ arg1: chr "a"
 #&gt;  $ arg2: chr "b"
-#&gt;  $ arg3: chr [1:2] "c1" "c2"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>inputs</span>, <span class='kw'>arg3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"c1"</span>, <span class='st'>"c2"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+#&gt;  $ arg3: chr [1:2] "c1" "c2"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>inputs</span>, arg3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>, <span class='st'>"c2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $     :List of 2
 #&gt;   ..$ arg1: chr "a"
 #&gt;   ..$ arg2: chr "b"
-#&gt;  $ arg3: chr [1:2] "c1" "c2"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>inputs</span>, <span class='kw'>arg3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"c1"</span>, <span class='st'>"c2"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 4
+#&gt;  $ arg3: chr [1:2] "c1" "c2"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>inputs</span>, arg3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>, <span class='st'>"c2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 4
 #&gt;  $ arg1 : chr "a"
 #&gt;  $ arg2 : chr "b"
 #&gt;  $ arg31: chr "c1"

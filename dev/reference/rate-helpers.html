@@ -174,17 +174,17 @@ rate_sleep()." />
 <code><a href='rate_sleep.html'>rate_sleep()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rate_delay</span>(<span class='kw'>pause</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
+    <pre class="usage"><span class='fu'>rate_delay</span><span class='op'>(</span>pause <span class='op'>=</span> <span class='fl'>1</span>, max_times <span class='op'>=</span> <span class='cn'>Inf</span><span class='op'>)</span>
 
-<span class='fu'>rate_backoff</span>(
-  <span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>pause_cap</span> <span class='kw'>=</span> <span class='fl'>60</span>,
-  <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>max_times</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>rate_backoff</span><span class='op'>(</span>
+  pause_base <span class='op'>=</span> <span class='fl'>1</span>,
+  pause_cap <span class='op'>=</span> <span class='fl'>60</span>,
+  pause_min <span class='op'>=</span> <span class='fl'>1</span>,
+  max_times <span class='op'>=</span> <span class='fl'>3</span>,
+  jitter <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>is_rate</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>is_rate</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,12 +225,14 @@ not be kind to the server, use with caution!).</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># A delay rate waits the same amount of time:</span>
-<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_delay</span>(<span class='fl'>0.02</span>)
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='input'>
+<span class='va'>rate</span> <span class='op'>&lt;-</span> <span class='fu'>rate_delay</span><span class='op'>(</span><span class='fl'>0.02</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span> <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span><span class='op'>(</span><span class='va'>rate</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.02 seconds.</span></div><div class='input'>
 <span class='co'># A backoff rate waits exponentially longer each time, with random</span>
 <span class='co'># jitter by default:</span>
-<span class='no'>rate</span> <span class='kw'>&lt;-</span> <span class='fu'>rate_backoff</span>(<span class='kw'>pause_base</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>pause_min</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span>(<span class='no'>rate</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.4 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.7 seconds.</span></div></pre>
+<span class='va'>rate</span> <span class='op'>&lt;-</span> <span class='fu'>rate_backoff</span><span class='op'>(</span>pause_base <span class='op'>=</span> <span class='fl'>0.2</span>, pause_min <span class='op'>=</span> <span class='fl'>0.005</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span> <span class='fu'><a href='rate_sleep.html'>rate_sleep</a></span><span class='op'>(</span><span class='va'>rate</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Retrying in 0.4 seconds.</span></div><div class='output co'>#&gt; <span class='message'>Retrying in 0.7 seconds.</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

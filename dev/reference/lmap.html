@@ -182,11 +182,11 @@ function <code>.f</code> to each subset of size 1 of that list (as in
 <code>.x[i]</code>). We call those elements <code>list-elements</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>lmap</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>lmap</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lmap_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>lmap_if</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.p</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .else <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>lmap_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>lmap_at</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.at</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,7 +222,7 @@ returns <code>FALSE</code>.</p></td>
       <td><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
+If the <code>tidyselect</code> package is installed, you can use <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code> and
 the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
     </table>
@@ -255,18 +255,19 @@ reshaped with a different size than the input list <code>.x</code>.</p>
     <pre class="examples"><div class='input'><span class='co'># Let's write a function that returns a larger list or an empty list</span>
 <span class='co'># depending on some condition. This function also uses the names</span>
 <span class='co'># metadata available in the attributes of the list-element</span>
-<span class='no'>maybe_rep</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-  <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>)
-  <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep_len</a></span>(<span class='no'>x</span>, <span class='no'>n</span>)
-  <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>out</span>) <span class='kw'>&gt;</span> <span class='fl'>0</span>) {
-    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>out</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>), <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='no'>n</span>))
-  }
-  <span class='no'>out</span>
-}
+<span class='va'>maybe_rep</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+  <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep_len</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>n</span><span class='op'>)</span>
+  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>}</span>
+  <span class='va'>out</span>
+<span class='op'>}</span>
 
 <span class='co'># The output size varies each time we map f()</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>5</span>:<span class='fl'>7</span>], <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>9</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>10</span>])
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap</span>(<span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $a1
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, b <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, c <span class='op'>=</span> <span class='fl'>8</span><span class='op'>:</span><span class='fl'>9</span>, d <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>lmap</span><span class='op'>(</span><span class='va'>maybe_rep</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a1
 #&gt; [1] 1 2 3 4
 #&gt; 
 #&gt; $a2
@@ -282,7 +283,8 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] "e" "f" "g"
 #&gt; </div><div class='input'>
 <span class='co'># We can apply f() on a selected subset of x</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"d"</span>), <span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $a1
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>lmap_at</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"d"</span><span class='op'>)</span>, <span class='va'>maybe_rep</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a1
 #&gt; [1] 1 2 3 4
 #&gt; 
 #&gt; $b
@@ -295,7 +297,8 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; [1] "j"
 #&gt; </div><div class='input'>
 <span class='co'># Or only where a condition is satisfied</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_if</span>(<span class='no'>is.character</span>, <span class='no'>maybe_rep</span>)</div><div class='output co'>#&gt; $a
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>lmap_if</span><span class='op'>(</span><span class='va'>is.character</span>, <span class='va'>maybe_rep</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a
 #&gt; [1] 1 2 3 4
 #&gt; 
 #&gt; $c
@@ -318,21 +321,22 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 <span class='co'># variable in order to identify them. Given these requirements, it</span>
 <span class='co'># makes sense to have a function that takes a data frame of size 1</span>
 <span class='co'># and returns a data frame of variable size.</span>
-<span class='no'>disjoin</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>) {
-  <span class='no'>name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>)
-  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='va'>disjoin</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>sep</span> <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 
-  <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>x</span>), <span class='kw'>function</span>(<span class='no'>level</span>) {
-    <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>x</span> <span class='kw'>==</span> <span class='no'>level</span>)
-  })
+  <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>level</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='va'>level</span><span class='op'>)</span>
+  <span class='op'>}</span><span class='op'>)</span>
 
-  <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>out</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>name</span>, <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span>(<span class='no'>x</span>), <span class='kw'>sep</span> <span class='kw'>=</span> <span class='no'>sep</span>)
-  <span class='no'>out</span>
-}
+  <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='va'>sep</span><span class='op'>)</span>
+  <span class='va'>out</span>
+<span class='op'>}</span>
 
 <span class='co'># Now, we are ready to map disjoin() on each categorical variable of a</span>
 <span class='co'># data frame:</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_if</span>(<span class='no'>is.factor</span>, <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 7</span><span>
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>lmap_if</span><span class='op'>(</span><span class='va'>is.factor</span>, <span class='va'>disjoin</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 7</span><span>
 #&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species_setosa
 #&gt;           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>          5.1         3.5          1.4         0.2              1
@@ -346,7 +350,8 @@ reshaped with a different size than the input list <code>.x</code>.</p>
 #&gt; </span><span style='color: #555555;'> 9</span><span>          4.4         2.9          1.4         0.2              1
 #&gt; </span><span style='color: #555555;'>10</span><span>          4.9         3.1          1.5         0.1              1
 #&gt; </span><span style='color: #555555;'># … with 140 more rows, and 2 more variables: Species_versicolor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   Species_virginica </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>lmap_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"vs"</span>, <span class='st'>"am"</span>), <span class='no'>disjoin</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 15</span><span>
+#&gt; </span><span style='color: #555555;'>#   Species_virginica </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>lmap_at</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cyl"</span>, <span class='st'>"vs"</span>, <span class='st'>"am"</span><span class='op'>)</span>, <span class='va'>disjoin</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 15</span><span>
 #&gt;      mpg cyl_4 cyl_6 cyl_8  disp    hp  drat    wt  qsec  vs_0  vs_1  am_0  am_1
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>  21       0     1     0  160    110  3.9   2.62  16.5     1     0     0     1

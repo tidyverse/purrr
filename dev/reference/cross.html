@@ -56,17 +56,19 @@ are slow and buggy, and we no longer think they are the right
 approach to solving this problem. Please use tidyr::expand_grid()
 instead.
 Here is an example of equivalent usages for cross() and
-expand_grid():data &amp;amp;lt;- list(
+expand_grid():data &amp;lt;- list(
   id = c(&quot;John&quot;, &quot;Jane&quot;),
   greeting = c(&quot;Hello.&quot;, &quot;Bonjour.&quot;),
   sep = c(&quot;! &quot;, &quot;... &quot;)
 )
 
 # With deprecated `cross()`
-data %&amp;amp;gt;% cross() %&amp;amp;gt;% map_chr(lift(paste))## [1] &quot;John! Hello.&quot;     &quot;Jane! Hello.&quot;     &quot;John! Bonjour.&quot;   &quot;Jane! Bonjour.&quot;  
+data %&amp;gt;% cross() %&amp;gt;% map_chr(lift(paste))
+## [1] &quot;John! Hello.&quot;     &quot;Jane! Hello.&quot;     &quot;John! Bonjour.&quot;   &quot;Jane! Bonjour.&quot;  
 ## [5] &quot;John... Hello.&quot;   &quot;Jane... Hello.&quot;   &quot;John... Bonjour.&quot; &quot;Jane... Bonjour.&quot;
 # With `expand_grid()`
-tidyr::expand_grid(!!!data) %&amp;amp;gt;% pmap_chr(paste)## [1] &quot;John! Hello.&quot;     &quot;John... Hello.&quot;   &quot;John! Bonjour.&quot;   &quot;John... Bonjour.&quot;
+tidyr::expand_grid(!!!data) %&amp;gt;% pmap_chr(paste)
+## [1] &quot;John! Hello.&quot;     &quot;John... Hello.&quot;   &quot;John! Bonjour.&quot;   &quot;John... Bonjour.&quot;
 ## [5] &quot;Jane! Hello.&quot;     &quot;Jane... Hello.&quot;   &quot;Jane! Bonjour.&quot;   &quot;Jane... Bonjour.&quot;
 
 " />
@@ -192,29 +194,31 @@ are slow and buggy, and we no longer think they are the right
 approach to solving this problem. Please use <code>tidyr::expand_grid()</code>
 instead.</p>
 <p>Here is an example of equivalent usages for <code>cross()</code> and
-<code>expand_grid()</code>:<div class="r"></p><pre><span class='no'>data</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"John"</span>, <span class='st'>"Jane"</span>),
-  <span class='kw'>greeting</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hello."</span>, <span class='st'>"Bonjour."</span>),
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"! "</span>, <span class='st'>"... "</span>)
-)
+<code>expand_grid()</code>:<div class="r"></p><pre><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"John"</span>, <span class='st'>"Jane"</span><span class='op'>)</span>,
+  greeting <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hello."</span>, <span class='st'>"Bonjour."</span><span class='op'>)</span>,
+  sep <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"! "</span>, <span class='st'>"... "</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># With deprecated `cross()`</span>
-<span class='no'>data</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>cross</span>() <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map.html'>map_chr</a></span>(<span class='fu'><a href='lift.html'>lift</a></span>(<span class='no'>paste</span>))</pre><p></div></p><pre>## [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
-## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+<span class='va'>data</span> <span class='op'>%&gt;%</span> <span class='fu'>cross</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map_chr</a></span><span class='op'>(</span><span class='fu'><a href='lift.html'>lift</a></span><span class='op'>(</span><span class='va'>paste</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p><pre><span class='co'>## [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  </span>
+<span class='co'>## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."</span>
 </pre><p><div class="r"></p><pre><span class='co'># With `expand_grid()`</span>
-<span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'>expand_grid</span>(!!!<span class='no'>data</span>) <span class='kw'>%&amp;gt;%</span> <span class='fu'><a href='map2.html'>pmap_chr</a></span>(<span class='no'>paste</span>)</pre><p></div></p><pre>## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
-## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
+<span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'>expand_grid</span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>data</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map2.html'>pmap_chr</a></span><span class='op'>(</span><span class='va'>paste</span><span class='op'>)</span>
+</pre><p></div></p><pre><span class='co'>## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."</span>
+<span class='co'>## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."</span>
 </pre>
 
     </div>
 
-    <pre class="usage"><span class='fu'>cross</span>(<span class='no'>.l</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>cross</span><span class='op'>(</span><span class='va'>.l</span>, .filter <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>cross2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>cross2</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, .filter <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>cross3</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.z</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>cross3</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.z</span>, .filter <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>cross_df</span>(<span class='no'>.l</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>cross_df</span><span class='op'>(</span><span class='va'>.l</span>, .filter <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -273,15 +277,16 @@ result.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># We build all combinations of names, greetings and separators from our</span>
 <span class='co'># list of data and pass each one to paste()</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"John"</span>, <span class='st'>"Jane"</span>),
-  <span class='kw'>greeting</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hello."</span>, <span class='st'>"Bonjour."</span>),
-  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"! "</span>, <span class='st'>"... "</span>)
-)
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"John"</span>, <span class='st'>"Jane"</span><span class='op'>)</span>,
+  greeting <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hello."</span>, <span class='st'>"Bonjour."</span><span class='op'>)</span>,
+  sep <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"! "</span>, <span class='st'>"... "</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>cross</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map</a></span>(<span class='fu'><a href='lift.html'>lift</a></span>(<span class='no'>paste</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross()` is deprecated as of purrr 0.4.0.</span>
+<span class='va'>data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>cross</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='fu'><a href='lift.html'>lift</a></span><span class='op'>(</span><span class='va'>paste</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross()` is deprecated as of purrr 0.4.0.</span>
 #&gt; <span class='warning'>Please use `tidyr::expand_grid()` instead.</span>
 #&gt; <span class='warning'>See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 #&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
@@ -314,14 +319,16 @@ result.</p>
 <span class='co'># data frame in long format: crossing three objects produces a data</span>
 <span class='co'># frame of three columns with each row being a particular</span>
 <span class='co'># combination. This is the same format that expand.grid() returns.</span>
-<span class='no'>args</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span> <span class='fu'>cross_df</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross_df()` is deprecated as of purrr 0.4.0.</span>
+<span class='va'>args</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span> <span class='fu'>cross_df</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross_df()` is deprecated as of purrr 0.4.0.</span>
 #&gt; <span class='warning'>Please use `tidyr::expand_grid()` instead.</span>
 #&gt; <span class='warning'>See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 #&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
 #&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='input'>
 <span class='co'># In case you need a list in long format (and not a data frame)</span>
 <span class='co'># just run as.list() after cross_df()</span>
-<span class='no'>args</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span>()</div><div class='output co'>#&gt; $id
+<span class='va'>args</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $id
 #&gt; [1] "John" "Jane" "John" "Jane" "John" "Jane" "John" "Jane"
 #&gt; 
 #&gt; $greeting
@@ -333,10 +340,11 @@ result.</p>
 #&gt; </div><div class='input'>
 <span class='co'># This format is often less practical for functional programming</span>
 <span class='co'># because applying a function to the combinations requires a loop</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>vector</a></span>(<span class='st'>"list"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>args</span>))
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span>(<span class='no'>out</span>))
-  <span class='no'>out</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>args</span>, <span class='no'>i</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='invoke.html'>invoke</a></span>(<span class='no'>paste</span>, <span class='no'>.</span>)
-<span class='no'>out</span></div><div class='output co'>#&gt; [[1]]
+<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/vector.html'>vector</a></span><span class='op'>(</span><span class='st'>"list"</span>, length <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>args</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>out</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>args</span>, <span class='va'>i</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='invoke.html'>invoke</a></span><span class='op'>(</span><span class='va'>paste</span>, <span class='va'>.</span><span class='op'>)</span>
+<span class='va'>out</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "John! Hello."
 #&gt; 
 #&gt; [[2]]
@@ -361,11 +369,13 @@ result.</p>
 #&gt; [1] "Jane... Bonjour."
 #&gt; </div><div class='input'>
 <span class='co'># It's easier to transpose and then use invoke_map()</span>
-<span class='no'>args</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='transpose.html'>transpose</a></span>() <span class='kw'>%&gt;%</span> <span class='fu'><a href='map.html'>map_chr</a></span>(~ <span class='fu'><a href='invoke.html'>invoke</a></span>(<span class='no'>paste</span>, <span class='no'>.</span>))</div><div class='output co'>#&gt; [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
+<span class='va'>args</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='transpose.html'>transpose</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='map.html'>map_chr</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='invoke.html'>invoke</a></span><span class='op'>(</span><span class='va'>paste</span>, <span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
 #&gt; [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."</div><div class='input'>
 <span class='co'># Unwanted combinations can be filtered out with a predicate function</span>
-<span class='no'>filter</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='no'>x</span> <span class='kw'>&gt;=</span> <span class='no'>y</span>
-<span class='fu'>cross2</span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='no'>filter</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross2()` is deprecated as of purrr 0.4.0.</span>
+<span class='va'>filter</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>&gt;=</span> <span class='va'>y</span>
+<span class='fu'>cross2</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, .filter <span class='op'>=</span> <span class='va'>filter</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `cross2()` is deprecated as of purrr 0.4.0.</span>
 #&gt; <span class='warning'>Please use `tidyr::expand_grid()` instead.</span>
 #&gt; <span class='warning'>See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 #&gt; <span class='warning'></span><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
@@ -402,9 +412,10 @@ result.</p>
 #&gt;   ..$ : int 5</div><div class='input'>
 <span class='co'># To give names to the components of the combinations, we map</span>
 <span class='co'># setNames() on the product:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>cross2</span>(<span class='no'>.</span>, <span class='no'>.</span>, <span class='kw'>.filter</span> <span class='kw'>=</span> <span class='no'>`==`</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='map.html'>map</a></span>(<span class='no'>setNames</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"y"</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>cross2</span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>.</span>, .filter <span class='op'>=</span> <span class='va'>`==`</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>setNames</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x"</span>, <span class='st'>"y"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$x
 #&gt; [1] 2
 #&gt; 
@@ -454,9 +465,10 @@ result.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Alternatively we can encapsulate the arguments in a named list</span>
 <span class='co'># before crossing to get named components:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>.</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>.</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>cross</span>(<span class='kw'>.filter</span> <span class='kw'>=</span> <span class='no'>`==`</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>.</span>, y <span class='op'>=</span> <span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>cross</span><span class='op'>(</span>.filter <span class='op'>=</span> <span class='va'>`==`</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$x
 #&gt; [1] 2
 #&gt; 

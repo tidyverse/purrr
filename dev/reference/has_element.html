@@ -170,7 +170,7 @@
     <p>Does a list contain an object?</p>
     </div>
 
-    <pre class="usage"><span class='fu'>has_element</span>(<span class='no'>.x</span>, <span class='no'>.y</span>)</pre>
+    <pre class="usage"><span class='fu'>has_element</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,8 +187,10 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='fl'>5</span>, <span class='fl'>9.9</span>)
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>has_element</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>has_element</span>(<span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] FALSE</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>5</span>, <span class='fl'>9.9</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>has_element</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>has_element</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

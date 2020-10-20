@@ -208,23 +208,23 @@ the input <code>.x</code>.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>map</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>map</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_lgl</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_lgl</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_chr</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_chr</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_int</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_int</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_dbl</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_dbl</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_raw</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_raw</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_dfr</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>map_dfr</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>map_dfc</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_dfc</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>walk</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>walk</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -301,8 +301,9 @@ of <code>.x</code> that meet a specified condition.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Compute normal distributions from an atomic vector</span>
-<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(<span class='no'>rnorm</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='va'>rnorm</span>, n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt;  [1] -0.33005266  1.16938020  0.51461548  0.50764934  0.77118524  0.59358665
 #&gt;  [7]  2.05278168 -0.84082226 -0.03995567  1.23740174
 #&gt; 
@@ -343,8 +344,9 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt;  [8] 11.717469  9.935019 11.055381
 #&gt; </div><div class='input'>
 <span class='co'># You can also use an anonymous function</span>
-<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>, <span class='no'>x</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt;  [1]  1.51073576  1.44189335  0.59996713 -0.31657382  0.68946511  2.42577099
 #&gt;  [7]  3.41264039  0.61613253 -0.63238493  0.03027404
 #&gt; 
@@ -385,8 +387,9 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt;  [8]  9.920924  9.611978 10.887876
 #&gt; </div><div class='input'>
 <span class='co'># Or a formula</span>
-<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(~ <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>, <span class='no'>.x</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt;  [1]  1.3705025 -0.8475769 -1.0836770  1.4754134  1.0154841  0.7195109
 #&gt;  [7] -1.9092978  1.6748726  0.5151697 -0.3697344
 #&gt; 
@@ -427,22 +430,26 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt;  [8]  8.413754 10.447023 10.225880
 #&gt; </div><div class='input'>
 <span class='co'># Simplify output to a vector instead of a list by computing the mean of the distributions</span>
-<span class='fl'>1</span>:<span class='fl'>10</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(<span class='no'>rnorm</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='kw'>%&gt;%</span>  <span class='co'># output a list</span>
-  <span class='fu'>map_dbl</span>(<span class='no'>mean</span>)           <span class='co'># output an atomic vector</span></div><div class='output co'>#&gt;  [1]  1.169039  2.476506  2.779545  4.039582  5.367765  6.500865  7.203717
+<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='va'>rnorm</span>, n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>  <span class='co'># output a list</span>
+  <span class='fu'>map_dbl</span><span class='op'>(</span><span class='va'>mean</span><span class='op'>)</span>           <span class='co'># output an atomic vector</span>
+</div><div class='output co'>#&gt;  [1]  1.169039  2.476506  2.779545  4.039582  5.367765  6.500865  7.203717
 #&gt;  [8]  8.242913  8.844403 10.140176</div><div class='input'>
 <span class='co'># Using set_names() with character vectors is handy to keep track</span>
 <span class='co'># of the original inputs:</span>
-<span class='fu'><a href='set_names.html'>set_names</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>map_chr</span>(<span class='no'>paste0</span>, <span class='st'>":suffix"</span>)</div><div class='output co'>#&gt;          foo          bar 
+<span class='fu'><a href='set_names.html'>set_names</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"foo"</span>, <span class='st'>"bar"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>map_chr</span><span class='op'>(</span><span class='va'>paste0</span>, <span class='st'>":suffix"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          foo          bar 
 #&gt; "foo:suffix" "bar:suffix" </div><div class='input'>
 <span class='co'># Working with lists</span>
-<span class='no'>favorite_desserts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>Sophia</span> <span class='kw'>=</span> <span class='st'>"banana bread"</span>, <span class='kw'>Eliott</span> <span class='kw'>=</span> <span class='st'>"pancakes"</span>, <span class='kw'>Karina</span> <span class='kw'>=</span> <span class='st'>"chocolate cake"</span>)
-<span class='no'>favorite_desserts</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_chr</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>.x</span>, <span class='st'>"rocks!"</span>))</div><div class='output co'>#&gt;                  Sophia                  Eliott                  Karina 
+<span class='va'>favorite_desserts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>Sophia <span class='op'>=</span> <span class='st'>"banana bread"</span>, Eliott <span class='op'>=</span> <span class='st'>"pancakes"</span>, Karina <span class='op'>=</span> <span class='st'>"chocolate cake"</span><span class='op'>)</span>
+<span class='va'>favorite_desserts</span> <span class='op'>%&gt;%</span> <span class='fu'>map_chr</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>.x</span>, <span class='st'>"rocks!"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                  Sophia                  Eliott                  Karina 
 #&gt;   "banana bread rocks!"       "pancakes rocks!" "chocolate cake rocks!" </div><div class='input'>
 <span class='co'># Extract by name or position</span>
 <span class='co'># .default specifies value for elements that are missing or NULL</span>
-<span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1L</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2L</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>3L</span>))
-<span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>map</span>(<span class='st'>"a"</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='st'>"???"</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='va'>l1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='cn'>NULL</span>, b <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>b <span class='op'>=</span> <span class='fl'>3L</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>map</span><span class='op'>(</span><span class='st'>"a"</span>, .default <span class='op'>=</span> <span class='st'>"???"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1
 #&gt; 
 #&gt; [[2]]
@@ -450,14 +457,17 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt; 
 #&gt; [[3]]
 #&gt; [1] "???"
-#&gt; </div><div class='input'><span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_int</span>(<span class='st'>"b"</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA  2  3</div><div class='input'><span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_int</span>(<span class='fl'>2</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA  2 NA</div><div class='input'>
+#&gt; </div><div class='input'><span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>map_int</span><span class='op'>(</span><span class='st'>"b"</span>, .default <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] NA  2  3</div><div class='input'><span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>map_int</span><span class='op'>(</span><span class='fl'>2</span>, .default <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] NA  2 NA</div><div class='input'>
 <span class='co'># Supply multiple values to index deeply into a list</span>
-<span class='no'>l2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>3</span>,     <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>]),
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>101</span>:<span class='fl'>103</span>, <span class='no'>letters</span>[<span class='fl'>4</span>:<span class='fl'>6</span>]),
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
-)
-<span class='no'>l2</span> <span class='kw'>%&gt;%</span> <span class='fu'>map</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='va'>l2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>num <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>,     <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>num <span class='op'>=</span> <span class='fl'>101</span><span class='op'>:</span><span class='fl'>103</span>, <span class='va'>letters</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>l2</span> <span class='op'>%&gt;%</span> <span class='fu'>map</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "b"
 #&gt; 
 #&gt; [[2]]
@@ -468,7 +478,8 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Use a list to build an extractor that mixes numeric indices and names,</span>
 <span class='co'># and .default to provide a default value if the element does not exist</span>
-<span class='no'>l2</span> <span class='kw'>%&gt;%</span> <span class='fu'>map</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"num"</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='va'>l2</span> <span class='op'>%&gt;%</span> <span class='fu'>map</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"num"</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 3
 #&gt; 
 #&gt; [[2]]
@@ -476,31 +487,35 @@ of <code>.x</code> that meet a specified condition.</p>
 #&gt; 
 #&gt; [[3]]
 #&gt; NULL
-#&gt; </div><div class='input'><span class='no'>l2</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_int</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"num"</span>, <span class='fl'>3</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1]   3 103  NA</div><div class='input'>
+#&gt; </div><div class='input'><span class='va'>l2</span> <span class='op'>%&gt;%</span> <span class='fu'>map_int</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"num"</span>, <span class='fl'>3</span><span class='op'>)</span>, .default <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]   3 103  NA</div><div class='input'>
 <span class='co'># Working with data frames</span>
 <span class='co'># Use map_lgl(), map_dbl(), etc to return a vector instead of a list:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_dbl</span>(<span class='no'>sum</span>)</div><div class='output co'>#&gt;      mpg      cyl     disp       hp     drat       wt     qsec       vs 
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>map_dbl</span><span class='op'>(</span><span class='va'>sum</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      mpg      cyl     disp       hp     drat       wt     qsec       vs 
 #&gt;  642.900  198.000 7383.100 4694.000  115.090  102.952  571.160   14.000 
 #&gt;       am     gear     carb 
 #&gt;   13.000  118.000   90.000 </div><div class='input'>
 <span class='co'># A more realistic example: split a data frame into pieces, fit a</span>
 <span class='co'># model to each piece, summarise and extract R^2</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>.</span>$<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(~ <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(<span class='no'>summary</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map_dbl</span>(<span class='st'>"r.squared"</span>)</div><div class='output co'>#&gt;         4         6         8 
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='va'>summary</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map_dbl</span><span class='op'>(</span><span class='st'>"r.squared"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         4         6         8 
 #&gt; 0.5086326 0.4645102 0.4229655 </div><div class='input'>
 <span class='co'># If each element of the output is a data frame, use</span>
 <span class='co'># map_dfr to row-bind them together:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='no'>.</span>$<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map</span>(~ <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>map_dfr</span>(~ <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>.</span>)))))</div><div class='output co'>#&gt;   (Intercept)        wt
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>$</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>map_dfr</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   (Intercept)        wt
 #&gt; 1    39.57120 -5.647025
 #&gt; 2    28.40884 -2.780106
-#&gt; 3    23.86803 -2.192438</div><div class='input'># (if you also want to preserve the variable names see
-# the broom package)
+#&gt; 3    23.86803 -2.192438</div><div class='input'><span class='co'># (if you also want to preserve the variable names see</span>
+<span class='co'># the broom package)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

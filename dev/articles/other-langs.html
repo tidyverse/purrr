@@ -136,7 +136,7 @@
 </ul>
 <p>However, the goal of purrr is not to try and simulate a purer functional programming language in R; we don’t want to implement a second-class version of Haskell in R. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R:</p>
 <ul>
-<li><p>Instead of point free (tacit) style, we use the pipe, <code><a href="../reference/pipe.html">%&gt;%</a></code>, to write code that can be read from left to right.</p></li>
+<li><p>Instead of point free (tacit) style, we use the pipe, <code><a href="../reference/%&gt;%.html">%&gt;%</a></code>, to write code that can be read from left to right.</p></li>
 <li><p>Instead of currying, we use <code>...</code> to pass in extra arguments.</p></li>
 <li><p>Anonymous functions are verbose in R, so we provide two convenient shorthands. For unary functions, <code>~ .x + 1</code> is equivalent to <code>function(.x) .x + 1</code>. For chains of transformations functions, <code>. %&gt;% f() %&gt;% g()</code> is equivalent to <code>function(.) . %&gt;% f() %&gt;% g()</code> (this shortcut is provided by magrittr).</p></li>
 <li><p>R is weakly typed, so we need <code>map</code> variants that describe the output type (like <code><a href="../reference/map.html">map_int()</a></code>, <code><a href="../reference/map.html">map_dbl()</a></code>, etc) because we don’t know the return type of <code>.f</code>.</p></li>

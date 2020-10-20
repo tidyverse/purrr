@@ -198,29 +198,29 @@ nested data structure.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>modify</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>modify</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>modify</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>modify</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>modify_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>modify_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>modify_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>modify_if</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.p</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .else <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>modify_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>modify_if</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.p</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .else <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>modify2</span>(<span class='no'>.x</span>, <span class='no'>.y</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
-
-<span class='fu'>imodify</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
-
-<span class='fu'>modify_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='no'>.depth</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>)
+<span class='fu'>modify_at</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.at</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>modify_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='no'>.depth</span> <span class='kw'>&lt;</span> <span class='fl'>0</span>)</pre>
+<span class='fu'>modify_at</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.at</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>modify2</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.y</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>imodify</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>modify_depth</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.depth</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .ragged <span class='op'>=</span> <span class='va'>.depth</span> <span class='op'>&lt;</span> <span class='fl'>0</span><span class='op'>)</span>
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>modify_depth</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.depth</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .ragged <span class='op'>=</span> <span class='va'>.depth</span> <span class='op'>&lt;</span> <span class='fl'>0</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -273,7 +273,7 @@ returns <code>FALSE</code>.</p></td>
       <td><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
+If the <code>tidyselect</code> package is installed, you can use <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code> and
 the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
     <tr>
@@ -313,12 +313,12 @@ must preserve the length of the input.</p>
 
 
 <p><code>modify()</code> and variants are generic over classes that implement
-<code><a href='https://rdrr.io/r/base/length.html'>length()</a></code>, <code>[[</code> and <code>[[&lt;-</code> methods. If the default implementation
+<code><a href='https://rdrr.io/r/base/length.html'>length()</a></code>, <code><a href='https://rdrr.io/r/base/Extract.html'>[[</a></code> and <code>[[&lt;-</code> methods. If the default implementation
 is not compatible for your class, you can override them with your
 own methods.</p>
 <p>If you implement your own <code>modify()</code> method, make sure it satisfies
 the following invariants:</p><pre>modify(x, identity) === x
-modify(x, compose(f, g)) === modify(x, g) %&amp;gt;% modify(f)
+modify(x, compose(f, g)) === modify(x, g) %&gt;% modify(f)
 </pre>
 
 <p>These invariants are known as the <a href='https://wiki.haskell.org/Functor#Functor_Laws'>functor laws</a> in computer
@@ -335,16 +335,18 @@ science.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Convert factors to characters</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>modify_if</span>(<span class='no'>is.factor</span>, <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; 'data.frame':	150 obs. of  5 variables:
+<span class='va'>iris</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>modify_if</span><span class='op'>(</span><span class='va'>is.factor</span>, <span class='va'>as.character</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	150 obs. of  5 variables:
 #&gt;  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 #&gt;  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
 #&gt;  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
 #&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
 #&gt;  $ Species     : chr  "setosa" "setosa" "setosa" "setosa" ...</div><div class='input'>
 <span class='co'># Specify which columns to map with a numeric vector of positions:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>5</span>), <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_at</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='va'>as.character</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
 #&gt;  $ mpg : chr  "21" "21" "22.8" "21.4" ...
 #&gt;  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
 #&gt;  $ disp: num  160 160 108 258 360 ...
@@ -357,7 +359,8 @@ science.</p>
 #&gt;  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
 #&gt;  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</div><div class='input'>
 <span class='co'># Or with a vector of names:</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>), <span class='no'>as.character</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_at</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cyl"</span>, <span class='st'>"am"</span><span class='op'>)</span>, <span class='va'>as.character</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	32 obs. of  11 variables:
 #&gt;  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
 #&gt;  $ cyl : chr  "6" "6" "4" "6" ...
 #&gt;  $ disp: num  160 160 108 258 360 ...
@@ -369,11 +372,12 @@ science.</p>
 #&gt;  $ am  : chr  "1" "1" "1" "0" ...
 #&gt;  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
 #&gt;  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span>(<span class='fl'>100</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='transpose.html'>transpose</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>modify_if</span>(<span class='st'>"x"</span>, ~ <span class='fu'><a href='list_modify.html'>update_list</a></span>(<span class='no'>.</span>, <span class='kw'>y</span> <span class='kw'>=</span> ~ <span class='no'>y</span> * <span class='fl'>100</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='transpose.html'>transpose</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='as_vector.html'>simplify_all</a></span>()</div><div class='output co'>#&gt; $x
+<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='transpose.html'>transpose</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>modify_if</span><span class='op'>(</span><span class='st'>"x"</span>, <span class='op'>~</span> <span class='fu'><a href='list_modify.html'>update_list</a></span><span class='op'>(</span><span class='va'>.</span>, y <span class='op'>=</span> <span class='op'>~</span> <span class='va'>y</span> <span class='op'>*</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='transpose.html'>transpose</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='as_vector.html'>simplify_all</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $x
 #&gt;   [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 #&gt;  [13] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
 #&gt;  [25] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
@@ -395,12 +399,14 @@ science.</p>
 #&gt; </div><div class='input'>
 <span class='co'># Use modify2() to map over two vectors and preserve the type of</span>
 <span class='co'># the first one:</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>)
-<span class='fu'>modify2</span>(<span class='no'>x</span>, <span class='no'>y</span>, ~ <span class='kw'>if</span> (<span class='no'>.y</span>) <span class='no'>.x</span> <span class='kw'>else</span> <span class='fl'>0L</span>)</div><div class='output co'>#&gt; foo bar 
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>foo <span class='op'>=</span> <span class='fl'>1L</span>, bar <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>modify2</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='op'>~</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>.y</span><span class='op'>)</span> <span class='va'>.x</span> <span class='kw'>else</span> <span class='fl'>0L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; foo bar 
 #&gt;   1   0 </div><div class='input'>
 <span class='co'># Use a predicate function to decide whether to map a function:</span>
-<span class='fu'>modify_if</span>(<span class='no'>iris</span>, <span class='no'>is.factor</span>, <span class='no'>as.character</span>)</div><div class='output co'>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+<span class='fu'>modify_if</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>is.factor</span>, <span class='va'>as.character</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 #&gt; 1            5.1         3.5          1.4         0.2     setosa
 #&gt; 2            4.9         3.0          1.4         0.2     setosa
 #&gt; 3            4.7         3.2          1.3         0.2     setosa
@@ -552,7 +558,8 @@ science.</p>
 #&gt; 149          6.2         3.4          5.4         2.3  virginica
 #&gt; 150          5.9         3.0          5.1         1.8  virginica</div><div class='input'>
 <span class='co'># Specify an alternative with the `.else` argument:</span>
-<span class='fu'>modify_if</span>(<span class='no'>iris</span>, <span class='no'>is.factor</span>, <span class='no'>as.character</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='no'>as.integer</span>)</div><div class='output co'>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+<span class='fu'>modify_if</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>is.factor</span>, <span class='va'>as.character</span>, .else <span class='op'>=</span> <span class='va'>as.integer</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 #&gt; 1              5           3            1           0     setosa
 #&gt; 2              4           3            1           0     setosa
 #&gt; 3              4           3            1           0     setosa
@@ -705,20 +712,21 @@ science.</p>
 #&gt; 150            5           3            5           1  virginica</div><div class='input'>
 
 <span class='co'># Modify at specified depth ---------------------------</span>
-<span class='no'>l1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='kw'>obj1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='kw'>prop1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>param1</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>, <span class='kw'>param2</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>4</span>),
-    <span class='kw'>prop2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>param1</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>6</span>, <span class='kw'>param2</span> <span class='kw'>=</span> <span class='fl'>7</span>:<span class='fl'>8</span>)
-  ),
-  <span class='kw'>obj2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='kw'>prop1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>param1</span> <span class='kw'>=</span> <span class='fl'>9</span>:<span class='fl'>10</span>, <span class='kw'>param2</span> <span class='kw'>=</span> <span class='fl'>11</span>:<span class='fl'>12</span>),
-    <span class='kw'>prop2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>param1</span> <span class='kw'>=</span> <span class='fl'>12</span>:<span class='fl'>14</span>, <span class='kw'>param2</span> <span class='kw'>=</span> <span class='fl'>15</span>:<span class='fl'>17</span>)
-  )
-)
+<span class='va'>l1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  obj1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    prop1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>param1 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, param2 <span class='op'>=</span> <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>,
+    prop2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>param1 <span class='op'>=</span> <span class='fl'>5</span><span class='op'>:</span><span class='fl'>6</span>, param2 <span class='op'>=</span> <span class='fl'>7</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span>
+  <span class='op'>)</span>,
+  obj2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    prop1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>param1 <span class='op'>=</span> <span class='fl'>9</span><span class='op'>:</span><span class='fl'>10</span>, param2 <span class='op'>=</span> <span class='fl'>11</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>)</span>,
+    prop2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>param1 <span class='op'>=</span> <span class='fl'>12</span><span class='op'>:</span><span class='fl'>14</span>, param2 <span class='op'>=</span> <span class='fl'>15</span><span class='op'>:</span><span class='fl'>17</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># In the above list, "obj" is level 1, "prop" is level 2 and "param"</span>
 <span class='co'># is level 3. To apply sum() on all params, we map it at depth 3:</span>
-<span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_depth</span>(<span class='fl'>3</span>, <span class='no'>sum</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+<span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_depth</span><span class='op'>(</span><span class='fl'>3</span>, <span class='va'>sum</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ obj1:List of 2
 #&gt;   ..$ prop1:List of 2
 #&gt;   .. ..$ param1: int 3
@@ -737,7 +745,8 @@ science.</p>
 <span class='co'># applied at the list level as when applied at the atomic result.</span>
 <span class='co'># The former is more efficient because it takes advantage of</span>
 <span class='co'># vectorisation.</span>
-<span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_depth</span>(<span class='fl'>3</span>, <span class='no'>`+`</span>, <span class='fl'>100L</span>)</div><div class='output co'>#&gt; $obj1
+<span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_depth</span><span class='op'>(</span><span class='fl'>3</span>, <span class='va'>`+`</span>, <span class='fl'>100L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $obj1
 #&gt; $obj1$prop1
 #&gt; $obj1$prop1$param1
 #&gt; [1] 101 102
@@ -772,7 +781,8 @@ science.</p>
 #&gt; [1] 115 116 117
 #&gt; 
 #&gt; 
-#&gt; </div><div class='input'><span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_depth</span>(<span class='fl'>4</span>, <span class='no'>`+`</span>, <span class='fl'>100L</span>)</div><div class='output co'>#&gt; $obj1
+#&gt; </div><div class='input'><span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_depth</span><span class='op'>(</span><span class='fl'>4</span>, <span class='va'>`+`</span>, <span class='fl'>100L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $obj1
 #&gt; $obj1$prop1
 #&gt; $obj1$prop1$param1
 #&gt; [1] 101 102
@@ -809,12 +819,14 @@ science.</p>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># modify() lets us pluck the elements prop1/param2 in obj1 and obj2:</span>
-<span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"prop1"</span>, <span class='st'>"param2"</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+<span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>modify</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"prop1"</span>, <span class='st'>"param2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ obj1: int [1:2] 3 4
 #&gt;  $ obj2: int [1:2] 11 12</div><div class='input'>
 <span class='co'># But what if we want to pluck all param2 elements? Then we need to</span>
 <span class='co'># act at a lower level:</span>
-<span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_depth</span>(<span class='fl'>2</span>, <span class='st'>"param2"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+<span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_depth</span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>"param2"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ obj1:List of 2
 #&gt;   ..$ prop1: int [1:2] 3 4
 #&gt;   ..$ prop2: int [1:2] 7 8
@@ -825,7 +837,8 @@ science.</p>
 <span class='co'># a lower level. Here we ask pmap() to map paste() simultaneously over all</span>
 <span class='co'># elements of the objects at the second level. paste() is effectively</span>
 <span class='co'># mapped at level 3.</span>
-<span class='no'>l1</span> <span class='kw'>%&gt;%</span> <span class='fu'>modify_depth</span>(<span class='fl'>2</span>, ~ <span class='fu'><a href='map2.html'>pmap</a></span>(<span class='no'>.</span>, <span class='no'>paste</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>" / "</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>()</div><div class='output co'>#&gt; List of 2
+<span class='va'>l1</span> <span class='op'>%&gt;%</span> <span class='fu'>modify_depth</span><span class='op'>(</span><span class='fl'>2</span>, <span class='op'>~</span> <span class='fu'><a href='map2.html'>pmap</a></span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>paste</span>, sep <span class='op'>=</span> <span class='st'>" / "</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ obj1:List of 2
 #&gt;   ..$ prop1:List of 2
 #&gt;   .. ..$ : chr "1 / 3"

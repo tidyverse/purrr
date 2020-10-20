@@ -170,17 +170,17 @@ exist, chuck() always throws an error in that case." />
     </div>
 
     <div class="ref-description">
-    <p><code>pluck()</code> and <code>chuck()</code> implement a generalised form of <code>[[</code> that
+    <p><code>pluck()</code> and <code>chuck()</code> implement a generalised form of <code><a href='https://rdrr.io/r/base/Extract.html'>[[</a></code> that
 allow you to index deeply and flexibly into data structures.
 <code>pluck()</code> consistently returns <code>NULL</code> when an element does not
 exist, <code>chuck()</code> always throws an error in that case.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pluck</span>(<span class='no'>.x</span>, <span class='no'>...</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>pluck</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span>, .default <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>chuck</span>(<span class='no'>.x</span>, <span class='no'>...</span>)
+<span class='fu'>chuck</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pluck</span>(<span class='no'>.x</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,9 +196,9 @@ an integer position, a string name, or an accessor function
 (except for the assignment variants which only support names and
 positions). If the object being indexed is an S4 object,
 accessing it by name will return the corresponding slot.</p>
-<p>These dots support <a href='https://rlang.r-lib.org/reference/list2.html'>tidy dots</a> features. In
-particular, if your accessors are stored in a list, you can
-splice that in with <code>!!!</code>.</p></td>
+<p><a href='https://rlang.r-lib.org/reference/dyn-dots.html'>Dynamic dots</a> are supported. In particular, if
+your accessors are stored in a list, you can splice that in with
+<code>!!!</code>.</p></td>
     </tr>
     <tr>
       <th>.default</th>
@@ -221,7 +221,7 @@ internal piece.</p>
 <p>This is often more readable than a mix of operators and accessors
 because it reads linearly and is free of syntactic
 cruft. Compare: <code>accessor(x[[1]])$foo</code> to <code>pluck(x, 1, accessor, "foo")</code>.</p></li>
-<li><p>These accessors never partial-match. This is unlike <code>$</code> which
+<li><p>These accessors never partial-match. This is unlike <code><a href='https://rdrr.io/r/base/Extract.html'>$</a></code> which
 will select the <code>disp</code> object if you write <code>mtcars$di</code>.</p></li>
 </ul>
 
@@ -233,9 +233,9 @@ applying a function to a pluck location.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Let's create a list of data structures:</span>
-<span class='no'>obj1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"a"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='kw'>elt</span> <span class='kw'>=</span> <span class='st'>"foo"</span>))
-<span class='no'>obj2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"b"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='kw'>elt</span> <span class='kw'>=</span> <span class='st'>"bar"</span>))
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>obj1</span>, <span class='no'>obj2</span>)
+<span class='va'>obj1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, elt <span class='op'>=</span> <span class='st'>"foo"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>obj2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>2</span>, elt <span class='op'>=</span> <span class='st'>"bar"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>obj1</span>, <span class='va'>obj2</span><span class='op'>)</span>
 
 
 <span class='co'># pluck() provides a way of retrieving objects from such data</span>
@@ -243,7 +243,8 @@ applying a function to a pluck location.</p></div>
 <span class='co'># list names, and accessor functions.</span>
 
 <span class='co'># Numeric positions index into the list by position, just like `[[`:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "a"
 #&gt; 
 #&gt; [[2]]
@@ -253,7 +254,8 @@ applying a function to a pluck location.</p></div>
 #&gt; [[2]]$elt
 #&gt; [1] "foo"
 #&gt; 
-#&gt; </div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; [[1]]
+#&gt; </div><div class='input'><span class='va'>x</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "a"
 #&gt; 
 #&gt; [[2]]
@@ -264,28 +266,36 @@ applying a function to a pluck location.</p></div>
 #&gt; [1] "foo"
 #&gt; 
 #&gt; </div><div class='input'>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1
 #&gt; 
 #&gt; $elt
 #&gt; [1] "foo"
-#&gt; </div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]<span class='kw'>[[</span><span class='fl'>2</span>]]</div><div class='output co'>#&gt; [[1]]
+#&gt; </div><div class='input'><span class='va'>x</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] 1
 #&gt; 
 #&gt; $elt
 #&gt; [1] "foo"
 #&gt; </div><div class='input'>
 <span class='co'># Supply names to index into named vectors:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>)</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'><span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]<span class='kw'>[[</span><span class='fl'>2</span>]]<span class='kw'>[[</span><span class='st'>"elt"</span>]]</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'>
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'><span class='va'>x</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='st'>"elt"</span><span class='op'>]</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'>
 
 <span class='co'># By default, pluck() consistently returns `NULL` when an element</span>
 <span class='co'># does not exist:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>10</span>]])</div><div class='output co'>#&gt; Error in x[[10]] : subscript out of bounds</div><div class='input'>
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>[[</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Error in x[[10]] : subscript out of bounds</div><div class='input'>
 <span class='co'># You can also supply a default value for non-existing elements:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>10</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] NA</div><div class='input'>
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>10</span>, .default <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] NA</div><div class='input'>
 <span class='co'># If you prefer to consistently fail for non-existing elements, use</span>
 <span class='co'># the opinionated variant chuck():</span>
-<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'>chuck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "a"
 #&gt; 
 #&gt; [[2]]
@@ -295,11 +305,14 @@ applying a function to a pluck location.</p></div>
 #&gt; [[2]]$elt
 #&gt; [1] "foo"
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; Error : Index 1 exceeds the length of plucked object (10 &gt; 2)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>chuck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; Error : Index 2 exceeds the length of plucked object (10 &gt; 2)</div><div class='input'>
+#&gt; </div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>chuck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Error : Index 1 exceeds the length of plucked object (10 &gt; 2)</div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>chuck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Error : Index 2 exceeds the length of plucked object (10 &gt; 2)</div><div class='input'>
 
 <span class='co'># The map() functions use pluck() by default to retrieve multiple</span>
 <span class='co'># values from a list:</span>
-<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]][[1]]
 #&gt; [1] 1
 #&gt; 
@@ -316,32 +329,37 @@ applying a function to a pluck location.</p></div>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># Pass multiple indexes with a list:</span>
-<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='st'>"elt"</span>))</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>"elt"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "foo"
 #&gt; 
 #&gt; [[2]]
 #&gt; [1] "bar"
 #&gt; </div><div class='input'>
 <span class='co'># This is equivalent to:</span>
-<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>pluck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>pluck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "foo"
 #&gt; 
 #&gt; [[2]]
 #&gt; [1] "bar"
 #&gt; </div><div class='input'>
 <span class='co'># You can also supply a default:</span>
-<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span>), <span class='kw'>.default</span> <span class='kw'>=</span> <span class='st'>"superb default"</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span><span class='op'>)</span>, .default <span class='op'>=</span> <span class='st'>"superb default"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [1] "superb default"
 #&gt; 
 #&gt; [[2]]
 #&gt; [1] "superb default"
 #&gt; </div><div class='input'>
 <span class='co'># Or use the strict variant:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>chuck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; Error : Index 3 exceeds the length of plucked object (10 &gt; 1)</div><div class='input'>
+<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>chuck</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Error : Index 3 exceeds the length of plucked object (10 &gt; 1)</div><div class='input'>
 
 <span class='co'># You can also assign a value in a pluck location with pluck&lt;-:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>) <span class='kw'>&lt;-</span> <span class='st'>"quuux"</span>
-<span class='no'>x</span></div><div class='output co'>#&gt; [[1]]
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>"quuux"</span>
+<span class='va'>x</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]][[1]]
 #&gt; [1] "a"
 #&gt; 
@@ -368,8 +386,9 @@ applying a function to a pluck location.</p></div>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># This is a shortcut for the prefix function assign_in():</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modify_in.html'>assign_in</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span>), <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"QUUUX"</span>)
-<span class='no'>y</span></div><div class='output co'>#&gt; [[1]]
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='modify_in.html'>assign_in</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span>, <span class='st'>"elt"</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='st'>"QUUUX"</span><span class='op'>)</span>
+<span class='va'>y</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]][[1]]
 #&gt; [1] "a"
 #&gt; 
@@ -397,19 +416,23 @@ applying a function to a pluck location.</p></div>
 #&gt; </div><div class='input'>
 
 <span class='co'># pluck() also supports accessor functions:</span>
-<span class='no'>my_element</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>x</span><span class='kw'>[[</span><span class='fl'>2</span>]]$<span class='no'>elt</span>
+<span class='va'>my_element</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>elt</span>
 
 <span class='co'># The accessor can then be passed to pluck:</span>
-<span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>1</span>, <span class='no'>my_element</span>)</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'><span class='fu'>pluck</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='no'>my_element</span>)</div><div class='output co'>#&gt; [1] "quuux"</div><div class='input'>
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='va'>my_element</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'><span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span>, <span class='va'>my_element</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "quuux"</div><div class='input'>
 <span class='co'># Even for this simple data structure, this is more readable than</span>
 <span class='co'># the alternative form because it requires you to read both from</span>
 <span class='co'># right-to-left and from left-to-right in different parts of the</span>
 <span class='co'># expression:</span>
-<span class='fu'>my_element</span>(<span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'>
+<span class='fu'>my_element</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "foo"</div><div class='input'>
 
 <span class='co'># If you have a list of accessors, you can splice those in with `!!!`:</span>
-<span class='no'>idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>1</span>, <span class='no'>my_element</span>)
-<span class='fu'>pluck</span>(<span class='no'>x</span>, !!!<span class='no'>idx</span>)</div><div class='output co'>#&gt; [1] "foo"</div></pre>
+<span class='va'>idx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='va'>my_element</span><span class='op'>)</span>
+<span class='fu'>pluck</span><span class='op'>(</span><span class='va'>x</span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>idx</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "foo"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

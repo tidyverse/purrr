@@ -196,11 +196,11 @@ depth level of a nested vector.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>map_if</span>(<span class='no'>.x</span>, <span class='no'>.p</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>map_if</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.p</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .else <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>map_at</span>(<span class='no'>.x</span>, <span class='no'>.at</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>map_at</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.at</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>map_depth</span>(<span class='no'>.x</span>, <span class='no'>.depth</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.ragged</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>map_depth</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.depth</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .ragged <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,7 +253,7 @@ returns <code>FALSE</code>.</p></td>
       <td><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code>vars()</code> and
+If the <code>tidyselect</code> package is installed, you can use <code><a href='https://dplyr.tidyverse.org/reference/vars.html'>vars()</a></code> and
 the <code>tidyselect</code> helpers to select elements.</p></td>
     </tr>
     <tr>
@@ -285,7 +285,8 @@ no elements at depth <code>.depth</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Use a predicate function to decide whether to map a function:</span>
-<span class='fu'>map_if</span>(<span class='no'>iris</span>, <span class='no'>is.factor</span>, <span class='no'>as.character</span>)</div><div class='output co'>#&gt; $Sepal.Length
+<span class='fu'>map_if</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>is.factor</span>, <span class='va'>as.character</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Sepal.Length
 #&gt;   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1
 #&gt;  [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0
 #&gt;  [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5
@@ -362,7 +363,8 @@ no elements at depth <code>.depth</code>.</p></td>
 #&gt; [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
 #&gt; </div><div class='input'>
 <span class='co'># Specify an alternative with the `.else` argument:</span>
-<span class='fu'>map_if</span>(<span class='no'>iris</span>, <span class='no'>is.factor</span>, <span class='no'>as.character</span>, <span class='kw'>.else</span> <span class='kw'>=</span> <span class='no'>as.integer</span>)</div><div class='output co'>#&gt; $Sepal.Length
+<span class='fu'>map_if</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>is.factor</span>, <span class='va'>as.character</span>, .else <span class='op'>=</span> <span class='va'>as.integer</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Sepal.Length
 #&gt;   [1] 5 4 4 4 5 5 4 5 4 4 5 4 4 4 5 5 5 5 5 5 5 5 4 5 4 5 5 5 5 4 4 5 5 5 4 5 5
 #&gt;  [38] 4 4 5 5 4 4 5 5 4 5 4 5 5 7 6 6 5 6 5 6 4 6 5 5 5 6 6 5 6 5 5 6 5 5 6 6 6
 #&gt;  [75] 6 6 6 6 6 5 5 5 5 6 5 6 6 6 5 5 5 6 5 5 5 5 5 6 5 5 6 5 7 6 6 7 4 7 6 7 6
@@ -423,7 +425,8 @@ no elements at depth <code>.depth</code>.</p></td>
 #&gt; [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" 
 #&gt; </div><div class='input'>
 <span class='co'># Use numeric vector of positions select elements to change:</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_at</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>5</span>), <span class='no'>is.numeric</span>)</div><div class='output co'>#&gt; $Sepal.Length
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>map_at</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='va'>is.numeric</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Sepal.Length
 #&gt;   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1
 #&gt;  [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0
 #&gt;  [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5
@@ -463,7 +466,8 @@ no elements at depth <code>.depth</code>.</p></td>
 #&gt; [1] FALSE
 #&gt; </div><div class='input'>
 <span class='co'># Use vector of names to specify which elements to change:</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>map_at</span>(<span class='st'>"Species"</span>, <span class='no'>toupper</span>)</div><div class='output co'>#&gt; $Sepal.Length
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>map_at</span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='va'>toupper</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Sepal.Length
 #&gt;   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4 5.1
 #&gt;  [19] 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5 4.9 5.0
 #&gt;  [37] 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0 6.4 6.9 5.5
@@ -541,13 +545,15 @@ no elements at depth <code>.depth</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># Use `map_depth()` to recursively traverse nested vectors and map</span>
 <span class='co'># a function at a certain depth:</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>, <span class='kw'>bar</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>4</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>baz</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>6</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; List of 2
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>foo <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, bar <span class='op'>=</span> <span class='fl'>3</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>, b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>baz <span class='op'>=</span> <span class='fl'>5</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 2
 #&gt;  $ a:List of 2
 #&gt;   ..$ foo: int [1:2] 1 2
 #&gt;   ..$ bar: int [1:2] 3 4
 #&gt;  $ b:List of 1
-#&gt;   ..$ baz: int [1:2] 5 6</div><div class='input'><span class='fu'>map_depth</span>(<span class='no'>x</span>, <span class='fl'>2</span>, <span class='no'>paste</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"/"</span>)</div><div class='output co'>#&gt; $a
+#&gt;   ..$ baz: int [1:2] 5 6</div><div class='input'><span class='fu'>map_depth</span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span>, <span class='va'>paste</span>, collapse <span class='op'>=</span> <span class='st'>"/"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a
 #&gt; $a$foo
 #&gt; [1] "1/2"
 #&gt; 
@@ -561,7 +567,8 @@ no elements at depth <code>.depth</code>.</p></td>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># Equivalent to:</span>
-<span class='fu'><a href='map.html'>map</a></span>(<span class='no'>x</span>, <span class='no'>map</span>, <span class='no'>paste</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>"/"</span>)</div><div class='output co'>#&gt; $a
+<span class='fu'><a href='map.html'>map</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>map</span>, <span class='va'>paste</span>, collapse <span class='op'>=</span> <span class='st'>"/"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a
 #&gt; $a$foo
 #&gt; [1] "1/2"
 #&gt; 

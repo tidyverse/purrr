@@ -176,23 +176,23 @@ if it does not. This is useful if you need to compute on both the value
 and the position of an element.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>imap</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>imap</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>imap_lgl</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>imap_lgl</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>imap_chr</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>imap_chr</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>imap_int</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>imap_int</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>imap_dbl</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>imap_dbl</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>imap_raw</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>imap_raw</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>imap_dfr</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>imap_dfr</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span>, .id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>imap_dfc</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)
+<span class='fu'>imap_dfc</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>iwalk</span>(<span class='no'>.x</span>, <span class='no'>.f</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>iwalk</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -252,8 +252,10 @@ variable will be created.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Note that when using the formula shortcut, the first argument</span>
 <span class='co'># is the value, and the second is the position</span>
-<span class='fu'>imap_chr</span>(<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>10</span>), ~ <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>.y</span>, <span class='st'>": "</span>, <span class='no'>.x</span>))</div><div class='output co'>#&gt;  [1] "1: 4"  "2: 6"  "3: 1"  "4: 5"  "5: 7"  "6: 9"  "7: 2"  "8: 10" "9: 8" 
-#&gt; [10] "10: 3"</div><div class='input'><span class='fu'>iwalk</span>(<span class='no'>mtcars</span>, ~ <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='no'>.y</span>, <span class='st'>": "</span>, <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='no'>.x</span>), <span class='st'>"\n"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>))</div><div class='output co'>#&gt; mpg: 19.2
+<span class='fu'>imap_chr</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>.y</span>, <span class='st'>": "</span>, <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "1: 4"  "2: 6"  "3: 1"  "4: 5"  "5: 7"  "6: 9"  "7: 2"  "8: 10" "9: 8" 
+#&gt; [10] "10: 3"</div><div class='input'><span class='fu'>iwalk</span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>.y</span>, <span class='st'>": "</span>, <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span>, <span class='st'>"\n"</span>, sep <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; mpg: 19.2
 #&gt; cyl: 6
 #&gt; disp: 196.3
 #&gt; hp: 123

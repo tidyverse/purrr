@@ -305,12 +305,13 @@
 <li><p><code><a href="../reference/partial.html">partial()</a></code> now calls <code>as_closure()</code> on primitive functions to ensure argument matching (<a href='https://github.com/tidyverse/purrr/issues/360'>#360</a>).</p></li>
 <li>
 <p>The <code>.lazy</code> argument of <code><a href="../reference/partial.html">partial()</a></code> is soft-deprecated in favour of quasiquotation:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># Before</span>
-<span class="fu"><a href="../reference/partial.html">partial</a></span>(<span class="no">fn</span>, <span class="kw">u</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>), <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1</span>), <span class="kw">.lazy</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># Before</span>
+<span class="fu"><a href="../reference/partial.html">partial</a></span><span class="op">(</span><span class="va">fn</span>, u <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .lazy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># After</span>
-<span class="fu"><a href="../reference/partial.html">partial</a></span>(<span class="no">fn</span>, <span class="kw">u</span> <span class="kw">=</span> !!<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>), <span class="kw">n</span> <span class="kw">=</span> !!<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1</span>))  <span class="co"># All constant</span>
-<span class="fu"><a href="../reference/partial.html">partial</a></span>(<span class="no">fn</span>, <span class="kw">u</span> <span class="kw">=</span> !!<span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>), <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1</span>))    <span class="co"># First constant</span></pre></div>
+<span class="fu"><a href="../reference/partial.html">partial</a></span><span class="op">(</span><span class="va">fn</span>, u <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, n <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>  <span class="co"># All constant</span>
+<span class="fu"><a href="../reference/partial.html">partial</a></span><span class="op">(</span><span class="va">fn</span>, u <span class="op">=</span> <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>    <span class="co"># First constant</span></pre></div>
 </li>
 </ul>
 </div>
@@ -339,8 +340,8 @@
 <li><p><code><a href="../reference/array-coercion.html">array_branch()</a></code> and <code><a href="../reference/array-coercion.html">array_tree()</a></code> now retain the <code><a href="https://rdrr.io/r/base/dimnames.html">dimnames()</a></code> of the input array (<a href='https://github.com/tidyverse/purrr/issues/584'>#584</a>, <a href='https://github.com/flying-sheep'>@flying-sheep</a>)</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> no longer flattens lists of arguments. You can still do it manually with <code>!!!</code>. This change is for consistency with other dots-collecting functions of the tidyverse.</p></li>
 <li>
-<p><code><a href="../reference/map_if.html">map_at()</a></code>, <code><a href="../reference/lmap.html">lmap_at()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> now supports selection using <code>vars()</code> and <code>tidyselect</code> (<a href='https://github.com/ColinFay'>@ColinFay</a>, <a href='https://github.com/tidyverse/purrr/issues/608'>#608</a>).</p>
-<p>Note that for now you need to import <code>vars()</code> from dplyr or call it qualified like <code><a href="https://dplyr.tidyverse.org/reference/vars.html">dplyr::vars()</a></code>. It will be reexported from rlang in a future release.</p>
+<p><code><a href="../reference/map_if.html">map_at()</a></code>, <code><a href="../reference/lmap.html">lmap_at()</a></code> and <code><a href="../reference/modify.html">modify_at()</a></code> now supports selection using <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code> and <code>tidyselect</code> (<a href='https://github.com/ColinFay'>@ColinFay</a>, <a href='https://github.com/tidyverse/purrr/issues/608'>#608</a>).</p>
+<p>Note that for now you need to import <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code> from dplyr or call it qualified like <code><a href="https://dplyr.tidyverse.org/reference/vars.html">dplyr::vars()</a></code>. It will be reexported from rlang in a future release.</p>
 </li>
 <li><p><code><a href="../reference/detect.html">detect()</a></code> now has a .default argument to specify the value returned when nothing is detected (<a href='https://github.com/tidyverse/purrr/issues/622'>#622</a>, <a href='https://github.com/ColinFay'>@ColinFay</a>).</p></li>
 </ul>
@@ -405,22 +406,24 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <ul>
 <li>
 <p><code><a href="../reference/invoke.html">invoke()</a></code> is retired in favour of the <code><a href="../reference/exec.html">exec()</a></code> function, reexported from rlang. <code><a href="../reference/exec.html">exec()</a></code> evaluates a function call built from its inputs and supports tidy dots:</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="co"># Before:</span>
-<span class="fu"><a href="../reference/invoke.html">invoke</a></span>(<span class="no">mean</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fl">10</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="co"># Before:</span>
+<span class="fu"><a href="../reference/invoke.html">invoke</a></span><span class="op">(</span><span class="va">mean</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 
 <span class="co"># After</span>
-<span class="fu"><a href="../reference/exec.html">exec</a></span>(<span class="no">mean</span>, <span class="fl">1</span>:<span class="fl">10</span>, !!!<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>))</pre></div>
+<span class="fu"><a href="../reference/exec.html">exec</a></span><span class="op">(</span><span class="va">mean</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p>Note that retired functions are not removed from the package and will be maintained undefinitely.</p>
 </li>
 <li>
 <p><code><a href="../reference/invoke.html">invoke_map()</a></code> is retired without replacement because it is more complex to understand than the corresponding code using <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code> and <code><a href="../reference/exec.html">exec()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="co"># Before:</span>
-<span class="fu"><a href="../reference/invoke.html">invoke_map</a></span>(<span class="no">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">args</span>))
-<span class="fu"><a href="../reference/invoke.html">invoke_map</a></span>(<span class="no">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">args1</span>, <span class="no">args2</span>))
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="co"># Before:</span>
+<span class="fu"><a href="../reference/invoke.html">invoke_map</a></span><span class="op">(</span><span class="va">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">args</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../reference/invoke.html">invoke_map</a></span><span class="op">(</span><span class="va">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">args1</span>, <span class="va">args2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># After:</span>
-<span class="fu"><a href="../reference/map.html">map</a></span>(<span class="no">fns</span>, <span class="no">exec</span>, !!!<span class="no">args</span>)
-<span class="fu"><a href="../reference/map2.html">map2</a></span>(<span class="no">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">args1</span>, <span class="no">args2</span>), <span class="kw">function</span>(<span class="no">fn</span>, <span class="no">args</span>) <span class="fu"><a href="../reference/exec.html">exec</a></span>(<span class="no">fn</span>, !!!<span class="no">args</span>))</pre></div>
+<span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">fns</span>, <span class="va">exec</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span><span class="op">)</span>
+<span class="fu"><a href="../reference/map2.html">map2</a></span><span class="op">(</span><span class="va">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">args1</span>, <span class="va">args2</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fn</span>, <span class="va">args</span><span class="op">)</span> <span class="fu"><a href="../reference/exec.html">exec</a></span><span class="op">(</span><span class="va">fn</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span><span class="op">)</span><span class="op">)</span></pre></div>
 </li>
 </ul>
 </div>
@@ -428,7 +431,7 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <h3 class="hasAnchor">
 <a href="#other-lifecycle-changes" class="anchor"></a>Other lifecycle changes</h3>
 <ul>
-<li><p><code><a href="../reference/get-attr.html">%@%</a></code> is soft-deprecated, please use the operator exported in rlang instead. The latter features an interface more consistent with <code>@</code> as it uses NSE, supports S4 fields, and has an assignment variant.</p></li>
+<li><p><code><a href="../reference/get-attr.html">%@%</a></code> is soft-deprecated, please use the operator exported in rlang instead. The latter features an interface more consistent with <code><a href="https://rdrr.io/r/base/slotOp.html">@</a></code> as it uses NSE, supports S4 fields, and has an assignment variant.</p></li>
 <li>
 <p>Removing elements from lists using <code>NULL</code> in <code><a href="../reference/list_modify.html">list_modify()</a></code> is soft-deprecated. Please use the new <code><a href="../reference/zap.html">zap()</a></code> sentinel reexported from rlang instead:</p>
 <pre class="{r}"><code><a href="../reference/list_modify.html">  # Before:
@@ -479,8 +482,8 @@ detect(x, f, .dir = "backward")</a></code></pre>
 <p>purrr no longer depends on lazyeval or Rcpp (or dplyr, as of the previous version). This makes the dependency graph of the tidyverse simpler, and makes purrr more suitable as a dependency of lower-level packages.</p>
 <p>There have also been two changes to eliminate name conflicts between purrr and dplyr:</p>
 <ul>
-<li><p><code>order_by()</code>, <code>sort_by()</code> and <code>split_by()</code> have been removed. <code>order_by()</code> conflicted with <code><a href="https://dplyr.tidyverse.org/reference/order_by.html">dplyr::order_by()</a></code> and the complete family doesn’t feel that useful. Use tibbles instead (<a href='https://github.com/tidyverse/purrr/issues/217'>#217</a>).</p></li>
-<li><p><code>contains()</code> has been renamed to <code><a href="../reference/has_element.html">has_element()</a></code> to avoid conflicts with dplyr (<a href='https://github.com/tidyverse/purrr/issues/217'>#217</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/order_by.html">order_by()</a></code>, <code>sort_by()</code> and <code>split_by()</code> have been removed. <code><a href="https://dplyr.tidyverse.org/reference/order_by.html">order_by()</a></code> conflicted with <code><a href="https://dplyr.tidyverse.org/reference/order_by.html">dplyr::order_by()</a></code> and the complete family doesn’t feel that useful. Use tibbles instead (<a href='https://github.com/tidyverse/purrr/issues/217'>#217</a>).</p></li>
+<li><p><code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code> has been renamed to <code><a href="../reference/has_element.html">has_element()</a></code> to avoid conflicts with dplyr (<a href='https://github.com/tidyverse/purrr/issues/217'>#217</a>).</p></li>
 </ul>
 </div>
 <div id="pluck" class="section level2">
