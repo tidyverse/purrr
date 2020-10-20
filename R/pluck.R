@@ -12,9 +12,9 @@
 #'   positions). If the object being indexed is an S4 object,
 #'   accessing it by name will return the corresponding slot.
 #'
-#'   These dots support [tidy dots][rlang::list2] features. In
-#'   particular, if your accessors are stored in a list, you can
-#'   splice that in with `!!!`.
+#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
+#'   your accessors are stored in a list, you can splice that in with
+#'   `!!!`.
 #' @param .default Value to use if target is empty or absent.
 #'
 #' @details

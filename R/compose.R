@@ -3,9 +3,9 @@
 #' @param ... Functions to apply in order (from right to left by
 #'   default). Formulas are converted to functions in the usual way.
 #'
-#'   These dots support [tidy dots][rlang::list2] features. In
-#'   particular, if your functions are stored in a list, you can
-#'   splice that in with `!!!`.
+#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
+#'   your functions are stored in a list, you can splice that in with
+#'   `!!!`.
 #' @param .dir If `"backward"` (the default), the functions are called
 #'   in the reverse order, from right to left, as is conventional in
 #'   mathematics. If `"forward"`, they are called from left to right.
