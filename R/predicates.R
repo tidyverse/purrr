@@ -1,4 +1,4 @@
-#' Test is an object is integer or double
+#' Test if an object is integer or double
 #'
 #' Numeric is used in three different ways in base R:
 #' * as an alias for double (as in [as.numeric()])
