@@ -103,7 +103,6 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
   }
 }
 
-
 SEXP coerce_impl(SEXP x, SEXP type_) {
   int n = Rf_length(x);
 

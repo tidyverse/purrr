@@ -133,6 +133,38 @@ map2_raw <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "raw")
 }
+
+#' @export
+#' @rdname map2
+map2_lgl_matrix <- function(.x, .y, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map2_matrix_impl, environment(), ".x", ".y", ".f", "logical", .n, .by_row)
+}
+#' @export
+#' @rdname map2
+map2_int_matrix <- function(.x, .y, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map2_matrix_impl, environment(), ".x", ".y", ".f", "integer", .n, .by_row)
+}
+#' @export
+#' @rdname map2
+map2_dbl_matrix <- function(.x, .y, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map2_matrix_impl, environment(), ".x", ".y", ".f", "double", .n, .by_row)
+}
+#' @export
+#' @rdname map2
+map2_chr_matrix <- function(.x, .y, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map2_matrix_impl, environment(), ".x", ".y", ".f", "character", .n, .by_row)
+}
+#' @export
+#' @rdname map2
+map2_raw_matrix <- function(.x, .y, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map2_matrix_impl, environment(), ".x", ".y", ".f", "raw", .n, .by_row)
+}
+
 #' @rdname map2
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
@@ -226,6 +258,61 @@ pmap_raw <- function(.l, .f, ...) {
   }
 
   .Call(pmap_impl, environment(), ".l", ".f", "raw")
+}
+
+#' @export
+#' @rdname map2
+pmap_lgl_matrix <- function(.l, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
+  .Call(pmap_matrix_impl, environment(), ".l", ".f", "logical", .n, .by_row)
+}
+
+#' @export
+#' @rdname map2
+pmap_int_matrix <- function(.l, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
+  .Call(pmap_matrix_impl, environment(), ".l", ".f", "integer", .n, .by_row)
+}
+
+#' @export
+#' @rdname map2
+pmap_dbl_matrix <- function(.l, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
+  .Call(pmap_matrix_impl, environment(), ".l", ".f", "double", .n, .by_row)
+}
+
+#' @export
+#' @rdname map2
+pmap_chr_matrix <- function(.l, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
+  .Call(pmap_matrix_impl, environment(), ".l", ".f", "character", .n, .by_row)
+}
+
+#' @export
+#' @rdname map2
+pmap_raw_matrix <- function(.l, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  if (is.data.frame(.l)) {
+    .l <- as.list(.l)
+  }
+
+  .Call(pmap_matrix_impl, environment(), ".l", ".f", "raw", .n, .by_row)
 }
 
 #' @rdname map2

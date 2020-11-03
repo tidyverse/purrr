@@ -219,6 +219,41 @@ map_raw <- function(.x, .f, ...) {
 }
 
 #' @rdname map
+#' @export
+map_lgl_matrix <- function(.x, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_matrix_impl, environment(), ".x", ".f", "logical", .n, .by_row)
+}
+
+#' @rdname map
+#' @export
+map_chr_matrix <- function(.x, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_matrix_impl, environment(), ".x", ".f", "character", .n, .by_row)
+}
+
+#' @rdname map
+#' @export
+map_int_matrix <- function(.x, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_matrix_impl, environment(), ".x", ".f", "integer", .n, .by_row)
+}
+
+#' @rdname map
+#' @export
+map_dbl_matrix <- function(.x, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_matrix_impl, environment(), ".x", ".f", "double", .n, .by_row)
+}
+
+#' @rdname map
+#' @export
+map_raw_matrix <- function(.x, .f, .n, ..., .by_row = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_matrix_impl, environment(), ".x", ".f", "raw", .n, .by_row)
+}
+
+#' @rdname map
 #' @param .id Either a string or `NULL`. If a string, the output will contain
 #'   a variable with that name, storing either the name (if `.x` is named) or
 #'   the index (if `.x` is unnamed) of the input. If `NULL`, the default, no
