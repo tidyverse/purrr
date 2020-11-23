@@ -14,7 +14,7 @@ Authors@R:
              role = c("cph", "fnd")))
 Description: A complete and consistent functional programming
     toolkit for R.
-License: GPL-3 | file LICENSE
+License: MIT + file LICENSE
 URL: http://purrr.tidyverse.org,
     https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
