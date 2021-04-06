@@ -23,7 +23,7 @@ Depends:
 Imports: 
     lifecycle (>= 0.2.0),
     magrittr (>= 1.5.0),
-    rlang (>= 0.4.7),
+    rlang (>= 0.4.10),
     vctrs (>= 0.3.2)
 LinkingTo:
     vctrs
