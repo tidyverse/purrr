@@ -136,7 +136,7 @@ map2_raw <- function(.x, .y, .f, ...) {
 #' @rdname map2
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `map2_dfr()`")
+  check_installed("dplyr", "for `map2_dfr()`.")
 
   .f <- as_mapper(.f, ...)
   res <- map2(.x, .y, .f, ...)
@@ -146,7 +146,7 @@ map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
 #' @rdname map2
 #' @export
 map2_dfc <- function(.x, .y, .f, ...) {
-  check_installed("dplyr", "for `map2_dfc()`")
+  check_installed("dplyr", "for `map2_dfc()`.")
 
   .f <- as_mapper(.f, ...)
   res <- map2(.x, .y, .f, ...)
@@ -228,7 +228,7 @@ pmap_raw <- function(.l, .f, ...) {
 #' @rdname map2
 #' @export
 pmap_dfr <- function(.l, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `pmap_dfr()`")
+  check_installed("dplyr", "for `pmap_dfr()`.")
 
   .f <- as_mapper(.f, ...)
   res <- pmap(.l, .f, ...)
@@ -238,7 +238,7 @@ pmap_dfr <- function(.l, .f, ..., .id = NULL) {
 #' @rdname map2
 #' @export
 pmap_dfc <- function(.l, .f, ...) {
-  check_installed("dplyr", "for `pmap_dfc()`")
+  check_installed("dplyr", "for `pmap_dfc()`.")
 
   .f <- as_mapper(.f, ...)
   res <- pmap(.l, .f, ...)

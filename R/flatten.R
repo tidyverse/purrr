@@ -63,7 +63,7 @@ flatten_raw <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_dfr <- function(.x, .id = NULL) {
-  check_installed("dplyr", "for `flatten_dfr()`")
+  check_installed("dplyr", "for `flatten_dfr()`.")
 
   res <- .Call(flatten_impl, .x)
   dplyr::bind_rows(res, .id = .id)
@@ -72,7 +72,7 @@ flatten_dfr <- function(.x, .id = NULL) {
 #' @export
 #' @rdname flatten
 flatten_dfc <- function(.x) {
-  check_installed("dplyr", "for `flatten_dfc()`")
+  check_installed("dplyr", "for `flatten_dfc()`.")
 
   res <- .Call(flatten_impl, .x)
   dplyr::bind_cols(res)

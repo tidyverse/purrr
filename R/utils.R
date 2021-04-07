@@ -19,7 +19,7 @@ maybe_as_data_frame <- function(out, x) {
 
 at_selection <- function(nm, .at){
   if (is_quosures(.at)) {
-    check_installed("tidyselect", "for using tidyselect in `map_at()`")
+    check_installed("tidyselect", "for using tidyselect in `map_at()`.")
     .at <- tidyselect::vars_select(.vars = nm, !!!.at)
   }
   .at
