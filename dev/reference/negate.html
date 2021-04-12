@@ -103,7 +103,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -144,7 +144,7 @@
 </li>
         <li>
   <a href="https://github.com/tidyverse/purrr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -195,32 +195,32 @@ inner lists. Only those elements where <code>.p</code> evaluates to
 </div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. function (x, ...) 
 #&gt; pluck(x, "x", .default = NULL)
-#&gt; &lt;environment: 0x7fac80b96e90&gt;
+#&gt; &lt;environment: 0x7fbb6ce71968&gt;
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x7fac7b9f5c60&gt;
-#&gt; &lt;environment: 0x7fac80ba4358&gt;</div><div class='input'><span class='fu'>negate</span><span class='op'>(</span><span class='va'>is.null</span><span class='op'>)</span>
+#&gt; &lt;bytecode: 0x7fbb6857e2c8&gt;
+#&gt; &lt;environment: 0x7fbb6ce7eab0&gt;</div><div class='input'><span class='fu'>negate</span><span class='op'>(</span><span class='va'>is.null</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. function (x) 
 #&gt; .Primitive("is.null")(x)
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x7fac7b9f5c60&gt;
-#&gt; &lt;environment: 0x7fac80c20ce0&gt;</div><div class='input'><span class='fu'>negate</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>.x</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span>
+#&gt; &lt;bytecode: 0x7fbb6857e2c8&gt;
+#&gt; &lt;environment: 0x7fbb6cf05bd0&gt;</div><div class='input'><span class='fu'>negate</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>.x</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;composed&gt;
 #&gt; 1. &lt;lambda&gt;
 #&gt; function (..., .x = ..1, .y = ..2, . = ..1) 
 #&gt; .x &gt; 0
-#&gt; &lt;environment: 0x7fac80b70cd0&gt;
+#&gt; &lt;environment: 0x7fbb6ce3f070&gt;
 #&gt; attr(,"class")
 #&gt; [1] "rlang_lambda_function" "function"             
 #&gt; 
 #&gt; 2. function (.x) 
 #&gt; !.x
-#&gt; &lt;bytecode: 0x7fac7b9f5c60&gt;
-#&gt; &lt;environment: 0x7fac80c8f8f8&gt;</div><div class='input'>
+#&gt; &lt;bytecode: 0x7fbb6857e2c8&gt;
+#&gt; &lt;environment: 0x7fbb6b6b86c0&gt;</div><div class='input'>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='transpose.html'>transpose</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, y <span class='op'>=</span> <span class='fu'><a href='rbernoulli.html'>rbernoulli</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span><span class='op'>(</span><span class='st'>"y"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 7</div><div class='input'><span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='keep.html'>keep</a></span><span class='op'>(</span><span class='fu'>negate</span><span class='op'>(</span><span class='st'>"y"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='op'>)</span>
