@@ -10,28 +10,16 @@ NULL
 
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
-    check_tibble()
+    check_installed("tibble")
     tibble::as_tibble(out)
   } else {
     out
   }
 }
 
-check_tibble <- function() {
-  if (!is_installed("tibble")) {
-    abort("The tibble package must be installed")
-  }
-}
-
-check_tidyselect <- function(){
-  if (!is_installed("tidyselect")) {
-    abort("Using tidyselect in `map_at()` requires tidyselect")
-  }
-}
-
 at_selection <- function(nm, .at){
-  if (is_quosures(.at)){
-    check_tidyselect()
+  if (is_quosures(.at)) {
+    check_installed("tidyselect", "for using tidyselect in `map_at()`.")
     .at <- tidyselect::vars_select(.vars = nm, !!!.at)
   }
   .at
