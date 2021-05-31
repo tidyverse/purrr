@@ -23,6 +23,7 @@
 #' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to the mapped function.
+#' @param .progress Whether to show a progress bar.
 #' @return
 #' * `map()` Returns a list the same length as `.x`.
 #'
@@ -106,9 +107,9 @@
 #'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
 #' # (if you also want to preserve the variable names see
 #' # the broom package)
-map <- function(.x, .f, ...) {
+map <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "list")
+  .Call(map_impl, environment(), ".x", ".f", "list", .progress)
 }
 
 #' Apply a function to each element of a vector conditionally
@@ -185,37 +186,37 @@ map_at <- function(.x, .at, .f, ...) {
 
 #' @rdname map
 #' @export
-map_lgl <- function(.x, .f, ...) {
+map_lgl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "logical")
+  .Call(map_impl, environment(), ".x", ".f", "logical", .progress)
 }
 
 #' @rdname map
 #' @export
-map_chr <- function(.x, .f, ...) {
+map_chr <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "character")
+  .Call(map_impl, environment(), ".x", ".f", "character", .progress)
 }
 
 #' @rdname map
 #' @export
-map_int <- function(.x, .f, ...) {
+map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "integer")
+  .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
 }
 
 #' @rdname map
 #' @export
-map_dbl <- function(.x, .f, ...) {
+map_dbl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "double")
+  .Call(map_impl, environment(), ".x", ".f", "double", .progress)
 }
 
 #' @rdname map
 #' @export
-map_raw <- function(.x, .f, ...) {
+map_raw <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "raw")
+  .Call(map_impl, environment(), ".x", ".f", "raw", .progress)
 }
 
 #' @rdname map

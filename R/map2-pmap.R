@@ -20,6 +20,7 @@
 #' @param .l A list of vectors, such as a data frame. The length of `.l`
 #'   determines the number of arguments that `.f` will be called with. List
 #'   names will be used if present.
+#' @param .progress Whether to show a progress bar.
 #' @return An atomic vector, list, or data frame, depending on the suffix.
 #'   Atomic vectors and lists will be named if `.x` or the first
 #'   element of `.l` is named.
@@ -99,39 +100,39 @@
 #' # If instead you want to bind by columns, use map2_dfc() or pmap_dfc()
 #' map2_dfc(arg1, arg2, ex_fun)
 
-map2 <- function(.x, .y, .f, ...) {
+map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "list", .progress)
 }
 #' @export
 #' @rdname map2
-map2_lgl <- function(.x, .y, .f, ...) {
+map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "logical")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "logical", .progress)
 }
 #' @export
 #' @rdname map2
-map2_int <- function(.x, .y, .f, ...) {
+map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "integer")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "integer", .progress)
 }
 #' @export
 #' @rdname map2
-map2_dbl <- function(.x, .y, .f, ...) {
+map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "double")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "double", .progress)
 }
 #' @export
 #' @rdname map2
-map2_chr <- function(.x, .y, .f, ...) {
+map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "character", .progress)
 }
 #' @export
 #' @rdname map2
-map2_raw <- function(.x, .y, .f, ...) {
+map2_raw <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw", .progress)
 }
 #' @rdname map2
 #' @export
@@ -165,64 +166,64 @@ walk2 <- function(.x, .y, .f, ...) {
 
 #' @export
 #' @rdname map2
-pmap <- function(.l, .f, ...) {
+pmap <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "list")
+  .Call(pmap_impl, environment(), ".l", ".f", "list", .progress)
 }
 
 #' @export
 #' @rdname map2
-pmap_lgl <- function(.l, .f, ...) {
+pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "logical")
+  .Call(pmap_impl, environment(), ".l", ".f", "logical", .progress)
 }
 #' @export
 #' @rdname map2
-pmap_int <- function(.l, .f, ...) {
+pmap_int <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "integer")
+  .Call(pmap_impl, environment(), ".l", ".f", "integer", .progress)
 }
 #' @export
 #' @rdname map2
-pmap_dbl <- function(.l, .f, ...) {
+pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "double")
+  .Call(pmap_impl, environment(), ".l", ".f", "double", .progress)
 }
 #' @export
 #' @rdname map2
-pmap_chr <- function(.l, .f, ...) {
+pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "character")
+  .Call(pmap_impl, environment(), ".l", ".f", "character", .progress)
 }
 #' @export
 #' @rdname map2
-pmap_raw <- function(.l, .f, ...) {
+pmap_raw <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "raw")
+  .Call(pmap_impl, environment(), ".l", ".f", "raw", .progress)
 }
 
 #' @rdname map2

@@ -28,13 +28,14 @@ void check_vector(SEXP x, const char *name) {
 }
 
 // call must involve i
-SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
+SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
+               SEXP progress) {
   // Create variable "i" and map to scalar integer
   SEXP i_val = PROTECT(Rf_ScalarInteger(1));
   SEXP i = Rf_install("i");
   Rf_defineVar(i, i_val, env);
 
-  SEXP bar = PROTECT(cli_progress_bar(n));
+  SEXP bar = PROTECT(cli_progress_bar(n, progress));
   SEXP out = PROTECT(Rf_allocVector(type, n));
   for (int i = 0; i < n; ++i) {
     if (SHOULD_TICK) cli_progress_set(bar, i);
@@ -62,7 +63,7 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
   return out;
 }
 
-SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
+SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_, SEXP progress) {
   const char* x_name = CHAR(Rf_asChar(x_name_));
   const char* f_name = CHAR(Rf_asChar(f_name_));
 
@@ -88,7 +89,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
   SEXP f_call = PROTECT(Rf_lang3(f, Xi, R_DotsSymbol));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type, 1));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type, 1, progress));
   copy_names(x_val, out);
 
   UNPROTECT(4);
@@ -96,7 +97,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   return out;
 }
 
-SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
+SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, SEXP progress) {
   const char* x_name = CHAR(Rf_asChar(x_name_));
   const char* y_name = CHAR(Rf_asChar(y_name_));
   const char* f_name = CHAR(Rf_asChar(f_name_));
@@ -135,14 +136,14 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXP Yi = PROTECT(Rf_lang3(R_Bracket2Symbol, y, ny == 1 ? one : i));
   SEXP f_call = PROTECT(Rf_lang4(f, Xi, Yi, R_DotsSymbol));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type, 2));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type, 2, progress));
   copy_names(x_val, out);
 
   UNPROTECT(7);
   return out;
 }
 
-SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
+SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) {
   const char* l_name = CHAR(Rf_asChar(l_name_));
   SEXP l = Rf_install(l_name);
   SEXP l_val = PROTECT(Rf_eval(l, env));
@@ -225,7 +226,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
 
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type, m));
+  SEXP out = PROTECT(call_loop(env, f_call, n, type, m, progress));
 
   if (Rf_length(l_val)) {
     copy_names(VECTOR_ELT(l_val, 0), out);

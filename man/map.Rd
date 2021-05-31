@@ -13,17 +13,17 @@
 \alias{walk}
 \title{Apply a function to each element of a list or atomic vector}
 \usage{
-map(.x, .f, ...)
+map(.x, .f, ..., .progress = FALSE)
 
-map_lgl(.x, .f, ...)
+map_lgl(.x, .f, ..., .progress = FALSE)
 
-map_chr(.x, .f, ...)
+map_chr(.x, .f, ..., .progress = FALSE)
 
-map_int(.x, .f, ...)
+map_int(.x, .f, ..., .progress = FALSE)
 
-map_dbl(.x, .f, ...)
+map_dbl(.x, .f, ..., .progress = FALSE)
 
-map_raw(.x, .f, ...)
+map_raw(.x, .f, ..., .progress = FALSE)
 
 map_dfr(.x, .f, ..., .id = NULL)
 
@@ -58,6 +58,8 @@ by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
+
+\item{.progress}{Whether to show a progress bar.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or

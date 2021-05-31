@@ -23,17 +23,17 @@
 \alias{pwalk}
 \title{Map over multiple inputs simultaneously.}
 \usage{
-map2(.x, .y, .f, ...)
+map2(.x, .y, .f, ..., .progress = FALSE)
 
-map2_lgl(.x, .y, .f, ...)
+map2_lgl(.x, .y, .f, ..., .progress = FALSE)
 
-map2_int(.x, .y, .f, ...)
+map2_int(.x, .y, .f, ..., .progress = FALSE)
 
-map2_dbl(.x, .y, .f, ...)
+map2_dbl(.x, .y, .f, ..., .progress = FALSE)
 
-map2_chr(.x, .y, .f, ...)
+map2_chr(.x, .y, .f, ..., .progress = FALSE)
 
-map2_raw(.x, .y, .f, ...)
+map2_raw(.x, .y, .f, ..., .progress = FALSE)
 
 map2_dfr(.x, .y, .f, ..., .id = NULL)
 
@@ -41,17 +41,17 @@ map2_dfc(.x, .y, .f, ...)
 
 walk2(.x, .y, .f, ...)
 
-pmap(.l, .f, ...)
+pmap(.l, .f, ..., .progress = FALSE)
 
-pmap_lgl(.l, .f, ...)
+pmap_lgl(.l, .f, ..., .progress = FALSE)
 
-pmap_int(.l, .f, ...)
+pmap_int(.l, .f, ..., .progress = FALSE)
 
-pmap_dbl(.l, .f, ...)
+pmap_dbl(.l, .f, ..., .progress = FALSE)
 
-pmap_chr(.l, .f, ...)
+pmap_chr(.l, .f, ..., .progress = FALSE)
 
-pmap_raw(.l, .f, ...)
+pmap_raw(.l, .f, ..., .progress = FALSE)
 
 pmap_dfr(.l, .f, ..., .id = NULL)
 
@@ -87,6 +87,8 @@ by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
+
+\item{.progress}{Whether to show a progress bar.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or
