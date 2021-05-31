@@ -6,6 +6,8 @@
 #include "conditions.h"
 #include "utils.h"
 
+#include "cli/progress.h"
+
 void copy_names(SEXP from, SEXP to) {
   if (Rf_length(from) != Rf_length(to))
     return;
@@ -32,8 +34,10 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
   SEXP i = Rf_install("i");
   Rf_defineVar(i, i_val, env);
 
+  SEXP bar = PROTECT(cli_progress_bar(n));
   SEXP out = PROTECT(Rf_allocVector(type, n));
   for (int i = 0; i < n; ++i) {
+    if (SHOULD_TICK) cli_progress_set(bar, i);
     if (i % 1024 == 0)
       R_CheckUserInterrupt();
 
@@ -52,8 +56,9 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);
   }
+  cli_progress_done(bar);
 
-  UNPROTECT(2);
+  UNPROTECT(3);
   return out;
 }
 

@@ -20,12 +20,14 @@ URL: http://purrr.tidyverse.org,
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
     R (>= 3.2)
-Imports: 
+Imports:
+    cli (>= 2.5.0.9000),
     lifecycle (>= 0.2.0),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
     vctrs (>= 0.3.2)
 LinkingTo:
+    cli,
     vctrs
 Suggests: 
     covr,
