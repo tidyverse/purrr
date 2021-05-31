@@ -1,6 +1,7 @@
 #' @keywords internal
 #' @import rlang
 #' @import vctrs
+#' @importFrom cli cli_progress_bar
 #' @useDynLib purrr, .registration = TRUE
 "_PACKAGE"
 
