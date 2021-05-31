@@ -40,6 +40,8 @@ Suggests:
     tidyselect
 VignetteBuilder: 
     knitr
+Remotes:
+    r-lib/cli@feature/progress2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
