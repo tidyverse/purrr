@@ -46,6 +46,7 @@ reference:
     `pmap()` (parallel map) iterates over a list of vectors;
     `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`.
   contents:
+  - map_if
   - map2
   - modify
   - starts_with("imap")
@@ -83,6 +84,7 @@ reference:
   - flatten
   - list_modify
   - reduce
+  - rep_along
   - splice
   - transpose
 
@@ -91,6 +93,7 @@ reference:
     Adverbs modify the action of a function; taking a function as input and
     returning a function with modified action as output.
   contents:
+  - faq-adverbs-export
   - compose
   - lift
   - negate
@@ -107,6 +110,9 @@ reference:
   - as_vector
   - rbernoulli
   - rdunif
+  - exec
   - rerun
   - set_names
   - vec_depth
+  - zap
+  - done
