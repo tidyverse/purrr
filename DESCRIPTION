@@ -6,8 +6,7 @@ Authors@R: c(
     person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = c("cph", "fnd"))
   )
-Description: A complete and consistent functional programming toolkit for
-    R.
+Description: A complete and consistent functional programming toolkit for R.
 License: MIT + file LICENSE
 URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
