@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://purrr.tidyverse.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/SUPPORT.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/articles/other-langs.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/news/index.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/accumulate.html</loc>
@@ -59,6 +89,9 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/imap.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/insistently.html</loc>
@@ -164,8 +197,5 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/reference/zap.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/articles/other-langs.html</loc>
   </url>
 </urlset>
