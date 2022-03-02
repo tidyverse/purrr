@@ -1,5 +1,3 @@
-context("list-modify")
-
 # list_modify -------------------------------------------------------------
 
 test_that("named lists have values replaced by name", {

@@ -1,5 +1,3 @@
-context("utils")
-
 test_that("rbernoulli is a special case of rbinom", {
   set.seed(1)
   x <- rbernoulli(10)

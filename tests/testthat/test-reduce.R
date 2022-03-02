@@ -1,5 +1,3 @@
-context("reduce")
-
 test_that("empty input returns init or error", {
   expect_error(reduce(list()), "no `.init` supplied")
   expect_equal(reduce(list(), `+`, .init = 0), 0)

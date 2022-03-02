@@ -1,5 +1,3 @@
-context("rerun")
-
 test_that("single unnamed arg doesn't get extra list", {
   expect_equal(rerun(2, 1), list(1, 1))
 })

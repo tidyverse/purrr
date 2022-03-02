@@ -1,5 +1,3 @@
-context("splice")
-
 test_that("predicate controls which elements get spliced", {
   x <- list(1, 2, list(3, 4))
 

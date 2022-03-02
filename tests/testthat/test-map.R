@@ -1,5 +1,3 @@
-context("map")
-
 test_that("preserves names", {
   out <- map(list(x = 1, y = 2), identity)
   expect_equal(names(out), c("x", "y"))
@@ -24,7 +22,7 @@ test_that("0 length input gives 0 length output", {
 })
 
 test_that("map() always returns a list", {
-  expect_is(map(mtcars, mean), "list")
+  expect_bare(map(mtcars, mean), "list")
 })
 
 test_that("types automatically coerced upwards", {
@@ -62,9 +60,12 @@ test_that("map forces arguments in same way as base R", {
 
 test_that("row and column binding work", {
   skip_if_not_installed("dplyr")
+  local_name_repair_quiet()
+
   mtcar_mod <- mtcars %>%
     split(.$cyl) %>%
     map(~ lm(mpg ~ wt, data = .x))
+
   f_coef <- function(x) as.data.frame(t(as.matrix(coef(x))))
   expect_length(mtcar_mod %>% map_dfr(f_coef), 2)
   expect_length(mtcar_mod %>% map_dfc(f_coef), 6)

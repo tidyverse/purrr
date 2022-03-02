@@ -1,5 +1,3 @@
-context("partial")
-
 test_that("dots are correctly placed in the signature", {
   out <- partialised_body(partial(runif, n = rpois(1, 5)))
   exp <- expr(runif(n = rpois(1, 5), ...))
@@ -59,15 +57,13 @@ test_that("partial() matches argument with primitives", {
 })
 
 test_that("partial() squashes quosures before printing", {
-  expect_known_output(file = test_path("test-partial-print.txt"), {
-    foo <- function(x, y) y
-    foo <- partial(foo, y = 3)
+  foo <- function(x, y) y
+  foo <- partial(foo, y = 3)
 
-    # Reproducible environment tag
-    environment(foo) <- global_env()
+  # Reproducible environment tag
+  environment(foo) <- global_env()
 
-    print(foo)
-  })
+  expect_snapshot(foo)
 })
 
 test_that("partial() handles primitives with named arguments after `...`", {

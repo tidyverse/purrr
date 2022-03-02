@@ -1,4 +1,3 @@
-
 test_that("new_rate() creates rate objects", {
   rate <- new_rate("foo", jitter = FALSE, max_times = 10)
   expect_identical(rate$state$i, 0L)
@@ -18,12 +17,11 @@ test_that("can bump and reset count", {
 })
 
 test_that("rates have print methods", {
-  expect_known_output(file = test_path("test-rate-print.txt"), {
+  expect_snapshot({
     # Also checks infinite `max_times` prints properly
-    print(rate_delay(20, max_times = Inf))
+    rate_delay(20, max_times = Inf)
 
-    cat_line()
-    print(rate_backoff())
+    rate_backoff()
   })
 })
 

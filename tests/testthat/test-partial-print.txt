@@ -1,3 +1,0 @@
-<partialised>
-function (...) 
-foo(y = 3, ...)

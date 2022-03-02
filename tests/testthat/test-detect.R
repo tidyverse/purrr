@@ -1,5 +1,3 @@
-context("detect")
-
 y <- 4:10
 
 test_that("detect functions work", {
