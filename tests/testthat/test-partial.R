@@ -148,7 +148,7 @@ test_that("partial() preserves visibility when arguments are from the same envir
 # Life cycle --------------------------------------------------------------
 
 test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
-  scoped_lifecycle_warnings()
+  local_lifecycle_warnings()
   expect_warning(partial(list, "foo", .lazy = TRUE), "soft-deprecated")
   expect_warning(partial(list, "foo", .env = env()), "soft-deprecated")
   expect_warning(partial(list, "foo", .first = TRUE, "soft-deprecated"))

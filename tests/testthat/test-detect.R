@@ -32,12 +32,12 @@ test_that("`detect()` requires a predicate function", {
 # Lifecycle ---------------------------------------------------------------
 
 test_that("`.right` argument is retired", {
-  scoped_lifecycle_warnings()
+  local_lifecycle_warnings()
   expect_warning(detect(1:2, ~ TRUE, .right = TRUE), "soft-deprecated")
 })
 
 test_that("`.right` argument still works", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
   is_odd <- function(x) x %% 2 == 1
   expect_equal(detect(y, is_odd, .right = TRUE), 9)
   expect_equal(detect_index(y, is_odd, .right = TRUE), 6)
