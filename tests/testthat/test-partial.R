@@ -155,7 +155,7 @@ test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
 })
 
 test_that("`.lazy` still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  local_options(lifecycle_disable_warnings = TRUE)
   counter <- env(n = 0)
   eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
   walk(1:10, ~eager())
@@ -163,7 +163,7 @@ test_that("`.lazy` still works", {
 })
 
 test_that("`.first` still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  local_options(lifecycle_disable_warnings = TRUE)
   out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
   exp <- expr(runif(..., n = rpois(1, 5)))
   expect_identical(out, exp)
