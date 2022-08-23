@@ -3,7 +3,7 @@
 \name{is_numeric}
 \alias{is_numeric}
 \alias{is_scalar_numeric}
-\title{Test is an object is integer or double}
+\title{Test if an object is integer or double}
 \usage{
 is_numeric(x)
 
