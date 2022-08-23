@@ -34,7 +34,8 @@ modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 \method{modify_depth}{default}(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
-\item{.x}{A list or atomic vector.}
+\item{.x, .y}{Vectors of the same length. A vector of length 1 will
+be recycled.}
 
 \item{.f}{A function, formula, or vector (not necessarily atomic).
 
