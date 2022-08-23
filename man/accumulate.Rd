@@ -98,8 +98,8 @@ reducing \code{list()} from the right produces a right-leaning list.
 
 \examples{
 # With an associative operation, the final value is always the
-# same, no matter the direction. You'll find it in the last element for a
-# backward (left) accumulation, and in the first element for forward
+# same, no matter the direction. You'll find it in the first element for a
+# backward (left) accumulation, and in the last element for forward
 # (right) one:
 1:5 \%>\% accumulate(`+`)
 1:5 \%>\% accumulate(`+`, .dir = "backward")

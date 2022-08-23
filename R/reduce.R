@@ -381,8 +381,8 @@ seq_len2 <- function(start, end) {
 #' @seealso [reduce()] when you only need the final reduced value.
 #' @examples
 #' # With an associative operation, the final value is always the
-#' # same, no matter the direction. You'll find it in the last element for a
-#' # backward (left) accumulation, and in the first element for forward
+#' # same, no matter the direction. You'll find it in the first element for a
+#' # backward (left) accumulation, and in the last element for forward
 #' # (right) one:
 #' 1:5 %>% accumulate(`+`)
 #' 1:5 %>% accumulate(`+`, .dir = "backward")
