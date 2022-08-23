@@ -13,7 +13,7 @@ x \%@\% name
 \item{name}{Attribute name}
 }
 \description{
-\ifelse{html}{\figure{lifecycle-soft-deprecated.svg}{options: alt='Soft-deprecated lifecycle'}}{\strong{Soft-deprecated}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
 
 Please use the \verb{\%@\%} operator exported in rlang. It has an
 interface more consistent with \code{@}: uses NSE, supports S4 fields,
