@@ -3,7 +3,7 @@
 This pair of functions make it easier to combine a function and list
 of parameters to get a result. invoke is a wrapper around
 do.call that makes it easy to use in a pipe. invoke_map
-makes it easier to call lists of functions with lists of parameters."><title>Invoke functions. — invoke • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Invoke functions. — invoke"><meta property="og:description" content="
+makes it easier to call lists of functions with lists of parameters."><title>Invoke functions. — invoke • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.2/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Invoke functions. — invoke"><meta property="og:description" content="
 This pair of functions make it easier to combine a function and list
 of parameters to get a result. invoke is a wrapper around
 do.call that makes it easy to use in a pipe. invoke_map
@@ -67,7 +67,7 @@ makes it easier to call lists of functions with lists of parameters."><meta prop
     </div>
 
     <div class="ref-description section level2">
-    <p><a href="https://www.tidyverse.org/lifecycle/#superseded" class="external-link"><img src="figures/lifecycle-superseded.svg" alt="Superseded lifecycle"></a></p>
+    <p><a href="https://lifecycle.r-lib.org/articles/stages.html#superseded" class="external-link"><img src="figures/lifecycle-superseded.svg" alt="[Superseded]"></a></p>
 <p>This pair of functions make it easier to combine a function and list
 of parameters to get a result. <code>invoke</code> is a wrapper around
 <code>do.call</code> that makes it easy to use in a pipe. <code>invoke_map</code>
@@ -76,23 +76,23 @@ makes it easier to call lists of functions with lists of parameters.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">invoke</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_lgl</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_int</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_dbl</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_chr</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_raw</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_dfr</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">invoke_map_dfc</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">invoke</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_lgl</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_int</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_dbl</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_chr</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_raw</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_dfr</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">invoke_map_dfc</span><span class="op">(</span><span class="va">.f</span>, .x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -100,19 +100,26 @@ makes it easier to call lists of functions with lists of parameters.</p>
     <dl><dt>.f</dt>
 <dd><p>For <code>invoke</code>, a function; for <code>invoke_map</code> a
 list of functions.</p></dd>
+
+
 <dt>.x</dt>
 <dd><p>For <code>invoke</code>, an argument-list; for <code>invoke_map</code> a
 list of argument-lists the same length as <code>.f</code> (or length 1).
 The default argument, <code>list(NULL)</code>, will be recycled to the
 same length as <code>.f</code>, and will call each function with no
 arguments (apart from any supplied in <code>...</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to each function.</p></dd>
+
+
 <dt>.env</dt>
 <dd><p>Environment in which <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> should
 evaluate a constructed expression. This only matters if you pass
 as <code>.f</code> the name of a function rather than its value, or as
 <code>.x</code> symbols of objects rather than their values.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="life-cycle">Life cycle<a class="anchor" aria-label="anchor" href="#life-cycle"></a></h2>
@@ -123,20 +130,22 @@ as <code>.f</code> the name of a function rather than its value, or as
 longer under active development but we will maintain them in the
 package undefinitely.</p><ul><li><p><code>invoke()</code> is retired in favour of the simpler <code><a href="exec.html">exec()</a></code> function
 reexported from rlang. <code><a href="exec.html">exec()</a></code> evaluates a function call built
-from its inputs and supports <a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic dots</a>:</p><div class="sourceCode"><pre><code><span class="co"># Before:</span>
-<span class="fu"><a href="../reference/invoke.html">invoke</a></span><span class="op">(</span><span class="va">mean</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-
-<span class="co"># After</span>
-<span class="fu"><a href="../reference/exec.html">exec</a></span><span class="op">(</span><span class="va">mean</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div></li>
+from its inputs and supports <a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic dots</a>:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">invoke</span>(mean, <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exec</span>(mean, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">!!!</span><span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre><p></p></div></li>
 <li><p><code>invoke_map()</code> is is retired without replacement because it is
 more complex to understand than the corresponding code using
-<code><a href="map.html">map()</a></code>, <code><a href="map2.html">map2()</a></code> and <code><a href="exec.html">exec()</a></code>:</p><div class="sourceCode"><pre><code><span class="co"># Before:</span>
-<span class="fu"><a href="../reference/invoke.html">invoke_map</a></span><span class="op">(</span><span class="va">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">args</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/invoke.html">invoke_map</a></span><span class="op">(</span><span class="va">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">args1</span>, <span class="va">args2</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># After:</span>
-<span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">fns</span>, <span class="va">exec</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span><span class="op">)</span>
-<span class="fu"><a href="../reference/map2.html">map2</a></span><span class="op">(</span><span class="va">fns</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">args1</span>, <span class="va">args2</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fn</span>, <span class="va">args</span><span class="op">)</span> <span class="fu"><a href="../reference/exec.html">exec</a></span><span class="op">(</span><span class="va">fn</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span><span class="op">)</span><span class="op">)</span></code></pre></div></li>
+<code><a href="map.html">map()</a></code>, <code><a href="map2.html">map2()</a></code> and <code><a href="exec.html">exec()</a></code>:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">invoke_map</span>(fns, <span class="fu">list</span>(args))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">invoke_map</span>(fns, <span class="fu">list</span>(args1, args2))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># After:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(fns, exec, <span class="sc">!!!</span>args)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">map2</span>(fns, <span class="fu">list</span>(args1, args2), <span class="cf">function</span>(fn, args) <span class="fu">exec</span>(fn, <span class="sc">!!!</span>args))</span></code></pre><p></p></div></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -151,25 +160,25 @@ more complex to understand than the corresponding code using
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Invoke a function with a list of arguments</span></span>
-<span class="r-in"><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Invoke a function with a list of arguments</span></span></span>
+<span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3277343 0.6021007 0.6043941 0.1246334 0.2946009 0.5776099 0.6309793</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.5120159 0.5050239 0.5340354</span>
-<span class="r-in"><span class="co"># Invoke a function with named arguments</span></span>
-<span class="r-in"><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Invoke a function with named arguments</span></span></span>
+<span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.55724944 0.86791949 0.82970869 0.11144915 0.70368836 0.89748826</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.27973255 0.22820188 0.01532989 0.12898156</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Combine the two:</span></span>
-<span class="r-in"><span class="fu">invoke</span><span class="op">(</span><span class="va">paste</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"01a"</span>, <span class="st">"01b"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Combine the two:</span></span></span>
+<span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">paste</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"01a"</span>, <span class="st">"01b"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "01a-01b"</span>
-<span class="r-in"><span class="co"># That's more natural as part of a pipeline:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"01a"</span>, <span class="st">"01b"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">invoke</span><span class="op">(</span><span class="va">paste</span>, <span class="va">.</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># That's more natural as part of a pipeline:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"01a"</span>, <span class="st">"01b"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">invoke</span><span class="op">(</span><span class="va">paste</span>, <span class="va">.</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "01a-01b"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Invoke a list of functions, each with different arguments</span></span>
-<span class="r-in"><span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">runif</span>, <span class="va">rnorm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Invoke a list of functions, each with different arguments</span></span></span>
+<span class="r-in"><span><span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">runif</span>, <span class="va">rnorm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.09338193 0.23688501 0.79114741 0.59973157 0.91014771 0.56042455</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.75570477 0.37917189 0.37328098 0.17029064</span>
@@ -177,23 +186,23 @@ more complex to understand than the corresponding code using
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.1173097 -0.4226757 -0.8346894 -0.8146651  0.7935841</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="co"># Or with the same inputs:</span></span>
-<span class="r-in"><span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">runif</span>, <span class="va">rnorm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Or with the same inputs:</span></span></span>
+<span class="r-in"><span><span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">runif</span>, <span class="va">rnorm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.57074752 0.41928296 0.26762217 0.04780944 0.10349305</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.48445511 -0.74107266  1.16061578  1.01206712 -0.07207847</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">runif</span>, <span class="va">rnorm</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">runif</span>, <span class="va">rnorm</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.12781466 0.27968351 0.81610606 0.05761299 0.80282925</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.2569391 -0.5106143  0.1020858 -1.3251728  0.7089426</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="co"># Or the same function with different inputs:</span></span>
-<span class="r-in"><span class="fu">invoke_map</span><span class="op">(</span><span class="st">"runif"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Or the same function with different inputs:</span></span></span>
+<span class="r-in"><span><span class="fu">invoke_map</span><span class="op">(</span><span class="st">"runif"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9662828 0.5152566 0.5494807 0.1637199 0.1645970</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -201,46 +210,46 @@ more complex to understand than the corresponding code using
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.786332777 0.751113420 0.784214704 0.654354915 0.378104397</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [6] 0.008566967 0.955329554 0.838616148 0.213424938 0.494713556</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Or as a pipeline</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">invoke_map</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or as a pipeline</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">invoke_map</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.375921</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1906799</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">invoke_map_dbl</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">invoke_map_dbl</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         m1         m2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.13422742 0.05007979 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Note that you can also match by position by explicitly omitting `.x`.</span></span>
-<span class="r-in"><span class="co"># This can be useful when the argument names of the functions are not</span></span>
-<span class="r-in"><span class="co"># identical</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">invoke_map</span><span class="op">(</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that you can also match by position by explicitly omitting `.x`.</span></span></span>
+<span class="r-in"><span><span class="co"># This can be useful when the argument names of the functions are not</span></span></span>
+<span class="r-in"><span><span class="co"># identical</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">invoke_map</span><span class="op">(</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8621935</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.06702543</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If you have pairs of function name and arguments, it's natural</span></span>
-<span class="r-in"><span class="co"># to store them in a data frame. Here we use a tibble because</span></span>
-<span class="r-in"><span class="co"># it has better support for list-columns</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_installed.html" class="external-link">is_installed</a></span><span class="op">(</span><span class="st">"tibble"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"runif"</span>, <span class="st">"rpois"</span>, <span class="st">"rnorm"</span><span class="op">)</span>,</span>
-<span class="r-in">    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span>, lambda <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="op">-</span><span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="va">df</span></span>
-<span class="r-in">  <span class="fu">invoke_map</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">f</span>, <span class="va">df</span><span class="op">$</span><span class="va">params</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If you have pairs of function name and arguments, it's natural</span></span></span>
+<span class="r-in"><span><span class="co"># to store them in a data frame. Here we use a tibble because</span></span></span>
+<span class="r-in"><span><span class="co"># it has better support for list-columns</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_installed.html" class="external-link">is_installed</a></span><span class="op">(</span><span class="st">"tibble"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"runif"</span>, <span class="st">"rpois"</span>, <span class="st">"rnorm"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span>, lambda <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, mean <span class="op">=</span> <span class="op">-</span><span class="fl">3</span>, sd <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">df</span></span></span>
+<span class="r-in"><span>  <span class="fu">invoke_map</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">f</span>, <span class="va">df</span><span class="op">$</span><span class="va">params</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.99628168 0.33100748 0.08520752 0.85446765 0.52302976 0.99703446</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.42188735 0.22862927 0.10356121 0.89888084</span>
@@ -265,7 +274,7 @@ more complex to understand than the corresponding code using
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
   </div></footer></body></html>

@@ -12,7 +12,7 @@ which elements of .x are transformed with .f.
 map_depth() allows to apply .f to a specific
 depth level of a nested vector.
 
-"><title>Apply a function to each element of a vector conditionally — map_if • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Apply a function to each element of a vector conditionally — map_if"><meta property="og:description" content="The functions map_if() and map_at() take .x as input, apply
+"><title>Apply a function to each element of a vector conditionally — map_if • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.2/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Apply a function to each element of a vector conditionally — map_if"><meta property="og:description" content="The functions map_if() and map_at() take .x as input, apply
 the function .f to some of the elements of .x, and return a
 list of the same length as the input.
 map_if() takes a predicate function .p as input to determine
@@ -97,17 +97,19 @@ depth level of a nested vector.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">map_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">map_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">map_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.x</dt>
 <dd><p>A list or atomic vector.</p></dd>
+
+
 <dt>.p</dt>
 <dd><p>A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as <code>.x</code>.
@@ -115,6 +117,8 @@ Alternatively, if the elements of <code>.x</code> are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where <code>.p</code> evaluates to
 <code>TRUE</code> will be modified.</p></dd>
+
+
 <dt>.f</dt>
 <dd><p>A function, formula, or vector (not necessarily atomic).</p>
 <p>If a <strong>function</strong>, it is used as is.</p>
@@ -131,27 +135,38 @@ converted to an extractor function. Character vectors index by
 name and numeric vectors index by position; use a list to index
 by position and name at different levels. If a component is not
 present, the value of <code>.default</code> will be returned.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed on to the mapped function.</p></dd>
+
+
 <dt>.else</dt>
 <dd><p>A function applied to elements of <code>.x</code> for which <code>.p</code>
 returns <code>FALSE</code>.</p></dd>
+
+
 <dt>.at</dt>
 <dd><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to <code>.at</code> will be modified.
 If the <code>tidyselect</code> package is installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and
 the <code>tidyselect</code> helpers to select elements.</p></dd>
+
+
 <dt>.depth</dt>
 <dd><p>Level of <code>.x</code> to map on. Use a negative value to
 count up from the lowest level of the list.</p><ul><li><p><code>map_depth(x, 0, fun)</code> is equivalent to <code>fun(x)</code>.</p></li>
 <li><p><code>map_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- map(x, fun)</code></p></li>
 <li><p><code>map_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- map(x, ~ map(., fun))</code></p></li>
 </ul></dd>
+
+
 <dt>.ragged</dt>
 <dd><p>If <code>TRUE</code>, will apply to leaves, even if they're not
 at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if there are
 no elements at depth <code>.depth</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -166,8 +181,8 @@ no elements at depth <code>.depth</code>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use a predicate function to decide whether to map a function:</span></span>
-<span class="r-in"><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use a predicate function to decide whether to map a function:</span></span></span>
+<span class="r-in"><span><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
@@ -244,9 +259,9 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Specify an alternative with the `.else` argument:</span></span>
-<span class="r-in"><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Specify an alternative with the `.else` argument:</span></span></span>
+<span class="r-in"><span><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5 4 4 4 5 5 4 5 4 4 5 4 4 4 5 5 5 5 5 5 5 5 4 5 4 5 5 5 5 4 4 5 5 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4 5 5 4 4 5 5 4 4 5 5 4 5 4 5 5 7 6 6 5 6 5 6 4 6 5 5 5 6 6 5 6 5 5</span>
@@ -307,9 +322,9 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use numeric vector of positions select elements to change:</span></span>
-<span class="r-in"><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">is.numeric</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use numeric vector of positions select elements to change:</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">is.numeric</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
@@ -349,9 +364,9 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use vector of names to specify which elements to change:</span></span>
-<span class="r-in"><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_at</span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">toupper</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use vector of names to specify which elements to change:</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_at</span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">toupper</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
@@ -428,18 +443,18 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [141] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [146] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use `map_depth()` to recursively traverse nested vectors and map</span></span>
-<span class="r-in"><span class="co"># a function at a certain depth:</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, bar <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>baz <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use `map_depth()` to recursively traverse nested vectors and map</span></span></span>
+<span class="r-in"><span><span class="co"># a function at a certain depth:</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, bar <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>baz <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ a:List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ foo: int [1:2] 1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ bar: int [1:2] 3 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ b:List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ baz: int [1:2] 5 6</span>
-<span class="r-in"><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a$foo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1/2"</span>
@@ -453,9 +468,9 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "5/6"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Equivalent to:</span></span>
-<span class="r-in"><span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">map</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Equivalent to:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">map</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a$foo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1/2"</span>
@@ -482,7 +497,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
   </div></footer></body></html>
