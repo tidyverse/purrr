@@ -77,9 +77,6 @@ exlude. Only those elements corresponding to \code{.at} will be modified.
 If the \code{tidyselect} package is installed, you can use \code{vars()} and
 the \code{tidyselect} helpers to select elements.}
 
-\item{.y}{Vectors of the same length. A vector of length 1 will
-be recycled.}
-
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
 \itemize{
@@ -127,9 +124,11 @@ is not compatible for your class, you can override them with your
 own methods.
 
 If you implement your own \code{modify()} method, make sure it satisfies
-the following invariants:\preformatted{modify(x, identity) === x
+the following invariants:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{modify(x, identity) === x
 modify(x, compose(f, g)) === modify(x, g) \%>\% modify(f)
-}
+}\if{html}{\out{</div>}}
 
 These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
 science.
