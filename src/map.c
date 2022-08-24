@@ -38,7 +38,7 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
   SEXP bar = PROTECT(cli_progress_bar(n, progress));
   SEXP out = PROTECT(Rf_allocVector(type, n));
   for (int i = 0; i < n; ++i) {
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
     if (i % 1024 == 0)
       R_CheckUserInterrupt();
 
