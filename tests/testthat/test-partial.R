@@ -1,5 +1,3 @@
-context("partial")
-
 test_that("dots are correctly placed in the signature", {
   out <- partialised_body(partial(runif, n = rpois(1, 5)))
   exp <- expr(runif(n = rpois(1, 5), ...))
@@ -59,15 +57,13 @@ test_that("partial() matches argument with primitives", {
 })
 
 test_that("partial() squashes quosures before printing", {
-  expect_known_output(file = test_path("test-partial-print.txt"), {
-    foo <- function(x, y) y
-    foo <- partial(foo, y = 3)
+  foo <- function(x, y) y
+  foo <- partial(foo, y = 3)
 
-    # Reproducible environment tag
-    environment(foo) <- global_env()
+  # Reproducible environment tag
+  environment(foo) <- global_env()
 
-    print(foo)
-  })
+  expect_snapshot(foo)
 })
 
 test_that("partial() handles primitives with named arguments after `...`", {
@@ -148,14 +144,14 @@ test_that("partial() preserves visibility when arguments are from the same envir
 # Life cycle --------------------------------------------------------------
 
 test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
-  scoped_lifecycle_warnings()
+  local_lifecycle_warnings()
   expect_warning(partial(list, "foo", .lazy = TRUE), "soft-deprecated")
   expect_warning(partial(list, "foo", .env = env()), "soft-deprecated")
   expect_warning(partial(list, "foo", .first = TRUE, "soft-deprecated"))
 })
 
 test_that("`.lazy` still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  local_options(lifecycle_disable_warnings = TRUE)
   counter <- env(n = 0)
   eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
   walk(1:10, ~eager())
@@ -163,7 +159,7 @@ test_that("`.lazy` still works", {
 })
 
 test_that("`.first` still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  local_options(lifecycle_disable_warnings = TRUE)
   out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
   exp <- expr(runif(..., n = rpois(1, 5)))
   expect_identical(out, exp)

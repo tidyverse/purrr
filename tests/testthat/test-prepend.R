@@ -1,5 +1,3 @@
-context("prepend")
-
 test_that("prepend is clearer version of merging with c()", {
   x <- 1:3
   expect_identical(

@@ -6,15 +6,14 @@
 \alias{purrr-package}
 \title{purrr: Functional Programming Tools}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A complete and consistent functional programming
-    toolkit for R.
+A complete and consistent functional programming toolkit for R.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://purrr.tidyverse.org}
+  \item \url{https://purrr.tidyverse.org/}
   \item \url{https://github.com/tidyverse/purrr}
   \item Report bugs at \url{https://github.com/tidyverse/purrr/issues}
 }

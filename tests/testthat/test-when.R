@@ -1,5 +1,3 @@
-context("when")
-
 test_that("when chooses the correct action", {
 
   x <-
@@ -47,16 +45,14 @@ test_that("named arguments work with when", {
 })
 
 test_that("default values work without a formula", {
-  x <-
-    iris %>%
+  x <- iris %>%
     subset(Sepal.Length > 10) %>%
     when(
       nrow(.) > 0 ~ .,
       head(iris, 10)
     )
 
-  expect_equivalent(x, head(iris, 10))
-
+  expect_equal(x, head(iris, 10))
 })
 
 test_that("error when named arguments have no matching conditions", {

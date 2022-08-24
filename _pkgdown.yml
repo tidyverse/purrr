@@ -2,12 +2,16 @@ url: https://purrr.tidyverse.org
 
 template:
   package: tidytemplate
+  bootstrap: 5
+
+  includes:
+    in_header: |
+      <script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
 development:
   mode: auto
 
 home:
-  strip_header: true
   links:
   - text: Learn more
     href: http://r4ds.had.co.nz/iteration.html
@@ -42,6 +46,7 @@ reference:
     `pmap()` (parallel map) iterates over a list of vectors;
     `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`.
   contents:
+  - map_if
   - map2
   - modify
   - starts_with("imap")
@@ -79,6 +84,7 @@ reference:
   - flatten
   - list_modify
   - reduce
+  - rep_along
   - splice
   - transpose
 
@@ -87,6 +93,7 @@ reference:
     Adverbs modify the action of a function; taking a function as input and
     returning a function with modified action as output.
   contents:
+  - faq-adverbs-export
   - compose
   - lift
   - negate
@@ -103,6 +110,9 @@ reference:
   - as_vector
   - rbernoulli
   - rdunif
+  - exec
   - rerun
   - set_names
   - vec_depth
+  - zap
+  - done

@@ -1,5 +1,3 @@
-context("simplify")
-
 test_that("can_simplify() understands vector molds", {
   x <- as.list(1:3)
   x2 <- c(x, list(1:3))

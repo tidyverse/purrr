@@ -1,5 +1,3 @@
-context("coerce")
-
 test_that("missing values converted to new type", {
   expect_equal(coerce_int(NA), NA_integer_)
   expect_equal(coerce_dbl(NA), NA_real_)

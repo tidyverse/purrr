@@ -1,5 +1,3 @@
-context("every-some")
-
 test_that("every returns TRUE if all elements are TRUE", {
   x <- list(0, 1, TRUE)
   expect_false(every(x, isTRUE))

@@ -1,5 +1,3 @@
-context("utils")
-
 test_that("rbernoulli is a special case of rbinom", {
   set.seed(1)
   x <- rbernoulli(10)
@@ -103,6 +101,6 @@ test_that("vec_simplify() ignores complex inputs", {
 # Lifecycle ---------------------------------------------------------------
 
 test_that("%@% is an infix attribute accessor", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
   expect_identical(mtcars %@% "names", attr(mtcars, "names"))
 })

@@ -1,5 +1,3 @@
-context("depth")
-
 test_that("depth of NULL is 0", {
   expect_equal(vec_depth(NULL), 0L)
 })
