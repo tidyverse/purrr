@@ -13,7 +13,7 @@ BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
     R (>= 3.2)
 Imports:
-    cli (>= 2.5.0.9000),
+    cli (>= 3.3.0),
     lifecycle (>= 0.2.0),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
