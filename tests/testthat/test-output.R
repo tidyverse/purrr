@@ -1,5 +1,3 @@
-context("output")
-
 test_that("safely has NULL error when successful", {
   out <- safely(log10)(10)
   expect_equal(out, list(result = 1, error = NULL))

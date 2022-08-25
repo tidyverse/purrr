@@ -1,5 +1,3 @@
-context("flatten")
-
 test_that("input must be a list", {
   expect_bad_type_error(flatten(1), "`.x` must be a list, not a double vector")
   expect_bad_type_error(flatten_dbl(1), "`.x` must be a list, not a double vector")

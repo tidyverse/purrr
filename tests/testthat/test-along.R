@@ -1,5 +1,3 @@
-context("along")
-
 test_that("list_along works", {
   x <- 1:5
   expect_identical(list_along(x), vector("list", 5))

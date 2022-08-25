@@ -9,7 +9,7 @@
 [![R build
 status](https://github.com/tidyverse/purrr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/purrr)
 [![Codecov test
-coverage](https://codecov.io/gh/tidyverse/purrr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/purrr?branch=master)
+coverage](https://codecov.io/gh/tidyverse/purrr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/purrr?branch=master)
 <!-- badges: end -->
 
 ## Overview
@@ -20,7 +20,7 @@ vectors. If you’ve never heard of FP before, the best place to start is
 the family of `map()` functions which allow you to replace many for
 loops with code that is both more succinct and easier to read. The best
 place to learn about the `map()` functions is the [iteration
-chapter](http://r4ds.had.co.nz/iteration.html) in R for data science.
+chapter](https://r4ds.had.co.nz/iteration.html) in R for data science.
 
 ## Installation
 

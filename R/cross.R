@@ -198,7 +198,7 @@ cross_df <- function(.l, .filter = NULL) {
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
-  check_tibble()
+  check_installed("tibble")
   cross(.l, .filter = .filter) %>%
     transpose() %>%
     simplify_all() %>%

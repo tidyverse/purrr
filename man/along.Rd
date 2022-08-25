@@ -14,7 +14,7 @@ list_along(x)
 A list of the same length as \code{x}.
 }
 \description{
-\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#questioning'><img src='figures/lifecycle-questioning.svg' alt='Questioning lifecycle'></a>}}{\strong{Questioning}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#questioning}{\figure{lifecycle-questioning.svg}{options: alt='[Questioning]'}}}{\strong{[Questioning]}}
 
 It can be useful to create an empty list that you plan to fill later. This is
 similar to the idea of \code{\link[=seq_along]{seq_along()}}, which creates a vector of the same

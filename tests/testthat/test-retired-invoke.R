@@ -1,5 +1,3 @@
-context("retired-invoke")
-
 # invoke ------------------------------------------------------------------
 
 test_that("invoke() evaluates expressions in the right environment", {

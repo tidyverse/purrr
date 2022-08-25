@@ -22,8 +22,8 @@
 #'
 #' * [modify_in()] modifies a single element in a [pluck()] location.
 #'
-#' @inheritParams map
 #' @inheritParams map2
+#' @inheritParams map
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'   from the lowest level of the list.
 #'

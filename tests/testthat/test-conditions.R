@@ -1,8 +1,6 @@
-context("conditions")
-
 test_that("stop_bad_type() stores fields", {
   err <- catch_cnd(stop_bad_type(NA, "`NULL`", actual = "a foobaz", arg = ".foo"))
-  expect_is(err, "purrr_error_bad_type")
+  expect_s3_class(err, "purrr_error_bad_type")
   expect_identical(err$x, NA)
   expect_identical(err$expected, "`NULL`")
   expect_identical(err$actual, "a foobaz")
@@ -57,7 +55,7 @@ test_that("stop_bad_element_type() accepts `what`", {
 
 test_that("stop_bad_length() stores fields", {
   err <- catch_cnd(stop_bad_length(1:3, 10, actual = 100, arg = ".foo"))
-  expect_is(err, "purrr_error_bad_length")
+  expect_s3_class(err, "purrr_error_bad_length")
   expect_identical(err$x, 1:3)
   expect_identical(err$expected_length, 10)
   expect_identical(err$arg, ".foo")

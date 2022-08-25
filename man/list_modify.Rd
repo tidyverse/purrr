@@ -19,14 +19,14 @@ These values should be either all named or all unnamed. When
 inputs are all named, they are matched to \code{.x} by name. When they
 are all unnamed, they are matched positionally.
 
-These dots support \link[rlang:list2]{tidy dots} features. In
-particular, if your functions are stored in a list, you can
-splice that in with \verb{!!!}.}
+\link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if
+your functions are stored in a list, you can splice that in with
+\verb{!!!}.}
 }
 \description{
 \code{list_modify()} and \code{list_merge()} recursively combine two lists, matching
 elements either by name or position. If a sub-element is present in
-both lists \code{list_modify()} takes the value from \code{y}, and \code{list_merge()}
+both lists, \code{list_modify()} takes the value from \code{y}, and \code{list_merge()}
 concatenates the values together.
 
 \code{update_list()} handles formulas and quosures that can refer to
@@ -51,7 +51,7 @@ str(list_modify(x, z = zap()))
 str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 
 
-# All these functions support tidy dots features. Use !!! to splice
+# All these functions support dynamic dots features. Use !!! to splice
 # a list of arguments:
 l <- list(new = 1, y = zap(), z = 5)
 str(list_modify(x, !!!l))

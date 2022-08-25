@@ -1,5 +1,3 @@
-context("composition")
-
 test_that("lift_dl and lift_ld are inverses of each other", {
   expect_identical(
     sum %>%

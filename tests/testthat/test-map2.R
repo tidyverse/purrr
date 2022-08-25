@@ -1,5 +1,3 @@
-context("map2")
-
 test_that("map2 inputs must be same length", {
   expect_error(
     map2(1:3, 2:3, function(...) NULL),
@@ -47,7 +45,7 @@ test_that("map2 takes only names from x", {
 })
 
 test_that("map2 always returns a list", {
-  expect_is(map2(mtcars, 0, ~mtcars), "list")
+  expect_bare(map2(mtcars, 0, ~mtcars), "list")
 })
 
 test_that("map2() with empty input copies names", {
