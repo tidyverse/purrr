@@ -94,11 +94,11 @@ reference:
     returning a function with modified action as output.
   contents:
   - faq-adverbs-export
+  - has_concept("adverbs")
   - compose
   - lift
   - negate
   - partial
-  - safely
   - insistently
   - rate_sleep
   - rate-helpers
