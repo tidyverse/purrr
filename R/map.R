@@ -161,8 +161,10 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @param .at A character vector of names, positive numeric vector of
 #'   positions to include, or a negative numeric vector of positions to
 #'   exlude. Only those elements corresponding to `.at` will be modified.
-#'   If the `tidyselect` package is installed, you can use `vars()` and
-#'   the `tidyselect` helpers to select elements.
+#'
+#'   `r lifecycle::badge("deprecated")`: if the tidyselect package is
+#'   installed, you can use `vars()` and tidyselect helpers to select
+#'   elements.
 #' @examples
 #' # Use numeric vector of positions select elements to change:
 #' iris %>% map_at(c(4, 5), is.numeric)

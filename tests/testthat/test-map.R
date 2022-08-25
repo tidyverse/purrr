@@ -84,6 +84,8 @@ test_that("map_if() and map_at() always return a list", {
 
 test_that("map_at() works with tidyselect", {
   skip_if_not_installed("tidyselect")
+  options(lifecycle_verbosity = "quiet")
+
   x <- list(a = "b", b = "c", aa = "bb")
   one <- map_at(x, vars(a), toupper)
   expect_identical(one$a, "B")
