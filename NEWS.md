@@ -15,7 +15,8 @@
   `accumulate_right()` are now fully deprecated. Similarly, the 
   `.lazy`, `.env`, and `.first` arguments to `partial()`,
   and the `.right` argument to `detect()` and `detect_index()` 
-  are fully deprecated.
+  are fully deprecated. Removing elements with `NULL` in `list_modify()` and
+  `list_merge()` is now fully deprecated.
 
 ## Features and fixes
 
