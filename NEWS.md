@@ -8,6 +8,9 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* `update_list()` (#858) has been deprecated. All these functions use some form
+  of non-standard evaluation, and we no longer believe that that is a good fit
+  for purrr.
 
 ## Features and fixes
 
