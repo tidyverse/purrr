@@ -4,7 +4,13 @@
 \alias{partial}
 \title{Partial apply a function, filling in some arguments.}
 \usage{
-partial(.f, ..., .env = NULL, .lazy = NULL, .first = NULL)
+partial(
+  .f,
+  ...,
+  .env = deprecated(),
+  .lazy = deprecated(),
+  .first = deprecated()
+)
 }
 \arguments{
 \item{.f}{a function. For the output source to read well, this should be a
@@ -20,13 +26,14 @@ These dots support quasiquotation. If you unquote a value, it is
 evaluated only once at function creation time.  Otherwise, it is
 evaluated each time the function is called.}
 
-\item{.env}{Soft-deprecated as of purrr 0.3.0. The environments are
+\item{.env}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} The environments are
 now captured via quosures.}
 
-\item{.lazy}{Soft-deprecated as of purrr 0.3.0. Please unquote the
-arguments that should be evaluated once at function creation time.}
+\item{.lazy}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please unquote the
+arguments that should be evaluated once at function creation time
+with \verb{!!}.}
 
-\item{.first}{Soft-deprecated as of purrr 0.3.0. Please pass an
+\item{.first}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please pass an
 empty argument \verb{... = } to specify the position of future
 arguments.}
 }

@@ -12,8 +12,8 @@
   are no longer supported. They have been defunct for quite some time.
 
 * Soft deprecated functions: `%@%`, `reduce_right()`, `reduce2_right()`,
-  `accumulate_right()`
-  are now fully deprecated.
+  `accumulate_right()` are now fully deprecated. Similarly, the 
+  `.lazy`, `.env`, and `.first` arguments to `partial()` are fully deprecated.
 
 ## Features and fixes
 
