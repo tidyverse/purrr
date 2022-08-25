@@ -29,7 +29,6 @@ test_that("can shortcircuit reduction with done()", {
 })
 
 test_that("reduce() forces arguments (#643)", {
-  skip_if(!has_force_and_call)
   compose <- function(f, g) function(x) f(g(x))
   expect_identical(reduce(list(identity, identity), compose)(1), 1)
 })
@@ -101,7 +100,6 @@ test_that("can terminate accumulate() early with an empty box", {
 })
 
 test_that("accumulate() forces arguments (#643)", {
-  skip_if(!has_force_and_call)
   compose <- function(f, g) function(x) f(g(x))
   fns <- accumulate(list(identity, identity), compose)
   expect_true(every(fns, function(f) identical(f(1), 1)))
@@ -153,7 +151,6 @@ test_that("can shortcircuit reduce2() with done()", {
 })
 
 test_that("reduce2() forces arguments (#643)", {
-  skip_if(!has_force_and_call)
   compose <- function(f, g, ...) function(x) f(g(x))
   fns <- reduce2(list(identity, identity), "foo", compose)
   expect_identical(fns(1), 1)
@@ -185,7 +182,6 @@ test_that("can terminate accumulate2() early", {
 })
 
 test_that("accumulate2() forces arguments (#643)", {
-  skip_if(!has_force_and_call)
   compose <- function(f, g, ...) function(x) f(g(x))
   fns <- accumulate2(list(identity, identity), "foo", compose)
   expect_true(every(fns, function(f) identical(f(1), 1)))
