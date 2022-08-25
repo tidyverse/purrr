@@ -60,6 +60,7 @@ str(f_quiet())
 \seealso{
 Other adverbs: 
 \code{\link{auto_browse}()},
+\code{\link{compose}()},
 \code{\link{possibly}()},
 \code{\link{safely}()}
 }

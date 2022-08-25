@@ -1,5 +1,8 @@
 #' Compose multiple functions
 #'
+#' Create a new function that is the composition of multiple functions,
+#' i.e. `compose(f, g)` is equivalwnt to `function(...) f(g(...))`.
+#'
 #' @param ... Functions to apply in order (from right to left by
 #'   default). Formulas are converted to functions in the usual way.
 #'
@@ -9,6 +12,8 @@
 #' @param .dir If `"backward"` (the default), the functions are called
 #'   in the reverse order, from right to left, as is conventional in
 #'   mathematics. If `"forward"`, they are called from left to right.
+#' @inheritSection safely Adverbs
+#' @family adverbs
 #' @return A function
 #' @export
 #' @examples

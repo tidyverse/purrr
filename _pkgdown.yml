@@ -95,7 +95,6 @@ reference:
   contents:
   - faq-adverbs-export
   - has_concept("adverbs")
-  - compose
   - lift
   - negate
   - partial

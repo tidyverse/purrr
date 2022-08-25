@@ -71,6 +71,7 @@ list("a", 10, 100) \%>\%
 \seealso{
 Other adverbs: 
 \code{\link{auto_browse}()},
+\code{\link{compose}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()}
 }

@@ -7,8 +7,8 @@
 #' @inheritParams safely
 #' @inheritSection safely Adverbs
 #' @inherit safely return
-#' @export
 #' @family adverbs
+#' @export
 #' @examples
 #' f <- function() {
 #'   print("Hi!")

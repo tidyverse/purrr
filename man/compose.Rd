@@ -22,8 +22,15 @@ mathematics. If \code{"forward"}, they are called from left to right.}
 A function
 }
 \description{
-Compose multiple functions
+Create a new function that is the composition of multiple functions,
+i.e. \code{compose(f, g)} is equivalwnt to \code{function(...) f(g(...))}.
 }
+\section{Adverbs}{
+This function is called an adverb because it modifies the effect of a
+function (a verb). If you'd like to include a function created an adverb
+in a package, be sure to read \link{faq-adverbs-export}.
+}
+
 \examples{
 not_null <- compose(`!`, is.null)
 not_null(4)
@@ -44,3 +51,11 @@ fns <- list(
 fn <- compose(!!!fns)
 fn("input")
 }
+\seealso{
+Other adverbs: 
+\code{\link{auto_browse}()},
+\code{\link{possibly}()},
+\code{\link{quietly}()},
+\code{\link{safely}()}
+}
+\concept{adverbs}

@@ -45,6 +45,7 @@ if (interactive()) {
 }
 \seealso{
 Other adverbs: 
+\code{\link{compose}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()},
 \code{\link{safely}()}
