@@ -91,12 +91,12 @@ inner lists. Only those elements where <code>.p</code> evaluates to
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;composed&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1. function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck(x, "x", .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x561968d89600&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bd72d15bf8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2. function (.x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> !.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x56196a5403c8&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x561968d746f0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bd74496c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bd72ce1018&gt;</span>
 <span class="r-in"><span><span class="fu">negate</span><span class="op">(</span><span class="va">is.null</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;composed&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1. function (x) </span>
@@ -104,21 +104,21 @@ inner lists. Only those elements where <code>.p</code> evaluates to
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2. function (.x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> !.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x56196a5403c8&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x561968aa0390&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bd74496c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bd72a59038&gt;</span>
 <span class="r-in"><span><span class="fu">negate</span><span class="op">(</span><span class="op">~</span> <span class="va">.x</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;composed&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1. &lt;lambda&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (..., .x = ..1, .y = ..2, . = ..1) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> .x &gt; 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x561968e6ac98&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bd72dfe9f8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "rlang_lambda_function" "function"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2. function (.x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> !.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x56196a5403c8&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x56196714fa38&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55bd74496c30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bd71cef450&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, y <span class="op">=</span> <span class="fu"><a href="rbernoulli.html">rbernoulli</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="keep.html">keep</a></span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="op">)</span></span></span>
