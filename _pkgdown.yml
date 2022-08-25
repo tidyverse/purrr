@@ -85,7 +85,6 @@ reference:
   - list_modify
   - reduce
   - rep_along
-  - splice
   - transpose
 
 - title: Adverbs

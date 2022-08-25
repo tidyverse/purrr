@@ -8,6 +8,8 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* `splice()` is deprecated because we no longer believe that automatic 
+  splicing makes for good UI. Instead use `list2()` + `!!!` (#869).
 
 ## Features and fixes
 
