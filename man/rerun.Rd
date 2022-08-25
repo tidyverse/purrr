@@ -2,7 +2,7 @@
 % Please edit documentation in R/rerun.R
 \name{rerun}
 \alias{rerun}
-\title{Re-run expressions multiple times.}
+\title{Re-run expressions multiple times}
 \usage{
 rerun(.n, ...)
 }
@@ -20,24 +20,25 @@ level list will be dropped. In this case, \code{rerun(n, x)} behaves like
 \code{replicate(n, x, simplify = FALSE)}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#questioning}{\figure{lifecycle-questioning.svg}{options: alt='[Questioning]'}}}{\strong{[Questioning]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 This is a convenient way of generating sample data. It works similarly to
-\code{\link{replicate}(..., simplify = FALSE)}.
+\code{\link{replicate}(..., simplify = FALSE)}. \code{rerun()} is deprecated
+because we now believe that NSE functions are not a  good fit for purrr.
+Also, \code{rerun(n, x)} can just as easily be expressed as \code{map(1:n, ~ x)}
 }
-\section{Lifecycle}{
-
-
-\code{rerun()} is in the questioning lifecycle stage because we are no
-longer convinced NSE functions are a good fit for purrr. Also,
-\code{rerun(n, x)} can just as easily be expressed as \code{map(1:n, ~ x)}
-(with the added benefit of being passed the current index as
-argument to the lambda).
-}
-
 \examples{
+# old
 10 \%>\% rerun(rnorm(5))
+# new
+1:10 \%>\% map(~ rnorm(5))
+
+# old
 10 \%>\%
   rerun(x = rnorm(5), y = rnorm(5)) \%>\%
+  map_dbl(~ cor(.x$x, .x$y))
+# new
+1:10 \%>\%
+  map(~ list(x = rnorm(5), y = rnorm(5))) \%>\%
   map_dbl(~ cor(.x$x, .x$y))
 }

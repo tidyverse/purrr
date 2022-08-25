@@ -1,17 +1,28 @@
+test_that("is deprecated", {
+  expect_snapshot({
+    . <- rerun(1, 1)
+  })
+
+})
+
 test_that("single unnamed arg doesn't get extra list", {
+  options(lifecycle_verbosity = "quiet")
   expect_equal(rerun(2, 1), list(1, 1))
 })
 
 test_that("single named arg gets extra list", {
+  options(lifecycle_verbosity = "quiet")
   expect_equal(rerun(2, a = 1), list(list(a = 1), list(a = 1)))
 })
 
 test_that("every run is different", {
+  options(lifecycle_verbosity = "quiet")
   x <- rerun(2, runif(1))
   expect_true(x[[1]] != x[[2]])
 })
 
 test_that("rerun uses scope of expression", {
+  options(lifecycle_verbosity = "quiet")
   f <- function(n) {
     rerun(1, x = seq_len(n))
   }

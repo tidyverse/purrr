@@ -111,7 +111,6 @@ reference:
   - rbernoulli
   - rdunif
   - exec
-  - rerun
   - set_names
   - vec_depth
   - zap
