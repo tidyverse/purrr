@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `modify()`, `modify2()`, and `modify_if()` now correctly handle `NULL`s
+  in replacement values (#655, #746, #753).
+
 * `every()` and `some()` now properly check the return value of their
   predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
 
@@ -24,7 +27,6 @@
   fixes issues when `partial()` is used with `lm()` for instance (#707).
   
 * purrr is now licensed as MIT (#805).
-
 
 # purrr 0.3.4
 
