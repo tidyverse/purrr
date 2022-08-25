@@ -11,6 +11,9 @@
 * `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
   are no longer supported. They have been defunct for quite some time.
 
+* Soft deprecated functions: `%@%`
+  are now fully deprecated.
+
 ## Features and fixes
 
 * `every()` and `some()` now properly check the return value of their

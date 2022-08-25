@@ -73,7 +73,6 @@ reference:
   - pluck
   - modify_in
   - attr_getter
-  - "`%@%`"
 
 - title: Other vector transforms
   desc: >
