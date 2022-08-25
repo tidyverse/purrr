@@ -11,7 +11,8 @@
 * `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
   are no longer supported. They have been defunct for quite some time.
 
-* Soft deprecated functions: `%@%`
+* Soft deprecated functions: `%@%`, `reduce_right()`, `reduce2_right()`,
+  `accumulate_right()`
   are now fully deprecated.
 
 ## Features and fixes

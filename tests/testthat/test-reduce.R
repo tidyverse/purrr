@@ -195,28 +195,29 @@ test_that("accumulate2() forces arguments (#643)", {
 # Life cycle --------------------------------------------------------------
 
 test_that("right variants are retired", {
-  local_lifecycle_warnings()
-  expect_warning(reduce_right(1:3, c), "soft-deprecated")
-  expect_warning(reduce2_right(1:3, 1:2, c), "soft-deprecated")
-  expect_warning(accumulate_right(1:3, c), "soft-deprecated")
+  expect_snapshot({
+    . <- reduce_right(1:3, c)
+    . <- reduce2_right(1:3, 1:2, c)
+    . <- accumulate_right(1:3, c)
+  })
 })
 
 test_that("reduce_right still works", {
-  local_lifecycle_silence()
+  options(lifecycle_verbosity = "quiet")
   expect_equal(reduce_right(c(1, 1), `+`), 2)
   expect_equal(reduce_right(c(1, 1), `+`, .init = 1), 3)
   expect_equal(reduce_right(1, `+`, .init = 1), 2)
 })
 
 test_that("reduce_right equivalent to reversing input", {
-  local_lifecycle_silence()
+  options(lifecycle_verbosity = "quiet")
   x <- list(c(2, 1), c(4, 3), c(6, 5))
   expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
   expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
 })
 
 test_that("reduce2_right still works", {
-  local_lifecycle_silence()
+  options(lifecycle_verbosity = "quiet")
 
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
   x <- c("a", "b", "c")
@@ -230,7 +231,7 @@ test_that("reduce2_right still works", {
 })
 
 test_that("accumulate_right still works", {
-  local_lifecycle_silence()
+  options(lifecycle_verbosity = "quiet")
 
   tt <- c("a", "b", "c")
   expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))
