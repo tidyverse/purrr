@@ -13,7 +13,9 @@
 
 * Soft deprecated functions: `%@%`, `reduce_right()`, `reduce2_right()`,
   `accumulate_right()` are now fully deprecated. Similarly, the 
-  `.lazy`, `.env`, and `.first` arguments to `partial()` are fully deprecated.
+  `.lazy`, `.env`, and `.first` arguments to `partial()`,
+  and the `.right` argument to `detect()` and `detect_index()` 
+  are fully deprecated.
 
 ## Features and fixes
 

@@ -48,7 +48,7 @@ present, the value of \code{.default} will be returned.}
 the vector and move towards the end; if \code{"backward"}, starts at
 the end of the vector and moves towards the beginning.}
 
-\item{.right}{Soft-deprecated. Please use \code{.dir} instead.}
+\item{.right}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{.dir} instead.}
 
 \item{.default}{The value returned when nothing is detected.}
 }
