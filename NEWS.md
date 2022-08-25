@@ -18,6 +18,9 @@
   are fully deprecated. Removing elements with `NULL` in `list_modify()` and
   `list_merge()` is now fully deprecated.
 
+* `is_numeric()` and `is_scalar_numeric()` have been removed. They have
+  been deprecated since purrr 0.2.3 (Sep 2017).
+
 ## Features and fixes
 
 * `every()` and `some()` now properly check the return value of their
