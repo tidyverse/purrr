@@ -72,6 +72,7 @@ list("a", 10, 100) \%>\%
 Other adverbs: 
 \code{\link{auto_browse}()},
 \code{\link{compose}()},
+\code{\link{negate}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()}
 }

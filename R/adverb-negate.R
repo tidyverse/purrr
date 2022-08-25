@@ -1,19 +1,18 @@
-#' Negate a predicate function.
+#' Negate a predicate function
 #'
-#' @inheritParams map_if
-#' @inheritParams as_mapper
+#' Negating a function changes `TRUE` to `FALSE` and `FALSE` to `TRUE`.
+#'
+#' @param .p A predicate function or a formula.
+#' @inheritSection safely Adverbs
+#' @family adverbs
 #' @return A new predicate function.
 #' @export
 #' @examples
-#' negate("x")
-#' negate(is.null)
-#' negate(~ .x > 0)
-#'
-#' x <- transpose(list(x = 1:10, y = rbernoulli(10)))
-#' x %>% keep("y") %>% length()
-#' x %>% keep(negate("y")) %>% length()
+#' x <- list(x = 1:10, y = rbernoulli(10), z = letters)
+#' x %>% keep(is.numeric) %>% names()
+#' x %>% keep(negate(is.numeric)) %>% names()
 #' # Same as
-#' x %>% discard("y") %>% length()
+#' x %>% discard(is.numeric)
 negate <- function(.p) {
   compose(`!`, as_mapper(.p))
 }

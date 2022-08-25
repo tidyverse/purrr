@@ -54,6 +54,7 @@ fn("input")
 \seealso{
 Other adverbs: 
 \code{\link{auto_browse}()},
+\code{\link{negate}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()},
 \code{\link{safely}()}
