@@ -23,7 +23,7 @@
 * `partial()` no longer inlines the function in the call stack. This
   fixes issues when `partial()` is used with `lm()` for instance (#707).
   
-* withr is now licensed as MIT (#805).
+* purrr is now licensed as MIT (#805).
 
 
 # purrr 0.3.4
