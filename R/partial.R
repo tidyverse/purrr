@@ -91,9 +91,6 @@ partial <- function(.f,
                     .lazy = NULL,
                     .first = NULL) {
   args <- enquos(...)
-  if (has_name(args, "...f")) {
-    stop_defunct("`...f` has been renamed to `.f` as of purrr 0.3.0.")
-  }
 
   fn_expr <- enexpr(.f)
   .fn <- switch(typeof(.f),

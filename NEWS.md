@@ -1,13 +1,15 @@
 
 # purrr (development version)
 
-## Breaking changes
+## Lifecycle updates
 
 * `cross()` and all its variants have been deprecated in favour of
   `tidyr::expand_grid()`. These functions were slow and buggy and we
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
+  are no longer supported. They have been defunct for quite some time.
 
 ## Features and fixes
 
@@ -24,7 +26,6 @@
   fixes issues when `partial()` is used with `lm()` for instance (#707).
   
 * purrr is now licensed as MIT (#805).
-
 
 # purrr 0.3.4
 

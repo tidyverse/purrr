@@ -168,7 +168,3 @@ test_that("`.first` still works", {
   expect_identical(partialised_body(partial(runif, .first = TRUE)), expr(runif(...)))
   expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
 })
-
-test_that("`...f` still works", {
-  expect_error(partial(...f = list, x = "foo"), "renamed", class = "defunctError")
-})
