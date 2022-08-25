@@ -8,6 +8,9 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* The `lift_*` family of functions has been deprecated. We no longer believe
+  these to be a good fit for purrr because rely on a style of function 
+  manipulation that is very uncommon in R code (#871).
 
 ## Features and fixes
 

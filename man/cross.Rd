@@ -52,9 +52,10 @@ Here is an example of equivalent usages for \code{cross()} and
 )
 
 # With deprecated `cross()`
-data \%>\% cross() \%>\% map_chr(lift(paste))
-#> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
-#> [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+data \%>\% cross() \%>\% map_chr(~ paste(..., collapse = " "))
+#> [1] "John Hello. ! "     "Jane Hello. ! "     "John Bonjour. ! "  
+#> [4] "Jane Bonjour. ! "   "John Hello. ... "   "Jane Hello. ... "  
+#> [7] "John Bonjour. ... " "Jane Bonjour. ... "
 
 # With `expand_grid()`
 tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
