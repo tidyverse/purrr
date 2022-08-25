@@ -75,8 +75,10 @@ returns \code{FALSE}.}
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.
-If the \code{tidyselect} package is installed, you can use \code{vars()} and
-the \code{tidyselect} helpers to select elements.}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
+installed, you can use \code{vars()} and tidyselect helpers to select
+elements.}
 
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
