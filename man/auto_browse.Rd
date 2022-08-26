@@ -47,6 +47,7 @@ if (interactive()) {
 Other adverbs: 
 \code{\link{compose}()},
 \code{\link{negate}()},
+\code{\link{partial}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()},
 \code{\link{safely}()}

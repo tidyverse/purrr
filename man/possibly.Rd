@@ -59,6 +59,7 @@ Other adverbs:
 \code{\link{auto_browse}()},
 \code{\link{compose}()},
 \code{\link{negate}()},
+\code{\link{partial}()},
 \code{\link{quietly}()},
 \code{\link{safely}()}
 }

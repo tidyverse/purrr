@@ -96,7 +96,6 @@ reference:
   - faq-adverbs-export
   - has_concept("adverbs")
   - lift
-  - partial
   - insistently
   - rate_sleep
   - rate-helpers

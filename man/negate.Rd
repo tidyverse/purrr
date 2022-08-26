@@ -32,6 +32,7 @@ x \%>\% discard(is.numeric)
 Other adverbs: 
 \code{\link{auto_browse}()},
 \code{\link{compose}()},
+\code{\link{partial}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()},
 \code{\link{safely}()}

@@ -1,8 +1,7 @@
-#' Partial apply a function, filling in some arguments.
+#' Partial apply a function, filling in some arguments
 #'
-#' @description
 #' Partial function application allows you to modify a function by pre-filling
-#' some of the arguments.  It is particularly useful in conjunction with
+#' some of the arguments. It is particularly useful in conjunction with
 #' functionals and other function operators.
 #'
 #' @details
@@ -40,6 +39,10 @@
 #' @param .lazy Soft-deprecated as of purrr 0.3.0. Please unquote the
 #'   arguments that should be evaluated once at function creation time.
 #'
+#' @inheritSection safely Adverbs
+#' @inherit safely return
+#' @family adverbs
+#' @export
 #' @examples
 #' # Partial is designed to replace the use of anonymous functions for
 #' # filling in function arguments. Instead of:
@@ -84,7 +87,6 @@
 #' # `... = ` argument:
 #' my_list <- partial(list, 1, ... = , 2)
 #' my_list("foo")
-#' @export
 partial <- function(.f,
                     ...,
                     .env = NULL,
