@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   other-langs: other-langs.html
-last_built: 2022-08-26T08:27Z
+last_built: 2022-08-26T08:30Z
 urls:
   reference: https://purrr.tidyverse.org/reference
   article: https://purrr.tidyverse.org/articles
