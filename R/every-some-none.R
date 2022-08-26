@@ -25,18 +25,16 @@
 every <- function(.x, .p, ...) {
   .p <- as_predicate(.p, ..., .mapper = TRUE, .allow_na = TRUE)
 
+  val <- TRUE
   for (i in seq_along(.x)) {
-    val <- .p(.x[[i]], ...)
+    val <- val && .p(.x[[i]], ...)
 
     if (is_false(val)) {
       return(FALSE)
     }
-    if (anyNA(val)) {
-      return(NA)
-    }
   }
 
-  TRUE
+  val
 }
 
 #' @export

@@ -80,11 +80,9 @@ reference:
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - cross
   - flatten
   - list_modify
   - reduce
-  - rep_along
   - splice
   - transpose
 
@@ -105,14 +103,9 @@ reference:
 
 - title: Misc
   contents:
-  - "`%||%`"
   - array_tree
   - as_vector
   - rbernoulli
   - rdunif
-  - exec
   - rerun
-  - set_names
   - vec_depth
-  - zap
-  - done

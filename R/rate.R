@@ -314,7 +314,7 @@ signal_rate_init <- function(rate) {
   signal("", "purrr_condition_rate_init", rate = rate)
 }
 signal_rate_retry <- function(rate, length, quiet) {
-  msg <- sprintf("Retrying in %.1g seconds.", length)
+  msg <- sprintf("Retrying in %s seconds.", format(length, digits = 2))
   class <- "purrr_message_rate_retry"
   if (quiet) {
     signal(msg, class, rate = rate, length = length)
