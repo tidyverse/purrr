@@ -1,5 +1,3 @@
-context("reduce")
-
 test_that("empty input returns init or error", {
   expect_error(reduce(list()), "no `.init` supplied")
   expect_equal(reduce(list(), `+`, .init = 0), 0)
@@ -109,6 +107,29 @@ test_that("accumulate() forces arguments (#643)", {
   expect_true(every(fns, function(f) identical(f(1), 1)))
 })
 
+test_that("accumulate() uses vctrs to simplify results", {
+  out <- list("foo", factor("bar")) %>% accumulate(~ .y)
+  expect_identical(out, c("foo", "bar"))
+})
+
+test_that("accumulate() does not fail when input can't be simplified", {
+  expect_identical(accumulate(list(1L, 2:3), ~ .y), list(1L, 2:3))
+  expect_identical(accumulate(list(1, "a"), ~ .y), list(1, "a"))
+  expect_identical(accumulate(1:3, ~ .y), 1:3)
+  expect_identical(accumulate(list(identity), ~ .y), list(identity))
+  expect_identical(accumulate(mtcars, ~ .y), as.list(mtcars))
+})
+
+test_that("accumulate() does not simplify data frame rowwise", {
+  out <- accumulate(
+    1L,
+    ~ data.frame(new = .y),
+    .init = data.frame(new = 0L)
+  )
+  exp <- list(data.frame(new = 0L), data.frame(new = 1L))
+  expect_identical(out, exp)
+})
+
 
 # reduce2 -----------------------------------------------------------------
 
@@ -174,28 +195,28 @@ test_that("accumulate2() forces arguments (#643)", {
 # Life cycle --------------------------------------------------------------
 
 test_that("right variants are retired", {
-  scoped_lifecycle_warnings()
+  local_lifecycle_warnings()
   expect_warning(reduce_right(1:3, c), "soft-deprecated")
   expect_warning(reduce2_right(1:3, 1:2, c), "soft-deprecated")
   expect_warning(accumulate_right(1:3, c), "soft-deprecated")
 })
 
 test_that("reduce_right still works", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
   expect_equal(reduce_right(c(1, 1), `+`), 2)
   expect_equal(reduce_right(c(1, 1), `+`, .init = 1), 3)
   expect_equal(reduce_right(1, `+`, .init = 1), 2)
 })
 
 test_that("reduce_right equivalent to reversing input", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
   x <- list(c(2, 1), c(4, 3), c(6, 5))
   expect_equal(reduce_right(x, c), c(6, 5, 4, 3, 2, 1))
   expect_equal(reduce_right(x, c, .init = 7), c(7, 6, 5, 4, 3, 2, 1))
 })
 
 test_that("reduce2_right still works", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
 
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
   x <- c("a", "b", "c")
@@ -209,7 +230,7 @@ test_that("reduce2_right still works", {
 })
 
 test_that("accumulate_right still works", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
 
   tt <- c("a", "b", "c")
   expect_equal(accumulate_right(tt, paste, sep = "."), c("c.b.a", "c.b", "c"))

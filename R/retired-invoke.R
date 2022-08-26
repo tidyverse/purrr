@@ -3,7 +3,7 @@
 #' @keywords internal
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("retired")}
+#' `r lifecycle::badge("superseded")`
 #'
 #' This pair of functions make it easier to combine a function and list
 #' of parameters to get a result. `invoke` is a wrapper around
@@ -30,7 +30,7 @@
 #'
 #' * `invoke()` is retired in favour of the simpler `exec()` function
 #'   reexported from rlang. `exec()` evaluates a function call built
-#'   from its inputs and supports tidy dots:
+#'   from its inputs and supports [dynamic dots][rlang::dyn-dots]:
 #'
 #'   ```
 #'   # Before:

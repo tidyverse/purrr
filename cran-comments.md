@@ -11,4 +11,4 @@
 
 ## revdepcheck results
 
-No problems were found.
+I did not run revdepcheck because this is a patch release that should not affect user facing code.

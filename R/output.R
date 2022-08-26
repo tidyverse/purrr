@@ -107,12 +107,12 @@ auto_browse <- function(.f) {
         # 1: h(simpleError(msg, call))
         # 2: .handleSimpleError(function (e)  <...>
         # 3: stop(...)
-        frame <- ctxt_frame(4)
+        frame <- sys.frame(4)
         browse_in_frame(frame)
       },
       warning = function(e) {
         if (getOption("warn") >= 2) {
-          frame <- ctxt_frame(7)
+          frame <- sys.frame(7)
           browse_in_frame(frame)
         }
       },
@@ -126,15 +126,15 @@ auto_browse <- function(.f) {
 browse_in_frame <- function(frame) {
   # ESS should problably set `.Platform$GUI == "ESS"`
   # In the meantime, check that ESSR is attached
-  if (is_scoped("ESSR")) {
+  if (is_attached("ESSR")) {
     # Workaround ESS issue
-    with_env(frame$env, on.exit({
+    with_env(frame, on.exit({
       browser()
       NULL
     }))
     return_from(frame)
   } else {
-    eval_bare(quote(browser()), env = frame$env)
+    eval_bare(quote(browser()), env = frame)
   }
 }
 

@@ -1,5 +1,3 @@
-context("recycle_args")
-
 test_that("rejects uneven lengths", {
   args <- list(1, c(1:2), NULL)
   expect_error(purrr:::recycle_args(args), "lengths == 1L \\| lengths == n")

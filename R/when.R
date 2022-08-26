@@ -1,6 +1,10 @@
 #' Match/validate a set of conditions for an object and continue with the action
 #' associated with the first valid match.
 #'
+#' @description
+#'
+#' `r lifecycle::badge("questioning")`
+#'
 #' `when` is a flavour of pattern matching (or an if-else abstraction) in
 #' which a value is matched against a sequence of condition-action sets. When a
 #' valid match/condition is found the action is executed and the result of the
@@ -9,7 +13,6 @@
 #' @param .   the value to match against
 #' @param ... formulas; each containing a condition as LHS and an action as RHS.
 #'   named arguments will define additional values.
-#' @keywords internal
 #' @return The value resulting from the action of the first valid
 #'   match/condition is returned. If no matches are found, and no default is
 #'   given, NULL will be returned.
@@ -28,6 +31,7 @@
 #' be valid. Note that the input value is always treated as a single object,
 #' as opposed to the `ifelse` function.
 #'
+#' @keywords internal
 #' @examples
 #' 1:10 %>%
 #'   when(

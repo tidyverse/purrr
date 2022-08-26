@@ -34,7 +34,8 @@ modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 \method{modify_depth}{default}(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
-\item{.x}{A list or atomic vector.}
+\item{.x, .y}{Vectors of the same length. A vector of length 1 will
+be recycled.}
 
 \item{.f}{A function, formula, or vector (not necessarily atomic).
 
@@ -48,7 +49,10 @@ are three ways to refer to the arguments:
 \item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
 }
 
-This syntax allows you to create very compact anonymous functions.
+This syntax allows you to create very compact anonymous
+functions. Note that formula functions conceptually take dots
+(that's why you can use \code{..1} etc). They silently ignore
+additional arguments that are not used in the formula expression.
 
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
 converted to an extractor function. Character vectors index by
@@ -73,9 +77,6 @@ positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.
 If the \code{tidyselect} package is installed, you can use \code{vars()} and
 the \code{tidyselect} helpers to select elements.}
-
-\item{.y}{Vectors of the same length. A vector of length 1 will
-be recycled.}
 
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
@@ -124,9 +125,11 @@ is not compatible for your class, you can override them with your
 own methods.
 
 If you implement your own \code{modify()} method, make sure it satisfies
-the following invariants:\preformatted{modify(x, identity) === x
+the following invariants:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{modify(x, identity) === x
 modify(x, compose(f, g)) === modify(x, g) \%>\% modify(f)
-}
+}\if{html}{\out{</div>}}
 
 These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
 science.

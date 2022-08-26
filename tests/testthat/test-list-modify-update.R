@@ -1,5 +1,3 @@
-context("list-modify")
-
 # list_modify -------------------------------------------------------------
 
 test_that("named lists have values replaced by name", {
@@ -16,6 +14,11 @@ test_that("unnamed lists are replaced by position", {
 test_that("can remove elements with `zap()`", {
   expect_equal(list_modify(list(1, 2, 3), zap(), zap()), list(3))
   expect_equal(list_modify(list(a = 1, b = 2, c = 3), b = zap(), a = zap()), list(c = 3))
+  expect_equal(
+    list_modify(list(a = list(fst = 1, snd = 2), b = 2, c = 3), b = zap(), a = zap()),
+    list(c = 3)
+  )
+  expect_equal(list_modify(list(list(1, 2), 2, 3), zap(), zap()), list(3))
 })
 
 test_that("error if inputs are not all named or unnamed", {
@@ -101,11 +104,11 @@ test_that("quosures and formulas are evaluated", {
 # Life cycle --------------------------------------------------------------
 
 test_that("removing elements with `NULL` is deprecated", {
-  scoped_lifecycle_warnings()
-  expect_warning(list_modify(list(1, 2, 3), NULL, NULL), list(3), "deprecated")
+  local_lifecycle_warnings()
+  expect_warning(list_modify(list(1, 2, 3), NULL))
 })
 
 test_that("can still remove elements with `NULL`", {
-  scoped_lifecycle_silence()
+  local_lifecycle_silence()
   expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })

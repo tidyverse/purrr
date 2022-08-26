@@ -46,7 +46,10 @@ are three ways to refer to the arguments:
 \item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
 }
 
-This syntax allows you to create very compact anonymous functions.
+This syntax allows you to create very compact anonymous
+functions. Note that formula functions conceptually take dots
+(that's why you can use \code{..1} etc). They silently ignore
+additional arguments that are not used in the formula expression.
 
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
 converted to an extractor function. Character vectors index by
@@ -90,7 +93,7 @@ versions that return an object of the same type as the input.
 atomic vector of the indicated type (or die trying).
 \item \code{map_dfr()} and \code{map_dfc()} return a data frame created by
 row-binding and column-binding respectively. They require dplyr
-to be installed.
+to be installed. \code{map_df()} is an alias for \code{map_dfr()}.
 \item The returned values of \code{.f} must be of length one for each element
 of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
 can be specified to handle values that are absent or empty. See

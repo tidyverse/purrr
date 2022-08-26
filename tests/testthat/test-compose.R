@@ -1,5 +1,3 @@
-context("compose")
-
 test_that("composed functions are applied right to left by default", {
   expect_identical(!is.null(4), compose(`!`, is.null)(4))
 
@@ -15,7 +13,7 @@ test_that("composed functions are applied in reverse order if .dir is supplied",
 test_that("compose supports formulas", {
   round_mean <- compose(~ .x * 100, ~ round(.x, 2), ~ mean(.x, na.rm = TRUE))
 
-  expect_is(round_mean, "purrr_function_compose")
+  expect_s3_class(round_mean, "purrr_function_compose")
   expect_identical(round_mean(1:100), round( mean(1:100, na.rm = TRUE), 2) * 100 )
 })
 
@@ -49,12 +47,12 @@ test_that("can compose primitive functions", {
 test_that("composed function prints informatively", {
   fn1 <- set_env(function(x) x + 1, global_env())
   fn2 <- set_env(function(x) x / 1, global_env())
-  expect_known_output(file = test_path("compose-print.txt"), {
-    cat("Single input:\n\n")
-    print(compose(fn1))
+  expect_snapshot({
+    "Single input"
+    compose(fn1)
 
-    cat("Multiple inputs:\n\n")
-    print(compose(fn1, fn2))
+    "Multiple inputs"
+    compose(fn1, fn2)
   })
 })
 
@@ -139,8 +137,4 @@ test_that("compose() can take dots from multiple environments", {
   expect_false(is_reference(quo_get_env(quos[[3]]), frame))
 
   expect_identical(unname(map_chr(quos, as_name)), c("_baz", "_bar", "_foo", "_quux"))
-})
-
-test_that("compose() does not inline functions in call stack", {
-  expect_equal(compose(~ sys.call())(), quote(`_fn`()))
 })

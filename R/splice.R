@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("questioning")}
+#' `r lifecycle::badge("questioning")`
 #'
 #' This splices all arguments into a list. Non-list objects and lists
 #' with a S3 class are encapsulated in a list before concatenation.

@@ -1,5 +1,3 @@
-context("pmap")
-
 test_that("input must be a list of vectors", {
   expect_bad_type_error(pmap(environment(), identity), "`.l` must be a list, not an environment")
   expect_bad_type_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
@@ -42,28 +40,31 @@ test_that("... are passed on", {
 
 test_that("outputs are suffixes have correct type", {
   x <- 1:3
-  expect_is(pmap_lgl(list(x), is.numeric), "logical")
-  expect_is(pmap_int(list(x), length), "integer")
-  expect_is(pmap_dbl(list(x), mean), "numeric")
-  expect_is(pmap_chr(list(x), paste), "character")
-  expect_is(pmap_raw(list(x), as.raw), "raw")
+  expect_bare(pmap_lgl(list(x), is.numeric), "logical")
+  expect_bare(pmap_int(list(x), length), "integer")
+  expect_bare(pmap_dbl(list(x), mean), "double")
+  expect_bare(pmap_chr(list(x), paste), "character")
+  expect_bare(pmap_raw(list(x), as.raw), "raw")
 })
 
 test_that("outputs are suffixes have correct type for data frames", {
   skip_if_not_installed("dplyr")
+  local_name_repair_quiet()
+
+  local_options(rlang_message_verbosity = "quiet")
   x <- 1:3
-  expect_is(pmap_dfr(list(x), as.data.frame), "data.frame")
-  expect_is(pmap_dfc(list(x), as.data.frame), "data.frame")
+  expect_s3_class(pmap_dfr(list(x), as.data.frame), "data.frame")
+  expect_s3_class(pmap_dfc(list(x), as.data.frame), "data.frame")
 })
 
 test_that("pmap on data frames performs rowwise operations", {
   mtcars2 <- mtcars[c("mpg", "cyl")]
   expect_length(pmap(mtcars2, paste), nrow(mtcars))
-  expect_is(pmap_lgl(mtcars2, function(mpg, cyl) mpg > cyl), "logical")
-  expect_is(pmap_int(mtcars2, function(mpg, cyl) as.integer(cyl)), "integer")
-  expect_is(pmap_dbl(mtcars2, function(mpg, cyl) mpg + cyl), "numeric")
-  expect_is(pmap_chr(mtcars2, paste), "character")
-  expect_is(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
+  expect_bare(pmap_lgl(mtcars2, function(mpg, cyl) mpg > cyl), "logical")
+  expect_bare(pmap_int(mtcars2, function(mpg, cyl) as.integer(cyl)), "integer")
+  expect_bare(pmap_dbl(mtcars2, function(mpg, cyl) mpg + cyl), "double")
+  expect_bare(pmap_chr(mtcars2, paste), "character")
+  expect_bare(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
 })
 
 test_that("pmap works with empty lists", {

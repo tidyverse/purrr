@@ -21,9 +21,9 @@ an integer position, a string name, or an accessor function
 positions). If the object being indexed is an S4 object,
 accessing it by name will return the corresponding slot.
 
-These dots support \link[rlang:list2]{tidy dots} features. In
-particular, if your accessors are stored in a list, you can
-splice that in with \verb{!!!}.}
+\link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if
+your accessors are stored in a list, you can splice that in with
+\verb{!!!}.}
 
 \item{.default}{Value to use if target is empty or absent.}
 
@@ -33,7 +33,7 @@ splice that in with \verb{!!!}.}
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
 allow you to index deeply and flexibly into data structures.
 \code{pluck()} consistently returns \code{NULL} when an element does not
-exist, \code{chuck()} always throws an error in that case.
+exist, \code{chuck()} always throws (or chucks) an error in that case.
 }
 \details{
 \itemize{
@@ -74,7 +74,7 @@ x[[1]][[2]][["elt"]]
 
 # By default, pluck() consistently returns `NULL` when an element
 # does not exist:
-pluck(x, 10, .default = NA)
+pluck(x, 10)
 try(x[[10]])
 
 # You can also supply a default value for non-existing elements:

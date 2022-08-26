@@ -1,5 +1,3 @@
-context("pluck")
-
 test_that("contents must be a vector", {
   expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
 })
@@ -128,7 +126,7 @@ test_that("pluck() dispatches on base getters", {
 })
 
 test_that("pluck() dispatches on global methods", {
-  scoped_bindings(.env = global_env(), levels.factor = function(...) "dispatched!")
+  local_bindings(.env = global_env(), levels.factor = function(...) "dispatched!")
   expect_identical(pluck(iris, "Species", levels), levels(iris$Species))
 })
 

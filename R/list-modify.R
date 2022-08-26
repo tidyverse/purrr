@@ -4,7 +4,7 @@
 #'
 #' `list_modify()` and `list_merge()` recursively combine two lists, matching
 #' elements either by name or position. If a sub-element is present in
-#' both lists `list_modify()` takes the value from `y`, and `list_merge()`
+#' both lists, `list_modify()` takes the value from `y`, and `list_merge()`
 #' concatenates the values together.
 #'
 #' `update_list()` handles formulas and quosures that can refer to
@@ -19,9 +19,9 @@
 #'   inputs are all named, they are matched to `.x` by name. When they
 #'   are all unnamed, they are matched positionally.
 #'
-#'   These dots support [tidy dots][rlang::list2] features. In
-#'   particular, if your functions are stored in a list, you can
-#'   splice that in with `!!!`.
+#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
+#'   your functions are stored in a list, you can splice that in with
+#'   `!!!`.
 #' @export
 #' @examples
 #' x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
@@ -40,7 +40,7 @@
 #' str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 #'
 #'
-#' # All these functions support tidy dots features. Use !!! to splice
+#' # All these functions support dynamic dots features. Use !!! to splice
 #' # a list of arguments:
 #' l <- list(new = 1, y = zap(), z = 5)
 #' str(list_modify(x, !!!l))
@@ -69,9 +69,10 @@ list_recurse <- function(x, y, base_case) {
     abort("`...` arguments must be either all named, or all unnamed")
   }
 
+  # N.B. is_list(zap()) is TRUE.
   if (is_null(y_names)) {
     for (i in rev(seq_along(y))) {
-      if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]])) {
+      if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
         x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
       } else {
         x[[i]] <- maybe_zap(base_case(x[[i]], y[[i]]))
@@ -80,7 +81,7 @@ list_recurse <- function(x, y, base_case) {
   } else {
     for (i in seq_along(y_names)) {
       nm <- y_names[[i]]
-      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]])) {
+      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
         x[[nm]] <- list_recurse(x[[nm]], y[[i]], base_case)
       } else {
         x[[nm]] <- maybe_zap(base_case(x[[nm]], y[[i]]))

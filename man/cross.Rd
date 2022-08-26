@@ -35,6 +35,34 @@ over. \code{cross_df()} returns a data frame where each row is one
 combination.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+These functions have been deprecated in purrr 0.4.0 because they
+are slow and buggy, and we no longer think they are the right
+approach to solving this problem. Please use \code{tidyr::expand_grid()}
+instead.
+
+Here is an example of equivalent usages for \code{cross()} and
+\code{expand_grid()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- list(
+  id = c("John", "Jane"),
+  greeting = c("Hello.", "Bonjour."),
+  sep = c("! ", "... ")
+)
+
+# With deprecated `cross()`
+data \%>\% cross() \%>\% map_chr(lift(paste))
+#> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
+#> [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+
+# With `expand_grid()`
+tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
+#> [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
+#> [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
+}\if{html}{\out{</div>}}
+}
+\details{
 \code{cross2()} returns the product set of the elements of
 \code{.x} and \code{.y}. \code{cross3()} takes an additional
 \code{.z} argument. \code{cross()} takes a list \code{.l} and
@@ -42,8 +70,7 @@ returns the cartesian product of all its elements in a list, with
 one combination by element. \code{cross_df()} is like
 \code{cross()} but returns a data frame, with one combination by
 row.
-}
-\details{
+
 \code{cross()}, \code{cross2()} and \code{cross3()} return the
 cartesian product is returned in wide format. This makes it more
 amenable to mapping operations. \code{cross_df()} returns the output
@@ -84,7 +111,7 @@ args <- data \%>\% cross_df()
 # just run as.list() after cross_df()
 args \%>\% as.list()
 
-# This format is often less pratical for functional programming
+# This format is often less practical for functional programming
 # because applying a function to the combinations requires a loop
 out <- vector("list", length = nrow(args))
 for (i in seq_along(out))
@@ -113,3 +140,4 @@ seq_len(3) \%>\%
 \seealso{
 \code{\link[=expand.grid]{expand.grid()}}
 }
+\keyword{internal}

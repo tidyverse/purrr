@@ -75,7 +75,10 @@ are three ways to refer to the arguments:
 \item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
 }
 
-This syntax allows you to create very compact anonymous functions.
+This syntax allows you to create very compact anonymous
+functions. Note that formula functions conceptually take dots
+(that's why you can use \code{..1} etc). They silently ignore
+additional arguments that are not used in the formula expression.
 
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
 converted to an extractor function. Character vectors index by
@@ -108,7 +111,7 @@ input is length 1, it will be recycled to the length of the longest.
 These functions are variants of \code{\link[=map]{map()}} that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
-share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
+share the same notion of "parallel" as \code{\link[base:Extremes]{base::pmax()}} and \code{\link[base:Extremes]{base::pmin()}}.
 \code{map2()} and \code{walk2()} are specialised for the two argument case; \code{pmap()}
 and \code{pwalk()} allow you to provide any number of arguments in a list. Note
 that a data frame is a very important special case, in which case \code{pmap()}

@@ -55,7 +55,7 @@
 #' To update your code with the same reduction as `reduce_right()`,
 #' simply reverse your vector and use a left reduction:
 #'
-#' ```{r}
+#' ```{r, eval = FALSE}
 #' # Before:
 #' reduce_right(1:3, f)
 #'
@@ -330,7 +330,7 @@ seq_len2 <- function(start, end) {
 #'     needs to be 1 element shorter than the vector to be accumulated (`.x`).
 #'     If `.init` is set, `.y` needs to be one element shorted than the
 #'     concatenation of the initial value and `.x`.
-#' 
+#'
 #' @param .f For `accumulate()` `.f` is 2-argument function. The function will
 #'     be passed the accumulated result or initial value as the first argument.
 #'     The next value in sequence is passed as the second argument.
@@ -370,7 +370,7 @@ seq_len2 <- function(start, end) {
 #'   iteration).
 #'
 #' @inheritSection reduce Direction
-#' 
+#'
 #' @section Life cycle:
 #'
 #' `accumulate_right()` is soft-deprecated in favour of the `.dir`
@@ -381,8 +381,8 @@ seq_len2 <- function(start, end) {
 #' @seealso [reduce()] when you only need the final reduced value.
 #' @examples
 #' # With an associative operation, the final value is always the
-#' # same, no matter the direction. You'll find it in the last element for a
-#' # backward (left) accumulation, and in the first element for forward
+#' # same, no matter the direction. You'll find it in the first element for a
+#' # backward (left) accumulation, and in the last element for forward
 #' # (right) one:
 #' 1:5 %>% accumulate(`+`)
 #' 1:5 %>% accumulate(`+`, .dir = "backward")
@@ -461,13 +461,14 @@ accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
-  # FIXME vctrs: This simplification step is for compatibility with
-  # the `base::Reduce()` implementation in earlier purrr versions
-  if (all(map_int(res, length) == 1L)) {
-    res <- unlist(res, recursive = FALSE)
+  # It would be unappropriate to simplify the result rowwise with
+  # `accumulate()` because it has invariants defined in terms of
+  # `length()` rather than `vec_size()`
+  if (some(res, is.data.frame)) {
+    res
+  } else {
+    vec_simplify(res)
   }
-
-  res
 }
 #' @rdname accumulate
 #' @export
@@ -494,7 +495,7 @@ accumulate_names <- function(nms, init, dir) {
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#' `r lifecycle::badge("soft-deprecated")`
 #'
 #' These functions are retired as of purrr 0.3.0. Please use the
 #' `.dir` argument of [reduce()] instead, or reverse your vectors

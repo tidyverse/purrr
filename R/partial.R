@@ -1,12 +1,25 @@
 #' Partial apply a function, filling in some arguments.
 #'
 #' @description
-#'
 #' Partial function application allows you to modify a function by pre-filling
 #' some of the arguments.  It is particularly useful in conjunction with
 #' functionals and other function operators.
 #'
-#' Note that an argument can only be partialised once.
+#' @details
+#' `partial()` creates a function that takes `...` arguments. Unlike
+#' [compose()] and other function operators like [negate()], it
+#' doesn't reuse the function signature of `.f`. This is because
+#' `partial()` explicitly supports NSE functions that use
+#' `substitute()` on their arguments. The only way to support those is
+#' to forward arguments through dots.
+#'
+#' Other unsupported patterns:
+#'
+#' - It is not possible to call `partial()` repeatedly on the same
+#'   argument to pre-fill it with a different expression.
+#'
+#' - It is not possible to refer to other arguments in pre-filled
+#'   argument.
 #'
 #' @param .f a function. For the output source to read well, this should be a
 #'   named function.
@@ -16,9 +29,9 @@
 #'   arguments relative to partialised ones. See
 #'   [rlang::call_modify()] to learn more about this syntax.
 #'
-#'   These dots support quasiquotation and quosures. If you unquote a
-#'   value, it is evaluated only once at function creation time.
-#'   Otherwise, it is evaluated each time the function is called.
+#'   These dots support quasiquotation. If you unquote a value, it is
+#'   evaluated only once at function creation time.  Otherwise, it is
+#'   evaluated each time the function is called.
 #' @param .env Soft-deprecated as of purrr 0.3.0. The environments are
 #'   now captured via quosures.
 #' @param .first Soft-deprecated as of purrr 0.3.0. Please pass an
@@ -83,7 +96,7 @@ partial <- function(.f,
   }
 
   fn_expr <- enexpr(.f)
-  fn <- switch(typeof(.f),
+  .fn <- switch(typeof(.f),
     builtin = ,
     special =
       as_closure(.f),
@@ -110,7 +123,7 @@ partial <- function(.f,
       "  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant"
     ))
     if (!.lazy) {
-      args <- map(args, eval_tidy, env = caller_env())
+      args <- map(args, ~ new_quosure(eval_tidy(.x , env = caller_env()), empty_env()))
     }
   }
   if (!is_null(.first)) {
@@ -127,36 +140,53 @@ partial <- function(.f,
     ))
   }
 
+  env <- caller_env()
+  heterogeneous_envs <- !every(args, quo_is_same_env, env)
+
+  if (!heterogeneous_envs) {
+    args <- map(args, quo_get_expr)
+  }
+
+  # Reuse function symbol if possible
+  fn_sym <- if (is_symbol(fn_expr)) fn_expr else quote(.fn)
+
   if (is_false(.first)) {
     # For compatibility
-    call <- call_modify(call2(fn), ... = , !!!args)
+    call <- call_modify(call2(fn_sym), ... = , !!!args)
   } else {
     # Pass on `...` from parent function. It should be last, this way if
     # `args` also contain a `...` argument, the position in `args`
     # prevails.
-    call <- call_modify(call2(fn), !!!args, ... = )
+    call <- call_modify(call2(fn_sym), !!!args, ... = )
   }
 
-  # Forward caller environment where S3 methods might be defined.
-  # See design note below.
-  call <- new_quosure(call, caller_env())
+  if (heterogeneous_envs) {
+    # Forward caller environment where S3 methods might be defined.
+    # See design note below.
+    call <- new_quosure(call, env)
 
-  # Unwrap quosured arguments if possible
-  call <- quo_invert(call)
+    # Unwrap quosured arguments if possible
+    call <- quo_invert(call)
 
-  # Derive a mask where dots can be forwarded
-  mask <- new_data_mask(env())
+    # Derive a mask where dots can be forwarded
+    mask <- new_data_mask(env(!!fn_sym := .fn))
 
-  partialised <- function(...) {
-    env_bind(mask, ... = env_get(current_env(), "..."))
-    eval_tidy(call, mask)
+    fn <- function(...) {
+      mask$... <- environment()$...
+      eval_tidy(call, mask)
+    }
+  } else {
+    body <- expr({
+      !!fn_sym <- !!.fn
+      !!call
+    })
+    fn <- new_function(pairlist2(... = ), body, env = env)
   }
 
   structure(
-    partialised,
+    fn,
     class = c("purrr_function_partial", "function"),
-    body = call,
-    fn = fn_expr
+    body = call
   )
 }
 
@@ -164,45 +194,11 @@ partial <- function(.f,
 print.purrr_function_partial <- function(x, ...) {
   cat("<partialised>\n")
 
-  body <- quo_squash(partialised_body(x))
-  body[[1]] <- partialised_fn(x)
-  body(x) <- body
-
-  # Remove reference to internal environment
-  x <- set_env(x, global_env())
-
+  body(x) <- partialised_body(x)
   print(x, ...)
 }
 
 partialised_body <- function(x) attr(x, "body")
-partialised_fn <- function(x) attr(x, "fn")
 
-
-# Lexical dispatch
-#
-# We evaluate in the definition environment rather than the caller
-# environment in order to support lexically scoped methods. This
-# helps with this case:
-#
-# ```
-# local({
-#   mean.foobar <- function(...) "foobar"
-#   foobar <- structure(list(), class = "foobar")
-#
-#   mean(foobar) == partial(mean)(foobar)
-# })
-# ```
-#
-# These are not standard dispatch semantics, ideally we'd dispatch in
-# the caller environment rather than the definition environment. The
-# issue is that there's a fundamental conflict between these goals:
-#
-# (a) Evaluating arguments in their environment (typically def env)
-# (b) Allowing substitution of partialised arguments
-# (c) Lexical dispatch in caller env rather than def env
-#
-# It might just be that partialised functions are meant to be private or
-# even anonymous (and thus local). Also lexical dispatch in the global
-# env should work anyway because most envs inherit from the search
-# path. And if in a package, registration will take care of dispatch.
-# Let's not worry about this too much.
+# For !!fn_sym <- !!.fn
+utils::globalVariables("!<-")

@@ -10,28 +10,16 @@ NULL
 
 maybe_as_data_frame <- function(out, x) {
   if (is.data.frame(x)) {
-    check_tibble()
+    check_installed("tibble")
     tibble::as_tibble(out)
   } else {
     out
   }
 }
 
-check_tibble <- function() {
-  if (!is_installed("tibble")) {
-    abort("The tibble package must be installed")
-  }
-}
-
-check_tidyselect <- function(){
-  if (!is_installed("tidyselect")) {
-    abort("Using tidyselect in `map_at()` requires tidyselect")
-  }
-}
-
 at_selection <- function(nm, .at){
-  if (is_quosures(.at)){
-    check_tidyselect()
+  if (is_quosures(.at)) {
+    check_installed("tidyselect", "for using tidyselect in `map_at()`.")
     .at <- tidyselect::vars_select(.vars = nm, !!!.at)
   }
   .at
@@ -55,7 +43,7 @@ names2 <- function(x) {
 #'
 #' @description
 #'
-#' \Sexpr[results=rd, stage=render]{purrr:::lifecycle("soft-deprecated")}
+#' `r lifecycle::badge("soft-deprecated")`
 #'
 #' Please use the `%@%` operator exported in rlang. It has an
 #' interface more consistent with `@`: uses NSE, supports S4 fields,
@@ -306,4 +294,23 @@ quo_invert <- function(call) {
 
 quo_is_constant <- function(quo) {
   is_reference(quo_get_env(quo), empty_env())
+}
+
+vec_simplify <- function(x) {
+  if (!vctrs::vec_is_list(x)) {
+    return(x)
+  }
+  if (!every(x, ~ vctrs::vec_is(.x) && vctrs::vec_size(.x) == 1L)) {
+    return(x)
+  }
+
+  tryCatch(
+    vctrs_error_incompatible_type = function(...) x,
+    vctrs::vec_c(!!!x)
+  )
+}
+
+quo_is_same_env <- function(x, env) {
+  quo_env <- quo_get_env(x)
+  is_reference(quo_env, env) || is_reference(quo_env, empty_env())
 }

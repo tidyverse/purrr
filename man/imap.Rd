@@ -45,7 +45,10 @@ are three ways to refer to the arguments:
 \item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
 }
 
-This syntax allows you to create very compact anonymous functions.
+This syntax allows you to create very compact anonymous
+functions. Note that formula functions conceptually take dots
+(that's why you can use \code{..1} etc). They silently ignore
+additional arguments that are not used in the formula expression.
 
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
 converted to an extractor function. Character vectors index by
@@ -66,7 +69,7 @@ Only applies to \verb{_dfr} variant.}
 A vector the same length as \code{.x}.
 }
 \description{
-\code{imap_xxx(x, ...)}, an indexed map, is short hand for
+\code{imap(x, ...)}, an indexed map, is short hand for
 \code{map2(x, names(x), ...)} if \code{x} has names, or \code{map2(x, seq_along(x), ...)}
 if it does not. This is useful if you need to compute on both the value
 and the position of an element.

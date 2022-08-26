@@ -1,10 +1,50 @@
 
 # purrr (development version)
 
+## Breaking changes
+
+* `cross()` and all its variants have been deprecated in favour of
+  `tidyr::expand_grid()`. These functions were slow and buggy and we
+  no longer think they are the right approach to solving this problem.
+  See #768 for more information.
+
+
+## Features and fixes
+
+* `every()` now correctly propagates missing values using the same
+  rules as `&&` (#751). Internally, it has become a wrapper around
+  `&&`. This makes it consistent with `&&` and also with `some()`
+  which has always been a wrapper around `||` with the same
+  propagation rules.
+
+* `modify()`, `modify2()`, and `modify_if()` now correctly handle `NULL`s
+  in replacement values (#655, #746, #753).
+
+* `every()` and `some()` now properly check the return value of their
+  predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
+
+* `accumulate()` now uses vctrs for simplifying the output. This
+  ensures a more principled and flexible coercion behaviour.
+
+* Greatly improved performance of functions created with `partial()` (#715).
+  Their invocation is now as fast as for functions creating manually.
+
+* `partial()` no longer inlines the function in the call stack. This
+  fixes issues when `partial()` is used with `lm()` for instance (#707).
+  
+* purrr is now licensed as MIT (#805).
+
+# purrr 0.3.4
+
+* Fixed issue in `list_modify()` that prevented lists from being
+  removed with `zap()` (@adamroyjones, #777).
+
 * Added documentation for exporting functions created with purrr
   adverb (@njtierney, #668). See `?faq-adverbs-export`.
 
-* Adds a `none` function, which tests that a predicate is false for all elements (the opposite of `every`). Added as part of Tidyverse Developer Day (@AliciaSchep, #735)
+* Added `none()`, which tests that a predicate is false for all elements
+  (the opposite of `every()`) (@AliciaSchep, #735).
+
 
 # purrr 0.3.3
 
@@ -99,6 +139,13 @@
   (any vector was considered `TRUE` if not a single `FALSE` value, no
   matter its length). These functions signal soft-deprecation warnings
   instead of a hard failure.
+
+  Edit (purr 0.4.0): `every()` and `some()` never issued deprecation
+  warnings because of a technical issue. We didn't fix the warnings in
+  the end, and using predicates returning `NA` is no longer considered
+  deprecated. If you need to use `every()` and `some()` in contexts
+  where `NA` propagation is unsafe, e.g. in `if ()` conditions, make
+  sure to use safe predicate functions like `is_true()`.
 
 * `modify()` and variants are now implemented using `length()`, `[[`,
   and `[[<-` methods. This implementation should be compatible with

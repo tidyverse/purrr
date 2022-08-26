@@ -51,3 +51,5 @@ SEXP lang8(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w, SEXP x, SEXP y, SEXP z) {
   UNPROTECT(1);
   return s;
 }
+
+#include <vctrs.c>

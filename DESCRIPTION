@@ -1,31 +1,38 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.3.3.9000
+Version: 0.3.4.9000
 Authors@R: c(
-    person("Lionel", "Henry", , "lionel@rstudio.com", c("aut", "cre")),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
+    person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = c("cph", "fnd"))
-    )
+  )
 Description: A complete and consistent functional programming toolkit for R.
-License: GPL-3 | file LICENSE
-URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
+License: MIT + file LICENSE
+URL: https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
     R (>= 3.2)
 Imports: 
-    magrittr (>= 1.5),
-    rlang (>= 0.3.1)
+    lifecycle (>= 0.2.0),
+    magrittr (>= 1.5.0),
+    rlang (>= 0.4.10),
+    vctrs (>= 0.3.2)
 Suggests: 
     covr,
     crayon,
     dplyr (>= 0.7.8),
     knitr,
     rmarkdown,
-    testthat,
-    tibble, 
+    testthat (>= 3.0.0),
+    tibble,
     tidyselect
-VignetteBuilder: knitr
+LinkingTo:
+    vctrs
+VignetteBuilder: 
+    knitr
+Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.2.1
+Config/testthat/edition: 3

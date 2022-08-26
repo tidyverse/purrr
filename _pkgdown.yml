@@ -2,30 +2,26 @@ url: https://purrr.tidyverse.org
 
 template:
   package: tidytemplate
+  bootstrap: 5
+
+  includes:
+    in_header: |
+      <script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
 development:
   mode: auto
 
 home:
-  strip_header: true
   links:
   - text: Learn more
     href: http://r4ds.had.co.nz/iteration.html
 
-navbar:
-  components:
-    home: ~
-    news:
-      text: News
-      menu:
-      - text: "Release notes"
-      - text: "Version 0.3.0"
-        href: https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/
-      - text: "Version 0.2.3"
-        href: https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/
-      - text: "------------------"
-      - text: "Change log"
-        href: news/index.html
+news:
+  releases:
+  - text: "Version 0.3.0"
+    href: https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/
+  - text: "Version 0.2.3"
+    href: https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/
 
 reference:
 - title: Map family
@@ -50,6 +46,7 @@ reference:
     `pmap()` (parallel map) iterates over a list of vectors;
     `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`.
   contents:
+  - map_if
   - map2
   - modify
   - starts_with("imap")
@@ -83,7 +80,6 @@ reference:
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - cross
   - flatten
   - list_modify
   - reduce
@@ -95,6 +91,7 @@ reference:
     Adverbs modify the action of a function; taking a function as input and
     returning a function with modified action as output.
   contents:
+  - faq-adverbs-export
   - compose
   - lift
   - negate
@@ -106,11 +103,9 @@ reference:
 
 - title: Misc
   contents:
-  - "`%||%`"
   - array_tree
   - as_vector
   - rbernoulli
   - rdunif
   - rerun
-  - set_names
   - vec_depth
