@@ -1,6 +1,3 @@
-context("as_mapper")
-
-
 # formulas ----------------------------------------------------------------
 
 test_that("can refer to first argument in three ways", {

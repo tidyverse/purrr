@@ -22,8 +22,8 @@
 #'
 #' * [modify_in()] modifies a single element in a [pluck()] location.
 #'
-#' @inheritParams map
 #' @inheritParams map2
+#' @inheritParams map
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'   from the lowest level of the list.
 #'
@@ -136,7 +136,7 @@ modify.default <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
   for (i in seq_along(.x)) {
-    .x[[i]] <- .f(.x[[i]], ...)
+    list_slice2(.x, i) <- .f(.x[[i]], ...)
   }
 
   .x
@@ -156,13 +156,13 @@ modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
 
   .f <- as_mapper(.f, ...)
   for (i in index[sel]) {
-    .x[[i]] <- .f(.x[[i]], ...)
+    list_slice2(.x, i) <- .f(.x[[i]], ...)
   }
 
   if (!is_null(.else)) {
     .else <- as_mapper(.else, ...)
     for (i in index[!sel]) {
-      .x[[i]] <- .else(.x[[i]], ...)
+      list_slice2(.x, i) <- .else(.x[[i]], ...)
     }
   }
 
@@ -336,7 +336,7 @@ modify2.default <- function(.x, .y, .f, ...) {
   .y <- args[[2]]
 
   for (i in seq_along(.x)) {
-    .x[[i]] <- .f(.x[[i]], .y[[i]], ...)
+    list_slice2(.x, i) <- .f(.x[[i]], .y[[i]], ...)
   }
 
   .x
@@ -472,4 +472,13 @@ inv_which <- function(x, sel) {
   } else {
     stop("unrecognised index type", call. = FALSE)
   }
+}
+
+`list_slice2<-` <- function(x, i, value) {
+  if (is.null(value)) {
+    x[i] <- list(NULL)
+  } else {
+    x[[i]] <- value
+  }
+  x
 }

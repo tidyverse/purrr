@@ -35,7 +35,7 @@ over. \code{cross_df()} returns a data frame where each row is one
 combination.
 }
 \description{
-\ifelse{html}{\figure{lifecycle-soft-deprecated.svg}{options: alt='Soft-deprecated lifecycle'}}{\strong{Soft-deprecated}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 These functions have been deprecated in purrr 0.4.0 because they
 are slow and buggy, and we no longer think they are the right
@@ -43,7 +43,9 @@ approach to solving this problem. Please use \code{tidyr::expand_grid()}
 instead.
 
 Here is an example of equivalent usages for \code{cross()} and
-\code{expand_grid()}:\if{html}{\out{<div class="r">}}\preformatted{data <- list(
+\code{expand_grid()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- list(
   id = c("John", "Jane"),
   greeting = c("Hello.", "Bonjour."),
   sep = c("! ", "... ")
@@ -51,15 +53,14 @@ Here is an example of equivalent usages for \code{cross()} and
 
 # With deprecated `cross()`
 data \%>\% cross() \%>\% map_chr(lift(paste))
-}\if{html}{\out{</div>}}\preformatted{## [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
-## [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
-}\if{html}{\out{<div class="r">}}\preformatted{# With `expand_grid()`
+#> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
+#> [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+
+# With `expand_grid()`
 tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
-}\if{html}{\out{</div>}}\preformatted{## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-## when loading 'dplyr'
-}\preformatted{## [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
-## [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
-}
+#> [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
+#> [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
+}\if{html}{\out{</div>}}
 }
 \details{
 \code{cross2()} returns the product set of the elements of
@@ -139,3 +140,4 @@ seq_len(3) \%>\%
 \seealso{
 \code{\link[=expand.grid]{expand.grid()}}
 }
+\keyword{internal}

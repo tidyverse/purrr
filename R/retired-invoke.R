@@ -30,7 +30,7 @@
 #'
 #' * `invoke()` is retired in favour of the simpler `exec()` function
 #'   reexported from rlang. `exec()` evaluates a function call built
-#'   from its inputs and supports tidy dots:
+#'   from its inputs and supports [dynamic dots][rlang::dyn-dots]:
 #'
 #'   ```
 #'   # Before:

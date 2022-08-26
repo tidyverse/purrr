@@ -1,5 +1,3 @@
-context("modify")
-
 test_that("modify returns same type as input", {
   df1 <- data.frame(x = 1:3, y = 4:6)
   expect_equal(modify(df1, length), data.frame(x = rep(3, 3), y = rep(3, 3)))
@@ -70,7 +68,7 @@ test_that("modify2() and imodify() preserve type of first input", {
   expect_identical(modify2(x, y, ~ if (.y) .x else 0L), c(foo = 1L, bar = 0L))
 
   out <- imodify(mtcars, paste)
-  expect_is(out, "data.frame")
+  expect_s3_class(out, "data.frame")
   expect_identical(out$vs, paste(mtcars$vs, "vs"))
 })
 
@@ -91,6 +89,22 @@ test_that("`.else` modifies false elements", {
   exp <- modify_if(exp, is.factor, as.character)
   expect_identical(modify_if(iris, is.factor, as.character, .else = as.integer), exp)
 })
+
+test_that("modify family preserves NULLs", {
+  l <- list(a = 1, b = NULL, c = 3)
+  expect_equal(modify(l, identity), l)
+  expect_equal(modify_at(l, "b", identity), l)
+  expect_equal(modify_if(l, is.null, identity), l)
+  expect_equal(
+    modify(l, ~ if (!is.null(.x)) .x + .y, 10),
+    list(a = 11, b = NULL, c = 13)
+  )
+  expect_equal(
+    modify_if(list(1, 2), ~ .x == 2, ~NULL),
+    list(1, NULL)
+  )
+})
+
 
 # modify_depth ------------------------------------------------------------
 
@@ -135,10 +149,17 @@ test_that("vectorised operations on the recursive and atomic levels yield same r
 test_that("modify_at() can use tidyselect", {
   skip_if_not_installed("tidyselect")
   one <-  modify_at(mtcars, vars(cyl, am), as.character)
-  expect_is(one$cyl, "character")
-  expect_is(one$am, "character")
+  expect_bare(one$cyl, "character")
+  expect_bare(one$am, "character")
   two <- modify_at(mtcars, vars(tidyselect::contains("cyl")), as.character)
-  expect_is(two$cyl, "character")
+  expect_bare(two$cyl, "character")
 })
 
-
+test_that("modify_depth() treats NULLs correctly", {
+  ll <- list(a = NULL, b = list(b1 = NULL, b2 = "hello"))
+  expect_equal(modify_depth(ll, .depth = 2, identity, .ragged = TRUE), ll)
+  expect_equal(
+    modify_depth(ll, .depth = 2, is.character, .ragged = TRUE),
+    list(a = NULL, b = list(b1 = FALSE, b2 = TRUE))
+  )
+})

@@ -1,5 +1,3 @@
-context("imap")
-
 x <- 1:3 %>% set_names()
 
 test_that("imap is special case of map2", {
@@ -7,7 +5,7 @@ test_that("imap is special case of map2", {
 })
 
 test_that("imap always returns a list", {
-  expect_is(imap(x, paste), "list")
+  expect_bare(imap(x, paste), "list")
 })
 
 test_that("atomic vector imap works", {

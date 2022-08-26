@@ -1,5 +1,3 @@
-context("arrays")
-
 x <- array(1:12, c(2, 2, 3), dimnames = list(letters[1:2], LETTERS[1:2], NULL))
 
 test_that("array_branch creates a flat list when no margin specified", {

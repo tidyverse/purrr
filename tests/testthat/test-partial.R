@@ -1,8 +1,6 @@
-context("partial")
-
 test_that("dots are correctly placed in the signature", {
   out <- partialised_body(partial(runif, n = rpois(1, 5)))
-  exp <- quo((!!runif)(n = rpois(1, 5), ...))
+  exp <- expr(runif(n = rpois(1, 5), ...))
   expect_identical(out, exp)
 })
 
@@ -21,6 +19,11 @@ test_that("no lazy evaluation means arguments aren't repeatedly evaluated", {
 test_that("partial() still works with functions using `missing()`", {
   fn <- function(x) missing(x)
   expect_false(partial(fn, x = 3)())
+
+  fn <- function(x, y) missing(y)
+  expect_true(partial(fn)())
+  expect_true(partial(fn, x = 1)())
+  expect_false(partial(fn, x = 1, y = 2)())
 })
 
 test_that("partialised arguments are evaluated in their environments", {
@@ -45,27 +48,22 @@ test_that("partialised function is evaluated in its environment", {
   expect_identical(partialised(), "foo")
 })
 
-test_that("partial() supports quosures", {
-  arg <- local({
-    n <- 0
-    quo({ n <<- n + 1; n})
-  })
-
-  fn <- partial(list, !!arg)
-  expect_identical(fn(), list(1))
-  expect_identical(fn(), list(2))
-})
-
 test_that("partial() matches argument with primitives", {
   minus <- partial(`-`, .y = 5)
+  expect_identical(minus(1), -4)
+
+  minus <- partial(`-`, e2 = 5)
   expect_identical(minus(1), -4)
 })
 
 test_that("partial() squashes quosures before printing", {
-  expect_known_output(file = test_path("test-partial-print.txt"), {
-    foo <- function(x, y) y
-    print(partial(foo, y = 3))
-  })
+  foo <- function(x, y) y
+  foo <- partial(foo, y = 3)
+
+  # Reproducible environment tag
+  environment(foo) <- global_env()
+
+  expect_snapshot(foo)
 })
 
 test_that("partial() handles primitives with named arguments after `...`", {
@@ -115,18 +113,45 @@ test_that("partial() supports lexically defined methods in the def env", {
   })
 })
 
+test_that("substitute() works for both partialised and non-partialised arguments", {
+  fn <- function(x, y) list(substitute(x), substitute(y))
+  expect_identical(partial(fn, foo)(y = bar), alist(foo, bar))
+})
+
+test_that("partial() still supports quosures and multiple environments", {
+  arg <- local({
+    n <- 0
+    quo({ n <<- n + 1; n})
+  })
+
+  x <- "foo"
+
+  fn <- partial(list, !!arg, x = x)
+  expect_identical(fn(), list(1, x = "foo"))
+  expect_identical(fn(), list(2, x = "foo"))
+})
+
+test_that("partial() preserves visibility when arguments are from the same environment (#656)", {
+  fn <- partial(identity, 1)
+  expect_identical(withVisible(fn()), list(value = 1, visible = TRUE))
+
+  fn <- function(x) invisible(x)
+  fn <- partial(fn, 1)
+  expect_identical(withVisible(fn()), list(value = 1, visible = FALSE))
+})
+
 
 # Life cycle --------------------------------------------------------------
 
 test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
-  scoped_lifecycle_warnings()
+  local_lifecycle_warnings()
   expect_warning(partial(list, "foo", .lazy = TRUE), "soft-deprecated")
   expect_warning(partial(list, "foo", .env = env()), "soft-deprecated")
   expect_warning(partial(list, "foo", .first = TRUE, "soft-deprecated"))
 })
 
 test_that("`.lazy` still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  local_options(lifecycle_disable_warnings = TRUE)
   counter <- env(n = 0)
   eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
   walk(1:10, ~eager())
@@ -134,14 +159,14 @@ test_that("`.lazy` still works", {
 })
 
 test_that("`.first` still works", {
-  scoped_options(lifecycle_disable_warnings = TRUE)
+  local_options(lifecycle_disable_warnings = TRUE)
   out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
-  exp <- quo((!!runif)(..., n = rpois(1, 5)))
+  exp <- expr(runif(..., n = rpois(1, 5)))
   expect_identical(out, exp)
 
   # partial() also works without partialised arguments
-  expect_identical(partialised_body(partial(runif, .first = TRUE)), quo((!!runif)(...)))
-  expect_identical(partialised_body(partial(runif, .first = FALSE)), quo((!!runif)(...)))
+  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr(runif(...)))
+  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
 })
 
 test_that("`...f` still works", {

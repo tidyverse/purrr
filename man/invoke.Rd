@@ -50,7 +50,7 @@ as \code{.f} the name of a function rather than its value, or as
 \code{.x} symbols of objects rather than their values.}
 }
 \description{
-\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#superseded'><img src='figures/lifecycle-superseded.svg' alt='Superseded lifecycle'></a>}}{\strong{Superseded}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
 This pair of functions make it easier to combine a function and list
 of parameters to get a result. \code{invoke} is a wrapper around
@@ -66,22 +66,26 @@ package undefinitely.
 \itemize{
 \item \code{invoke()} is retired in favour of the simpler \code{exec()} function
 reexported from rlang. \code{exec()} evaluates a function call built
-from its inputs and supports tidy dots:\preformatted{# Before:
+from its inputs and supports \link[rlang:dyn-dots]{dynamic dots}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Before:
 invoke(mean, list(na.rm = TRUE), x = 1:10)
 
 # After
 exec(mean, 1:10, !!!list(na.rm = TRUE))
-}
+}\if{html}{\out{</div>}}
 \item \code{invoke_map()} is is retired without replacement because it is
 more complex to understand than the corresponding code using
-\code{map()}, \code{map2()} and \code{exec()}:\preformatted{# Before:
+\code{map()}, \code{map2()} and \code{exec()}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Before:
 invoke_map(fns, list(args))
 invoke_map(fns, list(args1, args2))
 
 # After:
 map(fns, exec, !!!args)
 map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
-}
+}\if{html}{\out{</div>}}
 }
 }
 

@@ -1,7 +1,7 @@
 #' Produce all combinations of list elements
 #'
 #' @description
-#' `r lifecycle::badge("soft-deprecated")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' These functions have been deprecated in purrr 0.4.0 because they
 #' are slow and buggy, and we no longer think they are the right
@@ -61,6 +61,7 @@
 #'   combination so that the list can be directly mapped
 #'   over. `cross_df()` returns a data frame where each row is one
 #'   combination.
+#' @keywords internal
 #' @export
 #' @examples
 #' # We build all combinations of names, greetings and separators from our
@@ -198,7 +199,7 @@ cross_df <- function(.l, .filter = NULL) {
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
-  check_tibble()
+  check_installed("tibble")
   cross(.l, .filter = .filter) %>%
     transpose() %>%
     simplify_all() %>%

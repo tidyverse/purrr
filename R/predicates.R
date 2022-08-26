@@ -1,9 +1,11 @@
-#' Test is an object is integer or double
+#' Test if an object is integer or double
 #'
+#' @description
 #' Numeric is used in three different ways in base R:
 #' * as an alias for double (as in [as.numeric()])
 #' * to mean either integer or double (as in [mode()])
 #' * for something representable as numeric (as in [as.numeric()])
+#'
 #' This function tests for the second, which is often not what you want
 #' so these functions are deprecated.
 #'
