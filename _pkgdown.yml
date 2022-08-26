@@ -93,7 +93,6 @@ reference:
     Adverbs modify the action of a function; taking a function as input and
     returning a function with modified action as output.
   contents:
-  - faq-adverbs-export
   - has_concept("adverbs")
   - lift
 
