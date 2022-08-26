@@ -80,7 +80,6 @@ reference:
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - cross
   - flatten
   - list_modify
   - reduce
