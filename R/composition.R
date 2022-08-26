@@ -42,6 +42,7 @@ NULL
 #'   name the parameters in the lifted function signature. This
 #'   prevents matching of arguments by name and match by position
 #'   instead.
+#' @keywords internal
 #' @export
 #' @examples
 #' ### Lifting from ... to list(...) or c(...)

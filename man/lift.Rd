@@ -142,3 +142,4 @@ mtcars \%>\% pmap_lgl(~ any(c(...) > 200))
 \seealso{
 \code{\link[=invoke]{invoke()}}
 }
+\keyword{internal}
