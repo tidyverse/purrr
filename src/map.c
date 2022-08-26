@@ -39,11 +39,8 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
 
     INTEGER(i_val)[0] = i + 1;
 
-#if defined(R_VERSION) && R_VERSION >= R_Version(3, 2, 3)
     SEXP res = PROTECT(R_forceAndCall(call, force_args, env));
-#else
-    SEXP res = PROTECT(Rf_eval(call, env));
-#endif
+
     if (type != VECSXP && Rf_length(res) != 1) {
       SEXP ptype = PROTECT(Rf_allocVector(type, 0));
       stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);
