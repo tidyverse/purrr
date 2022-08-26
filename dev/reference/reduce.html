@@ -93,7 +93,7 @@ function will be passed the accumulated value as the first
 argument, the next value of <code>.x</code> as the second argument, and the
 next value of <code>.y</code> as the third argument.</p>
 <p>The reduction terminates early if <code>.f</code> returns a value wrapped in
-a <code><a href="done.html">done()</a></code>.</p></dd>
+a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done()</a></code>.</p></dd>
 
 
 <dt>...</dt>
@@ -218,7 +218,7 @@ values of the reduction.</p></div>
 <span class="r-in"><span><span class="co"># meets a condition:</span></span></span>
 <span class="r-in"><span><span class="va">paste3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, <span class="va">sep</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="done.html">done</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -229,7 +229,7 @@ values of the reduction.</p></div>
 <span class="r-in"><span><span class="co"># the RHS:</span></span></span>
 <span class="r-in"><span><span class="va">paste4</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, <span class="va">sep</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="va">input</span> <span class="op">==</span> <span class="st">"j"</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="done.html">done</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

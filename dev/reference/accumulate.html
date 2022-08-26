@@ -84,7 +84,7 @@ vector. Each application of the function uses the initial value or result
 of the previous application as the first argument. The second argument is
 the next value of the vector. The results of each application are
 returned in a list. The accumulation can optionally terminate before
-processing the whole vector in response to a <code><a href="done.html">done()</a></code> signal returned by
+processing the whole vector in response to a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done()</a></code> signal returned by
 the accumulation function.</p>
 <p>By contrast to <code>accumulate()</code>, <code><a href="reduce.html">reduce()</a></code> applies a 2-argument function in
 the same way, but discards all results except that of the final function
@@ -114,7 +114,7 @@ function will be passed the accumulated result as the first
 argument. The next value in sequence from <code>.x</code> is passed as the second argument. The
 next value in sequence from <code>.y</code> is passed as the third argument.</p>
 <p>The accumulation terminates early if <code>.f</code> returns a value wrapped in
-a <code><a href="done.html">done()</a></code>.</p></dd>
+a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done()</a></code>.</p></dd>
 
 
 <dt>...</dt>
@@ -160,7 +160,7 @@ right accumulation, this order is reversed.</p>
 
 
 <p>The accumulation terminates early if <code>.f</code> returns a value wrapped
-in a <code><a href="done.html">done()</a></code>. If the done box is empty, the last value is
+in a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done()</a></code>. If the done box is empty, the last value is
 used instead and the result is one element shorter (but always
 includes the initial value, even when terminating at the first
 iteration).</p>
@@ -245,7 +245,7 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># meets a condition:</span></span></span>
 <span class="r-in"><span><span class="va">paste3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, <span class="va">sep</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="done.html">done</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -258,7 +258,7 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># value of the last iteration:</span></span></span>
 <span class="r-in"><span><span class="va">paste3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, <span class="va">sep</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="done.html">done</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -269,7 +269,7 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># the RHS:</span></span></span>
 <span class="r-in"><span><span class="va">paste4</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, <span class="va">sep</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="va">input</span> <span class="op">==</span> <span class="st">"f"</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="done.html">done</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -283,7 +283,7 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="rerun.html">rerun</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="set_names.html">set_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sim"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html" class="external-link">set_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sim"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="op">~</span> <span class="fu">accumulate</span><span class="op">(</span><span class="va">.</span>, <span class="op">~</span> <span class="fl">.05</span> <span class="op">+</span> <span class="va">.x</span> <span class="op">+</span> <span class="va">.y</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map_dfr</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">.x</span>, step <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"simulation"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">step</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>

@@ -61,13 +61,7 @@
     <loc>https://purrr.tidyverse.org/dev/reference/detect.html</loc>
   </url>
   <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/done.html</loc>
-  </url>
-  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/every.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/exec.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/faq-adverbs-export.html</loc>
@@ -130,9 +124,6 @@
     <loc>https://purrr.tidyverse.org/dev/reference/negate.html</loc>
   </url>
   <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/null-default.html</loc>
-  </url>
-  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/partial.html</loc>
   </url>
   <url>
@@ -169,16 +160,10 @@
     <loc>https://purrr.tidyverse.org/dev/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/rep_along.html</loc>
-  </url>
-  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/rerun.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/safely.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/set_names.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/splice.html</loc>
@@ -191,8 +176,5 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/when.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/zap.html</loc>
   </url>
 </urlset>

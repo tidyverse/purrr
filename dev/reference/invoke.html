@@ -126,10 +126,10 @@ as <code>.f</code> the name of a function rather than its value, or as
     
 
 
-<p>These functions are retired in favour of <code><a href="exec.html">exec()</a></code>. They are no
+<p>These functions are retired in favour of <code><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec()</a></code>. They are no
 longer under active development but we will maintain them in the
-package undefinitely.</p><ul><li><p><code>invoke()</code> is retired in favour of the simpler <code><a href="exec.html">exec()</a></code> function
-reexported from rlang. <code><a href="exec.html">exec()</a></code> evaluates a function call built
+package undefinitely.</p><ul><li><p><code>invoke()</code> is retired in favour of the simpler <code><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec()</a></code> function
+reexported from rlang. <code><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec()</a></code> evaluates a function call built
 from its inputs and supports <a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">dynamic dots</a>:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">invoke</span>(mean, <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
@@ -138,7 +138,7 @@ from its inputs and supports <a href="https://rlang.r-lib.org/reference/dyn-dots
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exec</span>(mean, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">!!!</span><span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre><p></p></div></li>
 <li><p><code>invoke_map()</code> is is retired without replacement because it is
 more complex to understand than the corresponding code using
-<code><a href="map.html">map()</a></code>, <code><a href="map2.html">map2()</a></code> and <code><a href="exec.html">exec()</a></code>:</p>
+<code><a href="map.html">map()</a></code>, <code><a href="map2.html">map2()</a></code> and <code><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec()</a></code>:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">invoke_map</span>(fns, <span class="fu">list</span>(args))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">invoke_map</span>(fns, <span class="fu">list</span>(args1, args2))</span>

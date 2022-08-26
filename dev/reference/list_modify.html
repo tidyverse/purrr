@@ -97,7 +97,7 @@ method for lists.</p>
 
 
 <dt>...</dt>
-<dd><p>New values of a list. Use <code><a href="zap.html">zap()</a></code> to remove values.</p>
+<dd><p>New values of a list. Use <code><a href="https://rlang.r-lib.org/reference/zap.html" class="external-link">zap()</a></code> to remove values.</p>
 <p>These values should be either all named or all unnamed. When
 inputs are all named, they are matched to <code>.x</code> by name. When they
 are all unnamed, they are matched positionally.</p>
@@ -142,7 +142,7 @@ your functions are stored in a list, you can splice that in with
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ b: num 2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Remove values</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_modify</span><span class="op">(</span><span class="va">x</span>, z <span class="op">=</span> <span class="fu"><a href="zap.html">zap</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_modify</span><span class="op">(</span><span class="va">x</span>, z <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/zap.html" class="external-link">zap</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ y: num 4</span>
@@ -160,7 +160,7 @@ your functions are stored in a list, you can splice that in with
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All these functions support dynamic dots features. Use !!! to splice</span></span></span>
 <span class="r-in"><span><span class="co"># a list of arguments:</span></span></span>
-<span class="r-in"><span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>new <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fu"><a href="zap.html">zap</a></span><span class="op">(</span><span class="op">)</span>, z <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>new <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/zap.html" class="external-link">zap</a></span><span class="op">(</span><span class="op">)</span>, z <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_modify</span><span class="op">(</span><span class="va">x</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">l</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x  : int [1:10] 1 2 3 4 5 6 7 8 9 10</span>

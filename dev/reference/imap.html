@@ -150,8 +150,8 @@ variable will be created.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Note that when using the formula shortcut, the first argument</span></span></span>
 <span class="r-in"><span><span class="co"># is the value, and the second is the position</span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 3"   "2: 5"   "3: 9"   "4: 7"   "5: 8"   "6: 1"   "7: 6"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "8: 4"   "9: 2"   "10: 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 5"  "2: 8"  "3: 6"  "4: 10" "5: 3"  "6: 7"  "7: 2"  "8: 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 9"  "10: 4"</span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl: 6</span>

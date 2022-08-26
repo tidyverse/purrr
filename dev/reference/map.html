@@ -341,7 +341,7 @@ of <code>.x</code> that meet a specified condition.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using set_names() with character vectors is handy to keep track</span></span></span>
 <span class="r-in"><span><span class="co"># of the original inputs:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="set_names.html">set_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_chr</span><span class="op">(</span><span class="va">paste0</span>, <span class="st">":suffix"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html" class="external-link">set_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_chr</span><span class="op">(</span><span class="va">paste0</span>, <span class="st">":suffix"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          foo          bar </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "foo:suffix" "bar:suffix" </span>
 <span class="r-in"><span></span></span>
