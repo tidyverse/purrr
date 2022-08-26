@@ -61,9 +61,11 @@ str(f_quiet())
 Other adverbs: 
 \code{\link{auto_browse}()},
 \code{\link{compose}()},
+\code{\link{insistently}()},
 \code{\link{negate}()},
 \code{\link{partial}()},
 \code{\link{possibly}()},
-\code{\link{safely}()}
+\code{\link{safely}()},
+\code{\link{slowly}()}
 }
 \concept{adverbs}

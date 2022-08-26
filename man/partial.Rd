@@ -110,9 +110,11 @@ my_list("foo")
 Other adverbs: 
 \code{\link{auto_browse}()},
 \code{\link{compose}()},
+\code{\link{insistently}()},
 \code{\link{negate}()},
 \code{\link{possibly}()},
 \code{\link{quietly}()},
-\code{\link{safely}()}
+\code{\link{safely}()},
+\code{\link{slowly}()}
 }
 \concept{adverbs}
