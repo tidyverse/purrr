@@ -90,8 +90,8 @@ reference:
 
 - title: Adverbs
   desc: >
-    Adverbs modify the action of a function; taking a function as input and
-    returning a function with modified action as output.
+    Adverbs modify the action of a function; they take a function as input and
+    return a function with modified action as output.
   contents:
   - has_concept("adverbs")
   - lift
