@@ -2,7 +2,7 @@
 % Please edit documentation in R/adverb-compose.R
 \name{compose}
 \alias{compose}
-\title{Compose multiple functions}
+\title{Compose multiple functions together to create a new function}
 \usage{
 compose(..., .dir = c("backward", "forward"))
 }

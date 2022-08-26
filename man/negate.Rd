@@ -2,7 +2,7 @@
 % Please edit documentation in R/adverb-negate.R
 \name{negate}
 \alias{negate}
-\title{Negate a predicate function}
+\title{Negate a predicate function so it selects what it previously rejected}
 \usage{
 negate(.p)
 }

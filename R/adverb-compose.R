@@ -1,4 +1,4 @@
-#' Compose multiple functions
+#' Compose multiple functions together to create a new function
 #'
 #' Create a new function that is the composition of multiple functions,
 #' i.e. `compose(f, g)` is equivalwnt to `function(...) f(g(...))`.

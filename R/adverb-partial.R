@@ -1,4 +1,4 @@
-#' Partial apply a function, filling in some arguments
+#' Partially apply a function, filling in some arguments
 #'
 #' Partial function application allows you to modify a function by pre-filling
 #' some of the arguments. It is particularly useful in conjunction with

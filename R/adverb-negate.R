@@ -1,4 +1,4 @@
-#' Negate a predicate function
+#' Negate a predicate function so it selects what it previously rejected
 #'
 #' Negating a function changes `TRUE` to `FALSE` and `FALSE` to `TRUE`.
 #'

@@ -1,4 +1,4 @@
-#' Wrap a function to avoid errors
+#' Wrap a function to return a value instead of an error
 #'
 #' Create a modified version of `.f` that return a default value (`otherwise`)
 #' whenever an error occurs.

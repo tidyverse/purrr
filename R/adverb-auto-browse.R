@@ -1,4 +1,4 @@
-#' Wrap a function so it automatically `browse()`s on error
+#' Wrap a function so it will automatically `browse()` on error
 #'
 #' A function wrapped with `auto_browse()` will automatically enter an
 #' interactive debugger using [browser()] when ever it encounters an error.

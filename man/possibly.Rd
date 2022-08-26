@@ -2,7 +2,7 @@
 % Please edit documentation in R/adverb-possibly.R
 \name{possibly}
 \alias{possibly}
-\title{Wrap a function to avoid errors}
+\title{Wrap a function to return a value instead of an error}
 \usage{
 possibly(.f, otherwise, quiet = TRUE)
 }

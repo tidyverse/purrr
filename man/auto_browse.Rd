@@ -2,7 +2,7 @@
 % Please edit documentation in R/adverb-auto-browse.R
 \name{auto_browse}
 \alias{auto_browse}
-\title{Wrap a function so it automatically \code{browse()}s on error}
+\title{Wrap a function so it will automatically \code{browse()} on error}
 \usage{
 auto_browse(.f)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/adverb-partial.R
 \name{partial}
 \alias{partial}
-\title{Partial apply a function, filling in some arguments}
+\title{Partially apply a function, filling in some arguments}
 \usage{
 partial(.f, ..., .env = NULL, .lazy = NULL, .first = NULL)
 }
