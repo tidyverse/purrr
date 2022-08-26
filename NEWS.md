@@ -11,6 +11,12 @@
 
 ## Features and fixes
 
+* `every()` now correctly propagates missing values using the same
+  rules as `&&` (#751). Internally, it has become a wrapper around
+  `&&`. This makes it consistent with `&&` and also with `some()`
+  which has always been a wrapper around `||` with the same
+  propagation rules.
+
 * `modify()`, `modify2()`, and `modify_if()` now correctly handle `NULL`s
   in replacement values (#655, #746, #753).
 
