@@ -32,7 +32,6 @@
 * `every()` and `some()` now properly check the return value of their
   predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
 
->>>>>>> a5dddf1a567c15715ad4f920afdd695c774df63f
 * `accumulate()` now uses vctrs for simplifying the output. This
   ensures a more principled and flexible coercion behaviour.
 
