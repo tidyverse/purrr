@@ -7,6 +7,7 @@
 \alias{map_int}
 \alias{map_dbl}
 \alias{map_raw}
+\alias{map_vec}
 \alias{map_dfr}
 \alias{map_df}
 \alias{map_dfc}
@@ -24,6 +25,8 @@ map_int(.x, .f, ...)
 map_dbl(.x, .f, ...)
 
 map_raw(.x, .f, ...)
+
+map_vec(.x, .f, ..., .ptype = NULL)
 
 map_dfr(.x, .f, ..., .id = NULL)
 
@@ -59,6 +62,10 @@ present, the value of \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
+\item{.ptype}{If \code{NULL}, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.}
+
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or
 the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
@@ -91,6 +98,8 @@ each element of a list or atomic vector and returning an object of the same leng
 versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
 atomic vector of the indicated type (or die trying).
+\item \code{map_vec()} simplifies to the common type of the output. It works with
+most types of simple vectors like Date, POSIXct, factors, etc.
 \item \code{map_dfr()} and \code{map_dfc()} return a data frame created by
 row-binding and column-binding respectively. They require dplyr
 to be installed. \code{map_df()} is an alias for \code{map_dfr()}.

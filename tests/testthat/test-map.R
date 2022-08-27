@@ -170,3 +170,32 @@ test_that("map() with empty input copies names", {
   expect_identical(map_chr(named_list, identity), named(chr()))
   expect_identical(map_raw(named_list, identity), named(raw()))
 })
+
+
+# map_vec -----------------------------------------------------------------
+
+test_that("still iterates using [[", {
+  df <- data.frame(x = 1, y = 2, z = 3)
+  expect_equal(map_vec(df, length), c(x = 1, y = 1, z = 1))
+})
+
+test_that("requires output be length 1", {
+  expect_snapshot(error = TRUE, {
+    map_vec(1:2, ~ rep(1, .x))
+  })
+})
+
+test_that("requires common type of output", {
+  out <- map_vec(1:2, ~ factor("x"))
+  expect_equal(out, factor(c("x", "x")))
+
+  expect_snapshot(error = TRUE, {
+    map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
+  })
+})
+
+test_that("can enforce .ptype", {
+  expect_snapshot(error = TRUE, {
+    map_vec(1:2, ~ factor("x"), .ptype = integer())
+  })
+})

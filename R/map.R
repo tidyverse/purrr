@@ -11,6 +11,9 @@
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
 #'   atomic vector of the indicated type (or die trying).
 #'
+#' * `map_vec()` simplifies to the common type of the output. It works with
+#'   most types of simple vectors like Date, POSIXct, factors, etc.
+#'
 #' * `map_dfr()` and `map_dfc()` return a data frame created by
 #'   row-binding and column-binding respectively. They require dplyr
 #'   to be installed. `map_df()` is an alias for `map_dfr()`.
@@ -217,6 +220,27 @@ map_raw <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "raw")
 }
+
+
+#' @rdname map
+#' @param .ptype If `NULL`, the default, the output type is the common type
+#'   of the elements of the result. Otherwise, supply a "prototype" giving
+#'   the desired type of output.
+#' @importFrom vctrs vec_c vec_size vec_ptype_common
+#' @export
+map_vec <- function(.x, .f, ..., .ptype = NULL) {
+  out <- map(.x, .f, ...)
+
+  .ptype <- vec_ptype_common(!!!out, .ptype = .ptype)
+  for (i in seq_along(out)) {
+    if (vec_size(out[[i]]) != 1L) {
+      stop_bad_element_vector(out[[i]], i, .ptype, 1L, what = "Result")
+    }
+  }
+
+  vec_c(!!!out, .ptype = .ptype)
+}
+
 
 #' @rdname map
 #' @param .id Either a string or `NULL`. If a string, the output will contain
