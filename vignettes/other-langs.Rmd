@@ -18,7 +18,7 @@ purrr draws inspiration from many related tools:
   [lodash](https://lodash.com) and 
   [lazy.js](http://danieltao.com/lazy.js/).
 
-* [rlist](http://renkun.me/rlist/), another R package to support working
+* [rlist](https://renkun-ken.github.io/rlist/), another R package to support working
   with lists. Similar goals but somewhat different philosophy.
 
 However, the goal of purrr is not to try and simulate a purer functional programming language in R; we don't want to implement a second-class version of Haskell in R. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R:
@@ -42,5 +42,5 @@ However, the goal of purrr is not to try and simulate a purer functional program
   argument, `.right`. Type-stable functions are easy to reason about so
   additional arguments will never change the type of the output.
 
-[scala]:http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.List
+[scala]:https://www.scala-lang.org/api/current/index.html
 [haskell]:http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11

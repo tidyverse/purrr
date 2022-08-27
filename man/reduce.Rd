@@ -69,7 +69,9 @@ has changed. Whereas \code{reduce_right()} computed \code{f(f(3, 2), 1)},
 standard way of reducing from the right.
 
 To update your code with the same reduction as \code{reduce_right()},
-simply reverse your vector and use a left reduction:\if{html}{\out{<div class="r">}}\preformatted{# Before:
+simply reverse your vector and use a left reduction:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Before:
 reduce_right(1:3, f)
 
 # After:
@@ -87,6 +89,10 @@ about a use case for a right reduction with a ternary function.
 # computes the product:
 1:3 \%>\% reduce(`+`)
 1:10 \%>\% reduce(`*`)
+
+# By ignoring the input vector (.y), you can turn output of one step into
+# the input for the next. This code takes 10 steps of a random walk:
+reduce(1:10, ~ .x + rnorm(1), .init = 0)
 
 # When the operation is associative, the direction of reduction
 # does not matter:

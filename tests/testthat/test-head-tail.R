@@ -1,5 +1,3 @@
-context("head-tail")
-
 y <- 1:100
 
 test_that("head_while works", {

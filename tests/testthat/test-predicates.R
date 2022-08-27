@@ -1,5 +1,3 @@
-context("predicates")
-
 test_that("predicate-based functionals work with logical vectors", {
   expect_equal(keep(as.list(1:3), c(TRUE, FALSE, TRUE)), list(1, 3))
   expect_equal(discard(as.list(1:3), c(TRUE, FALSE, TRUE)), list(2))

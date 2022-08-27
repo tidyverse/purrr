@@ -1,5 +1,3 @@
-context("transpose")
-
 test_that("input must be a list", {
   expect_bad_type_error(transpose(1:3), "`.l` must be a list, not an integer vector")
 })

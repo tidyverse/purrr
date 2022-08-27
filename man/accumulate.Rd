@@ -111,8 +111,8 @@ reducing \code{list()} from the right produces a right-leaning list.
 
 \examples{
 # With an associative operation, the final value is always the
-# same, no matter the direction. You'll find it in the last element for a
-# backward (left) accumulation, and in the first element for forward
+# same, no matter the direction. You'll find it in the first element for a
+# backward (left) accumulation, and in the last element for forward
 # (right) one:
 1:5 \%>\% accumulate(`+`)
 1:5 \%>\% accumulate(`+`, .dir = "backward")
@@ -127,6 +127,10 @@ accumulate(letters[1:5], paste, sep = ".")
 # Note how the intermediary reduced values are passed to the left
 # with a left reduction, and to the right otherwise:
 accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
+
+# By ignoring the input vector (.y), you can turn output of one step into
+# the input for the next. This code takes 10 steps of a random walk:
+accumulate(1:10, ~ .x + rnorm(1), .init = 0)
 
 # `accumulate2()` is a version of `accumulate()` that works with
 # 3-argument functions and one additional vector:

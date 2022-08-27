@@ -10,7 +10,7 @@ modify_in(.x, .where, .f, ...)
 assign_in(x, where, value)
 }
 \arguments{
-\item{.x}{A vector or environment}
+\item{.x, x}{A vector or environment}
 
 \item{.where, where}{A pluck location, as a numeric vector of
 positions, a character vector of names, or a list combining both.
@@ -19,8 +19,6 @@ The location must exist in the data structure.}
 \item{.f}{A function to apply at the pluck location given by \code{.where}.}
 
 \item{...}{Arguments passed to \code{.f}.}
-
-\item{x}{A vector or environment}
 
 \item{value}{A value to replace in \code{.x} at the pluck location.}
 }

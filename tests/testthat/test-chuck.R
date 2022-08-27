@@ -1,5 +1,3 @@
-context("chuck")
-
 # NULL input ----------------------------------------------------------------
 
 test_that("trying to chuck NULL raises errors", {
