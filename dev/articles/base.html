@@ -612,6 +612,15 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -0.09802317  2.72057350  2.87673977  4.05830349</span></span></code></pre></div>
 <p>(And of course you can mix and match the piping style with either base R or purrr.)</p>
+<p>The pipe is particularly compelling when working with longer transformations. For example, the following code splits <code>mtcars</code> up by <code>cyl</code>, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">coef</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/map.html">map_dbl</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        4        6        8 </span></span>
+<span><span class="co">#&gt; 39.57120 28.40884 23.86803</span></span></code></pre></div>
 </div>
 </div>
 </div>
