@@ -11,6 +11,8 @@
 
 ## Features and fixes
 
+* `pluck()` and `chuck()` now warn if you provide named inputs to ... (#788).
+
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 

@@ -2,6 +2,10 @@ test_that("contents must be a vector", {
   expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
 })
 
+test_that("dots must be unnamed", {
+  expect_snapshot(pluck(1, a = 1), error = TRUE)
+})
+
 # pluck vector --------------------------------------------------------------
 
 test_that("can pluck by position", {
