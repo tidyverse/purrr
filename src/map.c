@@ -7,14 +7,20 @@
 #include "utils.h"
 
 void copy_names(SEXP from, SEXP to) {
-  if (Rf_length(from) != Rf_length(to))
-    return;
-
   SEXP names = Rf_getAttrib(from, R_NamesSymbol);
-  if (Rf_isNull(names))
+  if (names == R_NilValue) {
     return;
+  }
+
+  R_len_t n = Rf_length(to);
+
+  if (Rf_length(names) != n) {
+    names = short_vec_recycle(names, n);
+  }
+  PROTECT(names);
 
   Rf_setAttrib(to, R_NamesSymbol, names);
+  UNPROTECT(1);
 }
 
 void check_vector(SEXP x, const char *name) {

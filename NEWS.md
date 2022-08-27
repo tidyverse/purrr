@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `map2()` and `pmap()` now recycle names of their first input if
+  needed (#783).
+
 * `every()` now correctly propagates missing values using the same
   rules as `&&` (#751). Internally, it has become a wrapper around
   `&&`. This makes it consistent with `&&` and also with `some()`
