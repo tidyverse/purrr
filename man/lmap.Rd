@@ -15,7 +15,8 @@ lmap_at(.x, .at, .f, ...)
 \arguments{
 \item{.x}{A list or data frame.}
 
-\item{.f}{A function that takes and returns a list or data frame.}
+\item{.f}{A function that takes a length-1 list and returns a list (of any
+length.)}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -39,46 +40,39 @@ the \code{tidyselect} helpers to select elements.}
 A list. There are no guarantees about the length.
 }
 \description{
-\code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to
-\code{map()}, \code{map_at()} and \code{map_if()}, with the
-difference that they operate exclusively on functions that take
-\emph{and} return a list (or data frame). Thus, instead of mapping
-the elements of a list (as in \code{.x[[i]]}), they apply a
-function \code{.f} to each subset of size 1 of that list (as in
-\code{.x[i]}). We call those elements \code{list-elements}).
+\code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to \code{map()}, \code{map_at()} and
+\code{map_if()}, except instead of mapping over \code{.x[[i]]}, they instead map over
+\code{.x[i]}.
+
+This has several advantages:
+\itemize{
+\item It makes it possible to work with functions that exclusively take a list.
+\item It allows \code{.f} to access the attributes of the encapsulating list,
+like \code{\link[=names]{names()}}.
+\item It allows \code{.f} to return a larger or small list than it receives
+changing the size of the output.
 }
-\details{
-Mapping the list-elements \code{.x[i]} has several advantages. It
-makes it possible to work with functions that exclusively take a
-list or data frame. It enables \code{.f} to access the attributes
-of the encapsulating list, like the name of the components it
-receives. It also enables \code{.f} to return a larger list than
-the list-element of size 1 it got as input. Conversely, \code{.f}
-can also return empty lists. In these cases, the output list is
-reshaped with a different size than the input list \code{.x}.
 }
 \examples{
+set.seed(1014)
+
 # Let's write a function that returns a larger list or an empty list
-# depending on some condition. This function also uses the names
-# metadata available in the attributes of the list-element
+# depending on some condition. It also uses the input name to name the
+# output
 maybe_rep <- function(x) {
   n <- rpois(1, 2)
-  out <- rep_len(x, n)
-  if (length(out) > 0) {
-    names(out) <- paste0(names(x), seq_len(n))
-  }
-  out
+  set_names(rep_len(x, n), paste0(names(x), seq_len(n)))
 }
 
 # The output size varies each time we map f()
 x <- list(a = 1:4, b = letters[5:7], c = 8:9, d = letters[10])
-x \%>\% lmap(maybe_rep)
+x \%>\% lmap(maybe_rep) \%>\% str()
 
 # We can apply f() on a selected subset of x
-x \%>\% lmap_at(c("a", "d"), maybe_rep)
+x \%>\% lmap_at(c("a", "d"), maybe_rep) \%>\% str()
 
 # Or only where a condition is satisfied
-x \%>\% lmap_if(is.character, maybe_rep)
+x \%>\% lmap_if(is.character, maybe_rep) \%>\% str()
 }
 \seealso{
 Other map variants: 
