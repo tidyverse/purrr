@@ -50,13 +50,15 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
       goto numeric_index_error;
     }
 
-    --val;
+    if (val < 0) {
+      val = n + val + 1;
+    }
     if (check_double_index_length(val, n, i, strict)) {
       goto numeric_index_error;
     }
 
     UNPROTECT(n_protect);
-    return val;
+    return val - 1;
 
    numeric_index_error:
     UNPROTECT(n_protect);
@@ -296,21 +298,29 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 }
 
 static int check_double_index_length(double val, int n, int i, bool strict) {
-  if (val < 0) {
+  if (val == 0) {
     if (strict) {
-      Rf_errorcall(R_NilValue,
-                   "Index %d must be greater than 0, not %.0f",
-                   i + 1,
-                   val + 1);
+      Rf_errorcall(R_NilValue, "Index %d is zero", i + 1);
     } else {
       return -1;
     }
-  } else if (val >= n) {
+  } else if (val < 0) {
+    if (strict) {
+      // Negative values have already been subtracted from end
+      Rf_errorcall(R_NilValue,
+                   "Negative index %d must be greater than or equal to %d, not %.0f",
+                   i + 1,
+                   -n,
+                   -n + val);
+    } else {
+      return -1;
+    }
+  } else if (val > n) {
     if (strict) {
       Rf_errorcall(R_NilValue,
                    "Index %d exceeds the length of plucked object (%.0f > %d)",
                    i + 1,
-                   val + 1,
+                   val,
                    n);
     } else {
       return -1;

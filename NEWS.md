@@ -11,6 +11,8 @@
 
 ## Features and fixes
 
+* `pluck()` now accepts negative integers, indexing from the right (#603).
+
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 
