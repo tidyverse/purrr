@@ -277,3 +277,14 @@ means |>
 ```
 
 (And of course you can mix and match the piping style with either base R or purrr.)
+
+The pipe is particularly compelling when working with longer transformations. For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
+
+```{r}
+mtcars %>% 
+  split(mtcars$cyl) %>% 
+  map(~ lm(mpg ~ wt, data = .x)) %>% 
+  map(coef) %>% 
+  map_dbl(1)
+```
+
