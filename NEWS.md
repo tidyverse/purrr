@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `as_mapper()` is now around twice as fast when used with character,
+  integer, or list (#820).
+
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 

@@ -118,14 +118,19 @@
 #' pluck(x, !!!idx)
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
+  pluck_raw(.x, list2(...), .default = .default)
+}
+
+pluck_raw <- function(.x, index, .default = NULL) {
   .Call(
     pluck_impl,
     x = .x,
-    index = list2(...),
+    index = index,
     missing = .default,
     strict = FALSE
   )
 }
+
 #' @rdname pluck
 #' @export
 chuck <- function(.x, ...) {
