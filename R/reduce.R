@@ -353,8 +353,10 @@ seq_len2 <- function(start, end) {
 #'   `"forward"` (the default) or `"backward"`. See the section about
 #'   direction below.
 #' @param .simplify If `TRUE`, the default, the accumulated list of
-#'   results is simplified to an atomic vector if possible. See
-#'   [simplify()].
+#'   results is simplified to an atomic vector if possible.
+#'
+#'   This is `TRUE` due to a historical mistake; a better default would be
+#'   `FALSE` to be consistent with other purrr functions.
 #'
 #' @return A list the same length of `.x` with the same names as `.x`.
 #'   If `.simplify` is `TRUE`, the list is simplified to an atomic

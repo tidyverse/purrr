@@ -43,8 +43,10 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 direction below.}
 
 \item{.simplify}{If \code{TRUE}, the default, the accumulated list of
-results is simplified to an atomic vector if possible. See
-\code{\link[=simplify]{simplify()}}.}
+results is simplified to an atomic vector if possible.
+
+This is \code{TRUE} due to a historical mistake; a better default would be
+\code{FALSE} to be consistent with other purrr functions.}
 
 \item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
 needs to be 1 element shorter than the vector to be accumulated (\code{.x}).
