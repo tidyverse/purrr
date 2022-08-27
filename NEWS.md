@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `pluck()` no longer replaces 0-length vectors with `default`; it now
+  only applies absent and `NULL` components.
+
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 

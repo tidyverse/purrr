@@ -59,15 +59,17 @@ test_that("special indexes never match", {
 })
 
 test_that("special values return NULL", {
-  # unnamed input
+  # absent name
   expect_null(pluck(list(1, 2), "a"))
+  expect_null(pluck(list(a = 1, b = 2), "c"))
 
-  # zero length input
-  expect_null(pluck(integer(), 1))
-
-  # past end
+  # outside of range
+  expect_null(pluck(1:4, 0))
   expect_null(pluck(1:4, 10))
-  expect_null(pluck(1:4, 10L))
+})
+
+test_that("can pluck 0-lengths object", {
+  expect_equal(pluck(list(integer()), 1), integer())
 })
 
 test_that("handles weird names", {
