@@ -76,6 +76,10 @@
 #' 1:3 %>% reduce(`+`)
 #' 1:10 %>% reduce(`*`)
 #'
+#' # By ignoring the input vector (.y), you can turn output of one step into
+#' # the input for the next. This code takes 10 steps of a random walk:
+#' reduce(1:10, ~ .x + rnorm(1), .init = 0)
+#'
 #' # When the operation is associative, the direction of reduction
 #' # does not matter:
 #' reduce(1:4, `+`)
@@ -397,6 +401,10 @@ seq_len2 <- function(start, end) {
 #' # Note how the intermediary reduced values are passed to the left
 #' # with a left reduction, and to the right otherwise:
 #' accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
+#'
+#' # By ignoring the input vector (.y), you can turn output of one step into
+#' # the input for the next. This code takes 10 steps of a random walk:
+#' accumulate(1:10, ~ .x + rnorm(1), .init = 0)
 #'
 #' # `accumulate2()` is a version of `accumulate()` that works with
 #' # 3-argument functions and one additional vector:
