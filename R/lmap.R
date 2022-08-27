@@ -83,34 +83,36 @@ lmap <- function(.x, .f, ...) {
 #' @export
 lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
   sel <- probe(.x, .p)
-
-  .x <- lmap_at(.x, which(sel), .f, ...)
-
-  if (!is_null(.else)) {
-    .x <- lmap_at(.x, which(!sel), .else, ...)
-  }
-
-  .x
+  lmap_helper(.x, sel, .f, ..., .else = .else)
 }
 
 #' @rdname lmap
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
-  if (is_formula(.f)) {
-    .f <- as_mapper(.f, ...)
-  }
-
   where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
 
+  lmap_helper(.x, sel, .f, ...)
+}
+
+lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
+  if (is_formula(.f)) {
+    .f <- rlang::as_function(.f)
+  }
+  if (is_formula(.else)) {
+    .else <- rlang::as_function(.else)
+  }
+
   out <- vector("list", length(.x))
   for (i in seq_along(.x)) {
-    res <-
-      if (sel[[i]]) {
-        .f(.x[i], ...)
-      } else {
-        .x[i]
-      }
+    if (.ind[[i]]) {
+      res <- .f(.x[i], ...)
+    } else if (is.null(.else)) {
+      res <- .x[i]
+    } else {
+      res <- .else(.x[i], ...)
+    }
+
     stopifnot(is.list(res))
     out[[i]] <- res
   }

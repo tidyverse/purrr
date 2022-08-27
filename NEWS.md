@@ -11,6 +11,8 @@
 
 ## Features and fixes
 
+* `lmap_if()` correctly handles `.else` functions (#847).
+
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 
