@@ -512,7 +512,7 @@ accumulate_names <- function(nms, init, dir) {
 }
 
 acc_simplify <- function(x) {
-  # It would be unappropriate to simplify the result rowwise with
+  # It would be inappropriate to simplify the result rowwise with
   # `accumulate()` because it has invariants defined in terms of
   # `length()` rather than `vec_size()`
   if (some(x, is.data.frame)) {
