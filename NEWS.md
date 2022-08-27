@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `lmap()` now always returns a list, even if `.x` is a data frame. 
+  This makes it more consistent with other functions in the `map` family.
+
 * `lmap_if()` correctly handles `.else` functions (#847).
 
 * `map2()` and `pmap()` now recycle names of their first input if

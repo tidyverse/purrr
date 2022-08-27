@@ -26,14 +26,6 @@ test_that("lmap_at() only affects selected elements", {
   expect_equal(out, list(0, 1, 2, 2))
 })
 
-test_that("lmap output is tibble if input is data frame", {
-  skip_if_not_installed("tibble")
-  expect_s3_class(lmap(mtcars, as.list), "tbl_df")
-
-  skip_if_not_installed("tidyselect")
-  expect_s3_class(lmap_at(mtcars, vars(tidyselect::contains("mpg")), ~ .x * 10), "tbl_df")
-})
-
 test_that("lmap_at can use tidyselect", {
   skip_if_not_installed("tidyselect")
   x <- lmap_at(mtcars, vars(tidyselect::contains("vs")), ~ .x + 10)

@@ -8,15 +8,6 @@
 #' @usage lhs \%>\% rhs
 NULL
 
-maybe_as_data_frame <- function(out, x) {
-  if (is.data.frame(x)) {
-    check_installed("tibble")
-    tibble::as_tibble(out)
-  } else {
-    out
-  }
-}
-
 at_selection <- function(nm, .at){
   if (is_quosures(.at)) {
     check_installed("tidyselect", "for using tidyselect in `map_at()`.")

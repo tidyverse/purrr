@@ -21,8 +21,7 @@
 #' @inheritParams map_if
 #' @inheritParams map_at
 #' @inheritParams map
-#' @return If `.x` is a list, a list. If `.x` is a data
-#'   frame, a data frame.
+#' @return A list. There are no guarantees about the length.
 #' @family map variants
 #' @export
 #' @examples
@@ -47,34 +46,6 @@
 #'
 #' # Or only where a condition is satisfied
 #' x %>% lmap_if(is.character, maybe_rep)
-#'
-#'
-#' # A more realistic example would be a function that takes discrete
-#' # variables in a dataset and turns them into disjunctive tables, a
-#' # form that is amenable to fitting some types of models.
-#'
-#' # A disjunctive table contains only 0 and 1 but has as many columns
-#' # as unique values in the original variable. Ideally, we want to
-#' # combine the names of each level with the name of the discrete
-#' # variable in order to identify them. Given these requirements, it
-#' # makes sense to have a function that takes a data frame of size 1
-#' # and returns a data frame of variable size.
-#' disjoin <- function(x, sep = "_") {
-#'   name <- names(x)
-#'   x <- as.factor(x[[1]])
-#'
-#'   out <- lapply(levels(x), function(level) {
-#'     as.numeric(x == level)
-#'   })
-#'
-#'   names(out) <- paste(name, levels(x), sep = sep)
-#'   out
-#' }
-#'
-#' # Now, we are ready to map disjoin() on each categorical variable of a
-#' # data frame:
-#' iris %>% lmap_if(is.factor, disjoin)
-#' mtcars %>% lmap_at(c("cyl", "vs", "am"), disjoin)
 lmap <- function(.x, .f, ...) {
   lmap_at(.x, seq_along(.x), .f, ...)
 }
@@ -119,5 +90,5 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
     out[[i]] <- res
   }
 
-  maybe_as_data_frame(flatten(out), .x)
+  flatten(out)
 }
