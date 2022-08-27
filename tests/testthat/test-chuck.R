@@ -1,7 +1,7 @@
 # NULL input ----------------------------------------------------------------
 
 test_that("trying to chuck NULL raises errors", {
-  expect_error(chuck(NULL, "a"), "can't be NULL")
+  expect_snapshot(chuck(NULL, "a"), error = TRUE)
 })
 
 # chuck vector --------------------------------------------------------------
@@ -31,9 +31,6 @@ test_that("halts on named vector errors", {
 })
 
 test_that("indices outside of vector length raise errors", {
-  # zero length input
-  expect_error(chuck(integer(), 1), "must have at least one element")
-
   # past end
   expect_error(chuck(1:4, 10), "exceeds the length of plucked object")
   expect_error(chuck(1:4, 10L), "exceeds the length of plucked object")

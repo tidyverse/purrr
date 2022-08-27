@@ -11,6 +11,9 @@
 
 ## Features and fixes
 
+* `pluck()` now requires indices to be length 1 (#813). It also now reports 
+  the correct type if you supply an unexpected index.
+
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 

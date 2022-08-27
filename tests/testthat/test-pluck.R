@@ -38,10 +38,21 @@ test_that("can pluck by name and position", {
   expect_equal(pluck(x, "a", 1, "b"), 1)
 })
 
+test_that("require length 1 character/double vectors", {
+  expect_snapshot(error = TRUE, {
+    pluck(1, 1:2)
+    pluck(1, integer())
+    pluck(1, NULL)
+    pluck(1, TRUE)
+  })
+})
 
-test_that("require length 1 vectors", {
-  expect_bad_element_length_error(pluck(1, letters), "must have length 1")
-  expect_bad_element_type_error(pluck(1, TRUE), "Index 1 must be a character or numeric vector")
+test_that("validate index even when indexing NULL", {
+  expect_snapshot(error = TRUE, {
+    pluck(NULL, 1:2)
+    pluck(NULL, TRUE)
+  })
+
 })
 
 test_that("special indexes never match", {
