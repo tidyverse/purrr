@@ -113,7 +113,9 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
       res <- .else(.x[i], ...)
     }
 
-    stopifnot(is.list(res))
+    if (!is.list(res)) {
+      stop_bad_type(res, "list", what = paste0("Element ", i))
+    }
     out[[i]] <- res
   }
 

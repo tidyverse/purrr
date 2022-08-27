@@ -45,3 +45,9 @@ test_that("`.else` preserves false elements", {
   out <- lmap_if(x, is.character, ~ list(1, 2), .else = ~ list(3, 4))
   expect_equal(out, list(1, 2, 3, 4))
 })
+
+test_that("generates informative error output isn't a list", {
+  expect_snapshot(error = TRUE, {
+    lmap(list(1), ~ 1)
+  })
+})
