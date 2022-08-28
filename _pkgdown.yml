@@ -71,6 +71,7 @@ reference:
     Getting or setting a single element.
   contents:
   - pluck
+  - pluck_depth
   - modify_in
   - attr_getter
   - "`%@%`"
@@ -108,4 +109,3 @@ reference:
   - rbernoulli
   - rdunif
   - rerun
-  - vec_depth
