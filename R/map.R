@@ -12,8 +12,7 @@
 #'   atomic vector of the indicated type (or die trying).
 #'
 #' * `map_dfr()` and `map_dfc()` return a data frame created by
-#'   row-binding and column-binding respectively. They require dplyr
-#'   to be installed. `map_df()` is an alias for `map_dfr()`.
+#'   row-binding and column-binding respectively.
 #'
 #' * The returned values of `.f` must be of length one for each element
 #'   of `.x`. If `.f` uses an extractor function shortcut, `.default`
@@ -227,11 +226,9 @@ map_raw <- function(.x, .f, ...) {
 #'   Only applies to `_dfr` variant.
 #' @export
 map_dfr <- function(.x, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `map_dfr()`.")
-
   .f <- as_mapper(.f, ...)
   res <- map(.x, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
+  vctrs::vec_rbind(!!!res, .names_to = .id)
 }
 
 #' @rdname map
@@ -242,11 +239,9 @@ map_df <- map_dfr
 #' @rdname map
 #' @export
 map_dfc <- function(.x, .f, ...) {
-  check_installed("dplyr", "for `map_dfc()`.")
-
   .f <- as_mapper(.f, ...)
-  res <- map(.x, .f, ...)
-  dplyr::bind_cols(res)
+  res <- unname(map(.x, .f, ...))
+  vctrs::vec_cbind(!!!res)
 }
 
 #' @rdname map

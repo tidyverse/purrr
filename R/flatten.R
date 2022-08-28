@@ -12,8 +12,7 @@
 #'   double vector, and `flatten_chr()` a character vector.
 #'
 #'   `flatten_dfr()` and `flatten_dfc()` return data frames created by
-#'   row-binding and column-binding respectively. They require dplyr to
-#'   be installed.
+#'   row-binding and column-binding respectively.
 #' @inheritParams map
 #' @export
 #' @examples
@@ -63,19 +62,15 @@ flatten_raw <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_dfr <- function(.x, .id = NULL) {
-  check_installed("dplyr", "for `flatten_dfr()`.")
-
   res <- .Call(flatten_impl, .x)
-  dplyr::bind_rows(res, .id = .id)
+  vctrs::vec_rbind(!!!res, .names_to = .id)
 }
 
 #' @export
 #' @rdname flatten
 flatten_dfc <- function(.x) {
-  check_installed("dplyr", "for `flatten_dfc()`.")
-
   res <- .Call(flatten_impl, .x)
-  dplyr::bind_cols(res)
+  vctrs::vec_cbind(!!!res)
 }
 
 #' @export

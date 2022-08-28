@@ -20,7 +20,6 @@ Imports:
 Suggests: 
     covr,
     crayon,
-    dplyr (>= 0.7.8),
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),

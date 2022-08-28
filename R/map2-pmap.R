@@ -9,7 +9,7 @@
 #' that a data frame is a very important special case, in which case `pmap()`
 #' and `pwalk()` apply the function `.f` to each row. `map_dfr()`, `pmap_dfr()`
 #' and `map2_dfc()`, `pmap_dfc()` return data frames created by row-binding
-#' and column-binding respectively. They require dplyr to be installed.
+#' and column-binding respectively.
 #'
 #' Note that arguments to be vectorised over come before `.f`,
 #' and arguments that are supplied to every call come after `.f`.
@@ -136,21 +136,17 @@ map2_raw <- function(.x, .y, .f, ...) {
 #' @rdname map2
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `map2_dfr()`.")
-
   .f <- as_mapper(.f, ...)
   res <- map2(.x, .y, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
+  vctrs::vec_rbind(!!!res, .names_to = .id)
 }
 
 #' @rdname map2
 #' @export
 map2_dfc <- function(.x, .y, .f, ...) {
-  check_installed("dplyr", "for `map2_dfc()`.")
-
   .f <- as_mapper(.f, ...)
-  res <- map2(.x, .y, .f, ...)
-  dplyr::bind_cols(res)
+  res <- unname(map2(.x, .y, .f, ...))
+  vctrs::vec_cbind(!!!res)
 }
 #' @rdname map2
 #' @export
@@ -228,21 +224,17 @@ pmap_raw <- function(.l, .f, ...) {
 #' @rdname map2
 #' @export
 pmap_dfr <- function(.l, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `pmap_dfr()`.")
-
   .f <- as_mapper(.f, ...)
   res <- pmap(.l, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
+  vctrs::vec_rbind(!!!res, .names_to = .id)
 }
 
 #' @rdname map2
 #' @export
 pmap_dfc <- function(.l, .f, ...) {
-  check_installed("dplyr", "for `pmap_dfc()`.")
-
   .f <- as_mapper(.f, ...)
-  res <- pmap(.l, .f, ...)
-  dplyr::bind_cols(res)
+  res <- unname(pmap(.l, .f, ...))
+  vctrs::vec_cbind(!!!res)
 }
 
 #' @rdname map2

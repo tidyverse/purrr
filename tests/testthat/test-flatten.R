@@ -78,6 +78,6 @@ test_that("can flatten to a data frame with named lists", {
   skip_if_not_installed("dplyr")
 
   dfs <- list(c(a = 1), c(b = 2))
-  expect_equal(flatten_dfr(dfs), tibble::tibble(a = 1, b = 2))
-  expect_equal(flatten_dfc(dfs), tibble::tibble(a = 1, b = 2))
+  expect_equal(flatten_dfr(dfs), data.frame(...1 = c(a = 1, b = 2)))
+  expect_equal(flatten_dfc(dfs), data.frame(a = 1, b = 2))
 })

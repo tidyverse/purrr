@@ -33,14 +33,6 @@ test_that("invoke_map() works with bare function", {
   expect_identical(invoke_map_raw(identity, as.raw(1:3)), as.raw(1:3))
 })
 
-test_that("invoke_map() works with bare function with data frames", {
-  skip_if_not_installed("dplyr")
-
-  data <- list(1:2, 3:4)
-  ops <- set_names(c(`+`, `-`), c("a", "b"))
-  expect_identical(invoke_map_dfr(ops, data), invoke_map_dfc(ops, data))
-})
-
 test_that("invoke_map() evaluates expressions in the right environment", {
   shadowed_object <- letters
   shadowed_fun <- toupper

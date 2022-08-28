@@ -16,11 +16,6 @@ test_that("atomic vector imap works", {
   expect_equal(imap_raw(as.raw(12), rawShift), rawShift(as.raw(12), 1) )
 })
 
-test_that("data frame imap works", {
-  skip_if_not_installed("dplyr")
-  expect_identical(imap_dfc(x, paste), imap_dfr(x, paste))
-})
-
 test_that("iwalk returns invisibly", {
   expect_output(iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = "")))
 })
