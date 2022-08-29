@@ -174,7 +174,7 @@ values of the reduction.</p></div>
 <span class="r-in"><span><span class="co"># By ignoring the input vector (.y), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
 <span class="r-in"><span><span class="fu">reduce</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.210997</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.720841</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># When the operation is associative, the direction of reduction</span></span></span>
 <span class="r-in"><span><span class="co"># does not matter:</span></span></span>

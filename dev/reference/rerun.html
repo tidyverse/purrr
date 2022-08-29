@@ -112,40 +112,40 @@ argument to the lambda).</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fl">10</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">rerun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2.1270070  2.2671748 -0.7295284 -0.3285439 -1.0982613</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.5695771 -0.7054585 -0.2006500 -1.3795947  1.4315682</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.1943798  0.4002536 -0.4490203  1.5965016 -0.2169430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.6362670  0.4182438  0.3339739  0.9148360 -0.6485253</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.0666471 1.4070856 0.2900719 0.8935104 0.7180041</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.5838175  1.1170840 -0.2291604 -0.6271039  2.0857385</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.3371559 -1.6741345  0.4867500 -1.0234974  0.2061258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.2521813  1.2765469 -0.4135560  0.5702703  0.4339727</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[5]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.2367365  1.7270080  0.8006205 -1.8889077 -0.5625300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.5379812 -0.4646306  1.2142894  0.6619489 -0.9258003</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[6]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.1346985  0.4111025 -0.6739550 -0.8711032  0.4065985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.7782660  0.9062180  0.7816749 -0.2570653 -1.1985562</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[7]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.7491272  0.4080580 -0.1398280 -0.7211374  0.2844147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.0351207 -0.5638711 -0.9761504 -1.6644778  1.3042903</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[8]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  1.36780134 -0.09473477 -1.71740570  0.15306192  1.01317917</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.20227926  0.90999420 -0.12205928  0.09408449  1.32917593</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[9]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.1698053 -1.2105522  1.7830747  0.1337425  0.4002212</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  1.1423058  0.2671142  0.6247009 -1.5705815  1.2739797</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[10]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.02531831  0.81876625 -1.12541439 -0.87451492 -0.62167682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.6492718  1.7295727 -0.1105585 -1.7302617  1.0966358</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fl">10</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">rerun</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map_dbl</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">x</span>, <span class="va">.x</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.76702858 -0.86471325 -0.16389576  0.06149510 -0.34729814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.88311137 -0.01305969  0.75752511  0.03675323 -0.64223526</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.4578316 -0.4668895 -0.2003976  0.6041469 -0.9039853 -0.4355599</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  0.8598898 -0.7927305 -0.1306537 -0.8586545</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
