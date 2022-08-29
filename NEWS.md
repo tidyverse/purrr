@@ -30,12 +30,9 @@
 
 ## Features and fixes
 
-<<<<<<< HEAD
 * `pluck()` now requires indices to be length 1 (#813). It also now reports 
   the correct type if you supply an unexpected index.
 
-||||||| Show recursion with reduce()/accumulate()
-=======
 * `pluck()` now accepts negative integers, indexing from the right (#603).
 
 * `pluck()` and `chuck()` now fail if you provide named inputs to ... (#788).
@@ -48,7 +45,6 @@
 
 * `lmap_if()` correctly handles `.else` functions (#847).
 
->>>>>>> 5d423cb20db73897bad6030ce246cdfcc42d4156
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 
