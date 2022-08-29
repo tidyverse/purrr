@@ -68,7 +68,7 @@ test_that("special values return NULL", {
   expect_null(pluck(1:4, 10))
 })
 
-test_that("can pluck 0-lengths object", {
+test_that("can pluck 0-length object", {
   expect_equal(pluck(list(integer()), 1), integer())
 })
 
