@@ -17,6 +17,7 @@
 #'   level list will be dropped. In this case, `rerun(n, x)` behaves like
 #'   `replicate(n, x, simplify = FALSE)`.
 #' @export
+#' @keywords internal
 #' @examples
 #' # old
 #' 10 %>% rerun(rnorm(5))

@@ -42,3 +42,4 @@ Also, \code{rerun(n, x)} can just as easily be expressed as \code{map(1:n, ~ x)}
   map(~ list(x = rnorm(5), y = rnorm(5))) \%>\%
   map_dbl(~ cor(.x$x, .x$y))
 }
+\keyword{internal}
