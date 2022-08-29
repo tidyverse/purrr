@@ -8,6 +8,9 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* `splice()` is deprecated because we no longer believe that automatic 
+  splicing makes for good UI. Instead use `list2()` + `!!!` (#869).
+
 * `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
   are no longer supported. They have been defunct for quite some time.
 

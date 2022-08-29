@@ -83,7 +83,6 @@ reference:
   - flatten
   - list_modify
   - reduce
-  - splice
   - transpose
 
 - title: Adverbs
