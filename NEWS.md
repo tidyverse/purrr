@@ -30,6 +30,9 @@
 
 ## Features and fixes
 
+* `pluck()` no longer replaces 0-length vectors with `default`; it now
+  only applies absent and `NULL` components.
+
 * `lmap()` now always returns a list, even if `.x` is a data frame. 
   This makes it more consistent with other functions in the `map` family.
 
