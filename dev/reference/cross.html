@@ -123,7 +123,7 @@ instead.</p>
 <span><span class="co">#&gt; [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."</span></span>
 <span></span>
 <span><span class="co"># With `expand_grid()`</span></span>
-<span><span class="fu">tidyr</span><span class="fu">::</span><span class="fu">expand_grid</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/map2.html">pmap_chr</a></span><span class="op">(</span><span class="va">paste</span><span class="op">)</span></span>
+<span><span class="fu">tidyr</span><span class="fu">::</span><span class="fu">expand_grid</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/pmap.html">pmap_chr</a></span><span class="op">(</span><span class="va">paste</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."</span></span>
 <span><span class="co">#&gt; [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."</span></span></code></pre><p></p></div>
     </div>

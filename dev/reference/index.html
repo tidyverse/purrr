@@ -82,7 +82,7 @@
       </dl></div><div class="section level2">
       <h2 id="map-variants">Map variants<a class="anchor" aria-label="anchor" href="#map-variants"></a></h2>
       
-      <p class="section-desc"></p><p>A rich set of variants builds on the basic idea of <code><a href="../reference/map.html">map()</a></code>: <code><a href="../reference/modify.html">modify()</a></code> modifies “in place”, returning a vector the same type as <code>.x</code>; <code><a href="../reference/map2.html">map2()</a></code> iterates over two vectors in parallel; <code><a href="../reference/map2.html">pmap()</a></code> (parallel map) iterates over a list of vectors; <code><a href="../reference/imap.html">imap()</a></code> (index map) is a shortcut for the common pattern <code>map2(x, names(x))</code>.</p>
+      <p class="section-desc"></p><p>A rich set of variants builds on the basic idea of <code><a href="../reference/map.html">map()</a></code>: <code><a href="../reference/modify.html">modify()</a></code> modifies “in place”, returning a vector the same type as <code>.x</code>; <code><a href="../reference/map2.html">map2()</a></code> iterates over two vectors in parallel; <code><a href="../reference/pmap.html">pmap()</a></code> (parallel map) iterates over a list of vectors; <code><a href="../reference/imap.html">imap()</a></code> (index map) is a shortcut for the common pattern <code>map2(x, names(x))</code>.</p>
 
       
     </div><div id="" class="section level2">
@@ -97,9 +97,14 @@
         <dd>Apply a function to each element of a vector conditionally</dd>
       </dl><dl><dt>
           
-          <code><a href="map2.html">map2()</a></code> <code><a href="map2.html">map2_lgl()</a></code> <code><a href="map2.html">map2_int()</a></code> <code><a href="map2.html">map2_dbl()</a></code> <code><a href="map2.html">map2_chr()</a></code> <code><a href="map2.html">map2_raw()</a></code> <code><a href="map2.html">map2_dfr()</a></code> <code><a href="map2.html">map2_dfc()</a></code> <code><a href="map2.html">walk2()</a></code> <code><a href="map2.html">pmap()</a></code> <code><a href="map2.html">pmap_lgl()</a></code> <code><a href="map2.html">pmap_int()</a></code> <code><a href="map2.html">pmap_dbl()</a></code> <code><a href="map2.html">pmap_chr()</a></code> <code><a href="map2.html">pmap_raw()</a></code> <code><a href="map2.html">pmap_dfr()</a></code> <code><a href="map2.html">pmap_dfc()</a></code> <code><a href="map2.html">pwalk()</a></code> 
+          <code><a href="map2.html">map2()</a></code> <code><a href="map2.html">map2_lgl()</a></code> <code><a href="map2.html">map2_int()</a></code> <code><a href="map2.html">map2_dbl()</a></code> <code><a href="map2.html">map2_chr()</a></code> <code><a href="map2.html">map2_raw()</a></code> <code><a href="map2.html">map2_dfr()</a></code> <code><a href="map2.html">map2_dfc()</a></code> <code><a href="map2.html">walk2()</a></code> 
         </dt>
-        <dd>Map over multiple inputs simultaneously.</dd>
+        <dd>Map over two inputs</dd>
+      </dl><dl><dt>
+          
+          <code><a href="pmap.html">pmap()</a></code> <code><a href="pmap.html">pmap_lgl()</a></code> <code><a href="pmap.html">pmap_int()</a></code> <code><a href="pmap.html">pmap_dbl()</a></code> <code><a href="pmap.html">pmap_chr()</a></code> <code><a href="pmap.html">pmap_raw()</a></code> <code><a href="pmap.html">pmap_dfr()</a></code> <code><a href="pmap.html">pmap_dfc()</a></code> <code><a href="pmap.html">pwalk()</a></code> 
+        </dt>
+        <dd>Map over multiple input simultaneously (in "parallel")</dd>
       </dl><dl><dt>
           
           <code><a href="modify.html">modify()</a></code> <code><a href="modify.html">modify_if()</a></code> <code><a href="modify.html">modify_at()</a></code> <code><a href="modify.html">modify2()</a></code> <code><a href="modify.html">imodify()</a></code> <code><a href="modify.html">modify_depth()</a></code> 

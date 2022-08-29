@@ -175,14 +175,14 @@ variable will be created.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<ul><li><p><code>map()</code> Returns a list the same length as <code>.x</code>.</p></li>
-<li><p><code>map_lgl()</code> returns a logical vector, <code>map_int()</code> an integer
-vector, <code>map_dbl()</code> a double vector, and <code>map_chr()</code> a character
-vector.</p></li>
-<li><p><code>map_df()</code>, <code>map_dfc()</code>, <code>map_dfr()</code> all return a data frame.</p></li>
-<li><p>If <code>.x</code> has <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names()</a></code>, the return value preserves those names.</p></li>
-<li><p>The output of <code>.f</code> will be automatically typed upwards, e.g.
-logical -&gt; integer -&gt; double -&gt; character.</p></li>
+<p>The output type is determined by the suffix:</p><ul><li><p>No suffix: returns a list the same length as the input. It will be
+named if the input was named.</p></li>
+<li><p><code>_lgl</code>, <code>_int</code>, <code>_dbl</code>, <code>_chr</code> return a logical, integer, double,
+or character vector respectively. The output of <code>.f</code> will only be
+automatically coerced upwards (i.e. logical -&gt; integer -&gt; double -&gt;
+character). It will be named if the input was named.</p></li>
+<li><p><code>_dfc</code> and <code>_dfr()</code> all return a data frame created by row-binding and
+column-binding respectively. They require dplyr to be installed.</p></li>
 </ul><ul><li><p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
 use in pipe.</p></li>
 </ul></div>
@@ -196,7 +196,8 @@ of <code>.x</code> that meet a specified condition.</p>
 <code><a href="lmap.html">lmap</a>()</code>,
 <code><a href="map2.html">map2</a>()</code>,
 <code><a href="map_if.html">map_if</a>()</code>,
-<code><a href="modify.html">modify</a>()</code></p></div>
+<code><a href="modify.html">modify</a>()</code>,
+<code><a href="pmap.html">pmap</a>()</code></p></div>
     </div>
 
     <div class="section level2">

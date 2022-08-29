@@ -159,7 +159,7 @@
 <td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>
 </td>
-<td><code><a href="../reference/map2.html">pmap()</a></code></td>
+<td><code><a href="../reference/pmap.html">pmap()</a></code></td>
 </tr>
 <tr class="even">
 <td>Atomic vector of desired type</td>
@@ -182,7 +182,7 @@
 <td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, then <code>is.*()</code> to check type</td>
 <td>
-<code><a href="../reference/map2.html">pmap_lgl()</a></code> (logical), <code><a href="../reference/map2.html">pmap_int()</a></code> (integer), <code><a href="../reference/map2.html">pmap_dbl()</a></code> (double), <code><a href="../reference/map2.html">pmap_chr()</a></code> (character), <code><a href="../reference/map2.html">pmap_raw()</a></code> (raw)</td>
+<code><a href="../reference/pmap.html">pmap_lgl()</a></code> (logical), <code><a href="../reference/pmap.html">pmap_int()</a></code> (integer), <code><a href="../reference/pmap.html">pmap_dbl()</a></code> (double), <code><a href="../reference/pmap.html">pmap_chr()</a></code> (character), <code><a href="../reference/pmap.html">pmap_raw()</a></code> (raw)</td>
 </tr>
 <tr class="odd">
 <td>Side effect only</td>
@@ -200,7 +200,7 @@
 <td>Side effect only</td>
 <td>&gt;2 vectors</td>
 <td>loops</td>
-<td><code><a href="../reference/map2.html">pwalk()</a></code></td>
+<td><code><a href="../reference/pmap.html">pwalk()</a></code></td>
 </tr>
 <tr class="even">
 <td>Data frame (<code>rbind</code> outputs)</td>
@@ -224,7 +224,7 @@
 <td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map2.html">pmap_dfr()</a></code></td>
+<td><code><a href="../reference/pmap.html">pmap_dfr()</a></code></td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -248,7 +248,7 @@
 <td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map2.html">pmap_dfc()</a></code></td>
+<td><code><a href="../reference/pmap.html">pmap_dfc()</a></code></td>
 </tr>
 <tr class="even">
 <td>Any</td>
@@ -257,7 +257,7 @@
 <code>l/s/vapply(X, function(x) f(x, names(x)))</code> or <code>mapply/Map(f, x, names(x))</code>
 </td>
 <td>
-<code><a href="../reference/imap.html">imap()</a></code>, <code>imap_*()</code> (<code>lgl</code>, <code>dbl</code>, <code>dfr</code>, and etc. just like for <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code>, and <code><a href="../reference/map2.html">pmap()</a></code>)</td>
+<code><a href="../reference/imap.html">imap()</a></code>, <code>imap_*()</code> (<code>lgl</code>, <code>dbl</code>, <code>dfr</code>, and etc. just like for <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code>, and <code><a href="../reference/pmap.html">pmap()</a></code>)</td>
 </tr>
 <tr class="odd">
 <td>Any</td>
@@ -534,10 +534,10 @@
 <span><span class="co">#&gt;  $ : num 4.47</span></span></code></pre></div>
 </li>
 <li>
-<p>In purrr, we need to switch from <code><a href="../reference/map2.html">map2()</a></code> to <code><a href="../reference/map2.html">pmap()</a></code> which takes a list of any number of arguments.</p>
+<p>In purrr, we need to switch from <code><a href="../reference/map2.html">map2()</a></code> to <code><a href="../reference/pmap.html">pmap()</a></code> which takes a list of any number of arguments.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span></span>
-<span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/map2.html">pmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span>, n <span class="op">=</span> <span class="va">ns</span><span class="op">)</span>, <span class="va">rnorm</span><span class="op">)</span></span>
+<span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmap.html">pmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span>, n <span class="op">=</span> <span class="va">ns</span><span class="op">)</span>, <span class="va">rnorm</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 4</span></span>
 <span><span class="co">#&gt;  $ : num [1:4] 1.377 1.302 -0.098 -0.13</span></span>

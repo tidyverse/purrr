@@ -133,7 +133,9 @@ nested data structure.</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.x, .y</dt>
 <dd><p>Vectors of the same length. A vector of length 1 will
-be recycled.</p></dd>
+be recycled.</p>
+<p>Note that the arguments that differ in each call come before <code>.f</code>,
+and the arguments that are the same come after <code>.f</code>.</p></dd>
 
 
 <dt>.f</dt>
@@ -233,7 +235,8 @@ science.</p>
 <code><a href="lmap.html">lmap</a>()</code>,
 <code><a href="map2.html">map2</a>()</code>,
 <code><a href="map_if.html">map_if</a>()</code>,
-<code><a href="map.html">map</a>()</code></p></div>
+<code><a href="map.html">map</a>()</code>,
+<code><a href="pmap.html">pmap</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -755,7 +758,7 @@ science.</p>
 <span class="r-in"><span><span class="co"># a lower level. Here we ask pmap() to map paste() simultaneously over all</span></span></span>
 <span class="r-in"><span><span class="co"># elements of the objects at the second level. paste() is effectively</span></span></span>
 <span class="r-in"><span><span class="co"># mapped at level 3.</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="op">~</span> <span class="fu"><a href="map2.html">pmap</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">paste</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="op">~</span> <span class="fu"><a href="pmap.html">pmap</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">paste</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
