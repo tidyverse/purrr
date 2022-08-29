@@ -24,5 +24,5 @@
       chuck(1:4, -10)
     Condition
       Error:
-      ! Negative index 1 must be greater than or equal to -4, not -9.
+      ! Negative index 1 must be greater than or equal to -4, not -10.
 

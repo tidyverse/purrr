@@ -311,7 +311,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
                    "Negative index %d must be greater than or equal to %d, not %.0f.",
                    i + 1,
                    -n,
-                   -n + val);
+                   val - n - 1);
     } else {
       return -1;
     }
