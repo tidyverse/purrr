@@ -502,8 +502,7 @@ accumulate_names <- function(nms, init, dir) {
 #' Reduce from the right (retired)
 #'
 #' @description
-#'
-#' `r lifecycle::badge("soft-deprecated")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' These functions are retired as of purrr 0.3.0. Please use the
 #' `.dir` argument of [reduce()] instead, or reverse your vectors
@@ -514,52 +513,38 @@ accumulate_names <- function(nms, init, dir) {
 #' @keywords internal
 #' @export
 reduce_right <- function(.x, .f, ..., .init) {
-  signal_soft_deprecated(paste_line(
-    "`reduce_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please use the new `.dir` argument of `reduce()` instead.",
-    "",
-    "  # Before:",
-    "  reduce_right(1:3, f)",
-    "",
-    "  # After:",
-    "  reduce(1:3, f, .dir = \"backward\")  # New algorithm",
-    "  reduce(rev(1:3), f)                # Same algorithm as reduce_right()",
-    ""
-  ))
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = "reduce_right()",
+    with = "reduce(.dir)",
+    always = TRUE
+  )
+
   .x <- rev(.x) # Compatibility
   reduce_impl(.x, .f, ..., .dir = "forward", .init = .init)
 }
 #' @rdname reduce_right
 #' @export
 reduce2_right <- function(.x, .y, .f, ..., .init) {
-  signal_soft_deprecated(paste_line(
-    "`reduce2_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please reverse your vectors and use `reduce2()` instead.",
-    "",
-    "  # Before:",
-    "  reduce2_right(x, y, f)",
-    "",
-    "  # After:",
-    "  reduce2(rev(x), rev(y), f)",
-    ""
-  ))
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = "reduce2_right()",
+    with = I("reverse your vectors and use `reduce2()`"),
+    always = TRUE
+  )
+
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
 }
 
 #' @rdname reduce_right
 #' @export
 accumulate_right <- function(.x, .f, ..., .init) {
-  signal_soft_deprecated(paste_line(
-    "`accumulate_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please use the new `.dir` argument of `accumulate()` instead.",
-    "",
-    "  # Before:",
-    "  accumulate_right(x, f)",
-    "",
-    "  # After:",
-    "  accumulate(x, f, .dir = \"backward\")",
-    ""
-  ))
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = "accumulate_right()",
+    with = "accumulate(.dir)",
+    always = TRUE
+  )
 
   # Note the order of arguments is switched
   f <- function(y, x) {
