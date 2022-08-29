@@ -25,7 +25,7 @@ accessing it by name will return the corresponding slot.
 your accessors are stored in a list, you can splice that in with
 \verb{!!!}.}
 
-\item{.default}{Value to use if target is empty or absent.}
+\item{.default}{Value to use if target is \code{NULL} or absent.}
 
 \item{value}{A value to replace in \code{.x} at the pluck location.}
 }
@@ -33,7 +33,7 @@ your accessors are stored in a list, you can splice that in with
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
 allow you to index deeply and flexibly into data structures.
 \code{pluck()} consistently returns \code{NULL} when an element does not
-exist, \code{chuck()} always throws (or chucks) an error in that case.
+exist while \code{chuck()} always throws (or chucks) an error.
 }
 \details{
 \itemize{
