@@ -1,7 +1,7 @@
 # NULL input ----------------------------------------------------------------
 
 test_that("trying to chuck NULL raises errors", {
-  expect_error(chuck(NULL, "a"), "can't be NULL")
+  expect_snapshot(chuck(NULL, "a"), error = TRUE)
 })
 
 test_that("dots must be unnamed", {

@@ -30,6 +30,9 @@
 
 ## Features and fixes
 
+* `pluck()` now requires indices to be length 1 (#813). It also now reports 
+  the correct type if you supply an unexpected index.
+
 * `pluck()` now accepts negative integers, indexing from the right (#603).
 
 * `pluck()` and `chuck()` now fail if you provide named inputs to ... (#788).
