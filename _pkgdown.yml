@@ -48,9 +48,10 @@ reference:
   contents:
   - map_if
   - map2
+  - pmap
   - modify
-  - starts_with("imap")
-  - starts_with("lmap")
+  - imap
+  - lmap
 
 - title: Predicate functionals
   desc: >
@@ -73,19 +74,15 @@ reference:
   - pluck
   - modify_in
   - attr_getter
-  - "`%@%`"
 
 - title: Other vector transforms
   desc: >
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - cross
   - flatten
   - list_modify
   - reduce
-  - rep_along
-  - splice
   - transpose
 
 - title: Adverbs
@@ -104,14 +101,9 @@ reference:
 
 - title: Misc
   contents:
-  - "`%||%`"
   - array_tree
   - as_vector
   - rbernoulli
   - rdunif
-  - exec
   - rerun
-  - set_names
   - vec_depth
-  - zap
-  - done

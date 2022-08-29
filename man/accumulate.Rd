@@ -115,6 +115,10 @@ accumulate(letters[1:5], paste, sep = ".")
 # with a left reduction, and to the right otherwise:
 accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 
+# By ignoring the input vector (.y), you can turn output of one step into
+# the input for the next. This code takes 10 steps of a random walk:
+accumulate(1:10, ~ .x + rnorm(1), .init = 0)
+
 # `accumulate2()` is a version of `accumulate()` that works with
 # 3-argument functions and one additional vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)

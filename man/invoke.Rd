@@ -142,7 +142,8 @@ Other map variants:
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
-\code{\link{modify}()}
+\code{\link{modify}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}
 \keyword{internal}
