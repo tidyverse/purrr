@@ -6,6 +6,7 @@ test_that("predicate controls which elements get spliced", {
 })
 
 test_that("splice() produces correctly named lists", {
+  local_options(lifecycle_verbosity = "quiet")
   inputs <- list(arg1 = "a", arg2 = "b")
 
   out1 <- splice(inputs, arg3 = c("c1", "c2"))
@@ -13,4 +14,11 @@ test_that("splice() produces correctly named lists", {
 
   out2 <- splice(inputs, arg = list(arg3 = 1, arg4 = 2))
   expect_named(out2, c("arg1", "arg2", "arg3", "arg4"))
+})
+
+test_that("splice is deprecated", {
+  expect_snapshot({
+    . <- splice()
+  })
+
 })

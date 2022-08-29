@@ -48,9 +48,10 @@ reference:
   contents:
   - map_if
   - map2
+  - pmap
   - modify
-  - starts_with("imap")
-  - starts_with("lmap")
+  - imap
+  - lmap
 
 - title: Predicate functionals
   desc: >
@@ -73,7 +74,6 @@ reference:
   - pluck
   - modify_in
   - attr_getter
-  - "`%@%`"
 
 - title: Other vector transforms
   desc: >
@@ -83,29 +83,21 @@ reference:
   - flatten
   - list_modify
   - reduce
-  - splice
   - transpose
 
 - title: Adverbs
   desc: >
-    Adverbs modify the action of a function; taking a function as input and
-    returning a function with modified action as output.
+    Adverbs modify the action of a function; they take a function as input and
+    return a function with modified action as output.
   contents:
-  - faq-adverbs-export
-  - compose
-  - lift
-  - negate
-  - partial
-  - safely
-  - insistently
-  - rate_sleep
-  - rate-helpers
+  - has_concept("adverbs")
 
 - title: Misc
   contents:
   - array_tree
   - as_vector
   - rbernoulli
+  - rate-helpers
   - rdunif
   - rerun
   - vec_depth
