@@ -30,6 +30,9 @@
 
 ## Features and fixes
 
+* `vec_depth()` is now `pluck_depth()` and works with more types of input
+  (#818).
+
 * `pluck()` now requires indices to be length 1 (#813). It also now reports 
   the correct type if you supply an unexpected index.
 
