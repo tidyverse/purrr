@@ -52,6 +52,9 @@
     <loc>https://purrr.tidyverse.org/dev/reference/attr_getter.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/auto_browse.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/compose.html</loc>
   </url>
   <url>
@@ -133,10 +136,16 @@
     <loc>https://purrr.tidyverse.org/dev/reference/pmap.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/possibly.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/prepend.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/purrr-package.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/quietly.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/rate-helpers.html</loc>
@@ -164,6 +173,9 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/safely.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/slowly.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/splice.html</loc>

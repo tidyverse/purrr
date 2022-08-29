@@ -160,7 +160,7 @@
           
           <code><a href="negate.html">negate()</a></code> 
         </dt>
-        <dd>Negate a predicate function.</dd>
+        <dd>Negate a predicate function so it selects what it previously rejected</dd>
       </dl><dl><dt>
           
           <code><a href="prepend.html">prepend()</a></code> 
@@ -231,7 +231,7 @@
       </dl></div><div class="section level2">
       <h2 id="adverbs">Adverbs<a class="anchor" aria-label="anchor" href="#adverbs"></a></h2>
       
-      <p class="section-desc"></p><p>Adverbs modify the action of a function; taking a function as input and returning a function with modified action as output.</p>
+      <p class="section-desc"></p><p>Adverbs modify the action of a function; they take a function as input and return a function with modified action as output.</p>
 
       
     </div><div id="" class="section level2">
@@ -241,44 +241,49 @@
 
       <dl><dt>
           
-          <code><a href="faq-adverbs-export.html">faq-adverbs-export</a></code> 
+          <code><a href="auto_browse.html">auto_browse()</a></code> 
         </dt>
-        <dd>Best practices for exporting adverb-wrapped functions</dd>
+        <dd>Wrap a function so it will automatically <code>browse()</code> on error</dd>
       </dl><dl><dt>
           
           <code><a href="compose.html">compose()</a></code> 
         </dt>
-        <dd>Compose multiple functions</dd>
+        <dd>Compose multiple functions together to create a new function</dd>
+      </dl><dl><dt>
+          
+          <code><a href="insistently.html">insistently()</a></code> 
+        </dt>
+        <dd>Transform a function to wait then retry after an error</dd>
       </dl><dl><dt>
           
           <code><a href="negate.html">negate()</a></code> 
         </dt>
-        <dd>Negate a predicate function.</dd>
+        <dd>Negate a predicate function so it selects what it previously rejected</dd>
       </dl><dl><dt>
           
           <code><a href="partial.html">partial()</a></code> 
         </dt>
-        <dd>Partial apply a function, filling in some arguments.</dd>
+        <dd>Partially apply a function, filling in some arguments</dd>
       </dl><dl><dt>
           
-          <code><a href="safely.html">safely()</a></code> <code><a href="safely.html">quietly()</a></code> <code><a href="safely.html">possibly()</a></code> <code><a href="safely.html">auto_browse()</a></code> 
+          <code><a href="possibly.html">possibly()</a></code> 
         </dt>
-        <dd>Capture side effects.</dd>
+        <dd>Wrap a function to return a value instead of an error</dd>
       </dl><dl><dt>
           
-          <code><a href="insistently.html">insistently()</a></code> <code><a href="insistently.html">slowly()</a></code> 
+          <code><a href="quietly.html">quietly()</a></code> 
         </dt>
-        <dd>Transform a function to make it run insistently or slowly</dd>
+        <dd>Wrap a function to capture side-effects</dd>
       </dl><dl><dt>
           
-          <code><a href="rate_sleep.html">rate_sleep()</a></code> <code><a href="rate_sleep.html">rate_reset()</a></code> 
+          <code><a href="safely.html">safely()</a></code> 
         </dt>
-        <dd>Wait for a given time</dd>
+        <dd>Wrap a function to capture errors</dd>
       </dl><dl><dt>
           
-          <code><a href="rate-helpers.html">rate_delay()</a></code> <code><a href="rate-helpers.html">rate_backoff()</a></code> <code><a href="rate-helpers.html">is_rate()</a></code> 
+          <code><a href="slowly.html">slowly()</a></code> 
         </dt>
-        <dd>Create delaying rate settings</dd>
+        <dd>Wrap a function to wait between executions</dd>
       </dl></div><div class="section level2">
       <h2 id="misc">Misc<a class="anchor" aria-label="anchor" href="#misc"></a></h2>
       
@@ -305,6 +310,11 @@
           <code><a href="rbernoulli.html">rbernoulli()</a></code> 
         </dt>
         <dd>Generate random sample from a Bernoulli distribution</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rate-helpers.html">rate_delay()</a></code> <code><a href="rate-helpers.html">rate_backoff()</a></code> <code><a href="rate-helpers.html">is_rate()</a></code> 
+        </dt>
+        <dd>Create delaying rate settings</dd>
       </dl><dl><dt>
           
           <code><a href="rdunif.html">rdunif()</a></code> 
