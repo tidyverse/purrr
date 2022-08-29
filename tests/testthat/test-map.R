@@ -185,6 +185,16 @@ test_that("requires output be length 1", {
   })
 })
 
+test_that("row-binds data frame output", {
+  out <- map_vec(1:2, ~ data.frame(x = .x))
+  expect_equal(out, data.frame(x = 1:2))
+})
+
+test_that("concatenates list output", {
+  out <- map_vec(1:2, ~ list(.x))
+  expect_equal(out, list(1, 2))
+})
+
 test_that("requires common type of output", {
   out <- map_vec(1:2, ~ factor("x"))
   expect_equal(out, factor(c("x", "x")))
