@@ -108,6 +108,6 @@ test_that("removing elements with `NULL` is deprecated", {
 })
 
 test_that("can still remove elements with `NULL`", {
-  options(lifecycle_verbosity = "quiet")
+  local_options(lifecycle_verbosity = "quiet")
   expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })

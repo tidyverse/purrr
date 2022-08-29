@@ -38,7 +38,7 @@ test_that("`.right` argument is retired", {
 })
 
 test_that("`.right` argument still works", {
-  options(lifecycle_verbosity = "quiet")
+  local_options(lifecycle_verbosity = "quiet")
   is_odd <- function(x) x %% 2 == 1
   expect_equal(detect(y, is_odd, .right = TRUE), 9)
   expect_equal(detect_index(y, is_odd, .right = TRUE), 6)

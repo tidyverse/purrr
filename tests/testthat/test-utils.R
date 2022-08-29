@@ -101,6 +101,6 @@ test_that("vec_simplify() ignores complex inputs", {
 # Lifecycle ---------------------------------------------------------------
 
 test_that("%@% is an infix attribute accessor", {
-  options(lifecycle_verbosity = "quiet")
+  local_options(lifecycle_verbosity = "quiet")
   expect_identical(mtcars %@% "names", attr(mtcars, "names"))
 })
