@@ -97,7 +97,7 @@ reference:
   - array_tree
   - as_vector
   - rbernoulli
+  - rate-helpers
   - rdunif
-  - exec
   - rerun
   - vec_depth
