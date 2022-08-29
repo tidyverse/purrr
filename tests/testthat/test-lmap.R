@@ -13,24 +13,34 @@ test_that("lmap output is list if input is list", {
   expect_bare(lmap_at(x, "a", maybe_rep), "list")
 })
 
-test_that("lmap output is tibble if input is data frame", {
-  skip_if_not_installed("tibble")
-  expect_s3_class(lmap(mtcars, as.list), "tbl_df")
+test_that("lmap() can increase and decrease elements", {
+  out <- lmap(list(0, 1, 2), ~ as.list(rep(.x, .x)))
+  expect_equal(out, list(1, 2, 2))
+})
 
-  expect_s3_class(lmap_at(mtcars, "mpg", ~ .x * 10), "tbl_df")
+test_that("lmap_at() only affects selected elements", {
+  out <- lmap_at(list(0, 1, 2), c(1, 3), ~ as.list(rep(.x, .x)))
+  expect_equal(out, list(1, 2, 2))
+
+  out <- lmap_at(list(0, 1, 2), c(2, 3), ~ as.list(rep(.x, .x)))
+  expect_equal(out, list(0, 1, 2, 2))
 })
 
 test_that("lmap_at can use tidyselect", {
-  skip_if_not_installed("tidyselect")
   options(lifecycle_verbosity = "quiet")
 
-  skip_if_not_installed("tidyselect")
   x <- lmap_at(mtcars, vars(tidyselect::contains("vs")), ~ .x + 10)
   expect_equal(x$vs[1], 10)
 })
 
-test_that("`.else` preserve-maps false elements", {
-  out <- lmap_if(list(a = 1, b = "foo"), is.character, ~ list("foo", .x, .y), .else = ~ list("bar", .x, .y), "baz")
-  exp <- set_names(list("bar", list(a = 1), "baz", "foo", list(b = "foo"), "baz"), rep("", 6))
-  expect_identical(out, exp)
+test_that("`.else` preserves false elements", {
+  x <- list("a", 99)
+  out <- lmap_if(x, is.character, ~ list(1, 2), .else = ~ list(3, 4))
+  expect_equal(out, list(1, 2, 3, 4))
+})
+
+test_that("generates informative error output isn't a list", {
+  expect_snapshot(error = TRUE, {
+    lmap(list(1), ~ 1)
+  })
 })

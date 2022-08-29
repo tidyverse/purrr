@@ -76,6 +76,10 @@
 #' 1:3 %>% reduce(`+`)
 #' 1:10 %>% reduce(`*`)
 #'
+#' # By ignoring the input vector (.y), you can turn output of one step into
+#' # the input for the next. This code takes 10 steps of a random walk:
+#' reduce(1:10, ~ .x + rnorm(1), .init = 0)
+#'
 #' # When the operation is associative, the direction of reduction
 #' # does not matter:
 #' reduce(1:4, `+`)
@@ -156,11 +160,7 @@ reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
     prev <- out
     elt <- .x[[idx[[i]]]]
 
-    if (has_force_and_call) {
-      out <- forceAndCall(2, fn, out, elt, ...)
-    } else {
-      out <- fn(out, elt, ...)
-    }
+    out <- forceAndCall(2, fn, out, elt, ...)
 
     if (is_done_box(out)) {
       return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]], left))
@@ -276,11 +276,7 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE) {
     x_i <- x_idx[[i]]
     y_i <- y_idx[[i]]
 
-    if (has_force_and_call) {
-      out <- forceAndCall(3, .f, out, .x[[x_i]], .y[[y_i]], ...)
-    } else {
-      out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
-    }
+    out <- forceAndCall(3, .f, out, .x[[x_i]], .y[[y_i]], ...)
 
     if (is_done_box(out)) {
       return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]]))
@@ -398,6 +394,10 @@ seq_len2 <- function(start, end) {
 #' # with a left reduction, and to the right otherwise:
 #' accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 #'
+#' # By ignoring the input vector (.y), you can turn output of one step into
+#' # the input for the next. This code takes 10 steps of a random walk:
+#' accumulate(1:10, ~ .x + rnorm(1), .init = 0)
+#'
 #' # `accumulate2()` is a version of `accumulate()` that works with
 #' # 3-argument functions and one additional vector:
 #' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
@@ -494,8 +494,7 @@ accumulate_names <- function(nms, init, dir) {
 #' Reduce from the right (retired)
 #'
 #' @description
-#'
-#' `r lifecycle::badge("soft-deprecated")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' These functions are retired as of purrr 0.3.0. Please use the
 #' `.dir` argument of [reduce()] instead, or reverse your vectors
@@ -506,52 +505,38 @@ accumulate_names <- function(nms, init, dir) {
 #' @keywords internal
 #' @export
 reduce_right <- function(.x, .f, ..., .init) {
-  signal_soft_deprecated(paste_line(
-    "`reduce_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please use the new `.dir` argument of `reduce()` instead.",
-    "",
-    "  # Before:",
-    "  reduce_right(1:3, f)",
-    "",
-    "  # After:",
-    "  reduce(1:3, f, .dir = \"backward\")  # New algorithm",
-    "  reduce(rev(1:3), f)                # Same algorithm as reduce_right()",
-    ""
-  ))
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = "reduce_right()",
+    with = "reduce(.dir)",
+    always = TRUE
+  )
+
   .x <- rev(.x) # Compatibility
   reduce_impl(.x, .f, ..., .dir = "forward", .init = .init)
 }
 #' @rdname reduce_right
 #' @export
 reduce2_right <- function(.x, .y, .f, ..., .init) {
-  signal_soft_deprecated(paste_line(
-    "`reduce2_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please reverse your vectors and use `reduce2()` instead.",
-    "",
-    "  # Before:",
-    "  reduce2_right(x, y, f)",
-    "",
-    "  # After:",
-    "  reduce2(rev(x), rev(y), f)",
-    ""
-  ))
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = "reduce2_right()",
+    with = I("reverse your vectors and use `reduce2()`"),
+    always = TRUE
+  )
+
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
 }
 
 #' @rdname reduce_right
 #' @export
 accumulate_right <- function(.x, .f, ..., .init) {
-  signal_soft_deprecated(paste_line(
-    "`accumulate_right()` is soft-deprecated as of purrr 0.3.0.",
-    "Please use the new `.dir` argument of `accumulate()` instead.",
-    "",
-    "  # Before:",
-    "  accumulate_right(x, f)",
-    "",
-    "  # After:",
-    "  accumulate(x, f, .dir = \"backward\")",
-    ""
-  ))
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = "accumulate_right()",
+    with = "accumulate(.dir)",
+    always = TRUE
+  )
 
   # Note the order of arguments is switched
   f <- function(y, x) {

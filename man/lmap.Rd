@@ -15,7 +15,8 @@ lmap_at(.x, .at, .f, ...)
 \arguments{
 \item{.x}{A list or data frame.}
 
-\item{.f}{A function that takes and returns a list or data frame.}
+\item{.f}{A function that takes a length-1 list and returns a list (of any
+length.)}
 
 \item{...}{Additional arguments passed on to the mapped function.}
 
@@ -38,78 +39,42 @@ installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 }
 \value{
-If \code{.x} is a list, a list. If \code{.x} is a data
-frame, a data frame.
+A list. There are no guarantees about the length.
 }
 \description{
-\code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to
-\code{map()}, \code{map_at()} and \code{map_if()}, with the
-difference that they operate exclusively on functions that take
-\emph{and} return a list (or data frame). Thus, instead of mapping
-the elements of a list (as in \code{.x[[i]]}), they apply a
-function \code{.f} to each subset of size 1 of that list (as in
-\code{.x[i]}). We call those elements \code{list-elements}).
+\code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to \code{map()}, \code{map_at()} and
+\code{map_if()}, except instead of mapping over \code{.x[[i]]}, they instead map over
+\code{.x[i]}.
+
+This has several advantages:
+\itemize{
+\item It makes it possible to work with functions that exclusively take a list.
+\item It allows \code{.f} to access the attributes of the encapsulating list,
+like \code{\link[=names]{names()}}.
+\item It allows \code{.f} to return a larger or small list than it receives
+changing the size of the output.
 }
-\details{
-Mapping the list-elements \code{.x[i]} has several advantages. It
-makes it possible to work with functions that exclusively take a
-list or data frame. It enables \code{.f} to access the attributes
-of the encapsulating list, like the name of the components it
-receives. It also enables \code{.f} to return a larger list than
-the list-element of size 1 it got as input. Conversely, \code{.f}
-can also return empty lists. In these cases, the output list is
-reshaped with a different size than the input list \code{.x}.
 }
 \examples{
+set.seed(1014)
+
 # Let's write a function that returns a larger list or an empty list
-# depending on some condition. This function also uses the names
-# metadata available in the attributes of the list-element
+# depending on some condition. It also uses the input name to name the
+# output
 maybe_rep <- function(x) {
   n <- rpois(1, 2)
-  out <- rep_len(x, n)
-  if (length(out) > 0) {
-    names(out) <- paste0(names(x), seq_len(n))
-  }
-  out
+  set_names(rep_len(x, n), paste0(names(x), seq_len(n)))
 }
 
 # The output size varies each time we map f()
 x <- list(a = 1:4, b = letters[5:7], c = 8:9, d = letters[10])
-x \%>\% lmap(maybe_rep)
+x \%>\% lmap(maybe_rep) \%>\% str()
 
 # We can apply f() on a selected subset of x
-x \%>\% lmap_at(c("a", "d"), maybe_rep)
+x \%>\% lmap_at(c("a", "d"), maybe_rep) \%>\% str()
 
 # Or only where a condition is satisfied
-x \%>\% lmap_if(is.character, maybe_rep)
-
-
-# A more realistic example would be a function that takes discrete
-# variables in a dataset and turns them into disjunctive tables, a
-# form that is amenable to fitting some types of models.
-
-# A disjunctive table contains only 0 and 1 but has as many columns
-# as unique values in the original variable. Ideally, we want to
-# combine the names of each level with the name of the discrete
-# variable in order to identify them. Given these requirements, it
-# makes sense to have a function that takes a data frame of size 1
-# and returns a data frame of variable size.
-disjoin <- function(x, sep = "_") {
-  name <- names(x)
-  x <- as.factor(x[[1]])
-
-  out <- lapply(levels(x), function(level) {
-    as.numeric(x == level)
-  })
-
-  names(out) <- paste(name, levels(x), sep = sep)
-  out
-}
-
-# Now, we are ready to map disjoin() on each categorical variable of a
-# data frame:
-iris \%>\% lmap_if(is.factor, disjoin)
-mtcars \%>\% lmap_at(c("cyl", "vs", "am"), disjoin)
+x \%>\% lmap_if(is.character, maybe_rep) \%>\% str()
 }
 \seealso{
 Other map variants: 
@@ -118,6 +83,7 @@ Other map variants:
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
-\code{\link{modify}()}
+\code{\link{modify}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}

@@ -51,17 +51,6 @@ as_mapper <- function(.f, ...) {
 }
 
 #' @export
-#' @rdname as_mapper
-#' @usage NULL
-as_function <- function(...) {
-  stop_defunct(paste_line(
-    "`as_function()` is defunct as of purrr 0.3.0.",
-    "Please use `as_mapper()` or `rlang::as_function()` instead"
-  ))
-  as_mapper(...)
-}
-
-#' @export
 as_mapper.default <- function(.f, ...) {
   if (typeof(.f) %in% c("special", "builtin")) {
     .f <- rlang::as_closure(.f)

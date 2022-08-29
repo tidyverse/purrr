@@ -26,3 +26,4 @@ Call \code{rate_reset()} to reset the internal rate counter to 0.
 \seealso{
 \code{\link[=rate_backoff]{rate_backoff()}}, \code{\link[=insistently]{insistently()}}
 }
+\keyword{internal}

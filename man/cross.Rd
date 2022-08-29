@@ -35,7 +35,7 @@ over. \code{cross_df()} returns a data frame where each row is one
 combination.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 These functions have been deprecated in purrr 0.4.0 because they
 are slow and buggy, and we no longer think they are the right
@@ -52,9 +52,10 @@ Here is an example of equivalent usages for \code{cross()} and
 )
 
 # With deprecated `cross()`
-data \%>\% cross() \%>\% map_chr(lift(paste))
-#> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."   "Jane! Bonjour."  
-#> [5] "John... Hello."   "Jane... Hello."   "John... Bonjour." "Jane... Bonjour."
+data \%>\% cross() \%>\% map_chr(~ paste(..., collapse = " "))
+#> [1] "John Hello. ! "     "Jane Hello. ! "     "John Bonjour. ! "  
+#> [4] "Jane Bonjour. ! "   "John Hello. ... "   "Jane Hello. ... "  
+#> [7] "John Bonjour. ... " "Jane Bonjour. ... "
 
 # With `expand_grid()`
 tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
@@ -140,3 +141,4 @@ seq_len(3) \%>\%
 \seealso{
 \code{\link[=expand.grid]{expand.grid()}}
 }
+\keyword{internal}

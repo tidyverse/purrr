@@ -1,7 +1,7 @@
 
 # purrr (development version)
 
-## Breaking changes
+## Lifecycle updates
 
 * `cross()` and all its variants have been deprecated in favour of
   `tidyr::expand_grid()`. These functions were slow and buggy and we
@@ -13,7 +13,41 @@
   use some form of non-standard evaluation which we now believe is a poor 
   fit for purrr.
 
+* The `lift_*` family of functions has been deprecated. We no longer believe
+  these to be a good fit for purrr because they rely on a style of function 
+  manipulation that is very uncommon in R code (#871).
+
+* `splice()` is deprecated because we no longer believe that automatic 
+  splicing makes for good UI. Instead use `list2()` + `!!!` (#869).
+
+* `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
+  are no longer supported. They have been defunct for quite some time.
+
+* Soft deprecated functions: `%@%`, `reduce_right()`, `reduce2_right()`,
+  `accumulate_right()` are now fully deprecated. Similarly, the 
+  `.lazy`, `.env`, and `.first` arguments to `partial()`,
+  and the `.right` argument to `detect()` and `detect_index()` 
+  are fully deprecated. Removing elements with `NULL` in `list_modify()` and
+  `list_merge()` is now fully deprecated.
+
+* `is_numeric()` and `is_scalar_numeric()` have been removed. They have
+  been deprecated since purrr 0.2.3 (Sep 2017).
+
 ## Features and fixes
+
+* `lmap()` now always returns a list, even if `.x` is a data frame. 
+  This makes it more consistent with other functions in the `map` family.
+
+* `lmap_if()` correctly handles `.else` functions (#847).
+
+* `map2()` and `pmap()` now recycle names of their first input if
+  needed (#783).
+
+* `every()` now correctly propagates missing values using the same
+  rules as `&&` (#751). Internally, it has become a wrapper around
+  `&&`. This makes it consistent with `&&` and also with `some()`
+  which has always been a wrapper around `||` with the same
+  propagation rules.
 
 * `modify()`, `modify2()`, and `modify_if()` now correctly handle `NULL`s
   in replacement values (#655, #746, #753).

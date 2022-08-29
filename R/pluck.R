@@ -3,7 +3,7 @@
 #' `pluck()` and `chuck()` implement a generalised form of `[[` that
 #' allow you to index deeply and flexibly into data structures.
 #' `pluck()` consistently returns `NULL` when an element does not
-#' exist, `chuck()` always throws an error in that case.
+#' exist, `chuck()` always throws (or chucks) an error in that case.
 #'
 #' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be

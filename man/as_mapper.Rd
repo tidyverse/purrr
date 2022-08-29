@@ -2,7 +2,6 @@
 % Please edit documentation in R/as_mapper.R
 \name{as_mapper}
 \alias{as_mapper}
-\alias{as_function}
 \alias{as_mapper.character}
 \alias{as_mapper.numeric}
 \alias{as_mapper.list}

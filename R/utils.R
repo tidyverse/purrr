@@ -8,16 +8,7 @@
 #' @usage lhs \%>\% rhs
 NULL
 
-maybe_as_data_frame <- function(out, x) {
-  if (is.data.frame(x)) {
-    check_installed("tibble")
-    tibble::as_tibble(out)
-  } else {
-    out
-  }
-}
-
-at_selection <- function(nm, .at, src){
+at_selection <- function(nm, .at){
   if (is_quosures(.at)) {
     lifecycle::deprecate_warn("0.4.0", I("using `vars()` in .at"))
 
@@ -44,8 +35,7 @@ names2 <- function(x) {
 #' Infix attribute accessor
 #'
 #' @description
-#'
-#' `r lifecycle::badge("soft-deprecated")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' Please use the `%@%` operator exported in rlang. It has an
 #' interface more consistent with `@`: uses NSE, supports S4 fields,
@@ -56,17 +46,10 @@ names2 <- function(x) {
 #' @export
 #' @name get-attr
 #' @keywords internal
-#' @examples
-#' factor(1:3) %@% "levels"
-#' mtcars %@% "class"
 `%@%` <- function(x, name) {
-  signal_soft_deprecated(paste_line(
-    "`%@%` is soft-deprecated as of purrr 0.3.0.",
-    "Please use the operator provided in rlang instead."
-  ))
+  lifecycle::deprecate_warn("0.3.0", I("%@%"), I("rlang::%@%"), always = TRUE)
   attr(x, name, exact = TRUE)
 }
-
 
 #' Generate random sample from a Bernoulli distribution
 #'
