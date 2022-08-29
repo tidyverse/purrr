@@ -19,7 +19,7 @@
 #' )
 #'
 #' # With deprecated `cross()`
-#' data %>% cross() %>% map_chr(lift(paste))
+#' data %>% cross() %>% map_chr(~ paste(..., collapse = " "))
 #'
 #' # With `expand_grid()`
 #' tidyr::expand_grid(!!!data) %>% pmap_chr(paste)

@@ -35,7 +35,10 @@ modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
 \item{.x, .y}{Vectors of the same length. A vector of length 1 will
-be recycled.}
+be recycled.
+
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.f}{A function, formula, or vector (not necessarily atomic).
 
@@ -209,6 +212,7 @@ Other map variants:
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
-\code{\link{map}()}
+\code{\link{map}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}

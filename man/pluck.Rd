@@ -16,7 +16,8 @@ pluck(.x, ...) <- value
 \item{.x, x}{A vector or environment}
 
 \item{...}{A list of accessors for indexing into the object. Can be
-an integer position, a string name, or an accessor function
+an positive integer, a negative integer (to index from the right),
+a string (to index into names), or an accessor function
 (except for the assignment variants which only support names and
 positions). If the object being indexed is an S4 object,
 accessing it by name will return the corresponding slot.
@@ -25,7 +26,7 @@ accessing it by name will return the corresponding slot.
 your accessors are stored in a list, you can splice that in with
 \verb{!!!}.}
 
-\item{.default}{Value to use if target is empty or absent.}
+\item{.default}{Value to use if target is \code{NULL} or absent.}
 
 \item{value}{A value to replace in \code{.x} at the pluck location.}
 }
@@ -33,7 +34,7 @@ your accessors are stored in a list, you can splice that in with
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
 allow you to index deeply and flexibly into data structures.
 \code{pluck()} consistently returns \code{NULL} when an element does not
-exist, \code{chuck()} always throws (or chucks) an error in that case.
+exist while \code{chuck()} always throws (or chucks) an error.
 }
 \details{
 \itemize{
@@ -62,15 +63,18 @@ x <- list(obj1, obj2)
 
 # Numeric positions index into the list by position, just like `[[`:
 pluck(x, 1)
-x[[1]]
+# same as x[[1]]
+
+# Index from the back
+pluck(x, -1)
+# same as x[[2]]
 
 pluck(x, 1, 2)
-x[[1]][[2]]
+# same as x[[1]][[2]]
 
 # Supply names to index into named vectors:
 pluck(x, 1, 2, "elt")
-x[[1]][[2]][["elt"]]
-
+# same as x[[1]][[2]][["elt"]]
 
 # By default, pluck() consistently returns `NULL` when an element
 # does not exist:
