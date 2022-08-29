@@ -160,11 +160,7 @@ reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
     prev <- out
     elt <- .x[[idx[[i]]]]
 
-    if (has_force_and_call) {
-      out <- forceAndCall(2, fn, out, elt, ...)
-    } else {
-      out <- fn(out, elt, ...)
-    }
+    out <- forceAndCall(2, fn, out, elt, ...)
 
     if (is_done_box(out)) {
       return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]], left))
@@ -280,11 +276,7 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE) {
     x_i <- x_idx[[i]]
     y_i <- y_idx[[i]]
 
-    if (has_force_and_call) {
-      out <- forceAndCall(3, .f, out, .x[[x_i]], .y[[y_i]], ...)
-    } else {
-      out <- .f(out, .x[[x_i]], .y[[y_i]], ...)
-    }
+    out <- forceAndCall(3, .f, out, .x[[x_i]], .y[[y_i]], ...)
 
     if (is_done_box(out)) {
       return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]]))
