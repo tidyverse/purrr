@@ -48,9 +48,10 @@ reference:
   contents:
   - map_if
   - map2
+  - pmap
   - modify
-  - starts_with("imap")
-  - starts_with("lmap")
+  - imap
+  - lmap
 
 - title: Predicate functionals
   desc: >
