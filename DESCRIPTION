@@ -11,9 +11,9 @@ License: MIT + file LICENSE
 URL: https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
-    R (>= 3.2)
+    R (>= 3.2.3)
 Imports: 
-    lifecycle (>= 0.2.0),
+    lifecycle (>= 1.0.1.9000),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
     vctrs (>= 0.3.2)
@@ -36,3 +36,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
+Remotes:  
+    r-lib/lifecycle

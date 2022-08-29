@@ -4,6 +4,10 @@ test_that("trying to chuck NULL raises errors", {
   expect_error(chuck(NULL, "a"), "can't be NULL")
 })
 
+test_that("dots must be unnamed", {
+  expect_snapshot(chuck(1, a = 1), error = TRUE)
+})
+
 # chuck vector --------------------------------------------------------------
 
 test_that("special indexes raise errors", {

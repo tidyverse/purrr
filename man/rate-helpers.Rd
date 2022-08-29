@@ -37,9 +37,8 @@ not be kind to the server, use with caution!).}
 \item{x}{An object to test.}
 }
 \description{
-These helpers create rate settings that you can pass to
-\code{\link[=insistently]{insistently()}}. You can also use them in your own functions with
-\code{\link[=rate_sleep]{rate_sleep()}}.
+These helpers create rate settings that you can pass to \code{\link[=insistently]{insistently()}} and
+\code{\link[=slowly]{slowly()}}. You can also use them in your own functions with \code{\link[=rate_sleep]{rate_sleep()}}.
 }
 \examples{
 # A delay rate waits the same amount of time:
@@ -50,7 +49,4 @@ for (i in 1:3) rate_sleep(rate, quiet = FALSE)
 # jitter by default:
 rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
 for (i in 1:3) rate_sleep(rate, quiet = FALSE)
-}
-\seealso{
-\code{\link[=rate_sleep]{rate_sleep()}}, \code{\link[=insistently]{insistently()}}
 }

@@ -74,15 +74,16 @@ variable will be created.
 Only applies to \verb{_dfr} variant.}
 }
 \value{
+The output type is determined by the suffix:
 \itemize{
-\item \code{map()} Returns a list the same length as \code{.x}.
-\item \code{map_lgl()} returns a logical vector, \code{map_int()} an integer
-vector, \code{map_dbl()} a double vector, and \code{map_chr()} a character
-vector.
-\item \code{map_df()}, \code{map_dfc()}, \code{map_dfr()} all return a data frame.
-\item If \code{.x} has \code{names()}, the return value preserves those names.
-\item The output of \code{.f} will be automatically typed upwards, e.g.
-logical -> integer -> double -> character.
+\item No suffix: returns a list the same length as the input. It will be
+named if the input was named.
+\item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
+or character vector respectively. The output of \code{.f} will only be
+automatically coerced upwards (i.e. logical -> integer -> double ->
+character). It will be named if the input was named.
+\item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
+column-binding respectively. They require dplyr to be installed.
 }
 
 \itemize{
@@ -191,6 +192,7 @@ Other map variants:
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
-\code{\link{modify}()}
+\code{\link{modify}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}

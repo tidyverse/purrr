@@ -113,6 +113,7 @@ Other map variants:
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map}()},
-\code{\link{modify}()}
+\code{\link{modify}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}

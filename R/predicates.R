@@ -1,28 +1,3 @@
-#' Test if an object is integer or double
-#'
-#' @description
-#' Numeric is used in three different ways in base R:
-#' * as an alias for double (as in [as.numeric()])
-#' * to mean either integer or double (as in [mode()])
-#' * for something representable as numeric (as in [as.numeric()])
-#'
-#' This function tests for the second, which is often not what you want
-#' so these functions are deprecated.
-#'
-#' @export
-#' @keywords internal
-is_numeric <- function(x) {
-  warning("Deprecated", call. = FALSE)
-  is_integer(x) || is_double(x)
-}
-
-#' @export
-#' @rdname is_numeric
-is_scalar_numeric <- function(x) {
-  warning("Deprecated", call. = FALSE)
-  is_scalar_integer(x) || is_scalar_double(x)
-}
-
 # Re-exports from purrr ---------------------------------------------------
 
 #' @export

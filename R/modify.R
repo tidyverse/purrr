@@ -429,21 +429,6 @@ modify_depth_rec <- function(.x, .depth, .f,
   })
 }
 
-#' Map at depth
-#'
-#' This function is defunct and has been replaced by [map_depth()].
-#' See also [modify_depth()] for a version that preserves the types of
-#' the elements of the tree.
-#'
-#' @inheritParams map
-#' @inheritParams map_if
-
-#' @export
-#' @keywords internal
-at_depth <- function(.x, .depth, .f, ...) {
-  stop_defunct("at_depth() is defunct, please use `map_depth()` instead")
-}
-
 # Internal version of map_lgl() that works with logical vectors
 probe <- function(.x, .p, ...) {
   if (is_logical(.p)) {
