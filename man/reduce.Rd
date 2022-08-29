@@ -90,6 +90,10 @@ about a use case for a right reduction with a ternary function.
 1:3 \%>\% reduce(`+`)
 1:10 \%>\% reduce(`*`)
 
+# By ignoring the input vector (.y), you can turn output of one step into
+# the input for the next. This code takes 10 steps of a random walk:
+reduce(1:10, ~ .x + rnorm(1), .init = 0)
+
 # When the operation is associative, the direction of reduction
 # does not matter:
 reduce(1:4, `+`)

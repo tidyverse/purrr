@@ -33,7 +33,7 @@ your accessors are stored in a list, you can splice that in with
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
 allow you to index deeply and flexibly into data structures.
 \code{pluck()} consistently returns \code{NULL} when an element does not
-exist, \code{chuck()} always throws an error in that case.
+exist, \code{chuck()} always throws (or chucks) an error in that case.
 }
 \details{
 \itemize{

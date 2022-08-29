@@ -144,14 +144,16 @@ test_that("partial() preserves visibility when arguments are from the same envir
 # Life cycle --------------------------------------------------------------
 
 test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
-  local_lifecycle_warnings()
-  expect_warning(partial(list, "foo", .lazy = TRUE), "soft-deprecated")
-  expect_warning(partial(list, "foo", .env = env()), "soft-deprecated")
-  expect_warning(partial(list, "foo", .first = TRUE, "soft-deprecated"))
+  expect_snapshot({
+    . <- partial(list, "foo", .lazy = TRUE)
+    . <- partial(list, "foo", .env = env())
+    . <- partial(list, "foo", .first = TRUE)
+  })
 })
 
 test_that("`.lazy` still works", {
-  local_options(lifecycle_disable_warnings = TRUE)
+  options(lifecycle_verbosity = "quiet")
+
   counter <- env(n = 0)
   eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
   walk(1:10, ~eager())
@@ -159,7 +161,8 @@ test_that("`.lazy` still works", {
 })
 
 test_that("`.first` still works", {
-  local_options(lifecycle_disable_warnings = TRUE)
+  options(lifecycle_verbosity = "quiet")
+
   out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
   exp <- expr(runif(..., n = rpois(1, 5)))
   expect_identical(out, exp)
@@ -167,8 +170,4 @@ test_that("`.first` still works", {
   # partial() also works without partialised arguments
   expect_identical(partialised_body(partial(runif, .first = TRUE)), expr(runif(...)))
   expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
-})
-
-test_that("`...f` still works", {
-  expect_error(partial(...f = list, x = "foo"), "renamed", class = "defunctError")
 })
