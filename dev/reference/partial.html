@@ -71,7 +71,13 @@ functionals and other function operators.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">partial</span><span class="op">(</span><span class="va">.f</span>, <span class="va">...</span>, .env <span class="op">=</span> <span class="cn">NULL</span>, .lazy <span class="op">=</span> <span class="cn">NULL</span>, .first <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">partial</span><span class="op">(</span></span>
+<span>  <span class="va">.f</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .env <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .lazy <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .first <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -92,17 +98,18 @@ evaluated each time the function is called.</p></dd>
 
 
 <dt>.env</dt>
-<dd><p>Soft-deprecated as of purrr 0.3.0. The environments are
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> The environments are
 now captured via quosures.</p></dd>
 
 
 <dt>.lazy</dt>
-<dd><p>Soft-deprecated as of purrr 0.3.0. Please unquote the
-arguments that should be evaluated once at function creation time.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Please unquote the
+arguments that should be evaluated once at function creation time
+with <code>!!</code>.</p></dd>
 
 
 <dt>.first</dt>
-<dd><p>Soft-deprecated as of purrr 0.3.0. Please pass an
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Please pass an
 empty argument <code>... = </code> to specify the position of future
 arguments.</p></dd>
 
@@ -154,7 +161,7 @@ argument.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;partialised&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = rpois(1, 5), ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562b29963478&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x557caaaff278&gt;</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5647063 0.2041884 0.8266304 0.9647663 0.3472210</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -167,7 +174,7 @@ argument.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;partialised&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = 3L, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x562b29963478&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x557caaaff278&gt;</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.6373880 0.1543250 0.5652254</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>

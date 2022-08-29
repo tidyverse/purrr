@@ -49,9 +49,6 @@
     <loc>https://purrr.tidyverse.org/dev/reference/as_vector.html</loc>
   </url>
   <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/at_depth.html</loc>
-  </url>
-  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/attr_getter.html</loc>
   </url>
   <url>
@@ -92,9 +89,6 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/invoke.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/is_numeric.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/keep.html</loc>
