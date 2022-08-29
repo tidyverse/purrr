@@ -118,6 +118,8 @@
 #' pluck(x, !!!idx)
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
+  check_dots_unnamed()
+
   .Call(
     pluck_impl,
     x = .x,
@@ -129,6 +131,8 @@ pluck <- function(.x, ..., .default = NULL) {
 #' @rdname pluck
 #' @export
 chuck <- function(.x, ...) {
+  check_dots_unnamed()
+
   .Call(
     pluck_impl,
     x = .x,
