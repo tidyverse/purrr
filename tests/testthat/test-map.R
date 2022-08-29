@@ -199,3 +199,9 @@ test_that("can enforce .ptype", {
     map_vec(1:2, ~ factor("x"), .ptype = integer())
   })
 })
+
+test_that("preserves names of input", {
+  x <- c(x = 1, y = 2)
+  out <- map_vec(x, ~ set_names(1, letters[.x]))
+  expect_named(out, c("x", "y"))
+})

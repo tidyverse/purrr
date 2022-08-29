@@ -232,13 +232,15 @@ map_vec <- function(.x, .f, ..., .ptype = NULL) {
   out <- map(.x, .f, ...)
 
   .ptype <- vec_ptype_common(!!!out, .ptype = .ptype)
-  for (i in seq_along(out)) {
-    if (vec_size(out[[i]]) != 1L) {
-      stop_bad_element_vector(out[[i]], i, .ptype, 1L, what = "Result")
-    }
+  bad_sizes <- which(list_sizes(out) != 1L)
+  if (length(bad_sizes) >= 1) {
+    i <- bad_sizes[[1L]]
+    stop_bad_element_vector(out[[i]], i, .ptype, 1L, what = "Result")
   }
 
-  vec_c(!!!out, .ptype = .ptype)
+  out <- vec_set_names(out, NULL)
+  out <- vec_unchop(out, ptype = .ptype)
+  vec_set_names(out, names(.x))
 }
 
 
