@@ -30,6 +30,8 @@
 
 ## Features and fixes
 
+* `pluck()` now accepts negative integers, indexing from the right (#603).
+
 * `pluck()` and `chuck()` now fail if you provide named inputs to ... (#788).
 
 * `pluck()` no longer replaces 0-length vectors with `default`; it now

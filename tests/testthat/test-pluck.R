@@ -22,6 +22,15 @@ test_that("can pluck by position", {
   expect_identical(pluck(x, 3L), x[[3]])
 })
 
+test_that("can pluck from back", {
+  x <- list(1, 2, 3)
+  expect_equal(pluck(x, -1), 3)
+  expect_equal(pluck(x, -2), 2)
+  expect_equal(pluck(x, -3), 1)
+  expect_equal(pluck(x, -4), NULL)
+  expect_equal(pluck(x, -5), NULL)
+})
+
 test_that("can pluck by name", {
   x <- list(a = "a", b = 1, c = c(TRUE, FALSE))
 

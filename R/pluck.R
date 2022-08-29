@@ -7,7 +7,8 @@
 #'
 #' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
-#'   an integer position, a string name, or an accessor function
+#'   an positive integer, a negative integer (to index from the right),
+#'   a string (to index into names), or an accessor function
 #'   (except for the assignment variants which only support names and
 #'   positions). If the object being indexed is an S4 object,
 #'   accessing it by name will return the corresponding slot.
@@ -31,7 +32,6 @@
 #' * These accessors never partial-match. This is unlike `$` which
 #'   will select the `disp` object if you write `mtcars$di`.
 #'
-#'
 #' @seealso [attr_getter()] for creating attribute getters suitable
 #'   for use with `pluck()` and `chuck()`. [modify_in()] for
 #'   applying a function to a pluck location.
@@ -48,15 +48,18 @@
 #'
 #' # Numeric positions index into the list by position, just like `[[`:
 #' pluck(x, 1)
-#' x[[1]]
+#' # same as x[[1]]
+#'
+#' # Index from the back
+#' pluck(x, -1)
+#' # same as x[[2]]
 #'
 #' pluck(x, 1, 2)
-#' x[[1]][[2]]
+#' # same as x[[1]][[2]]
 #'
 #' # Supply names to index into named vectors:
 #' pluck(x, 1, 2, "elt")
-#' x[[1]][[2]][["elt"]]
-#'
+#' # same as x[[1]][[2]][["elt"]]
 #'
 #' # By default, pluck() consistently returns `NULL` when an element
 #' # does not exist:
