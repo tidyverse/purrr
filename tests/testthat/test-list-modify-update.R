@@ -104,11 +104,10 @@ test_that("quosures and formulas are evaluated", {
 # Life cycle --------------------------------------------------------------
 
 test_that("removing elements with `NULL` is deprecated", {
-  local_lifecycle_warnings()
-  expect_warning(list_modify(list(1, 2, 3), NULL))
+  expect_snapshot(. <- list_modify(list(1, 2, 3), NULL))
 })
 
 test_that("can still remove elements with `NULL`", {
-  local_lifecycle_silence()
+  local_options(lifecycle_verbosity = "quiet")
   expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })

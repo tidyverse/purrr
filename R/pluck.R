@@ -3,7 +3,7 @@
 #' `pluck()` and `chuck()` implement a generalised form of `[[` that
 #' allow you to index deeply and flexibly into data structures.
 #' `pluck()` consistently returns `NULL` when an element does not
-#' exist, `chuck()` always throws (or chucks) an error in that case.
+#' exist while `chuck()` always throws (or chucks) an error.
 #'
 #' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
@@ -16,7 +16,7 @@
 #'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
 #'   your accessors are stored in a list, you can splice that in with
 #'   `!!!`.
-#' @param .default Value to use if target is empty or absent.
+#' @param .default Value to use if target is `NULL` or absent.
 #'
 #' @details
 #' * You can pluck or chuck with standard accessors like integer
@@ -121,6 +121,8 @@
 #' pluck(x, !!!idx)
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
+  check_dots_unnamed()
+
   .Call(
     pluck_impl,
     x = .x,
@@ -132,6 +134,8 @@ pluck <- function(.x, ..., .default = NULL) {
 #' @rdname pluck
 #' @export
 chuck <- function(.x, ...) {
+  check_dots_unnamed()
+
   .Call(
     pluck_impl,
     x = .x,
