@@ -28,13 +28,14 @@ test_that(".default replaces absent values", {
   expect_equal(map_dbl(x, "b", .default = NA), c(2, NA, NA))
 })
 
-test_that(".default replaces elements with length 0", {
+test_that(".default only replaces NULL elements", {
   x <- list(
     list(a = 1),
+    list(a = numeric()),
     list(a = NULL),
-    list(a = numeric())
+    list()
   )
-  expect_equal(map_dbl(x, "a", .default = NA), c(1, NA, NA))
+  expect_equal(map(x, "a", .default = NA), list(1, numeric(), NA, NA))
 })
 
 test_that("Additional arguments are ignored", {
@@ -75,3 +76,4 @@ test_that("complex types aren't supported for indexing", {
 test_that("raw vectors are supported for indexing", {
   expect_equal( as_mapper(1)(raw(2)), raw(1) )
 })
+

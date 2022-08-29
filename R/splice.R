@@ -1,21 +1,16 @@
 #' Splice objects and lists of objects into a list
 #'
 #' @description
-#'
-#' `r lifecycle::badge("questioning")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' This splices all arguments into a list. Non-list objects and lists
 #' with a S3 class are encapsulated in a list before concatenation.
+#' We no longer believe that implicit/automatic splicing is a good idea;
+#' instead use `!!!` in conjunction with `rlang::list2()`.
 #'
 #' @param ... Objects to concatenate.
 #' @return A list.
-#'
-#' @section Life cycle:
-#'
-#' `splice()` is in the questioning lifecycle stage as of purrr
-#' 0.3.0. We are now favouring the `!!!` syntax enabled by
-#' [rlang::list2()].
-#'
+#' @keywords internal
 #' @examples
 #' inputs <- list(arg1 = "a", arg2 = "b")
 #'
@@ -25,6 +20,8 @@
 #' c(inputs, arg3 = c("c1", "c2")) %>% str()
 #' @export
 splice <- function(...) {
+  lifecycle::deprecate_warn("0.4.0", "splice()")
+
   splice_if(list(...), is_bare_list)
 }
 

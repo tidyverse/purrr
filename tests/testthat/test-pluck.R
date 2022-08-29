@@ -2,6 +2,10 @@ test_that("contents must be a vector", {
   expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
 })
 
+test_that("dots must be unnamed", {
+  expect_snapshot(pluck(1, a = 1), error = TRUE)
+})
+
 # pluck vector --------------------------------------------------------------
 
 test_that("can pluck by position", {
@@ -16,6 +20,15 @@ test_that("can pluck by position", {
   expect_identical(pluck(x, 1L), x[[1]])
   expect_identical(pluck(x, 2L), x[[2]])
   expect_identical(pluck(x, 3L), x[[3]])
+})
+
+test_that("can pluck from back", {
+  x <- list(1, 2, 3)
+  expect_equal(pluck(x, -1), 3)
+  expect_equal(pluck(x, -2), 2)
+  expect_equal(pluck(x, -3), 1)
+  expect_equal(pluck(x, -4), NULL)
+  expect_equal(pluck(x, -5), NULL)
 })
 
 test_that("can pluck by name", {
@@ -70,15 +83,17 @@ test_that("special indexes never match", {
 })
 
 test_that("special values return NULL", {
-  # unnamed input
+  # absent name
   expect_null(pluck(list(1, 2), "a"))
+  expect_null(pluck(list(a = 1, b = 2), "c"))
 
-  # zero length input
-  expect_null(pluck(integer(), 1))
-
-  # past end
+  # outside of range
+  expect_null(pluck(1:4, 0))
   expect_null(pluck(1:4, 10))
-  expect_null(pluck(1:4, 10L))
+})
+
+test_that("can pluck 0-length object", {
+  expect_equal(pluck(list(integer()), 1), integer())
 })
 
 test_that("handles weird names", {
