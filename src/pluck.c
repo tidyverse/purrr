@@ -256,7 +256,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
  end:
   UNPROTECT(1);
-  return Rf_isNull(x) ? missing : x;
+  return x == R_NilValue ? missing : x;
 }
 
 
