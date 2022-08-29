@@ -7,14 +7,20 @@
 #include "utils.h"
 
 void copy_names(SEXP from, SEXP to) {
-  if (Rf_length(from) != Rf_length(to))
-    return;
-
   SEXP names = Rf_getAttrib(from, R_NamesSymbol);
-  if (Rf_isNull(names))
+  if (names == R_NilValue) {
     return;
+  }
+
+  R_len_t n = Rf_length(to);
+
+  if (Rf_length(names) != n) {
+    names = short_vec_recycle(names, n);
+  }
+  PROTECT(names);
 
   Rf_setAttrib(to, R_NamesSymbol, names);
+  UNPROTECT(1);
 }
 
 void check_vector(SEXP x, const char *name) {
@@ -39,11 +45,8 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args) {
 
     INTEGER(i_val)[0] = i + 1;
 
-#if defined(R_VERSION) && R_VERSION >= R_Version(3, 2, 3)
     SEXP res = PROTECT(R_forceAndCall(call, force_args, env));
-#else
-    SEXP res = PROTECT(Rf_eval(call, env));
-#endif
+
     if (type != VECSXP && Rf_length(res) != 1) {
       SEXP ptype = PROTECT(Rf_allocVector(type, 0));
       stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);

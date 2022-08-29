@@ -31,13 +31,14 @@
 #'   These dots support quasiquotation. If you unquote a value, it is
 #'   evaluated only once at function creation time.  Otherwise, it is
 #'   evaluated each time the function is called.
-#' @param .env Soft-deprecated as of purrr 0.3.0. The environments are
+#' @param .env `r lifecycle::badge("deprecated")` The environments are
 #'   now captured via quosures.
-#' @param .first Soft-deprecated as of purrr 0.3.0. Please pass an
+#' @param .first `r lifecycle::badge("deprecated")` Please pass an
 #'   empty argument `... = ` to specify the position of future
 #'   arguments.
-#' @param .lazy Soft-deprecated as of purrr 0.3.0. Please unquote the
-#'   arguments that should be evaluated once at function creation time.
+#' @param .lazy `r lifecycle::badge("deprecated")` Please unquote the
+#'   arguments that should be evaluated once at function creation time
+#'   with `!!`.
 #'
 #' @inheritSection safely Adverbs
 #' @inherit safely return
@@ -89,13 +90,10 @@
 #' my_list("foo")
 partial <- function(.f,
                     ...,
-                    .env = NULL,
-                    .lazy = NULL,
-                    .first = NULL) {
+                    .env = deprecated(),
+                    .lazy = deprecated(),
+                    .first = deprecated()) {
   args <- enquos(...)
-  if (has_name(args, "...f")) {
-    stop_defunct("`...f` has been renamed to `.f` as of purrr 0.3.0.")
-  }
 
   fn_expr <- enexpr(.f)
   .fn <- switch(typeof(.f),
@@ -107,39 +105,17 @@ partial <- function(.f,
     abort(sprintf("`.f` must be a function, not %s", friendly_type_of(.f)))
   )
 
-  if (!is_null(.env)) {
-    signal_soft_deprecated(paste_line(
-      "The `.env` argument is soft-deprecated as of purrr 0.3.0.",
-    ))
+  if (lifecycle::is_present(.env)) {
+    lifecycle::deprecate_warn("0.3.0", "partial(.env)", always = TRUE)
   }
-  if (!is_null(.lazy)) {
-    signal_soft_deprecated(paste_line(
-      "The `.lazy` argument is soft-deprecated as of purrr 0.3.0.",
-      "Please unquote the arguments that should be evaluated once and for all.",
-      "",
-      "  # Before:",
-      "  partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)",
-      "",
-      "  # After:",
-      "  partial(fn, u = !!runif(1), n = !!rnorm(1))  # All constant",
-      "  partial(fn, u = !!runif(1), n = rnorm(1))    # First constant"
-    ))
+  if (lifecycle::is_present(.lazy)) {
+    lifecycle::deprecate_warn("0.3.0", "partial(.lazy)", always = TRUE)
     if (!.lazy) {
       args <- map(args, ~ new_quosure(eval_tidy(.x , env = caller_env()), empty_env()))
     }
   }
-  if (!is_null(.first)) {
-    signal_soft_deprecated(paste_line(
-      "The `.first` argument is soft-deprecated as of purrr 0.3.0.",
-      "Please pass a `... =` argument instead.",
-      "",
-      "  # Before:",
-      "  partial(fn, x = 1, y = 2, .first = FALSE)",
-      "",
-      "  # After:",
-      "  partial(fn, x = 1, y = 2, ... = )  # Partialised arguments last",
-      "  partial(fn, x = 1, ... = , y = 2)  # Partialised arguments around"
-    ))
+  if (lifecycle::is_present(.first)) {
+    lifecycle::deprecate_warn("0.3.0", "partial(.first)", always = TRUE)
   }
 
   env <- caller_env()
