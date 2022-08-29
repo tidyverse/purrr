@@ -133,6 +133,9 @@
     <loc>https://purrr.tidyverse.org/dev/reference/pluck.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/pluck_depth.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/pmap.html</loc>
   </url>
   <url>
@@ -182,9 +185,6 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/transpose.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/vec_depth.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/when.html</loc>
