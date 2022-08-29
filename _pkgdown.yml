@@ -87,23 +87,17 @@ reference:
 
 - title: Adverbs
   desc: >
-    Adverbs modify the action of a function; taking a function as input and
-    returning a function with modified action as output.
+    Adverbs modify the action of a function; they take a function as input and
+    return a function with modified action as output.
   contents:
-  - faq-adverbs-export
-  - compose
-  - negate
-  - partial
-  - safely
-  - insistently
-  - rate_sleep
-  - rate-helpers
+  - has_concept("adverbs")
 
 - title: Misc
   contents:
   - array_tree
   - as_vector
   - rbernoulli
+  - rate-helpers
   - rdunif
   - rerun
   - vec_depth
