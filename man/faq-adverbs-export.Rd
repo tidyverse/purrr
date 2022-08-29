@@ -10,8 +10,8 @@ purrr code. This means that creating them once and for all when
 the package is built may cause problems when purrr is updated, because
 a function that the adverb uses might no longer exist.
 
-Instead, either create the function on package load or by wrapping the call
-within another function, as shown below.
+Instead, either create the modified function once per session on package
+load or wrap the call within another function every time you use it:
 \itemize{
 \item Using the \code{\link[=.onLoad]{.onLoad()}} hook:
 
