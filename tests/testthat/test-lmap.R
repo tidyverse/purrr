@@ -27,7 +27,7 @@ test_that("lmap_at() only affects selected elements", {
 })
 
 test_that("lmap_at can use tidyselect", {
-  options(lifecycle_verbosity = "quiet")
+  local_options(lifecycle_verbosity = "quiet")
 
   x <- lmap_at(mtcars, vars(tidyselect::contains("vs")), ~ .x + 10)
   expect_equal(x$vs[1], 10)

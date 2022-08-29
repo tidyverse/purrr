@@ -148,7 +148,7 @@ test_that("vectorised operations on the recursive and atomic levels yield same r
 
 test_that("modify_at() can use tidyselect", {
   skip_if_not_installed("tidyselect")
-  options(lifecycle_verbosity = "quiet")
+  local_options(lifecycle_verbosity = "quiet")
 
   one <-  modify_at(mtcars, vars(cyl, am), as.character)
   expect_bare(one$cyl, "character")
