@@ -1,6 +1,7 @@
 test_that("is deprecated", {
   expect_snapshot({
-    . <- rerun(1, 1)
+    . <- rerun(5, rnorm(1))
+    . <- rerun(5, rnorm(1), rnorm(2))
   })
 
 })

@@ -33,7 +33,7 @@
 #'   map(~ list(x = rnorm(5), y = rnorm(5))) %>%
 #'   map_dbl(~ cor(.x$x, .x$y))
 rerun <- function(.n, ...) {
-  lifecycle::deprecate_warn("0.4.0", "rerun()", "map()")
+  deprec_rerun(.n, ...)
 
   dots <- quos(...)
 
@@ -51,4 +51,22 @@ rerun <- function(.n, ...) {
     out[[i]] <- eval_dots(dots)
   }
   out
+}
+
+deprec_rerun <- function(.n, ...) {
+  n <- .n
+  old <- substitute(rerun(n, ...))
+  if (dots_n(...) == 1) {
+    new <- substitute(map(1:n, ~ ...))
+  } else {
+    new <- substitute(map(1:n, ~ list(...)))
+  }
+
+  lifecycle::deprecate_warn("0.4.0", "rerun()", "map()", details = paste_line(
+    "  # Previously",
+    paste0("  ", expr_deparse(old)),
+    "",
+    "  # Now",
+    paste0("  ", expr_deparse(new))
+  ))
 }
