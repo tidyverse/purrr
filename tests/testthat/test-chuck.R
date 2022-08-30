@@ -1,7 +1,11 @@
 # NULL input ----------------------------------------------------------------
 
 test_that("trying to chuck NULL raises errors", {
-  expect_error(chuck(NULL, "a"), "can't be NULL")
+  expect_snapshot(chuck(NULL, "a"), error = TRUE)
+})
+
+test_that("dots must be unnamed", {
+  expect_snapshot(chuck(1, a = 1), error = TRUE)
 })
 
 # chuck vector --------------------------------------------------------------
@@ -31,16 +35,11 @@ test_that("halts on named vector errors", {
 })
 
 test_that("indices outside of vector length raise errors", {
-  # zero length input
-  expect_error(chuck(integer(), 1), "must have at least one element")
-
-  # past end
-  expect_error(chuck(1:4, 10), "exceeds the length of plucked object")
-  expect_error(chuck(1:4, 10L), "exceeds the length of plucked object")
-
-  # before start
-  expect_error(chuck(1:4, -1), "must be greater than 0")
-  expect_error(chuck(1:4, -1L), "must be greater than 0")
+  expect_snapshot(error = TRUE, {
+    chuck(1:4, 10)
+    chuck(1:4, 0)
+    chuck(1:4, -10)
+  })
 })
 
 test_that("handles weird names", {

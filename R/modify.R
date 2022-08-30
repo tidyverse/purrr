@@ -388,7 +388,7 @@ modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   force(.ragged)
 
   if (.depth < 0) {
-    .depth <- vec_depth(.x) + .depth
+    .depth <- pluck_depth(.x) + .depth
   }
 
   .f <- as_mapper(.f, ...)

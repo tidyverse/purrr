@@ -35,6 +35,22 @@
 
 ## Features and fixes
 
+* `as_mapper()` is now around twice as fast when used with character,
+  integer, or list (#820).
+
+* `vec_depth()` is now `pluck_depth()` and works with more types of input
+  (#818).
+
+* `pluck()` now requires indices to be length 1 (#813). It also now reports 
+  the correct type if you supply an unexpected index.
+
+* `pluck()` now accepts negative integers, indexing from the right (#603).
+
+* `pluck()` and `chuck()` now fail if you provide named inputs to ... (#788).
+
+* `pluck()` no longer replaces 0-length vectors with `default`; it now
+  only applies absent and `NULL` components.
+
 * `lmap()` now always returns a list, even if `.x` is a data frame. 
   This makes it more consistent with other functions in the `map` family.
 

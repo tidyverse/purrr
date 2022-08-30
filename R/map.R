@@ -293,7 +293,7 @@ map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
     abort("`.depth` must be a single number")
   }
   if (.depth < 0) {
-    .depth <- vec_depth(.x) + .depth
+    .depth <- pluck_depth(.x) + .depth
   }
 
   .f <- as_mapper(.f, ...)
