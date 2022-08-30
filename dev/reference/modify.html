@@ -177,9 +177,10 @@ returns <code>FALSE</code>.</p></dd>
 <dt>.at</dt>
 <dd><p>A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and
-the <code>tidyselect</code> helpers to select elements.</p></dd>
+exlude. Only those elements corresponding to <code>.at</code> will be modified.</p>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>: if the tidyselect package is
+installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and tidyselect helpers to select
+elements.</p></dd>
 
 
 <dt>.depth</dt>
@@ -284,9 +285,10 @@ science.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="rbernoulli.html">rbernoulli</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="st">"x"</span>, <span class="op">~</span> <span class="fu"><a href="list_modify.html">update_list</a></span><span class="op">(</span><span class="va">.</span>, y <span class="op">=</span> <span class="op">~</span> <span class="va">y</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="st">"x"</span>, <span class="op">~</span> <span class="fu"><a href="update_list.html">update_list</a></span><span class="op">(</span><span class="va">.</span>, y <span class="op">=</span> <span class="op">~</span> <span class="va">y</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_vector.html">simplify_all</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`update_list()` was deprecated in purrr 0.4.0.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [12] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE</span>

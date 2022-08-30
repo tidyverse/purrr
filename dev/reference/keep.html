@@ -134,6 +134,13 @@ evaluation of the predicate function <code>.p</code> is stricter.</p>
 <span class="r-in"><span><span class="co"># Using a string instead of a function will select all list elements</span></span></span>
 <span class="r-in"><span><span class="co"># where that subelement is TRUE</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="rerun.html">rerun</a></span><span class="op">(</span><span class="fl">5</span>, a <span class="op">=</span> <span class="fu"><a href="rbernoulli.html">rbernoulli</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`rerun()` was deprecated in purrr 0.4.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `map()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Previously</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   rerun(5, a = rbernoulli(1), b = sample(10))</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Now</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   map(1:5, ~ list(a = rbernoulli(1), b = sample(10)))</span>
 <span class="r-in"><span><span class="va">x</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$a</span>

@@ -187,6 +187,9 @@
     <loc>https://purrr.tidyverse.org/dev/reference/transpose.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/update_list.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/when.html</loc>
   </url>
 </urlset>

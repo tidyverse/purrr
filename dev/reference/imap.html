@@ -152,8 +152,8 @@ variable will be created.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Note that when using the formula shortcut, the first argument</span></span></span>
 <span class="r-in"><span><span class="co"># is the value, and the second is the position</span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 8"  "2: 9"  "3: 1"  "4: 5"  "5: 2"  "6: 7"  "7: 4"  "8: 10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 3"  "10: 6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 1"  "2: 2"  "3: 4"  "4: 10" "5: 3"  "6: 9"  "7: 7"  "8: 5" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 6"  "10: 8"</span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl: 6</span>
