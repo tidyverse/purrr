@@ -56,7 +56,7 @@ See function documentation for the details.
 Here `x` denotes a vector and `f` denotes a function
 
 | Output                        | Input                                 | Base R                                                                      | purrr                                                                                                               |
-|-----------------|-----------------|-----------------|--------------------|
+|------------------|------------------|------------------|--------------------|
 | List                          | 1 vector                              | `lapply()`                                                                  | `map()`                                                                                                             |
 | List                          | 2 vectors                             | `mapply()`, `Map()`                                                         | `map2()`                                                                                                            |
 | List                          | \>2 vectors                           | `mapply()`, `Map()`                                                         | `pmap()`                                                                                                            |
@@ -77,18 +77,16 @@ Here `x` denotes a vector and `f` denotes a function
 | List                          | Recursively apply to list within list | `rapply()`                                                                  | `map_depth()`                                                                                                       |
 | List                          | List only                             | `lapply()`                                                                  | `lmap()`, `lmap_at()`, `lmap_if()`                                                                                  |
 
-### Shorthands
+### Extractor shorthands
 
-When an anonymous function is required in `*apply` or `map` functions, purrr offers shorthands to make the anonymous function more readable and easier to write.
-Here `l` denotes a list of arguments, and `f` denotes some expression involving arguments of the anonymous function.
+Since a common use case for map functions is list extracting components, purrr provides a handful of shortcut functions for various uses of `[[`.
 
-| Input                                                   | base R                                                                                                                         | purrr                       |
-|------------------|--------------------------|----------------------------|
-| 1 vector                                                | `function(x) f(x)`                                                                                                             | `~ f(.x)`                   |
-| 2 vectors                                               | `function(x, y) f(x, y)`                                                                                                       | `~ f(.x, .y)`               |
-| More than 2 vectors                                     | `function(x, y, z, ...) f(x, y, z, ...)` or `function(l) f(l[[1]], l[[2]], l[[3]], ...)` or `function(l) do.call(f, args = l)` | `~ f(..1, ..2, ..3, ...)`   |
-| Extract `i`th element of each vector                    | `lapply(x, function(y) tryCatch(y[["a"]], error = function(e) NA))`,                                                           | `map(x, "a", default = NA)` |
-| Extract `i`th element of each vector with default value | `lapply(x, function(y) tryCatch(y[[3]], error = function(e) NA))`                                                              | `map(x, 3, .default = NA)`  |
+| Input                      | base R                                                            | purrr                      |
+|-------------------|--------------------------|----------------------------|
+| Extract by name            | `` lapply(x, `[[`, "a") ``                                        | `map(x, "a")`              |
+| Extract by position        | `` lapply(x, `[[`, 3) ``                                          | `map(x, 3)`                |
+| Extract deeply             | `lapply(x, \(y) x[[1]][["x"]][[3]])`                              | `map(x, list(1, "x", 3))`  |
+| Extract with default value | `lapply(x, function(y) tryCatch(y[[3]], error = function(e) NA))` | `map(x, 3, .default = NA)` |
 
 ### Predicates
 
@@ -152,7 +150,7 @@ means <- 1:4
 sds <- 1:4
 ```
 
-- This is relatively tricky in base R because we have to adjust a number of `mapply()`'s defaults.
+-   This is relatively tricky in base R because we have to adjust a number of `mapply()`'s defaults.
 
     ```{r}
     set.seed(2020)
@@ -165,20 +163,18 @@ sds <- 1:4
     )
     str(samples)
     ```
-    
-    Alternatively, we could use `Map()` which doesn't simply, but also doesn't
-    take any constant arguments, so we need to use an anonymous function:
-    
+
+    Alternatively, we could use `Map()` which doesn't simply, but also doesn't take any constant arguments, so we need to use an anonymous function:
+
     ```{r}
     samples <- Map(function(...) rnorm(..., n = 5), mean = means, sd = sds)
     ```
-    
+
     In R 4.1 and up, you could use the shorter anonymous function form:
-    
+
     ```{r, eval = modern_r}
     samples <- Map(\(...) rnorm(..., n = 5), mean = means, sd = sds)
     ```
-    
 
 -   Working with a pair of vectors is a common situation so purrr provides the `map2()` family of functions:
 
@@ -196,7 +192,7 @@ We can make the challenge still more complex by also varying the number of sampl
 ns <- 4:1
 ```
 
--   Using base R's `Map()` becomes more straightforward because there are no constant arguments. 
+-   Using base R's `Map()` becomes more straightforward because there are no constant arguments.
 
     ```{r}
     set.seed(2020)
@@ -214,9 +210,12 @@ ns <- 4:1
 
 ### Outputs
 
-Given the samples, imagine we want to compute their means. A mean is a single number, so we want the output to be a numeric vector rather than a list.
+Given the samples, imagine we want to compute their means.
+A mean is a single number, so we want the output to be a numeric vector rather than a list.
 
--   There are two options in base R: `vapply()` or `sapply()`. `vapply()` requires you to specific the output type (so is relatively verbose), but will always return a numeric vector. `sapply()` is concise, but if you supply an empty list you'll get a list instead of a numeric vector.
+-   There are two options in base R: `vapply()` or `sapply()`.
+    `vapply()` requires you to specific the output type (so is relatively verbose), but will always return a numeric vector.
+    `sapply()` is concise, but if you supply an empty list you'll get a list instead of a numeric vector.
 
     ```{r}
     # type stable
@@ -278,13 +277,13 @@ means |>
 
 (And of course you can mix and match the piping style with either base R or purrr.)
 
-The pipe is particularly compelling when working with longer transformations. For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
+The pipe is particularly compelling when working with longer transformations.
+For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
 
 ```{r}
 mtcars %>% 
   split(mtcars$cyl) %>% 
-  map(~ lm(mpg ~ wt, data = .x)) %>% 
+  map(\(df) lm(mpg ~ wt, data = df)) %>% 
   map(coef) %>% 
   map_dbl(1)
 ```
-

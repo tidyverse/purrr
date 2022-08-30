@@ -49,9 +49,9 @@ The following example uses purrr to solve a fairly realistic problem: split a da
 ```{r}
 library(purrr)
 
-mtcars %>%
-  split(.$cyl) %>% # from base R
-  map(~ lm(mpg ~ wt, data = .)) %>%
+mtcars |> 
+  split(mtcars$cyl) |>  # from base R
+  map(\(df) lm(mpg ~ wt, data = df)) |> 
   map(summary) %>%
   map_dbl("r.squared")
 ```
@@ -64,9 +64,9 @@ This example illustrates some of the advantages of purrr functions over the equi
   type (`map()` returns lists; `map_dbl()` returns double vectors), or they 
   throw an error.
   
-* All `map()` functions either accept function, formulas (used for succinctly
-  generating anonymous functions), a character vector (used to extract 
-  components by name), or a numeric vector (used to extract by position).
+* All `map()` functions accept functions (named, anonymous, and lambda), 
+  character vector (used to extract components by name), or numeric vectors 
+  (used to extract by position).
 
 -----
 

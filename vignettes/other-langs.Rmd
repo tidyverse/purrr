@@ -28,11 +28,8 @@ However, the goal of purrr is not to try and simulate a purer functional program
 
 * Instead of currying, we use `...` to pass in extra arguments.
 
-* Anonymous functions are verbose in R, so we provide two convenient shorthands.
+* Before R 4.1, anonymous functions were verbose, so we provide two convenient shorthands.
   For unary functions, `~ .x + 1` is equivalent to `function(.x) .x + 1`.
-  For chains of transformations functions, `. %>% f() %>% g()` is
-  equivalent to `function(.) . %>% f() %>% g()` (this shortcut is provided
-  by magrittr).
 
 * R is weakly typed, so we need `map` variants that describe the output type 
   (like `map_int()`, `map_dbl()`, etc) because we don't know the return type of `.f`.
