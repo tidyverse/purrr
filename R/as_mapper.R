@@ -103,8 +103,7 @@ plucker <- function(i, default) {
   # Use metaprogramming to create function that prints nicely
   new_function(
     exprs(x = , ... = ),
-    expr(pluck_raw(x, !!i, .default = !!default)),
-    env = global_env()
+    expr(pluck_raw(x, !!i, .default = !!default))
   )
 }
 
