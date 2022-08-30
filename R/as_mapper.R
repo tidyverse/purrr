@@ -98,11 +98,12 @@ find_extract_default <- function(.null, .default) {
 
 plucker <- function(i, default) {
   x <- NULL # supress global variables check NOTE
+  i <- as.list(i)
 
+  # Use metaprogramming to create function that prints nicely
   new_function(
     exprs(x = , ... = ),
-    expr(pluck(x, !!!i, .default = !!default)),
-    env = caller_env()
+    expr(pluck_raw(x, !!i, .default = !!default))
   )
 }
 

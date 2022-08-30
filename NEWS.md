@@ -30,6 +30,9 @@
 
 ## Features and fixes
 
+* `as_mapper()` is now around twice as fast when used with character,
+  integer, or list (#820).
+
 * `vec_depth()` is now `pluck_depth()` and works with more types of input
   (#818).
 
