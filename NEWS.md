@@ -33,6 +33,9 @@
 * `is_numeric()` and `is_scalar_numeric()` have been removed. They have
   been deprecated since purrr 0.2.3 (Sep 2017).
 
+* `*_raw()` have been deprecated because they are of limited use and you can 
+  now use `map_vec()` instead (#903).
+
 ## Features and fixes
 
 * `as_mapper()` is now around twice as fast when used with character,

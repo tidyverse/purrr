@@ -20,7 +20,6 @@ test_that("can flatten all atomic vectors", {
   expect_equal(flatten(list("a")), list("a"))
   expect_equal(flatten(list(as.raw(1))), list(as.raw(1)))
   expect_equal(flatten(list(1i)), list(1i))
-  expect_equal(flatten_raw(list(as.raw(1))), as.raw(1))
 })
 
 test_that("NULLs are silently dropped", {

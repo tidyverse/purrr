@@ -125,16 +125,6 @@ pmap_chr <- function(.l, .f, ...) {
 
   .Call(pmap_impl, environment(), ".l", ".f", "character")
 }
-#' @export
-#' @rdname pmap
-pmap_raw <- function(.l, .f, ...) {
-  .f <- as_mapper(.f, ...)
-  if (is.data.frame(.l)) {
-    .l <- as.list(.l)
-  }
-
-  .Call(pmap_impl, environment(), ".l", ".f", "raw")
-}
 
 #' @rdname pmap
 #' @export
