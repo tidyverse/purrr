@@ -100,17 +100,11 @@ maybe_zap <- function(x) {
     return(x)
   }
 
-  signal_soft_deprecated(paste_line(
-    "Removing elements with `NULL` is soft-deprecated as of purrr 0.3.0.",
-    "Please use `zap()` instead of `NULL`",
-    "",
-    "  # Before:",
-    "  list_modify(x, foo = NULL)",
-    "",
-    "  # After:",
-    "  list_modify(x, foo = zap())"
-  ))
-
+  lifecycle::deprecate_warn(
+    when = "0.3.0",
+    what = I("Removing elements with `NULL`"),
+    with = "zap()"
+  )
   # Allow removing with `NULL` for now. In purrr 0.5.0, this
   # functionality will be defunct and we'll allow setting elements to
   # `NULL`.

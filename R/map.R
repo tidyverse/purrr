@@ -23,19 +23,20 @@
 #' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
 #' @param ... Additional arguments passed on to the mapped function.
-#' @return
-#' * `map()` Returns a list the same length as `.x`.
+#' @returns
+#' The output type is determined by the suffix:
 #'
-#' * `map_lgl()` returns a logical vector, `map_int()` an integer
-#'   vector, `map_dbl()` a double vector, and `map_chr()` a character
-#'   vector.
+#' * No suffix: returns a list the same length as the input. It will be
+#'   named if the input was named.
 #'
-#' * `map_df()`, `map_dfc()`, `map_dfr()` all return a data frame.
+#' * `_lgl`, `_int`, `_dbl`, `_chr` return a logical, integer, double,
+#'   or character vector respectively. The output of `.f` will only be
+#'   automatically coerced upwards (i.e. logical -> integer -> double ->
+#'   character). It will be named if the input was named.
 #'
-#' * If `.x` has `names()`, the return value preserves those names.
+#' * `_dfc` and `_dfr()` all return a data frame created by row-binding and
+#'    column-binding respectively. They require dplyr to be installed.
 #'
-#' * The output of `.f` will be automatically typed upwards, e.g.
-#'   logical -> integer -> double -> character.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
@@ -290,7 +291,7 @@ map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
     abort("`.depth` must be a single number")
   }
   if (.depth < 0) {
-    .depth <- vec_depth(.x) + .depth
+    .depth <- pluck_depth(.x) + .depth
   }
 
   .f <- as_mapper(.f, ...)

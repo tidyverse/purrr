@@ -2,6 +2,10 @@ test_that("contents must be a vector", {
   expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
 })
 
+test_that("dots must be unnamed", {
+  expect_snapshot(pluck(1, a = 1), error = TRUE)
+})
+
 # pluck vector --------------------------------------------------------------
 
 test_that("can pluck by position", {
@@ -16,6 +20,15 @@ test_that("can pluck by position", {
   expect_identical(pluck(x, 1L), x[[1]])
   expect_identical(pluck(x, 2L), x[[2]])
   expect_identical(pluck(x, 3L), x[[3]])
+})
+
+test_that("can pluck from back", {
+  x <- list(1, 2, 3)
+  expect_equal(pluck(x, -1), 3)
+  expect_equal(pluck(x, -2), 2)
+  expect_equal(pluck(x, -3), 1)
+  expect_equal(pluck(x, -4), NULL)
+  expect_equal(pluck(x, -5), NULL)
 })
 
 test_that("can pluck by name", {
@@ -38,10 +51,21 @@ test_that("can pluck by name and position", {
   expect_equal(pluck(x, "a", 1, "b"), 1)
 })
 
+test_that("require length 1 character/double vectors", {
+  expect_snapshot(error = TRUE, {
+    pluck(1, 1:2)
+    pluck(1, integer())
+    pluck(1, NULL)
+    pluck(1, TRUE)
+  })
+})
 
-test_that("require length 1 vectors", {
-  expect_bad_element_length_error(pluck(1, letters), "must have length 1")
-  expect_bad_element_type_error(pluck(1, TRUE), "Index 1 must be a character or numeric vector")
+test_that("validate index even when indexing NULL", {
+  expect_snapshot(error = TRUE, {
+    pluck(NULL, 1:2)
+    pluck(NULL, TRUE)
+  })
+
 })
 
 test_that("special indexes never match", {
@@ -59,15 +83,17 @@ test_that("special indexes never match", {
 })
 
 test_that("special values return NULL", {
-  # unnamed input
+  # absent name
   expect_null(pluck(list(1, 2), "a"))
+  expect_null(pluck(list(a = 1, b = 2), "c"))
 
-  # zero length input
-  expect_null(pluck(integer(), 1))
-
-  # past end
+  # outside of range
+  expect_null(pluck(1:4, 0))
   expect_null(pluck(1:4, 10))
-  expect_null(pluck(1:4, 10L))
+})
+
+test_that("can pluck 0-length object", {
+  expect_equal(pluck(list(integer()), 1), integer())
 })
 
 test_that("handles weird names", {

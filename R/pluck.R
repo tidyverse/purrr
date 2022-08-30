@@ -3,11 +3,12 @@
 #' `pluck()` and `chuck()` implement a generalised form of `[[` that
 #' allow you to index deeply and flexibly into data structures.
 #' `pluck()` consistently returns `NULL` when an element does not
-#' exist, `chuck()` always throws (or chucks) an error in that case.
+#' exist while `chuck()` always throws (or chucks) an error.
 #'
 #' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
-#'   an integer position, a string name, or an accessor function
+#'   an positive integer, a negative integer (to index from the right),
+#'   a string (to index into names), or an accessor function
 #'   (except for the assignment variants which only support names and
 #'   positions). If the object being indexed is an S4 object,
 #'   accessing it by name will return the corresponding slot.
@@ -15,7 +16,7 @@
 #'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
 #'   your accessors are stored in a list, you can splice that in with
 #'   `!!!`.
-#' @param .default Value to use if target is empty or absent.
+#' @param .default Value to use if target is `NULL` or absent.
 #'
 #' @details
 #' * You can pluck or chuck with standard accessors like integer
@@ -30,7 +31,6 @@
 #'
 #' * These accessors never partial-match. This is unlike `$` which
 #'   will select the `disp` object if you write `mtcars$di`.
-#'
 #'
 #' @seealso [attr_getter()] for creating attribute getters suitable
 #'   for use with `pluck()` and `chuck()`. [modify_in()] for
@@ -48,15 +48,18 @@
 #'
 #' # Numeric positions index into the list by position, just like `[[`:
 #' pluck(x, 1)
-#' x[[1]]
+#' # same as x[[1]]
+#'
+#' # Index from the back
+#' pluck(x, -1)
+#' # same as x[[2]]
 #'
 #' pluck(x, 1, 2)
-#' x[[1]][[2]]
+#' # same as x[[1]][[2]]
 #'
 #' # Supply names to index into named vectors:
 #' pluck(x, 1, 2, "elt")
-#' x[[1]][[2]][["elt"]]
-#'
+#' # same as x[[1]][[2]][["elt"]]
 #'
 #' # By default, pluck() consistently returns `NULL` when an element
 #' # does not exist:
@@ -118,6 +121,7 @@
 #' pluck(x, !!!idx)
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
+  check_dots_unnamed()
   pluck_raw(.x, list2(...), .default = .default)
 }
 
@@ -134,6 +138,8 @@ pluck_raw <- function(.x, index, .default = NULL) {
 #' @rdname pluck
 #' @export
 chuck <- function(.x, ...) {
+  check_dots_unnamed()
+
   .Call(
     pluck_impl,
     x = .x,

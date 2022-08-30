@@ -388,7 +388,7 @@ modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   force(.ragged)
 
   if (.depth < 0) {
-    .depth <- vec_depth(.x) + .depth
+    .depth <- pluck_depth(.x) + .depth
   }
 
   .f <- as_mapper(.f, ...)
@@ -427,21 +427,6 @@ modify_depth_rec <- function(.x, .depth, .f,
   modify(.x, function(x) {
     modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
   })
-}
-
-#' Map at depth
-#'
-#' This function is defunct and has been replaced by [map_depth()].
-#' See also [modify_depth()] for a version that preserves the types of
-#' the elements of the tree.
-#'
-#' @inheritParams map
-#' @inheritParams map_if
-
-#' @export
-#' @keywords internal
-at_depth <- function(.x, .depth, .f, ...) {
-  stop_defunct("at_depth() is defunct, please use `map_depth()` instead")
 }
 
 # Internal version of map_lgl() that works with logical vectors
