@@ -1,16 +1,9 @@
 #' Modify a list
 #'
-#' @description
-#'
 #' `list_modify()` and `list_merge()` recursively combine two lists, matching
 #' elements either by name or position. If a sub-element is present in
 #' both lists, `list_modify()` takes the value from `y`, and `list_merge()`
 #' concatenates the values together.
-#'
-#' `update_list()` handles formulas and quosures that can refer to
-#' values existing within the input list. Note that this function
-#' might be deprecated in the future in favour of a `dplyr::mutate()`
-#' method for lists.
 #'
 #' @param .x List to modify.
 #' @param ... New values of a list. Use `zap()` to remove values.
@@ -38,7 +31,6 @@
 #'
 #' # Combine values
 #' str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
-#'
 #'
 #' # All these functions support dynamic dots features. Use !!! to splice
 #' # a list of arguments:
@@ -111,10 +103,23 @@ maybe_zap <- function(x) {
   NULL
 }
 
-#' @rdname list_modify
+
+#' Update a list with formulas
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `update_list()` handles formulas and quosures that can refer to
+#' values existing within the input list. This function is deprecated
+#' because we no longer believe that functions that use tidy evaluation are
+#' a good fit for purrr.
+#'
+#' @inheritParams list_modify
 #' @export
-#' @usage NULL
+#' @keywords internal
 update_list <- function(.x, ...) {
+  lifecycle::deprecate_warn("0.4.0", "update_list()")
+
   dots <- dots_list(...)
 
   formulas <- map_lgl(dots, is_bare_formula, lhs = FALSE, scoped = TRUE)

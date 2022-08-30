@@ -100,4 +100,4 @@ reference:
   - rbernoulli
   - rate-helpers
   - rdunif
-  - rerun
+  - vec_depth

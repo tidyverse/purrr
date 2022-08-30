@@ -10,6 +10,8 @@ NULL
 
 at_selection <- function(nm, .at){
   if (is_quosures(.at)) {
+    lifecycle::deprecate_warn("0.4.0", I("using `vars()` in .at"))
+
     check_installed("tidyselect", "for using tidyselect in `map_at()`.")
     .at <- tidyselect::vars_select(.vars = nm, !!!.at)
   }

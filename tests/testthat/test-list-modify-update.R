@@ -91,11 +91,19 @@ test_that("list_merge handles duplicate names", {
 
 # update_list ------------------------------------------------------------
 
+test_that("update_list() is deprecated", {
+  expect_snapshot({
+    . <- update_list(list())
+  })
+})
+
 test_that("can modify element called x", {
+  local_options(lifecycle_verbosity = "quiet")
   expect_equal(update_list(list(), x = 1), list(x = 1))
 })
 
 test_that("quosures and formulas are evaluated", {
+  local_options(lifecycle_verbosity = "quiet")
   expect_identical(update_list(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
   expect_identical(update_list(list(x = 1), y = ~x + 1), list(x = 1, y = 2))
 })

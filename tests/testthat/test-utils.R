@@ -104,3 +104,9 @@ test_that("%@% is an infix attribute accessor", {
   local_options(lifecycle_verbosity = "quiet")
   expect_identical(mtcars %@% "names", attr(mtcars, "names"))
 })
+
+test_that("using tidyselect in .at is deprecated", {
+  expect_snapshot({
+    . <- at_selection(letters, vars("x"))
+  })
+})

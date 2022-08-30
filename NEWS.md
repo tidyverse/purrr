@@ -8,6 +8,11 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* `update_list()` (#858) and `rerun()` (#877), and the use of tidyselect
+  with `map_at()` and friends (#874) have been deprecated. These functions 
+  use some form of non-standard evaluation which we now believe is a poor 
+  fit for purrr.
+
 * The `lift_*` family of functions has been deprecated. We no longer believe
   these to be a good fit for purrr because they rely on a style of function 
   manipulation that is very uncommon in R code (#871).

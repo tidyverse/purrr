@@ -1,6 +1,6 @@
 test_that("lmap output is list if input is list", {
   expect_bare(lmap(as.list(mtcars), as.list), "list")
-  skip_if_not_installed("tidyselect")
+
   x <- list(a = 1:4, b = letters[5:7], c = 8:9, d = letters[10])
   maybe_rep <- function(x) {
     n <- rpois(1, 2)
@@ -10,7 +10,7 @@ test_that("lmap output is list if input is list", {
     }
     out
   }
-  expect_bare(lmap_at(x, vars(tidyselect::contains("a")), maybe_rep), "list")
+  expect_bare(lmap_at(x, "a", maybe_rep), "list")
 })
 
 test_that("lmap() can increase and decrease elements", {
@@ -27,7 +27,8 @@ test_that("lmap_at() only affects selected elements", {
 })
 
 test_that("lmap_at can use tidyselect", {
-  skip_if_not_installed("tidyselect")
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- lmap_at(mtcars, vars(tidyselect::contains("vs")), ~ .x + 10)
   expect_equal(x$vs[1], 10)
 })
