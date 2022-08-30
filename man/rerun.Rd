@@ -29,16 +29,16 @@ Also, \code{rerun(n, x)} can just as easily be expressed as \code{map(1:n, ~ x)}
 }
 \examples{
 # old
-10 \%>\% rerun(rnorm(5))
+5 \%>\% rerun(rnorm(5)) \%>\% str()
 # new
-1:10 \%>\% map(~ rnorm(5))
+1:5 \%>\% map(~ rnorm(5)) \%>\% str()
 
 # old
-10 \%>\%
+5 \%>\%
   rerun(x = rnorm(5), y = rnorm(5)) \%>\%
   map_dbl(~ cor(.x$x, .x$y))
 # new
-1:10 \%>\%
+1:5 \%>\%
   map(~ list(x = rnorm(5), y = rnorm(5))) \%>\%
   map_dbl(~ cor(.x$x, .x$y))
 }
