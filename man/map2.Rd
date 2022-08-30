@@ -6,7 +6,6 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
-\alias{map2_raw}
 \alias{map2_dfr}
 \alias{map2_dfc}
 \alias{map2_df}
@@ -22,8 +21,6 @@ map2_int(.x, .y, .f, ...)
 map2_dbl(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
-
-map2_raw(.x, .y, .f, ...)
 
 map2_dfr(.x, .y, .f, ..., .id = NULL)
 

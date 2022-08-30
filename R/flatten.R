@@ -54,11 +54,6 @@ flatten_chr <- function(.x) {
   .Call(vflatten_impl, .x, "character")
 }
 
-#' @export
-#' @rdname flatten
-flatten_raw <- function(.x) {
-  .Call(vflatten_impl, .x, "raw")
-}
 
 #' @export
 #' @rdname flatten

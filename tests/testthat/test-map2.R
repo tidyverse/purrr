@@ -55,7 +55,6 @@ test_that("map2() with empty input copies names", {
   expect_identical(map2_int(named_list, list(), identity), named(int()))
   expect_identical(map2_dbl(named_list, list(), identity), named(dbl()))
   expect_identical(map2_chr(named_list, list(), identity), named(chr()))
-  expect_identical(map2_raw(named_list, list(), identity), named(raw()))
 })
 
 test_that("map2() and pmap() recycle names (#779)", {

@@ -44,7 +44,6 @@ test_that("outputs are suffixes have correct type", {
   expect_bare(pmap_int(list(x), length), "integer")
   expect_bare(pmap_dbl(list(x), mean), "double")
   expect_bare(pmap_chr(list(x), paste), "character")
-  expect_bare(pmap_raw(list(x), as.raw), "raw")
 })
 
 test_that("outputs are suffixes have correct type for data frames", {
@@ -64,7 +63,6 @@ test_that("pmap on data frames performs rowwise operations", {
   expect_bare(pmap_int(mtcars2, function(mpg, cyl) as.integer(cyl)), "integer")
   expect_bare(pmap_dbl(mtcars2, function(mpg, cyl) mpg + cyl), "double")
   expect_bare(pmap_chr(mtcars2, paste), "character")
-  expect_bare(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
 })
 
 test_that("pmap works with empty lists", {
@@ -94,5 +92,4 @@ test_that("pmap() with empty input copies names", {
   expect_identical(pmap_int(named_list, identity), named(int()))
   expect_identical(pmap_dbl(named_list, identity), named(dbl()))
   expect_identical(pmap_chr(named_list, identity), named(chr()))
-  expect_identical(pmap_raw(named_list, identity), named(raw()))
 })
