@@ -7,28 +7,13 @@
 possibly(.f, otherwise, quiet = TRUE)
 }
 \arguments{
-\item{.f}{A function, formula, or vector (not necessarily atomic).
-
-If a \strong{function}, it is used as is.
-
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
+\item{.f}{A function to modify, specified in one of the following ways:
 \itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
-
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
-
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
+\item A named function, e.g. \code{mean}.
+\item An anonymous function, e.g. \code{function(x) x + 1}.
+\item A lambda function, e.g. \verb{\\(a) a + 1}.
+\item A formula, e.g. \code{~ .x + 1}.
+}}
 
 \item{otherwise}{Default value to use when an error occurs.}
 

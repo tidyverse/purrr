@@ -1,21 +1,23 @@
 #' Keep or discard elements using a predicate function.
 #'
-#' `keep()` and `discard()` are opposites. `compact()` is a handy
-#' wrapper that removes all empty elements.
+#' `keep()` selects all elements where `.p` evaluates to `TRUE`;
+#' `discard()` selects all elements where `.p` evaluates to `FALSE`.
+#' `compact()` discards elements where `.p` evaluates to an empty vector.
 #'
-#' These are usually called `select` or `filter` and `reject` or
-#' `drop`, but those names are already taken. `keep()` is similar to
-#' [Filter()], but the argument order is more convenient, and the
-#' evaluation of the predicate function `.p` is stricter.
+#' In other languages, `keep()` and `discard()` are often called `select()`/
+#' `filter()` and `reject()`/ `drop()`, but those names are already taken
+#' in R. `keep()` is similar to [Filter()], but the argument order is more
+#' convenient, and the evaluation of the predicate function `.p` is stricter.
 #'
 #' @param .x A list or vector.
-#' @param .p For `keep()` and `discard()`, a predicate function. Only
-#'   those elements where `.p` evaluates to `TRUE` will be kept or
-#'   discarded.
+#' @param .p A predicate function (i.e. a function that returns either `TRUE`
+#'   or `FALSE`) specified in one of the following ways:
 #'
-#'   For `compact()`, a function that is applied to each element of
-#'   `.x`. Only those elements where `.p` evaluates to an empty vector
-#'   will be discarded.
+#'   * A named function, e.g. `is.character`.
+#'   * An anonymous function, e.g. `function(x) all(x < 0)`.
+#'   * A lambda function, e.g. `\(x) all(x < 0)`.
+#'   * A formula, e.g. `~ all(.x < 0)`. You must use `.x` to refer to the first
+#'     argument).
 #' @param ... Additional arguments passed on to `.p`.
 #' @export
 #' @examples

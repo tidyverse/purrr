@@ -7,7 +7,15 @@
 negate(.p)
 }
 \arguments{
-\item{.p}{A predicate function or a formula.}
+\item{.p}{A predicate function (i.e. a function that returns either \code{TRUE}
+or \code{FALSE}) specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{is.character}.
+\item An anonymous function, e.g. \code{function(x) all(x < 0)}.
+\item A lambda function, e.g. \verb{\\(x) all(x < 0)}.
+\item A formula, e.g. \code{~ all(.x < 0)}. You must use \code{.x} to refer to the first
+argument).
+}}
 }
 \value{
 A new predicate function.

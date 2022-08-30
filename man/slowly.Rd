@@ -7,12 +7,18 @@
 slowly(f, rate = rate_delay(), quiet = TRUE)
 }
 \arguments{
-\item{f}{A function to modify.}
+\item{f}{A function to modify, specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{mean}.
+\item An anonymous function, e.g. \code{function(x) x + 1}.
+\item A lambda function, e.g. \verb{\\(a) a + 1}.
+\item A formula, e.g. \code{~ .x + 1}.
+}}
 
 \item{rate}{A \link[=rate-helpers]{rate} object. Defaults to a constant delay.}
 
-\item{quiet}{If \code{FALSE}, prints a message displaying how long until
-the next request.}
+\item{quiet}{Hide errors (\code{TRUE}, the default), or display them
+as they occur?}
 }
 \value{
 A function that takes the same arguments as \code{.f}, but returns

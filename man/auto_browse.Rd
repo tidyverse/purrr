@@ -7,11 +7,13 @@
 auto_browse(.f)
 }
 \arguments{
-\item{.f}{A (non-primitive) function.
-
-It doesn't make sense to use auto_browse with primitive functions,
-because they are implemented in C so there's no useful environment
-for you to interact with.}
+\item{.f}{A function to modify, specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{mean}.
+\item An anonymous function, e.g. \code{function(x) x + 1}.
+\item A lambda function, e.g. \verb{\\(a) a + 1}.
+\item A formula, e.g. \code{~ .x + 1}.
+}}
 }
 \value{
 A function that takes the same arguments as \code{.f}, but returns

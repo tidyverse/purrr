@@ -18,14 +18,20 @@ lmap_at(.x, .at, .f, ...)
 \item{.f}{A function that takes a length-1 list and returns a list (of any
 length.)}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
+
+\item{.p}{A predicate function (i.e. a function that returns either \code{TRUE}
+or \code{FALSE}) specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{is.character}.
+\item An anonymous function, e.g. \code{function(x) all(x < 0)}.
+\item A lambda function, e.g. \verb{\\(x) all(x < 0)}.
+\item A formula, e.g. \code{~ all(.x < 0)}. You must use \code{.x} to refer to the first
+argument).
+}}
 
 \item{.else}{A function applied to elements of \code{.x} for which \code{.p}
 returns \code{FALSE}.}

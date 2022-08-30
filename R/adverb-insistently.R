@@ -4,7 +4,7 @@
 #' `insistently()` takes a function and modifies it to retry after given
 #' amount of time whenever it errors.
 #'
-#' @param f A function to modify.
+#' @inheritParams safely
 #' @param rate A [rate][rate-helpers] object. Defaults to jittered exponential
 #'   backoff.
 #' @inheritParams rate_sleep

@@ -6,8 +6,7 @@
 #' type (list for `map()`, integer vector for `map_int()`, etc), the
 #' `modify()` family always returns the same type as the input object.
 #'
-#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]);
-#'   return(x)`.
+#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]); return(x)`.
 #'
 #' * `modify_if()` only modifies the elements of `x` that satisfy a
 #'   predicate and leaves the others unchanged. `modify_at()` only
@@ -22,8 +21,12 @@
 #'
 #' * [modify_in()] modifies a single element in a [pluck()] location.
 #'
+#' @param .x A vector.
+#' @param .y A vector, usually the same length as `.x`.
 #' @inheritParams map2
 #' @inheritParams map
+#' @param .f A function specified in the same way as the corresponding map
+#'   function.
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'   from the lowest level of the list.
 #'
