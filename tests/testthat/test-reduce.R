@@ -162,8 +162,8 @@ test_that("basic accumulate2() works", {
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
 
   x <- c("a", "b", "c")
-  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b", "a-b.c"))
-  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b", "x.a-b.c"))
+  expect_equal(accumulate2(x, c("-", "."), paste2), c("a", "a-b", "a-b.c"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), c("x", "x.a", "x.a-b", "x.a-b.c"))
 })
 
 test_that("can terminate accumulate2() early", {
@@ -177,8 +177,8 @@ test_that("can terminate accumulate2() early", {
   }
 
   x <- c("a", "b", "c")
-  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b"))
-  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b"))
+  expect_equal(accumulate2(x, c("-", "."), paste2), c("a", "a-b"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), c("x", "x.a", "x.a-b"))
 })
 
 test_that("accumulate2() forces arguments (#643)", {
