@@ -217,70 +217,6 @@ underline <- function(x) if (has_crayon()) crayon::underline(x) else x
 bullet <- function(...) paste0(bold(silver(" * ")), sprintf(...))
 
 
-quo_invert <- function(call) {
-  call <- duplicate(call, shallow = TRUE)
-
-  if (is_quosure(call)) {
-    rest <- quo_get_expr(call)
-  } else {
-    rest <- call
-  }
-  if (!is_call(rest)) {
-    abort("Internal error: Expected call in `quo_invert()`")
-  }
-
-  first_quo <- NULL
-
-  # Find first quosured argument. We unwrap constant quosures which
-  # add no scoping information.
-  while (!is_null(rest)) {
-    elt <- node_car(rest)
-
-    if (is_quosure(elt)) {
-      if (quo_is_constant(elt)) {
-        # Unwrap constant quosures
-        node_poke_car(rest, quo_get_expr(elt))
-      } else if (is_null(first_quo)) {
-        # Record first quosured argument
-        first_quo <- elt
-        first_node <- rest
-      }
-    }
-
-    rest <- node_cdr(rest)
-  }
-
-  if (is_null(first_quo)) {
-    return(call)
-  }
-
-  # Take the wrapping quosure env as reference if there is one.
-  # Otherwise, take the first quosure detected in arguments.
-  if (is_quosure(call)) {
-    env <- quo_get_env(call)
-    call <- quo_get_expr(call)
-  } else {
-    env <- quo_get_env(first_quo)
-  }
-
-  rest <- first_node
-  while (!is_null(rest)) {
-    cur <- node_car(rest)
-
-    if (is_quosure(cur) && is_reference(quo_get_env(cur), env)) {
-      node_poke_car(rest, quo_get_expr(cur))
-    }
-
-    rest <- node_cdr(rest)
-  }
-
-  new_quosure(call, env)
-}
-
-quo_is_constant <- function(quo) {
-  is_reference(quo_get_env(quo), empty_env())
-}
-
 vec_simplify <- function(x) {
   if (!vctrs::vec_is_list(x)) {
     return(x)
@@ -295,7 +231,3 @@ vec_simplify <- function(x) {
   )
 }
 
-quo_is_same_env <- function(x, env) {
-  quo_env <- quo_get_env(x)
-  is_reference(quo_env, env) || is_reference(quo_env, empty_env())
-}
