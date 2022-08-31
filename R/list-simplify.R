@@ -1,6 +1,6 @@
 # Internal helper used by list_transform() and accumulate()
 # when simplify = TRUE (the default)
-list_simplify <- function(x, ptype = NULL) {
+list_simplify <- function(x, ptype = NULL, strict = FALSE) {
   vec_assert(x, list())
 
   # We choose not to simply data frames to keep length invariants
@@ -12,13 +12,24 @@ list_simplify <- function(x, ptype = NULL) {
     } else {
       tryCatch(
         vec_c(!!!x),
-        vctrs_error_incompatible_type = function(err) x
+        vctrs_error_incompatible_type = function(err) {
+          if (strict) {
+            abort("Failed to simplify", parent = err)
+          } else {
+            x
+          }
+        }
       )
     }
   } else {
-    x
+    if (strict) {
+      abort("Failed to simplify: not all elements vectors of  length 1")
+    } else {
+      x
+    }
   }
 }
+
 
 check_ptype_simplify <- function(ptype = NULL, simplify = TRUE) {
   rlang:::check_bool(simplify)
