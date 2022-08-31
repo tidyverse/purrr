@@ -19,12 +19,6 @@ test_that("rdunif fails if a and b are not unit length numbers", {
   expect_error(rdunif(1000, c(2, 3), 2))
 })
 
-test_that("has_names returns vector of logicals", {
-  expect_equal(has_names(letters %>% set_names()), rep_along(letters, TRUE))
-  expect_equal(has_names(letters), rep_along(letters, FALSE))
-})
-
-
 test_that("vec_simplify() coerces atomic inputs", {
   expect_identical(
     vec_simplify(list(1, TRUE)),

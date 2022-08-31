@@ -28,10 +28,6 @@ recycle_args <- function(args) {
   args
 }
 
-names2 <- function(x) {
-  names(x) %||% rep("", length(x))
-}
-
 #' Infix attribute accessor
 #'
 #' @description
@@ -84,22 +80,6 @@ rdunif <- function(n, b, a = 1) {
 
 # magrittr placeholder
 globalVariables(".")
-
-
-has_names <- function(x) {
-  nms <- names(x)
-  if (is.null(nms)) {
-    rep_along(x, FALSE)
-  } else {
-    !(is.na(nms) | nms == "")
-  }
-}
-
-ndots <- function(...) nargs()
-
-is_names <- function(nms) {
-  is_character(nms) && !any(is.na(nms) | nms == "")
-}
 
 paste_line <- function(...) {
   paste(chr(...), collapse = "\n")
@@ -166,9 +146,6 @@ paste_classes <- function(x) {
   paste(class(x), collapse = "/")
 }
 
-is_bool <- function(x) {
-  is_logical(x, n = 1) && !is.na(x)
-}
 is_number <- function(x) {
   is_integerish(x, n = 1, finite = TRUE)
 }
