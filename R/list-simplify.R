@@ -1,9 +1,20 @@
 # Internal helper used by list_transform() and accumulate()
 # when simplify = TRUE (the default)
-list_simplify <- function(x, ptype = NULL, strict = FALSE) {
+list_simplify <- function(x, simplify = NA, ptype = NULL) {
   vec_assert(x, list())
+  if (length(simplify) > 1 || !is.logical(simplify)) {
+    abort("`simplify` must be `TRUE`, `FALSE`, or `NA`")
+  }
+  if (!is.null(ptype) && isFALSE(simplify)) {
+    abort("Must not specify `ptype` when `simplify = FALSE`")
+  }
 
-  # We choose not to simply data frames to keep length invariants
+  if (isFALSE(simplify)) {
+    return(x)
+  }
+  strict <- !is.na(simplify)
+
+  # We choose not to simply data frames to preserve length invariants
   can_simplify <- every(x, ~ vec_is(.x, size = 1) && !is.data.frame(.x))
 
   if (can_simplify) {
@@ -23,18 +34,9 @@ list_simplify <- function(x, ptype = NULL, strict = FALSE) {
     }
   } else {
     if (strict) {
-      abort("Failed to simplify: not all elements vectors of  length 1")
+      abort("Failed to simplify: not all elements vectors of length 1")
     } else {
       x
     }
-  }
-}
-
-
-check_ptype_simplify <- function(ptype = NULL, simplify = TRUE) {
-  rlang:::check_bool(simplify)
-
-  if (!is.null(ptype) && !simplify) {
-    abort("Must not specific `ptype` when `simplify = FALSE`")
   }
 }

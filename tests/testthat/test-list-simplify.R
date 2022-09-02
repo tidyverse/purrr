@@ -28,10 +28,3 @@ test_that("ptype is checked", {
 test_that("x must be a list", {
   expect_snapshot(list_simplify(1:5), error = TRUE)
 })
-
-test_that("verifies simplify and ptype", {
-  expect_snapshot(error = TRUE, {
-    check_ptype_simplify(NULL, 1)
-    check_ptype_simplify(integer(), FALSE)
-  })
-})

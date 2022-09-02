@@ -346,8 +346,10 @@ seq_len2 <- function(start, end) {
 #' @param .dir The direction of accumulation as a string, one of
 #'   `"forward"` (the default) or `"backward"`. See the section about
 #'   direction below.
-#' @param .simplify If `TRUE`, the default, the accumulated list of
+#' @param .simplify If `NA`, the default, the accumulated list of
 #'   results is simplified to an atomic vector if possible.
+#'   If `TRUE`, the result is simplified, erroring if not possible.
+#'   If `FALSE`, the result is not simplified, always returning a list.
 #' @param .ptype If `simplify` is `TRUE`, optionally supply a vector prototype
 #'   to enforce the output types.
 #' @return A vector the same length of `.x` with the same names as `.x`.
@@ -456,28 +458,21 @@ seq_len2 <- function(start, end) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 #' @export
-accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .simplify = TRUE, .ptype = NULL) {
+accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .simplify = NA, .ptype = NULL) {
   .dir <- arg_match(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
-  check_ptype_simplify(.ptype, .simplify)
 
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
-  if (.simplify) {
-    res <- list_simplify(res, .ptype)
-  }
+  res <- list_simplify(res, .simplify, .ptype)
   res
 }
 #' @rdname accumulate
 #' @export
-accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = TRUE, .ptype = NULL) {
-  check_ptype_simplify(.ptype, .simplify)
-
+accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
   res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
-  if (.simplify) {
-    res <- list_simplify(res, .ptype)
-  }
+  res <- list_simplify(res, .simplify, .ptype)
   res
 }
 

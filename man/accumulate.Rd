@@ -11,11 +11,11 @@ accumulate(
   ...,
   .init,
   .dir = c("forward", "backward"),
-  .simplify = TRUE,
+  .simplify = NA,
   .ptype = NULL
 )
 
-accumulate2(.x, .y, .f, ..., .init, .simplify = TRUE, .ptype = NULL)
+accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -43,8 +43,10 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
 
-\item{.simplify}{If \code{TRUE}, the default, the accumulated list of
-results is simplified to an atomic vector if possible.}
+\item{.simplify}{If \code{NA}, the default, the accumulated list of
+results is simplified to an atomic vector if possible.
+If \code{TRUE}, the result is simplified, erroring if not possible.
+If \code{FALSE}, the result is not simplified, always returning a list.}
 
 \item{.ptype}{If \code{simplify} is \code{TRUE}, optionally supply a vector prototype
 to enforce the output types.}

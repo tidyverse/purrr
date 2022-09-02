@@ -15,16 +15,3 @@
       ! `x` must be a vector with type <list>.
       Instead, it has type <integer>.
 
-# verifies simplify and ptype
-
-    Code
-      check_ptype_simplify(NULL, 1)
-    Condition
-      Error in `check_ptype_simplify()`:
-      ! `simplify` must be `TRUE` or `FALSE`, not a number.
-    Code
-      check_ptype_simplify(integer(), FALSE)
-    Condition
-      Error in `check_ptype_simplify()`:
-      ! Must not specific `ptype` when `simplify = FALSE`
-
