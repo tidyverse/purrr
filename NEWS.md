@@ -36,7 +36,13 @@
 * `*_raw()` have been deprecated because they are of limited use and you can 
   now use `map_vec()` instead (#903).
 
+* `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
+  `list_c()`, `list_cbind()`, and `list_rbind()`.
+
 ## Features and fixes
+
+* New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
+  `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
