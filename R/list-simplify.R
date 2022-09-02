@@ -1,5 +1,3 @@
-# Internal helper used by list_transform() and accumulate()
-# when simplify = TRUE (the default)
 list_simplify <- function(x, simplify = NA, ptype = NULL) {
   vec_assert(x, list())
   if (length(simplify) > 1 || !is.logical(simplify)) {
