@@ -39,7 +39,8 @@ installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 }
 \value{
-A list. There are no guarantees about the length.
+A list or data frame, matching \code{.x}. There are no guarantees about
+the length.
 }
 \description{
 \code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to \code{map()}, \code{map_at()} and

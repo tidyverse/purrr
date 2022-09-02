@@ -20,7 +20,7 @@
 #' c(inputs, arg3 = c("c1", "c2")) %>% str()
 #' @export
 splice <- function(...) {
-  lifecycle::deprecate_warn("0.4.0", "splice()")
+  lifecycle::deprecate_warn("0.4.0", "splice()", "list_flatten()")
 
   splice_if(list(...), is_bare_list)
 }
@@ -34,5 +34,6 @@ splice_if <- function(.x, .p) {
     out[unspliced] <- map2(out[unspliced], names(out)[unspliced], set_names)
   }
 
-  flatten(out)
+  # Avoid deprecation message by inlining flatten()
+  .Call(flatten_impl, out)
 }
