@@ -82,6 +82,8 @@ reference:
   contents:
   - accumulate
   - flatten
+  - list_c
+  - list_flatten
   - list_modify
   - reduce
   - transpose
