@@ -19,10 +19,10 @@ list_simplify <- function(x, simplify = NA, ptype = NULL) {
 
   if (can_simplify) {
     if (!is.null(ptype)) {
-      vec_c(!!!x, .ptype = ptype)
+      vec_unchop(x, ptype = ptype)
     } else {
       tryCatch(
-        vec_c(!!!x),
+        vec_unchop(x),
         vctrs_error_incompatible_type = function(err) {
           if (strict) {
             abort("Failed to simplify", parent = err)
