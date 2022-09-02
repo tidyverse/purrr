@@ -6,9 +6,6 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
-\alias{map2_dfr}
-\alias{map2_dfc}
-\alias{map2_df}
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
@@ -21,10 +18,6 @@ map2_int(.x, .y, .f, ...)
 map2_dbl(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
-
-map2_dfr(.x, .y, .f, ..., .id = NULL)
-
-map2_dfc(.x, .y, .f, ...)
 
 walk2(.x, .y, .f, ...)
 }
@@ -59,13 +52,6 @@ by position and name at different levels. If a component is not
 present, the value of \code{.default} will be returned.}
 
 \item{...}{Additional arguments passed on to the mapped function.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
 The output type is determined by the suffix:
@@ -76,8 +62,7 @@ named if the input was named.
 or character vector respectively. The output of \code{.f} will only be
 automatically coerced upwards (i.e. logical -> integer -> double ->
 character). It will be named if the input was named.
-\item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.
+\item \verb{_rbind()} and \verb{_cbind()} return a data frame.
 }
 
 \itemize{

@@ -11,9 +11,8 @@
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
 #'   atomic vector of the indicated type (or die trying).
 #'
-#' * `map_dfr()` and `map_dfc()` return a data frame created by
-#'   row-binding and column-binding respectively. They require dplyr
-#'   to be installed. `map_df()` is an alias for `map_dfr()`.
+#' * `map_rbind()` and `map_cbind()` return a data frame created by
+#'   row-binding and column-binding respectively.
 #'
 #' * The returned values of `.f` must be of length one for each element
 #'   of `.x`. If `.f` uses an extractor function shortcut, `.default`
@@ -34,8 +33,7 @@
 #'   automatically coerced upwards (i.e. logical -> integer -> double ->
 #'   character). It will be named if the input was named.
 #'
-#' * `_dfc` and `_dfr()` all return a data frame created by row-binding and
-#'    column-binding respectively. They require dplyr to be installed.
+#' * `_rbind()` and `_cbind()` return a data frame.
 #'
 #' @export
 #' @family map variants
@@ -98,15 +96,6 @@
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
 #'   map_dbl("r.squared")
-#'
-#' # If each element of the output is a data frame, use
-#' # map_dfr to row-bind them together:
-#' mtcars %>%
-#'   split(.$cyl) %>%
-#'   map(~ lm(mpg ~ wt, data = .x)) %>%
-#'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
-#' # (if you also want to preserve the variable names see
-#' # the broom package)
 map <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list")
@@ -214,37 +203,6 @@ map_dbl <- function(.x, .f, ...) {
   .Call(map_impl, environment(), ".x", ".f", "double")
 }
 
-
-#' @rdname map
-#' @param .id Either a string or `NULL`. If a string, the output will contain
-#'   a variable with that name, storing either the name (if `.x` is named) or
-#'   the index (if `.x` is unnamed) of the input. If `NULL`, the default, no
-#'   variable will be created.
-#'
-#'   Only applies to `_dfr` variant.
-#' @export
-map_dfr <- function(.x, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `map_dfr()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- map(.x, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
-}
-
-#' @rdname map
-#' @export
-#' @usage NULL
-map_df <- map_dfr
-
-#' @rdname map
-#' @export
-map_dfc <- function(.x, .f, ...) {
-  check_installed("dplyr", "for `map_dfc()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- map(.x, .f, ...)
-  dplyr::bind_cols(res)
-}
 
 #' @rdname map
 #' @description * `walk()` calls `.f` for its side-effect and returns

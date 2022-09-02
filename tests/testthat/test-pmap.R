@@ -46,16 +46,6 @@ test_that("outputs are suffixes have correct type", {
   expect_bare(pmap_chr(list(x), paste), "character")
 })
 
-test_that("outputs are suffixes have correct type for data frames", {
-  skip_if_not_installed("dplyr")
-  local_name_repair_quiet()
-
-  local_options(rlang_message_verbosity = "quiet")
-  x <- 1:3
-  expect_s3_class(pmap_dfr(list(x), as.data.frame), "data.frame")
-  expect_s3_class(pmap_dfc(list(x), as.data.frame), "data.frame")
-})
-
 test_that("pmap on data frames performs rowwise operations", {
   mtcars2 <- mtcars[c("mpg", "cyl")]
   expect_length(pmap(mtcars2, paste), nrow(mtcars))

@@ -1,7 +1,8 @@
-#' Function that return raw vectors
+#' Functions that return raw vectors
 #'
 #' @description
 #' `r lifecycle::badge("deprecated")`
+#'
 #' These variants of [map()], [map2()], [imap()], [pmap()], and [flatten()]
 #' return raw vectors. They have been deprecated because they are of limited
 #' use and you can now use `map_vec()` instead.

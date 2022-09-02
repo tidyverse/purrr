@@ -29,13 +29,6 @@ flatten_dfc(.x)
 \item{.x}{A list to flatten. The contents of the list can be anything for
 \code{flatten()} (as a list is returned), but the contents must match the
 type for the other functions.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
 \code{flatten()} returns a list, \code{flatten_lgl()} a logical

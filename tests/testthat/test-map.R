@@ -54,19 +54,6 @@ test_that("map forces arguments in same way as base R", {
   expect_equal(f_map[[2]](0), f_base[[2]](0))
 })
 
-test_that("row and column binding work", {
-  skip_if_not_installed("dplyr")
-  local_name_repair_quiet()
-
-  mtcar_mod <- mtcars %>%
-    split(.$cyl) %>%
-    map(~ lm(mpg ~ wt, data = .x))
-
-  f_coef <- function(x) as.data.frame(t(as.matrix(coef(x))))
-  expect_length(mtcar_mod %>% map_dfr(f_coef), 2)
-  expect_length(mtcar_mod %>% map_dfc(f_coef), 6)
-})
-
 test_that("walk is used for side-effects", {
   expect_output(walk(1:3, str))
 })

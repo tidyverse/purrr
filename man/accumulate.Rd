@@ -169,7 +169,7 @@ library(ggplot2)
 rerun(5, rnorm(100)) \%>\%
   set_names(paste0("sim", 1:5)) \%>\%
   map(~ accumulate(., ~ .05 + .x + .y)) \%>\%
-  map_dfr(~ tibble(value = .x, step = 1:100), .id = "simulation") \%>\%
+  map_rbind(~ tibble(value = .x, step = 1:100), .id = "simulation") \%>\%
   ggplot(aes(x = step, y = value)) +
     geom_line(aes(color = simulation)) +
     ggtitle("Simulations of a random walk with drift")
