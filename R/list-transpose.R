@@ -1,12 +1,12 @@
 #' @examples
-#' # transpose() is useful in conjunction with safely() & quietly()
+#' # list_tranpose() is useful in conjunction with safely()
 #' x <- list("a", 1, 2)
 #' y <- x %>% map(safely(log))
 #' y %>% str()
 #' y %>% list_transpose() %>% str()
 #' y %>% list_transpose(default = list(result = NA)) %>% str()
 #'
-#' # list_tranpose() will simplify by default:
+#' # list_tranpose() will try to simplify by default:
 #' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 #' x %>% list_transpose()
 #' # use simplify = FALSE to always return lists:
@@ -20,37 +20,47 @@
 #' )
 #' ll %>% list_transpose()
 #' ll %>% list_transpose(c("x", "y", "z"))
+#'
+#' # And specify default if you want to simplify
 #' ll %>% list_transpose(c("x", "y", "z"), default = NA)
-list_transpose <- function(x, template = vec_index(x[[1]]), simplify = TRUE, ptype = NULL, default = NULL) {
+list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, default = NULL) {
   vec_assert(x, list())
   if (length(x) == 0) {
     return(list())
   }
 
-  # TODO: name these appropriate
-  if (is_bool(simplify)) {
-    simplify <- rep(list(simplify), length(template))
-  }
-  if (!(has_names(default) && is.list(default))) {
-    default <- rep(list(default), length(template))
-  }
-  if (!(has_names(ptype) && is.list(ptype))) {
-    ptype <- rep(list(ptype), length(template))
+  template <- template %||%
+    names(x[[1]]) %||%
+    cli::cli_abort("First element of {.arg x} is unnamed, please supply `template.")
+  if (!is.character(template)) {
+    cli::cli_abort("{.arg template} must be a character vector")
   }
 
-  out <- vector("list", length(template))
-  if (is.character(template)) {
-    names(out) <- template
-  }
+  simplify <- match_template(simplify, template)
+  default <- match_template(default, template)
+  ptype <- match_template(ptype, template)
 
-  for (i in seq_along(template)) {
-    res <- map(x, template[[i]], .default = default[[i]])
-    if (simplify[[i]]) {
-      res <- list_simplify(res, ptype[[i]])
-    }
-    out[[i]] <- res
+  out <- rep_named(template, list())
+  for (nm in template) {
+    res <- map(x, nm, .default = default[[nm]])
+    res <- list_simplify(res, simplify = simplify[[nm]], ptype = ptype[[nm]])
+    out[[nm]] <- res
   }
 
   out
 }
 
+match_template <- function(x, template, error_arg = caller_arg(x), error_call = caller_env()) {
+  if (is_bare_list(x) && is_named(x)) {
+    extra_names <- setdiff(names(x), template)
+    if (length(extra_names)) {
+      cli::cli_abort(
+        "{.arg {error_arg}} contains unknown names: {.str extra_names}",
+        call = error_call
+      )
+    }
+    x
+  } else {
+    rep_named(template, list(x))
+  }
+}
