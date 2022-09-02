@@ -56,7 +56,7 @@ See function documentation for the details.
 Here `x` denotes a vector and `f` denotes a function
 
 | Output                        | Input                                 | Base R                                                                      | purrr                                                                                                               |
-|------------------|------------------|------------------|--------------------|
+|------------------|------------------|------------------|-------------------|
 | List                          | 1 vector                              | `lapply()`                                                                  | `map()`                                                                                                             |
 | List                          | 2 vectors                             | `mapply()`, `Map()`                                                         | `map2()`                                                                                                            |
 | List                          | \>2 vectors                           | `mapply()`, `Map()`                                                         | `pmap()`                                                                                                            |
@@ -279,8 +279,7 @@ means |>
 
 The pipe is particularly compelling when working with longer transformations.
 For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
-
-```{r}
+```{r, eval = modern_r}
 mtcars %>% 
   split(mtcars$cyl) %>% 
   map(\(df) lm(mpg ~ wt, data = df)) %>% 
