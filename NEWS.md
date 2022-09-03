@@ -18,7 +18,8 @@
   manipulation that is very uncommon in R code (#871).
 
 * `splice()` is deprecated because we no longer believe that automatic 
-  splicing makes for good UI. Instead use `list2()` + `!!!` (#869).
+  splicing makes for good UI. Instead use `list2()` + `!!!` or
+  `list_flatten()` (#869).
 
 * `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
   are no longer supported. They have been defunct for quite some time.

@@ -17,8 +17,9 @@ A list.
 
 This splices all arguments into a list. Non-list objects and lists
 with a S3 class are encapsulated in a list before concatenation.
+
 We no longer believe that implicit/automatic splicing is a good idea;
-instead use \verb{!!!} in conjunction with \code{rlang::list2()}.
+instead use \code{rlang::list2()} + \verb{!!!} or \code{\link[=list_flatten]{list_flatten()}}.
 }
 \examples{
 inputs <- list(arg1 = "a", arg2 = "b")

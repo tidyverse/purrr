@@ -5,8 +5,9 @@
 #'
 #' This splices all arguments into a list. Non-list objects and lists
 #' with a S3 class are encapsulated in a list before concatenation.
+#'
 #' We no longer believe that implicit/automatic splicing is a good idea;
-#' instead use `!!!` in conjunction with `rlang::list2()`.
+#' instead use `rlang::list2()` + `!!!` or [list_flatten()].
 #'
 #' @param ... Objects to concatenate.
 #' @return A list.
