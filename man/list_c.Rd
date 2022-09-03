@@ -11,7 +11,7 @@ list_c(x, ptype = NULL)
 list_cbind(
   x,
   name_repair = c("unique", "universal", "check_unique"),
-  ptype = NULL
+  size = NULL
 )
 
 list_rbind(x, id = NULL, ptype = NULL)
@@ -24,6 +24,9 @@ the same.}
 
 \item{name_repair}{One of \code{"unique"}, \code{"universal"}, or \code{"check_unique"}.
 See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of these options.}
+
+\item{size}{An optional integer size to ensure that every input has the
+same size (i.e. number of rows).}
 }
 \description{
 \itemize{
@@ -36,8 +39,13 @@ together with \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}.
 }
 }
 \examples{
-x <- list(a = 1, b = 2, c = 3)
-list_c(x)
-list_rbind(x)
-list_cbind(x)
+x1 <- list(a = 1, b = 2, c = 3)
+list_c(x1)
+
+x2 <- list(
+  data.frame(x = 1:2),
+  data.frame(y = "a")
+)
+list_rbind(x2)
+list_cbind(x2)
 }
