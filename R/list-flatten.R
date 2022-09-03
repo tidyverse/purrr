@@ -2,17 +2,24 @@
 #'
 #' Flattening a list removes a single layer of internal hierarchy.
 #'
-#' @param x A list
-#' @return A list, probably longer.
+#' @param x A list.
+#' @param name_spec If both inner and outer names are present, control
+#'   how they are combined. Should be a glue specification that uses
+#'   variables `inner` and `outer`.
+#' @return A list. The list might be shorter if `x` contains empty lists,
+#'   the same length if it contains lists of length 1 or no sub-lists,
+#'   or longer if it contains lists of length > 1.
 #' @export
 #' @examples
 #' x <- list(1, list(2, 3), list(4, list(5)))
 #' x %>% list_flatten() %>% str()
 #' x %>% list_flatten() %>% list_flatten() %>% str()
 #'
-#' # It's now as flat as it can get so further flattening leaves it
-#' # changed.
-#' x %>% list_flatten() %>% list_flatten() %>% list_flatten() %>% str()
+#' # Flat lists are left as is
+#' list(1, 2, 3, 4, 5) %>% list_flatten() %>% str()
+#'
+#' # Empty lists will disappear
+#' list(1, list(), 2, list(3)) %>% list_flatten() %>% str()
 #'
 #' # Another way to see this is that it reduces the depth of the list
 #' x <- list(
@@ -21,11 +28,15 @@
 #' )
 #' x %>% pluck_depth()
 #' x %>% list_flatten() %>% pluck_depth()
-list_flatten <- function(x) {
+#'
+#' # Use name_spec to control how inner and outer names are combined
+#' x <- list(x = list(a = 1, b = 2), y = list(c = 1, d = 2))
+#' x %>% list_flatten() %>% names()
+#' x %>% list_flatten(name_spec = "{outer}") %>% names()
+#' x %>% list_flatten(name_spec = "{inner}") %>% names()
+list_flatten <- function(x, name_spec = "{outer}_{inner}") {
   check_is_list(x)
 
-  is_nested <- map_lgl(x, vctrs::vec_is_list)
-  x[!is_nested] <- map(x[!is_nested], list)
-
-  unlist(x, recursive = FALSE)
+  x <- modify_if(x, vctrs::vec_is_list, identity, .else = list)
+  vec_unchop(x, ptype = list(), name_spec = name_spec)
 }

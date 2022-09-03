@@ -28,12 +28,5 @@ splice <- function(...) {
 splice_if <- function(.x, .p) {
   unspliced <- !probe(.x, .p)
   out <- modify_if(.x, unspliced, list)
-
-  # Copy outer names to inner
-  if (!is.null(names(.x))) {
-    out[unspliced] <- map2(out[unspliced], names(out)[unspliced], set_names)
-  }
-
-  # Avoid deprecation message by inlining flatten()
-  .Call(flatten_impl, out)
+  list_flatten(out, name_spec = "{inner}")
 }

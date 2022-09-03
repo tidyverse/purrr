@@ -4,13 +4,19 @@
 \alias{list_flatten}
 \title{Flatten a list}
 \usage{
-list_flatten(x)
+list_flatten(x, name_spec = "{outer}_{inner}")
 }
 \arguments{
-\item{x}{A list}
+\item{x}{A list.}
+
+\item{name_spec}{If both inner and outer names are present, control
+how they are combined. Should be a glue specification that uses
+variables \code{inner} and \code{outer}.}
 }
 \value{
-A list, probably longer.
+A list. The list might be shorter if \code{x} contains empty lists,
+the same length if it contains lists of length 1 or no sub-lists,
+or longer if it contains lists of length > 1.
 }
 \description{
 Flattening a list removes a single layer of internal hierarchy.
@@ -20,9 +26,11 @@ x <- list(1, list(2, 3), list(4, list(5)))
 x \%>\% list_flatten() \%>\% str()
 x \%>\% list_flatten() \%>\% list_flatten() \%>\% str()
 
-# It's now as flat as it can get so further flattening leaves it
-# changed.
-x \%>\% list_flatten() \%>\% list_flatten() \%>\% list_flatten() \%>\% str()
+# Flat lists are left as is
+list(1, 2, 3, 4, 5) \%>\% list_flatten() \%>\% str()
+
+# Empty lists will disappear
+list(1, list(), 2, list(3)) \%>\% list_flatten() \%>\% str()
 
 # Another way to see this is that it reduces the depth of the list
 x <- list(
@@ -31,4 +39,10 @@ x <- list(
 )
 x \%>\% pluck_depth()
 x \%>\% list_flatten() \%>\% pluck_depth()
+
+# Use name_spec to control how inner and outer names are combined
+x <- list(x = list(a = 1, b = 2), y = list(c = 1, d = 2))
+x \%>\% list_flatten() \%>\% names()
+x \%>\% list_flatten(name_spec = "{outer}") \%>\% names()
+x \%>\% list_flatten(name_spec = "{inner}") \%>\% names()
 }
