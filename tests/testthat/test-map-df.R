@@ -1,4 +1,14 @@
+test_that("_df/_dfc/_dfr are deprecated", {
+  expect_snapshot({
+    . <- map_df(list(), identity)
+    . <- map_dfr(list(), identity)
+    . <- map_dfc(list(), identity)
+  })
+})
+
 test_that("row and column binding work", {
+  local_options(lifecycle_verbosity = "quiet")
+
   skip_if_not_installed("dplyr")
   local_name_repair_quiet()
 

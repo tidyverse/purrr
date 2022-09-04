@@ -55,6 +55,7 @@
 #' # now
 #' map2_cbind(arg1, arg2, ex_fun)
 map_dfr <- function(.x, .f, ..., .id = NULL) {
+  lifecycle::deprecate_warn("0.4.0", "map_dfc()", "map_rbind()")
   check_installed("dplyr", "for `map_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -65,11 +66,20 @@ map_dfr <- function(.x, .f, ..., .id = NULL) {
 #' @rdname map_dfr
 #' @usage NULL
 #' @export
-map_df <- map_dfr
+map_df <- function(.x, .f, ..., .id = NULL) {
+  lifecycle::deprecate_warn("0.4.0", "map_df()", "map_rbind()")
+  check_installed("dplyr", "for `map_dfr()`.")
+
+  .f <- as_mapper(.f, ...)
+  res <- map(.x, .f, ...)
+  dplyr::bind_rows(res, .id = .id)
+}
 
 #' @rdname map_dfr
 #' @export
 map_dfc <- function(.x, .f, ...) {
+  lifecycle::deprecate_warn("0.4.0", "map_dfc()", "map_cbind()")
+
   check_installed("dplyr", "for `map_dfc()`.")
 
   .f <- as_mapper(.f, ...)
