@@ -63,12 +63,8 @@ named if the input was named.
 or character vector respectively. The output of \code{.f} will only be
 automatically coerced upwards (i.e. logical -> integer -> double ->
 character). It will be named if the input was named.
-\item \verb{_rbind()} and \verb{_cbind()} return a data frame.
-}
-
-\itemize{
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in pipe.
+use in a pipe.
 }
 }
 \description{

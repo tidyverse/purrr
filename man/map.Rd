@@ -7,7 +7,7 @@
 \alias{map_int}
 \alias{map_dbl}
 \alias{walk}
-\title{Apply a function to each element of a list or atomic vector}
+\title{Apply a function to each element of a vector}
 \usage{
 map(.x, .f, ...)
 
@@ -58,34 +58,27 @@ named if the input was named.
 or character vector respectively. The output of \code{.f} will only be
 automatically coerced upwards (i.e. logical -> integer -> double ->
 character). It will be named if the input was named.
-\item \verb{_rbind()} and \verb{_cbind()} return a data frame.
-}
-
-\itemize{
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in pipe.
+use in a pipe.
 }
 }
 \description{
 The map functions transform their input by applying a function to
-each element of a list or atomic vector and returning an object of the same length as the input.
+each element of a list or atomic vector and returning an object of
+the same length as the input.
 \itemize{
 \item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}} family for
 versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
 atomic vector of the indicated type (or die trying).
-\item \code{map_rbind()} and \code{map_cbind()} return a data frame created by
-row-binding and column-binding respectively.
-\item The returned values of \code{.f} must be of length one for each element
-of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
-can be specified to handle values that are absent or empty. See
-\code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
-}
-
-\itemize{
 \item \code{walk()} calls \code{.f} for its side-effect and returns
 the input \code{.x}.
 }
+
+The returned values of \code{.f} must be of length one for each element
+of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
+can be specified to handle values that are absent or empty. See
+\code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
 }
 \examples{
 # Compute normal distributions from an atomic vector
