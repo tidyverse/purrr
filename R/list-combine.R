@@ -13,6 +13,10 @@
 #' @param x A list.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
+#' @param id By default, `names(x)` are list. Alternatively, supply a string
+#'   an the names will be saved into a column with name `id`. If `id`
+#'   is supplied and `x` is not named, the position of the elements will
+#'   be used instead of thee names.
 #' @param size An optional integer size to ensure that every input has the
 #'   same size (i.e. number of rows).
 #' @param name_repair One of `"unique"`, `"universal"`, or `"check_unique"`.
@@ -23,10 +27,13 @@
 #' list_c(x1)
 #'
 #' x2 <- list(
-#'   data.frame(x = 1:2),
-#'   data.frame(y = "a")
+#'   a = data.frame(x = 1:2),
+#'   b = data.frame(y = "a")
 #' )
 #' list_rbind(x2)
+#' list_rbind(x2, id = "id")
+#' list_rbind(unname(x2), id = "id")
+#'
 #' list_cbind(x2)
 list_c <- function(x, ptype = NULL) {
   check_is_list(x)
@@ -46,7 +53,7 @@ list_cbind <- function(
 
 #' @export
 #' @rdname list_c
-list_rbind <- function(x, id = NULL, ptype = NULL) {
+list_rbind <- function(x, id = rlang::zap(), ptype = NULL) {
   check_is_list(x)
   vctrs::vec_rbind(!!!x, .names_to = id, .ptype = ptype)
 }

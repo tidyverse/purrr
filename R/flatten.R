@@ -21,6 +21,7 @@
 #'   `flatten_dfr()` and `flatten_dfc()` return data frames created by
 #'   row-binding and column-binding respectively. They require dplyr to
 #'   be installed.
+#' @keywords internal
 #' @inheritParams map
 #' @export
 #' @examples

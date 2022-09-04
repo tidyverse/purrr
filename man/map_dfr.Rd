@@ -78,11 +78,11 @@ arg2 <- 10:13
 # was
 map2_dfr(arg1, arg2, ex_fun)
 # now
-map2_rbind(arg1, arg2, ex_fun)
+# map2_rbind(arg1, arg2, ex_fun)
 
 # was
 map2_dfc(arg1, arg2, ex_fun)
 # now
-map2_cbind(arg1, arg2, ex_fun)
+# map2_cbind(arg1, arg2, ex_fun)
 }
 \keyword{internal}

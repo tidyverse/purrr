@@ -36,6 +36,7 @@ reference:
     See details in `as_mapper()`
   contents:
   - map
+  - map_c
   - as_mapper
 
 - title: Map variants
@@ -81,7 +82,6 @@ reference:
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - flatten
   - list_c
   - list_flatten
   - list_modify

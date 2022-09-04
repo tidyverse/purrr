@@ -14,7 +14,7 @@ list_cbind(
   size = NULL
 )
 
-list_rbind(x, id = NULL, ptype = NULL)
+list_rbind(x, id = rlang::zap(), ptype = NULL)
 }
 \arguments{
 \item{x}{A list.}
@@ -27,6 +27,11 @@ See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of t
 
 \item{size}{An optional integer size to ensure that every input has the
 same size (i.e. number of rows).}
+
+\item{id}{By default, \code{names(x)} are list. Alternatively, supply a string
+an the names will be saved into a column with name \code{id}. If \code{id}
+is supplied and \code{x} is not named, the position of the elements will
+be used instead of thee names.}
 }
 \description{
 \itemize{
@@ -43,9 +48,12 @@ x1 <- list(a = 1, b = 2, c = 3)
 list_c(x1)
 
 x2 <- list(
-  data.frame(x = 1:2),
-  data.frame(y = "a")
+  a = data.frame(x = 1:2),
+  b = data.frame(y = "a")
 )
 list_rbind(x2)
+list_rbind(x2, id = "id")
+list_rbind(unname(x2), id = "id")
+
 list_cbind(x2)
 }

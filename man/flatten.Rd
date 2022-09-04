@@ -66,3 +66,4 @@ x \%>\% flatten() \%>\% str()
 # now
 x \%>\% list_flatten() \%>\% str()
 }
+\keyword{internal}

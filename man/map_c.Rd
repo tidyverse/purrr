@@ -49,6 +49,11 @@ present, the value of \code{.default} will be returned.}
 \item{.ptype}{An optional prototype to ensure that the output type is always
 the same.}
 
+\item{.id}{By default, \code{names(x)} are list. Alternatively, supply a string
+an the names will be saved into a column with name \code{id}. If \code{id}
+is supplied and \code{x} is not named, the position of the elements will
+be used instead of thee names.}
+
 \item{.name_repair}{One of \code{"unique"}, \code{"universal"}, or \code{"check_unique"}.
 See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of these options.}
 
