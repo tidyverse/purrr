@@ -70,15 +70,11 @@ the same length as the input.
 \item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}} family for
 versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
-atomic vector of the indicated type (or die trying).
+atomic vector of the indicated type (or die trying). For these functions,
+\code{.f} must return a length-1 vector of the appropriate type.
 \item \code{walk()} calls \code{.f} for its side-effect and returns
 the input \code{.x}.
 }
-
-The returned values of \code{.f} must be of length one for each element
-of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
-can be specified to handle values that are absent or empty. See
-\code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
 }
 \examples{
 # Compute normal distributions from an atomic vector

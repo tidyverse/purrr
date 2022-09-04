@@ -9,15 +9,11 @@
 #'   versions that return an object of the same type as the input.
 #'
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
-#'   atomic vector of the indicated type (or die trying).
+#'   atomic vector of the indicated type (or die trying). For these functions,
+#'   `.f` must return a length-1 vector of the appropriate type.
 #'
 #' * `walk()` calls `.f` for its side-effect and returns
 #'   the input `.x`.
-#'
-#' The returned values of `.f` must be of length one for each element
-#' of `.x`. If `.f` uses an extractor function shortcut, `.default`
-#' can be specified to handle values that are absent or empty. See
-#' [as_mapper()] for more on `.default`.
 #'
 #' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
