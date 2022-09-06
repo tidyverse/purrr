@@ -26,10 +26,13 @@ test_that("map() always returns a list", {
 })
 
 test_that("types automatically coerced correctly", {
-  expect_identical(map_int(c(FALSE, TRUE), identity), c(0L, 1L))
+  expect_identical(map_lgl(c(NA, 0, 1), identity), c(NA, FALSE, TRUE))
 
-  expect_identical(map_dbl(c(FALSE, TRUE), identity), c(0, 1))
-  expect_identical(map_dbl(c(1L, 2L), identity), c(1, 2))
+  expect_identical(map_int(c(NA, FALSE, TRUE), identity), c(NA, 0L, 1L))
+  expect_identical(map_int(c(NA, 1, 2), identity), c(NA, 1L, 2L))
+
+  expect_identical(map_dbl(c(NA, FALSE, TRUE), identity), c(NA, 0, 1))
+  expect_identical(map_dbl(c(NA, 1L, 2L), identity), c(NA, 1, 2))
 
   expect_identical(map_chr(NA, identity), NA_character_)
 })
