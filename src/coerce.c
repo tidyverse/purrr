@@ -21,6 +21,20 @@ int double_to_logical(double x, SEXP from, SEXP to, int i) {
   }
 }
 
+int double_to_integer(double x, SEXP from, SEXP to, int i) {
+  if (R_IsNA(x)) {
+    return NA_INTEGER;
+  }
+  int out = x;
+
+  if (out == x) {
+    return out;
+  } else {
+    cant_coerce(from, to, i);
+    return 0;
+  }
+}
+
 int integer_to_logical(double x, SEXP from, SEXP to, int i) {
   if (x == NA_INTEGER) {
     return NA_LOGICAL;
@@ -88,6 +102,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     switch(TYPEOF(from)) {
     case LGLSXP: INTEGER(to)[i] = LOGICAL(from)[j]; break;
     case INTSXP: INTEGER(to)[i] = INTEGER(from)[j]; break;
+    case REALSXP: INTEGER(to)[i] = double_to_integer(REAL(from)[j], from, to, i); break;
     default: cant_coerce(from, to, i);
     }
     break;

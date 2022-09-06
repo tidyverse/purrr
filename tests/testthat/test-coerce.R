@@ -18,6 +18,16 @@ test_that("coercion to logical follows vctrs principles",{
   expect_error(coerce_lgl("true"), "Can't coerce")
 })
 
+test_that("coercion to integer follow vctrs principles", {
+  expect_identical(coerce_int(c(TRUE, FALSE, NA)), c(1L, 0L, NA))
+  expect_identical(coerce_int(c(NA, 1L, 10L)), c(NA, 1L, 10L))
+
+  expect_identical(coerce_int(c(NA, 1, 10)), c(NA, 1L, 10L))
+  expect_error(coerce_int(1.5), "Can't coerce")
+
+  expect_error(coerce_int("1"), "Can't coerce")
+})
+
 test_that("can't coerce downwards", {
   expect_error(coerce_chr(list(1)), "Can't coerce")
   expect_error(coerce_dbl(list(1)), "Can't coerce")
@@ -30,7 +40,6 @@ test_that("can't coerce downwards", {
   expect_error(coerce_lgl("a"), "Can't coerce")
   expect_error(coerce_raw("a"), "Can't coerce")
 
-  expect_error(coerce_int(1), "Can't coerce")
   expect_error(coerce_raw(1), "Can't coerce")
 
   expect_error(coerce_raw(1L), "Can't coerce")
