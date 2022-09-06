@@ -6,6 +6,18 @@ test_that("missing values converted to new type", {
   expect_equal(coerce_dbl(NA_integer_), NA_real_)
 })
 
+test_that("coercion to logical follows vctrs principles",{
+  expect_equal(coerce_lgl(c(TRUE, FALSE, NA)), c(TRUE, FALSE, NA))
+
+  expect_equal(coerce_lgl(c(1L, 0L, NA)), c(TRUE, FALSE, NA))
+  expect_error(coerce_lgl(2L), "Can't coerce")
+
+  expect_equal(coerce_lgl(c(1, 0, NA)), c(TRUE, FALSE, NA))
+  expect_error(coerce_lgl(1.5), "Can't coerce")
+
+  expect_error(coerce_lgl("true"), "Can't coerce")
+})
+
 test_that("can't coerce downwards", {
   expect_error(coerce_chr(list(1)), "Can't coerce")
   expect_error(coerce_dbl(list(1)), "Can't coerce")
@@ -19,10 +31,8 @@ test_that("can't coerce downwards", {
   expect_error(coerce_raw("a"), "Can't coerce")
 
   expect_error(coerce_int(1), "Can't coerce")
-  expect_error(coerce_lgl(1), "Can't coerce")
   expect_error(coerce_raw(1), "Can't coerce")
 
-  expect_error(coerce_lgl(1L), "Can't coerce")
   expect_error(coerce_raw(1L), "Can't coerce")
 
   expect_error(coerce_raw(TRUE), "Can't coerce")
