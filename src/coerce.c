@@ -8,7 +8,7 @@ void cant_coerce(SEXP from, SEXP to, int i) {
     i + 1, Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
 }
 
-int double_to_logical(double x, SEXP from, SEXP to, int i) {
+int real_to_logical(double x, SEXP from, SEXP to, int i) {
   if (R_IsNA(x)) {
     return NA_LOGICAL;
   } else if (x == 0) {
@@ -21,7 +21,7 @@ int double_to_logical(double x, SEXP from, SEXP to, int i) {
   }
 }
 
-int double_to_integer(double x, SEXP from, SEXP to, int i) {
+int real_to_integer(double x, SEXP from, SEXP to, int i) {
   if (R_IsNA(x)) {
     return NA_INTEGER;
   }
@@ -62,31 +62,6 @@ SEXP logical_to_char(int x, SEXP from, SEXP to, int i) {
     return NILSXP;
   }
 }
-SEXP integer_to_char(int x) {
-  if (x == NA_INTEGER)
-    return NA_STRING;
-
-  char buf[100];
-  snprintf(buf, 100, "%d", x);
-  return Rf_mkChar(buf);
-}
-SEXP double_to_char(double x) {
-  if (!R_finite(x)) {
-    if (R_IsNA(x)) {
-      return NA_STRING;
-    } else if (R_IsNaN(x)) {
-      return Rf_mkChar("NaN");
-    } else if (x > 0) {
-      return Rf_mkChar("Inf");
-    } else {
-      return Rf_mkChar("-Inf");
-    }
-  }
-
-  char buf[100];
-  snprintf(buf, 100, "%f", x);
-  return Rf_mkChar(buf);
-}
 
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
   switch(TYPEOF(to)) {
@@ -94,7 +69,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     switch(TYPEOF(from)) {
     case LGLSXP: LOGICAL(to)[i] = LOGICAL(from)[j]; break;
     case INTSXP: LOGICAL(to)[i] = integer_to_logical(INTEGER(from)[j], from, to, i); break;
-    case REALSXP: LOGICAL(to)[i] = double_to_logical(REAL(from)[j], from, to, i); break;
+    case REALSXP: LOGICAL(to)[i] = real_to_logical(REAL(from)[j], from, to, i); break;
     default: cant_coerce(from, to, i);
     }
     break;
@@ -102,7 +77,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     switch(TYPEOF(from)) {
     case LGLSXP: INTEGER(to)[i] = LOGICAL(from)[j]; break;
     case INTSXP: INTEGER(to)[i] = INTEGER(from)[j]; break;
-    case REALSXP: INTEGER(to)[i] = double_to_integer(REAL(from)[j], from, to, i); break;
+    case REALSXP: INTEGER(to)[i] = real_to_integer(REAL(from)[j], from, to, i); break;
     default: cant_coerce(from, to, i);
     }
     break;
