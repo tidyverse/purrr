@@ -1,12 +1,4 @@
-test_that("missing values converted to new type", {
-  expect_equal(coerce_int(NA), NA_integer_)
-  expect_equal(coerce_dbl(NA), NA_real_)
-  expect_equal(coerce_chr(NA), NA_character_)
-
-  expect_equal(coerce_dbl(NA_integer_), NA_real_)
-})
-
-test_that("coercion to logical follows vctrs principles",{
+test_that("can coerce to logical vectors",{
   expect_equal(coerce_lgl(c(TRUE, FALSE, NA)), c(TRUE, FALSE, NA))
 
   expect_equal(coerce_lgl(c(1L, 0L, NA)), c(TRUE, FALSE, NA))
@@ -18,8 +10,9 @@ test_that("coercion to logical follows vctrs principles",{
   expect_error(coerce_lgl("true"), "Can't coerce")
 })
 
-test_that("coercion to integer follow vctrs principles", {
+test_that("can coerce to integer vectors", {
   expect_identical(coerce_int(c(TRUE, FALSE, NA)), c(1L, 0L, NA))
+
   expect_identical(coerce_int(c(NA, 1L, 10L)), c(NA, 1L, 10L))
 
   expect_identical(coerce_int(c(NA, 1, 10)), c(NA, 1L, 10L))
@@ -28,49 +21,27 @@ test_that("coercion to integer follow vctrs principles", {
   expect_error(coerce_int("1"), "Can't coerce")
 })
 
-test_that("can't coerce downwards", {
-  expect_error(coerce_chr(list(1)), "Can't coerce")
-  expect_error(coerce_dbl(list(1)), "Can't coerce")
-  expect_error(coerce_int(list(1)), "Can't coerce")
-  expect_error(coerce_lgl(list(1)), "Can't coerce")
-  expect_error(coerce_raw(list(1)), "Can't coerce")
+test_that("can coerce to double vctrs", {
+  expect_identical(coerce_dbl(c(TRUE, FALSE, NA)), c(1, 0, NA))
 
-  expect_error(coerce_dbl("a"), "Can't coerce")
-  expect_error(coerce_int("a"), "Can't coerce")
-  expect_error(coerce_lgl("a"), "Can't coerce")
-  expect_error(coerce_raw("a"), "Can't coerce")
+  expect_identical(coerce_dbl(c(NA, 1L, 10L)), c(NA, 1, 10))
 
-  expect_error(coerce_raw(1), "Can't coerce")
+  expect_identical(coerce_dbl(c(NA, 1.5)), c(NA, 1.5))
 
-  expect_error(coerce_raw(1L), "Can't coerce")
-
-  expect_error(coerce_raw(TRUE), "Can't coerce")
+  expect_error(coerce_dbl("1.5"), "Can't coerce")
 })
 
-test_that("coercing to same type returns input", {
-  expect_equal(coerce_lgl(c(TRUE, FALSE)), c(TRUE, FALSE))
-  expect_equal(coerce_dbl(c(1, 2)), c(1, 2))
-  expect_equal(coerce_int(c(1L, 2L)), c(1L, 2L))
-  expect_equal(coerce_chr(c("a", "b")), c("a", "b"))
-  expect_equal(coerce_raw(as.raw(c(0,1))), as.raw(c(0,1)))
-})
+test_that("can coerce to character vectors", {
+  expect_equal(coerce_chr(NA), NA_character_)
+  expect_error(coerce_chr(TRUE), "Can't coerce")
 
-test_that("types automatically coerced upwards", {
-  expect_identical(coerce_int(c(FALSE, TRUE)), c(0L, 1L))
-  expect_identical(coerce_dbl(c(FALSE, TRUE)), c(0, 1))
-  expect_identical(coerce_dbl(c(1L, 2L)), c(1, 2))
+  expect_error(coerce_chr(1L), "Can't coerce")
+
+  expect_error(coerce_chr(1), "Can't coerce")
+
+  expect_equal(coerce_chr("x"), "x")
 })
 
 test_that("can't coerce to expressions", {
   expect_error(coerce(list(1), "expression"))
-})
-
-test_that("as_vector can be type-specifc", {
-  expect_identical(as_vector(as.list(letters), "character"), letters)
-})
-
-test_that("as_vector cannot coerce lists with zero-length elements", {
-  x <- list(a = 1, b = c(list(), 3))
-  expect_error(as_vector(x))
-  expect_identical(x, simplify(x))
 })
