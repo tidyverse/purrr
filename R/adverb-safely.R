@@ -14,7 +14,7 @@
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `function(x) x + 1`.
 #'   * A lambda function, e.g. `\(a) a + 1`.
-#'   * A formula, e.g. `~ .x + 1`.
+#'   * A formula, e.g. `~ .x + 1`. Only appropriate for simple tasks.
 #' @param otherwise Default value to use when an error occurs.
 #' @param quiet Hide errors (`TRUE`, the default), or display them
 #'   as they occur?

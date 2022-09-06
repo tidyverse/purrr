@@ -40,6 +40,7 @@ iwalk(.x, .f, ...)
 \item A lambda function, e.g. \verb{\\(x, idx) x + idx}.
 \item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the
 current element and \code{.y} to refer to the current index.
+Only appropriate for simple tasks.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.

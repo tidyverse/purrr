@@ -12,7 +12,7 @@ slowly(f, rate = rate_delay(), quiet = TRUE)
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \code{function(x) x + 1}.
 \item A lambda function, e.g. \verb{\\(a) a + 1}.
-\item A formula, e.g. \code{~ .x + 1}.
+\item A formula, e.g. \code{~ .x + 1}. Only appropriate for simple tasks.
 }}
 
 \item{rate}{A \link[=rate-helpers]{rate} object. Defaults to a constant delay.}

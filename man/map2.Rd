@@ -42,7 +42,7 @@ of length 1 will be recycled to the length of the other.}
 \item A lambda function, e.g. \verb{\\(x) x + 1}, \verb{\\(a, b) a + b}.
 \item A formula, e.g. \code{~ .x + 1}, \code{~ .x + .y}. You must use \code{.x} to refer to
 the current element of \code{x} and \code{.y} to refer to the current element of
-\code{y}.
+\code{y}. Only appropriate for simple tasks.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.

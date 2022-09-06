@@ -12,6 +12,7 @@
 #'   * A lambda function, e.g. `\(x, idx) x + idx`.
 #'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the
 #'     current element and `.y` to refer to the current index.
+#'     Only appropriate for simple tasks.
 #' @inheritParams map
 #' @return A vector the same length as `.x`.
 #' @export

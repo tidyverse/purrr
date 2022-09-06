@@ -19,7 +19,7 @@ or \code{FALSE}) specified in one of the following ways:
 \item An anonymous function, e.g. \code{function(x) all(x < 0)}.
 \item A lambda function, e.g. \verb{\\(x) all(x < 0)}.
 \item A formula, e.g. \code{~ all(.x < 0)}. You must use \code{.x} to refer to the first
-argument).
+argument). Only appropriate for very tasks.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.

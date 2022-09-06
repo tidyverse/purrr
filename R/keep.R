@@ -17,7 +17,7 @@
 #'   * An anonymous function, e.g. `function(x) all(x < 0)`.
 #'   * A lambda function, e.g. `\(x) all(x < 0)`.
 #'   * A formula, e.g. `~ all(.x < 0)`. You must use `.x` to refer to the first
-#'     argument).
+#'     argument). Only appropriate for very tasks.
 #' @param ... Additional arguments passed on to `.p`.
 #' @export
 #' @examples

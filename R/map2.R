@@ -13,7 +13,7 @@
 #'   * A lambda function, e.g. `\(x) x + 1`, `\(a, b) a + b`.
 #'   * A formula, e.g. `~ .x + 1`, `~ .x + .y`. You must use `.x` to refer to
 #'     the current element of `x` and `.y` to refer to the current element of
-#'     `y`.
+#'     `y`. Only appropriate for simple tasks.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants
