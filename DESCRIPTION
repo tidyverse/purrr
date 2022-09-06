@@ -37,4 +37,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 Remotes: 
-    url::https://github.com/r-lib/lifecycle/archive/main.tar.gz
+    r-lib/lifecycle
