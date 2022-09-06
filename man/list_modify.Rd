@@ -16,10 +16,10 @@ list_merge(.x, ...)
 
 These values should be either all named or all unnamed. When
 inputs are all named, they are matched to \code{.x} by name. When they
-are all unnamed, they are matched positionally.
+are all unnamed, they are matched by position.
 
-\link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if
-your functions are stored in a list, you can splice that in with
+\link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if your
+replacement values are stored in a list, you can splice that in with
 \verb{!!!}.}
 }
 \description{
@@ -37,6 +37,7 @@ str(list_modify(x, a = 1))
 # Replace values
 str(list_modify(x, z = 5))
 str(list_modify(x, z = list(a = 1:5)))
+str(list_modify(x, z = NULL))
 
 # Remove values
 str(list_modify(x, z = zap()))

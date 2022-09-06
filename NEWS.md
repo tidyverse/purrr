@@ -38,6 +38,11 @@
 
 ## Features and fixes
 
+* `list_modify()`'s interface has been standardised. Modifying with `NULL`
+  now always creates a `NULL` in the output and we no longer recurse into
+  data frames (and other objects built on top of lists that are fundamentally
+  non-list like) (#810).
+
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
 

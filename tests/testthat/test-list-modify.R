@@ -3,37 +3,29 @@
 test_that("named lists have values replaced by name", {
   expect_equal(list_modify(list(a = 1), b = 2), list(a = 1, b = 2))
   expect_equal(list_modify(list(a = 1), a = 2), list(a = 2))
+  expect_equal(list_modify(list(a = 1), a = NULL), list(a = NULL))
   expect_equal(list_modify(list(a = 1, b = 2), b = zap()), list(a = 1))
 })
 
 test_that("unnamed lists are replaced by position", {
   expect_equal(list_modify(list(3), 1, 2), list(1, 2))
+  expect_equal(list_modify(list(3), NULL), list(NULL))
+
+  expect_equal(list_modify(list(3), zap()), list())
+  expect_equal(list_modify(list(3), zap(), zap()), list())
+
   expect_equal(list_modify(list(1, 2, 3), 4), list(4, 2, 3))
-})
-
-test_that("can remove elements with `zap()`", {
-  expect_equal(list_modify(list(1, 2, 3), zap(), zap()), list(3))
-  expect_equal(list_modify(list(a = 1, b = 2, c = 3), b = zap(), a = zap()), list(c = 3))
-  expect_equal(
-    list_modify(list(a = list(fst = 1, snd = 2), b = 2, c = 3), b = zap(), a = zap()),
-    list(c = 3)
-  )
-  expect_equal(list_modify(list(list(1, 2), 2, 3), zap(), zap()), list(3))
-})
-
-test_that("error if inputs are not all named or unnamed", {
-  expect_error(
-    list_modify(list(a = 1), 2, a = 2),
-    "must be either all named, or all unnamed"
-  )
 })
 
 test_that("can update unnamed lists with named inputs", {
   expect_identical(list_modify(list(1), a = 2), list(1, a = 2))
+  expect_identical(list_modify(list(1), a = NULL), list(1, a = NULL))
+  expect_identical(list_modify(list(1), a = zap()), list(1))
 })
 
 test_that("can update named lists with unnamed inputs", {
   expect_identical(list_modify(list(a = 1, b = 2), 2), list(a = 2, b = 2))
+  expect_identical(list_modify(list(a = 1, b = 2), zap()), list(b = 2))
   expect_identical(list_modify(list(a = 1, b = 2), 2, 3, 4), list(a = 2, b = 3, 4))
 })
 
@@ -41,7 +33,7 @@ test_that("lists are replaced recursively", {
   expect_equal(
     list_modify(
       list(a = list(x = 1)),
-      a = list(x = 2)
+      a = list(x = 2),
     ),
     list(a = list(x = 2))
   )
@@ -55,11 +47,20 @@ test_that("lists are replaced recursively", {
   )
 })
 
-test_that("duplicate names works", {
-  expect_equal(list_modify(list(x = 1), x = 2, x = 3), list(x = 3))
+test_that("but data.frames are not", {
+  x1 <- list(x = data.frame(x = 1))
+  x2 <- list(x = data.frame(y = 2))
+  out <- list_modify(x1, !!!x2)
+  expect_equal(out, x2)
 })
 
+test_that("error if inputs are not all named or unnamed", {
+  expect_snapshot(list_modify(list(a = 1), 2, a = 2), error = TRUE)
+})
 
+test_that("errors on names are duplicated", {
+  expect_snapshot(list_modify(list(x = 1), x = 2, x = 3), error = TRUE)
+})
 
 # list_merge --------------------------------------------------------------
 
@@ -85,8 +86,8 @@ test_that("list_merge returns the non-empty list", {
   expect_equal(list_merge(list(), 2), list(2))
 })
 
-test_that("list_merge handles duplicate names", {
-  expect_equal(list_merge(list(x = 1), x = 2, x = 3), list(x = 1:3))
+test_that("list_merge errors on duplicated names", {
+  expect_snapshot(list_merge(list(x = 1), x = 2, x = 3), error = TRUE)
 })
 
 # update_list ------------------------------------------------------------
@@ -106,16 +107,4 @@ test_that("quosures and formulas are evaluated", {
   local_options(lifecycle_verbosity = "quiet")
   expect_identical(update_list(list(x = 1), y = quo(x + 1)), list(x = 1, y = 2))
   expect_identical(update_list(list(x = 1), y = ~x + 1), list(x = 1, y = 2))
-})
-
-
-# Life cycle --------------------------------------------------------------
-
-test_that("removing elements with `NULL` is deprecated", {
-  expect_snapshot(. <- list_modify(list(1, 2, 3), NULL))
-})
-
-test_that("can still remove elements with `NULL`", {
-  local_options(lifecycle_verbosity = "quiet")
-  expect_equal(list_modify(list(1, 2, 3), NULL, NULL), list(3))
 })
