@@ -329,18 +329,9 @@ modify2 <- function(.x, .y, .f, ...) {
 }
 #' @export
 modify2.default <- function(.x, .y, .f, ...) {
-  .f <- as_mapper(.f, ...)
-
-  args <- recycle_args(list(.x, .y))
-  .x <- args[[1]]
-  .y <- args[[2]]
-
-  for (i in seq_along(.x)) {
-    list_slice2(.x, i) <- .f(.x[[i]], .y[[i]], ...)
-  }
-
-  .x
+  modify_base(map2, .x, .y, .f, ...)
 }
+
 #' @rdname modify
 #' @export
 imodify <- function(.x, .f, ...) {
@@ -366,11 +357,14 @@ modify2.logical  <- function(.x, .y, .f, ...) {
 }
 
 modify_base <- function(mapper, .x, .y, .f, ...) {
-  args <- recycle_args(list(.x, .y))
-  .x <- args[[1]]
-  .y <- args[[2]]
+  .f <- as_mapper(.f, ...)
+  out <- mapper(.x, .y, .f, ...)
 
-  .x[] <- mapper(.x, .y, .f, ...)
+  # if .x got recycled by map2
+  if (length(out) > length(.x)) {
+    .x <- .x[rep(1L, length(out))]
+  }
+  .x[] <- out
   .x
 }
 

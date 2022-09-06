@@ -38,6 +38,10 @@
 
 ## Features and fixes
 
+* `map2()`, `modify2()`, and `pmap()` now use tidyverse recycling rules where
+  vectors of length 1 are recycled to any size but all others must have
+  the same length (#878).
+
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
 
