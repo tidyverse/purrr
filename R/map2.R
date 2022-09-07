@@ -58,12 +58,7 @@ map2_chr <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
 }
-#' @export
-#' @rdname map2
-map2_raw <- function(.x, .y, .f, ...) {
-  .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw")
-}
+
 #' @rdname map2
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {

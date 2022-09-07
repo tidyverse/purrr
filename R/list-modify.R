@@ -56,8 +56,7 @@ list_recurse <- function(x, y, base_case) {
   }
 
   y_names <- names(y)
-
-  if (!is_null(y_names) && !is_names(y_names)) {
+  if (!is_null(y_names) && !is_named(y)) {
     abort("`...` arguments must be either all named, or all unnamed")
   }
 

@@ -12,14 +12,14 @@ URL: https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
     R (>= 3.2.3)
-Imports: 
+Imports:
+    cli,
     lifecycle (>= 1.0.1.9001),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
     vctrs (>= 0.3.2)
 Suggests: 
     covr,
-    crayon,
     dplyr (>= 0.7.8),
     knitr,
     rmarkdown,
@@ -36,5 +36,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
-Remotes:  
+Remotes: 
     r-lib/lifecycle

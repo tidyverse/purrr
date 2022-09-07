@@ -215,29 +215,33 @@ modify.pairlist <- function(.x, .f, ...) {
 }
 
 #' @export
-modify_if.integer <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_int(.x[sel], .f, ...)
-  .x
+modify_if.integer <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_int, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.double <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_dbl(.x[sel], .f, ...)
-  .x
+modify_if.double <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_dbl, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.character <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_chr(.x[sel], .f, ...)
-  .x
+modify_if.character <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_chr, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.logical <- function(.x, .p, .f, ...) {
+modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_lgl, .x, .p, .true = .f, .false = .else, ...)
+}
+
+modify_if_atomic <- function(.fmap, .x, .p, .true, .false = NULL, ...) {
   sel <- probe(.x, .p)
-  .x[sel] <- map_lgl(.x[sel], .f, ...)
+  .x[sel] <- .fmap(.x[sel], .true, ...)
+
+  if (!is.null(.false)) {
+    .x[!sel] <- .fmap(.x[!sel], .false, ...)
+  }
+
   .x
 }
+
 
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {

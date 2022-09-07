@@ -86,32 +86,25 @@ is_rate <- function(x) {
 
 #' @export
 print.purrr_rate_delay <- function(x, ...) {
-  cat_line(bold("<rate: delay>"))
-  print_purrr_rate(x)
-
-  cat_line(bullet("`pause`: %.2f", x$pause))
+  cli::cli_text("<rate: delay>")
+  cli::cli_bullets(c(
+    " " = "Attempts: {rate_count(x)}/{x$max_times}",
+    " " = "{.field pause}: {x$pause}"
+  ))
 
   invisible(x)
 }
 #' @export
 print.purrr_rate_backoff <- function(x, ...) {
-  cat_line(bold("<rate: backoff>"))
-  print_purrr_rate(x)
+  cli::cli_text("<rate: backoff>")
 
-  cat_line(
-    bullet("`pause_base`: %d", x$pause_base),
-    bullet("`pause_cap`: %d", x$pause_cap),
-    bullet("`pause_min`: %d", x$pause_min)
-  )
+  cli::cli_bullets(c(
+    " " = "Attempts: {rate_count(x)}/{x$max_times}",
+    " " = "{.field pause_base}: {x$pause_base}",
+    " " = "{.field pause_cap}: {x$pause_cap}",
+    " " = "{.field pause_min}: {x$pause_min}"
+  ))
 
-  invisible(x)
-}
-print_purrr_rate <- function(x, ...) {
-  cat_line(
-    # Using `%s` to convert `Inf` to character
-    sprintf("Attempts: %d/%s", rate_count(x), x$max_times),
-    "Fields:"
-  )
   invisible(x)
 }
 

@@ -6,7 +6,6 @@
 \alias{pmap_int}
 \alias{pmap_dbl}
 \alias{pmap_chr}
-\alias{pmap_raw}
 \alias{pmap_dfr}
 \alias{pmap_dfc}
 \alias{pmap_df}
@@ -22,8 +21,6 @@ pmap_int(.l, .f, ...)
 pmap_dbl(.l, .f, ...)
 
 pmap_chr(.l, .f, ...)
-
-pmap_raw(.l, .f, ...)
 
 pmap_dfr(.l, .f, ..., .id = NULL)
 

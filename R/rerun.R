@@ -39,7 +39,7 @@ rerun <- function(.n, ...) {
 
   # Special case: if single unnamed argument, insert directly into the output
   # rather than wrapping in a list.
-  if (length(dots) == 1 && !has_names(dots)) {
+  if (length(dots) == 1 && !is_named(dots)) {
     dots <- dots[[1]]
     eval_dots <- eval_tidy
   } else {
