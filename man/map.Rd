@@ -31,30 +31,23 @@ walk(.x, .f, ...)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A function, formula, or vector (not necessarily atomic).
-
-If a \strong{function}, it is used as is.
-
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
+\item{.f}{A function, specified in one of the following ways:
 \itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
+\item A named function, e.g. \code{mean}.
+\item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
+\item A formula, e.g. \code{~ .x + 1}. You must use \code{.x} to refer to the first
+argument. Only recommended if you require backward compatibility with
+older versions of R.
+\item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
+are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
+\verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
+set a default value if the indexed element is \code{NULL} or does not exist.
+}}
 
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
+\item{...}{Additional arguments passed on to the mapped function.
 
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
-
-\item{...}{Additional arguments passed on to the mapped function.}
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.id}{Either a string or \code{NULL}. If a string, the output will contain
 a variable with that name, storing either the name (if \code{.x} is named) or

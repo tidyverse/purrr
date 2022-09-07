@@ -10,10 +10,10 @@
 #'
 #'   These values should be either all named or all unnamed. When
 #'   inputs are all named, they are matched to `.x` by name. When they
-#'   are all unnamed, they are matched positionally.
+#'   are all unnamed, they are matched by position.
 #'
-#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
-#'   your functions are stored in a list, you can splice that in with
+#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if your
+#'   replacement values are stored in a list, you can splice that in with
 #'   `!!!`.
 #' @export
 #' @examples
@@ -25,6 +25,7 @@
 #' # Replace values
 #' str(list_modify(x, z = 5))
 #' str(list_modify(x, z = list(a = 1:5)))
+#' str(list_modify(x, z = NULL))
 #'
 #' # Remove values
 #' str(list_modify(x, z = zap()))
@@ -37,72 +38,40 @@
 #' l <- list(new = 1, y = zap(), z = 5)
 #' str(list_modify(x, !!!l))
 list_modify <- function(.x, ...) {
-  list_recurse(.x, list2(...), function(x, y) y)
+  vec_check_list(.x)
+  y <- dots_list(..., .named = NULL, .homonyms = "error")
+  list_recurse(.x, y, function(x, y) y)
 }
 #' @export
 #' @rdname list_modify
 list_merge <- function(.x, ...) {
-  list_recurse(.x, list2(...), c)
+  vec_check_list(.x)
+  y <- dots_list(..., .named = NULL, .homonyms = "error")
+  list_recurse(.x, y, c)
 }
 
-list_recurse <- function(x, y, base_case) {
-  stopifnot(is.list(x), is.list(y))
-
-  if (is_empty(x)) {
-    return(y)
-  }
-  if (is_empty(y)) {
-    return(x)
-  }
-
-  y_names <- names(y)
-
-  if (!is_null(y_names) && !is_names(y_names)) {
+list_recurse <- function(x, y, base_f) {
+  if (!is_null(names(y)) && !is_named(y)) {
     abort("`...` arguments must be either all named, or all unnamed")
   }
 
-  # N.B. is_list(zap()) is TRUE.
-  if (is_null(y_names)) {
-    for (i in rev(seq_along(y))) {
-      if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
-        x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
-      } else {
-        x[[i]] <- maybe_zap(base_case(x[[i]], y[[i]]))
-      }
-    }
-  } else {
-    for (i in seq_along(y_names)) {
-      nm <- y_names[[i]]
-      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
-        x[[nm]] <- list_recurse(x[[nm]], y[[i]], base_case)
-      } else {
-        x[[nm]] <- maybe_zap(base_case(x[[nm]], y[[i]]))
-      }
+  idx <- names(y) %||% rev(seq_along(y))
+
+  for (i in idx) {
+    x_i <- pluck(x, i)
+    y_i <- pluck(y, i)
+
+    if (is_zap(y_i)) {
+      x[[i]] <- NULL
+    } else if (vec_is_list(x_i) && vec_is_list(y_i)) {
+      list_slice2(x, i) <- list_recurse(x_i, y_i, base_f)
+    } else {
+      list_slice2(x, i) <- base_f(x_i, y_i)
     }
   }
 
   x
 }
-
-maybe_zap <- function(x) {
-  if (is_zap(x)) {
-    return(NULL)
-  }
-  if (!is_null(x)) {
-    return(x)
-  }
-
-  lifecycle::deprecate_warn(
-    when = "0.3.0",
-    what = I("Removing elements with `NULL`"),
-    with = "zap()"
-  )
-  # Allow removing with `NULL` for now. In purrr 0.5.0, this
-  # functionality will be defunct and we'll allow setting elements to
-  # `NULL`.
-  NULL
-}
-
 
 #' Update a list with formulas
 #'
