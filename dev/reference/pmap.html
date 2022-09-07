@@ -97,6 +97,8 @@ they share the same notion of "parallel" as <code><a href="https://rdrr.io/r/bas
 <dd><p>A list of vectors. The length of <code>.l</code> determines the number of
 arguments that <code>.f</code> will be called with. Arguments will be supply by
 position if unnamed, and by name if named.</p>
+<p>Vectors of length 1 will be recycled to any length; all other elements
+must be have the same length.</p>
 <p>A data frame is an important special case of <code>.l</code>. It will cause <code>.f</code>
 to be called once for each row.</p></dd>
 
