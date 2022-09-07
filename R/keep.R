@@ -14,8 +14,7 @@
 #'   or `FALSE`) specified in one of the following ways:
 #'
 #'   * A named function, e.g. `is.character`.
-#'   * An anonymous function, e.g. `function(x) all(x < 0)`.
-#'   * A lambda function, e.g. `\(x) all(x < 0)`.
+#'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
 #'   * A formula, e.g. `~ all(.x < 0)`. You must use `.x` to refer to the first
 #'     argument). Only appropriate for very tasks.
 #' @param ... Additional arguments passed on to `.p`.

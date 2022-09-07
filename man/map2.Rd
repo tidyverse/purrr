@@ -35,11 +35,10 @@ of length 1 will be recycled to the length of the other.}
 \item{.f}{A function, specified in one of the following ways:
 \itemize{
 \item A named function.
-\item An anonymous function, e.g. \code{function(x) x + 1}, \code{function(a, b) a + b}.
-\item A lambda function, e.g. \verb{\\(x) x + 1}, \verb{\\(a, b) a + b}.
-\item A formula, e.g. \code{~ .x + 1}, \code{~ .x + .y}. You must use \code{.x} to refer to
-the current element of \code{x} and \code{.y} to refer to the current element of
-\code{y}. Only appropriate for simple tasks.
+\item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
+\item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the current
+element of \code{x} and \code{.y} to refer to the current element of \code{y}. Only
+appropriate for simple tasks.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.

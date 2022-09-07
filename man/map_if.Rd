@@ -19,8 +19,7 @@ map_depth(.x, .depth, .f, ..., .ragged = FALSE)
 or \code{FALSE}) specified in one of the following ways:
 \itemize{
 \item A named function, e.g. \code{is.character}.
-\item An anonymous function, e.g. \code{function(x) all(x < 0)}.
-\item A lambda function, e.g. \verb{\\(x) all(x < 0)}.
+\item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
 \item A formula, e.g. \code{~ all(.x < 0)}. You must use \code{.x} to refer to the first
 argument). Only appropriate for very tasks.
 }}
@@ -28,8 +27,7 @@ argument). Only appropriate for very tasks.
 \item{.f}{A function, specified in one of the following ways:
 \itemize{
 \item A named function, e.g. \code{mean}.
-\item An anonymous function, e.g. \code{function(x) x + 1}.
-\item A lambda function, e.g. \verb{\\(x) x + 1}.
+\item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
 \item A formula, e.g. \code{~ .x + 1}. You must use \code{.x} to refer to the first
 argument. Only appropriate for very simple tasks.
 \item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which

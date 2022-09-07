@@ -10,8 +10,7 @@ possibly(.f, otherwise, quiet = TRUE)
 \item{.f}{A function to modify, specified in one of the following ways:
 \itemize{
 \item A named function, e.g. \code{mean}.
-\item An anonymous function, e.g. \code{function(x) x + 1}.
-\item A lambda function, e.g. \verb{\\(a) a + 1}.
+\item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
 \item A formula, e.g. \code{~ .x + 1}. Only appropriate for simple tasks.
 }}
 

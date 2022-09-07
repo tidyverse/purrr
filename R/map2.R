@@ -9,11 +9,10 @@
 #' @param .f A function, specified in one of the following ways:
 #'
 #'   * A named function.
-#'   * An anonymous function, e.g. `function(x) x + 1`, `function(a, b) a + b`.
-#'   * A lambda function, e.g. `\(x) x + 1`, `\(a, b) a + b`.
-#'   * A formula, e.g. `~ .x + 1`, `~ .x + .y`. You must use `.x` to refer to
-#'     the current element of `x` and `.y` to refer to the current element of
-#'     `y`. Only appropriate for simple tasks.
+#'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
+#'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the current
+#'     element of `x` and `.y` to refer to the current element of `y`. Only
+#'     appropriate for simple tasks.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants

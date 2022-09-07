@@ -39,8 +39,8 @@ to be called once for each row.}
 \item{.f}{A function, specified in one of the following ways:
 \itemize{
 \item A named function.
-\item An anonymous function, e.g. \code{function(x, y, z) x + y / z}
-\item A lambda function, e.g. \verb{\\(x, y, z) x + y / z}.
+\item An anonymous function, e.g. \verb{\\(x, y, z) x + y / z} or
+\code{function(x, y, z) x + y / z}
 \item A formula, e.g. \code{~ ..1 + ..2 / ..3}. This syntax is not recommended as
 you can only refer to arguments by position.
 }}

@@ -15,8 +15,8 @@
 #' @param .f A function, specified in one of the following ways:
 #'
 #'   * A named function.
-#'   * An anonymous function, e.g. `function(x, y, z) x + y / z`
-#'   * A lambda function, e.g. `\(x, y, z) x + y / z`.
+#'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
+#'     `function(x, y, z) x + y / z`
 #'   * A formula, e.g. `~ ..1 + ..2 / ..3`. This syntax is not recommended as
 #'     you can only refer to arguments by position.
 #' @inheritParams map

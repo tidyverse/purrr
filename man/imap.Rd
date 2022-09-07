@@ -33,8 +33,8 @@ iwalk(.x, .f, ...)
 \item{.f}{A function, specified in one of the following ways:
 \itemize{
 \item A named function, e.g. \code{paste}.
-\item An anonymous function, e.g. \code{function(x, idx) x + idx}.
-\item A lambda function, e.g. \verb{\\(x, idx) x + idx}.
+\item An anonymous function, e.g. \verb{\\(x, idx) x + idx} or
+\code{function(x, idx) x + idx}.
 \item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the
 current element and \code{.y} to refer to the current index.
 Only appropriate for simple tasks.

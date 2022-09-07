@@ -8,8 +8,8 @@
 #' @param .f A function, specified in one of the following ways:
 #'
 #'   * A named function, e.g. `paste`.
-#'   * An anonymous function, e.g. `function(x, idx) x + idx`.
-#'   * A lambda function, e.g. `\(x, idx) x + idx`.
+#'   * An anonymous function, e.g. `\(x, idx) x + idx` or
+#'     `function(x, idx) x + idx`.
 #'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the
 #'     current element and `.y` to refer to the current index.
 #'     Only appropriate for simple tasks.
