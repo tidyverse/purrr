@@ -464,14 +464,14 @@ accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .sim
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
-  res <- list_simplify(res, .simplify, .ptype)
+  res <- list_simplify(res, .simplify, .ptype, error_arg = "accumulated results")
   res
 }
 #' @rdname accumulate
 #' @export
 accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
   res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
-  res <- list_simplify(res, .simplify, .ptype)
+  res <- list_simplify(res, .simplify, .ptype, error_arg = "accumulated results")
   res
 }
 
