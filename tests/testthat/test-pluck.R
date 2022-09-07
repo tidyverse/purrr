@@ -234,6 +234,17 @@ test_that("assign_in() assigns", {
   expect_identical(out, list(list(bar = 1, foo = 20)))
 })
 
+test_that("can assign NULL (#636)", {
+  expect_equal(
+    assign_in(list(x = 1, y = 2), 1, value = NULL),
+    list(x = NULL, y = 2)
+  )
+  expect_equal(
+    assign_in(list(x = 1, y = 2), "y", value = NULL),
+    list(x = 1, y = NULL)
+  )
+})
+
 test_that("pluck<- is an alias for assign_in()", {
   x <- list(list(bar = 1, foo = 2))
   pluck(x, 1, "foo") <- 30
@@ -242,16 +253,22 @@ test_that("pluck<- is an alias for assign_in()", {
 
 test_that("assign_in() requires at least one location", {
   x <- list("foo")
-  expect_error(assign_in(x, NULL, value = "foo"), "without pluck locations")
-  expect_error(pluck(x) <- "foo", "without pluck locations")
+  expect_snapshot(error = TRUE, {
+    assign_in(x, NULL, value = "foo")
+    pluck(x) <- "foo"
+  })
 })
 
-test_that("assign_in() requires existing location", {
-  x <- list(list(bar = 1, foo = 2))
-  expect_error(assign_in(x, 2, 10), "exceeds the length")
-  expect_error(assign_in(x, list(1, "baz"), 10), "Can't find name `baz`")
-})
+test_that("can modify non-existing locations", {
+  expect_equal(assign_in(list(), "x", 1), list(x = 1))
+  expect_equal(assign_in(list(), 2, 1), list(NULL, 1))
 
+  expect_equal(assign_in(list(), c("x", "y"), 1), list(x = list(y = 1)))
+  expect_equal(assign_in(list(), c(2, 1), 1), list(NULL, list(1)))
+
+  expect_equal(assign_in(list(), list("x", 2), 1), list(x = list(NULL, 1)))
+  expect_equal(assign_in(list(), list(1, "y"), 1), list(list(y = 1)))
+})
 
 # modify_in() ----------------------------------------------------------
 
@@ -265,12 +282,11 @@ test_that("modify_in() modifies in pluck location", {
   expect_identical(out, list(list(bar = 11, foo = 2)))
 })
 
-test_that("modify_in() requires existing location", {
-  x <- list(list(bar = 1, foo = 2))
-  expect_error(modify_in(x, 2, `+`, 10), "exceeds the length")
-  expect_error(modify_in(x, list(1, "baz"), `+`, 10), "Can't find name `baz`")
+test_that("modify_in() doesn't require existing", {
+  x <- list(list(x = 1, y = 2))
+  expect_equal(modify_in(x, 2, ~ 10), list(list(x = 1, y = 2), 10))
+  expect_equal(modify_in(x, list(1, "z"), ~ 10), list(list(x = 1, y = 2, z = 10)))
 })
-
 
 # S3 ----------------------------------------------------------------------
 

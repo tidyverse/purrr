@@ -38,6 +38,11 @@
 
 ## Features and fixes
 
+* `pluck<-`/`assign()` can now modify non-existing locations (#704).
+
+* `pluck<-`/`assign()` now sets elements to `NULL` rather than removing them
+  (#636).
+
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
 
