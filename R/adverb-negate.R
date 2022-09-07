@@ -2,7 +2,7 @@
 #'
 #' Negating a function changes `TRUE` to `FALSE` and `FALSE` to `TRUE`.
 #'
-#' @param .p A predicate function or a formula.
+#' @inheritParams keep
 #' @inheritSection safely Adverbs
 #' @family adverbs
 #' @return A new predicate function.

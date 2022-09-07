@@ -12,6 +12,13 @@
 #'
 #'   A data frame is an important special case of `.l`. It will cause `.f`
 #'   to be called once for each row.
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function.
+#'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
+#'     `function(x, y, z) x + y / z`
+#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. This syntax is not recommended as
+#'     you can only refer to arguments by position.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants
