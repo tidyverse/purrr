@@ -38,7 +38,8 @@ of length 1 will be recycled to the length of the other.}
 \item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
 \item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the current
 element of \code{x} and \code{.y} to refer to the current element of \code{y}. Only
-appropriate for simple tasks.
+recommended if you require backward compatibility with older versions
+of R.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.

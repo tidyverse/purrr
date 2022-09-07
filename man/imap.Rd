@@ -36,8 +36,8 @@ iwalk(.x, .f, ...)
 \item An anonymous function, e.g. \verb{\\(x, idx) x + idx} or
 \code{function(x, idx) x + idx}.
 \item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the
-current element and \code{.y} to refer to the current index.
-Only appropriate for simple tasks.
+current element and \code{.y} to refer to the current index. Only recommended
+if you require backward compatibility with older versions of R.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.

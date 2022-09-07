@@ -13,7 +13,8 @@
 #' @param .f A function to modify, specified in one of the following ways:
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   * A formula, e.g. `~ .x + 1`. Only appropriate for simple tasks.
+#'   * A formula, e.g. `~ .x + 1`. Only recommended if you require backward
+#'     compatibility with olders version of R.
 #' @param otherwise Default value to use when an error occurs.
 #' @param quiet Hide errors (`TRUE`, the default), or display them
 #'   as they occur?

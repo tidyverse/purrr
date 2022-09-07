@@ -11,7 +11,8 @@ possibly(.f, otherwise, quiet = TRUE)
 \itemize{
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
-\item A formula, e.g. \code{~ .x + 1}. Only appropriate for simple tasks.
+\item A formula, e.g. \code{~ .x + 1}. Only recommended if you require backward
+compatibility with olders version of R.
 }}
 
 \item{otherwise}{Default value to use when an error occurs.}

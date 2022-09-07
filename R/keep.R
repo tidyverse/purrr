@@ -16,7 +16,8 @@
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
 #'   * A formula, e.g. `~ all(.x < 0)`. You must use `.x` to refer to the first
-#'     argument). Only appropriate for very tasks.
+#'     argument). Only recommended if you require backward compatibility with
+#'     older versions of R.
 #' @param ... Additional arguments passed on to `.p`.
 #' @export
 #' @examples
