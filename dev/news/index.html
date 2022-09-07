@@ -73,7 +73,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="features-and-fixes-development-version">Features and fixes<a class="anchor" aria-label="anchor" href="#features-and-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/as_mapper.html">as_mapper()</a></code> is now around twice as fast when used with character, integer, or list (<a href="https://github.com/tidyverse/purrr/issues/820" class="external-link">#820</a>).</p></li>
+<ul><li><p><code>modify_if(.else)</code> is now actually evaluated for atomic vectors (<a href="https://github.com/mgirlich" class="external-link">@mgirlich</a>, <a href="https://github.com/tidyverse/purrr/issues/701" class="external-link">#701</a>).</p></li>
+<li><p><code><a href="../reference/as_mapper.html">as_mapper()</a></code> is now around twice as fast when used with character, integer, or list (<a href="https://github.com/tidyverse/purrr/issues/820" class="external-link">#820</a>).</p></li>
 <li><p><code><a href="../reference/pluck_depth.html">vec_depth()</a></code> is now <code><a href="../reference/pluck_depth.html">pluck_depth()</a></code> and works with more types of input (<a href="https://github.com/tidyverse/purrr/issues/818" class="external-link">#818</a>).</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> now requires indices to be length 1 (<a href="https://github.com/tidyverse/purrr/issues/813" class="external-link">#813</a>). It also now reports the correct type if you supply an unexpected index.</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> now accepts negative integers, indexing from the right (<a href="https://github.com/tidyverse/purrr/issues/603" class="external-link">#603</a>).</p></li>
