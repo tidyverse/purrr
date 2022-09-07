@@ -42,6 +42,9 @@
   vectors of length 1 are recycled to any size but all others must have
   the same length (#878).
 
+* `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
+  #701).
+   
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
 

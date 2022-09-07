@@ -6,8 +6,7 @@
 #' type (list for `map()`, integer vector for `map_int()`, etc), the
 #' `modify()` family always returns the same type as the input object.
 #'
-#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]);
-#'   return(x)`.
+#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]); return(x)`.
 #'
 #' * `modify_if()` only modifies the elements of `x` that satisfy a
 #'   predicate and leaves the others unchanged. `modify_at()` only
@@ -22,8 +21,12 @@
 #'
 #' * [modify_in()] modifies a single element in a [pluck()] location.
 #'
+#' @param .x A vector.
+#' @param .y A vector, usually the same length as `.x`.
 #' @inheritParams map2
 #' @inheritParams map
+#' @param .f A function specified in the same way as the corresponding map
+#'   function.
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'   from the lowest level of the list.
 #'
@@ -212,29 +215,33 @@ modify.pairlist <- function(.x, .f, ...) {
 }
 
 #' @export
-modify_if.integer <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_int(.x[sel], .f, ...)
-  .x
+modify_if.integer <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_int, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.double <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_dbl(.x[sel], .f, ...)
-  .x
+modify_if.double <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_dbl, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.character <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_chr(.x[sel], .f, ...)
-  .x
+modify_if.character <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_chr, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.logical <- function(.x, .p, .f, ...) {
+modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_lgl, .x, .p, .true = .f, .false = .else, ...)
+}
+
+modify_if_atomic <- function(.fmap, .x, .p, .true, .false = NULL, ...) {
   sel <- probe(.x, .p)
-  .x[sel] <- map_lgl(.x[sel], .f, ...)
+  .x[sel] <- .fmap(.x[sel], .true, ...)
+
+  if (!is.null(.false)) {
+    .x[!sel] <- .fmap(.x[!sel], .false, ...)
+  }
+
   .x
 }
+
 
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {

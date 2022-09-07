@@ -4,11 +4,16 @@
 #' These functions are variants of [map()] that iterate over two arguments at
 #' a time.
 #'
-#' @param .x,.y Vectors of the same length. A vector of length 1 will
-#'   be recycled.
+#' @param .x,.y A pair of vectors, usually the same length. If not, a vector
+#'   of length 1 will be recycled to the length of the other.
+#' @param .f A function, specified in one of the following ways:
 #'
-#'   Note that the arguments that differ in each call come before `.f`,
-#'   and the arguments that are the same come after `.f`.
+#'   * A named function.
+#'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
+#'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the current
+#'     element of `x` and `.y` to refer to the current element of `y`. Only
+#'     recommended if you require backward compatibility with older versions
+#'     of R.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants

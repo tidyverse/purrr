@@ -5,14 +5,25 @@
 #' if it does not. This is useful if you need to compute on both the value
 #' and the position of an element.
 #'
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function, e.g. `paste`.
+#'   * An anonymous function, e.g. `\(x, idx) x + idx` or
+#'     `function(x, idx) x + idx`.
+#'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the
+#'     current element and `.y` to refer to the current index. Only recommended
+#'     if you require backward compatibility with older versions of R.
 #' @inheritParams map
 #' @return A vector the same length as `.x`.
 #' @export
 #' @family map variants
 #' @examples
-#' # Note that when using the formula shortcut, the first argument
-#' # is the value, and the second is the position
+#' imap_chr(sample(10), paste)
+#'
+#' imap_chr(sample(10), function(x, indx) paste0(indx, ": ", x))
+#' # same as
 #' imap_chr(sample(10), ~ paste0(.y, ": ", .x))
+#'
 #' iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = ""))
 imap <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)

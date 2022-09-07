@@ -20,9 +20,23 @@
 #'   can be specified to handle values that are absent or empty. See
 #'   [as_mapper()] for more on `.default`.
 #'
-#' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function, e.g. `mean`.
+#'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
+#'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
+#'     argument. Only recommended if you require backward compatibility with
+#'     older versions of R.
+#'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
+#'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
+#'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
+#'     set a default value if the indexed element is `NULL` or does not exist.
+#'
 #' @param ... Additional arguments passed on to the mapped function.
+#'
+#'   Note that the arguments that differ in each call come before `.f`,
+#'   and the arguments that are the same come after `.f`.
 #' @returns
 #' The output type is determined by the suffix:
 #'
@@ -127,12 +141,7 @@ map <- function(.x, .f, ...) {
 #'   which elements of `.x` are transformed with `.f`.
 #'
 #' @inheritParams map
-#' @param .p A single predicate function, a formula describing such a
-#'   predicate function, or a logical vector of the same length as `.x`.
-#'   Alternatively, if the elements of `.x` are themselves lists of
-#'   objects, a string indicating the name of a logical element in the
-#'   inner lists. Only those elements where `.p` evaluates to
-#'   `TRUE` will be modified.
+#' @inheritParams keep
 #' @param .else A function applied to elements of `.x` for which `.p`
 #' returns `FALSE`.
 #' @export

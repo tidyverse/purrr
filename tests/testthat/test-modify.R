@@ -88,6 +88,11 @@ test_that("`.else` modifies false elements", {
   exp <- modify_if(iris, negate(is.factor), as.integer)
   exp <- modify_if(exp, is.factor, as.character)
   expect_identical(modify_if(iris, is.factor, as.character, .else = as.integer), exp)
+
+  expect_equal(modify_if(c(TRUE, FALSE), ~ .x, ~ FALSE, .else = ~ TRUE), c(FALSE, TRUE))
+  expect_equal(modify_if(1:2, ~ .x == 1, ~ 3L, .else = ~ 4L), c(3, 4))
+  expect_equal(modify_if(c(1, 10), ~ .x < 5, ~ .x * 10, .else = ~ .x / 2), c(10, 5))
+  expect_equal(modify_if(c("a", "b"), ~ .x == "a", ~ "A", .else = ~ "B"), c("A", "B"))
 })
 
 test_that("modify family preserves NULLs", {
