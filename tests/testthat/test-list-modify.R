@@ -54,11 +54,9 @@ test_that("but data.frames are not", {
   expect_equal(out, x2)
 })
 
-test_that("error if inputs are not all named or unnamed", {
+test_that("list_modify() validates inputs", {
+  expect_snapshot(list_modify(1:3), error = TRUE)
   expect_snapshot(list_modify(list(a = 1), 2, a = 2), error = TRUE)
-})
-
-test_that("errors on names are duplicated", {
   expect_snapshot(list_modify(list(x = 1), x = 2, x = 3), error = TRUE)
 })
 
@@ -86,7 +84,8 @@ test_that("list_merge returns the non-empty list", {
   expect_equal(list_merge(list(), 2), list(2))
 })
 
-test_that("list_merge errors on duplicated names", {
+test_that("merge() validates inputs", {
+  expect_snapshot(list_merge(1:3), error = TRUE)
   expect_snapshot(list_merge(list(x = 1), x = 2, x = 3), error = TRUE)
 })
 

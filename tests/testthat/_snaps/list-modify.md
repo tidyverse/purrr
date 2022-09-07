@@ -1,4 +1,12 @@
-# error if inputs are not all named or unnamed
+# list_modify() validates inputs
+
+    Code
+      list_modify(1:3)
+    Condition
+      Error in `list_modify()`:
+      ! `.x` must be a list, not an integer vector.
+
+---
 
     Code
       list_modify(list(a = 1), 2, a = 2)
@@ -6,7 +14,7 @@
       Error in `list_recurse()`:
       ! `...` arguments must be either all named, or all unnamed
 
-# errors on names are duplicated
+---
 
     Code
       list_modify(list(x = 1), x = 2, x = 3)
@@ -15,7 +23,15 @@
       ! Arguments in `...` must have unique names.
       x Multiple arguments named `x` at positions 1 and 2.
 
-# list_merge errors on duplicated names
+# merge() validates inputs
+
+    Code
+      list_merge(1:3)
+    Condition
+      Error in `list_merge()`:
+      ! `.x` must be a list, not an integer vector.
+
+---
 
     Code
       list_merge(list(x = 1), x = 2, x = 3)

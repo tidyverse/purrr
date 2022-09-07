@@ -38,19 +38,19 @@
 #' l <- list(new = 1, y = zap(), z = 5)
 #' str(list_modify(x, !!!l))
 list_modify <- function(.x, ...) {
+  vec_check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, function(x, y) y)
 }
 #' @export
 #' @rdname list_modify
 list_merge <- function(.x, ...) {
+  vec_check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, c)
 }
 
 list_recurse <- function(x, y, base_f) {
-  stopifnot(is.list(x), is.list(y))
-
   if (!is_null(names(y)) && !is_named(y)) {
     abort("`...` arguments must be either all named, or all unnamed")
   }
