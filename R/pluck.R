@@ -239,7 +239,8 @@ assign_in <- function(x, where, value) {
   if (n == 0) {
     abort("`where` must contain at least one element")
   } else if (n > 1) {
-    value <- assign_in(pluck(x, where[[1]]), where[-1], value)
+    old <- pluck(x, where[[1]], .default = list())
+    value <- assign_in(old, where[-1], value)
   }
   list_slice2(x, where[[1]]) <- value
   x
