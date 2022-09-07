@@ -111,13 +111,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   check_vector(y_val, ".y");
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
-  if (nx == 0 || ny == 0) {
-    SEXP out = PROTECT(Rf_allocVector(type, 0));
-    copy_names(x_val, out);
-    UNPROTECT(3);
-    return out;
-  }
-  if (nx != ny && !(nx == 1 || ny == 1)) {
+  if (nx != ny && nx != 1 && ny != 1) {
     Rf_errorcall(R_NilValue,
                  "Mapped vectors must have consistent lengths:\n"
                  "* `.x` has length %d\n"
@@ -125,7 +119,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
                  nx,
                  ny);
   }
-  int n = (nx > ny) ? nx : ny;
+  int n = (nx == 1) ? ny : nx;
 
   // Constructs a call like f(x[[i]], y[[i]], ...)
   SEXP one = PROTECT(Rf_ScalarInteger(1));
@@ -150,9 +144,10 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     stop_bad_type(l_val, "a list", NULL, l_name);
   }
 
-  // Check all elements are lists and find maximum length
+  // Check all elements are lists and find recycled length
   int m = Rf_length(l_val);
-  int n = 0;
+  int has_scalar = 0;
+  int n = -1;
   for (int j = 0; j < m; ++j) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
@@ -161,28 +156,20 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_) {
     }
 
     int nj = Rf_length(j_val);
-
-    if (nj == 0) {
-      SEXP out = PROTECT(Rf_allocVector(type, 0));
-      copy_names(j_val, out);
-      UNPROTECT(2);
-      return out;
+    if (nj == 1) {
+      has_scalar = 1;
+      continue;
     }
 
-    if (nj > n) {
+    if (n == -1) {
       n = nj;
-    }
-
-  }
-
-  // Check length of all elements
-  for (int j = 0; j < m; ++j) {
-    SEXP j_val = VECTOR_ELT(l_val, j);
-    int nj = Rf_length(j_val);
-
-    if (nj != 1 && nj != n) {
+    } else if (nj != n) {
       stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
     }
+  }
+
+  if (n == -1) {
+    n = has_scalar ? 1 : 0;
   }
 
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));

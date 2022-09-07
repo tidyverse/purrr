@@ -38,6 +38,10 @@
 
 ## Features and fixes
 
+* `map2()`, `modify2()`, and `pmap()` now use tidyverse recycling rules where
+  vectors of length 1 are recycled to any size but all others must have
+  the same length (#878).
+
 * `list_modify()`'s interface has been standardised. Modifying with `NULL`
   now always creates a `NULL` in the output and we no longer recurse into
   data frames (and other objects built on top of lists that are fundamentally

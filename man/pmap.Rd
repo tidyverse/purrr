@@ -33,6 +33,9 @@ pwalk(.l, .f, ...)
 arguments that \code{.f} will be called with. Arguments will be supply by
 position if unnamed, and by name if named.
 
+Vectors of length 1 will be recycled to any length; all other elements
+must be have the same length.
+
 A data frame is an important special case of \code{.l}. It will cause \code{.f}
 to be called once for each row.}
 

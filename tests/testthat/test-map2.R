@@ -1,14 +1,3 @@
-test_that("map2 inputs must be same length", {
-  expect_error(
-    map2(1:3, 2:3, function(...) NULL),
-    paste_line(
-      "Mapped vectors must have consistent lengths:",
-      "\\* `.x` has length 3",
-      "\\* `.y` has length 2"
-    )
-  )
-})
-
 test_that("map2 can't simplify if elements longer than length 1", {
   expect_bad_element_vector_error(
     map2_int(1:4, 5:8, range),
@@ -21,19 +10,14 @@ test_that("fails on non-vectors", {
   expect_bad_type_error(map2("a", environment(), identity), "`.y` must be a vector, not an environment")
 })
 
-test_that("map2 vectorised inputs of length 1", {
+test_that("map2 recycles inputs", {
+  expect_equal(map2(1, 1, `+`), list(2))
+
   expect_equal(map2(1:2, 1, `+`), list(2, 3))
-  expect_equal(map2(1, 1:2, `+`), list(2, 3))
-})
+  expect_equal(map2(integer(), 1, `+`), list())
+  expect_equal(map2(NULL, 1, `+`), list())
 
-test_that("any 0 length input gives 0 length output", {
-  expect_equal(map2(list(), list(), ~ 1), list())
-  expect_equal(map2(1:10, list(), ~ 1), list())
-  expect_equal(map2(list(), 1:10, ~ 1), list())
-
-  expect_equal(map2(NULL, NULL, ~ 1), list())
-  expect_equal(map2(1:10, NULL, ~ 1), list())
-  expect_equal(map2(NULL, 1:10, ~ 1), list())
+  expect_snapshot(map2(1:2, 1:3, `+`), error = TRUE)
 })
 
 test_that("map2 takes only names from x", {
@@ -57,13 +41,9 @@ test_that("map2() with empty input copies names", {
   expect_identical(map2_chr(named_list, list(), identity), named(chr()))
 })
 
-test_that("map2() and pmap() recycle names (#779)", {
+test_that("map2() recycle names (#779)", {
   expect_identical(
     map2(c(a = 1), 1:2, ~ .x),
-    list(a = 1, a = 1)
-  )
-  expect_identical(
-    pmap(list(c(a = 1), 1:2), ~ .x),
     list(a = 1, a = 1)
   )
 })
