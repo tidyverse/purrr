@@ -1,5 +1,6 @@
 list_simplify <- function(x, simplify = NA, ptype = NULL) {
-  vec_assert(x, list())
+  vec_check_list(x)
+
   if (length(simplify) > 1 || !is.logical(simplify)) {
     abort("`simplify` must be `TRUE`, `FALSE`, or `NA`")
   }
@@ -7,13 +8,13 @@ list_simplify <- function(x, simplify = NA, ptype = NULL) {
     abort("Must not specify `ptype` when `simplify = FALSE`")
   }
 
+  # Ensures result is a list
   if (isFALSE(simplify)) {
     return(x)
   }
   strict <- !is.na(simplify)
 
-  # We choose not to simply data frames to preserve length invariants
-  can_simplify <- every(x, ~ vec_is(.x, size = 1) && !is.data.frame(.x))
+  can_simplify <- every(x, vec_is, size = 1)
 
   if (can_simplify) {
     if (!is.null(ptype)) {

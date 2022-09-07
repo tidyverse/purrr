@@ -12,16 +12,15 @@ test_that("simplification requires common type", {
   expect_equal(list_simplify(list(1, "a")), list(1, "a"))
 })
 
-test_that("never simplifies data frames", {
-  x <- list(data.frame(x = 1), data.frame(y = 1))
-  expect_equal(list_simplify(x), x)
+test_that("can simplify one-row data frames", {
+  x <- list(data.frame(x = 1), data.frame(y = 2))
+  expect_equal(list_simplify(x), data.frame(x = c(1, NA), y = c(NA, 2)))
 })
 
 test_that("ptype is checked", {
   expect_equal(list_simplify(list(1, 2), ptype = double()), c(1, 2))
   expect_snapshot(list_simplify(list(1, 2), ptype = character()), error = TRUE)
 })
-
 
 # argument checking -------------------------------------------------------
 
