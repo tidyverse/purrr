@@ -22,8 +22,23 @@ test_that("ptype is checked", {
   expect_snapshot(list_simplify(list(1, 2), ptype = character()), error = TRUE)
 })
 
+test_that("can suppress simplification", {
+  x <- list(1, 2)
+  expect_equal(list_simplify(x, simplify = FALSE), x)
+})
+
+test_that("strict simplification will error", {
+  expect_snapshot(error = TRUE, {
+    list_simplify(list(1, "a"), simplify = TRUE)
+    list_simplify(list(1, 1:2), simplify = TRUE)
+    list_simplify(list(1, 2), simplify = TRUE, ptype = character())
+  })
+})
+
 # argument checking -------------------------------------------------------
 
-test_that("x must be a list", {
+test_that("validates inputs", {
   expect_snapshot(list_simplify(1:5), error = TRUE)
+  expect_snapshot(list_simplify(list(), simplify = 1), error = TRUE)
+  expect_snapshot(list_simplify(list(), simplify = FALSE, ptype = integer()), error = TRUE)
 })

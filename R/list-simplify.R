@@ -17,23 +17,19 @@ list_simplify <- function(x, simplify = NA, ptype = NULL) {
   can_simplify <- every(x, vec_is, size = 1)
 
   if (can_simplify) {
-    if (!is.null(ptype)) {
-      vec_unchop(x, ptype = ptype)
-    } else {
-      tryCatch(
-        vec_unchop(x),
-        vctrs_error_incompatible_type = function(err) {
-          if (strict) {
-            abort("Failed to simplify", parent = err)
-          } else {
-            x
-          }
+    tryCatch(
+      vec_unchop(x, ptype = ptype),
+      vctrs_error_incompatible_type = function(err) {
+        if (strict || !is.null(ptype)) {
+          cli::cli_abort("Failed to simplify {.arg x}.", parent = err)
+        } else {
+          x
         }
-      )
-    }
+      }
+    )
   } else {
     if (strict) {
-      abort("Failed to simplify: not all elements vectors of length 1")
+      cli::cli_abort("Failed to simplify {.arg x}: not all elements vectors of length 1.")
     } else {
       x
     }
