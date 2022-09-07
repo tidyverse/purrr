@@ -3,21 +3,15 @@ test_that("input must be a list of vectors", {
   expect_bad_type_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
 })
 
-test_that("elements must be same length", {
-  expect_bad_element_length_error(pmap(list(1:2, 1:3), identity), "Element 1 of `.l` must have length 1 or 3, not 2")
-})
+test_that("inputs are recycled", {
+  expect_equal(pmap(list(1, 1), c), list(c(1, 1)))
+  expect_equal(pmap(list(1:2, 1), c), list(c(1, 1), c(2, 1)))
 
-test_that("handles any length 0 input", {
-  expect_equal(pmap(list(list(), list(), list()), ~ 1), list())
-  expect_equal(pmap(list(NULL, NULL, NULL), ~ 1), list())
+  expect_equal(pmap(list(list(), 1), ~ 1), list())
+  expect_equal(pmap(list(NULL, 1), ~ 1), list())
 
-  expect_equal(pmap(list(list(), list(), 1:10), ~ 1), list())
-  expect_equal(pmap(list(NULL, NULL, 1:10), ~ 1), list())
-})
-
-test_that("length 1 elemetns are recycled", {
-  out <- pmap(list(1:2, 1), c)
-  expect_equal(out, list(c(1, 1), c(2, 1)))
+  expect_snapshot(pmap(list(1:2, 1:3), identity), error = TRUE)
+  expect_snapshot(pmap(list(1:2, integer()), identity), error = TRUE)
 })
 
 test_that(".f called with named arguments", {
@@ -28,6 +22,13 @@ test_that(".f called with named arguments", {
 test_that("names are preserved", {
   out <- pmap(list(c(x = 1, y = 2), 3:4), list)
   expect_equal(names(out), c("x", "y"))
+})
+
+test_that("pmap() recycles names (#779)", {
+  expect_identical(
+    pmap(list(c(a = 1), 1:2), ~ .x),
+    list(a = 1, a = 1)
+  )
 })
 
 test_that("... are passed on", {
@@ -66,7 +67,7 @@ test_that("pmap on data frames performs rowwise operations", {
 })
 
 test_that("pmap works with empty lists", {
-  expect_identical(pmap(list(), identity), list())
+  expect_identical(pmap(list(), ~ 1), list())
 })
 
 test_that("preserves S3 class of input vectors (#358)", {

@@ -12,19 +12,21 @@ reduce2(.x, .y, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, and \code{accumulate()}, a 2-argument
-function. The function will be passed the accumulated value as
-the first argument and the "next" value as the second argument.
+\item{.f}{For \code{reduce()}, a 2-argument function. The function will be passed
+the accumulated value as the first argument and the "next" value as the
+second argument.
 
-For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
-function will be passed the accumulated value as the first
-argument, the next value of \code{.x} as the second argument, and the
-next value of \code{.y} as the third argument.
+For \code{reduce2()}, a 3-argument function. The function will be passed the
+accumulated value as the first argument, the next value of \code{.x} as the
+second argument, and the next value of \code{.y} as the third argument.
 
 The reduction terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
+
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{.x[[1]]}. This is useful if
