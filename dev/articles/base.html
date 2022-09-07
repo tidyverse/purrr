@@ -127,10 +127,10 @@
 <p>Here <code>x</code> denotes a vector and <code>f</code> denotes a function</p>
 <table class="table">
 <colgroup>
-<col width="23%">
-<col width="23%">
-<col width="23%">
-<col width="28%">
+<col width="24%">
+<col width="24%">
+<col width="24%">
+<col width="26%">
 </colgroup>
 <thead><tr class="header">
 <th>Output</th>
@@ -285,13 +285,13 @@
 </table>
 </div>
 <div class="section level4">
-<h4 id="shorthands">Shorthands<a class="anchor" aria-label="anchor" href="#shorthands"></a>
+<h4 id="extractor-shorthands">Extractor shorthands<a class="anchor" aria-label="anchor" href="#extractor-shorthands"></a>
 </h4>
-<p>When an anonymous function is required in <code>*apply</code> or <code>map</code> functions, purrr offers shorthands to make the anonymous function more readable and easier to write. Here <code>l</code> denotes a list of arguments, and <code>f</code> denotes some expression involving arguments of the anonymous function.</p>
+<p>Since a common use case for map functions is list extracting components, purrr provides a handful of shortcut functions for various uses of <code>[[</code>.</p>
 <table class="table">
 <colgroup>
-<col width="25%">
-<col width="36%">
+<col width="26%">
+<col width="35%">
 <col width="38%">
 </colgroup>
 <thead><tr class="header">
@@ -301,30 +301,22 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>1 vector</td>
-<td><code>function(x) f(x)</code></td>
-<td><code>~ f(.x)</code></td>
+<td>Extract by name</td>
+<td><code>lapply(x, `[[`, "a")</code></td>
+<td><code>map(x, "a")</code></td>
 </tr>
 <tr class="even">
-<td>2 vectors</td>
-<td><code>function(x, y) f(x, y)</code></td>
-<td><code>~ f(.x, .y)</code></td>
+<td>Extract by position</td>
+<td><code>lapply(x, `[[`, 3)</code></td>
+<td><code>map(x, 3)</code></td>
 </tr>
 <tr class="odd">
-<td>More than 2 vectors</td>
-<td>
-<code>function(x, y, z, ...) f(x, y, z, ...)</code> or <code>function(l) f(l[[1]], l[[2]], l[[3]], ...)</code> or <code>function(l) do.call(f, args = l)</code>
-</td>
-<td><code>~ f(..1, ..2, ..3, ...)</code></td>
+<td>Extract deeply</td>
+<td><code>lapply(x, \(y) x[[1]][["x"]][[3]])</code></td>
+<td><code>map(x, list(1, "x", 3))</code></td>
 </tr>
 <tr class="even">
-<td>Extract <code>i</code>th element of each vector</td>
-<td>
-<code>lapply(x, function(y) tryCatch(y[["a"]], error = function(e) NA))</code>,</td>
-<td><code>map(x, "a", default = NA)</code></td>
-</tr>
-<tr class="odd">
-<td>Extract <code>i</code>th element of each vector with default value</td>
+<td>Extract with default value</td>
 <td><code>lapply(x, function(y) tryCatch(y[[3]], error = function(e) NA))</code></td>
 <td><code>map(x, 3, .default = NA)</code></td>
 </tr>
@@ -616,7 +608,7 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">coef</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/map.html">map_dbl</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        4        6        8 </span></span>

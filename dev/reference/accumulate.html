@@ -119,7 +119,9 @@ a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-li
 
 
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>Note that the arguments that differ in each call come before <code>.f</code>,
+and the arguments that are the same come after <code>.f</code>.</p></dd>
 
 
 <dt>.init</dt>
@@ -223,9 +225,8 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># By ignoring the input vector (.y), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
 <span class="r-in"><span><span class="fu">accumulate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.00000000 -0.02906116 -0.71839549 -0.04462672  0.83490583</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  1.24138439  0.25709245  2.57881952  1.56029263  2.73879588</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.63360682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.0000000 0.4001296 1.0213318 1.4909000 2.5648070 1.8609270 2.5607905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 2.6692354 2.5263731 2.9142683 2.4350081</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `accumulate2()` is a version of `accumulate()` that works with</span></span></span>
 <span class="r-in"><span><span class="co"># 3-argument functions and one additional vector:</span></span></span>

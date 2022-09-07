@@ -88,32 +88,24 @@ a time.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.x, .y</dt>
-<dd><p>Vectors of the same length. A vector of length 1 will
-be recycled.</p>
-<p>Note that the arguments that differ in each call come before <code>.f</code>,
-and the arguments that are the same come after <code>.f</code>.</p></dd>
+<dd><p>A pair of vectors, usually the same length. If not, a vector
+of length 1 will be recycled to the length of the other.</p></dd>
 
 
 <dt>.f</dt>
-<dd><p>A function, formula, or vector (not necessarily atomic).</p>
-<p>If a <strong>function</strong>, it is used as is.</p>
-<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
-are three ways to refer to the arguments:</p><ul><li><p>For a single argument function, use <code>.</code></p></li>
-<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
-<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
-</ul><p>This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use <code>..1</code> etc). They silently ignore
-additional arguments that are not used in the formula expression.</p>
-<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of <code>.default</code> will be returned.</p></dd>
+<dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x, y) x + y</code> or <code>function(x, y) x + y</code>.</p></li>
+<li><p>A formula, e.g. <code>~ .x + .y</code>. You must use <code>.x</code> to refer to the current
+element of <code>x</code> and <code>.y</code> to refer to the current element of <code>y</code>. Only
+recommended if you require backward compatibility with older versions
+of R.</p></li>
+</ul></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>Note that the arguments that differ in each call come before <code>.f</code>,
+and the arguments that are the same come after <code>.f</code>.</p></dd>
 
 
 <dt>.id</dt>

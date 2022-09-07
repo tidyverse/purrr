@@ -98,25 +98,19 @@ and the position of an element.</p>
 
 
 <dt>.f</dt>
-<dd><p>A function, formula, or vector (not necessarily atomic).</p>
-<p>If a <strong>function</strong>, it is used as is.</p>
-<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
-are three ways to refer to the arguments:</p><ul><li><p>For a single argument function, use <code>.</code></p></li>
-<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
-<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
-</ul><p>This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use <code>..1</code> etc). They silently ignore
-additional arguments that are not used in the formula expression.</p>
-<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of <code>.default</code> will be returned.</p></dd>
+<dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>paste</code>.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x, idx) x + idx</code> or
+<code>function(x, idx) x + idx</code>.</p></li>
+<li><p>A formula, e.g. <code>~ .x + .y</code>. You must use <code>.x</code> to refer to the
+current element and <code>.y</code> to refer to the current index. Only recommended
+if you require backward compatibility with older versions of R.</p></li>
+</ul></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>Note that the arguments that differ in each call come before <code>.f</code>,
+and the arguments that are the same come after <code>.f</code>.</p></dd>
 
 
 <dt>.id</dt>
@@ -147,11 +141,17 @@ variable will be created.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Note that when using the formula shortcut, the first argument</span></span></span>
-<span class="r-in"><span><span class="co"># is the value, and the second is the position</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="va">paste</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "6 1"  "1 2"  "8 3"  "5 4"  "3 5"  "10 6" "2 7"  "4 8"  "7 9"  "9 10"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">indx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">indx</span>, <span class="st">": "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 10" "2: 3"  "3: 4"  "4: 2"  "5: 6"  "6: 1"  "7: 5"  "8: 7" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 9"  "10: 8"</span>
+<span class="r-in"><span><span class="co"># same as</span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 8"  "2: 6"  "3: 4"  "4: 5"  "5: 2"  "6: 10" "7: 7"  "8: 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 3"  "10: 9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 9"  "2: 5"  "3: 8"  "4: 1"  "5: 6"  "6: 7"  "7: 2"  "8: 4" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 10" "10: 3"</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl: 6</span>

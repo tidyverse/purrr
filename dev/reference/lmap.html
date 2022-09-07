@@ -111,16 +111,19 @@ length.)</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>Note that the arguments that differ in each call come before <code>.f</code>,
+and the arguments that are the same come after <code>.f</code>.</p></dd>
 
 
 <dt>.p</dt>
-<dd><p>A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as <code>.x</code>.
-Alternatively, if the elements of <code>.x</code> are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where <code>.p</code> evaluates to
-<code>TRUE</code> will be modified.</p></dd>
+<dd><p>A predicate function (i.e. a function that returns either <code>TRUE</code>
+or <code>FALSE</code>) specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>is.character</code>.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x) all(x &lt; 0)</code> or <code>function(x) all(x &lt; 0)</code>.</p></li>
+<li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. You must use <code>.x</code> to refer to the first
+argument). Only recommended if you require backward compatibility with
+older versions of R.</p></li>
+</ul></dd>
 
 
 <dt>.else</dt>

@@ -74,7 +74,11 @@ amount of time whenever it errors.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>f</dt>
-<dd><p>A function to modify.</p></dd>
+<dd><p>A function to modify, specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>mean</code>.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x) x + 1</code> or <code>function(x) x + 1</code>.</p></li>
+<li><p>A formula, e.g. <code>~ .x + 1</code>. Only recommended if you require backward
+compatibility with olders version of R.</p></li>
+</ul></dd>
 
 
 <dt>rate</dt>
@@ -83,8 +87,8 @@ backoff.</p></dd>
 
 
 <dt>quiet</dt>
-<dd><p>If <code>FALSE</code>, prints a message displaying how long until
-the next request.</p></dd>
+<dd><p>Hide errors (<code>TRUE</code>, the default), or display them
+as they occur?</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -88,19 +88,20 @@ and use a left reduction.</p>
 
 
 <dt>.f</dt>
-<dd><p>For <code><a href="reduce.html">reduce()</a></code>, and <code><a href="accumulate.html">accumulate()</a></code>, a 2-argument
-function. The function will be passed the accumulated value as
-the first argument and the "next" value as the second argument.</p>
-<p>For <code><a href="reduce.html">reduce2()</a></code> and <code><a href="accumulate.html">accumulate2()</a></code>, a 3-argument function. The
-function will be passed the accumulated value as the first
-argument, the next value of <code>.x</code> as the second argument, and the
-next value of <code>.y</code> as the third argument.</p>
+<dd><p>For <code><a href="reduce.html">reduce()</a></code>, a 2-argument function. The function will be passed
+the accumulated value as the first argument and the "next" value as the
+second argument.</p>
+<p>For <code><a href="reduce.html">reduce2()</a></code>, a 3-argument function. The function will be passed the
+accumulated value as the first argument, the next value of <code>.x</code> as the
+second argument, and the next value of <code>.y</code> as the third argument.</p>
 <p>The reduction terminates early if <code>.f</code> returns a value wrapped in
 a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done()</a></code>.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>Note that the arguments that differ in each call come before <code>.f</code>,
+and the arguments that are the same come after <code>.f</code>.</p></dd>
 
 
 <dt>.init</dt>
