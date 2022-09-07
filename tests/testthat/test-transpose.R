@@ -1,48 +1,72 @@
+test_that("transpose() is deprecated", {
+  expect_snapshot(. <- transpose(list()))
+})
+
 test_that("input must be a list", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_bad_type_error(transpose(1:3), "`.l` must be a list, not an integer vector")
 })
 
 test_that("elements of input must be atomic vectors", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_bad_element_type_error(transpose(list(environment())), "Element 1 must be a vector, not an environment")
   expect_bad_element_type_error(transpose(list(list(), environment())), "Element 2 must be a vector, not an environment")
 })
 
 test_that("empty list returns empty list", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_equal(transpose(list()), list())
 })
 
 test_that("transpose switches order of first & second idnex", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(list(1, 3), list(2, 4))
   expect_equal(transpose(x), list(list(1, 2), list(3, 4)))
 })
 
 test_that("inside names become outside names", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(list(x = 1), list(x = 2))
   expect_equal(transpose(x), list(x = list(1, 2)))
 })
 
 test_that("outside names become inside names", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(x = list(1, 3), y = list(2, 4))
   expect_equal(transpose(x), list(list(x = 1, y = 2), list(x = 3, y = 4)))
 })
 
 test_that("warns if element too short", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(list(1, 2), list(1))
   expect_warning(out <- transpose(x), "Element 2 must be length 2, not 1")
   expect_equal(out, list(list(1, 1), list(2, NULL)))
 })
 test_that("warns if element too long", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(list(1, 2), list(1, 2, 3))
   expect_warning(out <- transpose(x), "Element 2 must be length 2, not 3")
   expect_equal(out, list(list(1, 1), list(2, 2)))
 })
 
 test_that("can transpose list of lists of  atomic vectors", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(list(TRUE, 1L, 1, "1"))
   expect_equal(transpose(x), list(list(TRUE), list(1L), list(1), list("1")))
 })
 
 test_that("can transpose lists of atomic vectors", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_equal(transpose(list(TRUE, FALSE)), list(list(TRUE, FALSE)))
   expect_equal(transpose(list(1L, 2L)), list(list(1L, 2L)))
   expect_equal(transpose(list(1, 2)), list(list(1, 2)))
@@ -50,6 +74,8 @@ test_that("can transpose lists of atomic vectors", {
 })
 
 test_that("can't transpose expressions", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_bad_type_error(
     transpose(list(expression(a))),
     "Transposed element must be a vector, not an expression vector"
@@ -59,6 +85,8 @@ test_that("can't transpose expressions", {
 # Named based matching ----------------------------------------------------
 
 test_that("can override default names", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(
     list(x = 1),
     list(y = 2, x = 1)
@@ -72,6 +100,8 @@ test_that("can override default names", {
 })
 
 test_that("if present, names are used", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(
     list(x = 1, y = 2),
     list(y = 2, x = 1)
@@ -83,6 +113,8 @@ test_that("if present, names are used", {
 })
 
 test_that("if missing elements, filled with NULL", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(
     list(x = 1, y = 2),
     list(x = 1)
@@ -94,6 +126,8 @@ test_that("if missing elements, filled with NULL", {
 # Position based matching -------------------------------------------------
 
 test_that("warning if too short", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(
     list(1, 2),
     list(1)
@@ -103,6 +137,8 @@ test_that("warning if too short", {
 })
 
 test_that("warning if too long", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list(
     list(1),
     list(1, 2)
@@ -110,3 +146,4 @@ test_that("warning if too long", {
   expect_warning(tx <- transpose(x), "must be length 1, not 2")
   expect_equal(tx, list(list(1, 1)))
 })
+
