@@ -3,13 +3,49 @@
 #include <Rinternals.h>
 #include <stdio.h>
 
-const char* sixteen = "0123456789abcdef" ;
+void cant_coerce(SEXP from, SEXP to, int i) {
+  Rf_errorcall(R_NilValue, "Can't coerce element %i from a %s to a %s",
+    i + 1, Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
+}
 
-SEXP raw_to_char( Rbyte x){
-  char buf[2] ;
-  buf[0] = sixteen[ x >> 4] ;
-  buf[1] = sixteen[ x & 0x0F ] ;
-  return Rf_mkCharLen( buf, 2) ;
+int real_to_logical(double x, SEXP from, SEXP to, int i) {
+  if (R_IsNA(x)) {
+    return NA_LOGICAL;
+  } else if (x == 0) {
+    return 0;
+  } else if (x == 1) {
+    return 1;
+  } else {
+    cant_coerce(from, to, i);
+    return 0;
+  }
+}
+
+int real_to_integer(double x, SEXP from, SEXP to, int i) {
+  if (R_IsNA(x)) {
+    return NA_INTEGER;
+  }
+  int out = x;
+
+  if (out == x) {
+    return out;
+  } else {
+    cant_coerce(from, to, i);
+    return 0;
+  }
+}
+
+int integer_to_logical(double x, SEXP from, SEXP to, int i) {
+  if (x == NA_INTEGER) {
+    return NA_LOGICAL;
+  } else if (x == 0) {
+    return 0;
+  } else if (x == 1) {
+    return 1;
+  } else {
+    cant_coerce(from, to, i);
+    return 0;
+  }
 }
 
 double logical_to_real(int x) {
@@ -18,13 +54,37 @@ double logical_to_real(int x) {
 double integer_to_real(int x) {
   return (x == NA_INTEGER) ? NA_REAL : x;
 }
-SEXP logical_to_char(int x) {
-  if (x == NA_LOGICAL)
-    return NA_STRING;
 
-  return Rf_mkChar(x ? "TRUE" : "FALSE");
+void deprecate_to_char(const char* type) {
+  SEXP fn = PROTECT(Rf_lang3(
+    Rf_install(":::"),
+    Rf_install("purrr"),
+    Rf_install("deprecate_to_char")
+  ));
+
+  SEXP call = PROTECT(Rf_lang2(
+    PROTECT(fn),
+    PROTECT(Rf_mkString("type"))
+  ));
+
+  Rf_eval(call, R_BaseEnv);
+  UNPROTECT(4);
 }
-SEXP integer_to_char(int x) {
+
+SEXP logical_to_char(int x, SEXP from, SEXP to, int i) {
+  if (x == NA_LOGICAL) {
+    return NA_STRING;
+  } else {
+    if (i == 0)
+      deprecate_to_char("logical");
+    return Rf_mkChar(x ? "TRUE" : "FALSE");
+  }
+}
+
+SEXP integer_to_char(int x, int i) {
+  if (i == 0)
+    deprecate_to_char("integer");
+
   if (x == NA_INTEGER)
     return NA_STRING;
 
@@ -32,7 +92,10 @@ SEXP integer_to_char(int x) {
   snprintf(buf, 100, "%d", x);
   return Rf_mkChar(buf);
 }
-SEXP double_to_char(double x) {
+SEXP double_to_char(double x, int i) {
+  if (i == 0)
+    deprecate_to_char("double");
+
   if (!R_finite(x)) {
     if (R_IsNA(x)) {
       return NA_STRING;
@@ -50,16 +113,14 @@ SEXP double_to_char(double x) {
   return Rf_mkChar(buf);
 }
 
-void cant_coerce(SEXP from, SEXP to, int i) {
-  Rf_errorcall(R_NilValue, "Can't coerce element %i from a %s to a %s",
-    i + 1, Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
-}
 
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
   switch(TYPEOF(to)) {
   case LGLSXP:
     switch(TYPEOF(from)) {
     case LGLSXP: LOGICAL(to)[i] = LOGICAL(from)[j]; break;
+    case INTSXP: LOGICAL(to)[i] = integer_to_logical(INTEGER(from)[j], from, to, i); break;
+    case REALSXP: LOGICAL(to)[i] = real_to_logical(REAL(from)[j], from, to, i); break;
     default: cant_coerce(from, to, i);
     }
     break;
@@ -67,7 +128,7 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     switch(TYPEOF(from)) {
     case LGLSXP: INTEGER(to)[i] = LOGICAL(from)[j]; break;
     case INTSXP: INTEGER(to)[i] = INTEGER(from)[j]; break;
-    case RAWSXP: INTEGER(to)[i] = RAW(from)[j]; break ;
+    case REALSXP: INTEGER(to)[i] = real_to_integer(REAL(from)[j], from, to, i); break;
     default: cant_coerce(from, to, i);
     }
     break;
@@ -76,17 +137,15 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
     case LGLSXP:  REAL(to)[i] = logical_to_real(LOGICAL(from)[j]); break;
     case INTSXP:  REAL(to)[i] = integer_to_real(INTEGER(from)[j]); break;
     case REALSXP: REAL(to)[i] = REAL(from)[j]; break;
-    case RAWSXP:  REAL(to)[i] = RAW(from)[j]; break ;
     default: cant_coerce(from, to, i);
     }
     break;
   case STRSXP:
     switch(TYPEOF(from)) {
-    case LGLSXP:  SET_STRING_ELT(to, i, logical_to_char(LOGICAL(from)[j])); break;
-    case INTSXP:  SET_STRING_ELT(to, i, integer_to_char(INTEGER(from)[j])); break;
-    case REALSXP: SET_STRING_ELT(to, i, double_to_char(REAL(from)[j])); break;
+    case LGLSXP:  SET_STRING_ELT(to, i, logical_to_char(LOGICAL(from)[j], from, to, i)); break;
+    case INTSXP:  SET_STRING_ELT(to, i, integer_to_char(INTEGER(from)[j], i)); break;
+    case REALSXP: SET_STRING_ELT(to, i, double_to_char(REAL(from)[j], i)); break;
     case STRSXP:  SET_STRING_ELT(to, i, STRING_ELT(from, j)); break;
-    case RAWSXP:  SET_STRING_ELT(to, i, raw_to_char(RAW(from)[j])); break;
     default: cant_coerce(from, to, i);
     }
     break;

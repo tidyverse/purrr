@@ -44,9 +44,7 @@
 #'   named if the input was named.
 #'
 #' * `_lgl`, `_int`, `_dbl`, `_chr` return a logical, integer, double,
-#'   or character vector respectively. The output of `.f` will only be
-#'   automatically coerced upwards (i.e. logical -> integer -> double ->
-#'   character). It will be named if the input was named.
+#'   or character vector respectively. It will be named if the input was named.
 #'
 #' * `_dfc` and `_dfr()` all return a data frame created by row-binding and
 #'    column-binding respectively. They require dplyr to be installed.
