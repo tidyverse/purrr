@@ -146,7 +146,6 @@ map2_dfc(arg1, arg2, ex_fun)
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},

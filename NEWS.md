@@ -36,6 +36,12 @@
 * `*_raw()` have been deprecated because they are of limited use and you can 
   now use `map_vec()` instead (#903).
 
+* `invoke_*()` is now deprecated. It was retired in 0.3.0 (Jan 2019) and 
+  3.5 years later, we have decided to deprecated it as part of the API 
+  refinement in the 1.0.0 release.
+
+* `map_call()` has been removed. It was made defunct in 0.3.0.
+
 ## Features and fixes
 
 * `_lgl()`, `_int()`, `_int()`, and `_dbl()` now use the same (strict) coercion

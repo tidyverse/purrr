@@ -90,7 +90,6 @@ map2(mods, by_cyl, predict)
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map_if}()},
 \code{\link{map}()},

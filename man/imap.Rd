@@ -72,7 +72,6 @@ iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = ""))
 }
 \seealso{
 Other map variants: 
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
