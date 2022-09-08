@@ -33,13 +33,18 @@ test_that("can coerce to double vctrs", {
 
 test_that("can coerce to character vectors", {
   expect_equal(coerce_chr(NA), NA_character_)
-  expect_error(coerce_chr(TRUE), "Can't coerce")
 
-  expect_error(coerce_chr(1L), "Can't coerce")
-
-  expect_error(coerce_chr(1), "Can't coerce")
+  expect_snapshot({
+    expect_equal(coerce_chr(TRUE), "TRUE")
+    expect_equal(coerce_chr(1L), "1")
+    expect_equal(coerce_chr(1.5), "1.500000")
+  })
 
   expect_equal(coerce_chr("x"), "x")
+})
+
+test_that("warns once per vector", {
+  expect_warning(expect_warning(coerce_chr(1:5)), NA)
 })
 
 test_that("can't coerce to expressions", {

@@ -54,14 +54,65 @@ double logical_to_real(int x) {
 double integer_to_real(int x) {
   return (x == NA_INTEGER) ? NA_REAL : x;
 }
+
+void deprecate_to_char(const char* type) {
+  SEXP fn = PROTECT(Rf_lang3(
+    Rf_install(":::"),
+    Rf_install("purrr"),
+    Rf_install("deprecate_to_char")
+  ));
+
+  SEXP call = PROTECT(Rf_lang2(
+    PROTECT(fn),
+    PROTECT(Rf_mkString("type"))
+  ));
+
+  Rf_eval(call, R_BaseEnv);
+  UNPROTECT(4);
+}
+
 SEXP logical_to_char(int x, SEXP from, SEXP to, int i) {
   if (x == NA_LOGICAL) {
     return NA_STRING;
   } else {
-    cant_coerce(from, to, i);
-    return NILSXP;
+    if (i == 0)
+      deprecate_to_char("logical");
+    return Rf_mkChar(x ? "TRUE" : "FALSE");
   }
 }
+
+SEXP integer_to_char(int x, int i) {
+  if (i == 0)
+    deprecate_to_char("integer");
+
+  if (x == NA_INTEGER)
+    return NA_STRING;
+
+  char buf[100];
+  snprintf(buf, 100, "%d", x);
+  return Rf_mkChar(buf);
+}
+SEXP double_to_char(double x, int i) {
+  if (i == 0)
+    deprecate_to_char("double");
+
+  if (!R_finite(x)) {
+    if (R_IsNA(x)) {
+      return NA_STRING;
+    } else if (R_IsNaN(x)) {
+      return Rf_mkChar("NaN");
+    } else if (x > 0) {
+      return Rf_mkChar("Inf");
+    } else {
+      return Rf_mkChar("-Inf");
+    }
+  }
+
+  char buf[100];
+  snprintf(buf, 100, "%f", x);
+  return Rf_mkChar(buf);
+}
+
 
 void set_vector_value(SEXP to, int i, SEXP from, int j) {
   switch(TYPEOF(to)) {
@@ -92,6 +143,8 @@ void set_vector_value(SEXP to, int i, SEXP from, int j) {
   case STRSXP:
     switch(TYPEOF(from)) {
     case LGLSXP:  SET_STRING_ELT(to, i, logical_to_char(LOGICAL(from)[j], from, to, i)); break;
+    case INTSXP:  SET_STRING_ELT(to, i, integer_to_char(INTEGER(from)[j], i)); break;
+    case REALSXP: SET_STRING_ELT(to, i, double_to_char(REAL(from)[j], i)); break;
     case STRSXP:  SET_STRING_ELT(to, i, STRING_ELT(from, j)); break;
     default: cant_coerce(from, to, i);
     }
