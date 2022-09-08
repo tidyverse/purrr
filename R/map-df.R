@@ -10,9 +10,9 @@
 #' and friends which require length 1 outputs, but actually they return results
 #' of any size because the results are combined together without any size checks.
 #'
-#' You can now instead use functions with `_rbind()` and `_cbind()` suffixes
-#' which use `vctrs::vec_rbind()` and `vctrs::vec_cbind()` under the hood,
-#' and have names that more clearly reflect their semantics.
+#' Instead, we now recommend usin `map()`, `map2()`, etc with [list_rbind()]
+#' and [list_cbind()]. These use [vctrs::vec_rbind()] and [vctrs::vec_cbind()]
+#' under the hood, and have names that more clearly reflect their semantics.
 #'
 #' @param .id Either a string or `NULL`. If a string, the output will contain
 #'   a variable with that name, storing either the name (if `.x` is named) or
@@ -34,7 +34,8 @@
 #' mtcars %>%
 #'   split(.$cyl) %>%
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
-#'   map_rbind(~ as.data.frame(t(as.matrix(coef(.)))))
+#'   map(~ as.data.frame(t(as.matrix(coef(.))))) %>%
+#'   list_rbind()
 #'
 #' # map2 ---------------------------------------------
 #'
@@ -48,12 +49,12 @@
 #' # was
 #' map2_dfr(arg1, arg2, ex_fun)
 #' # now
-#' # map2_rbind(arg1, arg2, ex_fun)
+#' map2(arg1, arg2, ex_fun) %>% list_rbind()
 #'
 #' # was
 #' map2_dfc(arg1, arg2, ex_fun)
 #' # now
-#' # map2_cbind(arg1, arg2, ex_fun)
+#' map2(arg1, arg2, ex_fun) %>% list_cbind()
 map_dfr <- function(.x, .f, ..., .id = NULL) {
   lifecycle::deprecate_warn("0.4.0", "map_dfc()", "map_rbind()")
   check_installed("dplyr", "for `map_dfr()`.")

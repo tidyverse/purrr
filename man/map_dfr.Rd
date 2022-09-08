@@ -48,9 +48,9 @@ names are suboptimal because they suggest they work like \verb{_lgl()}, \verb{_i
 and friends which require length 1 outputs, but actually they return results
 of any size because the results are combined together without any size checks.
 
-You can now instead use functions with \verb{_rbind()} and \verb{_cbind()} suffixes
-which use \code{vctrs::vec_rbind()} and \code{vctrs::vec_cbind()} under the hood,
-and have names that more clearly reflect their semantics.
+Instead, we now recommend usin \code{map()}, \code{map2()}, etc with \code{\link[=list_rbind]{list_rbind()}}
+and \code{\link[=list_cbind]{list_cbind()}}. These use \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}} and \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}
+under the hood, and have names that more clearly reflect their semantics.
 }
 \examples{
 # map ---------------------------------------------
@@ -64,7 +64,8 @@ mtcars \%>\%
 mtcars \%>\%
   split(.$cyl) \%>\%
   map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map_rbind(~ as.data.frame(t(as.matrix(coef(.)))))
+  map(~ as.data.frame(t(as.matrix(coef(.))))) \%>\%
+  list_rbind()
 
 # map2 ---------------------------------------------
 
@@ -78,11 +79,11 @@ arg2 <- 10:13
 # was
 map2_dfr(arg1, arg2, ex_fun)
 # now
-# map2_rbind(arg1, arg2, ex_fun)
+map2(arg1, arg2, ex_fun) \%>\% list_rbind()
 
 # was
 map2_dfc(arg1, arg2, ex_fun)
 # now
-# map2_cbind(arg1, arg2, ex_fun)
+map2(arg1, arg2, ex_fun) \%>\% list_cbind()
 }
 \keyword{internal}

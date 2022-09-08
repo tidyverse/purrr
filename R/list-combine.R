@@ -13,7 +13,7 @@
 #' @param x A list.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
-#' @param id By default, `names(x)` are list. Alternatively, supply a string
+#' @param id By default, `names(x)` are lost. Alternatively, supply a string
 #'   and the names will be saved into a column with name `id`. If `id`
 #'   is supplied and `x` is not named, the position of the elements will
 #'   be used instead of the names.

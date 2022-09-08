@@ -28,7 +28,7 @@ See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of t
 \item{size}{An optional integer size to ensure that every input has the
 same size (i.e. number of rows).}
 
-\item{id}{By default, \code{names(x)} are list. Alternatively, supply a string
+\item{id}{By default, \code{names(x)} are lost. Alternatively, supply a string
 and the names will be saved into a column with name \code{id}. If \code{id}
 is supplied and \code{x} is not named, the position of the elements will
 be used instead of the names.}
