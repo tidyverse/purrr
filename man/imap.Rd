@@ -6,8 +6,6 @@
 \alias{imap_chr}
 \alias{imap_int}
 \alias{imap_dbl}
-\alias{imap_dfr}
-\alias{imap_dfc}
 \alias{iwalk}
 \title{Apply a function to each element of a vector, and its index}
 \usage{
@@ -20,10 +18,6 @@ imap_chr(.x, .f, ...)
 imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
-
-imap_dfr(.x, .f, ..., .id = NULL)
-
-imap_dfc(.x, .f, ...)
 
 iwalk(.x, .f, ...)
 }
@@ -44,13 +38,6 @@ if you require backward compatibility with older versions of R.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
 A vector the same length as \code{.x}.
