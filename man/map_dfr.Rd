@@ -43,10 +43,10 @@ Only applies to \verb{_dfr} variant.}
 
 These variants of \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, and \code{\link[=pmap]{pmap()}} return data
 frames. They have been deprecated because they use \code{dplyr::bind_rows()}
-and \code{dplyr::bind_cols()} which have often confusing semantics, and their
+and \code{dplyr::bind_cols()} which often have confusing semantics, and their
 names are suboptimal because they suggest they work like \verb{_lgl()}, \verb{_int()},
-and friends which require length 1 outputs, but actually they accept results
-of anything because the results are combined to together.
+and friends which require length 1 outputs, but actually they return results
+of any size because the results are combined together without any size checks.
 
 You can now instead use functions with \verb{_rbind()} and \verb{_cbind()} suffixes
 which use \code{vctrs::vec_rbind()} and \code{vctrs::vec_cbind()} under the hood,
