@@ -65,8 +65,6 @@ reference:
   - has_element
   - head_while
   - keep
-  - negate
-  - prepend
 
 - title: Plucking
   desc: >
@@ -102,4 +100,4 @@ reference:
   - rbernoulli
   - rate-helpers
   - rdunif
-  - vec_depth
+  - prepend

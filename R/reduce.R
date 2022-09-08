@@ -11,14 +11,13 @@
 #' @param .y For `reduce2()` and `accumulate2()`, an additional
 #'   argument that is passed to `.f`. If `init` is not set, `.y`
 #'   should be 1 element shorter than `.x`.
-#' @param .f For `reduce()`, and `accumulate()`, a 2-argument
-#'   function. The function will be passed the accumulated value as
-#'   the first argument and the "next" value as the second argument.
+#' @param .f For `reduce()`, a 2-argument function. The function will be passed
+#'   the accumulated value as the first argument and the "next" value as the
+#'   second argument.
 #'
-#'   For `reduce2()` and `accumulate2()`, a 3-argument function. The
-#'   function will be passed the accumulated value as the first
-#'   argument, the next value of `.x` as the second argument, and the
-#'   next value of `.y` as the third argument.
+#'   For `reduce2()`, a 3-argument function. The function will be passed the
+#'   accumulated value as the first argument, the next value of `.x` as the
+#'   second argument, and the next value of `.y` as the third argument.
 #'
 #'   The reduction terminates early if `.f` returns a value wrapped in
 #'   a [done()].

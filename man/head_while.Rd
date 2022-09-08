@@ -19,7 +19,10 @@ objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
 \code{TRUE} will be modified.}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
+
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 }
 \value{
 A vector the same type as \code{.x}.

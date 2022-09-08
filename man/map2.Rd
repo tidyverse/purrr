@@ -22,36 +22,23 @@ map2_chr(.x, .y, .f, ...)
 walk2(.x, .y, .f, ...)
 }
 \arguments{
-\item{.x, .y}{Vectors of the same length. A vector of length 1 will
-be recycled.
+\item{.x, .y}{A pair of vectors, usually the same length. If not, a vector
+of length 1 will be recycled to the length of the other.}
+
+\item{.f}{A function, specified in one of the following ways:
+\itemize{
+\item A named function.
+\item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
+\item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the current
+element of \code{x} and \code{.y} to refer to the current element of \code{y}. Only
+recommended if you require backward compatibility with older versions
+of R.
+}}
+
+\item{...}{Additional arguments passed on to the mapped function.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
-
-\item{.f}{A function, formula, or vector (not necessarily atomic).
-
-If a \strong{function}, it is used as is.
-
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
-\itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
-
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
-
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
-
-\item{...}{Additional arguments passed on to the mapped function.}
 }
 \value{
 The output type is determined by the suffix:

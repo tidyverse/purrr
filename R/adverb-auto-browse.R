@@ -3,11 +3,7 @@
 #' A function wrapped with `auto_browse()` will automatically enter an
 #' interactive debugger using [browser()] when ever it encounters an error.
 #'
-#' @param .f A (non-primitive) function.
-#'
-#'   It doesn't make sense to use auto_browse with primitive functions,
-#'   because they are implemented in C so there's no useful environment
-#'   for you to interact with.
+#' @inheritParams safely
 #' @inheritSection safely Adverbs
 #' @inherit safely return
 #' @family adverbs

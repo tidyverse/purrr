@@ -45,6 +45,23 @@
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
+* `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
+
+* `pluck<-`/`assign_in()` now sets elements to `NULL` rather than removing them
+  (#636). Now use the explicit `zap()` if you want to remove elements.
+
+* `map2()`, `modify2()`, and `pmap()` now use tidyverse recycling rules where
+  vectors of length 1 are recycled to any size but all others must have
+  the same length (#878).
+
+* `list_modify()`'s interface has been standardised. Modifying with `NULL`
+  now always creates a `NULL` in the output and we no longer recurse into
+  data frames (and other objects built on top of lists that are fundamentally
+  non-list like) (#810).
+
+* `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
+  #701).
+   
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
 
