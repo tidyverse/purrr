@@ -70,6 +70,7 @@ reference:
     Getting or setting a single element.
   contents:
   - pluck
+  - chuck
   - pluck_depth
   - modify_in
   - attr_getter
