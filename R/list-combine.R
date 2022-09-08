@@ -10,7 +10,7 @@
 #' * `list_cbind()` combines elements into a data frame by column-binding them
 #'   together with [vctrs::vec_cbind()].
 #'
-#' @param x A list.  For `list_rbind()` and `list_cbind()` the list must
+#' @param x A list. For `list_rbind()` and `list_cbind()` the list must
 #'   only contain data frames.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
