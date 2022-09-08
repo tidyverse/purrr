@@ -56,9 +56,9 @@
       converting a logical/integer/double to a character vector should require 
       an explicit coercion.
       
-    * `map_dbl(1.5, identity)` now fails because we believe that silently 
+    * `map_int(1.5, identity)` now fails because we believe that silently 
       truncating doubles to integers is dangerous. But note that 
-      `map_dbl(1, identity)` still works since no numeric precision is lost.
+      `map_int(1, identity)` still works since no numeric precision is lost.
       
     * `map_int(c(TRUE, FALSE), identity)`, `map_dbl(c(TRUE, FALSE), identity)`,
       `map_lgl(c(1L, 0L), identity)` and `map_lgl(c(1, 0), identity)` now
