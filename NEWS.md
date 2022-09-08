@@ -38,6 +38,9 @@
 
 ## Features and fixes
 
+* New `list_update()` which is similar to `list_modify()` but doesn't work
+  recursively (#822).
+
 * `_lgl()`, `_int()`, `_int()`, and `_dbl()` now use the same (strict) coercion
   methods as vctrs (#904). This means that:
   
