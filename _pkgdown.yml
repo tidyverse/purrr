@@ -36,7 +36,6 @@ reference:
     See details in `as_mapper()`
   contents:
   - map
-  - map_c
   - as_mapper
 
 - title: Map variants

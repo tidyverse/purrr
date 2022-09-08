@@ -40,6 +40,9 @@
 * `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
   `list_c()`, `list_cbind()`, and `list_rbind()`.
 
+* `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
+  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+
 ## Features and fixes
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
