@@ -1,11 +1,10 @@
 #' Do every, some, or none of the elements of a list satisfy a predicate?
 #'
-#' @inheritParams map
-#' @param .p A predicate function to apply on each element of `.x`.
-#'   `some()` returns `TRUE` when `.p` is `TRUE` for at least one
-#'   element. `every()` returns `TRUE` when `.p` is `TRUE` for all
-#'   elements. `none()` returns `TRUE` when `.p` is `FALSE` for all
-#'   elements.`
+#' * `some()` returns `TRUE` when `.p` is `TRUE` for at least one element.
+#' * `every()` returns `TRUE` when `.p` is `TRUE` for all elements.
+#' * `none()` returns `TRUE` when `.p` is `FALSE` for all elements.
+#'
+#' @inheritParams keep
 #' @param ... Additional arguments passed on to `.p`.
 #' @return A logical vector of length 1.
 #' @export

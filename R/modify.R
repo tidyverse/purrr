@@ -6,8 +6,7 @@
 #' type (list for `map()`, integer vector for `map_int()`, etc), the
 #' `modify()` family always returns the same type as the input object.
 #'
-#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]);
-#'   return(x)`.
+#' * `modify()` is a shortcut for `x[[i]] <- f(x[[i]]); return(x)`.
 #'
 #' * `modify_if()` only modifies the elements of `x` that satisfy a
 #'   predicate and leaves the others unchanged. `modify_at()` only
@@ -22,8 +21,12 @@
 #'
 #' * [modify_in()] modifies a single element in a [pluck()] location.
 #'
+#' @param .x A vector.
+#' @param .y A vector, usually the same length as `.x`.
 #' @inheritParams map2
 #' @inheritParams map
+#' @param .f A function specified in the same way as the corresponding map
+#'   function.
 #' @param .depth Level of `.x` to map on. Use a negative value to count up
 #'   from the lowest level of the list.
 #'
@@ -212,29 +215,33 @@ modify.pairlist <- function(.x, .f, ...) {
 }
 
 #' @export
-modify_if.integer <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_int(.x[sel], .f, ...)
-  .x
+modify_if.integer <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_int, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.double <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_dbl(.x[sel], .f, ...)
-  .x
+modify_if.double <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_dbl, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.character <- function(.x, .p, .f, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- map_chr(.x[sel], .f, ...)
-  .x
+modify_if.character <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_chr, .x, .p, .true = .f, .false = .else, ...)
 }
 #' @export
-modify_if.logical <- function(.x, .p, .f, ...) {
+modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_atomic(map_lgl, .x, .p, .true = .f, .false = .else, ...)
+}
+
+modify_if_atomic <- function(.fmap, .x, .p, .true, .false = NULL, ...) {
   sel <- probe(.x, .p)
-  .x[sel] <- map_lgl(.x[sel], .f, ...)
+  .x[sel] <- .fmap(.x[sel], .true, ...)
+
+  if (!is.null(.false)) {
+    .x[!sel] <- .fmap(.x[!sel], .false, ...)
+  }
+
   .x
 }
+
 
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
@@ -265,63 +272,6 @@ modify_at.logical <- function(.x, .at, .f, ...) {
   .x
 }
 
-#' Modify a pluck location
-#'
-#' @description
-#'
-#' * `assign_in()` takes a data structure and a [pluck][pluck] location,
-#'   assigns a value there, and returns the modified data structure.
-#'
-#' * `modify_in()` applies a function to a pluck location, assigns the
-#'   result back to that location with [assign_in()], and returns the
-#'   modified data structure.
-#'
-#' The pluck location must exist.
-#'
-#' @inheritParams pluck
-#' @param .f A function to apply at the pluck location given by `.where`.
-#' @param ... Arguments passed to `.f`.
-#' @param .where,where A pluck location, as a numeric vector of
-#'   positions, a character vector of names, or a list combining both.
-#'   The location must exist in the data structure.
-#'
-#' @seealso [pluck()]
-#' @examples
-#' # Recall that pluck() returns a component of a data structure that
-#' # might be arbitrarily deep
-#' x <- list(list(bar = 1, foo = 2))
-#' pluck(x, 1, "foo")
-#'
-#' # Use assign_in() to modify the pluck location:
-#' assign_in(x, list(1, "foo"), 100)
-#'
-#' # modify_in() applies a function to that location and update the
-#' # element in place:
-#' modify_in(x, list(1, "foo"), ~ .x * 200)
-#'
-#' # Additional arguments are passed to the function in the ordinary way:
-#' modify_in(x, list(1, "foo"), `+`, 100)
-#' @export
-modify_in <- function(.x, .where, .f, ...) {
-  .where <- as.list(.where)
-  .f <- rlang::as_function(.f)
-
-  value <- .f(chuck(.x, !!!.where), ...)
-  assign_in(.x, .where, value)
-}
-#' @rdname modify_in
-#' @param value A value to replace in `.x` at the pluck location.
-#' @export
-assign_in <- function(x, where, value) {
-  # Check value exists at pluck location
-  chuck(x, !!!where)
-
-  call <- reduce_subset_call(quote(x), as.list(where))
-  call <- call("<-", call, value)
-  eval_bare(call)
-  x
-}
-
 #' @rdname modify
 #' @export
 modify2 <- function(.x, .y, .f, ...) {
@@ -329,18 +279,9 @@ modify2 <- function(.x, .y, .f, ...) {
 }
 #' @export
 modify2.default <- function(.x, .y, .f, ...) {
-  .f <- as_mapper(.f, ...)
-
-  args <- recycle_args(list(.x, .y))
-  .x <- args[[1]]
-  .y <- args[[2]]
-
-  for (i in seq_along(.x)) {
-    list_slice2(.x, i) <- .f(.x[[i]], .y[[i]], ...)
-  }
-
-  .x
+  modify_base(map2, .x, .y, .f, ...)
 }
+
 #' @rdname modify
 #' @export
 imodify <- function(.x, .f, ...) {
@@ -366,11 +307,14 @@ modify2.logical  <- function(.x, .y, .f, ...) {
 }
 
 modify_base <- function(mapper, .x, .y, .f, ...) {
-  args <- recycle_args(list(.x, .y))
-  .x <- args[[1]]
-  .y <- args[[2]]
+  .f <- as_mapper(.f, ...)
+  out <- mapper(.x, .y, .f, ...)
 
-  .x[] <- mapper(.x, .y, .f, ...)
+  # if .x got recycled by map2
+  if (length(out) > length(.x)) {
+    .x <- .x[rep(1L, length(out))]
+  }
+  .x[] <- out
   .x
 }
 

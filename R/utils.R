@@ -18,16 +18,6 @@ at_selection <- function(nm, .at){
   .at
 }
 
-recycle_args <- function(args) {
-  lengths <- map_int(args, length)
-  n <- max(lengths)
-
-  stopifnot(all(lengths == 1L | lengths == n))
-  to_recycle <- lengths == 1L
-  args[to_recycle] <- lapply(args[to_recycle], function(x) rep.int(x, n))
-  args
-}
-
 #' Infix attribute accessor
 #'
 #' @description
