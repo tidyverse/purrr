@@ -3,6 +3,17 @@ test_that("_df/_dfc/_dfr are deprecated", {
     . <- map_df(list(), identity)
     . <- map_dfr(list(), identity)
     . <- map_dfc(list(), identity)
+
+    . <- map2_df(list(), list(), identity)
+    . <- map2_dfr(list(), list(), identity)
+    . <- map2_dfc(list(), list(), identity)
+
+    . <- imap_dfr(list(), identity)
+    . <- imap_dfc(list(), identity)
+
+    . <- pmap_df(list(), identity)
+    . <- pmap_dfr(list(), identity)
+    . <- pmap_dfc(list(), identity)
   })
 })
 
@@ -22,12 +33,14 @@ test_that("row and column binding work", {
 })
 
 test_that("data frame imap works", {
+  local_options(lifecycle_verbosity = "quiet")
   skip_if_not_installed("dplyr")
   x <- set_names(1:3)
   expect_identical(imap_dfc(x, paste), imap_dfr(x, paste))
 })
 
 test_that("outputs are suffixes have correct type for data frames", {
+  local_options(lifecycle_verbosity = "quiet")
   skip_if_not_installed("dplyr")
   local_name_repair_quiet()
 
