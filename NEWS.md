@@ -38,9 +38,9 @@
 
 ## Features and fixes
 
-* `pluck<-`/`assign()` can now modify non-existing locations (#704).
+* `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
 
-* `pluck<-`/`assign()` now sets elements to `NULL` rather than removing them
+* `pluck<-`/`assign_in()` now sets elements to `NULL` rather than removing them
   (#636).
 
 * `map2()`, `modify2()`, and `pmap()` now use tidyverse recycling rules where
