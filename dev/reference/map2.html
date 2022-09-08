@@ -123,9 +123,7 @@ variable will be created.</p>
 <p>The output type is determined by the suffix:</p><ul><li><p>No suffix: returns a list the same length as the input. It will be
 named if the input was named.</p></li>
 <li><p><code>_lgl</code>, <code>_int</code>, <code>_dbl</code>, <code>_chr</code> return a logical, integer, double,
-or character vector respectively. The output of <code>.f</code> will only be
-automatically coerced upwards (i.e. logical -&gt; integer -&gt; double -&gt;
-character). It will be named if the input was named.</p></li>
+or character vector respectively. It will be named if the input was named.</p></li>
 <li><p><code>_dfc</code> and <code>_dfr()</code> all return a data frame created by row-binding and
 column-binding respectively. They require dplyr to be installed.</p></li>
 </ul><ul><li><p><code><a href="map.html">walk()</a></code> returns the input <code>.x</code> (invisibly). This makes it easy to
