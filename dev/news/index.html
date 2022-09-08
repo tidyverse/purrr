@@ -79,7 +79,7 @@
 <li>
 <p><code>_lgl()</code>, <code>_int()</code>, <code>_int()</code>, and <code>_dbl()</code> now use the same (strict) coercion methods as vctrs (<a href="https://github.com/tidyverse/purrr/issues/904" class="external-link">#904</a>). This means that:</p>
 <ul><li><p><code>map_chr(TRUE, identity)</code>, <code>map_chr(0L, identity)</code>, and <code>map_chr(1L, identity)</code> are deprecated because we now believe that converting a logical/integer/double to a character vector should require an explicit coercion.</p></li>
-<li><p><code>map_dbl(1.5, identity)</code> now fails because we believe that silently truncating doubles to integers is dangerous. But note that <code>map_dbl(1, identity)</code> still works since no numeric precision is lost.</p></li>
+<li><p><code>map_int(1.5, identity)</code> now fails because we believe that silently truncating doubles to integers is dangerous. But note that <code>map_int(1, identity)</code> still works since no numeric precision is lost.</p></li>
 <li><p><code>map_int(c(TRUE, FALSE), identity)</code>, <code>map_dbl(c(TRUE, FALSE), identity)</code>, <code>map_lgl(c(1L, 0L), identity)</code> and <code>map_lgl(c(1, 0), identity)</code> now succeed because 1/TRUE and 0/FALSE should be interchangeable.</p></li>
 </ul></li>
 <li><p><code>pluck&lt;-</code>/<code><a href="../reference/modify_in.html">assign_in()</a></code> can now modify non-existing locations (<a href="https://github.com/tidyverse/purrr/issues/704" class="external-link">#704</a>).</p></li>
