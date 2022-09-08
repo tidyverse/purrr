@@ -81,7 +81,7 @@ depth level of a nested vector.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Apply a function to each element of a vector conditionally</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/purrr/blob/HEAD/R/map.R" class="external-link"><code>R/map.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/purrr/blob/HEAD/R/map-if-at.R" class="external-link"><code>R/map-if-at.R</code></a></small>
       <div class="d-none name"><code>map_if.Rd</code></div>
     </div>
 
@@ -112,13 +112,12 @@ depth level of a nested vector.</p></li>
 
 
 <dt>.p</dt>
-<dd><p>A predicate function (i.e. a function that returns either <code>TRUE</code>
-or <code>FALSE</code>) specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>is.character</code>.</p></li>
-<li><p>An anonymous function, e.g. <code>\(x) all(x &lt; 0)</code> or <code>function(x) all(x &lt; 0)</code>.</p></li>
-<li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. You must use <code>.x</code> to refer to the first
-argument). Only recommended if you require backward compatibility with
-older versions of R.</p></li>
-</ul></dd>
+<dd><p>A single predicate function, a formula describing such a
+predicate function, or a logical vector of the same length as <code>.x</code>.
+Alternatively, if the elements of <code>.x</code> are themselves lists of
+objects, a string indicating the name of a logical element in the
+inner lists. Only those elements where <code>.p</code> evaluates to
+<code>TRUE</code> will be modified.</p></dd>
 
 
 <dt>.f</dt>

@@ -100,6 +100,12 @@
     <loc>https://purrr.tidyverse.org/dev/reference/lift.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/list_c.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/list_flatten.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/list_modify.html</loc>
   </url>
   <url>
@@ -110,6 +116,9 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/map2.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/map_dfr.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/map_if.html</loc>

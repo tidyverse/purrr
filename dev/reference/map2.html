@@ -78,10 +78,6 @@ a time.</p>
 <span></span>
 <span><span class="fu">map2_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map2_dfr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span>, .id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">map2_dfc</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">walk2</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -107,27 +103,17 @@ of R.</p></li>
 <p>Note that the arguments that differ in each call come before <code>.f</code>,
 and the arguments that are the same come after <code>.f</code>.</p></dd>
 
-
-<dt>.id</dt>
-<dd><p>Either a string or <code>NULL</code>. If a string, the output will contain
-a variable with that name, storing either the name (if <code>.x</code> is named) or
-the index (if <code>.x</code> is unnamed) of the input. If <code>NULL</code>, the default, no
-variable will be created.</p>
-<p>Only applies to <code>_dfr</code> variant.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>The output type is determined by the suffix:</p><ul><li><p>No suffix: returns a list the same length as the input. It will be
-named if the input was named.</p></li>
+<p>The output length is determined by the length of the input.
+The output type is determined by the suffix:</p><ul><li><p>No suffix: a list.</p></li>
 <li><p><code>_lgl</code>, <code>_int</code>, <code>_dbl</code>, <code>_chr</code> return a logical, integer, double,
 or character vector respectively. It will be named if the input was named.</p></li>
-<li><p><code>_dfc</code> and <code>_dfr()</code> all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.</p></li>
-</ul><ul><li><p><code><a href="map.html">walk()</a></code> returns the input <code>.x</code> (invisibly). This makes it easy to
-use in pipe.</p></li>
+<li><p><code><a href="map.html">walk()</a></code> returns the input <code>.x</code> (invisibly). This makes it easy to
+use in a pipe.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

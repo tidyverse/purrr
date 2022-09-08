@@ -84,10 +84,6 @@ they share the same notion of "parallel" as <code><a href="https://rdrr.io/r/bas
 <span></span>
 <span><span class="fu">pmap_chr</span><span class="op">(</span><span class="va">.l</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">pmap_dfr</span><span class="op">(</span><span class="va">.l</span>, <span class="va">.f</span>, <span class="va">...</span>, .id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">pmap_dfc</span><span class="op">(</span><span class="va">.l</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">pwalk</span><span class="op">(</span><span class="va">.l</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -117,27 +113,17 @@ you can only refer to arguments by position.</p></li>
 <p>Note that the arguments that differ in each call come before <code>.f</code>,
 and the arguments that are the same come after <code>.f</code>.</p></dd>
 
-
-<dt>.id</dt>
-<dd><p>Either a string or <code>NULL</code>. If a string, the output will contain
-a variable with that name, storing either the name (if <code>.x</code> is named) or
-the index (if <code>.x</code> is unnamed) of the input. If <code>NULL</code>, the default, no
-variable will be created.</p>
-<p>Only applies to <code>_dfr</code> variant.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>The output type is determined by the suffix:</p><ul><li><p>No suffix: returns a list the same length as the input. It will be
-named if the input was named.</p></li>
+<p>The output length is determined by the length of the input.
+The output type is determined by the suffix:</p><ul><li><p>No suffix: a list.</p></li>
 <li><p><code>_lgl</code>, <code>_int</code>, <code>_dbl</code>, <code>_chr</code> return a logical, integer, double,
 or character vector respectively. It will be named if the input was named.</p></li>
-<li><p><code>_dfc</code> and <code>_dfr()</code> all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.</p></li>
-</ul><ul><li><p><code><a href="map.html">walk()</a></code> returns the input <code>.x</code> (invisibly). This makes it easy to
-use in pipe.</p></li>
+<li><p><code><a href="map.html">walk()</a></code> returns the input <code>.x</code> (invisibly). This makes it easy to
+use in a pipe.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -241,30 +227,6 @@ use in pipe.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 5</span>
 <span class="r-in"><span><span class="fu">pmap_dbl</span><span class="op">(</span><span class="va">df</span>, <span class="va">min</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 5</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If you want to bind the results of your function rowwise, use:</span></span></span>
-<span class="r-in"><span><span class="co"># map2_dfr() or pmap_dfr()</span></span></span>
-<span class="r-in"><span><span class="va">ex_fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">arg1</span>, <span class="va">arg2</span><span class="op">)</span><span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">arg1</span> <span class="op">+</span> <span class="va">arg2</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">col</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="va">arg1</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span></span>
-<span class="r-in"><span><span class="va">arg2</span> <span class="op">&lt;-</span> <span class="fl">10</span><span class="op">:</span><span class="fl">13</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="map2.html">map2_dfr</a></span><span class="op">(</span><span class="va">arg1</span>, <span class="va">arg2</span>, <span class="va">ex_fun</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   col</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  17</span>
-<span class="r-in"><span><span class="co"># If instead you want to bind by columns, use map2_dfc() or pmap_dfc()</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="map2.html">map2_dfc</a></span><span class="op">(</span><span class="va">arg1</span>, <span class="va">arg2</span>, <span class="va">ex_fun</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `col` -&gt; `col...1`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `col` -&gt; `col...2`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `col` -&gt; `col...3`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `col` -&gt; `col...4`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   col...1 col...2 col...3 col...4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      11      13      15      17</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

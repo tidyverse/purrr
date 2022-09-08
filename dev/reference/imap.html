@@ -84,10 +84,6 @@ and the position of an element.</p>
 <span></span>
 <span><span class="fu">imap_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">imap_dfr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">imap_dfc</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">iwalk</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -112,14 +108,6 @@ if you require backward compatibility with older versions of R.</p></li>
 <p>Note that the arguments that differ in each call come before <code>.f</code>,
 and the arguments that are the same come after <code>.f</code>.</p></dd>
 
-
-<dt>.id</dt>
-<dd><p>Either a string or <code>NULL</code>. If a string, the output will contain
-a variable with that name, storing either the name (if <code>.x</code> is named) or
-the index (if <code>.x</code> is unnamed) of the input. If <code>NULL</code>, the default, no
-variable will be created.</p>
-<p>Only applies to <code>_dfr</code> variant.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -142,16 +130,15 @@ variable will be created.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="va">paste</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "8 1"   "6 2"   "7 3"   "3 4"   "1 5"   "5 6"   "4 7"   "2 8"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9 9"   "10 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "7 1"  "1 2"  "6 3"  "3 4"  "2 5"  "8 6"  "9 7"  "5 8"  "10 9" "4 10"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">indx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">indx</span>, <span class="st">": "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 10" "2: 3"  "3: 4"  "4: 7"  "5: 6"  "6: 8"  "7: 5"  "8: 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 1"  "10: 9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 2"   "2: 1"   "3: 7"   "4: 6"   "5: 9"   "6: 8"   "7: 5"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "8: 4"   "9: 3"   "10: 10"</span>
 <span class="r-in"><span><span class="co"># same as</span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 5"  "2: 2"  "3: 3"  "4: 9"  "5: 4"  "6: 8"  "7: 1"  "8: 6" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 10" "10: 7"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 7"  "2: 4"  "3: 2"  "4: 10" "5: 9"  "6: 1"  "7: 8"  "8: 6" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 5"  "10: 3"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
