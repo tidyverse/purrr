@@ -37,6 +37,6 @@
 list_flatten <- function(x, name_spec = "{outer}_{inner}") {
   check_is_list(x)
 
-  x <- modify_if(x, vctrs::vec_is_list, identity, .else = list)
+  x <- modify_if(x, vec_is_list, identity, .else = list)
   vec_unchop(x, ptype = list(), name_spec = name_spec)
 }

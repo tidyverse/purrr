@@ -14,9 +14,9 @@
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
 #' @param id By default, `names(x)` are list. Alternatively, supply a string
-#'   an the names will be saved into a column with name `id`. If `id`
+#'   and the names will be saved into a column with name `id`. If `id`
 #'   is supplied and `x` is not named, the position of the elements will
-#'   be used instead of thee names.
+#'   be used instead of the names.
 #' @param size An optional integer size to ensure that every input has the
 #'   same size (i.e. number of rows).
 #' @param name_repair One of `"unique"`, `"universal"`, or `"check_unique"`.

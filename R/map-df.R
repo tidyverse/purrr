@@ -5,10 +5,10 @@
 #'
 #' These variants of [map()], [map2()], [imap()], and [pmap()] return data
 #' frames. They have been deprecated because they use `dplyr::bind_rows()`
-#' and `dplyr::bind_cols()` which have often confusing semantics, and their
+#' and `dplyr::bind_cols()` which often have confusing semantics, and their
 #' names are suboptimal because they suggest they work like `_lgl()`, `_int()`,
-#' and friends which require length 1 outputs, but actually they accept results
-#' of anything because the results are combined to together.
+#' and friends which require length 1 outputs, but actually they return results
+#' of any size because the results are combined together without any size checks.
 #'
 #' You can now instead use functions with `_rbind()` and `_cbind()` suffixes
 #' which use `vctrs::vec_rbind()` and `vctrs::vec_cbind()` under the hood,
