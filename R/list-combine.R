@@ -36,7 +36,7 @@
 #'
 #' list_cbind(x2)
 list_c <- function(x, ptype = NULL) {
-  check_is_list(x)
+  vec_check_list(x)
   vctrs::vec_unchop(x, ptype = ptype)
 }
 
@@ -47,22 +47,13 @@ list_cbind <- function(
     name_repair = c("unique", "universal", "check_unique"),
     size = NULL
   ) {
-  check_is_list(x)
-  vctrs::vec_cbind(!!!x, .name_repair = name_repair, .size = size)
+  vec_check_list(x)
+  vctrs::vec_cbind(!!!x, .name_repair = name_repair, .size = size, .call = current_env())
 }
 
 #' @export
 #' @rdname list_c
 list_rbind <- function(x, id = rlang::zap(), ptype = NULL) {
-  check_is_list(x)
-  vctrs::vec_rbind(!!!x, .names_to = id, .ptype = ptype)
-}
-
-check_is_list <- function(x, error_call = caller_env()) {
-  if (!vctrs::vec_is_list(x)) {
-    cli::cli_abort(
-      "{.arg x} must be a list, not {friendly_type_of(x)}",
-      call = error_call
-    )
-  }
+  vec_check_list(x)
+  vctrs::vec_rbind(!!!x, .names_to = id, .ptype = ptype, .call = current_env())
 }

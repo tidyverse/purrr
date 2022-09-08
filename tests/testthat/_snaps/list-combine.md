@@ -19,7 +19,7 @@
     Code
       list_cbind(list(df1, df3))
     Condition
-      Error in `vctrs::vec_cbind()`:
+      Error in `list_cbind()`:
       ! Can't recycle `..1` (size 2) to match `..2` (size 3).
 
 # list_cbind() can enforce size
@@ -35,7 +35,7 @@
     Code
       list_rbind(list(df1, df3))
     Condition
-      Error in `vctrs::vec_rbind()`:
+      Error in `list_rbind()`:
       ! Can't combine `..1$x` <double> and `..2$x` <character>.
 
 # list_rbind() can enforce ptype
@@ -43,7 +43,7 @@
     Code
       list_rbind(list(df1), ptype = data.frame(x = character()))
     Condition
-      Error in `vctrs::vec_rbind()`:
+      Error in `list_rbind()`:
       ! Can't convert `..1$x` <double> to match type of `x` <character>.
 
 # assert input is a list
@@ -52,15 +52,15 @@
       list_c(1)
     Condition
       Error in `list_c()`:
-      ! `x` must be a list, not a double vector
+      ! `x` must be a list, not a number.
     Code
       list_rbind(1)
     Condition
       Error in `list_rbind()`:
-      ! `x` must be a list, not a double vector
+      ! `x` must be a list, not a number.
     Code
       list_cbind(1)
     Condition
       Error in `list_cbind()`:
-      ! `x` must be a list, not a double vector
+      ! `x` must be a list, not a number.
 
