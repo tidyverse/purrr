@@ -17,7 +17,8 @@ list_cbind(
 list_rbind(x, id = rlang::zap(), ptype = NULL)
 }
 \arguments{
-\item{x}{A list.}
+\item{x}{A list.  For \code{list_rbind()} and \code{list_cbind()} the list must
+only contain data frames.}
 
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}

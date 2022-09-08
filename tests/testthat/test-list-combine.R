@@ -66,3 +66,10 @@ test_that("assert input is a list", {
     list_cbind(mtcars)
   })
 })
+
+test_that("assert input is list of data frames", {
+  expect_snapshot(error = TRUE, {
+    list_rbind(list(1, mtcars, 3))
+    list_cbind(list(1, mtcars, 3))
+  })
+})

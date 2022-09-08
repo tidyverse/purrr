@@ -83,3 +83,16 @@
       Error in `list_cbind()`:
       ! `x` must be a list, not a <data.frame> object.
 
+# assert input is list of data frames
+
+    Code
+      list_rbind(list(1, mtcars, 3))
+    Condition
+      Error in `list_rbind()`:
+      ! All elements of `x` must be data frames. Elements 1 and 3 are not.
+    Code
+      list_cbind(list(1, mtcars, 3))
+    Condition
+      Error in `list_cbind()`:
+      ! All elements of `x` must be data frames. Elements 1 and 3 are not.
+
