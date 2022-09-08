@@ -45,7 +45,7 @@ list_flatten <- function(
   ) {
   vec_check_list(x)
 
-  x <- modify_if(x, vec_is_list, identity, .else = list)
+  x <- map_if(x, vec_is_list, identity, .else = list)
   vec_unchop(
     x,
     ptype = list(),
