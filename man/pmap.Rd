@@ -47,14 +47,14 @@ Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 }
 \value{
+The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: returns a list the same length as the input. It will be
-named if the input was named.
+\item No suffix: a list.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
 or character vector respectively. The output of \code{.f} will only be
 automatically coerced upwards (i.e. logical -> integer -> double ->
-character). It will be named if the input was named.
+character).
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in a pipe.
 }

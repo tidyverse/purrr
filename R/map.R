@@ -33,15 +33,15 @@
 #'   Note that the arguments that differ in each call come before `.f`,
 #'   and the arguments that are the same come after `.f`.
 #' @returns
+#' The output length is determined by the length of the input.
 #' The output type is determined by the suffix:
 #'
-#' * No suffix: returns a list the same length as the input. It will be
-#'   named if the input was named.
+#' * No suffix: a list.
 #'
 #' * `_lgl`, `_int`, `_dbl`, `_chr` return a logical, integer, double,
 #'   or character vector respectively. The output of `.f` will only be
 #'   automatically coerced upwards (i.e. logical -> integer -> double ->
-#'   character). It will be named if the input was named.
+#'   character).
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
 #'    use in a pipe.
