@@ -52,9 +52,7 @@ The output type is determined by the suffix:
 \itemize{
 \item No suffix: a list.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. The output of \code{.f} will only be
-automatically coerced upwards (i.e. logical -> integer -> double ->
-character).
+or character vector respectively. It will be named if the input was named.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in a pipe.
 }

@@ -48,6 +48,22 @@
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
+* `_lgl()`, `_int()`, `_int()`, and `_dbl()` now use the same (strict) coercion
+  methods as vctrs (#904). This means that:
+  
+    * `map_chr(TRUE, identity)`, `map_chr(0L, identity)`, and 
+      `map_chr(1L, identity)` are deprecated because we now believe that 
+      converting a logical/integer/double to a character vector should require 
+      an explicit coercion.
+      
+    * `map_dbl(1.5, identity)` now fails because we believe that silently 
+      truncating doubles to integers is dangerous. But note that 
+      `map_dbl(1, identity)` still works since no numeric precision is lost.
+      
+    * `map_int(c(TRUE, FALSE), identity)`, `map_dbl(c(TRUE, FALSE), identity)`,
+      `map_lgl(c(1L, 0L), identity)` and `map_lgl(c(1, 0), identity)` now
+      succeed because 1/TRUE and 0/FALSE should be interchangeable.
+
 * `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
 
 * `pluck<-`/`assign_in()` now sets elements to `NULL` rather than removing them
