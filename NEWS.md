@@ -38,6 +38,11 @@
 
 ## Features and fixes
 
+* `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
+
+* `pluck<-`/`assign_in()` now sets elements to `NULL` rather than removing them
+  (#636). Now use the explicit `zap()` if you want to remove elements.
+
 * `map2()`, `modify2()`, and `pmap()` now use tidyverse recycling rules where
   vectors of length 1 are recycled to any size but all others must have
   the same length (#878).

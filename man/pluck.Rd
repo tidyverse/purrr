@@ -28,7 +28,8 @@ your accessors are stored in a list, you can splice that in with
 
 \item{.default}{Value to use if target is \code{NULL} or absent.}
 
-\item{value}{A value to replace in \code{.x} at the pluck location.}
+\item{value}{A value to replace in \code{.x} at the pluck location.
+Use \code{zap()} to instead remove the element.}
 }
 \description{
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
@@ -55,7 +56,6 @@ will select the \code{disp} object if you write \code{mtcars$di}.
 obj1 <- list("a", list(1, elt = "foo"))
 obj2 <- list("b", list(2, elt = "bar"))
 x <- list(obj1, obj2)
-
 
 # pluck() provides a way of retrieving objects from such data
 # structures using a combination of numeric positions, vector or
@@ -90,37 +90,12 @@ chuck(x, 1)
 try(chuck(x, 10))
 try(chuck(x, 1, 10))
 
-
 # The map() functions use pluck() by default to retrieve multiple
 # values from a list:
 map(x, 2)
 
-# Pass multiple indexes with a list:
-map(x, list(2, "elt"))
-
-# This is equivalent to:
-map(x, pluck, 2, "elt")
-
-# You can also supply a default:
-map(x, list(2, "elt", 10), .default = "superb default")
-
-# Or use the strict variant:
-try(map(x, chuck, 2, "elt", 10))
-
-
-# You can also assign a value in a pluck location with pluck<-:
-pluck(x, 2, 2, "elt") <- "quuux"
-x
-
-# This is a shortcut for the prefix function assign_in():
-y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
-y
-
-
 # pluck() also supports accessor functions:
 my_element <- function(x) x[[2]]$elt
-
-# The accessor can then be passed to pluck:
 pluck(x, 1, my_element)
 pluck(x, 2, my_element)
 
@@ -129,7 +104,6 @@ pluck(x, 2, my_element)
 # right-to-left and from left-to-right in different parts of the
 # expression:
 my_element(x[[1]])
-
 
 # If you have a list of accessors, you can splice those in with `!!!`:
 idx <- list(1, my_element)
