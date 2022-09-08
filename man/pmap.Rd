@@ -74,9 +74,7 @@ The output type is determined by the suffix:
 \item No suffix: returns a list the same length as the input. It will be
 named if the input was named.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. The output of \code{.f} will only be
-automatically coerced upwards (i.e. logical -> integer -> double ->
-character). It will be named if the input was named.
+or character vector respectively. It will be named if the input was named.
 \item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
 column-binding respectively. They require dplyr to be installed.
 }
