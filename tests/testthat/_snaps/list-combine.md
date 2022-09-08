@@ -41,7 +41,8 @@
 # list_rbind() can enforce ptype
 
     Code
-      list_rbind(list(df1), ptype = data.frame(x = character()))
+      ptype <- data.frame(x = character(), stringsAsFactors = FALSE)
+      list_rbind(list(df1), ptype = ptype)
     Condition
       Error in `list_rbind()`:
       ! Can't convert `..1$x` <double> to match type of `x` <character>.

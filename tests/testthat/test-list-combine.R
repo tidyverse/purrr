@@ -34,7 +34,7 @@ test_that("list_cbind() can enforce size", {
 test_that("list_rbind() row-binds compatible data.frames", {
   df1 <- data.frame(x = 1)
   df2 <- data.frame(x = 2, y = 1)
-  df3 <- data.frame(x = "a")
+  df3 <- data.frame(x = "a", stringsAsFactors = FALSE)
 
   expect_equal(list_rbind(list(df1, df2)), data.frame(x = 1:2, y = c(NA, 1)))
 
@@ -45,8 +45,10 @@ test_that("list_rbind() row-binds compatible data.frames", {
 
 test_that("list_rbind() can enforce ptype", {
   df1 <- data.frame(x = 1)
+
   expect_snapshot(error = TRUE, {
-    list_rbind(list(df1), ptype = data.frame(x = character()))
+    ptype <- data.frame(x = character(), stringsAsFactors = FALSE)
+    list_rbind(list(df1), ptype = ptype)
   })
 })
 
