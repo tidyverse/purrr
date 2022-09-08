@@ -28,7 +28,8 @@ your accessors are stored in a list, you can splice that in with
 
 \item{.default}{Value to use if target is \code{NULL} or absent.}
 
-\item{value}{A value to replace in \code{.x} at the pluck location.}
+\item{value}{A value to replace in \code{.x} at the pluck location.
+Use \code{zap()} to instead remove the element.}
 }
 \description{
 \code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that

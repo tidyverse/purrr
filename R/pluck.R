@@ -213,6 +213,8 @@ attr_getter <- function(attr) {
 #'
 #' # Use assign_in() to modify the pluck location:
 #' str(assign_in(x, list(1, "foo"), 100))
+#' # Or zap to remove it
+#' str(assign_in(x, list(1, "foo"), zap()))
 #'
 #' # Like pluck(), this works even when the element (or its parents) don't exist
 #' pluck(x, 1, "baz")
@@ -233,6 +235,7 @@ modify_in <- function(.x, .where, .f, ...) {
 }
 #' @rdname modify_in
 #' @param value A value to replace in `.x` at the pluck location.
+#'   Use `zap()` to instead remove the element.
 #' @export
 assign_in <- function(x, where, value) {
   n <- length(where)
@@ -240,8 +243,16 @@ assign_in <- function(x, where, value) {
     abort("`where` must contain at least one element")
   } else if (n > 1) {
     old <- pluck(x, where[[1]], .default = list())
-    value <- assign_in(old, where[-1], value)
+    if (!is_zap(value) || !identical(old, list())) {
+      value <- assign_in(old, where[-1], value)
+    }
   }
-  list_slice2(x, where[[1]]) <- value
+
+  if (is_zap(value)) {
+    x[[where[[1]]]] <- NULL
+  } else {
+    list_slice2(x, where[[1]]) <- value
+  }
+
   x
 }

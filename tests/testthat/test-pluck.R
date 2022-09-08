@@ -245,6 +245,27 @@ test_that("can assign NULL (#636)", {
   )
 })
 
+test_that("can remove elements with zap()", {
+  expect_equal(
+    assign_in(list(x = 1, y = 2), 1, value = zap()),
+    list(y = 2)
+  )
+  expect_equal(
+    assign_in(list(x = 1, y = 2), "y", value = zap()),
+    list(x = 1)
+  )
+
+  # And deep indexing leaves unchanged
+  expect_equal(
+    assign_in(list(x = 1, y = 2), c(3, 4, 5), value = zap()),
+    list(x = 1, y = 2)
+  )
+  expect_equal(
+    assign_in(list(x = 1, y = 2), c("a", "b", "c"), value = zap()),
+    list(x = 1, y = 2)
+  )
+})
+
 test_that("pluck<- is an alias for assign_in()", {
   x <- list(list(bar = 1, foo = 2))
   pluck(x, 1, "foo") <- 30

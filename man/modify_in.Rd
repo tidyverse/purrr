@@ -20,7 +20,8 @@ The location must exist in the data structure.}
 
 \item{...}{Arguments passed to \code{.f}.}
 
-\item{value}{A value to replace in \code{.x} at the pluck location.}
+\item{value}{A value to replace in \code{.x} at the pluck location.
+Use \code{zap()} to instead remove the element.}
 }
 \description{
 \itemize{
@@ -39,6 +40,8 @@ pluck(x, 1, "foo")
 
 # Use assign_in() to modify the pluck location:
 str(assign_in(x, list(1, "foo"), 100))
+# Or zap to remove it
+str(assign_in(x, list(1, "foo"), zap()))
 
 # Like pluck(), this works even when the element (or its parents) don't exist
 pluck(x, 1, "baz")
