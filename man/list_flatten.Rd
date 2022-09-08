@@ -4,7 +4,11 @@
 \alias{list_flatten}
 \title{Flatten a list}
 \usage{
-list_flatten(x, name_spec = "{outer}_{inner}")
+list_flatten(
+  x,
+  name_spec = "{outer}_{inner}",
+  name_repair = c("minimal", "unique", "check_unique", "universal")
+)
 }
 \arguments{
 \item{x}{A list.}
@@ -12,6 +16,10 @@ list_flatten(x, name_spec = "{outer}_{inner}")
 \item{name_spec}{If both inner and outer names are present, control
 how they are combined. Should be a glue specification that uses
 variables \code{inner} and \code{outer}.}
+
+\item{name_repair}{One of \code{"minimal"}, \code{"unique"}, \code{"universal"}, or
+\code{"check_unique"}. See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of these
+options.}
 }
 \value{
 A list. The list might be shorter if \code{x} contains empty lists,
@@ -19,7 +27,8 @@ the same length if it contains lists of length 1 or no sub-lists,
 or longer if it contains lists of length > 1.
 }
 \description{
-Flattening a list removes a single layer of internal hierarchy.
+Flattening a list removes a single layer of internal hierarchy,
+i.e. it inlines elements that are lists leaving non-lists alone.
 }
 \examples{
 x <- list(1, list(2, 3), list(4, list(5)))
