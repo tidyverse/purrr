@@ -56,4 +56,11 @@ test_that("assert input is a list", {
     list_rbind(1)
     list_cbind(1)
   })
+
+  # and not just built on a list
+  expect_snapshot(error = TRUE, {
+    list_c(mtcars)
+    list_rbind(mtcars)
+    list_cbind(mtcars)
+  })
 })

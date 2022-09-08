@@ -64,3 +64,21 @@
       Error in `list_cbind()`:
       ! `x` must be a list, not a number.
 
+---
+
+    Code
+      list_c(mtcars)
+    Condition
+      Error in `list_c()`:
+      ! `x` must be a list, not a <data.frame> object.
+    Code
+      list_rbind(mtcars)
+    Condition
+      Error in `list_rbind()`:
+      ! `x` must be a list, not a <data.frame> object.
+    Code
+      list_cbind(mtcars)
+    Condition
+      Error in `list_cbind()`:
+      ! `x` must be a list, not a <data.frame> object.
+
