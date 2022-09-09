@@ -83,7 +83,6 @@ x \%>\% lmap_if(is.character, maybe_rep) \%>\% str()
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
