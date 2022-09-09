@@ -9,15 +9,15 @@
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
-map2(.x, .y, .f, ..., .progress = FALSE)
+map2(.x, .y, .f, ..., .progress = NULL)
 
-map2_lgl(.x, .y, .f, ..., .progress = FALSE)
+map2_lgl(.x, .y, .f, ..., .progress = NULL)
 
-map2_int(.x, .y, .f, ..., .progress = FALSE)
+map2_int(.x, .y, .f, ..., .progress = NULL)
 
-map2_dbl(.x, .y, .f, ..., .progress = FALSE)
+map2_dbl(.x, .y, .f, ..., .progress = NULL)
 
-map2_chr(.x, .y, .f, ..., .progress = FALSE)
+map2_chr(.x, .y, .f, ..., .progress = NULL)
 
 walk2(.x, .y, .f, ...)
 }
@@ -35,9 +35,9 @@ recommended if you require backward compatibility with older versions
 of R.
 }}
 
-\item{...}{Additional arguments passed on to the mapped function.
+\item{...}{Additional arguments passed on to the mapped function.}
 
-\item{.progress}{Whether to show a progress bar.}
+\item{.progress}{Whether to show a progress bar.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}

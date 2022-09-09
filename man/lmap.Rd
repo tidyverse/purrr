@@ -18,10 +18,7 @@ lmap_at(.x, .at, .f, ...)
 \item{.f}{A function that takes a length-1 list and returns a list (of any
 length.)}
 
-\item{...}{Additional arguments passed on to the mapped function.
-
-Note that the arguments that differ in each call come before \code{.f},
-and the arguments that are the same come after \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.

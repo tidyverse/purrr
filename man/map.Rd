@@ -37,9 +37,9 @@ are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 set a default value if the indexed element is \code{NULL} or does not exist.
 }}
 
-\item{...}{Additional arguments passed on to the mapped function.
+\item{...}{Additional arguments passed on to the mapped function.}
 
-\item{.progress}{Whether to show a progress bar.}
+\item{.progress}{Whether to show a progress bar.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}

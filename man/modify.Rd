@@ -39,10 +39,7 @@ modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 \item{.f}{A function specified in the same way as the corresponding map
 function.}
 
-\item{...}{Additional arguments passed on to the mapped function.
-
-Note that the arguments that differ in each call come before \code{.f},
-and the arguments that are the same come after \code{.f}.}
+\item{...}{Additional arguments passed on to the mapped function.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.

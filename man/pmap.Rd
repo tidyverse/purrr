@@ -9,15 +9,15 @@
 \alias{pwalk}
 \title{Map over multiple input simultaneously (in "parallel")}
 \usage{
-pmap(.l, .f, ...)
+pmap(.l, .f, ..., .progress = NULL)
 
-pmap_lgl(.l, .f, ...)
+pmap_lgl(.l, .f, ..., .progress = NULL)
 
-pmap_int(.l, .f, ...)
+pmap_int(.l, .f, ..., .progress = NULL)
 
-pmap_dbl(.l, .f, ...)
+pmap_dbl(.l, .f, ..., .progress = NULL)
 
-pmap_chr(.l, .f, ...)
+pmap_chr(.l, .f, ..., .progress = NULL)
 
 pwalk(.l, .f, ...)
 }
@@ -41,7 +41,9 @@ to be called once for each row.}
 you can only refer to arguments by position.
 }}
 
-\item{...}{Additional arguments passed on to the mapped function.
+\item{...}{Additional arguments passed on to the mapped function.}
+
+\item{.progress}{Whether to show a progress bar.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}

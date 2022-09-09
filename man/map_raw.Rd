@@ -8,13 +8,13 @@
 \alias{flatten_raw}
 \title{Functions that return raw vectors}
 \usage{
-map_raw(.x, .f, ...)
+map_raw(.x, .f, ..., .progress = NULL)
 
-map2_raw(.x, .y, .f, ...)
+map2_raw(.x, .y, .f, ..., .progress = NULL)
 
-imap_raw(.x, .f, ...)
+imap_raw(.x, .f, ..., .progress = NULL)
 
-pmap_raw(.l, .f, ...)
+pmap_raw(.l, .f, ..., .progress = NULL)
 
 flatten_raw(.x)
 }
