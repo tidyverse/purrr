@@ -1,44 +1,36 @@
-test_that("simplification requires vectors", {
-  expect_equal(list_simplify(list(mean)), list(mean))
-})
+test_that("simplifies using vctrs principles", {
+  expect_identical(list_simplify(list(1, 2L)), c(1, 2))
+  expect_equal(list_simplify(list("x", factor("y"))), c("x", "y"))
 
-test_that("simplification requires length 1 inputs", {
-  expect_equal(list_simplify(list(1, 2:3)), list(1, 2:3))
-  expect_equal(list_simplify(list(1, 2, 3)), c(1, 2, 3))
-})
-
-test_that("simplification requires common type", {
-  expect_equal(list_simplify(list(1, 2)), c(1, 2))
-  expect_equal(list_simplify(list(1, "a")), list(1, "a"))
-})
-
-test_that("can simplify one-row data frames", {
   x <- list(data.frame(x = 1), data.frame(y = 2))
   expect_equal(list_simplify(x), data.frame(x = c(1, NA), y = c(NA, 2)))
 })
 
-test_that("ptype is checked", {
+test_that("ptype is enforced", {
   expect_equal(list_simplify(list(1, 2), ptype = double()), c(1, 2))
   expect_snapshot(list_simplify(list(1, 2), ptype = character()), error = TRUE)
-})
-
-test_that("can suppress simplification", {
-  x <- list(1, 2)
-  expect_equal(list_simplify(x, simplify = FALSE), x)
+  # even if `strict = FALSE`
+  expect_snapshot(list_simplify(list(1, 2), ptype = character(), strict = FALSE), error = TRUE)
 })
 
 test_that("strict simplification will error", {
   expect_snapshot(error = TRUE, {
-    list_simplify(list(1, "a"), simplify = TRUE)
-    list_simplify(list(1, 1:2), simplify = TRUE)
-    list_simplify(list(1, 2), simplify = TRUE, ptype = character())
+    list_simplify(list(1, "a"))
+    list_simplify(list(1, 1:2))
+    list_simplify(list(1, 2), ptype = character())
   })
+})
+
+test_that("simplification requires length-1 vectors with common type", {
+  expect_equal(list_simplify(list(mean), strict = FALSE), list(mean))
+  expect_equal(list_simplify(list(1, 2:3), strict = FALSE), list(1, 2:3))
+  expect_equal(list_simplify(list(1, "a"), strict = FALSE), list(1, "a"))
 })
 
 # argument checking -------------------------------------------------------
 
 test_that("validates inputs", {
-  expect_snapshot(list_simplify(1:5), error = TRUE)
-  expect_snapshot(list_simplify(list(), simplify = 1), error = TRUE)
-  expect_snapshot(list_simplify(list(), simplify = FALSE, ptype = integer()), error = TRUE)
+  expect_snapshot(list_simplify_internal(1:5), error = TRUE)
+  expect_snapshot(list_simplify_internal(list(), simplify = 1), error = TRUE)
+  expect_snapshot(list_simplify_internal(list(), simplify = FALSE, ptype = integer()), error = TRUE)
 })
