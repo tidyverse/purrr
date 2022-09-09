@@ -1,38 +1,35 @@
 #' Coerce a list to a vector
 #'
-#' `as_vector()` collapses a list of vectors into one vector. It
-#' checks that the type of each vector is consistent with
-#' `.type`. If the list can not be simplified, it throws an error.
-#' `simplify` will simplify a vector if possible; `simplify_all`
-#' will apply `simplify` to every element of a list.
+#' @description
+#' `r lifecycle::badge("deprecated")`
 #'
-#' `.type` can be a vector mold specifying both the type and the
-#' length of the vectors to be concatenated, such as `numeric(1)`
-#' or `integer(4)`. Alternatively, it can be a string describing
-#' the type, one of: "logical", "integer", "double", "complex",
-#' "character" or "raw".
+#' These functions are deprecated in favour of `list_simplify()`:
+#'
+#' * `as_vector(x)` is now `list_simplify(x)`
+#' * `simplify(x)` is now `list_simplify(strict = FALSE)`
+#' * `simplify_all(x)` is `map(x, list_simplify, strict = FALSE)`
 #'
 #' @param .x A list of vectors
-#' @param .type A vector mold or a string describing the type of the
-#'   input vectors. The latter can be any of the types returned by
-#'   [typeof()], or "numeric" as a shorthand for either
-#'   "double" or "integer".
+#' @param .type can be a vector mold specifying both the type and the
+#'   length of the vectors to be concatenated, such as `numeric(1)`
+#'   or `integer(4)`. Alternatively, it can be a string describing
+#'   the type, one of: "logical", "integer", "double", "complex",
+#'   "character" or "raw".
 #' @export
+#' @keywords internal
 #' @examples
-#' # Supply the type either with a string:
+#' # was
 #' as.list(letters) %>% as_vector("character")
+#' # now
+#' as.list(letters) %>% list_simplify(ptype = character())
 #'
-#' # Or with a vector mold:
-#' as.list(letters) %>% as_vector(character(1))
-#'
-#' # Vector molds are more flexible because they also specify the
-#' # length of the concatenated vectors:
+#' # was:
 #' list(1:2, 3:4, 5:6) %>% as_vector(integer(2))
-#'
-#' # Note that unlike vapply(), as_vector() never adds dimension
-#' # attributes. So when you specify a vector mold of size > 1, you
-#' # always get a vector and not a matrix
+#' # now:
+#' list(1:2, 3:4, 5:6) %>% list_c(ptype = integer())
 as_vector <- function(.x, .type = NULL) {
+  lifecycle::deprecate_warn("0.4.0", "as_vector()", "list_simplify()")
+
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {
@@ -43,6 +40,7 @@ as_vector <- function(.x, .type = NULL) {
 #' @export
 #' @rdname as_vector
 simplify <- function(.x, .type = NULL) {
+  lifecycle::deprecate_warn("0.4.0", "as_vector()", "list_simplify()")
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {
@@ -53,7 +51,17 @@ simplify <- function(.x, .type = NULL) {
 #' @export
 #' @rdname as_vector
 simplify_all <- function(.x, .type = NULL) {
-  map(.x, simplify, .type = .type)
+  lifecycle::deprecate_warn("0.4.0", "as_vector()", I("map() + list_simplify()"))
+
+  # Inline simplify to avoid double deprecation
+  simplify <- function(.x) {
+    if (can_simplify(.x, .type)) {
+      unlist(.x)
+    } else {
+      .x
+    }
+  }
+  map(.x, simplify)
 }
 
 

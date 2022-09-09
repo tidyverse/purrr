@@ -97,7 +97,6 @@ reference:
 - title: Misc
   contents:
   - array_tree
-  - as_vector
   - rbernoulli
   - rate-helpers
   - rdunif
