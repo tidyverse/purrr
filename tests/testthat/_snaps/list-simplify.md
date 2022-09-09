@@ -54,7 +54,7 @@
       list_simplify_internal(list(), simplify = 1)
     Condition
       Error in `list_simplify_internal()`:
-      ! `simplify` must be `TRUE`, `FALSE`, or `NA`
+      ! `simplify` must be `TRUE`, `FALSE`, or `NA`.
 
 ---
 
@@ -62,5 +62,5 @@
       list_simplify_internal(list(), simplify = FALSE, ptype = integer())
     Condition
       Error in `list_simplify_internal()`:
-      ! Must not specify `ptype` when `simplify = FALSE`
+      ! Must not specify `ptype` when `simplify = FALSE`.
 

@@ -31,10 +31,10 @@ list_simplify_internal <- function(
     error_call = caller_env()
   ) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
-    abort("`simplify` must be `TRUE`, `FALSE`, or `NA`")
+    cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.")
   }
   if (!is.null(ptype) && isFALSE(simplify)) {
-    abort("Must not specify `ptype` when `simplify = FALSE`")
+    cli::cli_abort("Must not specify {.arg ptype} when `simplify = FALSE`.")
   }
 
   if (isFALSE(simplify)) {
