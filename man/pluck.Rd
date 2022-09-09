@@ -2,15 +2,15 @@
 % Please edit documentation in R/pluck.R
 \name{pluck}
 \alias{pluck}
-\alias{chuck}
 \alias{pluck<-}
-\title{Pluck or chuck a single element from a vector or environment}
+\alias{pluck_exists}
+\title{Safely get or set an element deep within a nested data structure}
 \usage{
 pluck(.x, ..., .default = NULL)
 
-chuck(.x, ...)
-
 pluck(.x, ...) <- value
+
+pluck_exists(.x, ...)
 }
 \arguments{
 \item{.x, x}{A vector or environment}
@@ -32,10 +32,16 @@ your accessors are stored in a list, you can splice that in with
 Use \code{zap()} to instead remove the element.}
 }
 \description{
-\code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
-allow you to index deeply and flexibly into data structures.
-\code{pluck()} consistently returns \code{NULL} when an element does not
-exist while \code{chuck()} always throws (or chucks) an error.
+\code{pluck()} implements a generalised form of \code{[[} that allow you to index
+deeply and flexibly into data structures. It always succeeds, returning
+\code{.default} if the index you are trying to access does not exist or is \code{NULL}.
+
+\verb{pluck<-()} is the assignment equivalent, allowing you to modify an object
+deped within a nested data structure.
+
+\code{pluck_exists()} tells you whether or not an object exists using the
+same rules as pluck (i.e. a \code{NULL} element is equivalent to an absent
+element).
 }
 \details{
 \itemize{
@@ -84,15 +90,10 @@ try(x[[10]])
 # You can also supply a default value for non-existing elements:
 pluck(x, 10, .default = NA)
 
-# If you prefer to consistently fail for non-existing elements, use
-# the opinionated variant chuck():
-chuck(x, 1)
-try(chuck(x, 10))
-try(chuck(x, 1, 10))
-
 # The map() functions use pluck() by default to retrieve multiple
 # values from a list:
-map(x, 2)
+map_chr(x, 1)
+map_int(x, c(2, 1))
 
 # pluck() also supports accessor functions:
 my_element <- function(x) x[[2]]$elt
