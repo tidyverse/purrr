@@ -51,6 +51,9 @@
 
 ## Features and fixes
 
+* `*_at()` can now take a functon (or formula) that's passed the vector of
+  element names and returns the elements to select.
+
 * New `list_update()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
 

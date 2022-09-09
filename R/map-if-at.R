@@ -45,9 +45,9 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
   set_names(out, names(.x))
 }
 #' @rdname map_if
-#' @param .at A character vector of names, positive numeric vector of
-#'   positions to include, or a negative numeric vector of positions to
-#'   exlude. Only those elements corresponding to `.at` will be modified.
+#' @param .at A logical, integer, or character vector giving the elements
+#'   to select. Alternatively, a function that takes a vector of names,
+#'   and returns a logical, integer, or character vector of elements to select.
 #'
 #'   `r lifecycle::badge("deprecated")`: if the tidyselect package is
 #'   installed, you can use `vars()` and tidyselect helpers to select
@@ -61,8 +61,7 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #
 #' @export
 map_at <- function(.x, .at, .f, ...) {
-
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
 
   out <- list_along(.x)

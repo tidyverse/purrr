@@ -26,7 +26,7 @@ test_that("modify_at requires a named object", {
 
 test_that("modify_at operates on character and numeric indexing", {
   df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(df1, TRUE, toupper))
+  expect_error(modify_at(df1, TRUE, T))
 })
 
 test_that("negative .at omits locations", {
