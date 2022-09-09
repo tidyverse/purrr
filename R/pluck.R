@@ -158,31 +158,6 @@ chuck <- function(.x, ...) {
   )
 }
 
-reduce_subset_call <- function(init, idx) {
-  if (!length(idx)) {
-    abort("Can't pluck-assign without pluck locations")
-  }
-  reduce(idx, subset_call, .init = init)
-}
-subset_call <- function(x, idx) {
-  if (!is_index(idx)) {
-    type <- friendly_type_of(idx)
-    abort(sprintf("The pluck-assign indices must be names or positions, not %s", type))
-  }
-  call("[[", x, idx)
-}
-
-is_index <- function(x) {
-  if (is.object(x)) {
-    return(FALSE)
-  }
-  if (!typeof(x) %in% c("character", "integer", "double")) {
-    return(FALSE)
-  }
-  length(x) == 1
-}
-
-
 #' Create an attribute getter function
 #'
 #' `attr_getter()` generates an attribute accessor function; i.e., it
