@@ -1,12 +1,28 @@
+test_that("invoke_* is deprecated", {
+  expect_snapshot({
+    . <- invoke(identity, 1)
+    . <- invoke_map(identity, list())
+    . <- invoke_map_lgl(identity, list())
+    . <- invoke_map_int(identity, list())
+    . <- invoke_map_dbl(identity, list())
+    . <- invoke_map_chr(identity, list())
+    . <- invoke_map_raw(identity, list())
+  })
+})
+
 # invoke ------------------------------------------------------------------
 
 test_that("invoke() evaluates expressions in the right environment", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- letters
   f <- toupper
   expect_equal(invoke("f", quote(x)), toupper(letters))
 })
 
 test_that("invoke() follows promises to find the evaluation env", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- letters
   f <- toupper
   f1 <- function(y) {
@@ -36,6 +52,7 @@ test_that("invoke_map() works with bare function", {
 })
 
 test_that("invoke_map() works with bare function with data frames", {
+  local_options(lifecycle_verbosity = "quiet")
   skip_if_not_installed("dplyr")
 
   data <- list(1:2, 3:4)
@@ -44,6 +61,8 @@ test_that("invoke_map() works with bare function with data frames", {
 })
 
 test_that("invoke_map() evaluates expressions in the right environment", {
+  local_options(lifecycle_verbosity = "quiet")
+
   shadowed_object <- letters
   shadowed_fun <- toupper
   expect_equal(
@@ -53,6 +72,8 @@ test_that("invoke_map() evaluates expressions in the right environment", {
 })
 
 test_that("invoke_maps doesn't rely on c() returning list", {
+  local_options(lifecycle_verbosity = "quiet")
+
   day <- as.Date("2016-09-01")
   expect_equal(invoke_map(identity, list(day)), list(day))
 })

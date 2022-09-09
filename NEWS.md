@@ -18,7 +18,8 @@
   manipulation that is very uncommon in R code (#871).
 
 * `splice()` is deprecated because we no longer believe that automatic 
-  splicing makes for good UI. Instead use `list2()` + `!!!` (#869).
+  splicing makes for good UI. Instead use `list2()` + `!!!` or
+  `list_flatten()` (#869).
 
 * `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
   are no longer supported. They have been defunct for quite some time.
@@ -36,10 +37,25 @@
 * `*_raw()` have been deprecated because they are of limited use and you can 
   now use `map_vec()` instead (#903).
 
+* `invoke_*()` is now deprecated. It was superseded in 0.3.0 (Jan 2019) and 
+  3.5 years later, we have decided to deprecate it as part of the API 
+  refinement in the 1.0.0 release.
+
+* `map_call()` has been removed. It was made defunct in 0.3.0.
+
+* `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
+  `list_c()`, `list_cbind()`, and `list_rbind()`.
+
+* `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
+  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+
 ## Features and fixes
 
 * New `list_update()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
+
+* New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
+  `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
 * `_lgl()`, `_int()`, `_int()`, and `_dbl()` now use the same (strict) coercion
   methods as vctrs (#904). This means that:
@@ -49,9 +65,9 @@
       converting a logical/integer/double to a character vector should require 
       an explicit coercion.
       
-    * `map_dbl(1.5, identity)` now fails because we believe that silently 
+    * `map_int(1.5, identity)` now fails because we believe that silently 
       truncating doubles to integers is dangerous. But note that 
-      `map_dbl(1, identity)` still works since no numeric precision is lost.
+      `map_int(1, identity)` still works since no numeric precision is lost.
       
     * `map_int(c(TRUE, FALSE), identity)`, `map_dbl(c(TRUE, FALSE), identity)`,
       `map_lgl(c(1L, 0L), identity)` and `map_lgl(c(1, 0), identity)` now
