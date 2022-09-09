@@ -39,7 +39,7 @@
 #' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
 #' x %>% list_transpose()
 #' # use simplify = FALSE to always return lists:
-#' x %>% list_transpose(simplify = FALSE) |> str()
+#' x %>% list_transpose(simplify = FALSE) %>% str()
 #'
 #' # Provide explicit template if you know which elements you want to extract
 #' ll <- list(
