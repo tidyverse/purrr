@@ -48,9 +48,10 @@ reference:
   contents:
   - map_if
   - map2
+  - pmap
   - modify
-  - starts_with("imap")
-  - starts_with("lmap")
+  - imap
+  - lmap
 
 - title: Predicate functionals
   desc: >
@@ -63,56 +64,39 @@ reference:
   - has_element
   - head_while
   - keep
-  - negate
-  - prepend
 
 - title: Plucking
   desc: >
     Getting or setting a single element.
   contents:
   - pluck
+  - pluck_depth
   - modify_in
   - attr_getter
-  - "`%@%`"
 
 - title: Other vector transforms
   desc: >
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - cross
-  - flatten
+  - list_c
+  - list_flatten
   - list_modify
   - reduce
-  - rep_along
-  - splice
   - transpose
 
 - title: Adverbs
   desc: >
-    Adverbs modify the action of a function; taking a function as input and
-    returning a function with modified action as output.
+    Adverbs modify the action of a function; they take a function as input and
+    return a function with modified action as output.
   contents:
-  - faq-adverbs-export
-  - compose
-  - lift
-  - negate
-  - partial
-  - safely
-  - insistently
-  - rate_sleep
-  - rate-helpers
+  - has_concept("adverbs")
 
 - title: Misc
   contents:
-  - "`%||%`"
   - array_tree
   - as_vector
   - rbernoulli
+  - rate-helpers
   - rdunif
-  - exec
-  - rerun
-  - set_names
-  - vec_depth
-  - zap
-  - done
+  - prepend

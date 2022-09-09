@@ -19,6 +19,8 @@ test_that("invoke() follows promises to find the evaluation env", {
 # invoke_map --------------------------------------------------------------
 
 test_that("invoke_map() works with bare function", {
+  local_options(lifecycle_verbosity = "quiet")
+
   data <- list(1:2, 3:4)
 
   expected <- list("1 2", "3 4")

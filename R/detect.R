@@ -1,11 +1,11 @@
 #' Find the value or position of the first match
 #'
+#' @inheritParams keep
 #' @inheritParams map
-#' @inheritParams every
 #' @param .dir If `"forward"`, the default, starts at the beginning of
 #'   the vector and move towards the end; if `"backward"`, starts at
 #'   the end of the vector and moves towards the beginning.
-#' @param .right Soft-deprecated. Please use `.dir` instead.
+#' @param .right `r lifecycle::badge("deprecated")` Please use `.dir` instead.
 #' @param .default The value returned when nothing is detected.
 #' @return `detect` the value of the first item that matches the
 #'  predicate; `detect_index` the position of the matching item.
@@ -69,18 +69,16 @@ detect_index <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = 
   0L
 }
 
+
+
 index <- function(x, dir, right = NULL, fn) {
   if (!is_null(right)) {
-    signal_soft_deprecated(env = caller_env(2), paste_line(
-      sprintf("The `.right` argument of `%s` is soft-deprecated as of purrr 0.3.0.", fn),
-      "Please use the new `.dir` argument instead:",
-      "",
-      "  # Before",
-      sprintf("  %s(x, f, .right = TRUE)", fn),
-      "",
-      "  # After",
-      sprintf("  %s(x, f, .dir = \"backward\")", fn)
-    ))
+    lifecycle::deprecate_warn(
+      when = "0.3.0",
+      what = paste0(fn, "(.right)"),
+      with = paste0(fn, "(.dir)"),
+      always = TRUE
+    )
     dir <- if (right) "backward" else "forward"
   }
 

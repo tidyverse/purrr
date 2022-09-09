@@ -51,17 +51,6 @@ as_mapper <- function(.f, ...) {
 }
 
 #' @export
-#' @rdname as_mapper
-#' @usage NULL
-as_function <- function(...) {
-  stop_defunct(paste_line(
-    "`as_function()` is defunct as of purrr 0.3.0.",
-    "Please use `as_mapper()` or `rlang::as_function()` instead"
-  ))
-  as_mapper(...)
-}
-
-#' @export
 as_mapper.default <- function(.f, ...) {
   if (typeof(.f) %in% c("special", "builtin")) {
     .f <- rlang::as_closure(.f)
@@ -109,11 +98,12 @@ find_extract_default <- function(.null, .default) {
 
 plucker <- function(i, default) {
   x <- NULL # supress global variables check NOTE
+  i <- as.list(i)
 
+  # Use metaprogramming to create function that prints nicely
   new_function(
     exprs(x = , ... = ),
-    expr(pluck(x, !!!i, .default = !!default)),
-    env = caller_env()
+    expr(pluck_raw(x, !!i, .default = !!default))
   )
 }
 

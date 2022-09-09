@@ -34,33 +34,15 @@ modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
 \method{modify_depth}{default}(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
-\item{.x, .y}{Vectors of the same length. A vector of length 1 will
-be recycled.}
+\item{.x}{A vector.}
 
-\item{.f}{A function, formula, or vector (not necessarily atomic).
+\item{.f}{A function specified in the same way as the corresponding map
+function.}
 
-If a \strong{function}, it is used as is.
+\item{...}{Additional arguments passed on to the mapped function.
 
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
-\itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
-
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
-
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
-
-\item{...}{Additional arguments passed on to the mapped function.}
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -75,8 +57,12 @@ returns \code{FALSE}.}
 \item{.at}{A character vector of names, positive numeric vector of
 positions to include, or a negative numeric vector of positions to
 exlude. Only those elements corresponding to \code{.at} will be modified.
-If the \code{tidyselect} package is installed, you can use \code{vars()} and
-the \code{tidyselect} helpers to select elements.}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
+installed, you can use \code{vars()} and tidyselect helpers to select
+elements.}
+
+\item{.y}{A vector, usually the same length as \code{.x}.}
 
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
 from the lowest level of the list.
@@ -209,6 +195,7 @@ Other map variants:
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
-\code{\link{map}()}
+\code{\link{map}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}

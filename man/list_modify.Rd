@@ -3,7 +3,6 @@
 \name{list_modify}
 \alias{list_modify}
 \alias{list_merge}
-\alias{update_list}
 \title{Modify a list}
 \usage{
 list_modify(.x, ...)
@@ -17,10 +16,10 @@ list_merge(.x, ...)
 
 These values should be either all named or all unnamed. When
 inputs are all named, they are matched to \code{.x} by name. When they
-are all unnamed, they are matched positionally.
+are all unnamed, they are matched by position.
 
-\link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if
-your functions are stored in a list, you can splice that in with
+\link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if your
+replacement values are stored in a list, you can splice that in with
 \verb{!!!}.}
 }
 \description{
@@ -28,11 +27,6 @@ your functions are stored in a list, you can splice that in with
 elements either by name or position. If a sub-element is present in
 both lists, \code{list_modify()} takes the value from \code{y}, and \code{list_merge()}
 concatenates the values together.
-
-\code{update_list()} handles formulas and quosures that can refer to
-values existing within the input list. Note that this function
-might be deprecated in the future in favour of a \code{dplyr::mutate()}
-method for lists.
 }
 \examples{
 x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
@@ -43,13 +37,13 @@ str(list_modify(x, a = 1))
 # Replace values
 str(list_modify(x, z = 5))
 str(list_modify(x, z = list(a = 1:5)))
+str(list_modify(x, z = NULL))
 
 # Remove values
 str(list_modify(x, z = zap()))
 
 # Combine values
 str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
-
 
 # All these functions support dynamic dots features. Use !!! to splice
 # a list of arguments:

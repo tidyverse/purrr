@@ -13,19 +13,14 @@ splice(...)
 A list.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#questioning}{\figure{lifecycle-questioning.svg}{options: alt='[Questioning]'}}}{\strong{[Questioning]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 This splices all arguments into a list. Non-list objects and lists
 with a S3 class are encapsulated in a list before concatenation.
+
+We no longer believe that implicit/automatic splicing is a good idea;
+instead use \code{rlang::list2()} + \verb{!!!} or \code{\link[=list_flatten]{list_flatten()}}.
 }
-\section{Life cycle}{
-
-
-\code{splice()} is in the questioning lifecycle stage as of purrr
-0.3.0. We are now favouring the \verb{!!!} syntax enabled by
-\code{\link[rlang:list2]{rlang::list2()}}.
-}
-
 \examples{
 inputs <- list(arg1 = "a", arg2 = "b")
 
@@ -34,3 +29,4 @@ splice(inputs, arg3 = c("c1", "c2")) \%>\% str()
 list(inputs, arg3 = c("c1", "c2")) \%>\% str()
 c(inputs, arg3 = c("c1", "c2")) \%>\% str()
 }
+\keyword{internal}

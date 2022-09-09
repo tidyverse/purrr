@@ -9,14 +9,20 @@
 #include "cli/progress.h"
 
 void copy_names(SEXP from, SEXP to) {
-  if (Rf_length(from) != Rf_length(to))
-    return;
-
   SEXP names = Rf_getAttrib(from, R_NamesSymbol);
-  if (Rf_isNull(names))
+  if (names == R_NilValue) {
     return;
+  }
+
+  R_len_t n = Rf_length(to);
+
+  if (Rf_length(names) != n) {
+    names = short_vec_recycle(names, n);
+  }
+  PROTECT(names);
 
   Rf_setAttrib(to, R_NamesSymbol, names);
+  UNPROTECT(1);
 }
 
 void check_vector(SEXP x, const char *name) {
@@ -44,11 +50,8 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
 
     INTEGER(i_val)[0] = i + 1;
 
-#if defined(R_VERSION) && R_VERSION >= R_Version(3, 2, 3)
     SEXP res = PROTECT(R_forceAndCall(call, force_args, env));
-#else
-    SEXP res = PROTECT(Rf_eval(call, env));
-#endif
+
     if (type != VECSXP && Rf_length(res) != 1) {
       SEXP ptype = PROTECT(Rf_allocVector(type, 0));
       stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);
@@ -114,13 +117,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, S
   check_vector(y_val, ".y");
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
-  if (nx == 0 || ny == 0) {
-    SEXP out = PROTECT(Rf_allocVector(type, 0));
-    copy_names(x_val, out);
-    UNPROTECT(3);
-    return out;
-  }
-  if (nx != ny && !(nx == 1 || ny == 1)) {
+  if (nx != ny && nx != 1 && ny != 1) {
     Rf_errorcall(R_NilValue,
                  "Mapped vectors must have consistent lengths:\n"
                  "* `.x` has length %d\n"
@@ -128,7 +125,7 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, S
                  nx,
                  ny);
   }
-  int n = (nx > ny) ? nx : ny;
+  int n = (nx == 1) ? ny : nx;
 
   // Constructs a call like f(x[[i]], y[[i]], ...)
   SEXP one = PROTECT(Rf_ScalarInteger(1));
@@ -153,9 +150,10 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
     stop_bad_type(l_val, "a list", NULL, l_name);
   }
 
-  // Check all elements are lists and find maximum length
+  // Check all elements are lists and find recycled length
   int m = Rf_length(l_val);
-  int n = 0;
+  int has_scalar = 0;
+  int n = -1;
   for (int j = 0; j < m; ++j) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
@@ -164,28 +162,20 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
     }
 
     int nj = Rf_length(j_val);
-
-    if (nj == 0) {
-      SEXP out = PROTECT(Rf_allocVector(type, 0));
-      copy_names(j_val, out);
-      UNPROTECT(2);
-      return out;
+    if (nj == 1) {
+      has_scalar = 1;
+      continue;
     }
 
-    if (nj > n) {
+    if (n == -1) {
       n = nj;
-    }
-
-  }
-
-  // Check length of all elements
-  for (int j = 0; j < m; ++j) {
-    SEXP j_val = VECTOR_ELT(l_val, j);
-    int nj = Rf_length(j_val);
-
-    if (nj != 1 && nj != n) {
+    } else if (nj != n) {
       stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
     }
+  }
+
+  if (n == -1) {
+    n = has_scalar ? 1 : 0;
   }
 
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));

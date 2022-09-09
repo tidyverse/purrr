@@ -1,11 +1,12 @@
-#' Re-run expressions multiple times.
+#' Re-run expressions multiple times
 #'
 #' @description
-#'
-#' `r lifecycle::badge("questioning")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' This is a convenient way of generating sample data. It works similarly to
-#' \code{\link{replicate}(..., simplify = FALSE)}.
+#' \code{\link{replicate}(..., simplify = FALSE)}. `rerun()` is deprecated
+#' because we now believe that NSE functions are not a  good fit for purrr.
+#' Also, `rerun(n, x)` can just as easily be expressed as `map(1:n, ~ x)`
 #'
 #' @param .n Number of times to run expressions
 #' @param ... Expressions to re-run.
@@ -15,27 +16,30 @@
 #'   There is one special case: if there's a single unnamed input, the second
 #'   level list will be dropped. In this case, `rerun(n, x)` behaves like
 #'   `replicate(n, x, simplify = FALSE)`.
-#'
-#' @section Lifecycle:
-#'
-#' `rerun()` is in the questioning lifecycle stage because we are no
-#' longer convinced NSE functions are a good fit for purrr. Also,
-#' `rerun(n, x)` can just as easily be expressed as `map(1:n, ~ x)`
-#' (with the added benefit of being passed the current index as
-#' argument to the lambda).
-#'
 #' @export
+#' @keywords internal
 #' @examples
-#' 10 %>% rerun(rnorm(5))
-#' 10 %>%
+#' # old
+#' 5 %>% rerun(rnorm(5)) %>% str()
+#' # new
+#' 1:5 %>% map(~ rnorm(5)) %>% str()
+#'
+#' # old
+#' 5 %>%
 #'   rerun(x = rnorm(5), y = rnorm(5)) %>%
 #'   map_dbl(~ cor(.x$x, .x$y))
+#' # new
+#' 1:5 %>%
+#'   map(~ list(x = rnorm(5), y = rnorm(5))) %>%
+#'   map_dbl(~ cor(.x$x, .x$y))
 rerun <- function(.n, ...) {
+  deprec_rerun(.n, ...)
+
   dots <- quos(...)
 
   # Special case: if single unnamed argument, insert directly into the output
   # rather than wrapping in a list.
-  if (length(dots) == 1 && !has_names(dots)) {
+  if (length(dots) == 1 && !is_named(dots)) {
     dots <- dots[[1]]
     eval_dots <- eval_tidy
   } else {
@@ -47,4 +51,22 @@ rerun <- function(.n, ...) {
     out[[i]] <- eval_dots(dots)
   }
   out
+}
+
+deprec_rerun <- function(.n, ...) {
+  n <- .n
+  old <- substitute(rerun(n, ...))
+  if (dots_n(...) == 1) {
+    new <- substitute(map(1:n, ~ ...))
+  } else {
+    new <- substitute(map(1:n, ~ list(...)))
+  }
+
+  lifecycle::deprecate_warn("0.4.0", "rerun()", "map()", details = paste_line(
+    "  # Previously",
+    paste0("  ", expr_deparse(old)),
+    "",
+    "  # Now",
+    paste0("  ", expr_deparse(new))
+  ))
 }

@@ -1,42 +1,49 @@
-#' Apply a function to each element of a list or atomic vector
+#' Apply a function to each element of a vector
 #'
 #' @description
-#'
 #' The map functions transform their input by applying a function to
-#' each element of a list or atomic vector and returning an object of the same length as the input.
+#' each element of a list or atomic vector and returning an object of
+#' the same length as the input.
 #'
 #' * `map()` always returns a list. See the [modify()] family for
 #'   versions that return an object of the same type as the input.
 #'
 #' * `map_lgl()`, `map_int()`, `map_dbl()` and `map_chr()` return an
-#'   atomic vector of the indicated type (or die trying).
+#'   atomic vector of the indicated type (or die trying). For these functions,
+#'   `.f` must return a length-1 vector of the appropriate type.
 #'
-#' * `map_dfr()` and `map_dfc()` return a data frame created by
-#'   row-binding and column-binding respectively. They require dplyr
-#'   to be installed. `map_df()` is an alias for `map_dfr()`.
+#' * `walk()` calls `.f` for its side-effect and returns
+#'   the input `.x`.
 #'
-#' * The returned values of `.f` must be of length one for each element
-#'   of `.x`. If `.f` uses an extractor function shortcut, `.default`
-#'   can be specified to handle values that are absent or empty. See
-#'   [as_mapper()] for more on `.default`.
-#'
-#' @inheritParams as_mapper
 #' @param .x A list or atomic vector.
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function, e.g. `mean`.
+#'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
+#'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
+#'     argument. Only recommended if you require backward compatibility with
+#'     older versions of R.
+#'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
+#'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
+#'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
+#'     set a default value if the indexed element is `NULL` or does not exist.
+#'
 #' @param ... Additional arguments passed on to the mapped function.
 #' @param .progress Whether to show a progress bar.
-#' @return
-#' * `map()` Returns a list the same length as `.x`.
 #'
-#' * `map_lgl()` returns a logical vector, `map_int()` an integer
-#'   vector, `map_dbl()` a double vector, and `map_chr()` a character
-#'   vector.
+#'   Note that the arguments that differ in each call come before `.f`,
+#'   and the arguments that are the same come after `.f`.
+#' @returns
+#' The output length is determined by the length of the input.
+#' The output type is determined by the suffix:
 #'
-#' * `map_df()`, `map_dfc()`, `map_dfr()` all return a data frame.
+#' * No suffix: a list.
 #'
-#' * If `.x` has `names()`, the return value preserves those names.
+#' * `_lgl`, `_int`, `_dbl`, `_chr` return a logical, integer, double,
+#'   or character vector respectively. It will be named if the input was named.
 #'
-#' * The output of `.f` will be automatically typed upwards, e.g.
-#'   logical -> integer -> double -> character.
+#' * `walk()` returns the input `.x` (invisibly). This makes it easy to
+#'    use in a pipe.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
@@ -98,90 +105,9 @@
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
 #'   map_dbl("r.squared")
-#'
-#' # If each element of the output is a data frame, use
-#' # map_dfr to row-bind them together:
-#' mtcars %>%
-#'   split(.$cyl) %>%
-#'   map(~ lm(mpg ~ wt, data = .x)) %>%
-#'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
-#' # (if you also want to preserve the variable names see
-#' # the broom package)
 map <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "list", .progress)
-}
-
-#' Apply a function to each element of a vector conditionally
-#'
-#' @description
-#'
-#' The functions `map_if()` and `map_at()` take `.x` as input, apply
-#' the function `.f` to some of the elements of `.x`, and return a
-#' list of the same length as the input.
-#'
-#' * `map_if()` takes a predicate function `.p` as input to determine
-#'   which elements of `.x` are transformed with `.f`.
-#'
-#' * `map_at()` takes a vector of names or positions `.at` to specify
-#'   which elements of `.x` are transformed with `.f`.
-#'
-#' @inheritParams map
-#' @param .p A single predicate function, a formula describing such a
-#'   predicate function, or a logical vector of the same length as `.x`.
-#'   Alternatively, if the elements of `.x` are themselves lists of
-#'   objects, a string indicating the name of a logical element in the
-#'   inner lists. Only those elements where `.p` evaluates to
-#'   `TRUE` will be modified.
-#' @param .else A function applied to elements of `.x` for which `.p`
-#' returns `FALSE`.
-#' @export
-#' @family map variants
-#' @examples
-#' # Use a predicate function to decide whether to map a function:
-#' map_if(iris, is.factor, as.character)
-#'
-#' # Specify an alternative with the `.else` argument:
-#' map_if(iris, is.factor, as.character, .else = as.integer)
-#'
-map_if <- function(.x, .p, .f, ..., .else = NULL) {
-  sel <- probe(.x, .p)
-
-  out <- list_along(.x)
-  out[sel]  <- map(.x[sel], .f, ...)
-
-  if (is_null(.else)) {
-    out[!sel] <- .x[!sel]
-  } else {
-    out[!sel]  <- map(.x[!sel], .else, ...)
-  }
-
-  set_names(out, names(.x))
-}
-#' @rdname map_if
-#' @param .at A character vector of names, positive numeric vector of
-#'   positions to include, or a negative numeric vector of positions to
-#'   exlude. Only those elements corresponding to `.at` will be modified.
-#'   If the `tidyselect` package is installed, you can use `vars()` and
-#'   the `tidyselect` helpers to select elements.
-#' @examples
-#' # Use numeric vector of positions select elements to change:
-#' iris %>% map_at(c(4, 5), is.numeric)
-#'
-#' # Use vector of names to specify which elements to change:
-#' iris %>% map_at("Species", toupper)
-#
-#' @export
-map_at <- function(.x, .at, .f, ...) {
-
-  where <- at_selection(names(.x), .at)
-  sel <- inv_which(.x, where)
-
-  out <- list_along(.x)
-  out[sel]  <- map(.x[sel], .f, ...)
-  out[!sel] <- .x[!sel]
-
-  set_names(out, names(.x))
 }
 
 #' @rdname map
@@ -214,120 +140,7 @@ map_dbl <- function(.x, .f, ..., .progress = FALSE) {
 
 #' @rdname map
 #' @export
-map_raw <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "raw", .progress)
-}
-
-#' @rdname map
-#' @param .id Either a string or `NULL`. If a string, the output will contain
-#'   a variable with that name, storing either the name (if `.x` is named) or
-#'   the index (if `.x` is unnamed) of the input. If `NULL`, the default, no
-#'   variable will be created.
-#'
-#'   Only applies to `_dfr` variant.
-#' @export
-map_dfr <- function(.x, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `map_dfr()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- map(.x, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
-}
-
-#' @rdname map
-#' @export
-#' @usage NULL
-map_df <- map_dfr
-
-#' @rdname map
-#' @export
-map_dfc <- function(.x, .f, ...) {
-  check_installed("dplyr", "for `map_dfc()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- map(.x, .f, ...)
-  dplyr::bind_cols(res)
-}
-
-#' @rdname map
-#' @description * `walk()` calls `.f` for its side-effect and returns
-#'   the input `.x`.
-#' @return
-#'
-#' * `walk()` returns the input `.x` (invisibly). This makes it easy to
-#'    use in pipe.
-#' @export
 walk <- function(.x, .f, ...) {
   map(.x, .f, ...)
   invisible(.x)
-}
-
-#' @rdname map_if
-#' @description * `map_depth()` allows to apply `.f` to a specific
-#'   depth level of a nested vector.
-#' @param .depth Level of `.x` to map on. Use a negative value to
-#'   count up from the lowest level of the list.
-#'
-#'   * `map_depth(x, 0, fun)` is equivalent to `fun(x)`.
-#'   * `map_depth(x, 1, fun)` is equivalent to `x <- map(x, fun)`
-#'   * `map_depth(x, 2, fun)` is equivalent to `x <- map(x, ~ map(., fun))`
-#' @param .ragged If `TRUE`, will apply to leaves, even if they're not
-#'   at depth `.depth`. If `FALSE`, will throw an error if there are
-#'   no elements at depth `.depth`.
-#' @examples
-#'
-#' # Use `map_depth()` to recursively traverse nested vectors and map
-#' # a function at a certain depth:
-#' x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
-#' str(x)
-#' map_depth(x, 2, paste, collapse = "/")
-#'
-#' # Equivalent to:
-#' map(x, map, paste, collapse = "/")
-#' @export
-map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
-  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
-    abort("`.depth` must be a single number")
-  }
-  if (.depth < 0) {
-    .depth <- vec_depth(.x) + .depth
-  }
-
-  .f <- as_mapper(.f, ...)
-  map_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
-}
-
-map_depth_rec <- function(.x,
-                          .depth,
-                          .f,
-                          ...,
-                          .ragged,
-                          .atomic) {
-  if (.depth < 0) {
-    abort("Invalid depth")
-  }
-
-  if (.atomic) {
-    if (!.ragged) {
-      abort("List not deep enough")
-    }
-    return(map(.x, .f, ...))
-  }
-
-  if (.depth == 0) {
-    return(.f(.x, ...))
-  }
-
-  if (.depth == 1) {
-    return(map(.x, .f, ...))
-  }
-
-  # Should this be replaced with a generic way of figuring out atomic
-  # types?
-  .atomic <- is_atomic(.x)
-
-  map(.x, function(x) {
-    map_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
-  })
 }

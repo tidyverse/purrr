@@ -1,3 +1,9 @@
 checks/
 logs/
 data.sqlite
+checks
+library
+checks.noindex
+library.noindex
+cloud.noindex
+*.html

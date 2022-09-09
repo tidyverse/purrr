@@ -1,24 +1,23 @@
-# anomalyDetection
+# elbird
 
 <details>
 
 * Version: 0.2.5
-* Source code: https://github.com/cran/anomalyDetection
-* URL: https://github.com/koalaverse/anomalyDetection
-* BugReports: https://github.com/koalaverse/anomalyDetection/issues
-* Date/Publication: 2018-03-07 16:18:12 UTC
-* Number of recursive dependencies: 86
+* GitHub: https://github.com/mrchypark/elbird
+* Source code: https://github.com/cran/elbird
+* Date/Publication: 2022-08-12 15:50:02 UTC
+* Number of recursive dependencies: 54
 
-Run `revdep_details(,"anomalyDetection")` for more info
+Run `cloud_details(, "elbird")` for more info
 
 </details>
 
 ## In both
 
-*   checking whether package ‘anomalyDetection’ can be installed ... ERROR
+*   checking whether package ‘elbird’ can be installed ... ERROR
     ```
     Installation failed.
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/anomalyDetection/new/anomalyDetection.Rcheck/00install.out’ for details.
+    See ‘/tmp/workdir/elbird/new/elbird.Rcheck/00install.out’ for details.
     ```
 
 ## Installation
@@ -26,157 +25,273 @@ Run `revdep_details(,"anomalyDetection")` for more info
 ### Devel
 
 ```
-* installing *source* package ‘anomalyDetection’ ...
-** package ‘anomalyDetection’ successfully unpacked and MD5 sums checked
+* installing *source* package ‘elbird’ ...
+** package ‘elbird’ successfully unpacked and MD5 sums checked
 ** using staged installation
-** libs
-clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp  -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘anomalyDetection’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/anomalyDetection/new/anomalyDetection.Rcheck/anomalyDetection’
+/usr/bin/uname
+Prior system libkiwi installation not found
+Preparing to download and build library from source...
+------------------------------[ ELBIRD ]------------------------------
+Configuration failed because 'git' was not found.
+If you want to kiwi build from source in package installation prosess,
+make sure git and cmake work in system.
+-------------------------------------------------------------------------
+ERROR: configuration failed for package ‘elbird’
+* removing ‘/tmp/workdir/elbird/new/elbird.Rcheck/elbird’
+
 
 ```
 ### CRAN
 
 ```
-* installing *source* package ‘anomalyDetection’ ...
-** package ‘anomalyDetection’ successfully unpacked and MD5 sums checked
+* installing *source* package ‘elbird’ ...
+** package ‘elbird’ successfully unpacked and MD5 sums checked
 ** using staged installation
-** libs
-clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/anomalyDetection/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp  -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘anomalyDetection’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/anomalyDetection/old/anomalyDetection.Rcheck/anomalyDetection’
+/usr/bin/uname
+Prior system libkiwi installation not found
+Preparing to download and build library from source...
+------------------------------[ ELBIRD ]------------------------------
+Configuration failed because 'git' was not found.
+If you want to kiwi build from source in package installation prosess,
+make sure git and cmake work in system.
+-------------------------------------------------------------------------
+ERROR: configuration failed for package ‘elbird’
+* removing ‘/tmp/workdir/elbird/old/elbird.Rcheck/elbird’
+
 
 ```
-# circumplex
+# ggPMX
 
 <details>
 
-* Version: 0.3.3
-* Source code: https://github.com/cran/circumplex
-* URL: https://github.com/jmgirard/circumplex
-* BugReports: https://github.com/jmgirard/circumplex/issues
-* Date/Publication: 2019-09-26 08:30:15 UTC
-* Number of recursive dependencies: 95
+* Version: 1.2.8
+* GitHub: https://github.com/ggPMXdevelopment/ggPMX
+* Source code: https://github.com/cran/ggPMX
+* Date/Publication: 2022-06-17 23:10:02 UTC
+* Number of recursive dependencies: 175
 
-Run `revdep_details(,"circumplex")` for more info
+Run `cloud_details(, "ggPMX")` for more info
 
 </details>
 
-## In both
-
-*   checking whether package ‘circumplex’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/circumplex/new/circumplex.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
+## Error before installation
 
 ### Devel
 
 ```
-* installing *source* package ‘circumplex’ ...
-** package ‘circumplex’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp  -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘circumplex’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/circumplex/new/circumplex.Rcheck/circumplex’
+* using log directory ‘/tmp/workdir/ggPMX/new/ggPMX.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘ggPMX/DESCRIPTION’ ... OK
+* this is package ‘ggPMX’ version ‘1.2.8’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+...
+  [ FAIL 1 | WARN 10 | SKIP 8 | PASS 327 ]
+  Error: Test failures
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+  ‘ggPMX-guide.Rmd’ using ‘UTF-8’... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 1 ERROR, 2 NOTEs
+
+
+
+
 
 ```
 ### CRAN
 
 ```
-* installing *source* package ‘circumplex’ ...
-** package ‘circumplex’ successfully unpacked and MD5 sums checked
-** using staged installation
-** libs
-clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/circumplex/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp  -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘circumplex’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/circumplex/old/circumplex.Rcheck/circumplex’
+* using log directory ‘/tmp/workdir/ggPMX/old/ggPMX.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘ggPMX/DESCRIPTION’ ... OK
+* this is package ‘ggPMX’ version ‘1.2.8’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+...
+  [ FAIL 1 | WARN 10 | SKIP 8 | PASS 327 ]
+  Error: Test failures
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+  ‘ggPMX-guide.Rmd’ using ‘UTF-8’... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 1 ERROR, 2 NOTEs
+
+
+
+
 
 ```
-# clustermq
+# ImputeRobust
 
 <details>
 
-* Version: 0.8.8
-* Source code: https://github.com/cran/clustermq
-* URL: https://github.com/mschubert/clustermq
-* BugReports: https://github.com/mschubert/clustermq/issues
-* Date/Publication: 2019-06-05 22:00:39 UTC
-* Number of recursive dependencies: 105
+* Version: 1.3-1
+* GitHub: NA
+* Source code: https://github.com/cran/ImputeRobust
+* Date/Publication: 2018-11-30 12:10:03 UTC
+* Number of recursive dependencies: 52
 
-Run `revdep_details(,"clustermq")` for more info
+Run `cloud_details(, "ImputeRobust")` for more info
 
 </details>
 
-## In both
+## Error before installation
 
-*   R CMD check timed out
-    
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/ImputeRobust/new/ImputeRobust.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘ImputeRobust/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘ImputeRobust’ version ‘1.3-1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘extremevalues’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/ImputeRobust/old/ImputeRobust.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘ImputeRobust/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘ImputeRobust’ version ‘1.3-1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘extremevalues’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+# kerastuneR
+
+<details>
+
+* Version: 0.1.0.5
+* GitHub: https://github.com/EagerAI/kerastuneR
+* Source code: https://github.com/cran/kerastuneR
+* Date/Publication: 2022-03-25 08:50:02 UTC
+* Number of recursive dependencies: 112
+
+Run `cloud_details(, "kerastuneR")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘kerastuneR’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/kerastuneR/new/kerastuneR.Rcheck/00install.out’ for details.
+    ```
+
+## Newly fixed
 
 *   checking dependencies in R code ... NOTE
     ```
-    Namespaces in Imports field not imported from:
-      ‘purrr’ ‘R6’
+    Namespace in Imports field not imported from: ‘keras’
       All declared Imports should be used.
     ```
 
-# codemetar
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘kerastuneR’ ...
+** package ‘kerastuneR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘kerastuneR’
+* removing ‘/tmp/workdir/kerastuneR/new/kerastuneR.Rcheck/kerastuneR’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘kerastuneR’ ...
+** package ‘kerastuneR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (kerastuneR)
+
+
+```
+# rATTAINS
 
 <details>
 
-* Version: 0.1.8
-* Source code: https://github.com/cran/codemetar
-* URL: https://github.com/ropensci/codemetar, https://ropensci.github.io/codemetar
-* BugReports: https://github.com/ropensci/codemetar/issues
-* Date/Publication: 2019-04-22 04:20:03 UTC
-* Number of recursive dependencies: 79
+* Version: 0.1.3
+* GitHub: https://github.com/mps9506/rATTAINS
+* Source code: https://github.com/cran/rATTAINS
+* Date/Publication: 2021-11-03 14:10:02 UTC
+* Number of recursive dependencies: 80
 
-Run `revdep_details(,"codemetar")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘memoise’
-      All declared Imports should be used.
-    ```
-
-# colorednoise
-
-<details>
-
-* Version: 1.0.5
-* Source code: https://github.com/cran/colorednoise
-* BugReports: http://github.com/japilo/colorednoise/issues
-* Date/Publication: 2019-09-27 13:10:02 UTC
-* Number of recursive dependencies: 79
-
-Run `revdep_details(,"colorednoise")` for more info
+Run `cloud_details(, "rATTAINS")` for more info
 
 </details>
 
-## In both
+## Newly broken
 
-*   checking whether package ‘colorednoise’ can be installed ... ERROR
+*   checking whether package ‘rATTAINS’ can be installed ... ERROR
     ```
     Installation failed.
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/colorednoise/new/colorednoise.Rcheck/00install.out’ for details.
+    See ‘/tmp/workdir/rATTAINS/new/rATTAINS.Rcheck/00install.out’ for details.
     ```
 
 ## Installation
@@ -184,115 +299,60 @@ Run `revdep_details(,"colorednoise")` for more info
 ### Devel
 
 ```
-* installing *source* package ‘colorednoise’ ...
-** package ‘colorednoise’ successfully unpacked and MD5 sums checked
+* installing *source* package ‘rATTAINS’ ...
+** package ‘rATTAINS’ successfully unpacked and MD5 sums checked
 ** using staged installation
-** libs
-clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘colorednoise’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/colorednoise/new/colorednoise.Rcheck/colorednoise’
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘rATTAINS’
+* removing ‘/tmp/workdir/rATTAINS/new/rATTAINS.Rcheck/rATTAINS’
+
 
 ```
 ### CRAN
 
 ```
-* installing *source* package ‘colorednoise’ ...
-** package ‘colorednoise’ successfully unpacked and MD5 sums checked
+* installing *source* package ‘rATTAINS’ ...
+** package ‘rATTAINS’ successfully unpacked and MD5 sums checked
 ** using staged installation
-** libs
-clang++ -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/colorednoise/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -mtune=core2 -O3 -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘colorednoise’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/colorednoise/old/colorednoise.Rcheck/colorednoise’
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (rATTAINS)
+
 
 ```
-# ELMER
+# stoRy
 
 <details>
 
-* Version: 2.8.3
-* Source code: https://github.com/cran/ELMER
-* Date/Publication: 2019-09-06
-* Number of recursive dependencies: 205
+* Version: 0.2.0
+* GitHub: https://github.com/theme-ontology/stoRy
+* Source code: https://github.com/cran/stoRy
+* Date/Publication: 2021-11-08 05:10:02 UTC
+* Number of recursive dependencies: 76
 
-Run `revdep_details(,"ELMER")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
-*   checking Rd \usage sections ... WARNING
-    ```
-    Undocumented arguments in documentation object 'heatmapGene'
-      ‘correlation.method’ ‘scatter.plot.width’ ‘scatter.plot.height’
-    
-    Functions with \usage entries need to have the appropriate \alias
-    entries, and all their arguments documented.
-    The \usage entries must correspond to syntactically valid R code.
-    See chapter ‘Writing R documentation files’ in the ‘Writing R
-    Extensions’ manual.
-    ```
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 75.8Mb
-      sub-directories of 1Mb or more:
-        doc  75.1Mb
-    ```
-
-*   checking R code for possible problems ... NOTE
-    ```
-    ...
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/GetNearbyGenes.R:538-539)
-    getRegionNearGenes: no visible binding for global variable 'ID'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/GetNearbyGenes.R:551)
-    getTFtargets: no visible binding for global variable 'TF'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/Main_function.R:1620)
-    getTFtargets: no visible binding for global variable 'TF'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/Main_function.R:1622)
-    heatmapGene: no visible global function definition for 'melt'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/plots.R:590)
-    heatmapGene: no visible binding for global variable 'mae'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/plots.R:590)
-    heatmapGene: no visible binding for global variable 'mae'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/plots.R:592)
-    heatmapGene: no visible global function definition for 'melt'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/plots.R:593)
-    heatmapGene: no visible binding for global variable 'mae'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/plots.R:593)
-    heatmapGene: no visible global function definition for 'stat_cor'
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/ELMER/new/ELMER.Rcheck/00_pkg_src/ELMER/R/plots.R:597-613)
-    Undefined global functions or variables:
-      DistanceTSS Hugo_Symbol ID mae melt Side stat_cor TF
-    ```
-
-# phenofit
-
-<details>
-
-* Version: 0.2.5-2
-* Source code: https://github.com/cran/phenofit
-* URL: https://github.com/kongdd/phenofit
-* BugReports: https://github.com/kongdd/phenofit/issues
-* Date/Publication: 2019-06-07 08:00:08 UTC
-* Number of recursive dependencies: 78
-
-Run `revdep_details(,"phenofit")` for more info
+Run `cloud_details(, "stoRy")` for more info
 
 </details>
 
-## In both
+## Newly broken
 
-*   checking whether package ‘phenofit’ can be installed ... ERROR
+*   checking whether package ‘stoRy’ can be installed ... ERROR
     ```
     Installation failed.
-    See ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/phenofit/new/phenofit.Rcheck/00install.out’ for details.
+    See ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/00install.out’ for details.
     ```
 
 ## Installation
@@ -300,90 +360,103 @@ Run `revdep_details(,"phenofit")` for more info
 ### Devel
 
 ```
-* installing *source* package ‘phenofit’ ...
-** package ‘phenofit’ successfully unpacked and MD5 sums checked
+* installing *source* package ‘stoRy’ ...
+** package ‘stoRy’ successfully unpacked and MD5 sums checked
 ** using staged installation
-** libs
-clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/phenofit/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/phenofit/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp  -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘phenofit’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/phenofit/new/phenofit.Rcheck/phenofit’
+** R
+Warning: namespace ‘stoRy’ is not available and has been replaced
+by .GlobalEnv when processing object ‘background_collection’
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘stoRy’
+* removing ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/stoRy’
+
 
 ```
 ### CRAN
 
 ```
-* installing *source* package ‘phenofit’ ...
-** package ‘phenofit’ successfully unpacked and MD5 sums checked
+* installing *source* package ‘stoRy’ ...
+** package ‘stoRy’ successfully unpacked and MD5 sums checked
 ** using staged installation
-** libs
-clang++ -std=gnu++11 -std=c++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG  -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/phenofit/Rcpp/include" -I"/Users/lionel/Desktop/lowliner/revdep/library.noindex/phenofit/RcppArmadillo/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -fopenmp  -fPIC  -Wall -g -O2  -arch x86_64 -ftemplate-depth-256 -Wall -pedantic -c RcppExports.cpp -o RcppExports.o
-clang: error: unsupported option '-fopenmp'
-make: *** [RcppExports.o] Error 1
-ERROR: compilation failed for package ‘phenofit’
-* removing ‘/Users/lionel/Desktop/lowliner/revdep/checks.noindex/phenofit/old/phenofit.Rcheck/phenofit’
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (stoRy)
+
 
 ```
-# TCGAbiolinks
+# tidyjson
 
 <details>
 
-* Version: 2.12.6
-* Source code: https://github.com/cran/TCGAbiolinks
-* URL: https://github.com/BioinformaticsFMRP/TCGAbiolinks
-* BugReports: https://github.com/BioinformaticsFMRP/TCGAbiolinks/issues
-* Date/Publication: 2019-09-05
-* Number of recursive dependencies: 266
+* Version: 0.3.1
+* GitHub: https://github.com/colearendt/tidyjson
+* Source code: https://github.com/cran/tidyjson
+* Date/Publication: 2020-05-31 21:30:03 UTC
+* Number of recursive dependencies: 96
 
-Run `revdep_details(,"TCGAbiolinks")` for more info
+Run `cloud_details(, "tidyjson")` for more info
 
 </details>
 
-## In both
+## Newly broken
 
-*   R CMD check timed out
-    
-
-*   checking installed package size ... NOTE
+*   checking whether package ‘tidyjson’ can be installed ... ERROR
     ```
-      installed size is 97.2Mb
-      sub-directories of 1Mb or more:
-        data   4.2Mb
-        doc   90.1Mb
-        R      2.7Mb
+    Installation failed.
+    See ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/00install.out’ for details.
     ```
 
-*   checking dependencies in R code ... NOTE
-    ```
-    There are ::: calls to the package's namespace in its code. A package
-      almost never needs to use ::: for its own objects:
-      ‘move’
-    ```
+## Installation
 
-*   checking R code for possible problems ... NOTE
-    ```
-    ...
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/clinical.R:712)
-    TCGAtumor_purity: no visible binding for global variable ‘Tumor.purity’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/clinical.R:723-724)
-    TCGAvisualize_oncoprint: no visible binding for global variable ‘value’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/visualize.R:932)
-    TCGAvisualize_SurvivalCoxNET: no visible global function definition for
-      ‘dNetInduce’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/visualize.R:156-157)
-    TCGAvisualize_SurvivalCoxNET: no visible global function definition for
-      ‘dNetPipeline’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/visualize.R:161-162)
-    TCGAvisualize_SurvivalCoxNET: no visible global function definition for
-      ‘dCommSignif’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/visualize.R:174)
-    TCGAvisualize_SurvivalCoxNET: no visible global function definition for
-      ‘visNet’
-      (/Users/lionel/Desktop/lowliner/revdep/checks.noindex/TCGAbiolinks/new/TCGAbiolinks.Rcheck/00_pkg_src/TCGAbiolinks/R/visualize.R:184-189)
-    Undefined global functions or variables:
-      barcode c3net clinical coordinates dCommSignif dNetInduce
-      dNetPipeline exon knnmi.cross limmacontrasts.fit limmamakeContrasts
-      minet openSesame portions rse_gene Tumor.purity value visNet
-    ```
+### Devel
 
+```
+* installing *source* package ‘tidyjson’ ...
+** package ‘tidyjson’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘tidyjson’
+* removing ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/tidyjson’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘tidyjson’ ...
+** package ‘tidyjson’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (tidyjson)
+
+
+```

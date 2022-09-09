@@ -6,9 +6,6 @@
 \alias{imap_chr}
 \alias{imap_int}
 \alias{imap_dbl}
-\alias{imap_raw}
-\alias{imap_dfr}
-\alias{imap_dfc}
 \alias{iwalk}
 \title{Apply a function to each element of a vector, and its index}
 \usage{
@@ -22,48 +19,25 @@ imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
 
-imap_raw(.x, .f, ...)
-
-imap_dfr(.x, .f, ..., .id = NULL)
-
-imap_dfc(.x, .f, ...)
-
 iwalk(.x, .f, ...)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{A function, formula, or vector (not necessarily atomic).
-
-If a \strong{function}, it is used as is.
-
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
+\item{.f}{A function, specified in one of the following ways:
 \itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
+\item A named function, e.g. \code{paste}.
+\item An anonymous function, e.g. \verb{\\(x, idx) x + idx} or
+\code{function(x, idx) x + idx}.
+\item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the
+current element and \code{.y} to refer to the current index. Only recommended
+if you require backward compatibility with older versions of R.
+}}
 
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
+\item{...}{Additional arguments passed on to the mapped function.
 
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
-
-\item{...}{Additional arguments passed on to the mapped function.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 }
 \value{
 A vector the same length as \code{.x}.
@@ -75,9 +49,12 @@ if it does not. This is useful if you need to compute on both the value
 and the position of an element.
 }
 \examples{
-# Note that when using the formula shortcut, the first argument
-# is the value, and the second is the position
+imap_chr(sample(10), paste)
+
+imap_chr(sample(10), function(x, indx) paste0(indx, ": ", x))
+# same as
 imap_chr(sample(10), ~ paste0(.y, ": ", .x))
+
 iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = ""))
 }
 \seealso{
@@ -87,6 +64,7 @@ Other map variants:
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
-\code{\link{modify}()}
+\code{\link{modify}()},
+\code{\link{pmap}()}
 }
 \concept{map variants}

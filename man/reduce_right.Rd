@@ -15,19 +15,21 @@ accumulate_right(.x, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, and \code{accumulate()}, a 2-argument
-function. The function will be passed the accumulated value as
-the first argument and the "next" value as the second argument.
+\item{.f}{For \code{reduce()}, a 2-argument function. The function will be passed
+the accumulated value as the first argument and the "next" value as the
+second argument.
 
-For \code{reduce2()} and \code{accumulate2()}, a 3-argument function. The
-function will be passed the accumulated value as the first
-argument, the next value of \code{.x} as the second argument, and the
-next value of \code{.y} as the third argument.
+For \code{reduce2()}, a 3-argument function. The function will be passed the
+accumulated value as the first argument, the next value of \code{.x} as the
+second argument, and the next value of \code{.y} as the third argument.
 
 The reduction terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
+
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{.x[[1]]}. This is useful if
@@ -39,7 +41,7 @@ argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
 should be 1 element shorter than \code{.x}.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 These functions are retired as of purrr 0.3.0. Please use the
 \code{.dir} argument of \code{\link[=reduce]{reduce()}} instead, or reverse your vectors

@@ -3,11 +3,12 @@
 #' `pluck()` and `chuck()` implement a generalised form of `[[` that
 #' allow you to index deeply and flexibly into data structures.
 #' `pluck()` consistently returns `NULL` when an element does not
-#' exist, `chuck()` always throws an error in that case.
+#' exist while `chuck()` always throws (or chucks) an error.
 #'
 #' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
-#'   an integer position, a string name, or an accessor function
+#'   an positive integer, a negative integer (to index from the right),
+#'   a string (to index into names), or an accessor function
 #'   (except for the assignment variants which only support names and
 #'   positions). If the object being indexed is an S4 object,
 #'   accessing it by name will return the corresponding slot.
@@ -15,7 +16,7 @@
 #'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
 #'   your accessors are stored in a list, you can splice that in with
 #'   `!!!`.
-#' @param .default Value to use if target is empty or absent.
+#' @param .default Value to use if target is `NULL` or absent.
 #'
 #' @details
 #' * You can pluck or chuck with standard accessors like integer
@@ -31,7 +32,6 @@
 #' * These accessors never partial-match. This is unlike `$` which
 #'   will select the `disp` object if you write `mtcars$di`.
 #'
-#'
 #' @seealso [attr_getter()] for creating attribute getters suitable
 #'   for use with `pluck()` and `chuck()`. [modify_in()] for
 #'   applying a function to a pluck location.
@@ -41,22 +41,24 @@
 #' obj2 <- list("b", list(2, elt = "bar"))
 #' x <- list(obj1, obj2)
 #'
-#'
 #' # pluck() provides a way of retrieving objects from such data
 #' # structures using a combination of numeric positions, vector or
 #' # list names, and accessor functions.
 #'
 #' # Numeric positions index into the list by position, just like `[[`:
 #' pluck(x, 1)
-#' x[[1]]
+#' # same as x[[1]]
+#'
+#' # Index from the back
+#' pluck(x, -1)
+#' # same as x[[2]]
 #'
 #' pluck(x, 1, 2)
-#' x[[1]][[2]]
+#' # same as x[[1]][[2]]
 #'
 #' # Supply names to index into named vectors:
 #' pluck(x, 1, 2, "elt")
-#' x[[1]][[2]][["elt"]]
-#'
+#' # same as x[[1]][[2]][["elt"]]
 #'
 #' # By default, pluck() consistently returns `NULL` when an element
 #' # does not exist:
@@ -72,37 +74,12 @@
 #' try(chuck(x, 10))
 #' try(chuck(x, 1, 10))
 #'
-#'
 #' # The map() functions use pluck() by default to retrieve multiple
 #' # values from a list:
 #' map(x, 2)
 #'
-#' # Pass multiple indexes with a list:
-#' map(x, list(2, "elt"))
-#'
-#' # This is equivalent to:
-#' map(x, pluck, 2, "elt")
-#'
-#' # You can also supply a default:
-#' map(x, list(2, "elt", 10), .default = "superb default")
-#'
-#' # Or use the strict variant:
-#' try(map(x, chuck, 2, "elt", 10))
-#'
-#'
-#' # You can also assign a value in a pluck location with pluck<-:
-#' pluck(x, 2, 2, "elt") <- "quuux"
-#' x
-#'
-#' # This is a shortcut for the prefix function assign_in():
-#' y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
-#' y
-#'
-#'
 #' # pluck() also supports accessor functions:
 #' my_element <- function(x) x[[2]]$elt
-#'
-#' # The accessor can then be passed to pluck:
 #' pluck(x, 1, my_element)
 #' pluck(x, 2, my_element)
 #'
@@ -112,23 +89,30 @@
 #' # expression:
 #' my_element(x[[1]])
 #'
-#'
 #' # If you have a list of accessors, you can splice those in with `!!!`:
 #' idx <- list(1, my_element)
 #' pluck(x, !!!idx)
 #' @export
 pluck <- function(.x, ..., .default = NULL) {
+  check_dots_unnamed()
+  pluck_raw(.x, list2(...), .default = .default)
+}
+
+pluck_raw <- function(.x, index, .default = NULL) {
   .Call(
     pluck_impl,
     x = .x,
-    index = list2(...),
+    index = index,
     missing = .default,
     strict = FALSE
   )
 }
+
 #' @rdname pluck
 #' @export
 chuck <- function(.x, ...) {
+  check_dots_unnamed()
+
   .Call(
     pluck_impl,
     x = .x,
@@ -199,4 +183,76 @@ is_index <- function(x) {
 attr_getter <- function(attr) {
   force(attr)
   function(x) attr(x, attr, exact = TRUE)
+}
+
+
+#' Modify a pluck location
+#'
+#' @description
+#'
+#' * `assign_in()` takes a data structure and a [pluck] location,
+#'   assigns a value there, and returns the modified data structure.
+#'
+#' * `modify_in()` applies a function to a pluck location, assigns the
+#'   result back to that location with [assign_in()], and returns the
+#'   modified data structure.
+#'
+#' @inheritParams pluck
+#' @param .f A function to apply at the pluck location given by `.where`.
+#' @param ... Arguments passed to `.f`.
+#' @param .where,where A pluck location, as a numeric vector of
+#'   positions, a character vector of names, or a list combining both.
+#'   The location must exist in the data structure.
+#' @seealso [pluck()]
+#' @export
+#' @examples
+#' # Recall that pluck() returns a component of a data structure that
+#' # might be arbitrarily deep
+#' x <- list(list(bar = 1, foo = 2))
+#' pluck(x, 1, "foo")
+#'
+#' # Use assign_in() to modify the pluck location:
+#' str(assign_in(x, list(1, "foo"), 100))
+#' # Or zap to remove it
+#' str(assign_in(x, list(1, "foo"), zap()))
+#'
+#' # Like pluck(), this works even when the element (or its parents) don't exist
+#' pluck(x, 1, "baz")
+#' str(assign_in(x, list(2, "baz"), 100))
+#'
+#' # modify_in() applies a function to that location and update the
+#' # element in place:
+#' modify_in(x, list(1, "foo"), ~ .x * 200)
+#'
+#' # Additional arguments are passed to the function in the ordinary way:
+#' modify_in(x, list(1, "foo"), `+`, 100)
+modify_in <- function(.x, .where, .f, ...) {
+  .where <- as.list(.where)
+  .f <- rlang::as_function(.f)
+
+  value <- .f(pluck(.x, !!!.where), ...)
+  assign_in(.x, .where, value)
+}
+#' @rdname modify_in
+#' @param value A value to replace in `.x` at the pluck location.
+#'   Use `zap()` to instead remove the element.
+#' @export
+assign_in <- function(x, where, value) {
+  n <- length(where)
+  if (n == 0) {
+    abort("`where` must contain at least one element")
+  } else if (n > 1) {
+    old <- pluck(x, where[[1]], .default = list())
+    if (!is_zap(value) || !identical(old, list())) {
+      value <- assign_in(old, where[-1], value)
+    }
+  }
+
+  if (is_zap(value)) {
+    x[[where[[1]]]] <- NULL
+  } else {
+    list_slice2(x, where[[1]]) <- value
+  }
+
+  x
 }

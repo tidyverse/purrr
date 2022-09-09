@@ -24,7 +24,10 @@ next value in sequence from \code{.y} is passed as the third argument.
 The accumulation terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
+
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.init}{If supplied, will be used as the first value to start
 the accumulation, rather than using \code{.x[[1]]}. This is useful if
@@ -115,6 +118,10 @@ accumulate(letters[1:5], paste, sep = ".")
 # with a left reduction, and to the right otherwise:
 accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 
+# By ignoring the input vector (.y), you can turn output of one step into
+# the input for the next. This code takes 10 steps of a random walk:
+accumulate(1:10, ~ .x + rnorm(1), .init = 0)
+
 # `accumulate2()` is a version of `accumulate()` that works with
 # 3-argument functions and one additional vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
@@ -162,10 +169,11 @@ letters \%>\% accumulate(paste4)
 library(dplyr)
 library(ggplot2)
 
-rerun(5, rnorm(100)) \%>\%
+map(1:5, ~ rnorm(100)) \%>\%
   set_names(paste0("sim", 1:5)) \%>\%
   map(~ accumulate(., ~ .05 + .x + .y)) \%>\%
-  map_dfr(~ tibble(value = .x, step = 1:100), .id = "simulation") \%>\%
+  map(~ tibble(value = .x, step = 1:100)) \%>\%
+  list_rbind(id = "simulation") \%>\%
   ggplot(aes(x = step, y = value)) +
     geom_line(aes(color = simulation)) +
     ggtitle("Simulations of a random walk with drift")
