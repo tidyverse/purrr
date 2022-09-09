@@ -51,6 +51,9 @@
 
 ## Features and fixes
 
+* New `list_update()` which is similar to `list_modify()` but doesn't work
+  recursively (#822).
+
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 

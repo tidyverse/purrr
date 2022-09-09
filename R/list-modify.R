@@ -1,9 +1,11 @@
 #' Modify a list
 #'
-#' `list_modify()` and `list_merge()` recursively combine two lists, matching
-#' elements either by name or position. If a sub-element is present in
-#' both lists, `list_modify()` takes the value from `y`, and `list_merge()`
-#' concatenates the values together.
+#' @description
+#' * `list_update()` modifies the elements of a list by name or position.
+#' * `list_modify()` modifies the elements of a list recursively.
+#' * `list_modify()` merges the elements of a list recursively.
+#'
+#' `list_modify()` is inspired by [utils::modifyList()].
 #'
 #' @param .x List to modify.
 #' @param ... New values of a list. Use `zap()` to remove values.
@@ -21,36 +23,48 @@
 #' str(x)
 #'
 #' # Update values
-#' str(list_modify(x, a = 1))
+#' str(list_update(x, a = 1))
 #' # Replace values
-#' str(list_modify(x, z = 5))
+#' str(list_update(x, z = 5))
+#' str(list_update(x, z = NULL))
+#'
+#' str(list_update(x, z = list(a = 1:5)))
+#' # replace recursively, leaving the other elements of z alone
 #' str(list_modify(x, z = list(a = 1:5)))
-#' str(list_modify(x, z = NULL))
 #'
 #' # Remove values
-#' str(list_modify(x, z = zap()))
+#' str(list_update(x, z = zap()))
 #'
-#' # Combine values
+#' # Combine values with list_merge()
 #' str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
 #'
 #' # All these functions support dynamic dots features. Use !!! to splice
 #' # a list of arguments:
 #' l <- list(new = 1, y = zap(), z = 5)
-#' str(list_modify(x, !!!l))
+#' str(list_update(x, !!!l))
+list_update <- function(.x, ...) {
+  vec_check_list(.x)
+  y <- dots_list(..., .named = NULL, .homonyms = "error")
+  list_recurse(.x, y, function(x, y) y, recurse = FALSE)
+}
+
+#' @export
+#' @rdname list_update
 list_modify <- function(.x, ...) {
   vec_check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, function(x, y) y)
 }
+
 #' @export
-#' @rdname list_modify
+#' @rdname list_update
 list_merge <- function(.x, ...) {
   vec_check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, c)
 }
 
-list_recurse <- function(x, y, base_f) {
+list_recurse <- function(x, y, base_f, recurse = TRUE) {
   if (!is_null(names(y)) && !is_named(y)) {
     abort("`...` arguments must be either all named, or all unnamed")
   }
@@ -63,7 +77,7 @@ list_recurse <- function(x, y, base_f) {
 
     if (is_zap(y_i)) {
       x[[i]] <- NULL
-    } else if (vec_is_list(x_i) && vec_is_list(y_i)) {
+    } else if (recurse && vec_is_list(x_i) && vec_is_list(y_i)) {
       list_slice2(x, i) <- list_recurse(x_i, y_i, base_f)
     } else {
       list_slice2(x, i) <- base_f(x_i, y_i)

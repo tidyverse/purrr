@@ -1,3 +1,31 @@
+# list_update -------------------------------------------------------------
+
+test_that("can modify named lists by name or position", {
+  expect_equal(list_update(list(a = 1), b = 2), list(a = 1, b = 2))
+  expect_equal(list_update(list(a = 1), a = 2), list(a = 2))
+  expect_equal(list_update(list(a = 1), a = NULL), list(a = NULL))
+  expect_equal(list_update(list(a = 1, b = 2), b = zap()), list(a = 1))
+
+  expect_equal(list_update(list(a = 1), 2), list(a = 2))
+  expect_equal(list_update(list(a = 1, b = 2), zap()), list(b = 2))
+})
+
+test_that("can modify unnamed lists by name or position", {
+  expect_equal(list_update(list(3), 1, 2), list(1, 2))
+  expect_equal(list_update(list(3), NULL), list(NULL))
+  expect_equal(list_update(list(3), zap()), list())
+  expect_equal(list_update(list(3), zap(), zap()), list())
+
+  expect_equal(list_update(list(1), a = 2), list(1, a = 2))
+  expect_equal(list_update(list(1), a = NULL), list(1, a = NULL))
+  expect_equal(list_update(list(1), a = zap()), list(1))
+})
+
+test_that("doesn't replace recursively", {
+  x <- list(y = list(a = 1))
+  expect_equal(list_update(x, y = list(b = 1)), list(y = list(b = 1)))
+})
+
 # list_modify -------------------------------------------------------------
 
 test_that("named lists have values replaced by name", {
