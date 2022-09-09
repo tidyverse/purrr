@@ -20,13 +20,7 @@ test_that("modify_if/modify_at return same type as input", {
 })
 
 test_that("modify_at requires a named object", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(unname(df1), "x", toupper))
-})
-
-test_that("modify_at operates on character and numeric indexing", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(df1, TRUE, T))
+  expect_snapshot(modify_at(list(), "x", toupper), error = TRUE)
 })
 
 test_that("negative .at omits locations", {

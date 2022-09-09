@@ -14,3 +14,18 @@ test_that("keep() and discard() require predicate functions", {
     discard(1:3, ~ NA)
   })
 })
+
+
+# keep_at / discard_at ----------------------------------------------------
+
+test_that("can keep_at/discard_at with character vector", {
+  x <- list(a = 1, b = 1, c = 1)
+  expect_equal(keep_at(x, "b"), list(b = 1))
+  expect_equal(discard_at(x, "b"), list(a = 1, c = 1))
+})
+
+test_that("can keep_at/discard_at with function", {
+  x <- list(a = 1, b = 1, c = 1)
+  expect_equal(keep_at(x, ~ . == "b"), list(b = 1))
+  expect_equal(discard_at(x, ~ . == "b"), list(a = 1, c = 1))
+})

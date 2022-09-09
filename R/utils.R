@@ -17,6 +17,10 @@ at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_
   }
 
   if (is.numeric(at) || is.logical(at) ||is.character(at)) {
+    if (is.character(at) && !is.null(names(x))) {
+      at <- intersect(at, names(x))
+    }
+
     at <- vec_as_subscript(at, arg = "at", call = error_call)
     vec_as_location(
       at,

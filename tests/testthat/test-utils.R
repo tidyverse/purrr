@@ -59,7 +59,6 @@ test_that("errors on invalid subsetting vectors", {
     at_selection(x, c(FALSE, TRUE))
     at_selection(x, NA_real_)
     at_selection(x, 4)
-    at_selection(x, "z")
   })
 })
 

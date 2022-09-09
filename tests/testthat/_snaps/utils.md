@@ -21,12 +21,6 @@
       ! Can't subset elements past the end.
       i Location 4 doesn't exist.
       i There are only 3 elements.
-    Code
-      at_selection(x, "z")
-    Condition
-      Error:
-      ! Can't subset elements that don't exist.
-      x Element `z` doesn't exist.
 
 # validates its inputs
 
