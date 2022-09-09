@@ -1,6 +1,11 @@
 test_that("modify returns same type as input", {
   df1 <- data.frame(x = 1:3, y = 4:6)
-  expect_equal(modify(df1, length), data.frame(x = rep(3, 3), y = rep(3, 3)))
+  df2 <- data.frame(x = 2:4, y = 5:7)
+  expect_equal(modify(df1, ~ .x + 1), df2)
+
+  x1 <- vctrs::list_of(c(1, 2), c(3, 6, 9))
+  x2 <- vctrs::list_of(c(2, 3), c(4, 7, 10))
+  expect_equal(modify(x1, ~ .x + 1), x2)
 })
 
 test_that("modify_if/modify_at return same type as input", {

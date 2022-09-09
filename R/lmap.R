@@ -19,7 +19,8 @@
 #' @inheritParams map_if
 #' @inheritParams map_at
 #' @inheritParams map
-#' @return A list. There are no guarantees about the length.
+#' @return A list or data frame, matching `.x`. There are no guarantees about
+#'   the length.
 #' @family map variants
 #' @export
 #' @examples
@@ -86,5 +87,9 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
     out[[i]] <- res
   }
 
-  flatten(out)
+  if (is.data.frame(.x)) {
+    list_cbind(out)
+  } else {
+    list_flatten(out)
+  }
 }

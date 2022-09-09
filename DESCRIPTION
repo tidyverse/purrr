@@ -17,7 +17,7 @@ Imports:
     lifecycle (>= 1.0.1.9001),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
-    vctrs (>= 0.3.2)
+    vctrs (>= 0.4.1.9000)
 Suggests: 
     covr,
     dplyr (>= 0.7.8),
@@ -36,5 +36,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
-Remotes: 
-    r-lib/lifecycle
+Remotes:  
+    r-lib/lifecycle,
+    r-lib/vctrs
