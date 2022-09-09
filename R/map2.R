@@ -59,29 +59,7 @@ map2_chr <- function(.x, .y, .f, ...) {
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
 }
 
-#' @rdname map2
-#' @export
-map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `map2_dfr()`.")
 
-  .f <- as_mapper(.f, ...)
-  res <- map2(.x, .y, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
-}
-
-#' @rdname map2
-#' @export
-map2_dfc <- function(.x, .y, .f, ...) {
-  check_installed("dplyr", "for `map2_dfc()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- map2(.x, .y, .f, ...)
-  dplyr::bind_cols(res)
-}
-#' @rdname map2
-#' @export
-#' @usage NULL
-map2_df <- map2_dfr
 #' @export
 #' @rdname map2
 walk2 <- function(.x, .y, .f, ...) {

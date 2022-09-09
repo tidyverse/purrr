@@ -6,11 +6,8 @@
 \alias{map_chr}
 \alias{map_int}
 \alias{map_dbl}
-\alias{map_dfr}
-\alias{map_df}
-\alias{map_dfc}
 \alias{walk}
-\title{Apply a function to each element of a list or atomic vector}
+\title{Apply a function to each element of a vector}
 \usage{
 map(.x, .f, ...)
 
@@ -21,10 +18,6 @@ map_chr(.x, .f, ...)
 map_int(.x, .f, ...)
 
 map_dbl(.x, .f, ...)
-
-map_dfr(.x, .f, ..., .id = NULL)
-
-map_dfc(.x, .f, ...)
 
 walk(.x, .f, ...)
 }
@@ -48,50 +41,28 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
+The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: returns a list the same length as the input. It will be
-named if the input was named.
+\item No suffix: a list.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. The output of \code{.f} will only be
-automatically coerced upwards (i.e. logical -> integer -> double ->
-character). It will be named if the input was named.
-\item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.
-}
-
-\itemize{
+or character vector respectively. It will be named if the input was named.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in pipe.
+use in a pipe.
 }
 }
 \description{
 The map functions transform their input by applying a function to
-each element of a list or atomic vector and returning an object of the same length as the input.
+each element of a list or atomic vector and returning an object of
+the same length as the input.
 \itemize{
 \item \code{map()} always returns a list. See the \code{\link[=modify]{modify()}} family for
 versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
-atomic vector of the indicated type (or die trying).
-\item \code{map_dfr()} and \code{map_dfc()} return a data frame created by
-row-binding and column-binding respectively. They require dplyr
-to be installed. \code{map_df()} is an alias for \code{map_dfr()}.
-\item The returned values of \code{.f} must be of length one for each element
-of \code{.x}. If \code{.f} uses an extractor function shortcut, \code{.default}
-can be specified to handle values that are absent or empty. See
-\code{\link[=as_mapper]{as_mapper()}} for more on \code{.default}.
-}
-
-\itemize{
+atomic vector of the indicated type (or die trying). For these functions,
+\code{.f} must return a length-1 vector of the appropriate type.
 \item \code{walk()} calls \code{.f} for its side-effect and returns
 the input \code{.x}.
 }
@@ -153,15 +124,6 @@ mtcars \%>\%
   map(~ lm(mpg ~ wt, data = .x)) \%>\%
   map(summary) \%>\%
   map_dbl("r.squared")
-
-# If each element of the output is a data frame, use
-# map_dfr to row-bind them together:
-mtcars \%>\%
-  split(.$cyl) \%>\%
-  map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
-# (if you also want to preserve the variable names see
-# the broom package)
 }
 \seealso{
 \code{\link[=map_if]{map_if()}} for applying a function to only those elements
@@ -169,7 +131,6 @@ of \code{.x} that meet a specified condition.
 
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},

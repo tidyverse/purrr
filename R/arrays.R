@@ -59,7 +59,7 @@ array_branch <- function(array, margin = NULL) {
     }
     as.list(array)
   } else {
-    flatten(apply(array, margin, list))
+    list_flatten(apply(array, margin, list))
   }
 }
 

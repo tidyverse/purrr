@@ -1,7 +1,8 @@
-#' Function that return raw vectors
+#' Functions that return raw vectors
 #'
 #' @description
 #' `r lifecycle::badge("deprecated")`
+#'
 #' These variants of [map()], [map2()], [imap()], [pmap()], and [flatten()]
 #' return raw vectors. They have been deprecated because they are of limited
 #' use and you can now use `map_vec()` instead.
@@ -19,7 +20,9 @@ map_raw <- function(.x, .f, ...) {
 #' @rdname map_raw
 map2_raw <- function(.x, .y, .f, ...) {
   lifecycle::deprecate_warn("0.4.0", "map2_raw()", "map2_vec()")
-
+  map2_raw_(.x, .y, .f, ...)
+}
+map2_raw_ <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   .Call(map2_impl, environment(), ".x", ".y", ".f", "raw")
 }

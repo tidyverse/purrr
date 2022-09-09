@@ -70,6 +70,7 @@ reference:
     Getting or setting a single element.
   contents:
   - pluck
+  - chuck
   - pluck_depth
   - modify_in
   - attr_getter
@@ -79,7 +80,8 @@ reference:
     A grab bag of useful tools for manipulating vectors.
   contents:
   - accumulate
-  - flatten
+  - list_c
+  - list_flatten
   - list_modify
   - list_transpose
   - reduce

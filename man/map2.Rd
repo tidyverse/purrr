@@ -6,9 +6,6 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
-\alias{map2_dfr}
-\alias{map2_dfc}
-\alias{map2_df}
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
@@ -21,10 +18,6 @@ map2_int(.x, .y, .f, ...)
 map2_dbl(.x, .y, .f, ...)
 
 map2_chr(.x, .y, .f, ...)
-
-map2_dfr(.x, .y, .f, ..., .id = NULL)
-
-map2_dfc(.x, .y, .f, ...)
 
 walk2(.x, .y, .f, ...)
 }
@@ -46,30 +39,16 @@ of R.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
+The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: returns a list the same length as the input. It will be
-named if the input was named.
+\item No suffix: a list.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. The output of \code{.f} will only be
-automatically coerced upwards (i.e. logical -> integer -> double ->
-character). It will be named if the input was named.
-\item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.
-}
-
-\itemize{
+or character vector respectively. It will be named if the input was named.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in pipe.
+use in a pipe.
 }
 }
 \description{
@@ -92,7 +71,6 @@ map2(mods, by_cyl, predict)
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map_if}()},
 \code{\link{map}()},

@@ -6,9 +6,6 @@
 \alias{pmap_int}
 \alias{pmap_dbl}
 \alias{pmap_chr}
-\alias{pmap_dfr}
-\alias{pmap_dfc}
-\alias{pmap_df}
 \alias{pwalk}
 \title{Map over multiple input simultaneously (in "parallel")}
 \usage{
@@ -21,10 +18,6 @@ pmap_int(.l, .f, ...)
 pmap_dbl(.l, .f, ...)
 
 pmap_chr(.l, .f, ...)
-
-pmap_dfr(.l, .f, ..., .id = NULL)
-
-pmap_dfc(.l, .f, ...)
 
 pwalk(.l, .f, ...)
 }
@@ -52,30 +45,16 @@ you can only refer to arguments by position.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
+The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: returns a list the same length as the input. It will be
-named if the input was named.
+\item No suffix: a list.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. The output of \code{.f} will only be
-automatically coerced upwards (i.e. logical -> integer -> double ->
-character). It will be named if the input was named.
-\item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.
-}
-
-\itemize{
+or character vector respectively. It will be named if the input was named.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in pipe.
+use in a pipe.
 }
 }
 \description{
@@ -132,23 +111,10 @@ df <- data.frame(
 pmin(df$x, df$y)
 map2_dbl(df$x, df$y, min)
 pmap_dbl(df, min)
-
-# If you want to bind the results of your function rowwise, use:
-# map2_dfr() or pmap_dfr()
-ex_fun <- function(arg1, arg2){
-col <- arg1 + arg2
-x <- as.data.frame(col)
-}
-arg1 <- 1:4
-arg2 <- 10:13
-map2_dfr(arg1, arg2, ex_fun)
-# If instead you want to bind by columns, use map2_dfc() or pmap_dfc()
-map2_dfc(arg1, arg2, ex_fun)
 }
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
