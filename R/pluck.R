@@ -112,7 +112,7 @@ pluck <- function(.x, ..., .default = NULL) {
 pluck_exists <- function(.x, ...) {
   check_dots_unnamed()
 
-  !identical(pluck_raw(.x, list2(...), .default = zap()), zap())
+  !is_zap(pluck_raw(.x, list2(...), .default = zap()))
 }
 
 pluck_raw <- function(.x, index, .default = NULL) {
