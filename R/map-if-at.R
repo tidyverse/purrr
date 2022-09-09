@@ -95,6 +95,15 @@ map_at <- function(.x, .at, .f, ...) {
 #'
 #' # Equivalent to:
 #' map(x, map, paste, collapse = "/")
+#'
+#' # When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
+#' x <- list(1, list(1, list(1, list(1, 1))))
+#' str(x)
+#' str(map_depth(x, 4, ~ length(unlist(.x)), .ragged = TRUE))
+#' str(map_depth(x, 3, ~ length(unlist(.x)), .ragged = TRUE))
+#' str(map_depth(x, 2, ~ length(unlist(.x)), .ragged = TRUE))
+#' str(map_depth(x, 1, ~ length(unlist(.x)), .ragged = TRUE))
+#' str(map_depth(x, 0, ~ length(unlist(.x)), .ragged = TRUE))
 #' @export
 map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   if (!is_integerish(.depth, n = 1, finite = TRUE)) {
@@ -116,28 +125,20 @@ map_depth_rec <- function(.x,
                           .atomic) {
   if (.depth < 0) {
     abort("Invalid depth")
-  }
-
-  if (.atomic) {
-    if (!.ragged) {
-      abort("List not deep enough")
+  } else if (.depth == 0) {
+    .f(.x, ...)
+  } else if (.depth == 1) {
+    map(.x, .f, ...)
+  } else {
+    if (vec_is_list(.x)) {
+      map(.x, map_depth_rec, .depth - 1, .f, ..., .ragged = .ragged)
+    } else {
+      if (.ragged) {
+        map(.x, .f, ...)
+      } else {
+        abort("List not deep enough")
+      }
     }
-    return(map(.x, .f, ...))
   }
 
-  if (.depth == 0) {
-    return(.f(.x, ...))
-  }
-
-  if (.depth == 1) {
-    return(map(.x, .f, ...))
-  }
-
-  # Should this be replaced with a generic way of figuring out atomic
-  # types?
-  .atomic <- is_atomic(.x)
-
-  map(.x, function(x) {
-    map_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
-  })
 }

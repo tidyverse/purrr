@@ -51,6 +51,9 @@
 
 ## Features and fixes
 
+* `map_depth()` now uses `vec_is_list()` to determine if there's more depth
+  to recurse into, as opposed to `!is_atomic(.x)` (#920).
+
 * New `list_update()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
 

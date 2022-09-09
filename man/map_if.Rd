@@ -100,6 +100,15 @@ map_depth(x, 2, paste, collapse = "/")
 
 # Equivalent to:
 map(x, map, paste, collapse = "/")
+
+# When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
+x <- list(1, list(1, list(1, list(1, 1))))
+str(x)
+str(map_depth(x, 4, ~ length(unlist(.x)), .ragged = TRUE))
+str(map_depth(x, 3, ~ length(unlist(.x)), .ragged = TRUE))
+str(map_depth(x, 2, ~ length(unlist(.x)), .ragged = TRUE))
+str(map_depth(x, 1, ~ length(unlist(.x)), .ragged = TRUE))
+str(map_depth(x, 0, ~ length(unlist(.x)), .ragged = TRUE))
 }
 \seealso{
 Other map variants: 
