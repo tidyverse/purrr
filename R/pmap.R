@@ -74,18 +74,6 @@
 #' pmin(df$x, df$y)
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
-#'
-#' # If you want to bind the results of your function rowwise, use:
-#' # map2_dfr() or pmap_dfr()
-#' ex_fun <- function(arg1, arg2){
-#' col <- arg1 + arg2
-#' x <- as.data.frame(col)
-#' }
-#' arg1 <- 1:4
-#' arg2 <- 10:13
-#' map2_dfr(arg1, arg2, ex_fun)
-#' # If instead you want to bind by columns, use map2_dfc() or pmap_dfc()
-#' map2_dfc(arg1, arg2, ex_fun)
 pmap <- function(.l, .f, ...) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
@@ -135,31 +123,6 @@ pmap_chr <- function(.l, .f, ...) {
 
   .Call(pmap_impl, environment(), ".l", ".f", "character")
 }
-
-#' @rdname pmap
-#' @export
-pmap_dfr <- function(.l, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `pmap_dfr()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- pmap(.l, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
-}
-
-#' @rdname pmap
-#' @export
-pmap_dfc <- function(.l, .f, ...) {
-  check_installed("dplyr", "for `pmap_dfc()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- pmap(.l, .f, ...)
-  dplyr::bind_cols(res)
-}
-
-#' @rdname pmap
-#' @export
-#' @usage NULL
-pmap_df <- pmap_dfr
 
 #' @export
 #' @rdname pmap
