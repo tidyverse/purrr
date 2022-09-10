@@ -81,39 +81,3 @@ void stop_bad_element_length(SEXP x,
   Rf_eval(call, R_BaseEnv);
   Rf_error("Internal error: `stop_bad_element_length()` should have thrown earlier");
 }
-
-
-void stop_bad_element_vector(SEXP x,
-                             R_xlen_t index,
-                             SEXP expected_ptype,
-                             R_xlen_t expected_length,
-                             const char* what,
-                             const char* arg,
-                             bool recycle) {
-  SEXP fn = Rf_lang3(Rf_install(":::"),
-                     Rf_install("purrr"),
-                     Rf_install("stop_bad_element_vector"));
-
-  SEXP call = lang8(PROTECT(fn),
-                    x,
-                    PROTECT(Rf_ScalarReal(index)),
-                    expected_ptype,
-                    PROTECT(Rf_ScalarReal(expected_length)),
-                    what ? PROTECT(Rf_mkString(what)) : R_NilValue,
-                    arg ? PROTECT(Rf_mkString(arg)) : R_NilValue,
-                    PROTECT(Rf_ScalarLogical(recycle)));
-
-  PROTECT(call);
-
-  SEXP node = CDR(CDR(CDR(CDR(CDR(call)))));
-  SET_TAG(node, Rf_install("what"));
-
-  node = CDR(node);
-  SET_TAG(node, Rf_install("arg"));
-
-  node = CDR(node);
-  SET_TAG(node, Rf_install("recycle"));
-
-  Rf_eval(call, R_BaseEnv);
-  Rf_error("Internal error: `stop_bad_element_length()` should have thrown earlier");
-}

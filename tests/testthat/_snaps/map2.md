@@ -3,8 +3,8 @@
     Code
       map2_int(1:4, 5:8, range)
     Condition
-      Error in `stop_bad_type()`:
-      ! Result 1 must be a single integer, not an integer vector of length 2
+      Error in `purrr:::stop_bad_element_length()`:
+      ! Result 1 must have length 1, not 2
 
 # fails on non-vectors
 

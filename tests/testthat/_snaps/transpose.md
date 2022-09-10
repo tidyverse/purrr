@@ -11,7 +11,7 @@
     Code
       transpose(list(environment()))
     Condition
-      Error in `stop_bad_type()`:
+      Error in `purrr:::stop_bad_element_type()`:
       ! Element 1 must be a vector, not an environment
 
 ---
@@ -19,7 +19,7 @@
     Code
       transpose(list(list(), environment()))
     Condition
-      Error in `stop_bad_type()`:
+      Error in `purrr:::stop_bad_element_type()`:
       ! Element 2 must be a vector, not an environment
 
 # can't transpose expressions

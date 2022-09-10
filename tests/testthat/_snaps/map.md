@@ -19,6 +19,6 @@
     Code
       purrr::map_int(x, "a")
     Condition
-      Error in `stop_bad_type()`:
-      ! Result 2 must be a single integer, not an integer vector of length 2
+      Error in `purrr:::stop_bad_element_length()`:
+      ! Result 2 must have length 1, not 2
 

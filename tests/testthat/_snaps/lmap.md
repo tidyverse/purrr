@@ -4,5 +4,5 @@
       lmap(list(1), ~1)
     Condition
       Error in `stop_bad_type()`:
-      ! Element 1 must be list, not a double vector
+      ! Element 1 must be list, not a number
 

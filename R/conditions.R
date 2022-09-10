@@ -30,60 +30,45 @@ NULL
 stop_bad_type <- function(x,
                           expected,
                           ...,
-                          actual = NULL,
                           what = NULL,
-                          arg = NULL,
-                          message = NULL,
-                          .subclass = NULL) {
-  what <- what %||% what_bad_object(arg) %||% "Object"
-  actual <- actual %||% friendly_type_of(x)
-  message <- message %||% sprintf(
-    "%s must be %s, not %s",
-    what,
-    expected,
-    actual
-  )
+                          arg = NULL) {
 
-  abort(
-    message,
-    x = x,
-    expected = expected,
-    actual = actual,
-    what = what,
-    arg = arg,
-    ...,
-    .subclass = c(.subclass, "purrr_error_bad_type")
-  )
+  what <- what %||% what_bad_object(arg)
+  cli::cli_abort("{what} must be {expected}, not {.obj_type_friendly {x}}")
 }
 
 stop_bad_element_type <- function(x,
                                   index,
                                   expected,
                                   ...,
-                                  actual = NULL,
                                   what = NULL,
-                                  arg = NULL,
-                                  message = NULL,
-                                  .subclass = NULL) {
-  stopifnot(is_integerish(index, n = 1, finite = TRUE))
+                                  arg = NULL) {
+  what <- what_bad_element(what, arg, index)
+  cli::cli_abort("{what} must be {expected}, not {.obj_type_friendly {x}}")
+}
+
+
+stop_bad_element_length <- function(x,
+                                    index,
+                                    expected_length,
+                                    ...,
+                                    what = NULL,
+                                    arg = NULL,
+                                    recycle = FALSE) {
   what <- what_bad_element(what, arg, index)
 
-  stop_bad_type(
-    x,
-    expected,
-    actual = actual,
-    what = what,
-    arg = arg,
-    index = index,
-    ...,
-    message = message,
-    .subclass = c(.subclass, "purrr_error_bad_element_type")
-  )
+  if (recycle) {
+    expected <- sprintf("1 or %s", expected_length)
+  } else {
+    expected <- expected_length
+  }
+
+  cli::cli_abort("{what} must have length {expected}, not {length(x)}")
 }
 
 what_bad_object <- function(arg) {
   if (is_null(arg)) {
-    NULL
+    "Object"
   } else if (is_string(arg)) {
     sprintf("`%s`", arg)
   } else {
@@ -91,6 +76,8 @@ what_bad_object <- function(arg) {
   }
 }
 what_bad_element <- function(what, arg, index) {
+  stopifnot(is_integerish(index, n = 1, finite = TRUE))
+
   if (is_null(arg)) {
     where <- ""
   } else {
@@ -101,118 +88,3 @@ what_bad_element <- function(what, arg, index) {
   sprintf("%s %d%s", what, index, where)
 }
 
-
-#' Error conditions for bad lengths
-#'
-#' @inheritParams purrr-conditions-type
-#' @param expected_length The expected length as a number. The actual length
-#'   is computed with `length(x)`.
-#' @param recycle Whether `x` is also allowed to have length 1.
-#'
-#' @keywords internal
-#' @name purrr-conditions-length
-#' @noRd
-NULL
-
-stop_bad_element_length <- function(x,
-                                    index,
-                                    expected_length,
-                                    ...,
-                                    what = NULL,
-                                    arg = NULL,
-                                    message = NULL,
-                                    recycle = FALSE,
-                                    .subclass = NULL) {
-  stopifnot(is_integerish(index, n = 1, finite = TRUE))
-  what <- what_bad_element(what, arg, index)
-  what <- what %||% what_bad_object(arg) %||% "Vector"
-
-  if (recycle) {
-    expected <- sprintf("1 or %s", expected_length)
-  } else {
-    expected <- as.character(expected_length)
-  }
-  actual <- length(x)
-
-  message <- message %||% sprintf(
-    "%s must have length %s, not %s",
-    what,
-    expected,
-    actual
-  )
-
-  abort(
-    message,
-    x = x,
-    expected_length = expected_length,
-    what = what,
-    arg = arg,
-    recycle = recycle,
-    ...,
-    .subclass = c(.subclass, "purrr_error_bad_element_length", "purrr_error_bad_length")
-  )
-
-}
-
-#' Error conditions for bad vectors
-#'
-#' @inheritParams purrr-conditions-length
-#' @param expected_ptype The expected prototype of `x`, i.e. an empty
-#'   vector of the expected type.
-#'
-#' @keywords internal
-#' @name purrr-conditions-vector
-#' @noRd
-NULL
-
-stop_bad_element_vector <- function(x,
-                                    index,
-                                    expected_ptype,
-                                    expected_length,
-                                    ...,
-                                    what = NULL,
-                                    arg = NULL,
-                                    message = NULL,
-                                    recycle = FALSE,
-                                    .subclass = NULL) {
-  stopifnot(is_integerish(index, n = 1, finite = TRUE))
-  what <- what_bad_element(what, arg, index)
-  what <- what %||% what_bad_object(arg) %||% "Vector"
-
-  expected <- friendly_vector_type(expected_ptype, expected_length, recycle)
-  actual <- friendly_vector_type(x, length(x))
-
-  stop_bad_type(
-    x,
-    expected,
-    actual = actual,
-    what = what,
-    arg = arg,
-    recycle = recycle,
-    message = message,
-    .subclass = c(.subclass, "purrr_error_bad_element_vector", "purrr_error_bad_vector")
-  )
-}
-
-friendly_vector_type <- function(x, length = NULL, recycle = FALSE) {
-  length <- length %||% length(x)
-
-  if (length == 1) {
-    return(friendly_type_of_element(x))
-  }
-
-  if (is.object(x)) {
-    classes <- paste0("`", paste_classes(x), "`")
-    type <- sprintf("a vector of class %s and", classes)
-  } else {
-    type <- friendly_type_of(x)
-  }
-
-  if (recycle) {
-    length <- sprintf("1 or %s", length)
-  } else {
-    length <- as.character(length)
-  }
-
-  sprintf("%s of length %s", type, length)
-}

@@ -11,7 +11,7 @@
     Code
       pmap(list(environment()), identity)
     Condition
-      Error in `stop_bad_type()`:
+      Error in `purrr:::stop_bad_element_type()`:
       ! Element 1 of `.l` must be a vector, not an environment
 
 # inputs are recycled

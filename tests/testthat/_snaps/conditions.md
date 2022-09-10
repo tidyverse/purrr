@@ -4,7 +4,7 @@
       stop_bad_type(NA, "`NULL`")
     Condition
       Error in `stop_bad_type()`:
-      ! Object must be `NULL`, not a logical vector
+      ! Object must be `NULL`, not `NA`
 
 ---
 
@@ -12,7 +12,7 @@
       stop_bad_type(NA, "`NULL`", arg = ".foo")
     Condition
       Error in `stop_bad_type()`:
-      ! `.foo` must be `NULL`, not a logical vector
+      ! `.foo` must be `NULL`, not `NA`
 
 ---
 
@@ -27,7 +27,7 @@
     Code
       stop_bad_element_type(1:3, 3, "a foobaz")
     Condition
-      Error in `stop_bad_type()`:
+      Error in `stop_bad_element_type()`:
       ! Element 3 must be a foobaz, not an integer vector
 
 ---
@@ -35,15 +35,15 @@
     Code
       stop_bad_element_type(1:3, 3, "a foobaz", actual = "a quux")
     Condition
-      Error in `stop_bad_type()`:
-      ! Element 3 must be a foobaz, not a quux
+      Error in `stop_bad_element_type()`:
+      ! Element 3 must be a foobaz, not an integer vector
 
 ---
 
     Code
       stop_bad_element_type(1:3, 3, "a foobaz", arg = "..arg")
     Condition
-      Error in `stop_bad_type()`:
+      Error in `stop_bad_element_type()`:
       ! Element 3 of `..arg` must be a foobaz, not an integer vector
 
 # stop_bad_element_type() accepts `what`
@@ -51,7 +51,7 @@
     Code
       stop_bad_element_type(1:3, 3, "a foobaz", what = "Result")
     Condition
-      Error in `stop_bad_type()`:
+      Error in `stop_bad_element_type()`:
       ! Result 3 must be a foobaz, not an integer vector
 
 # stop_bad_element_length() constructs error message
@@ -85,28 +85,4 @@
     Condition
       Error in `stop_bad_element_length()`:
       ! Result 8 of `.foo` must have length 1 or 10, not 3
-
-# stop_bad_element_vector() constructs error message
-
-    Code
-      stop_bad_element_vector(1:3, 3, character(), 1)
-    Condition
-      Error in `stop_bad_type()`:
-      ! Element 3 must be a single string, not an integer vector of length 3
-
----
-
-    Code
-      stop_bad_element_vector(1:3, 20, 1:2, 10, what = "Result", recycle = TRUE)
-    Condition
-      Error in `stop_bad_type()`:
-      ! Result 20 must be an integer vector of length 1 or 10, not an integer vector of length 3
-
----
-
-    Code
-      stop_bad_element_vector(list(1, 2), 1, logical(), 10, arg = ".quux", recycle = TRUE)
-    Condition
-      Error in `stop_bad_type()`:
-      ! Element 1 of `.quux` must be a logical vector of length 1 or 10, not a list of length 2
 

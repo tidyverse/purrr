@@ -55,7 +55,7 @@
       flatten(1)
     Condition
       Error in `purrr:::stop_bad_type()`:
-      ! `.x` must be a list, not a double vector
+      ! `.x` must be a list, not a number
 
 ---
 
@@ -63,14 +63,14 @@
       flatten_dbl(1)
     Condition
       Error in `purrr:::stop_bad_type()`:
-      ! `.x` must be a list, not a double vector
+      ! `.x` must be a list, not a number
 
 # contents of list must be supported types
 
     Code
       flatten(list(quote(a)))
     Condition
-      Error in `stop_bad_type()`:
+      Error in `purrr:::stop_bad_element_type()`:
       ! Element 1 of `.x` must be a vector, not a symbol
 
 ---
@@ -78,7 +78,7 @@
     Code
       flatten(list(expression(a)))
     Condition
-      Error in `stop_bad_type()`:
+      Error in `purrr:::stop_bad_element_type()`:
       ! Element 1 of `.x` must be a vector, not an expression vector
 
 # must be a list
@@ -87,5 +87,5 @@
       flatten_lgl(1)
     Condition
       Error in `purrr:::stop_bad_type()`:
-      ! `.x` must be a list, not a double vector
+      ! `.x` must be a list, not a number
 

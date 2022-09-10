@@ -28,8 +28,8 @@
     Code
       pluck(1, TRUE)
     Condition
-      Error in `stop_bad_type()`:
-      ! Index 1 must be a character or numeric vector, not a logical vector
+      Error in `purrr:::stop_bad_element_type()`:
+      ! Index 1 must be a character or numeric vector, not `TRUE`
 
 # validate index even when indexing NULL
 
@@ -41,40 +41,40 @@
     Code
       pluck(NULL, TRUE)
     Condition
-      Error in `stop_bad_type()`:
-      ! Index 1 must be a character or numeric vector, not a logical vector
+      Error in `purrr:::stop_bad_element_type()`:
+      ! Index 1 must be a character or numeric vector, not `TRUE`
 
 # pluck errors with invalid indices
 
     Code
       pluck(environment(), 1)
     Condition
-      Error in `stop_bad_type()`:
-      ! Index 1 must be a single string, not a single double
+      Error in `purrr:::stop_bad_element_type()`:
+      ! Element 1 of `Index` must be string, not a number
 
 ---
 
     Code
       pluck(environment(), letters)
     Condition
-      Error in `stop_bad_type()`:
-      ! Index 1 must be a single string, not a character vector of length 26
+      Error in `purrr:::stop_bad_element_length()`:
+      ! Index 1 must have length 1, not 26
 
 ---
 
     Code
       pluck(A, 1)
     Condition
-      Error in `stop_bad_type()`:
-      ! Index 1 must be a single string, not a single double
+      Error in `purrr:::stop_bad_element_type()`:
+      ! Element 1 of `Index` must be string, not a number
 
 ---
 
     Code
       pluck(A, letters)
     Condition
-      Error in `stop_bad_type()`:
-      ! Index 1 must be a single string, not a character vector of length 26
+      Error in `purrr:::stop_bad_element_length()`:
+      ! Index 1 must have length 1, not 26
 
 # assign_in() requires at least one location
 
