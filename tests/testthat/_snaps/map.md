@@ -19,6 +19,6 @@
     Code
       purrr::map_int(x, "a")
     Condition
-      Error:
+      Error in `purrr::map_int()`:
       ! Result 2 must have length 1, not 2
 

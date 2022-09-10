@@ -30,7 +30,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
   int index_n = Rf_length(index);
   if (index_n != 1) {
-    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false);
+    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false, R_BaseEnv);
   }
 
   switch (TYPEOF(index)) {
@@ -103,7 +103,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   default:
-    stop_bad_element_type(index, i + 1, "a character or numeric vector", "Index", NULL);
+    stop_bad_element_type(index, i + 1, "a character or numeric vector", "Index", NULL, R_BaseEnv);
   }
 }
 
@@ -142,10 +142,10 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP) {
-    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL);
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, R_BaseEnv);
   }
   if (Rf_length(index_i) != 1) {
-    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false);
+    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, R_BaseEnv);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -165,10 +165,10 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP) {
-    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL);
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, R_BaseEnv);
   }
   if (Rf_length(index_i) != 1) {
-    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false);
+    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, R_BaseEnv);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -204,7 +204,7 @@ static bool is_function(SEXP x) {
 
 SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
   if (TYPEOF(index) != VECSXP) {
-    stop_bad_type(index, "a list", NULL, "where");
+    stop_bad_type(index, "a list", NULL, "where", R_BaseEnv);
   }
 
   PROTECT_INDEX idx;
