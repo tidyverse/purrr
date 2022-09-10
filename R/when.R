@@ -66,8 +66,7 @@ when <- function(., ...) {
   named  <- if (is.null(names)) rep(FALSE, length(dots)) else names != ""
 
   if (sum(!named) == 0)
-    stop("At least one matching condition is needed.",
-         call. = FALSE)
+    cli::cli_abort("At least one matching condition is needed.")
 
   is_formula <-
     vapply(dots,
