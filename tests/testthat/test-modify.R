@@ -20,13 +20,13 @@ test_that("modify_if/modify_at return same type as input", {
 })
 
 test_that("modify_at requires a named object", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(unname(df1), "x", toupper))
+  x <- list(1, 2)
+  expect_snapshot(modify_at(x, "x", toupper), error = TRUE)
 })
 
 test_that("modify_at operates on character and numeric indexing", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(df1, TRUE, toupper))
+  x <- list(x = 1, y = 2)
+  expect_snapshot(modify_at(x, mean, toupper), error = TRUE)
 })
 
 test_that("negative .at omits locations", {
@@ -85,8 +85,8 @@ test_that("modify2() recycles arguments", {
 })
 
 test_that("modify_if() requires predicate functions", {
-  expect_error(modify_if(list(1, 2), ~ NA, ~ "foo"), ", not a missing value")
-  expect_error(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), ", not a logical vector of length 2")
+  expect_snapshot(modify_if(list(1, 2), ~ NA, ~ "foo"), error = TRUE)
+  expect_snapshot(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), error = TRUE)
 })
 
 test_that("`.else` modifies false elements", {
@@ -127,9 +127,8 @@ test_that("modify_depth modifies values at specified depth", {
   expect_equal(modify_depth(x1, 3, length), list(list(list(3, 3))))
   expect_equal(modify_depth(x1, -1, length), list(list(list(3, 3))))
   expect_equal(modify_depth(x1, 4, length), list(list(list(c(1, 1, 1), c(1, 1, 1)))))
-  expect_error(modify_depth(x1, 5, length), "List not deep enough")
-  expect_error(modify_depth(x1, 6, length), "List not deep enough")
-  expect_error(modify_depth(x1, -5, length), "Invalid depth")
+  expect_snapshot(modify_depth(x1, 5, length), error = TRUE)
+  expect_snapshot(modify_depth(x1, -5, length), error = TRUE)
 })
 
 test_that(".ragged = TRUE operates on leaves", {
@@ -153,7 +152,6 @@ test_that("vectorised operations on the recursive and atomic levels yield same r
   exp <- list(list(list(11:13, 14:16)))
   expect_identical(modify_depth(x, 3, `+`, 10L), exp)
   expect_identical(modify_depth(x, 4, `+`, 10L), exp)
-  expect_error(modify_depth(x, 5, `+`, 10L), "not deep enough")
 })
 
 test_that("modify_at() can use tidyselect", {

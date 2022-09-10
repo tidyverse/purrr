@@ -22,8 +22,8 @@ test_that("has_element checks whether a list contains an object", {
 })
 
 test_that("`detect()` requires a predicate function", {
-  expect_error(detect(list(1:2, 2), is.na), "must return a single `TRUE` or `FALSE`")
-  expect_error(detect(list(1:2, 2), function(...) NA), "not a missing value")
+  expect_snapshot(detect(list(1:2, 2), is.na), error = TRUE)
+  expect_snapshot(detect(list(1:2, 2), function(...) NA), error = TRUE)
 })
 
 

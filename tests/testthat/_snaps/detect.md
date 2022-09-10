@@ -1,3 +1,19 @@
+# `detect()` requires a predicate function
+
+    Code
+      detect(list(1:2, 2), is.na)
+    Condition
+      Error in `detect()`:
+      ! `.p` must return a single `TRUE` or `FALSE`, not a logical vector.
+
+---
+
+    Code
+      detect(list(1:2, 2), function(...) NA)
+    Condition
+      Error in `detect()`:
+      ! `.p` must return a single `TRUE` or `FALSE`, not `NA`.
+
 # `.right` argument is retired
 
     Code
