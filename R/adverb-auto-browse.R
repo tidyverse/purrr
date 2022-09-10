@@ -43,9 +43,6 @@ auto_browse <- function(.f) {
           frame <- sys.frame(7)
           browse_in_frame(frame)
         }
-      },
-      interrupt = function(e) {
-        stop("Terminated by user", call. = FALSE)
       }
     )
   }

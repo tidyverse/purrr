@@ -51,9 +51,6 @@ capture_error <- function(code, otherwise = NULL, quiet = TRUE) {
         message("Error: ", e$message)
 
       list(result = otherwise, error = e)
-    },
-    interrupt = function(e) {
-      stop("Terminated by user", call. = FALSE)
     }
   )
 }
