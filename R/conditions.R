@@ -47,6 +47,7 @@ stop_bad_element_type <- function(x,
   cli::cli_abort("{what} must be {expected}, not {.obj_type_friendly {x}}")
 }
 
+# Helpers -----------------------------------------------------------------
 
 stop_bad_element_length <- function(x,
                                     index,
@@ -75,6 +76,7 @@ what_bad_object <- function(arg) {
     stop_bad_type(arg, "`NULL` or a string", arg = "arg")
   }
 }
+
 what_bad_element <- function(what, arg, index) {
   stopifnot(is_integerish(index, n = 1, finite = TRUE))
 
