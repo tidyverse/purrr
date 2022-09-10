@@ -31,10 +31,13 @@ stop_bad_type <- function(x,
                           expected,
                           ...,
                           what = NULL,
-                          arg = NULL) {
-
+                          arg = NULL,
+                          call = caller_env()) {
   what <- what %||% what_bad_object(arg)
-  cli::cli_abort("{what} must be {expected}, not {.obj_type_friendly {x}}")
+  cli::cli_abort(
+    "{what} must be {expected}, not {.obj_type_friendly {x}}",
+    call = call
+  )
 }
 
 stop_bad_element_type <- function(x,
@@ -42,9 +45,13 @@ stop_bad_element_type <- function(x,
                                   expected,
                                   ...,
                                   what = NULL,
-                                  arg = NULL) {
+                                  arg = NULL,
+                                  call = caller_env()) {
   what <- what_bad_element(what, arg, index)
-  cli::cli_abort("{what} must be {expected}, not {.obj_type_friendly {x}}")
+  cli::cli_abort(
+    "{what} must be {expected}, not {.obj_type_friendly {x}}",
+    call = call
+  )
 }
 
 stop_bad_element_length <- function(x,
@@ -53,7 +60,8 @@ stop_bad_element_length <- function(x,
                                     ...,
                                     what = NULL,
                                     arg = NULL,
-                                    recycle = FALSE) {
+                                    recycle = FALSE,
+                                    call = caller_env()) {
   what <- what_bad_element(what, arg, index)
 
   if (recycle) {
@@ -62,7 +70,10 @@ stop_bad_element_length <- function(x,
     expected <- expected_length
   }
 
-  cli::cli_abort("{what} must have length {expected}, not {length(x)}")
+  cli::cli_abort(
+    "{what} must have length {expected}, not {length(x)}",
+    call = call
+  )
 }
 
 # Helpers -----------------------------------------------------------------

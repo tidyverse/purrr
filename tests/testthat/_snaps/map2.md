@@ -3,7 +3,7 @@
     Code
       map2_int(1:4, 5:8, range)
     Condition
-      Error in `purrr:::stop_bad_element_length()`:
+      Error:
       ! Result 1 must have length 1, not 2
 
 # fails on non-vectors
@@ -11,7 +11,7 @@
     Code
       map2(environment(), "a", identity)
     Condition
-      Error in `purrr:::stop_bad_type()`:
+      Error:
       ! `.x` must be a vector, not an environment
 
 ---
@@ -19,7 +19,7 @@
     Code
       map2("a", environment(), identity)
     Condition
-      Error in `purrr:::stop_bad_type()`:
+      Error:
       ! `.y` must be a vector, not an environment
 
 # map2 recycles inputs
