@@ -1,3 +1,19 @@
+# empty input returns init or error
+
+    Code
+      reduce(list())
+    Condition
+      Error in `reduce()`:
+      ! `.x` is empty, and no `.init` supplied.
+
+# requires equal length vectors
+
+    Code
+      reduce2(1:3, 1, `+`)
+    Condition
+      Error in `reduce2()`:
+      ! `.y` must have length 2, not 1.
+
 # right variants are retired
 
     Code

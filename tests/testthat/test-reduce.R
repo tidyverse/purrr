@@ -1,5 +1,6 @@
 test_that("empty input returns init or error", {
-  expect_error(reduce(list()), "no `.init` supplied")
+  expect_snapshot(reduce(list()), error = TRUE)
+
   expect_equal(reduce(list(), `+`, .init = 0), 0)
 })
 
@@ -139,6 +140,10 @@ test_that("basic application works", {
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
 })
 
+test_that("requires equal length vectors", {
+  expect_snapshot(reduce2(1:3, 1, `+`), error = TRUE)
+})
+
 test_that("reduce returns original input if it was length one", {
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   expect_equal(reduce(x[1], paste), x[[1]])
@@ -223,7 +228,6 @@ test_that("reduce2_right still works", {
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   y <- list(c(6, 7), c(8, 9))
   expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
-  expect_error(reduce2_right(y, x, paste))
 })
 
 test_that("accumulate_right still works", {
