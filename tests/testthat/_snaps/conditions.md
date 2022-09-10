@@ -44,7 +44,7 @@
       stop_bad_element_type(1:3, 3, "a foobaz", arg = "..arg")
     Condition
       Error in `stop_bad_element_type()`:
-      ! Element 3 of `..arg` must be a foobaz, not an integer vector
+      ! `..arg[[3]]` must be a foobaz, not an integer vector
 
 # stop_bad_element_type() accepts `what`
 
@@ -68,7 +68,7 @@
       stop_bad_element_length(1:3, 8, 10, arg = ".foo")
     Condition
       Error in `stop_bad_element_length()`:
-      ! Element 8 of `.foo` must have length 10, not 3
+      ! `.foo[[8]]` must have length 10, not 3
 
 ---
 
@@ -76,7 +76,7 @@
       stop_bad_element_length(1:3, 8, 10, arg = ".foo", what = "Result")
     Condition
       Error in `stop_bad_element_length()`:
-      ! Result 8 of `.foo` must have length 10, not 3
+      ! `.foo[[8]]` must have length 10, not 3
 
 ---
 
@@ -84,5 +84,5 @@
       stop_bad_element_length(1:3, 8, 10, arg = ".foo", what = "Result", recycle = TRUE)
     Condition
       Error in `stop_bad_element_length()`:
-      ! Result 8 of `.foo` must have length 1 or 10, not 3
+      ! `.foo[[8]]` must have length 1 or 10, not 3
 

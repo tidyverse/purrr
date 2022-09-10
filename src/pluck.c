@@ -142,7 +142,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP) {
-    stop_bad_element_type(index_i, i + 1, "string", NULL, "Index");
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL);
   }
   if (Rf_length(index_i) != 1) {
     stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false);
@@ -165,7 +165,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
 
 SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP) {
-    stop_bad_element_type(index_i, i + 1, "string", NULL, "Index");
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL);
   }
   if (Rf_length(index_i) != 1) {
     stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false);

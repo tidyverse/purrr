@@ -80,13 +80,12 @@ what_bad_object <- function(arg) {
 what_bad_element <- function(what, arg, index) {
   stopifnot(is_integerish(index, n = 1, finite = TRUE))
 
-  if (is_null(arg)) {
-    where <- ""
-  } else {
-    where <- sprintf(" of `%s`", as_string(arg))
-  }
-
   what <- what %||% "Element"
-  sprintf("%s %d%s", what, index, where)
+
+  if (is_null(arg)) {
+    sprintf("%s %d", what, index)
+  } else {
+    sprintf("`%s[[%d]]`", arg, index)
+  }
 }
 

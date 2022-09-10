@@ -50,7 +50,7 @@
       pluck(environment(), 1)
     Condition
       Error in `purrr:::stop_bad_element_type()`:
-      ! Element 1 of `Index` must be string, not a number
+      ! Index 1 must be a string, not a number
 
 ---
 
@@ -66,7 +66,7 @@
       pluck(A, 1)
     Condition
       Error in `purrr:::stop_bad_element_type()`:
-      ! Element 1 of `Index` must be string, not a number
+      ! Index 1 must be a string, not a number
 
 ---
 

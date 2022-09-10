@@ -71,7 +71,7 @@
       flatten(list(quote(a)))
     Condition
       Error in `purrr:::stop_bad_element_type()`:
-      ! Element 1 of `.x` must be a vector, not a symbol
+      ! `.x[[1]]` must be a vector, not a symbol
 
 ---
 
@@ -79,7 +79,7 @@
       flatten(list(expression(a)))
     Condition
       Error in `purrr:::stop_bad_element_type()`:
-      ! Element 1 of `.x` must be a vector, not an expression vector
+      ! `.x[[1]]` must be a vector, not an expression vector
 
 # must be a list
 

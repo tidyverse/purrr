@@ -12,7 +12,7 @@
       pmap(list(environment()), identity)
     Condition
       Error in `purrr:::stop_bad_element_type()`:
-      ! Element 1 of `.l` must be a vector, not an environment
+      ! `.l[[1]]` must be a vector, not an environment
 
 # inputs are recycled
 
@@ -20,7 +20,7 @@
       pmap(list(1:2, 1:3), identity)
     Condition
       Error in `purrr:::stop_bad_element_length()`:
-      ! Element 2 of `.l` must have length 1 or 2, not 3
+      ! `.l[[2]]` must have length 1 or 2, not 3
 
 ---
 
@@ -28,5 +28,5 @@
       pmap(list(1:2, integer()), identity)
     Condition
       Error in `purrr:::stop_bad_element_length()`:
-      ! Element 2 of `.l` must have length 1 or 2, not 0
+      ! `.l[[2]]` must have length 1 or 2, not 0
 
