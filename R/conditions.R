@@ -114,14 +114,17 @@ what_bad_element <- function(what, arg, index) {
 #' @noRd
 NULL
 
-stop_bad_length <- function(x,
-                            expected_length,
-                            ...,
-                            what = NULL,
-                            arg = NULL,
-                            message = NULL,
-                            recycle = FALSE,
-                            .subclass = NULL) {
+stop_bad_element_length <- function(x,
+                                    index,
+                                    expected_length,
+                                    ...,
+                                    what = NULL,
+                                    arg = NULL,
+                                    message = NULL,
+                                    recycle = FALSE,
+                                    .subclass = NULL) {
+  stopifnot(is_integerish(index, n = 1, finite = TRUE))
+  what <- what_bad_element(what, arg, index)
   what <- what %||% what_bad_object(arg) %||% "Vector"
 
   if (recycle) {
@@ -146,33 +149,9 @@ stop_bad_length <- function(x,
     arg = arg,
     recycle = recycle,
     ...,
-    .subclass = c(.subclass, "purrr_error_bad_length")
+    .subclass = c(.subclass, "purrr_error_bad_element_length", "purrr_error_bad_length")
   )
-}
 
-stop_bad_element_length <- function(x,
-                                    index,
-                                    expected_length,
-                                    ...,
-                                    what = NULL,
-                                    arg = NULL,
-                                    message = NULL,
-                                    recycle = FALSE,
-                                    .subclass = NULL) {
-  stopifnot(is_integerish(index, n = 1, finite = TRUE))
-  what <- what_bad_element(what, arg, index)
-
-  stop_bad_length(
-    x,
-    expected_length,
-    what = what,
-    arg = arg,
-    index = index,
-    ...,
-    recycle = recycle,
-    message = message,
-    .subclass = c(.subclass, "purrr_error_bad_element_length")
-  )
 }
 
 #' Error conditions for bad vectors
@@ -184,31 +163,7 @@ stop_bad_element_length <- function(x,
 #' @keywords internal
 #' @name purrr-conditions-vector
 #' @noRd
-stop_bad_vector <- function(x,
-                            expected_ptype,
-                            expected_length = NULL,
-                            ...,
-                            what = NULL,
-                            arg = NULL,
-                            message = NULL,
-                            recycle = FALSE,
-                            .subclass = NULL) {
-  what <- what %||% what_bad_object(arg) %||% "Vector"
-
-  expected <- friendly_vector_type(expected_ptype, expected_length, recycle)
-  actual <- friendly_vector_type(x, length(x))
-
-  stop_bad_type(
-    x,
-    expected,
-    actual = actual,
-    what = what,
-    arg = arg,
-    recycle = recycle,
-    message = message,
-    .subclass = c(.subclass, "purrr_error_bad_vector")
-  )
-}
+NULL
 
 stop_bad_element_vector <- function(x,
                                     index,
@@ -222,18 +177,20 @@ stop_bad_element_vector <- function(x,
                                     .subclass = NULL) {
   stopifnot(is_integerish(index, n = 1, finite = TRUE))
   what <- what_bad_element(what, arg, index)
+  what <- what %||% what_bad_object(arg) %||% "Vector"
 
-  stop_bad_vector(
+  expected <- friendly_vector_type(expected_ptype, expected_length, recycle)
+  actual <- friendly_vector_type(x, length(x))
+
+  stop_bad_type(
     x,
-    expected_ptype,
-    expected_length,
+    expected,
+    actual = actual,
     what = what,
     arg = arg,
-    index = index,
-    ...,
     recycle = recycle,
     message = message,
-    .subclass = c(.subclass, "purrr_error_bad_element_vector")
+    .subclass = c(.subclass, "purrr_error_bad_element_vector", "purrr_error_bad_vector")
   )
 }
 

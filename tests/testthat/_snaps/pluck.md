@@ -13,17 +13,17 @@
     Code
       pluck(1, 1:2)
     Condition
-      Error in `stop_bad_length()`:
+      Error in `purrr:::stop_bad_element_length()`:
       ! Index 1 must have length 1, not 2
     Code
       pluck(1, integer())
     Condition
-      Error in `stop_bad_length()`:
+      Error in `purrr:::stop_bad_element_length()`:
       ! Index 1 must have length 1, not 0
     Code
       pluck(1, NULL)
     Condition
-      Error in `stop_bad_length()`:
+      Error in `purrr:::stop_bad_element_length()`:
       ! Index 1 must have length 1, not 0
     Code
       pluck(1, TRUE)
@@ -36,7 +36,7 @@
     Code
       pluck(NULL, 1:2)
     Condition
-      Error in `stop_bad_length()`:
+      Error in `purrr:::stop_bad_element_length()`:
       ! Index 1 must have length 1, not 2
     Code
       pluck(NULL, TRUE)
