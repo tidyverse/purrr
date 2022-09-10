@@ -16,6 +16,14 @@
       x Problematic argument:
       * a = 1
 
+# special indexes raise errors
+
+    Code
+      chuck(x, integer(0))
+    Condition
+      Error in `purrr:::stop_bad_element_length()`:
+      ! Index 1 must have length 1, not 0
+
 # indices outside of vector length raise errors
 
     Code

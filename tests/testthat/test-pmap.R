@@ -1,6 +1,6 @@
 test_that("input must be a list of vectors", {
-  expect_bad_type_error(pmap(environment(), identity), "`.l` must be a list, not an environment")
-  expect_bad_type_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
+  expect_snapshot(pmap(environment(), identity), error = TRUE)
+  expect_snapshot(pmap(list(environment()), identity), error = TRUE)
 })
 
 test_that("inputs are recycled", {

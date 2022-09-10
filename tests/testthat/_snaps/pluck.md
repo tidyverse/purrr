@@ -44,6 +44,38 @@
       Error in `stop_bad_type()`:
       ! Index 1 must be a character or numeric vector, not a logical vector
 
+# pluck errors with invalid indices
+
+    Code
+      pluck(environment(), 1)
+    Condition
+      Error in `stop_bad_type()`:
+      ! Index 1 must be a single string, not a single double
+
+---
+
+    Code
+      pluck(environment(), letters)
+    Condition
+      Error in `stop_bad_type()`:
+      ! Index 1 must be a single string, not a character vector of length 26
+
+---
+
+    Code
+      pluck(A, 1)
+    Condition
+      Error in `stop_bad_type()`:
+      ! Index 1 must be a single string, not a single double
+
+---
+
+    Code
+      pluck(A, letters)
+    Condition
+      Error in `stop_bad_type()`:
+      ! Index 1 must be a single string, not a character vector of length 26
+
 # assign_in() requires at least one location
 
     Code

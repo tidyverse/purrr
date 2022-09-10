@@ -14,15 +14,15 @@ test_that("flatten functions are deprecated", {
 test_that("input must be a list", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_bad_type_error(flatten(1), "`.x` must be a list, not a double vector")
-  expect_bad_type_error(flatten_dbl(1), "`.x` must be a list, not a double vector")
+  expect_snapshot(flatten(1), error = TRUE)
+  expect_snapshot(flatten_dbl(1), error = TRUE)
 })
 
 test_that("contents of list must be supported types", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_bad_element_type_error(flatten(list(quote(a))), "Element 1 of `.x` must be a vector, not a symbol")
-  expect_bad_element_type_error(flatten(list(expression(a))), "Element 1 of `.x` must be a vector, not an expression vector")
+  expect_snapshot(flatten(list(quote(a))), error = TRUE)
+  expect_snapshot(flatten(list(expression(a))), error = TRUE)
 })
 
 test_that("each second level element becomes first level element", {
@@ -84,7 +84,7 @@ test_that("child names beat parent names", {
 test_that("must be a list", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_bad_type_error(flatten_lgl(1), "must be a list")
+  expect_snapshot(flatten_lgl(1), error = TRUE)
 })
 
 test_that("can flatten all atomic vectors", {

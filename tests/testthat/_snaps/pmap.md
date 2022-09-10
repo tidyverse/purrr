@@ -1,3 +1,19 @@
+# input must be a list of vectors
+
+    Code
+      pmap(environment(), identity)
+    Condition
+      Error in `purrr:::stop_bad_type()`:
+      ! `.l` must be a list, not an environment
+
+---
+
+    Code
+      pmap(list(environment()), identity)
+    Condition
+      Error in `stop_bad_type()`:
+      ! Element 1 of `.l` must be a vector, not an environment
+
 # inputs are recycled
 
     Code
