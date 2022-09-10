@@ -19,7 +19,7 @@ test_that("filtering works", {
 
 test_that("filtering requires a predicate function", {
   local_options(lifecycle_verbosity = "quiet")
-  expect_error(cross2(1:3, 1:3, .filter = ~ c(TRUE, TRUE)), "not a logical vector of length 2")
+  expect_snapshot(cross2(1:3, 1:3, .filter = ~ c(TRUE, TRUE)), error = TRUE)
 })
 
 test_that("filtering fails when filter function doesn't return a logical", {

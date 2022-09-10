@@ -98,10 +98,14 @@ map_at <- function(.x, .at, .f, ...) {
 #' @export
 map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   if (!is_integerish(.depth, n = 1, finite = TRUE)) {
-    abort("`.depth` must be a single number")
+    depth <- .depth
+    cli::cli_abort("{.arg .depth} must be a single number, not {.obj_type_friendly {depth}}.")
   }
   if (.depth < 0) {
     .depth <- pluck_depth(.x) + .depth
+    if (.depth < 0) {
+      cli::cli_abort("`Negative {.arg .depth} must be smaller that {.code pluck_depth(.x)}")
+    }
   }
 
   .f <- as_mapper(.f, ...)
@@ -113,11 +117,8 @@ map_depth_rec <- function(.x,
                           .f,
                           ...,
                           .ragged,
-                          .atomic) {
-  if (.depth < 0) {
-    abort("Invalid depth")
-  }
-
+                          .atomic,
+                          .error_call = caller_env()) {
   if (.atomic) {
     if (!.ragged) {
       abort("List not deep enough")
