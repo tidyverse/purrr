@@ -1,4 +1,5 @@
 test_that("when chooses the correct action", {
+  local_options(lifecycle_verbosity = "quiet")
 
   x <-
     1:5 %>%
@@ -32,6 +33,8 @@ test_that("when chooses the correct action", {
 })
 
 test_that("named arguments work with when", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <-
     1:10 %>%
     when(
@@ -45,6 +48,8 @@ test_that("named arguments work with when", {
 })
 
 test_that("default values work without a formula", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- iris %>%
     subset(Sepal.Length > 10) %>%
     when(
@@ -56,5 +61,7 @@ test_that("default values work without a formula", {
 })
 
 test_that("error when named arguments have no matching conditions", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_error(1:5 %>% when(a = sum(.) < 5 ~ 3))
 })

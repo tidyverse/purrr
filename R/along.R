@@ -21,5 +21,7 @@
 #' @rdname along
 #' @export
 list_along <- function(x) {
+  lifecycle::deprecate_warn("0.4.0", "list_along()")
+
   vector("list", length(x))
 }

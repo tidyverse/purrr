@@ -63,6 +63,8 @@
 #'        ~ stop("Expected fewer than 10 rows."))
 #' @export
 when <- function(., ...) {
+  lifecycle::deprecate_warn("0.4.0", "when()", "dplyr::case_when()")
+
   dots   <- list(...)
   names  <- names(dots)
   named  <- if (is.null(names)) rep(FALSE, length(dots)) else names != ""
