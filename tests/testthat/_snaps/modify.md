@@ -20,7 +20,7 @@
       modify_if(list(1, 2), ~NA, ~"foo")
     Condition
       Error in `modify_if()`:
-      ! `.p` must return a single `TRUE` or `FALSE`, not `NA`.
+      ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 
 ---
 
@@ -28,7 +28,7 @@
       modify_if(1:2, ~ c(TRUE, FALSE), ~"foo")
     Condition
       Error in `modify_if_atomic()`:
-      ! `.p` must return a single `TRUE` or `FALSE`, not a logical vector.
+      ! `.p()` must return a single `TRUE` or `FALSE`, not a logical vector.
 
 # modify_depth modifies values at specified depth
 

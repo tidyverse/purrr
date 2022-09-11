@@ -4,7 +4,7 @@
       keep(1:3, ~NA)
     Condition
       Error in `keep()`:
-      ! `.p` must return a single `TRUE` or `FALSE`, not `NA`.
+      ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 
 ---
 
@@ -12,5 +12,5 @@
       discard(1:3, ~ 1:3)
     Condition
       Error in `discard()`:
-      ! `.p` must return a single `TRUE` or `FALSE`, not an integer vector.
+      ! `.p()` must return a single `TRUE` or `FALSE`, not an integer vector.
 

@@ -121,7 +121,7 @@ as_predicate <- function(.fn, ..., .mapper, .allow_na = FALSE, .error_call = cal
         return(NA)
       }
       cli::cli_abort(
-        "{.arg .p} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
+        "{.fn .p} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
         call = .error_call
       )
     }

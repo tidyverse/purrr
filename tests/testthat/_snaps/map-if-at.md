@@ -4,7 +4,7 @@
       map_if(1:3, ~NA, ~"foo")
     Condition
       Error in `map_if()`:
-      ! `.p` must return a single `TRUE` or `FALSE`, not `NA`.
+      ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 
 # map_depth modifies values at specified depth
 
