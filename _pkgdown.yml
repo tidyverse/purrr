@@ -64,6 +64,7 @@ reference:
   - has_element
   - head_while
   - keep
+  - keep_at
 
 - title: Plucking
   desc: >
