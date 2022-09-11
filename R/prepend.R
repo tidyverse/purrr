@@ -1,5 +1,11 @@
 #' Prepend a vector
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function has been deprecated since it's not related to the core purpose
+#' of purrr.
+#'
 #' This is a companion to [append()] to help merging two
 #' lists or atomic vectors. `prepend()` is a clearer semantic
 #' signal than `c()` that a vector is to be merged at the beginning of
@@ -10,6 +16,7 @@
 #' @param before a subscript, before which the values are to be appended. If
 #'   `NULL`, values will be appended at the beginning even for `x` of length 0.
 #' @return A merged vector.
+#' @keywords internal
 #' @export
 #' @examples
 #' x <- as.list(1:3)

@@ -1,16 +1,14 @@
 #' Create a list of given length
 #'
 #' @description
+#' `r lifecycle::badge("deprecated")`
 #'
-#' `r lifecycle::badge("questioning")`
+#' This function has been deprecated since it's not related to the core purpose
+#' of purrr.
 #'
 #' It can be useful to create an empty list that you plan to fill later. This is
 #' similar to the idea of [seq_along()], which creates a vector of the same
 #' length as its input.
-#'
-#' @details
-#'
-#' This function might change to [vctrs::vec_init()].
 #'
 #' @param x A vector.
 #' @return A list of the same length as `x`.

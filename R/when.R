@@ -2,8 +2,10 @@
 #' associated with the first valid match.
 #'
 #' @description
+#' `r lifecycle::badge("deprecated")`
 #'
-#' `r lifecycle::badge("questioning")`
+#' This function has been deprecated since it's not related to the core purpose
+#' of purrr. You can now use [dplyr::case_when()] instead.
 #'
 #' `when` is a flavour of pattern matching (or an if-else abstraction) in
 #' which a value is matched against a sequence of condition-action sets. When a

@@ -39,9 +39,16 @@ at_selection <- function(nm, .at){
 
 #' Generate random sample from a Bernoulli distribution
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function has been deprecated since it's not related to the core purpose
+#' of purrr.
+#'
 #' @param n Number of samples
 #' @param p Probability of getting `TRUE`
 #' @return A logical vector
+#' @keywords internal
 #' @export
 #' @examples
 #' rbernoulli(10)
@@ -52,8 +59,15 @@ rbernoulli <- function(n, p = 0.5) {
 
 #' Generate random sample from a discrete uniform distribution
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' This function has been deprecated since it's not related to the core purpose
+#' of purrr.
+#'
 #' @param n Number of samples to draw.
 #' @param a,b Range of the distribution (inclusive).
+#' @keywords internal
 #' @export
 #' @examples
 #' table(rdunif(1e3, 10))
