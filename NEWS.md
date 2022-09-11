@@ -49,6 +49,10 @@
 * `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
   appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
 
+* `prepend()`, `rdunif()`, `rbernoulli()`, `when()`, and `list_along()` have 
+  all been deprecated (#925). It's now clear that they don't align with the
+  core purpose of purrr.
+
 ## Features and fixes
 
 * New `list_update()` which is similar to `list_modify()` but doesn't work
