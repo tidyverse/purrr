@@ -14,22 +14,22 @@
       pluck(1, 1:2)
     Condition
       Error:
-      ! Index 1 must have length 1, not 2
+      ! Index 1 must have length 1, not 2.
     Code
       pluck(1, integer())
     Condition
       Error:
-      ! Index 1 must have length 1, not 0
+      ! Index 1 must have length 1, not 0.
     Code
       pluck(1, NULL)
     Condition
       Error:
-      ! Index 1 must have length 1, not 0
+      ! Index 1 must have length 1, not 0.
     Code
       pluck(1, TRUE)
     Condition
       Error:
-      ! Index 1 must be a character or numeric vector, not `TRUE`
+      ! Index 1 must be a character or numeric vector, not `TRUE`.
 
 # validate index even when indexing NULL
 
@@ -37,12 +37,12 @@
       pluck(NULL, 1:2)
     Condition
       Error:
-      ! Index 1 must have length 1, not 2
+      ! Index 1 must have length 1, not 2.
     Code
       pluck(NULL, TRUE)
     Condition
       Error:
-      ! Index 1 must be a character or numeric vector, not `TRUE`
+      ! Index 1 must be a character or numeric vector, not `TRUE`.
 
 # pluck errors with invalid indices
 
@@ -50,7 +50,7 @@
       pluck(environment(), 1)
     Condition
       Error:
-      ! Index 1 must be a string, not a number
+      ! Index 1 must be a string, not a number.
 
 ---
 
@@ -58,7 +58,7 @@
       pluck(environment(), letters)
     Condition
       Error:
-      ! Index 1 must have length 1, not 26
+      ! Index 1 must have length 1, not 26.
 
 ---
 
@@ -66,7 +66,7 @@
       pluck(A, 1)
     Condition
       Error:
-      ! Index 1 must be a string, not a number
+      ! Index 1 must be a string, not a number.
 
 ---
 
@@ -74,7 +74,7 @@
       pluck(A, letters)
     Condition
       Error:
-      ! Index 1 must have length 1, not 26
+      ! Index 1 must have length 1, not 26.
 
 # assign_in() requires at least one location
 

@@ -4,7 +4,7 @@
       map2_int(1:4, 5:8, range)
     Condition
       Error in `map2_int()`:
-      ! Result 1 must have length 1, not 2
+      ! Result 1 must have length 1, not 2.
 
 # fails on non-vectors
 
@@ -12,7 +12,7 @@
       map2(environment(), "a", identity)
     Condition
       Error:
-      ! `.x` must be a vector, not an environment
+      ! `.x` must be a vector, not an environment.
 
 ---
 
@@ -20,7 +20,7 @@
       map2("a", environment(), identity)
     Condition
       Error:
-      ! `.y` must be a vector, not an environment
+      ! `.y` must be a vector, not an environment.
 
 # map2 recycles inputs
 

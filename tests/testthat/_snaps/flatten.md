@@ -55,7 +55,7 @@
       flatten(1)
     Condition
       Error:
-      ! `.x` must be a list, not a number
+      ! `.x` must be a list, not a number.
 
 ---
 
@@ -63,7 +63,7 @@
       flatten_dbl(1)
     Condition
       Error:
-      ! `.x` must be a list, not a number
+      ! `.x` must be a list, not a number.
 
 # contents of list must be supported types
 
@@ -71,7 +71,7 @@
       flatten(list(quote(a)))
     Condition
       Error:
-      ! `.x[[1]]` must be a vector, not a symbol
+      ! `.x[[1]]` must be a vector, not a symbol.
 
 ---
 
@@ -79,7 +79,7 @@
       flatten(list(expression(a)))
     Condition
       Error:
-      ! `.x[[1]]` must be a vector, not an expression vector
+      ! `.x[[1]]` must be a vector, not an expression vector.
 
 # must be a list
 
@@ -87,5 +87,5 @@
       flatten_lgl(1)
     Condition
       Error:
-      ! `.x` must be a list, not a number
+      ! `.x` must be a list, not a number.
 
