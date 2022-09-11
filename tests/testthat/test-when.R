@@ -1,3 +1,9 @@
+test_that("when is deprecated", {
+  expect_snapshot({
+    . <- when(1:5 < 3 ~ 1, ~ 0)
+  })
+})
+
 test_that("when chooses the correct action", {
   local_options(lifecycle_verbosity = "quiet")
 

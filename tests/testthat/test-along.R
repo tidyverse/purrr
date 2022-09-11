@@ -1,3 +1,9 @@
+test_that("list-along is deprecated", {
+  expect_snapshot({
+    . <- list_along(1:4)
+  })
+})
+
 test_that("list_along works", {
   local_options(lifecycle_verbosity = "quiet")
 

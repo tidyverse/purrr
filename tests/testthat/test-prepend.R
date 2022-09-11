@@ -1,3 +1,9 @@
+test_that("prepend is deprecated", {
+  expect_snapshot({
+    . <- prepend(1, 2)
+  })
+})
+
 test_that("prepend is clearer version of merging with c()", {
   local_options(lifecycle_verbosity = "quiet")
 

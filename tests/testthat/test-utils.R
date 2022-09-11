@@ -1,3 +1,10 @@
+test_that("rdunif and rbernoulli are deprecated", {
+  expect_snapshot({
+    . <- rdunif(10, 1)
+    . <- rbernoulli(10)
+  })
+})
+
 test_that("rbernoulli is a special case of rbinom", {
   local_options(lifecycle_verbosity = "quiet")
 
