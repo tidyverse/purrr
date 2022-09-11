@@ -11,7 +11,7 @@
     Code
       map2(environment(), "a", identity)
     Condition
-      Error:
+      Error in `map2()`:
       ! `.x` must be a vector, not an environment.
 
 ---
@@ -19,7 +19,7 @@
     Code
       map2("a", environment(), identity)
     Condition
-      Error:
+      Error in `map2()`:
       ! `.y` must be a vector, not an environment.
 
 # map2 recycles inputs

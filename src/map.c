@@ -23,12 +23,12 @@ void copy_names(SEXP from, SEXP to) {
   UNPROTECT(1);
 }
 
-void check_vector(SEXP x, const char *name) {
+void check_vector(SEXP x, const char *name, SEXP env) {
   if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
     return;
   }
 
-  stop_bad_type(x, "a vector", NULL, name, R_BaseEnv);
+  stop_bad_type(x, "a vector", NULL, name, env);
 }
 
 // call must involve i
@@ -69,7 +69,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x");
+  check_vector(x_val, ".x", env);
 
   int n = Rf_length(x_val);
   if (n == 0) {
@@ -105,9 +105,9 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x");
+  check_vector(x_val, ".x", env);
   SEXP y_val = PROTECT(Rf_eval(y, env));
-  check_vector(y_val, ".y");
+  check_vector(y_val, ".y", env);
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx != ny && nx != 1 && ny != 1) {
