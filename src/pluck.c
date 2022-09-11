@@ -22,7 +22,7 @@ SEXP obj_names(SEXP x, bool strict);
 
 // S3 objects must implement a `length()` method in the case of a
 // numeric index and a `names()` method for the character case
-int find_offset(SEXP x, SEXP index, int i, bool strict) {
+int find_offset(SEXP x, SEXP index, int i, bool strict, SEXP env) {
   int n = obj_length(x, strict);
   if (n < 0) {
     return -1;
@@ -30,7 +30,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
   int index_n = Rf_length(index);
   if (index_n != 1) {
-    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false, R_BaseEnv);
+    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false, env);
   }
 
   switch (TYPEOF(index)) {
@@ -103,12 +103,12 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   default:
-    stop_bad_element_type(index, i + 1, "a character or numeric vector", "Index", NULL, R_BaseEnv);
+    stop_bad_element_type(index, i + 1, "a character or numeric vector", "Index", NULL, env);
   }
 }
 
-SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
-  int offset = find_offset(x, index_i, i, strict);
+SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict, SEXP env) {
+  int offset = find_offset(x, index_i, i, strict, env);
   if (check_offset(offset, index_i, strict)) {
     return R_NilValue;
   }
@@ -140,12 +140,12 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   return R_NilValue;
 }
 
-SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
+SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict, SEXP env) {
   if (TYPEOF(index_i) != STRSXP) {
-    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, R_BaseEnv);
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, env);
   }
   if (Rf_length(index_i) != 1) {
-    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, R_BaseEnv);
+    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, env);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -163,12 +163,12 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   return out;
 }
 
-SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
+SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict, SEXP env) {
   if (TYPEOF(index_i) != STRSXP) {
-    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, R_BaseEnv);
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, env);
   }
   if (Rf_length(index_i) != 1) {
-    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, R_BaseEnv);
+    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, env);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -202,9 +202,9 @@ static bool is_function(SEXP x) {
   }
 }
 
-SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
+SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg, SEXP env) {
   if (TYPEOF(index) != VECSXP) {
-    stop_bad_type(index, "a list", NULL, "where", R_BaseEnv);
+    stop_bad_type(index, "a list", NULL, "where", env);
   }
 
   PROTECT_INDEX idx;
@@ -223,14 +223,14 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     }
     // Assume all S3 objects implement the vector interface
     if (OBJECT(x) && TYPEOF(x) != S4SXP) {
-      x = extract_vector(x, index_i, i, strict);
+      x = extract_vector(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       continue;
     }
 
     switch (TYPEOF(x)) {
     case NILSXP:
-      find_offset(x, index_i, i, strict);
+      find_offset(x, index_i, i, strict, env);
       if (strict) {
         Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
       }
@@ -244,15 +244,15 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     case RAWSXP:
     case VECSXP:
     case EXPRSXP:
-      x = extract_vector(x, index_i, i, strict);
+      x = extract_vector(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       break;
     case ENVSXP:
-      x = extract_env(x, index_i, i, strict);
+      x = extract_env(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       break;
     case S4SXP:
-      x = extract_s4(x, index_i, i, strict);
+      x = extract_s4(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       break;
     default:

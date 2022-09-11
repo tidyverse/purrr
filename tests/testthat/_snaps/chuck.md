@@ -21,7 +21,7 @@
     Code
       chuck(x, integer(0))
     Condition
-      Error:
+      Error in `chuck()`:
       ! Index 1 must have length 1, not 0.
 
 # indices outside of vector length raise errors
