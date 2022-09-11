@@ -3,14 +3,11 @@
 \name{map_depth}
 \alias{map_depth}
 \alias{modify_depth}
-\alias{modify_depth.default}
 \title{Map/modify elements at given depth}
 \usage{
 map_depth(.x, .depth, .f, ..., .ragged = FALSE)
 
 modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
-
-\method{modify_depth}{default}(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

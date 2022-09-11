@@ -49,6 +49,9 @@
 * `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
   appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
 
+* `modify_depth()` is no longer a generic. This makes it more consistent
+  with `map_depth()`.
+
 ## Features and fixes
 
 * `map_depth()` now uses `vec_is_list()` to determine if there's more depth

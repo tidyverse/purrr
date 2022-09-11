@@ -105,9 +105,7 @@ map_depth_rec <- function(.x,
       }
     }
   }
-
 }
-
 
 
 #' @rdname map_depth
@@ -116,14 +114,6 @@ modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   if (!is_integerish(.depth, n = 1, finite = TRUE)) {
     abort("`.depth` must be a single number")
   }
-  UseMethod("modify_depth")
-}
-
-#' @rdname map_depth
-#' @export
-modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  force(.ragged)
-
   if (.depth < 0) {
     .depth <- pluck_depth(.x) + .depth
   }
