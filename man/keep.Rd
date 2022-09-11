@@ -4,7 +4,7 @@
 \alias{keep}
 \alias{discard}
 \alias{compact}
-\title{Keep or discard elements using a predicate function}
+\title{Keep/discard elements based on their values}
 \usage{
 keep(.x, .p, ...)
 

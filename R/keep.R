@@ -1,4 +1,4 @@
-#' Keep or discard elements using a predicate function
+#' Keep/discard elements based on their values
 #'
 #' `keep()` selects all elements where `.p` evaluates to `TRUE`;
 #' `discard()` selects all elements where `.p` evaluates to `FALSE`.
@@ -61,17 +61,17 @@ compact <- function(.x, .p = identity) {
 }
 
 
-#' Keep or discard elements using names or positions
+#' Keep/discard elements based on their name/position
 #'
 #' @inheritParams map_at
-#' @seealso [keep()]/[discard()] to keep/discard elements by value
+#' @seealso [keep()]/[discard()] to keep/discard elements by value.
 #' @export
 #' @examples
 #' x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)
 #' x %>% keep_at(letters)
 #' x %>% discard_at(letters)
 #'
-#' # Can also use function
+#' # Can also use a function
 #' x %>% keep_at(~ nchar(.x) == 3)
 #' x %>% discard_at(~ nchar(.x) == 3)
 keep_at <- function(x, at) {

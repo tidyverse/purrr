@@ -3,7 +3,7 @@
 \name{keep_at}
 \alias{keep_at}
 \alias{discard_at}
-\title{Keep or discard elements using names or positions}
+\title{Keep/discard elements based on their name/position}
 \usage{
 keep_at(x, at)
 
@@ -21,17 +21,17 @@ installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 }
 \description{
-Keep or discard elements using names or positions
+Keep/discard elements based on their name/position
 }
 \examples{
 x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)
 x \%>\% keep_at(letters)
 x \%>\% discard_at(letters)
 
-# Can also use function
+# Can also use a function
 x \%>\% keep_at(~ nchar(.x) == 3)
 x \%>\% discard_at(~ nchar(.x) == 3)
 }
 \seealso{
-\code{\link[=keep]{keep()}}/\code{\link[=discard]{discard()}} to keep/discard elements by value
+\code{\link[=keep]{keep()}}/\code{\link[=discard]{discard()}} to keep/discard elements by value.
 }
