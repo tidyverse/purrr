@@ -79,34 +79,8 @@ map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   }
 
   .f <- as_mapper(.f, ...)
-  map_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
+  map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged)
 }
-
-map_depth_rec <- function(.x,
-                          .depth,
-                          .f,
-                          ...,
-                          .ragged,
-                          .atomic) {
-  if (.depth < 0) {
-    abort("Invalid depth")
-  } else if (.depth == 0) {
-    .f(.x, ...)
-  } else if (.depth == 1) {
-    map(.x, .f, ...)
-  } else {
-    if (vec_is_list(.x)) {
-      map(.x, map_depth_rec, .depth - 1, .f, ..., .ragged = .ragged)
-    } else {
-      if (.ragged) {
-        map(.x, .f, ...)
-      } else {
-        abort("List not deep enough")
-      }
-    }
-  }
-}
-
 
 #' @rdname map_depth
 #' @export
@@ -119,39 +93,44 @@ modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
   }
 
   .f <- as_mapper(.f, ...)
-  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
+  map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged)
 }
 
-modify_depth_rec <- function(.x, .depth, .f,
-                             ...,
-                             .ragged = FALSE,
-                             .atomic = FALSE) {
+map_depth_rec <- function(.fmap,
+                          .x,
+                          .depth,
+                          .f,
+                          ...,
+                          .ragged) {
   if (.depth < 0) {
     abort("Invalid depth")
-  }
-
-  if (.atomic) {
-    if (!.ragged) {
-      abort("List not deep enough")
+  } else if (.depth == 0) {
+    if (identical(.fmap, map)) {
+      .f(.x, ...)
+    } else {
+      .x[] <- .f(.x, ...)
+      .x
     }
-    return(modify(.x, .f, ...))
+  } else if (.depth == 1) {
+    .fmap(.x, .f, ...)
+  } else {
+    if (is.list(.x)) {
+      .fmap(.x, function(x) {
+        map_depth_rec(
+          .fmap = .fmap,
+          .x = x,
+          .depth = .depth - 1,
+          .f = .f,
+          ...,
+          .ragged = .ragged
+        )
+      })
+    } else {
+      if (.ragged) {
+        .fmap(.x, .f, ...)
+      } else {
+        abort("List not deep enough")
+      }
+    }
   }
-
-  if (.depth == 0) {
-    # TODO vctrs: Use `vec_cast()` on result?
-    .x[] <- .f(.x, ...)
-    return(.x)
-  }
-
-  if (.depth == 1) {
-    return(modify(.x, .f, ...))
-  }
-
-  # Should this be replaced with a generic way of figuring out atomic
-  # types?
-  .atomic <- is_atomic(.x)
-
-  modify(.x, function(x) {
-    modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
-  })
 }
