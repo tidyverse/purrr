@@ -82,7 +82,9 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
     }
 
     if (!is.list(res)) {
-      stop_bad_type(res, "list", what = paste0("Element ", i))
+      cli::cli_abort(
+        "`.f(.x[[{i}}]])` must return a list, not {.obj_type_friendly {res}}"
+      )
     }
     out[[i]] <- res
   }

@@ -4,5 +4,5 @@
       lmap(list(1), ~1)
     Condition
       Error in `lmap_helper()`:
-      ! Element 1 must be list, not a number.
+      ! `.f(.x[[1}]])` must return a list, not a number
 

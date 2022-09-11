@@ -3,3 +3,9 @@ test_that("insistently() resets rate state", {
   expect_snapshot_error(fn(), class = "purrr_error_rate_excess")
   expect_snapshot_error(fn(), class = "purrr_error_rate_excess")
 })
+
+test_that("validates inputs", {
+  expect_snapshot(error = TRUE, {
+    insistently(mean, 10)
+  })
+})

@@ -62,7 +62,9 @@ insistently <- function(f, rate = rate_backoff(), quiet = TRUE) {
   force(quiet)
 
   if (!is_rate(rate)) {
-    stop_bad_type(rate, "a rate", arg = "rate")
+    cli::cli_abort(
+      "{.arg rate} must be a rate object, not {.obj_type_friendly {rate}}."
+    )
   }
 
   function(...) {
