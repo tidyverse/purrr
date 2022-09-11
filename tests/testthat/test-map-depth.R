@@ -9,9 +9,8 @@ test_that("map_depth modifies values at specified depth", {
   expect_equal(map_depth(x1, 3, length), list(list(list(3, 3))))
   expect_equal(map_depth(x1, -1, length), list(list(list(3, 3))))
   expect_equal(map_depth(x1, 4, length), list(list(list(list(1, 1, 1), list(1, 1, 1)))))
-  expect_error(map_depth(x1, 5, length), "List not deep enough") #FIXME
-  expect_error(map_depth(x1, 6, length), "List not deep enough")
-  expect_error(map_depth(x1, -5, length), "Invalid depth")
+  expect_snapshot(map_depth(x1, 6, length), error = TRUE)
+  expect_snapshot(map_depth(x1, -5, length), error = TRUE)
 })
 
 test_that("map_depth() with .ragged = TRUE operates on leaves", {
@@ -41,9 +40,8 @@ test_that("modify_depth modifies values at specified depth", {
   expect_equal(modify_depth(x1, 3, length), list(list(list(3, 3))))
   expect_equal(modify_depth(x1, -1, length), list(list(list(3, 3))))
   expect_equal(modify_depth(x1, 4, length), list(list(list(c(1, 1, 1), c(1, 1, 1)))))
-  expect_error(modify_depth(x1, 5, length), "List not deep enough")
-  expect_error(modify_depth(x1, 6, length), "List not deep enough")
-  expect_error(modify_depth(x1, -5, length), "Invalid depth")
+  expect_snapshot(modify_depth(x1, 5, length), error = TRUE)
+  expect_snapshot(modify_depth(x1, -5, length), error = TRUE)
 })
 
 test_that(".ragged = TRUE operates on leaves", {
