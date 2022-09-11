@@ -14,6 +14,14 @@
       Error in `reduce2()`:
       ! `.y` must have length 2, not 1.
 
+# requires init if `.x` is empty
+
+    Code
+      reduce2(list())
+    Condition
+      Error in `reduce2()`:
+      ! `.x` is empty, and no `.init` supplied.
+
 # right variants are retired
 
     Code

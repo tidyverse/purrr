@@ -257,7 +257,7 @@ accum_index <- function(out, left) {
 }
 
 reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .error_call = caller_env()) {
-  out <- reduce_init(.x, .init, left = .left, error_call = error_call)
+  out <- reduce_init(.x, .init, left = .left, error_call = .error_call)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
 
