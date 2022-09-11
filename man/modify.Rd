@@ -9,8 +9,6 @@
 \alias{modify_at.default}
 \alias{modify2}
 \alias{imodify}
-\alias{modify_depth}
-\alias{modify_depth.default}
 \title{Modify elements selectively}
 \usage{
 modify(.x, .f, ...)
@@ -28,10 +26,6 @@ modify_at(.x, .at, .f, ...)
 modify2(.x, .y, .f, ...)
 
 imodify(.x, .f, ...)
-
-modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
-
-\method{modify_depth}{default}(.x, .depth, .f, ..., .ragged = .depth < 0)
 }
 \arguments{
 \item{.x}{A vector.}
@@ -63,18 +57,6 @@ installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 
 \item{.y}{A vector, usually the same length as \code{.x}.}
-
-\item{.depth}{Level of \code{.x} to map on. Use a negative value to count up
-from the lowest level of the list.
-\itemize{
-\item \code{modify_depth(x, 0, fun)} is equivalent to \code{x[] <- fun(x)}.
-\item \code{modify_depth(x, 1, fun)} is equivalent to \code{x <- modify(x, fun)}
-\item \code{modify_depth(x, 2, fun)} is equivalent to \code{x <- modify(x, ~ modify(., fun))}
-}}
-
-\item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
-at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
-no elements at depth \code{.depth}.}
 }
 \value{
 An object the same class as \code{.x}
@@ -91,8 +73,6 @@ modifies elements given by names or positions.
 \item \code{modify2()} modifies the elements of \code{.x} but also passes the
 elements of \code{.y} to \code{.f}, just like \code{\link[=map2]{map2()}}. \code{imodify()} passes
 the names or the indices to \code{.f} like \code{\link[=imap]{imap()}} does.
-\item \code{modify_depth()} only modifies elements at a given level of a
-nested data structure.
 \item \code{\link[=modify_in]{modify_in()}} modifies a single element in a \code{\link[=pluck]{pluck()}} location.
 }
 }
@@ -151,42 +131,6 @@ modify_if(iris, is.factor, as.character)
 # Specify an alternative with the `.else` argument:
 modify_if(iris, is.factor, as.character, .else = as.integer)
 
-
-# Modify at specified depth ---------------------------
-l1 <- list(
-  obj1 = list(
-    prop1 = list(param1 = 1:2, param2 = 3:4),
-    prop2 = list(param1 = 5:6, param2 = 7:8)
-  ),
-  obj2 = list(
-    prop1 = list(param1 = 9:10, param2 = 11:12),
-    prop2 = list(param1 = 12:14, param2 = 15:17)
-  )
-)
-
-# In the above list, "obj" is level 1, "prop" is level 2 and "param"
-# is level 3. To apply sum() on all params, we map it at depth 3:
-l1 \%>\% modify_depth(3, sum) \%>\% str()
-
-# Note that vectorised operations will yield the same result when
-# applied at the list level as when applied at the atomic result.
-# The former is more efficient because it takes advantage of
-# vectorisation.
-l1 \%>\% modify_depth(3, `+`, 100L)
-l1 \%>\% modify_depth(4, `+`, 100L)
-
-# modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
-l1 \%>\% modify(c("prop1", "param2")) \%>\% str()
-
-# But what if we want to pluck all param2 elements? Then we need to
-# act at a lower level:
-l1 \%>\% modify_depth(2, "param2") \%>\% str()
-
-# modify_depth() can be with other purrr functions to make them operate at
-# a lower level. Here we ask pmap() to map paste() simultaneously over all
-# elements of the objects at the second level. paste() is effectively
-# mapped at level 3.
-l1 \%>\% modify_depth(2, ~ pmap(., paste, sep = " / ")) \%>\% str()
 }
 \seealso{
 Other map variants: 

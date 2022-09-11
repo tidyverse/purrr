@@ -47,6 +47,7 @@ reference:
     `imap()` (index map) is a shortcut for the common pattern `map2(x, names(x))`.
   contents:
   - map_if
+  - map_depth
   - map2
   - pmap
   - modify

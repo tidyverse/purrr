@@ -3,14 +3,11 @@
 \name{map_if}
 \alias{map_if}
 \alias{map_at}
-\alias{map_depth}
 \title{Apply a function to each element of a vector conditionally}
 \usage{
 map_if(.x, .p, .f, ..., .else = NULL)
 
 map_at(.x, .at, .f, ...)
-
-map_depth(.x, .depth, .f, ..., .ragged = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -50,18 +47,6 @@ exlude. Only those elements corresponding to \code{.at} will be modified.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
-
-\item{.depth}{Level of \code{.x} to map on. Use a negative value to
-count up from the lowest level of the list.
-\itemize{
-\item \code{map_depth(x, 0, fun)} is equivalent to \code{fun(x)}.
-\item \code{map_depth(x, 1, fun)} is equivalent to \code{x <- map(x, fun)}
-\item \code{map_depth(x, 2, fun)} is equivalent to \code{x <- map(x, ~ map(., fun))}
-}}
-
-\item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
-at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
-no elements at depth \code{.depth}.}
 }
 \description{
 The functions \code{map_if()} and \code{map_at()} take \code{.x} as input, apply
@@ -72,11 +57,6 @@ list of the same length as the input.
 which elements of \code{.x} are transformed with \code{.f}.
 \item \code{map_at()} takes a vector of names or positions \code{.at} to specify
 which elements of \code{.x} are transformed with \code{.f}.
-}
-
-\itemize{
-\item \code{map_depth()} allows to apply \code{.f} to a specific
-depth level of a nested vector.
 }
 }
 \examples{
@@ -91,24 +71,6 @@ iris \%>\% map_at(c(4, 5), is.numeric)
 
 # Use vector of names to specify which elements to change:
 iris \%>\% map_at("Species", toupper)
-
-# Use `map_depth()` to recursively traverse nested vectors and map
-# a function at a certain depth:
-x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
-str(x)
-map_depth(x, 2, paste, collapse = "/")
-
-# Equivalent to:
-map(x, map, paste, collapse = "/")
-
-# When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
-x <- list(1, list(1, list(1, list(1, 1))))
-str(x)
-str(map_depth(x, 4, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 3, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 2, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 1, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 0, ~ length(unlist(.x)), .ragged = TRUE))
 }
 \seealso{
 Other map variants: 
