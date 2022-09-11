@@ -51,8 +51,11 @@
 
 ## Features and fixes
 
-* `*_at()` can now take a functon (or formula) that's passed the vector of
+* `*_at()` can now take a function (or formula) that's passed the vector of
   element names and returns the elements to select.
+
+* New `keep_at()` and `discard_at()` that work like `keep()` and `discard()`
+  but operation on element names rather than element contents (#817).
 
 * New `list_update()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
