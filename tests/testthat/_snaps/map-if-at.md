@@ -12,7 +12,7 @@
       map_depth(x1, -5, length)
     Condition
       Error in `map_depth()`:
-      ! `Negative `.depth` must be smaller that `pluck_depth(.x)`
+      ! Negative `.depth` must be smaller than `pluck_depth(.x)`.
 
 ---
 

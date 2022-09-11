@@ -104,7 +104,7 @@ map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   if (.depth < 0) {
     .depth <- pluck_depth(.x) + .depth
     if (.depth < 0) {
-      cli::cli_abort("`Negative {.arg .depth} must be smaller that {.code pluck_depth(.x)}")
+      cli::cli_abort("Negative {.arg .depth} must be smaller than {.code pluck_depth(.x)}.")
     }
   }
 
