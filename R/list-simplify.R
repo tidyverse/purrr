@@ -34,7 +34,7 @@ list_simplify_internal <- function(
     cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.", arg = "simplify")
   }
   if (!is.null(ptype) && isFALSE(simplify)) {
-    cli::cli_abort("Must not specify {.arg ptype} when `simplify = FALSE`.")
+    cli::cli_abort("Can't specify {.arg ptype} when `simplify = FALSE`.")
   }
 
   if (isFALSE(simplify)) {
@@ -63,7 +63,7 @@ simplify_impl <- function(
 
   if (can_simplify) {
     tryCatch(
-      vec_unchop(x, ptype = ptype),
+      list_unchop(x, ptype = ptype),
       vctrs_error_incompatible_type = function(err) {
         if (strict || !is.null(ptype)) {
           cli::cli_abort(

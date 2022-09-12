@@ -11,7 +11,7 @@
       list_transpose(list(list(x = 1), list(x = 2:3)), simplify = TRUE)
     Condition
       Error in `list_transpose()`:
-      ! Failed to simplify output `x`: not all elements vectors of length 1.
+      ! Can't simplify `` output `x` `` because all elements vectors must be length 1.
 
 # can supply `simplify` globally or individually
 
@@ -48,7 +48,7 @@
       list_transpose(list(1))
     Condition
       Error in `list_transpose()`:
-      ! First element of `x` is unnamed, please supply `template`.
+      ! Must supply either `template` or a named `x`.
     Code
       list_transpose(list(a = 1), template = 1)
     Condition

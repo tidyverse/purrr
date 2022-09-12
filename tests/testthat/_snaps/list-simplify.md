@@ -31,7 +31,7 @@
       list_simplify(list(1, 1:2))
     Condition
       Error in `list_simplify()`:
-      ! Failed to simplify `x`: not all elements vectors of length 1.
+      ! Can't simplify `` `x` `` because all elements vectors must be length 1.
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
@@ -62,5 +62,5 @@
       list_simplify_internal(list(), simplify = FALSE, ptype = integer())
     Condition
       Error in `list_simplify_internal()`:
-      ! Must not specify `ptype` when `simplify = FALSE`.
+      ! Can't specify `ptype` when `simplify = FALSE`.
 
