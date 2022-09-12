@@ -12,7 +12,7 @@
       list_modify(list(a = 1), 2, a = 2)
     Condition
       Error in `list_modify()`:
-      ! `...` arguments must be either all named, or all unnamed
+      ! `...` arguments must be either all named or all unnamed.
 
 ---
 

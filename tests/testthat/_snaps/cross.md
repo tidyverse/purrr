@@ -4,5 +4,5 @@
       cross2(1:3, 1:3, .filter = ~ c(TRUE, TRUE))
     Condition
       Error in `cross()`:
-      ! The filter function must return a single logical `TRUE` or `FALSE`, not a logical vector.
+      ! The filter function must return a single `TRUE` or `FALSE`, not a logical vector.
 

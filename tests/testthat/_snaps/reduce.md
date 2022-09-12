@@ -4,7 +4,7 @@
       reduce(list())
     Condition
       Error in `reduce()`:
-      ! `.x` is empty, and no `.init` supplied.
+      ! Must supply `.init` when `.x` is empty.
 
 # requires equal length vectors
 
@@ -20,7 +20,7 @@
       reduce2(list())
     Condition
       Error in `reduce2()`:
-      ! `.x` is empty, and no `.init` supplied.
+      ! Must supply `.init` when `.x` is empty.
 
 # right variants are retired
 

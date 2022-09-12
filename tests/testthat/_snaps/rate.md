@@ -21,7 +21,7 @@
       rate_sleep(rate)
     Condition
       Error in `rate_sleep()`:
-      ! Request failed after 3 attempts
+      ! Request failed after 3 attempts.
 
 ---
 
@@ -38,7 +38,7 @@
       rate_sleep(rate)
     Condition
       Error in `rate_sleep()`:
-      ! Request failed after 3 attempts
+      ! Request failed after 3 attempts.
 
 ---
 
@@ -55,7 +55,7 @@
       rate_sleep(rate)
     Condition
       Error in `rate_sleep()`:
-      ! Request failed after 0 attempts
+      ! Request failed after 0 attempts.
 
 ---
 

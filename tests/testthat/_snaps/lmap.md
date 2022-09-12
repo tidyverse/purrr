@@ -4,7 +4,7 @@
       lmap(list(1), ~1)
     Condition
       Error in `lmap()`:
-      ! `.f(.x[[1]])` must return a list, not a number
+      ! `.f(.x[[1]])` must return a list, not a number.
     Code
       lmap(list(1), environment())
     Condition
