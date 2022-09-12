@@ -30,19 +30,3 @@
       Error in `modify_if_atomic()`:
       ! `.p()` must return a single `TRUE` or `FALSE`, not a logical vector.
 
-# modify_depth modifies values at specified depth
-
-    Code
-      modify_depth(x1, 5, length)
-    Condition
-      Error in `modify_depth_rec()`:
-      ! `.x` not deep enough for specified `.depth`.
-
----
-
-    Code
-      modify_depth(x1, -5, length)
-    Condition
-      Error in `modify_depth_rec()`:
-      ! Invalid depth
-

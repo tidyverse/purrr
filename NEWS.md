@@ -1,7 +1,8 @@
-
 # purrr (development version)
 
 ## Lifecycle updates
+
+### Core purpose refinements
 
 * `cross()` and all its variants have been deprecated in favour of
   `tidyr::expand_grid()`. These functions were slow and buggy and we
@@ -17,9 +18,26 @@
   these to be a good fit for purrr because they rely on a style of function 
   manipulation that is very uncommon in R code (#871).
 
+* `*_raw()` have been deprecated because they are of limited use and you can 
+  now use `map_vec()` instead (#903).
+
+* `prepend()`, `rdunif()`, `rbernoulli()`, `when()`, and `list_along()` have 
+  all been deprecated (#925). It's now clear that they don't align with the
+  core purpose of purrr.
+
 * `splice()` is deprecated because we no longer believe that automatic 
   splicing makes for good UI. Instead use `list2()` + `!!!` or
   `list_flatten()` (#869).
+
+### Flattening and simplification
+
+* `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
+  `list_c()`, `list_cbind()`, and `list_rbind()`.
+
+* `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
+  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+
+### Deprecation next steps
 
 * `as_function()`, `at_depth()`, and the `...f` argument to `partial()` 
   are no longer supported. They have been defunct for quite some time.
@@ -34,28 +52,28 @@
 * `is_numeric()` and `is_scalar_numeric()` have been removed. They have
   been deprecated since purrr 0.2.3 (Sep 2017).
 
-* `*_raw()` have been deprecated because they are of limited use and you can 
-  now use `map_vec()` instead (#903).
-
 * `invoke_*()` is now deprecated. It was superseded in 0.3.0 (Jan 2019) and 
   3.5 years later, we have decided to deprecate it as part of the API 
   refinement in the 1.0.0 release.
 
 * `map_call()` has been removed. It was made defunct in 0.3.0.
 
-* `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
-  `list_c()`, `list_cbind()`, and `list_rbind()`.
+## New features
 
-* `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
-  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+* Some mapping functions have now a `.progress` argument to create a
+  progress bar. See `?progress_bars` (#149).
 
-## Features and fixes
+* purrr is now licensed as MIT (#805).
 
-* New `list_update()` which is similar to `list_modify()` but doesn't work
-  recursively (#822).
+### Flattening and simplification
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
+
+* `accumulate()` now uses vctrs for simplifying the output. This
+  ensures a more principled and flexible coercion behaviour.
+
+### Tidyverse consistency
 
 * `_lgl()`, `_int()`, `_int()`, and `_dbl()` now use the same (strict) coercion
   methods as vctrs (#904). This means that:
@@ -73,25 +91,14 @@
       `map_lgl(c(1L, 0L), identity)` and `map_lgl(c(1, 0), identity)` now
       succeed because 1/TRUE and 0/FALSE should be interchangeable.
 
-* `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
-
-* `pluck<-`/`assign_in()` now sets elements to `NULL` rather than removing them
-  (#636). Now use the explicit `zap()` if you want to remove elements.
-
 * `map2()`, `modify2()`, and `pmap()` now use tidyverse recycling rules where
   vectors of length 1 are recycled to any size but all others must have
   the same length (#878).
 
-* `list_modify()`'s interface has been standardised. Modifying with `NULL`
-  now always creates a `NULL` in the output and we no longer recurse into
-  data frames (and other objects built on top of lists that are fundamentally
-  non-list like) (#810).
+* `map2()` and `pmap()` now recycle names of their first input if
+  needed (#783).
 
-* `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
-  #701).
-   
-* `as_mapper()` is now around twice as fast when used with character,
-  integer, or list (#820).
+### Plucking
 
 * `vec_depth()` is now `pluck_depth()` and works with more types of input
   (#818).
@@ -106,13 +113,45 @@
 * `pluck()` no longer replaces 0-length vectors with `default`; it now
   only applies absent and `NULL` components.
 
+* `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
+
+### Setting with NULL
+
+* `pluck<-`/`assign_in()` now sets elements to `NULL` rather than removing them
+  (#636). Now use the explicit `zap()` if you want to remove elements.
+
+* `modify()`, `modify2()`, and `modify_if()` now correctly handle `NULL`s
+  in replacement values (#655, #746, #753).
+
+* `list_modify()`'s interface has been standardised. Modifying with `NULL`
+  now always creates a `NULL` in the output (#810)
+
+### `list_` functions`
+
+* New `list_update()` which is similar to `list_modify()` but doesn't work
+  recursively (#822).
+
+* `list_modify()` no longer recurses into data frames (and other objects built 
+  on top of lists that are fundamentally non-list like) (#810).
+
+## Minor improvements and bug fixes
+
+* `modify_depth()` is no longer a generic. This makes it more consistent
+  with `map_depth()`.
+
+* `map_depth()` now uses `is.list()` to determine if there's more depth
+  to recurse into, as opposed to `!is_atomic(.x)` (#920).
+
+* `as_mapper()` is now around twice as fast when used with character,
+  integer, or list (#820).
+
+* `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
+  #701).
+   
 * `lmap()` now always returns a list, even if `.x` is a data frame. 
   This makes it more consistent with other functions in the `map` family.
 
 * `lmap_if()` correctly handles `.else` functions (#847).
-
-* `map2()` and `pmap()` now recycle names of their first input if
-  needed (#783).
 
 * `every()` now correctly propagates missing values using the same
   rules as `&&` (#751). Internally, it has become a wrapper around
@@ -120,14 +159,8 @@
   which has always been a wrapper around `||` with the same
   propagation rules.
 
-* `modify()`, `modify2()`, and `modify_if()` now correctly handle `NULL`s
-  in replacement values (#655, #746, #753).
-
 * `every()` and `some()` now properly check the return value of their
   predicate function. It must now return a `TRUE`, `FALSE`, or `NA`.
-
-* `accumulate()` now uses vctrs for simplifying the output. This
-  ensures a more principled and flexible coercion behaviour.
 
 * Greatly improved performance of functions created with `partial()` (#715).
   Their invocation is now as fast as for functions creating manually.
@@ -135,8 +168,6 @@
 * `partial()` no longer inlines the function in the call stack. This
   fixes issues when `partial()` is used with `lm()` for instance (#707).
   
-* purrr is now licensed as MIT (#805).
-
 # purrr 0.3.4
 
 * Fixed issue in `list_modify()` that prevented lists from being

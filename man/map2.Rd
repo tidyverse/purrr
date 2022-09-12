@@ -9,15 +9,15 @@
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
-map2(.x, .y, .f, ...)
+map2(.x, .y, .f, ..., .progress = NULL)
 
-map2_lgl(.x, .y, .f, ...)
+map2_lgl(.x, .y, .f, ..., .progress = NULL)
 
-map2_int(.x, .y, .f, ...)
+map2_int(.x, .y, .f, ..., .progress = NULL)
 
-map2_dbl(.x, .y, .f, ...)
+map2_dbl(.x, .y, .f, ..., .progress = NULL)
 
-map2_chr(.x, .y, .f, ...)
+map2_chr(.x, .y, .f, ..., .progress = NULL)
 
 walk2(.x, .y, .f, ...)
 }
@@ -39,6 +39,9 @@ of R.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
+
+\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
+for details.}
 }
 \value{
 The output length is determined by the length of the input.

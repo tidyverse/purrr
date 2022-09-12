@@ -30,33 +30,38 @@
 #' by_cyl <- mtcars %>% split(.$cyl)
 #' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
-map2 <- function(.x, .y, .f, ...) {
+map2 <- function(.x, .y, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "list")
+  .progress <- .progress %||% FALSE
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "list", .progress)
 }
 #' @export
 #' @rdname map2
-map2_lgl <- function(.x, .y, .f, ...) {
+map2_lgl <- function(.x, .y, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "logical")
+  .progress <- .progress %||% FALSE
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "logical", .progress)
 }
 #' @export
 #' @rdname map2
-map2_int <- function(.x, .y, .f, ...) {
+map2_int <- function(.x, .y, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "integer")
+  .progress <- .progress %||% FALSE
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "integer", .progress)
 }
 #' @export
 #' @rdname map2
-map2_dbl <- function(.x, .y, .f, ...) {
+map2_dbl <- function(.x, .y, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "double")
+  .progress <- .progress %||% FALSE
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "double", .progress)
 }
 #' @export
 #' @rdname map2
-map2_chr <- function(.x, .y, .f, ...) {
+map2_chr <- function(.x, .y, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "character")
+  .progress <- .progress %||% FALSE
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "character", .progress)
 }
 
 

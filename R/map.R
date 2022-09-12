@@ -32,6 +32,8 @@
 #'
 #'   Note that the arguments that differ in each call come before `.f`,
 #'   and the arguments that are the same come after `.f`.
+#' @param .progress Whether to show a progress bar. See [progress_bars]
+#'   for details.
 #' @returns
 #' The output length is determined by the length of the input.
 #' The output type is determined by the suffix:
@@ -104,37 +106,37 @@
 #'   map(~ lm(mpg ~ wt, data = .x)) %>%
 #'   map(summary) %>%
 #'   map_dbl("r.squared")
-map <- function(.x, .f, ...) {
+map <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "list")
+  .Call(map_impl, environment(), ".x", ".f", "list", .progress)
 }
 
 #' @rdname map
 #' @export
-map_lgl <- function(.x, .f, ...) {
+map_lgl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "logical")
+  .Call(map_impl, environment(), ".x", ".f", "logical", .progress)
 }
 
 #' @rdname map
 #' @export
-map_chr <- function(.x, .f, ...) {
+map_chr <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "character")
+  .Call(map_impl, environment(), ".x", ".f", "character", .progress)
 }
 
 #' @rdname map
 #' @export
-map_int <- function(.x, .f, ...) {
+map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "integer")
+  .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
 }
 
 #' @rdname map
 #' @export
-map_dbl <- function(.x, .f, ...) {
+map_dbl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "double")
+  .Call(map_impl, environment(), ".x", ".f", "double", .progress)
 }
 
 #' @rdname map
