@@ -29,7 +29,7 @@ test_that("list_flatten() restores", {
   }
   new_my_num_list <- function(xs) {
     stopifnot(
-      purrr::every(xs, \(x) {
+      every(xs, function(x) {
         is_null(x) ||
           is.numeric(x) ||
           inherits(x, "my_num_list")
