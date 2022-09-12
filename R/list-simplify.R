@@ -1,6 +1,5 @@
 #' Simplify a list to an atomic or S3 vector
 #'
-#' @details
 #' Simplification maintains a one-to-one correspondence between the input
 #' and output, implying that each element of `x` must contain a vector of
 #' length 1. If you don't want to maintain this correspondence, then you
@@ -8,7 +7,8 @@
 #'
 #' @param x A list.
 #' @param strict What should happen if simplification fails? If `TRUE`,
-#'   will error. If `FALSE`, will return `x` unchanged.
+#'   it will error. If `FALSE` and `ptype` is not supplied, it will return `x`
+#'   unchanged.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
 #' @returns A vector the same length as `x`.
@@ -19,6 +19,12 @@
 #' try(list_simplify(list(1, 2, "x")))
 #' try(list_simplify(list(1, 2, 1:3)))
 list_simplify <- function(x, strict = TRUE, ptype = NULL) {
+  if (!is_bool(strict)) {
+    cli::cli_abort(
+      "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}."
+    )
+  }
+
   simplify_impl(x, strict = strict, ptype = ptype)
 }
 
@@ -28,10 +34,18 @@ list_simplify_internal <- function(x,
                                    ptype = NULL,
                                    error_call = caller_env()) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
-    cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.", arg = "simplify")
+    cli::cli_abort(
+      "{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.",
+      arg = "simplify",
+      call = error_call
+    )
   }
   if (!is.null(ptype) && isFALSE(simplify)) {
-    cli::cli_abort("Can't specify {.arg ptype} when `simplify = FALSE`.")
+    cli::cli_abort(
+      "Can't specify {.arg ptype} when `simplify = FALSE`.",
+      arg = "ptype",
+      call = error_call
+    )
   }
 
   if (isFALSE(simplify)) {

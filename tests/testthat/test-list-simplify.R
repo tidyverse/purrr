@@ -33,4 +33,6 @@ test_that("validates inputs", {
   expect_snapshot(list_simplify_internal(1:5), error = TRUE)
   expect_snapshot(list_simplify_internal(list(), simplify = 1), error = TRUE)
   expect_snapshot(list_simplify_internal(list(), simplify = FALSE, ptype = integer()), error = TRUE)
+
+  expect_snapshot(list_simplify(list(), strict = NA), error = TRUE)
 })

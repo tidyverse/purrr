@@ -45,7 +45,7 @@
     Code
       list_simplify_internal(list(), simplify = 1)
     Condition
-      Error in `list_simplify_internal()`:
+      Error:
       ! `simplify` must be `TRUE`, `FALSE`, or `NA`.
 
 ---
@@ -53,6 +53,14 @@
     Code
       list_simplify_internal(list(), simplify = FALSE, ptype = integer())
     Condition
-      Error in `list_simplify_internal()`:
+      Error:
       ! Can't specify `ptype` when `simplify = FALSE`.
+
+---
+
+    Code
+      list_simplify(list(), strict = NA)
+    Condition
+      Error in `list_simplify()`:
+      ! `strict` must be `TRUE` or `FALSE`, not `NA`.
 

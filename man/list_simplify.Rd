@@ -10,7 +10,8 @@ list_simplify(x, strict = TRUE, ptype = NULL)
 \item{x}{A list.}
 
 \item{strict}{What should happen if simplification fails? If \code{TRUE},
-will error. If \code{FALSE}, will return \code{x} unchanged.}
+it will error. If \code{FALSE} and \code{ptype} is not supplied, it will return \code{x}
+unchanged.}
 
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}
@@ -19,9 +20,6 @@ the same.}
 A vector the same length as \code{x}.
 }
 \description{
-Simplify a list to an atomic or S3 vector
-}
-\details{
 Simplification maintains a one-to-one correspondence between the input
 and output, implying that each element of \code{x} must contain a vector of
 length 1. If you don't want to maintain this correspondence, then you
