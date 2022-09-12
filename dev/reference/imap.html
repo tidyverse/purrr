@@ -129,15 +129,16 @@ and the arguments that are the same come after <code>.f</code>.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="va">paste</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "9 1"  "5 2"  "6 3"  "8 4"  "1 5"  "3 6"  "10 7" "2 8"  "4 9"  "7 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "8 1"   "7 2"   "2 3"   "5 4"   "9 5"   "4 6"   "3 7"   "6 8"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "1 9"   "10 10"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">indx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">indx</span>, <span class="st">": "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 4"  "2: 1"  "3: 5"  "4: 8"  "5: 3"  "6: 6"  "7: 10" "8: 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 9"  "10: 7"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 9"  "2: 7"  "3: 4"  "4: 1"  "5: 10" "6: 3"  "7: 2"  "8: 8" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 6"  "10: 5"</span>
 <span class="r-in"><span><span class="co"># same as</span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 10" "2: 8"  "3: 6"  "4: 4"  "5: 9"  "6: 5"  "7: 7"  "8: 3" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 2"  "10: 1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 6"  "2: 2"  "3: 9"  "4: 3"  "5: 1"  "6: 4"  "7: 10" "8: 8" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 5"  "10: 7"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">.y</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
