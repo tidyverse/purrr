@@ -29,10 +29,10 @@
 #'     set a default value if the indexed element is `NULL` or does not exist.
 #'
 #' @param ... Additional arguments passed on to the mapped function.
-#' @param .progress Whether to show a progress bar.
 #'
 #'   Note that the arguments that differ in each call come before `.f`,
 #'   and the arguments that are the same come after `.f`.
+#' @param .progress Whether to show a progress bar.
 #' @returns
 #' The output length is determined by the length of the input.
 #' The output type is determined by the suffix:

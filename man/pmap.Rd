@@ -41,12 +41,12 @@ to be called once for each row.}
 you can only refer to arguments by position.
 }}
 
-\item{...}{Additional arguments passed on to the mapped function.}
-
-\item{.progress}{Whether to show a progress bar.
+\item{...}{Additional arguments passed on to the mapped function.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
+
+\item{.progress}{Whether to show a progress bar.}
 }
 \value{
 The output length is determined by the length of the input.
