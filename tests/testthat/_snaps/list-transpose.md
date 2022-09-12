@@ -3,15 +3,13 @@
     Code
       list_transpose(list(list(x = 1), list(x = "b")), simplify = TRUE)
     Condition
-      Error in `list_transpose()`:
-      ! Failed to simplify output `x`.
-      Caused by error:
+      Error:
       ! Can't combine `..1` <double> and `..2` <character>.
     Code
       list_transpose(list(list(x = 1), list(x = 2:3)), simplify = TRUE)
     Condition
       Error in `list_transpose()`:
-      ! Can't simplify `` output `x` `` because all elements vectors must be length 1.
+      ! All elements must be length-1 vectors.
 
 # can supply `simplify` globally or individually
 

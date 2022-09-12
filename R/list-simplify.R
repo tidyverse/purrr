@@ -27,7 +27,6 @@ list_simplify_internal <- function(
     x,
     simplify = NA,
     ptype = NULL,
-    error_arg = "x",
     error_call = caller_env()
   ) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
@@ -45,7 +44,6 @@ list_simplify_internal <- function(
     x,
     strict = !is.na(simplify),
     ptype = ptype,
-    error_arg = error_arg,
     error_call = error_call
   )
 }
@@ -54,7 +52,6 @@ simplify_impl <- function(
     x,
     strict = TRUE,
     ptype = NULL,
-    error_arg = "`x`",
     error_call = caller_env()
   ) {
   vec_check_list(x, arg = error_arg, call = error_call)
@@ -63,14 +60,11 @@ simplify_impl <- function(
 
   if (can_simplify) {
     tryCatch(
+      # TODO: use `error_call` when available
       list_unchop(x, ptype = ptype),
       vctrs_error_incompatible_type = function(err) {
         if (strict || !is.null(ptype)) {
-          cli::cli_abort(
-            "Failed to simplify {error_arg}.",
-            parent = err,
-            call = error_call
-          )
+          cnd_signal(err)
         } else {
           x
         }
@@ -78,10 +72,7 @@ simplify_impl <- function(
     )
   } else {
     if (strict) {
-      cli::cli_abort(
-        "Can't simplify {.arg {error_arg}} because all elements vectors must be length 1.",
-        call = error_call
-      )
+      cli::cli_abort("All elements must be length-1 vectors.", call = error_call)
     } else {
       x
     }

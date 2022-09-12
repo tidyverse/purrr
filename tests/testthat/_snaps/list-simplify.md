@@ -3,9 +3,7 @@
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
-      Error in `list_simplify()`:
-      ! Failed to simplify `x`.
-      Caused by error:
+      Error:
       ! Can't convert <double> to <character>.
 
 ---
@@ -13,9 +11,7 @@
     Code
       list_simplify(list(1, 2), ptype = character(), strict = FALSE)
     Condition
-      Error in `list_simplify()`:
-      ! Failed to simplify `x`.
-      Caused by error:
+      Error:
       ! Can't convert <double> to <character>.
 
 # strict simplification will error
@@ -23,21 +19,17 @@
     Code
       list_simplify(list(1, "a"))
     Condition
-      Error in `list_simplify()`:
-      ! Failed to simplify `x`.
-      Caused by error:
+      Error:
       ! Can't combine `..1` <double> and `..2` <character>.
     Code
       list_simplify(list(1, 1:2))
     Condition
       Error in `list_simplify()`:
-      ! Can't simplify `` `x` `` because all elements vectors must be length 1.
+      ! All elements must be length-1 vectors.
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
-      Error in `list_simplify()`:
-      ! Failed to simplify `x`.
-      Caused by error:
+      Error:
       ! Can't convert <double> to <character>.
 
 # validates inputs
@@ -45,8 +37,8 @@
     Code
       list_simplify_internal(1:5)
     Condition
-      Error:
-      ! `x` must be a list, not an integer vector.
+      Error in `vec_check_list()`:
+      ! object 'error_arg' not found
 
 ---
 

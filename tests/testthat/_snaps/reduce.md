@@ -3,9 +3,7 @@
     Code
       accumulate(list(1, "a"), ~.y, .simplify = TRUE)
     Condition
-      Error in `accumulate()`:
-      ! Failed to simplify accumulated results.
-      Caused by error:
+      Error:
       ! Can't combine `..1` <double> and `..2` <character>.
 
 # right variants are retired

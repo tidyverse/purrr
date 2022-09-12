@@ -73,8 +73,7 @@ list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, defa
     res <- map(x, nm, .default = default[[nm]])
     res <- list_simplify_internal(res,
       simplify = simplify[[nm]] %||% NA,
-      ptype = ptype[[nm]],
-      error_arg = paste0("output `", nm, "`")
+      ptype = ptype[[nm]]
     )
     out[[nm]] <- res
   }
