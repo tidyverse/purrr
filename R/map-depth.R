@@ -71,16 +71,7 @@
 #' # mapped at level 3.
 #' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
 map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
-  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
-    cli::cli_abort("{.arg .depth} must be a single number, not {.obj_type_friendly {depth}}.")
-  }
-  if (.depth < 0) {
-    .depth <- pluck_depth(.x) + .depth
-    if (.depth < 0) {
-      cli::cli_abort("Negative {.arg .depth} must be smaller than {.code pluck_depth(.x)}.")
-    }
-  }
-
+  .depth <- check_depth(.depth, pluck_depth(.x))
   .f <- as_mapper(.f, ...)
   map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged)
 }
@@ -88,16 +79,7 @@ map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
 #' @rdname map_depth
 #' @export
 modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
-    cli::cli_abort("{.arg .depth} must be a single number, not {.obj_type_friendly {depth}}.")
-  }
-  if (.depth < 0) {
-    .depth <- pluck_depth(.x) + .depth
-    if (.depth < 0) {
-      cli::cli_abort("Negative {.arg .depth} must be smaller than {.code pluck_depth(.x)}.")
-    }
-  }
-
+  .depth <- check_depth(.depth, pluck_depth(.x))
   .f <- as_mapper(.f, ...)
   map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged)
 }
@@ -140,3 +122,23 @@ map_depth_rec <- function(.fmap,
     }
   }
 }
+
+check_depth <- function(depth, max_depth, error_call = caller_env()) {
+  if (!is_integerish(depth, n = 1, finite = TRUE)) {
+    cli::cli_abort(
+      "{.arg .depth} must be a single number, not {.obj_type_friendly {depth}}.",
+      call = error_call
+    )
+  }
+  if (depth < 0) {
+    if (-depth > max_depth) {
+      cli::cli_abort(
+        "Negative {.arg .depth} ({depth}) must be greater than -{max_depth}.",
+        call = error_call
+      )
+    }
+    depth <- max_depth + depth
+  }
+  depth
+}
+

@@ -12,7 +12,7 @@
       map_depth(x1, -5, length)
     Condition
       Error in `map_depth()`:
-      ! Negative `.depth` must be smaller than `pluck_depth(.x)`.
+      ! Negative `.depth` (-5) must be greater than -4.
 
 # modify_depth modifies values at specified depth
 
@@ -28,5 +28,13 @@
       modify_depth(x1, -5, length)
     Condition
       Error in `modify_depth()`:
-      ! Negative `.depth` must be smaller than `pluck_depth(.x)`.
+      ! Negative `.depth` (-5) must be greater than -4.
+
+# validates depth
+
+    Code
+      check_depth(mean)
+    Condition
+      Error:
+      ! `.depth` must be a single number, not a function.
 
