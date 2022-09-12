@@ -45,6 +45,9 @@
 
 ## Features and fixes
 
+* Some mapping functions have now a `.progress` argument to create a
+  progress bar. See `?progress_bars` (#149).
+
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
