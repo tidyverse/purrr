@@ -70,6 +70,22 @@
 * Some mapping functions have now a `.progress` argument to create a
   progress bar. See `?progress_bars` (#149).
 
+* purrr is now licensed as MIT (#805).
+
+### Flattening and simplification
+
+* New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
+  `c()`, `rbind()`, or `cbind()` all of the elements in a list.
+
+* `accumulate()` now uses vctrs for simplifying the output. This
+  ensures a more principled and flexible coercion behaviour.
+
+* New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
+  `c()`, `rbind()`, or `cbind()` all of the elements in a list.
+
+* `accumulate()` now uses vctrs for simplifying the output. This
+  ensures a more principled and flexible coercion behaviour.
+
 ### Tidyverse consistency
 
 * `_lgl()`, `_int()`, `_int()`, and `_dbl()` now use the same (strict) coercion
@@ -141,6 +157,12 @@
 * `accumulate()` and `accumulate2()` now both simplify the output if possible.
   New arguments `simplify` and `ptype` allow you to control the details of
   simplification (#774, #809).
+
+* `modify_depth()` is no longer a generic. This makes it more consistent
+  with `map_depth()`.
+
+* `map_depth()` now uses `is.list()` to determine if there's more depth
+  to recurse into, as opposed to `!is_atomic(.x)` (#920).
 
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
