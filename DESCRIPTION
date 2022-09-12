@@ -14,7 +14,7 @@ Depends:
     R (>= 3.2.3)
 Imports:
     cli (>= 3.4.0),
-    lifecycle (>= 1.0.1.9001),
+    lifecycle (>= 1.0.2),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
     vctrs (>= 0.4.1.9000)
@@ -38,5 +38,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 Remotes:  
-    r-lib/lifecycle,
     r-lib/vctrs
