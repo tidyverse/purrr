@@ -12,7 +12,7 @@ list_transpose(x, template = NULL, simplify = NA, ptype = NULL, default = NULL)
 \item{template}{A "template" that specifies the names of output list.
 Usually taken from the name of the first element of \code{x}.}
 
-\item{simplify}{Should the result be simplified?
+\item{simplify}{Should the result be \link[=list_simplify]{simplified}?
 \itemize{
 \item \code{TRUE}: simplify or die trying.
 \item \code{NA}: simplify if possible.
@@ -28,7 +28,7 @@ Alternatively, a named list specifying the prototype by output column.}
 Alternatively, a named list specifying the prototype by output column.}
 }
 \description{
-\code{list_transpose()} turns a list-of-lists "inside-out"; it turns a pair of
+\code{list_transpose()} turns a list-of-lists "inside-out". For instance it turns a pair of
 lists into a list of pairs, or a list of pairs into pair of lists. For
 example, if you had a list of length \code{n} where each component had values \code{a}
 and \code{b}, \code{list_transpose()} would make a list with elements \code{a} and
