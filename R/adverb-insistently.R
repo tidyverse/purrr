@@ -59,13 +59,8 @@
 #' possibly_insistent_risky_runif()
 insistently <- function(f, rate = rate_backoff(), quiet = TRUE) {
   f <- as_mapper(f)
+  check_rate(rate)
   force(quiet)
-
-  if (!is_rate(rate)) {
-    cli::cli_abort(
-      "{.arg rate} must be a rate object, not {.obj_type_friendly {rate}}."
-    )
-  }
 
   function(...) {
     rate_reset(rate)

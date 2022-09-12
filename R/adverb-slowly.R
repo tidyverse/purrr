@@ -19,13 +19,8 @@
 #' out <- map(1:5, slow_runif)
 slowly <- function(f, rate = rate_delay(), quiet = TRUE) {
   f <- as_mapper(f)
+  check_rate(rate)
   force(quiet)
-
-  if (!is_rate(rate)) {
-    cli::cli_abort(
-      "{.arg rate} must be a rate object, not {.obj_type_friendly {rate}}."
-    )
-  }
 
   function(...) {
     rate_sleep(rate, quiet = quiet)

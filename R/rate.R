@@ -222,3 +222,14 @@ stop_rate_excess <- function(rate, error_call = caller_env()) {
     call = error_call
   )
 }
+
+check_rate <- function(rate, error_call = caller_env()) {
+  if (!is_rate(rate)) {
+    cli::cli_abort(
+      "{.arg rate} must be a rate object, not {.obj_type_friendly {rate}}.",
+      arg = "rate",
+      call = error_call,
+    )
+  }
+}
+
