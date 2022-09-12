@@ -97,7 +97,5 @@ reference:
 - title: Misc
   contents:
   - array_tree
-  - rbernoulli
   - rate-helpers
-  - rdunif
-  - prepend
+  - progress_bars

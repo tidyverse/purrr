@@ -33,7 +33,7 @@
 map_if <- function(.x, .p, .f, ..., .else = NULL) {
   sel <- probe(.x, .p)
 
-  out <- list_along(.x)
+  out <- vector("list", length(.x))
   out[sel]  <- map(.x[sel], .f, ...)
 
   if (is_null(.else)) {
@@ -60,13 +60,13 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' iris %>% map_at("Species", toupper)
 #
 #' @export
-map_at <- function(.x, .at, .f, ...) {
+map_at <- function(.x, .at, .f, ..., .progress = NULL) {
 
   where <- at_selection(names(.x), .at)
   sel <- inv_which(.x, where)
 
-  out <- list_along(.x)
-  out[sel]  <- map(.x[sel], .f, ...)
+  out <- vector("list", length(.x))
+  out[sel]  <- map(.x[sel], .f, ..., .progress = .progress)
   out[!sel] <- .x[!sel]
 
   set_names(out, names(.x))

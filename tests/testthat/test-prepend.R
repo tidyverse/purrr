@@ -1,4 +1,12 @@
+test_that("prepend is deprecated", {
+  expect_snapshot({
+    . <- prepend(1, 2)
+  })
+})
+
 test_that("prepend is clearer version of merging with c()", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- 1:3
   expect_identical(
     x %>% prepend(4),
@@ -13,6 +21,8 @@ test_that("prepend is clearer version of merging with c()", {
 })
 
 test_that("prepend appends at the beginning for empty list by default", {
+  local_options(lifecycle_verbosity = "quiet")
+
   x <- list()
   expect_identical(
     x %>% prepend(1),
@@ -21,6 +31,8 @@ test_that("prepend appends at the beginning for empty list by default", {
 })
 
 test_that("prepend throws error if before param is neither NULL nor between 1 and length(x)", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_error(
     prepend(list(), 1, before = 1),
     "is.null(before) || (before > 0 && before <= n) is not TRUE"
