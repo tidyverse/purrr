@@ -9,8 +9,6 @@ modifies elements given by names or positions.
 modify2() modifies the elements of .x but also passes the
 elements of .y to .f, just like map2(). imodify() passes
 the names or the indices to .f like imap() does.
-modify_depth() only modifies elements at a given level of a
-nested data structure.
 modify_in() modifies a single element in a pluck() location.
 
 "><title>Modify elements selectively — modify • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.2/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Modify elements selectively — modify"><meta property="og:description" content="Unlike map() and its variants which always return a fixed object
@@ -23,8 +21,6 @@ modifies elements given by names or positions.
 modify2() modifies the elements of .x but also passes the
 elements of .y to .f, just like map2(). imodify() passes
 the names or the indices to .f like imap() does.
-modify_depth() only modifies elements at a given level of a
-nested data structure.
 modify_in() modifies a single element in a pluck() location.
 
 "><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -97,8 +93,6 @@ modifies elements given by names or positions.</p></li>
 <li><p><code>modify2()</code> modifies the elements of <code>.x</code> but also passes the
 elements of <code>.y</code> to <code>.f</code>, just like <code><a href="map2.html">map2()</a></code>. <code>imodify()</code> passes
 the names or the indices to <code>.f</code> like <code><a href="imap.html">imap()</a></code> does.</p></li>
-<li><p><code>modify_depth()</code> only modifies elements at a given level of a
-nested data structure.</p></li>
 <li><p><code><a href="modify_in.html">modify_in()</a></code> modifies a single element in a <code><a href="pluck.html">pluck()</a></code> location.</p></li>
 </ul></div>
 
@@ -121,12 +115,7 @@ nested data structure.</p></li>
 <span></span>
 <span><span class="fu">modify2</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">imodify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">modify_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for default</span></span>
-<span><span class="fu">modify_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">imodify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -171,20 +160,6 @@ elements.</p></dd>
 
 <dt>.y</dt>
 <dd><p>A vector, usually the same length as <code>.x</code>.</p></dd>
-
-
-<dt>.depth</dt>
-<dd><p>Level of <code>.x</code> to map on. Use a negative value to count up
-from the lowest level of the list.</p><ul><li><p><code>modify_depth(x, 0, fun)</code> is equivalent to <code>x[] &lt;- fun(x)</code>.</p></li>
-<li><p><code>modify_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- modify(x, fun)</code></p></li>
-<li><p><code>modify_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- modify(x, ~ modify(., fun))</code></p></li>
-</ul></dd>
-
-
-<dt>.ragged</dt>
-<dd><p>If <code>TRUE</code>, will apply to leaves, even if they're not
-at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if there are
-no elements at depth <code>.depth</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -619,155 +594,6 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 149            6           3            5           2  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150            5           3            5           1  virginica</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Modify at specified depth ---------------------------</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  obj1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    prop1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, param2 <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    prop2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">6</span>, param2 <span class="op">=</span> <span class="fl">7</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  obj2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    prop1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">9</span><span class="op">:</span><span class="fl">10</span>, param2 <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    prop2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">14</span>, param2 <span class="op">=</span> <span class="fl">15</span><span class="op">:</span><span class="fl">17</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># In the above list, "obj" is level 1, "prop" is level 2 and "param"</span></span></span>
-<span class="r-in"><span><span class="co"># is level 3. To apply sum() on all params, we map it at depth 3:</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 48</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Note that vectorised operations will yield the same result when</span></span></span>
-<span class="r-in"><span><span class="co"># applied at the list level as when applied at the atomic result.</span></span></span>
-<span class="r-in"><span><span class="co"># The former is more efficient because it takes advantage of</span></span></span>
-<span class="r-in"><span><span class="co"># vectorisation.</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 101 102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 103 104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 105 106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 107 108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 109 110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 111 112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 112 113 114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 115 116 117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">4</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 101 102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 103 104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 105 106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 107 108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 109 110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 111 112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 112 113 114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 115 116 117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># modify() lets us pluck the elements prop1/param2 in obj1 and obj2:</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prop1"</span>, <span class="st">"param2"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1: int [1:2] 3 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2: int [1:2] 11 12</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># But what if we want to pluck all param2 elements? Then we need to</span></span></span>
-<span class="r-in"><span><span class="co"># act at a lower level:</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="st">"param2"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1: int [1:2] 3 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2: int [1:2] 7 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1: int [1:2] 11 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2: int [1:3] 15 16 17</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># modify_depth() can be with other purrr functions to make them operate at</span></span></span>
-<span class="r-in"><span><span class="co"># a lower level. Here we ask pmap() to map paste() simultaneously over all</span></span></span>
-<span class="r-in"><span><span class="co"># elements of the objects at the second level. paste() is effectively</span></span></span>
-<span class="r-in"><span><span class="co"># mapped at level 3.</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="op">~</span> <span class="fu"><a href="pmap.html">pmap</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">paste</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "1 / 3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "2 / 4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "5 / 7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "6 / 8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "9 / 11"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "10 / 12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "12 / 15"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "13 / 16"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "14 / 17"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
