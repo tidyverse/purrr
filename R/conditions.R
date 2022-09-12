@@ -36,6 +36,7 @@ stop_bad_type <- function(x,
   what <- what %||% what_bad_object(arg)
   cli::cli_abort(
     "{what} must be {expected}, not {.obj_type_friendly {x}}.",
+    arg = arg,
     call = call
   )
 }
@@ -50,6 +51,7 @@ stop_bad_element_type <- function(x,
   what <- what_bad_element(what, arg, index)
   cli::cli_abort(
     "{what} must be {expected}, not {.obj_type_friendly {x}}.",
+    arg = arg,
     call = call
   )
 }
@@ -72,6 +74,7 @@ stop_bad_element_length <- function(x,
 
   cli::cli_abort(
     "{what} must have length {expected}, not {length(x)}.",
+    arg = arg,
     call = call
   )
 }
