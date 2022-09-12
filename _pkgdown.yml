@@ -100,3 +100,4 @@ reference:
   - rate-helpers
   - rdunif
   - prepend
+  - progress_bars
