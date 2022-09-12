@@ -67,7 +67,7 @@ list_merge <- function(.x, ...) {
 list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()) {
   if (!is_null(names(y)) && !is_named(y)) {
     cli::cli_abort(
-      "`...` arguments must be either all named, or all unnamed",
+      "`...` arguments must be either all named or all unnamed.",
       call = error_call
     )
   }

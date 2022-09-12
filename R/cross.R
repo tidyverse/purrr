@@ -152,7 +152,7 @@ cross <- function(.l, .filter = NULL) {
       is_to_filter <- do.call(".filter", unname(out[[i]]))
       if (!is_bool(is_to_filter)) {
         cli::cli_abort(
-          "The filter function must return a single logical `TRUE` or `FALSE`, not {.obj_type_friendly {is_to_filter}}."
+          "The filter function must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {is_to_filter}}."
         )
       }
       if (is_to_filter) {

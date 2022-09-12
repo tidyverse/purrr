@@ -246,7 +246,7 @@ modify_in <- function(.x, .where, .f, ...) {
 assign_in <- function(x, where, value) {
   n <- length(where)
   if (n == 0) {
-    cli::cli_abort("{.arg where} must contain at least one element")
+    cli::cli_abort("{.arg where} must contain at least one element.", arg = "where")
   } else if (n > 1) {
     old <- pluck(x, where[[1]], .default = list())
     if (!is_zap(value) || !identical(old, list())) {

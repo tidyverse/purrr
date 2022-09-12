@@ -217,7 +217,7 @@ stop_rate_excess <- function(rate, error_call = caller_env()) {
   rate_bump_count(rate)
 
   cli::cli_abort(
-    "Request failed after {i} attempts",
+    "Request failed after {i} attempts.",
     class = "purrr_error_rate_excess",
     call = error_call
   )

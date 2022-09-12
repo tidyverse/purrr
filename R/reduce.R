@@ -206,7 +206,7 @@ reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
   } else {
     if (is_empty(x)) {
       cli::cli_abort(
-        "{.arg .x} is empty, and no {.arg .init} supplied.",
+        "Must supply {.arg .init} when {.arg .x} is empty.",
         call = error_call
       )
     } else if (left) {

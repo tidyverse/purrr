@@ -81,7 +81,7 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL, .error_call = caller_en
 
     if (!is.list(res)) {
       cli::cli_abort(
-        "{.code .f(.x[[{i}]])} must return a list, not {.obj_type_friendly {res}}",
+        "{.code .f(.x[[{i}]])} must return a list, not {.obj_type_friendly {res}}.",
         call = .error_call
       )
     }
