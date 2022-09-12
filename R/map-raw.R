@@ -9,46 +9,42 @@
 #'
 #' @keywords internal
 #' @export
-map_raw <- function(.x, .f, ..., .progress = NULL) {
+map_raw <- function(.x, .f, ...) {
   lifecycle::deprecate_warn("0.4.0", "map_raw()", "map_vec()")
 
   .f <- as_mapper(.f, ...)
-  .progress <- .progress %||% FALSE
-  .Call(map_impl, environment(), ".x", ".f", "raw", .progress)
+  .Call(map_impl, environment(), ".x", ".f", "raw", FALSE)
 }
 
 #' @export
 #' @rdname map_raw
-map2_raw <- function(.x, .y, .f, ..., .progress = NULL) {
+map2_raw <- function(.x, .y, .f, ...) {
   lifecycle::deprecate_warn("0.4.0", "map2_raw()", "map2_vec()")
 
   .f <- as_mapper(.f, ...)
-  .progress <- .progress %||% FALSE
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw", .progress)
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw", FALSE)
 }
 
 #' @rdname map_raw
 #' @export
-imap_raw <- function(.x, .f, ..., .progress = NULL) {
+imap_raw <- function(.x, .f, ...) {
   lifecycle::deprecate_warn("0.4.0", "imap_raw()", "imap_vec()")
 
   .f <- as_mapper(.f, ...)
-  .progress <- .progress %||% FALSE
-  map2_raw(.x, vec_index(.x), .f, ..., .progress = .progress)
+  map2_raw(.x, vec_index(.x), .f, ...)
 }
 
 #' @export
 #' @rdname map_raw
-pmap_raw <- function(.l, .f, ..., .progress = NULL) {
+pmap_raw <- function(.l, .f, ...) {
   lifecycle::deprecate_warn("0.4.0", "pmap_raw()", "pmap_vec()")
 
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-  .progress <- .progress %||% FALSE
 
-  .Call(pmap_impl, environment(), ".l", ".f", "raw", .progress)
+  .Call(pmap_impl, environment(), ".l", ".f", "raw", FALSE)
 }
 
 #' @export
