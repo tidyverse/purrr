@@ -37,8 +37,8 @@
     Code
       list_simplify_internal(1:5)
     Condition
-      Error in `vec_check_list()`:
-      ! object 'error_arg' not found
+      Error:
+      ! `x` must be a list, not an integer vector.
 
 ---
 

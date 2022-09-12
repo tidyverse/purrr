@@ -54,7 +54,7 @@ simplify_impl <- function(
     ptype = NULL,
     error_call = caller_env()
   ) {
-  vec_check_list(x, arg = error_arg, call = error_call)
+  vec_check_list(x, call = error_call)
 
   can_simplify <- every(x, vec_is, size = 1)
 
