@@ -23,11 +23,10 @@ list_simplify <- function(x, strict = TRUE, ptype = NULL) {
 }
 
 # Wrapper used by purrr functions that do automatic simplification
-list_simplify_internal <- function(
-    x,
-    simplify = NA,
-    ptype = NULL,
-    error_call = caller_env()
+list_simplify_internal <- function(x,
+                                   simplify = NA,
+                                   ptype = NULL,
+                                   error_call = caller_env()
   ) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
     cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.", arg = "simplify")
@@ -48,12 +47,10 @@ list_simplify_internal <- function(
   )
 }
 
-simplify_impl <- function(
-    x,
-    strict = TRUE,
-    ptype = NULL,
-    error_call = caller_env()
-  ) {
+simplify_impl <- function(x,
+                          strict = TRUE,
+                          ptype = NULL,
+                          error_call = caller_env()) {
   vec_check_list(x, call = error_call)
 
   can_simplify <- every(x, vec_is, size = 1)
