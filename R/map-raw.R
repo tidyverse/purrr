@@ -13,7 +13,7 @@ map_raw <- function(.x, .f, ...) {
   lifecycle::deprecate_warn("0.4.0", "map_raw()", "map_vec()")
 
   .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "raw")
+  .Call(map_impl, environment(), ".x", ".f", "raw", FALSE)
 }
 
 #' @export
@@ -24,7 +24,7 @@ map2_raw <- function(.x, .y, .f, ...) {
 }
 map2_raw_ <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw")
+  .Call(map2_impl, environment(), ".x", ".y", ".f", "raw", FALSE)
 }
 
 #' @rdname map_raw
@@ -46,7 +46,7 @@ pmap_raw <- function(.l, .f, ...) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "raw")
+  .Call(pmap_impl, environment(), ".l", ".f", "raw", FALSE)
 }
 
 #' @export

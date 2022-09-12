@@ -98,3 +98,4 @@ reference:
   - array_tree
   - as_vector
   - rate-helpers
+  - progress_bars

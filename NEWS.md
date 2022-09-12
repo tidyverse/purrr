@@ -55,6 +55,9 @@
 
 ## Features and fixes
 
+* Some mapping functions have now a `.progress` argument to create a
+  progress bar. See `?progress_bars` (#149).
+
 * New `list_update()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
 
