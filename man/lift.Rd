@@ -35,10 +35,11 @@ name the parameters in the lifted function signature. This
 prevents matching of arguments by name and match by position
 instead.}
 
-\item{.type}{A vector mold or a string describing the type of the
-input vectors. The latter can be any of the types returned by
-\code{\link[=typeof]{typeof()}}, or "numeric" as a shorthand for either
-"double" or "integer".}
+\item{.type}{Can be a vector mold specifying both the type and the
+length of the vectors to be concatenated, such as \code{numeric(1)}
+or \code{integer(4)}. Alternatively, it can be a string describing
+the type, one of: "logical", "integer", "double", "complex",
+"character" or "raw".}
 }
 \value{
 A function.

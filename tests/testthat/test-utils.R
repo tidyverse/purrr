@@ -32,30 +32,6 @@ test_that("rdunif fails if a and b are not unit length numbers", {
   expect_error(rdunif(1000, c(2, 3), 2))
 })
 
-test_that("vec_simplify() coerces atomic inputs", {
-  expect_identical(
-    vec_simplify(list(1, TRUE)),
-    c(1, 1)
-  )
-  expect_identical(
-    vec_simplify(list("foo", factor("bar"))),
-    c("foo", "bar")
-  )
-  expect_identical(
-    vec_simplify(list(data.frame(x = FALSE), data.frame(x = 1L))),
-    data.frame(x = 0:1)
-  )
-})
-
-test_that("vec_simplify() ignores complex inputs", {
-  expect_identical(vec_simplify(list(1L, 2:3)), list(1L, 2:3))
-  expect_identical(vec_simplify(list(1, "a")), list(1, "a"))
-  expect_identical(vec_simplify(1:3), 1:3)
-  expect_identical(vec_simplify(list(identity)), list(identity))
-  expect_identical(vec_simplify(mtcars), mtcars)
-})
-
-
 # Lifecycle ---------------------------------------------------------------
 
 test_that("%@% is an infix attribute accessor", {

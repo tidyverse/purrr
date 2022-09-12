@@ -1,3 +1,11 @@
+# accumulate() does fail when simpification is required
+
+    Code
+      accumulate(list(1, "a"), ~.y, .simplify = TRUE)
+    Condition
+      Error:
+      ! Can't combine `..1` <double> and `..2` <character>.
+
 # right variants are retired
 
     Code

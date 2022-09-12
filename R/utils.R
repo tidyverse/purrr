@@ -182,19 +182,3 @@ friendly_type_of_element <- function(x) {
     abort("Expected a base vector type")
   )
 }
-
-
-vec_simplify <- function(x) {
-  if (!vctrs::vec_is_list(x)) {
-    return(x)
-  }
-  if (!every(x, ~ vctrs::vec_is(.x) && vctrs::vec_size(.x) == 1L)) {
-    return(x)
-  }
-
-  tryCatch(
-    vctrs_error_incompatible_type = function(...) x,
-    vctrs::vec_c(!!!x)
-  )
-}
-
