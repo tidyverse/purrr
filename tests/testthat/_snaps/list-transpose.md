@@ -1,3 +1,19 @@
+# integer template requires exact length of list() simplify etc
+
+    Code
+      list_transpose(x, ptype = list())
+    Condition
+      Error:
+      ! Can't convert <double> to <list>.
+
+---
+
+    Code
+      list_transpose(x, ptype = list(integer()))
+    Condition
+      Error in `match_template()`:
+      ! List `ptype` must be same length as numeric template
+
 # simplification fails silently unless requested
 
     Code
@@ -43,13 +59,8 @@
       Error in `list_transpose()`:
       ! `x` must be a list, not a number.
     Code
-      list_transpose(list(1))
+      list_transpose(list(1), template = mean)
     Condition
       Error in `list_transpose()`:
-      ! Must supply either `template` or a named `x`.
-    Code
-      list_transpose(list(a = 1), template = 1)
-    Condition
-      Error in `list_transpose()`:
-      ! `template` must be a character vector.
+      ! `template` must be a character or numeric vector, not a function.
 

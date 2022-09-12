@@ -57,42 +57,64 @@ list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, defa
     return(list())
   }
 
-  template <- template %||%
-    names(x[[1]]) %||%
-    cli::cli_abort("Must supply either {.arg template} or a named {.arg x}.")
-  if (!is.character(template)) {
-    cli::cli_abort("{.arg template} must be a character vector.")
+  template <- template %||% vec_index(x[[1]])
+  if (!is.character(template) && !is.numeric(template)) {
+    cli::cli_abort(
+      "{.arg template} must be a character or numeric vector, not {.obj_type_friendly {template}}.",
+      arg = template
+    )
   }
 
   simplify <- match_template(simplify, template)
   default <- match_template(default, template)
   ptype <- match_template(ptype, template)
 
-  out <- rep_named(template, list())
-  for (nm in template) {
-    res <- map(x, nm, .default = default[[nm]])
+  out <- rep_along(template, list())
+  if (is.character(template)) {
+    names(out) <- template
+  }
+
+  for (i in seq_along(template)) {
+    idx <- template[[i]]
+    res <- map(x, idx, .default = default[[i]])
     res <- list_simplify_internal(res,
-      simplify = simplify[[nm]] %||% NA,
-      ptype = ptype[[nm]]
+      simplify = simplify[[i]] %||% NA,
+      ptype = ptype[[i]]
     )
-    out[[nm]] <- res
+    out[[i]] <- res
   }
 
   out
 }
 
 match_template <- function(x, template, error_arg = caller_arg(x), error_call = caller_env()) {
-  if (is_bare_list(x) && is_named(x)) {
-    extra_names <- setdiff(names(x), template)
-    if (length(extra_names)) {
-      cli::cli_abort(
-        "{.arg {error_arg}} contains unknown names: {.str {extra_names}}",
-        arg = error_arg,
-        call = error_call
-      )
+  if (is.character(template)) {
+    if (is_bare_list(x) && is_named(x)) {
+      extra_names <- setdiff(names(x), template)
+      if (length(extra_names)) {
+        cli::cli_abort(
+          "{.arg {error_arg}} contains unknown names: {.str {extra_names}}",
+          arg = error_arg,
+          call = error_call
+        )
+      }
+
+      out <- rep_named(template, list(NULL))
+      out[names(x)] <- x
+      out
+    } else {
+      rep_named(template, list(x))
     }
-    x
+  } else if (is.numeric(template)) {
+    if (is_bare_list(x) && length(x) > 0) {
+      if (length(x) != length(template)) {
+        cli::cli_abort("List {.arg {error_arg}} must be same length as numeric template")
+      }
+      x
+    } else {
+      rep_along(template, list(x))
+    }
   } else {
-    rep_named(template, list(x))
+    abort("Invalid x", .internal = TRUE)
   }
 }

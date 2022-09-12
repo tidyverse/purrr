@@ -8,6 +8,67 @@ test_that("transposing empty list returns empty list", {
   expect_equal(list_transpose(list()), list())
 })
 
+test_that("can use character template", {
+  x <- list(list(a = 1, b = 2), list(b = 3, c = 4))
+  # Default:
+  expect_equal(
+    list_transpose(x, default = NA),
+    list(a = c(1, NA), b = c(2, 3))
+  )
+
+  # Change order
+  expect_equal(
+    list_transpose(x, c("b", "a"), default = NA),
+    list(b = c(2, 3), a = c(1, NA))
+  )
+  # Remove
+  expect_equal(
+    list_transpose(x, "b", default = NA),
+    list(b = c(2, 3))
+  )
+  # Add
+  expect_equal(
+    list_transpose(x, c("a", "b", "c"), default = NA),
+    list(a = c(1, NA), b = c(2, 3), c = c(NA, 4))
+  )
+})
+
+test_that("can use integer template", {
+  x <- list(list(1, 2, 3), list(4, 5))
+  # Default:
+  expect_equal(
+    list_transpose(x, default = NA),
+    list(c(1, 4), c(2, 5), c(3, NA))
+  )
+
+  # Change order
+  expect_equal(
+    list_transpose(x, c(3, 2, 1), default = NA),
+    list(c(3, NA), c(2, 5), c(1, 4))
+  )
+  # Remove
+  expect_equal(
+    list_transpose(x, 2, default = NA),
+    list(c(2, 5))
+  )
+  # Add
+  expect_equal(
+    list_transpose(x, 1:4, default = NA),
+    list(c(1, 4), c(2, 5), c(3, NA), c(NA, NA))
+  )
+})
+
+test_that("integer template requires exact length of list() simplify etc", {
+  x <- list(list(1, 2), list(3, 4))
+
+  expect_snapshot(list_transpose(x, ptype = list()), error = TRUE)
+  expect_snapshot(list_transpose(x, ptype = list(integer())), error = TRUE)
+  expect_identical(
+    list_transpose(x, ptype = list(integer(), integer())),
+    list(c(1L, 3L), c(2L, 4L))
+  )
+})
+
 test_that("simplification fails silently unless requested", {
   expect_equal(
     list_transpose(list(list(x = 1), list(x = "b"))),
@@ -66,7 +127,6 @@ test_that("can supply `default` globally or individually", {
 test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
     list_transpose(10)
-    list_transpose(list(1))
-    list_transpose(list(a = 1), template = 1)
+    list_transpose(list(1), template = mean)
   })
 })

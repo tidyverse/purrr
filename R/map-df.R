@@ -56,7 +56,7 @@
 #' # now
 #' map2(arg1, arg2, ex_fun) %>% list_cbind()
 map_dfr <- function(.x, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "map_dfr()", I("`map()` + `list_rbind()`"))
+  lifecycle::deprecate_warn("0.4.0", "map_dfr()", I("`map()` + `list_rbind()`"), always = TRUE)
   check_installed("dplyr", "for `map_dfr()`.")
 
   .f <- as_mapper(.f, ...)
