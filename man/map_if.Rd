@@ -8,7 +8,7 @@
 \usage{
 map_if(.x, .p, .f, ..., .else = NULL)
 
-map_at(.x, .at, .f, ...)
+map_at(.x, .at, .f, ..., .progress = NULL)
 
 map_depth(.x, .depth, .f, ..., .ragged = FALSE)
 }
@@ -50,6 +50,8 @@ exlude. Only those elements corresponding to \code{.at} will be modified.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
+
+\item{.progress}{Whether to show a progress bar.}
 
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to
 count up from the lowest level of the list.
