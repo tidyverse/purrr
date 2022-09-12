@@ -97,8 +97,5 @@ reference:
   contents:
   - array_tree
   - as_vector
-  - rbernoulli
   - rate-helpers
-  - rdunif
-  - prepend
   - progress_bars
