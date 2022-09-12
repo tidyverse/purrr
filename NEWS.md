@@ -63,10 +63,6 @@
 * Some mapping functions have now a `.progress` argument to create a
   progress bar. See `?progress_bars` (#149).
 
-* purrr is now licensed as MIT (#805).
-
-### Flattening and simplification
-
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
@@ -135,6 +131,12 @@
   on top of lists that are fundamentally non-list like) (#810).
 
 ## Minor improvements and bug fixes
+
+* `modify_depth()` is no longer a generic. This makes it more consistent
+  with `map_depth()`.
+
+* `map_depth()` now uses `is.list()` to determine if there's more depth
+  to recurse into, as opposed to `!is_atomic(.x)` (#920).
 
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
