@@ -12,18 +12,22 @@
 #' indices in a similar way to transposing a matrix.
 #'
 #' @param x A list of vectors to transpose.
-#' @param template A "template" that specifies the names of the output list.
-#'   Usually taken from the name of the first element of `x`.
+#' @param template A "template" that describes the output list. Can either be
+#'   a character vector (where elements are extracted by name), or an integer
+#'   vector (where elements are extracted by position). Defaults to the names
+#'   of the first element of `x`, or if they're not present, the integer
+#'   indices.
 #' @param simplify Should the result be [simplified][list_simplify]?
 #'   * `TRUE`: simplify or die trying.
 #'   * `NA`: simplify if possible.
 #'   * `FALSE`: never try to simplify, always leaving as a list.
 #'
-#'   Alternatively, a named list specifying the simplification by output column.
+#'   Alternatively, a named list specifying the simplification by output
+#'   element.
 #' @param ptype An optional vector prototype used to control the simplification.
-#'   Alternatively, a named list specifying the prototype by output column.
+#'   Alternatively, a named list specifying the prototype by output element.
 #' @param default A default value to use if a value is absent or `NULL`.
-#'   Alternatively, a named list specifying the default by output column.
+#'   Alternatively, a named list specifying the default by output element.
 #' @export
 #' @examples
 #' # list_transpose() is useful in conjunction with safely()
@@ -60,11 +64,13 @@
 #' ll %>% list_transpose(c("x", "y", "z"), default = NA)
 list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, default = NULL) {
   vec_check_list(x)
+
   if (length(x) == 0) {
-    return(list())
+    template <- integer()
+  } else {
+    template <- template %||% vec_index(x[[1]])
   }
 
-  template <- template %||% vec_index(x[[1]])
   if (!is.character(template) && !is.numeric(template)) {
     cli::cli_abort(
       "{.arg template} must be a character or numeric vector, not {.obj_type_friendly {template}}.",
@@ -115,7 +121,10 @@ match_template <- function(x, template, error_arg = caller_arg(x), error_call = 
   } else if (is.numeric(template)) {
     if (is_bare_list(x) && length(x) > 0) {
       if (length(x) != length(template)) {
-        cli::cli_abort("List {.arg {error_arg}} must be the same length as the numeric {.arg template}.")
+        cli::cli_abort(
+          "Length of {.arg {error_arg}} ({length(x)}) and {.arg template} ({length(template)}) must be the same when transposing by position.",
+          call = error_call
+        )
       }
       x
     } else {

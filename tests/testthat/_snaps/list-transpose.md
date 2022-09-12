@@ -11,8 +11,8 @@
     Code
       list_transpose(x, ptype = list(integer()))
     Condition
-      Error in `match_template()`:
-      ! List `ptype` must be the same length as the numeric `template`.
+      Error in `list_transpose()`:
+      ! Length of `ptype` (1) and `template` (2) must be the same when transposing by position.
 
 # simplification fails silently unless requested
 

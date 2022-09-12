@@ -9,8 +9,11 @@ list_transpose(x, template = NULL, simplify = NA, ptype = NULL, default = NULL)
 \arguments{
 \item{x}{A list of vectors to transpose.}
 
-\item{template}{A "template" that specifies the names of the output list.
-Usually taken from the name of the first element of \code{x}.}
+\item{template}{A "template" that describes the output list. Can either be
+a character vector (where elements are extracted by name), or an integer
+vector (where elements are extracted by position). Defaults to the names
+of the first element of \code{x}, or if they're not present, the integer
+indices.}
 
 \item{simplify}{Should the result be \link[=list_simplify]{simplified}?
 \itemize{
@@ -19,13 +22,14 @@ Usually taken from the name of the first element of \code{x}.}
 \item \code{FALSE}: never try to simplify, always leaving as a list.
 }
 
-Alternatively, a named list specifying the simplification by output column.}
+Alternatively, a named list specifying the simplification by output
+element.}
 
 \item{ptype}{An optional vector prototype used to control the simplification.
-Alternatively, a named list specifying the prototype by output column.}
+Alternatively, a named list specifying the prototype by output element.}
 
 \item{default}{A default value to use if a value is absent or \code{NULL}.
-Alternatively, a named list specifying the default by output column.}
+Alternatively, a named list specifying the default by output element.}
 }
 \description{
 \code{list_transpose()} turns a list-of-lists "inside-out". For instance it turns a pair of
