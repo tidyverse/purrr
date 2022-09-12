@@ -42,7 +42,7 @@
 #' # If you need to find all positions, use map_lgl():
 #' which(map_lgl(x, "foo"))
 detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, .default = NULL) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE, .error_call = current_env())
+  .f <- as_predicate(.f, ..., .mapper = TRUE)
   .dir <- arg_match(.dir, c("forward", "backward"))
 
   for (i in index(.x, .dir, .right, "detect")) {
@@ -57,7 +57,7 @@ detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, 
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE, .error_call = current_env())
+  .f <- as_predicate(.f, ..., .mapper = TRUE)
   .dir <- arg_match(.dir, c("forward", "backward"))
 
   for (i in index(.x, .dir, .right, "detect_index")) {
