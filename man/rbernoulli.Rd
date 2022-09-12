@@ -15,9 +15,13 @@ rbernoulli(n, p = 0.5)
 A logical vector
 }
 \description{
-Generate random sample from a Bernoulli distribution
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function has been deprecated since it's not related to the core purpose
+of purrr.
 }
 \examples{
 rbernoulli(10)
 rbernoulli(100, 0.1)
 }
+\keyword{internal}
