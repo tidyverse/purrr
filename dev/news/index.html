@@ -78,7 +78,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="features-and-fixes-development-version">Features and fixes<a class="anchor" aria-label="anchor" href="#features-and-fixes-development-version"></a></h3>
-<ul><li><p>New <code><a href="../reference/list_update.html">list_update()</a></code> which is similar to <code><a href="../reference/list_update.html">list_modify()</a></code> but doesn’t work recursively (<a href="https://github.com/tidyverse/purrr/issues/822" class="external-link">#822</a>).</p></li>
+<ul><li><p>Some mapping functions have now a <code>.progress</code> argument to create a progress bar. See <code><a href="../reference/progress_bars.html">?progress_bars</a></code> (<a href="https://github.com/tidyverse/purrr/issues/149" class="external-link">#149</a>).</p></li>
+<li><p>New <code><a href="../reference/list_update.html">list_update()</a></code> which is similar to <code><a href="../reference/list_update.html">list_modify()</a></code> but doesn’t work recursively (<a href="https://github.com/tidyverse/purrr/issues/822" class="external-link">#822</a>).</p></li>
 <li><p>New <code><a href="../reference/list_c.html">list_c()</a></code>, <code><a href="../reference/list_c.html">list_rbind()</a></code>, and <code><a href="../reference/list_c.html">list_cbind()</a></code> make it easy to <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, or <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> all of the elements in a list.</p></li>
 <li>
 <p><code>_lgl()</code>, <code>_int()</code>, <code>_int()</code>, and <code>_dbl()</code> now use the same (strict) coercion methods as vctrs (<a href="https://github.com/tidyverse/purrr/issues/904" class="external-link">#904</a>). This means that:</p>

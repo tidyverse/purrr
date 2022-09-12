@@ -95,15 +95,15 @@ the input <code>.x</code>.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_lgl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">map_lgl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">map_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_int</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">map_int</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">map_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">walk</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -131,6 +131,11 @@ set a default value if the indexed element is <code>NULL</code> or does not exis
 <dd><p>Additional arguments passed on to the mapped function.</p>
 <p>Note that the arguments that differ in each call come before <code>.f</code>,
 and the arguments that are the same come after <code>.f</code>.</p></dd>
+
+
+<dt>.progress</dt>
+<dd><p>Whether to show a progress bar. See <a href="progress_bars.html">progress_bars</a>
+for details.</p></dd>
 
 </dl></div>
     <div class="section level2">

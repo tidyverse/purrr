@@ -100,7 +100,7 @@ depth level of a nested vector.</p></li>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">map_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -151,6 +151,11 @@ exlude. Only those elements corresponding to <code>.at</code> will be modified.<
 <p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>: if the tidyselect package is
 installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and tidyselect helpers to select
 elements.</p></dd>
+
+
+<dt>.progress</dt>
+<dd><p>Whether to show a progress bar. See <a href="progress_bars.html">progress_bars</a>
+for details.</p></dd>
 
 
 <dt>.depth</dt>
