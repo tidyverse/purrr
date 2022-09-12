@@ -88,9 +88,13 @@
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Some mapping functions have now a <code>.progress</code> argument to create a progress bar. See <code><a href="../reference/progress_bars.html">?progress_bars</a></code> (<a href="https://github.com/tidyverse/purrr/issues/149" class="external-link">#149</a>).</p></li>
-<li><p>New <code><a href="../reference/list_c.html">list_c()</a></code>, <code><a href="../reference/list_c.html">list_rbind()</a></code>, and <code><a href="../reference/list_c.html">list_cbind()</a></code> make it easy to <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, or <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> all of the elements in a list.</p></li>
-<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> now uses vctrs for simplifying the output. This ensures a more principled and flexible coercion behaviour.</p></li>
+<li><p>purrr is now licensed as MIT (<a href="https://github.com/tidyverse/purrr/issues/805" class="external-link">#805</a>).</p></li>
 </ul><div class="section level4">
+<h4 id="flattening-and-simplification-development-version-1">Flattening and simplification<a class="anchor" aria-label="anchor" href="#flattening-and-simplification-development-version-1"></a></h4>
+<ul><li><p>New <code><a href="../reference/list_c.html">list_c()</a></code>, <code><a href="../reference/list_c.html">list_rbind()</a></code>, and <code><a href="../reference/list_c.html">list_cbind()</a></code> make it easy to <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, or <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> all of the elements in a list.</p></li>
+<li><p><code><a href="../reference/accumulate.html">accumulate()</a></code> now uses vctrs for simplifying the output. This ensures a more principled and flexible coercion behaviour.</p></li>
+</ul></div>
+<div class="section level4">
 <h4 id="tidyverse-consistency-development-version">Tidyverse consistency<a class="anchor" aria-label="anchor" href="#tidyverse-consistency-development-version"></a></h4>
 <ul><li>
 <p><code>_lgl()</code>, <code>_int()</code>, <code>_int()</code>, and <code>_dbl()</code> now use the same (strict) coercion methods as vctrs (<a href="https://github.com/tidyverse/purrr/issues/904" class="external-link">#904</a>). This means that:</p>
