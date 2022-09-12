@@ -1,7 +1,7 @@
 #' Transpose a list
 #'
 #' @description
-#' `list_transpose()` turns a list-of-lists "inside-out"; it turns a pair of
+#' `list_transpose()` turns a list-of-lists "inside-out". For instance it turns a pair of
 #' lists into a list of pairs, or a list of pairs into pair of lists. For
 #' example, if you had a list of length `n` where each component had values `a`
 #' and `b`, `list_transpose()` would make a list with elements `a` and
@@ -14,7 +14,7 @@
 #' @param x A list of vectors to transpose.
 #' @param template A "template" that specifies the names of output list.
 #'   Usually taken from the name of the first element of `x`.
-#' @param simplify Should the result be simplified?
+#' @param simplify Should the result be [simplified][list_simplify]?
 #'   * `TRUE`: simplify or die trying.
 #'   * `NA`: simplify if possible.
 #'   * `FALSE`: never try to simplify, always leaving as a list.
@@ -59,7 +59,7 @@ list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, defa
 
   template <- template %||%
     names(x[[1]]) %||%
-    cli::cli_abort("First element of {.arg x} is unnamed, please supply {.arg template}.")
+    cli::cli_abort("Must supply either {.arg template} or a named {.arg x}.")
   if (!is.character(template)) {
     cli::cli_abort("{.arg template} must be a character vector.")
   }

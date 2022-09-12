@@ -31,7 +31,7 @@ list_simplify_internal <- function(
     error_call = caller_env()
   ) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
-    cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.")
+    cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.", arg = "simplify")
   }
   if (!is.null(ptype) && isFALSE(simplify)) {
     cli::cli_abort("Must not specify {.arg ptype} when `simplify = FALSE`.")
@@ -79,7 +79,7 @@ simplify_impl <- function(
   } else {
     if (strict) {
       cli::cli_abort(
-        "Failed to simplify {error_arg}: not all elements vectors of length 1.",
+        "Can't simplify {.arg {error_arg}} because all elements vectors must be length 1.",
         call = error_call
       )
     } else {
