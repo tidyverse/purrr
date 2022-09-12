@@ -109,6 +109,12 @@
     <loc>https://purrr.tidyverse.org/dev/reference/list_flatten.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/list_simplify.html</loc>
+  </url>
+  <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/list_transpose.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/list_update.html</loc>
   </url>
   <url>
