@@ -1,9 +1,16 @@
-#' Pluck or chuck a single element from a vector or environment
+#' Safely get or set an element deep within a nested data structure
 #'
-#' `pluck()` and `chuck()` implement a generalised form of `[[` that
-#' allow you to index deeply and flexibly into data structures.
-#' `pluck()` consistently returns `NULL` when an element does not
-#' exist while `chuck()` always throws (or chucks) an error.
+#' @description
+#' `pluck()` implements a generalised form of `[[` that allow you to index
+#' deeply and flexibly into data structures. It always succeeds, returning
+#' `.default` if the index you are trying to access does not exist or is `NULL`.
+#'
+#' `pluck<-()` is the assignment equivalent, allowing you to modify an object
+#' deped within a nested data structure.
+#'
+#' `pluck_exists()` tells you whether or not an object exists using the
+#' same rules as pluck (i.e. a `NULL` element is equivalent to an absent
+#' element).
 #'
 #' @param .x,x A vector or environment
 #' @param ... A list of accessors for indexing into the object. Can be
@@ -35,6 +42,7 @@
 #' @seealso [attr_getter()] for creating attribute getters suitable
 #'   for use with `pluck()` and `chuck()`. [modify_in()] for
 #'   applying a function to a pluck location.
+#' @export
 #' @examples
 #' # Let's create a list of data structures:
 #' obj1 <- list("a", list(1, elt = "foo"))
@@ -68,15 +76,10 @@
 #' # You can also supply a default value for non-existing elements:
 #' pluck(x, 10, .default = NA)
 #'
-#' # If you prefer to consistently fail for non-existing elements, use
-#' # the opinionated variant chuck():
-#' chuck(x, 1)
-#' try(chuck(x, 10))
-#' try(chuck(x, 1, 10))
-#'
 #' # The map() functions use pluck() by default to retrieve multiple
 #' # values from a list:
-#' map(x, 2)
+#' map_chr(x, 1)
+#' map_int(x, c(2, 1))
 #'
 #' # pluck() also supports accessor functions:
 #' my_element <- function(x) x[[2]]$elt
@@ -92,10 +95,24 @@
 #' # If you have a list of accessors, you can splice those in with `!!!`:
 #' idx <- list(1, my_element)
 #' pluck(x, !!!idx)
-#' @export
 pluck <- function(.x, ..., .default = NULL) {
   check_dots_unnamed()
   pluck_raw(.x, list2(...), .default = .default)
+}
+
+#' @rdname pluck
+#' @inheritParams modify_in
+#' @export
+`pluck<-` <- function(.x, ..., value) {
+  assign_in(.x, list2(...), value)
+}
+
+#' @rdname pluck
+#' @export
+pluck_exists <- function(.x, ...) {
+  check_dots_unnamed()
+
+  !is_zap(pluck_raw(.x, list2(...), .default = zap()))
 }
 
 pluck_raw <- function(.x, index, .default = NULL) {
@@ -108,8 +125,27 @@ pluck_raw <- function(.x, index, .default = NULL) {
   )
 }
 
-#' @rdname pluck
+#' Get an element deep within a nested data structure, failing if it doesn't
+#' exist
+#'
+#' `chuck()` implements a generalised form of `[[` that allow you to index
+#' deeply and flexibly into data structures. If the index you are trying to
+#' access does not exist (or is `NULL`), it will throw (i.e. chuck) an error.
+#'
+#' @seealso [pluck()] for a quiet equivalent.
+#' @inheritParams pluck
 #' @export
+#' @examples
+#' x <- list(a = 1, b = 2)
+#'
+#' # When indexing an element that doesn't exist `[[` sometimes returns NULL:
+#' x[["y"]]
+#' # and sometimes errors:
+#' try(x[[3]])
+#'
+#' # chuck() consistently errors:
+#' try(chuck(x, "y"))
+#' try(chuck(x, 3))
 chuck <- function(.x, ...) {
   check_dots_unnamed()
 
@@ -121,38 +157,6 @@ chuck <- function(.x, ...) {
     strict = TRUE
   )
 }
-
-#' @rdname pluck
-#' @inheritParams modify_in
-#' @export
-`pluck<-` <- function(.x, ..., value) {
-  assign_in(.x, list2(...), value)
-}
-
-reduce_subset_call <- function(init, idx) {
-  if (!length(idx)) {
-    abort("Can't pluck-assign without pluck locations")
-  }
-  reduce(idx, subset_call, .init = init)
-}
-subset_call <- function(x, idx) {
-  if (!is_index(idx)) {
-    type <- friendly_type_of(idx)
-    abort(sprintf("The pluck-assign indices must be names or positions, not %s", type))
-  }
-  call("[[", x, idx)
-}
-
-is_index <- function(x) {
-  if (is.object(x)) {
-    return(FALSE)
-  }
-  if (!typeof(x) %in% c("character", "integer", "double")) {
-    return(FALSE)
-  }
-  length(x) == 1
-}
-
 
 #' Create an attribute getter function
 #'

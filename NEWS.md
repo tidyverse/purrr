@@ -37,6 +37,12 @@
 * `*_raw()` have been deprecated because they are of limited use and you can 
   now use `map_vec()` instead (#903).
 
+* `invoke_*()` is now deprecated. It was superseded in 0.3.0 (Jan 2019) and 
+  3.5 years later, we have decided to deprecate it as part of the API 
+  refinement in the 1.0.0 release.
+
+* `map_call()` has been removed. It was made defunct in 0.3.0.
+
 * `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
   `list_c()`, `list_cbind()`, and `list_rbind()`.
 
@@ -47,6 +53,9 @@
 
 * Some mapping functions have now a `.progress` argument to create a
   progress bar. See `?progress_bars` (#149).
+
+* New `list_update()` which is similar to `list_modify()` but doesn't work
+  recursively (#822).
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.

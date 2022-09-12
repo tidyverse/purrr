@@ -11,7 +11,6 @@
 \alias{invoke_map_dfr}
 \alias{invoke_map_dfc}
 \alias{invoke_map_df}
-\alias{map_call}
 \title{Invoke functions.}
 \usage{
 invoke(.f, .x = NULL, ..., .env = NULL)
@@ -50,100 +49,65 @@ as \code{.f} the name of a function rather than its value, or as
 \code{.x} symbols of objects rather than their values.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
-
-This pair of functions make it easier to combine a function and list
-of parameters to get a result. \code{invoke} is a wrapper around
-\code{do.call} that makes it easy to use in a pipe. \code{invoke_map}
-makes it easier to call lists of functions with lists of parameters.
-}
-\section{Life cycle}{
-
-
-These functions are retired in favour of \code{\link[=exec]{exec()}}. They are no
-longer under active development but we will maintain them in the
-package undefinitely.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 \itemize{
-\item \code{invoke()} is retired in favour of the simpler \code{exec()} function
+\item \code{invoke()} is deprecated in favour of the simpler \code{exec()} function
 reexported from rlang. \code{exec()} evaluates a function call built
 from its inputs and supports \link[rlang:dyn-dots]{dynamic dots}:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{# Before:
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{# Before:
 invoke(mean, list(na.rm = TRUE), x = 1:10)
 
 # After
 exec(mean, 1:10, !!!list(na.rm = TRUE))
 }\if{html}{\out{</div>}}
-\item \code{invoke_map()} is is retired without replacement because it is
-more complex to understand than the corresponding code using
-\code{map()}, \code{map2()} and \code{exec()}:
+\item \code{invoke_map()} is deprecated because it's harder to understand than the
+corresponding code using \code{map()}/\code{map2()} and \code{exec()}:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{# Before:
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{# Before:
 invoke_map(fns, list(args))
 invoke_map(fns, list(args1, args2))
 
 # After:
 map(fns, exec, !!!args)
-map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
+map2(fns, list(args1, args2), \\(fn, args) exec(fn, !!!args))
 }\if{html}{\out{</div>}}
 }
 }
-
 \examples{
-# Invoke a function with a list of arguments
+# was
 invoke(runif, list(n = 10))
-# Invoke a function with named arguments
 invoke(runif, n = 10)
+# now
+exec(runif, n = 10)
 
-# Combine the two:
-invoke(paste, list("01a", "01b"), sep = "-")
-# That's more natural as part of a pipeline:
-list("01a", "01b") \%>\%
-  invoke(paste, ., sep = "-")
+# was
+args <- list("01a", "01b")
+invoke(paste, args, sep = "-")
+# now
+exec(paste, !!!args, sep = "-")
 
-# Invoke a list of functions, each with different arguments
-invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
-# Or with the same inputs:
-invoke_map(list(runif, rnorm), list(list(n = 5)))
-invoke_map(list(runif, rnorm), n = 5)
-# Or the same function with different inputs:
-invoke_map("runif", list(list(n = 5), list(n = 10)))
+# was
+funs <- list(runif, rnorm)
+funs \%>\% invoke_map(n = 5)
+funs \%>\% invoke_map(list(list(n = 10), list(n = 5)))
 
-# Or as a pipeline
+# now
+funs \%>\% map(exec, n = 5)
+funs \%>\% map2(list(list(n = 10), list(n = 5)), function(f, args) exec(f, !!!args))
+
+# or use pmap + a tibble
+df <- tibble::tibble(
+  fun = list(runif, rnorm),
+  args = list(list(n = 10), list(n = 5))
+)
+df \%>\% pmap(function(fun, args) exec(fun, !!!args))
+
+
+# was
 list(m1 = mean, m2 = median) \%>\% invoke_map(x = rcauchy(100))
-list(m1 = mean, m2 = median) \%>\% invoke_map_dbl(x = rcauchy(100))
+# now
+list(m1 = mean, m2 = median) \%>\% map(function(f) f(rcauchy(100)))
 
-# Note that you can also match by position by explicitly omitting `.x`.
-# This can be useful when the argument names of the functions are not
-# identical
-list(m1 = mean, m2 = median) \%>\%
-  invoke_map(, rcauchy(100))
-
-# If you have pairs of function name and arguments, it's natural
-# to store them in a data frame. Here we use a tibble because
-# it has better support for list-columns
-if (rlang::is_installed("tibble")) {
-  df <- tibble::tibble(
-    f = c("runif", "rpois", "rnorm"),
-    params = list(
-      list(n = 10),
-      list(n = 5, lambda = 10),
-      list(n = 10, mean = -3, sd = 10)
-    )
-  )
-  df
-  invoke_map(df$f, df$params)
 }
-}
-\seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map2}()},
-\code{\link{map_if}()},
-\code{\link{map}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
-}
-\concept{map variants}
 \keyword{internal}

@@ -217,11 +217,6 @@ test_that("can't pluck from complex", {
 
 # assign_in() ----------------------------------------------------------
 
-test_that("reduce_subset_call() type-checks", {
-  expect_identical(reduce_subset_call(NA, list(1, 4, "foo", 3)), quote(NA[[1]][[4]][["foo"]][[3]]))
-  expect_error(reduce_subset_call(NA, list(1, attr_getter("foo"), 3)), "must be names or positions, not a function")
-})
-
 test_that("assign_in() doesn't assign in the caller environment", {
   x <- list(list(bar = 1, foo = 2))
   assign_in(x, list(1, "foo"), value = 20)

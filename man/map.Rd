@@ -134,7 +134,6 @@ of \code{.x} that meet a specified condition.
 
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
