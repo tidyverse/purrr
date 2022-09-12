@@ -35,7 +35,7 @@ name the parameters in the lifted function signature. This
 prevents matching of arguments by name and match by position
 instead.}
 
-\item{.type}{can be a vector mold specifying both the type and the
+\item{.type}{Can be a vector mold specifying both the type and the
 length of the vectors to be concatenated, such as \code{numeric(1)}
 or \code{integer(4)}. Alternatively, it can be a string describing
 the type, one of: "logical", "integer", "double", "complex",

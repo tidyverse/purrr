@@ -12,7 +12,7 @@
       list_transpose(x, ptype = list(integer()))
     Condition
       Error in `match_template()`:
-      ! List `ptype` must be same length as numeric template
+      ! List `ptype` must be the same length as the numeric `template`.
 
 # simplification fails silently unless requested
 
@@ -33,7 +33,7 @@
       list_transpose(x, simplify = list(c = FALSE))
     Condition
       Error in `list_transpose()`:
-      ! `simplify` contains unknown names: "c"
+      ! `simplify` contains unknown names: "c".
 
 # can supply `ptype` globally or individually
 
@@ -41,7 +41,7 @@
       list_transpose(x, ptype = list(c = integer()))
     Condition
       Error in `list_transpose()`:
-      ! `ptype` contains unknown names: "c"
+      ! `ptype` contains unknown names: "c".
 
 # can supply `default` globally or individually
 
@@ -49,7 +49,7 @@
       list_transpose(x, default = list(c = NA))
     Condition
       Error in `list_transpose()`:
-      ! `default` contains unknown names: "c"
+      ! `default` contains unknown names: "c".
 
 # validates inputs
 

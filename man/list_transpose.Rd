@@ -9,7 +9,7 @@ list_transpose(x, template = NULL, simplify = NA, ptype = NULL, default = NULL)
 \arguments{
 \item{x}{A list of vectors to transpose.}
 
-\item{template}{A "template" that specifies the names of output list.
+\item{template}{A "template" that specifies the names of the output list.
 Usually taken from the name of the first element of \code{x}.}
 
 \item{simplify}{Should the result be \link[=list_simplify]{simplified}?
@@ -24,18 +24,18 @@ Alternatively, a named list specifying the simplification by output column.}
 \item{ptype}{An optional vector prototype used to control the simplification.
 Alternatively, a named list specifying the prototype by output column.}
 
-\item{default}{A default value to use if a value is absent of \code{NULL}.
-Alternatively, a named list specifying the prototype by output column.}
+\item{default}{A default value to use if a value is absent or \code{NULL}.
+Alternatively, a named list specifying the default by output column.}
 }
 \description{
 \code{list_transpose()} turns a list-of-lists "inside-out". For instance it turns a pair of
-lists into a list of pairs, or a list of pairs into pair of lists. For
+lists into a list of pairs, or a list of pairs into a pair of lists. For
 example, if you had a list of length \code{n} where each component had values \code{a}
 and \code{b}, \code{list_transpose()} would make a list with elements \code{a} and
-\code{b} that contained lists of length n.
+\code{b} that contained lists of length \code{n}.
 
 It's called transpose because \code{x[["a"]][["b"]]} is equivalent to
-\code{transpose(x)[["b"]][["a"]]}, i.e. transposing a list flips the order of
+\code{list_transpose(x)[["b"]][["a"]]}, i.e. transposing a list flips the order of
 indices in a similar way to transposing a matrix.
 }
 \examples{
@@ -60,7 +60,7 @@ x \%>\%
   list_transpose(simplify = FALSE) \%>\%
   list_transpose(simplify = FALSE) \%>\% str()
 
-# Provide explicit template if you know which elements you want to extract
+# Provide an explicit template if you know which elements you want to extract
 ll <- list(
   list(x = 1, y = "one"),
   list(z = "deux", x = 2)
@@ -69,6 +69,6 @@ ll \%>\% list_transpose()
 ll \%>\% list_transpose(template = c("x", "y", "z"))
 ll \%>\% list_transpose(template = 1)
 
-# And specify default if you want to simplify
+# And specify a default if you want to simplify
 ll \%>\% list_transpose(c("x", "y", "z"), default = NA)
 }

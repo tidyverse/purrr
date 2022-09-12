@@ -15,7 +15,7 @@ simplify_all(.x, .type = NULL)
 \arguments{
 \item{.x}{A list of vectors}
 
-\item{.type}{can be a vector mold specifying both the type and the
+\item{.type}{Can be a vector mold specifying both the type and the
 length of the vectors to be concatenated, such as \code{numeric(1)}
 or \code{integer(4)}. Alternatively, it can be a string describing
 the type, one of: "logical", "integer", "double", "complex",
@@ -27,7 +27,7 @@ the type, one of: "logical", "integer", "double", "complex",
 These functions are deprecated in favour of \code{list_simplify()}:
 \itemize{
 \item \code{as_vector(x)} is now \code{list_simplify(x)}
-\item \code{simplify(x)} is now \code{list_simplify(strict = FALSE)}
+\item \code{simplify(x)} is now \code{list_simplify(x, strict = FALSE)}
 \item \code{simplify_all(x)} is \code{map(x, list_simplify, strict = FALSE)}
 }
 }
