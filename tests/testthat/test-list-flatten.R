@@ -22,3 +22,31 @@ test_that("can control names if both present", {
 test_that("requires a list", {
   expect_snapshot(list_flatten(1:2), error = TRUE)
 })
+
+test_that("list_flatten() restores", {
+  my_num_list <- function(...) {
+    new_my_num_list(list2(...))
+  }
+  new_my_num_list <- function(xs) {
+    stopifnot(
+      purrr::every(xs, \(x) {
+        is_null(x) ||
+          is.numeric(x) ||
+          inherits(x, "my_num_list")
+      })
+    )
+    new_vctr(xs, class = "my_num_list")
+  }
+
+  local_methods(
+    vec_restore.my_num_list = function(x, to, ...) {
+      new_my_num_list(x)
+    }
+  )
+
+  xs <- my_num_list(1, 2, my_num_list(3:4))
+  expect_equal(
+    list_flatten(xs),
+    my_num_list(1, 2, 3:4)
+  )
+})
