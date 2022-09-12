@@ -87,6 +87,7 @@ match_template <- function(x, template, error_arg = caller_arg(x), error_call = 
     if (length(extra_names)) {
       cli::cli_abort(
         "{.arg {error_arg}} contains unknown names: {.str {extra_names}}",
+        arg = error_arg,
         call = error_call
       )
     }

@@ -43,7 +43,7 @@ test_that("can supply `ptype` globally or individually", {
     list_transpose(x, ptype = integer()),
     list(a = c(1L, 3L), b = c(2L, 4L))
   )
-  expect_equal(
+  expect_identical(
     list_transpose(x, ptype = list(a = integer())),
     list(a = c(1L, 3L), b = c(2, 4))
   )
