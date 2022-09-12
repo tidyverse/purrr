@@ -51,8 +51,8 @@ results is simplified to an atomic vector if possible.
 If \code{TRUE}, the result is simplified, erroring if not possible.
 If \code{FALSE}, the result is not simplified, always returning a list.}
 
-\item{.ptype}{If \code{simplify} is \code{TRUE}, optionally supply a vector prototype
-to enforce the output types.}
+\item{.ptype}{If \code{simplify} is \code{NA} or \code{TRUE}, optionally supply a vector
+prototype to enforce the output type.}
 
 \item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
 needs to be 1 element shorter than the vector to be accumulated (\code{.x}).

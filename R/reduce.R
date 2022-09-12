@@ -349,8 +349,8 @@ seq_len2 <- function(start, end) {
 #'   results is simplified to an atomic vector if possible.
 #'   If `TRUE`, the result is simplified, erroring if not possible.
 #'   If `FALSE`, the result is not simplified, always returning a list.
-#' @param .ptype If `simplify` is `TRUE`, optionally supply a vector prototype
-#'   to enforce the output types.
+#' @param .ptype If `simplify` is `NA` or `TRUE`, optionally supply a vector
+#'   prototype to enforce the output type.
 #' @return A vector the same length of `.x` with the same names as `.x`.
 #'
 #'   If `.init` is supplied, the length is extended by 1. If `.x` has
