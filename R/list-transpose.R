@@ -2,17 +2,17 @@
 #'
 #' @description
 #' `list_transpose()` turns a list-of-lists "inside-out". For instance it turns a pair of
-#' lists into a list of pairs, or a list of pairs into pair of lists. For
+#' lists into a list of pairs, or a list of pairs into a pair of lists. For
 #' example, if you had a list of length `n` where each component had values `a`
 #' and `b`, `list_transpose()` would make a list with elements `a` and
-#' `b` that contained lists of length n.
+#' `b` that contained lists of length `n`.
 #'
 #' It's called transpose because `x[["a"]][["b"]]` is equivalent to
-#' `transpose(x)[["b"]][["a"]]`, i.e. transposing a list flips the order of
+#' `list_transpose(x)[["b"]][["a"]]`, i.e. transposing a list flips the order of
 #' indices in a similar way to transposing a matrix.
 #'
 #' @param x A list of vectors to transpose.
-#' @param template A "template" that specifies the names of output list.
+#' @param template A "template" that specifies the names of the output list.
 #'   Usually taken from the name of the first element of `x`.
 #' @param simplify Should the result be [simplified][list_simplify]?
 #'   * `TRUE`: simplify or die trying.
@@ -22,8 +22,8 @@
 #'   Alternatively, a named list specifying the simplification by output column.
 #' @param ptype An optional vector prototype used to control the simplification.
 #'   Alternatively, a named list specifying the prototype by output column.
-#' @param default A default value to use if a value is absent of `NULL`.
-#'   Alternatively, a named list specifying the prototype by output column.
+#' @param default A default value to use if a value is absent or `NULL`.
+#'   Alternatively, a named list specifying the default by output column.
 #' @export
 #' @examples
 #' # list_transpose() is useful in conjunction with safely()
@@ -47,7 +47,7 @@
 #'   list_transpose(simplify = FALSE) %>%
 #'   list_transpose(simplify = FALSE) %>% str()
 #'
-#' # Provide explicit template if you know which elements you want to extract
+#' # Provide an explicit template if you know which elements you want to extract
 #' ll <- list(
 #'   list(x = 1, y = "one"),
 #'   list(z = "deux", x = 2)
@@ -56,7 +56,7 @@
 #' ll %>% list_transpose(template = c("x", "y", "z"))
 #' ll %>% list_transpose(template = 1)
 #'
-#' # And specify default if you want to simplify
+#' # And specify a default if you want to simplify
 #' ll %>% list_transpose(c("x", "y", "z"), default = NA)
 list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, default = NULL) {
   vec_check_list(x)
@@ -100,7 +100,7 @@ match_template <- function(x, template, error_arg = caller_arg(x), error_call = 
       extra_names <- setdiff(names(x), template)
       if (length(extra_names)) {
         cli::cli_abort(
-          "{.arg {error_arg}} contains unknown names: {.str {extra_names}}",
+          "{.arg {error_arg}} contains unknown names: {.str {extra_names}}.",
           arg = error_arg,
           call = error_call
         )
@@ -115,13 +115,13 @@ match_template <- function(x, template, error_arg = caller_arg(x), error_call = 
   } else if (is.numeric(template)) {
     if (is_bare_list(x) && length(x) > 0) {
       if (length(x) != length(template)) {
-        cli::cli_abort("List {.arg {error_arg}} must be same length as numeric template")
+        cli::cli_abort("List {.arg {error_arg}} must be the same length as the numeric {.arg template}.")
       }
       x
     } else {
       rep_along(template, list(x))
     }
   } else {
-    abort("Invalid x", .internal = TRUE)
+    abort("Invalid `template`", .internal = TRUE)
   }
 }

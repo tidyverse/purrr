@@ -26,8 +26,7 @@ list_simplify <- function(x, strict = TRUE, ptype = NULL) {
 list_simplify_internal <- function(x,
                                    simplify = NA,
                                    ptype = NULL,
-                                   error_call = caller_env()
-  ) {
+                                   error_call = caller_env()) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
     cli::cli_abort("{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.", arg = "simplify")
   }

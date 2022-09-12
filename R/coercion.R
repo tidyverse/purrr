@@ -6,11 +6,11 @@
 #' These functions are deprecated in favour of `list_simplify()`:
 #'
 #' * `as_vector(x)` is now `list_simplify(x)`
-#' * `simplify(x)` is now `list_simplify(strict = FALSE)`
+#' * `simplify(x)` is now `list_simplify(x, strict = FALSE)`
 #' * `simplify_all(x)` is `map(x, list_simplify, strict = FALSE)`
 #'
 #' @param .x A list of vectors
-#' @param .type can be a vector mold specifying both the type and the
+#' @param .type Can be a vector mold specifying both the type and the
 #'   length of the vectors to be concatenated, such as `numeric(1)`
 #'   or `integer(4)`. Alternatively, it can be a string describing
 #'   the type, one of: "logical", "integer", "double", "complex",
