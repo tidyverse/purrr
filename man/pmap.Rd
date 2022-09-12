@@ -46,7 +46,8 @@ you can only refer to arguments by position.
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 
-\item{.progress}{Whether to show a progress bar.}
+\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
+for details.}
 }
 \value{
 The output length is determined by the length of the input.

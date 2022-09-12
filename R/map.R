@@ -32,7 +32,8 @@
 #'
 #'   Note that the arguments that differ in each call come before `.f`,
 #'   and the arguments that are the same come after `.f`.
-#' @param .progress Whether to show a progress bar.
+#' @param .progress Whether to show a progress bar. See [progress_bars]
+#'   for details.
 #' @returns
 #' The output length is determined by the length of the input.
 #' The output type is determined by the suffix:

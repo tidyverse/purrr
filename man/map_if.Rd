@@ -51,7 +51,8 @@ exlude. Only those elements corresponding to \code{.at} will be modified.
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 
-\item{.progress}{Whether to show a progress bar.}
+\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
+for details.}
 
 \item{.depth}{Level of \code{.x} to map on. Use a negative value to
 count up from the lowest level of the list.
