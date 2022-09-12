@@ -77,14 +77,14 @@
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
-* `accumulate()` now uses vctrs for simplifying the output. This
-  ensures a more principled and flexible coercion behaviour.
+* New `list_simplify()` reduces a list of length-1 vectors to a simpler atomic
+  or S3 vector (#900).
 
-* New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
-  `c()`, `rbind()`, or `cbind()` all of the elements in a list.
+* New `list_transpose()` which automatically simplifies if possible (#875).
 
-* `accumulate()` now uses vctrs for simplifying the output. This
-  ensures a more principled and flexible coercion behaviour.
+* `accumulate()` and `accumulate2()` now both simplify the output if possible
+  using vctrs. New arguments `simplify` and `ptype` allow you to control the 
+  details of simplification (#774, #809).
 
 ### Tidyverse consistency
 
@@ -147,16 +147,7 @@
 * `list_modify()` no longer recurses into data frames (and other objects built 
   on top of lists that are fundamentally non-list like) (#810).
 
-* New `list_simplify()` reduces a list of length-1 vectors to a simpler atomic
-  or S3 vector (#900).
-
-* New `list_transpose()` which automatically simplifies if possible (#875).
-
 ## Minor improvements and bug fixes
-
-* `accumulate()` and `accumulate2()` now both simplify the output if possible.
-  New arguments `simplify` and `ptype` allow you to control the details of
-  simplification (#774, #809).
 
 * `modify_depth()` is no longer a generic. This makes it more consistent
   with `map_depth()`.
