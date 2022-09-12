@@ -7,7 +7,7 @@
 \usage{
 map_if(.x, .p, .f, ..., .else = NULL)
 
-map_at(.x, .at, .f, ...)
+map_at(.x, .at, .f, ..., .progress = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -47,6 +47,9 @@ exlude. Only those elements corresponding to \code{.at} will be modified.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
+
+\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
+for details.}
 }
 \description{
 The functions \code{map_if()} and \code{map_at()} take \code{.x} as input, apply

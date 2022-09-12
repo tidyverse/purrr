@@ -9,15 +9,15 @@
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
-map(.x, .f, ...)
+map(.x, .f, ..., .progress = FALSE)
 
-map_lgl(.x, .f, ...)
+map_lgl(.x, .f, ..., .progress = FALSE)
 
-map_chr(.x, .f, ...)
+map_chr(.x, .f, ..., .progress = FALSE)
 
-map_int(.x, .f, ...)
+map_int(.x, .f, ..., .progress = FALSE)
 
-map_dbl(.x, .f, ...)
+map_dbl(.x, .f, ..., .progress = FALSE)
 
 walk(.x, .f, ...)
 }
@@ -41,6 +41,9 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
+
+\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
+for details.}
 }
 \value{
 The output length is determined by the length of the input.

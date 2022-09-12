@@ -15,7 +15,7 @@
 #' pluck_depth(x)
 #' x %>% map_int(pluck_depth)
 pluck_depth <- function(x) {
-  if (is.list(x) || is.expression(x) || is.call(x)) {
+  if (is.list(x) || is.expression(x)) {
     depths <- map_int(x, pluck_depth)
     1L + max(depths, 0L)
   } else if (is_atomic(x)) {

@@ -21,10 +21,8 @@ test_that("depth of nested is depth of deepest element + 1", {
   expect_equal(pluck_depth(x), 3)
 })
 
-test_that("handles other recursive", {
+test_that("handles other expressions, like pluck", {
   expect_equal(pluck_depth(expression(1, 2)), 2)
-  expect_equal(pluck_depth(quote(f(x))), 1)
-  expect_equal(pluck_depth(quote(f(g()))), 2)
 })
 
 test_that("vec_depth() is deprecated", {
