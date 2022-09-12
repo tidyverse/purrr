@@ -63,6 +63,10 @@
 * Some mapping functions have now a `.progress` argument to create a
   progress bar. See `?progress_bars` (#149).
 
+* purrr is now licensed as MIT (#805).
+
+### Flattening and simplification
+
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
