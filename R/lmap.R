@@ -57,7 +57,7 @@ lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @rdname lmap
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
 
   lmap_helper(.x, sel, .f, ...)

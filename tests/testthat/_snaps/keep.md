@@ -5,12 +5,9 @@
     Condition
       Error in `keep()`:
       ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
-
----
-
     Code
-      discard(1:3, ~ 1:3)
+      discard(1:3, ~NA)
     Condition
       Error in `discard()`:
-      ! `.p()` must return a single `TRUE` or `FALSE`, not an integer vector.
+      ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 

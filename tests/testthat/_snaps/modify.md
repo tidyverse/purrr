@@ -1,18 +1,10 @@
 # modify_at requires a named object
 
     Code
-      modify_at(x, "x", toupper)
+      modify_at(list(), "x", toupper)
     Condition
-      Error in `modify_at()`:
-      ! Character `.at` must be used with a named `x`.
-
-# modify_at operates on character and numeric indexing
-
-    Code
-      modify_at(x, mean, toupper)
-    Condition
-      Error in `modify_at()`:
-      ! `.at` must be a character or numeric vector, not a function.
+      Error in `vec_as_location()`:
+      ! Can't use character names to index an unnamed vector.
 
 # modify_if() requires predicate functions
 

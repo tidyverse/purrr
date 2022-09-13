@@ -20,13 +20,7 @@ test_that("modify_if/modify_at return same type as input", {
 })
 
 test_that("modify_at requires a named object", {
-  x <- list(1, 2)
-  expect_snapshot(modify_at(x, "x", toupper), error = TRUE)
-})
-
-test_that("modify_at operates on character and numeric indexing", {
-  x <- list(x = 1, y = 2)
-  expect_snapshot(modify_at(x, mean, toupper), error = TRUE)
+  expect_snapshot(modify_at(list(), "x", toupper), error = TRUE)
 })
 
 test_that("negative .at omits locations", {
