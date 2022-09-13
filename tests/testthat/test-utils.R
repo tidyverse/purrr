@@ -73,7 +73,7 @@ test_that("validates its inputs", {
   expect_snapshot(at_selection(x, list()), error = TRUE)
 })
 
-test_that("tidyselect in is deprecated", {
+test_that("tidyselect `at` is deprecated", {
   expect_snapshot({
     . <- at_selection(data.frame(x = 1), vars("x"))
   })
