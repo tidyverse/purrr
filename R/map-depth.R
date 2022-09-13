@@ -127,6 +127,7 @@ check_depth <- function(depth, max_depth, error_call = caller_env()) {
   if (!is_integerish(depth, n = 1, finite = TRUE)) {
     cli::cli_abort(
       "{.arg .depth} must be a single number, not {.obj_type_friendly {depth}}.",
+      arg = ".depth",
       call = error_call
     )
   }
@@ -134,6 +135,7 @@ check_depth <- function(depth, max_depth, error_call = caller_env()) {
     if (-depth > max_depth) {
       cli::cli_abort(
         "Negative {.arg .depth} ({depth}) must be greater than -{max_depth}.",
+        arg = ".depth",
         call = error_call
       )
     }

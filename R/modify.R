@@ -290,6 +290,7 @@ inv_which <- function(x, sel, error_call = caller_env()) {
     if (is.null(names)) {
       cli::cli_abort(
         "Character {.arg .at} must be used with a named {.arg x}.",
+        arg = ".at",
         call = error_call
       )
     }
@@ -304,6 +305,7 @@ inv_which <- function(x, sel, error_call = caller_env()) {
   } else {
     cli::cli_abort(
       "{.arg .at} must be a character or numeric vector, not {.obj_type_friendly {sel}}.",
+      arg = ".at",
       call = error_call
     )
   }

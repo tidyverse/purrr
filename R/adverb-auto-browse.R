@@ -25,7 +25,10 @@
 #'
 auto_browse <- function(.f) {
   if (is_primitive(.f)) {
-    cli::cli_abort("Can not {.fn auto_browse} primitive functions")
+    cli::cli_abort(
+      "{.arg .f} must not be a primitive function.",
+      arg = ".f"
+    )
   }
 
   function(...) {

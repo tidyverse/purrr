@@ -35,7 +35,10 @@ as_vector_ <- function(.x, .type = NULL) {
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {
-    cli::cli_abort("Can't coerce {.arg .x} to a vector.")
+    cli::cli_abort(
+      "Can't coerce {.arg .x} to a vector.",
+      arg = ".x"
+    )
   }
 }
 

@@ -131,6 +131,7 @@ as_predicate <- function(.fn,
       }
       cli::cli_abort(
         "{.fn { .error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
+        arg = .error_arg,
         call = .error_call
       )
     }

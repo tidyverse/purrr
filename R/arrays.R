@@ -53,7 +53,8 @@ array_branch <- function(array, margin = NULL) {
   } else if (is.null(dim(array))) {
     if (!identical(as.integer(margin), 1L)) {
       cli::cli_abort(
-        "{.arg margin} must be `NULL` or `1` with 1D arrays, not {.str {margin}}."
+        "{.arg margin} must be `NULL` or `1` with 1D arrays, not {.str {margin}}.",
+        arg = "margin"
       )
     }
     as.list(array)

@@ -207,6 +207,7 @@ reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
     if (is_empty(x)) {
       cli::cli_abort(
         "Must supply {.arg .init} when {.arg .x} is empty.",
+        arg = ".init",
         call = error_call
       )
     } else if (left) {
@@ -264,6 +265,7 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .er
   if (length(x_idx) != length(y_idx)) {
     cli::cli_abort(
       "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
+      arg = ".y",
       call = .error_call)
   }
 

@@ -100,7 +100,10 @@ partial <- function(.f,
     builtin = ,
     special = as_closure(.f),
     closure = .f,
-    cli::cli_abort("{.arg .f} must be a function, not {.obj_friendly_type { .f }}.")
+    cli::cli_abort(
+      "{.arg .f} must be a function, not {.obj_friendly_type { .f }}.",
+      arg = ".f"
+    )
   )
 
   if (lifecycle::is_present(.env)) {
