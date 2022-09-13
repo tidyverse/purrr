@@ -34,7 +34,7 @@ VignetteBuilder:
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.1.9000
 Config/testthat/edition: 3
-Remotes:  
+Remotes: 
     r-lib/vctrs

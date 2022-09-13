@@ -72,36 +72,36 @@ the input \code{.x}.
 }
 \examples{
 # Compute normal distributions from an atomic vector
-1:10 \%>\%
+1:10 |>
   map(rnorm, n = 10)
 
 # You can also use an anonymous function
-1:10 \%>\%
+1:10 |>
   map(function(x) rnorm(10, x))
 
 # Or a formula
-1:10 \%>\%
+1:10 |>
   map(~ rnorm(10, .x))
 
 # Simplify output to a vector instead of a list by computing the mean of the distributions
-1:10 \%>\%
-  map(rnorm, n = 10) \%>\%  # output a list
+1:10 |>
+  map(rnorm, n = 10) |>  # output a list
   map_dbl(mean)           # output an atomic vector
 
 # Using set_names() with character vectors is handy to keep track
 # of the original inputs:
-set_names(c("foo", "bar")) \%>\% map_chr(paste0, ":suffix")
+set_names(c("foo", "bar")) |> map_chr(paste0, ":suffix")
 
 # Working with lists
 favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
-favorite_desserts \%>\% map_chr(~ paste(.x, "rocks!"))
+favorite_desserts |> map_chr(~ paste(.x, "rocks!"))
 
 # Extract by name or position
 # .default specifies value for elements that are missing or NULL
 l1 <- list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L))
-l1 \%>\% map("a", .default = "???")
-l1 \%>\% map_int("b", .default = NA)
-l1 \%>\% map_int(2, .default = NA)
+l1 |> map("a", .default = "???")
+l1 |> map_int("b", .default = NA)
+l1 |> map_int(2, .default = NA)
 
 # Supply multiple values to index deeply into a list
 l2 <- list(
@@ -109,23 +109,23 @@ l2 <- list(
   list(num = 101:103, letters[4:6]),
   list()
 )
-l2 \%>\% map(c(2, 2))
+l2 |> map(c(2, 2))
 
 # Use a list to build an extractor that mixes numeric indices and names,
 # and .default to provide a default value if the element does not exist
-l2 \%>\% map(list("num", 3))
-l2 \%>\% map_int(list("num", 3), .default = NA)
+l2 |> map(list("num", 3))
+l2 |> map_int(list("num", 3), .default = NA)
 
 # Working with data frames
 # Use map_lgl(), map_dbl(), etc to return a vector instead of a list:
-mtcars \%>\% map_dbl(sum)
+mtcars |> map_dbl(sum)
 
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2
-mtcars \%>\%
-  split(.$cyl) \%>\%
-  map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map(summary) \%>\%
+mtcars |>
+  split(.$cyl) |>
+  map(~ lm(mpg ~ wt, data = .x)) |>
+  map(summary) |>
   map_dbl("r.squared")
 }
 \seealso{

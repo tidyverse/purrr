@@ -7,3 +7,4 @@ revdep/library
 TAGS
 .httr-oauth
 docs
+/man/macros/examples.Rd
