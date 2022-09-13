@@ -66,7 +66,7 @@ void stop_bad_type(SEXP x, const char* expected, const char* what, const char* a
 
   SEXP env = PROTECT(caller_env());
   Rf_eval(call, env);
-  Rf_error("Internal error: `stop_bad_type()` should have thrown earlier");
+  while (1); // No return
 }
 
 void stop_bad_element_type(SEXP x, R_xlen_t index, const char* expected, const char* what, const char* arg) {
@@ -91,7 +91,7 @@ void stop_bad_element_type(SEXP x, R_xlen_t index, const char* expected, const c
 
   SEXP env = PROTECT(caller_env());
   Rf_eval(call, env);
-  Rf_error("Internal error: `stop_bad_element_type()` should have thrown earlier");
+  while (1); // No return
 }
 
 void stop_bad_element_length(SEXP x,
@@ -125,5 +125,5 @@ void stop_bad_element_length(SEXP x,
 
   SEXP env = PROTECT(caller_env());
   Rf_eval(call, env);
-  Rf_error("Internal error: `stop_bad_element_length()` should have thrown earlier");
+  while (1); // No return
 }
