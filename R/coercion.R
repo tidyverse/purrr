@@ -29,7 +29,9 @@
 #' list(1:2, 3:4, 5:6) %>% list_c(ptype = integer())
 as_vector <- function(.x, .type = NULL) {
   lifecycle::deprecate_warn("0.4.0", "as_vector()", "list_simplify()")
-
+  as_vector_(.x, .type)
+}
+as_vector_ <- function(.x, .type = NULL) {
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {

@@ -45,7 +45,11 @@ the type, one of: "logical", "integer", "double", "complex",
 A function.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
+We have supeseded these functions because we no longer believe "lifting"
+to be a mainstream operation, and we are striving to reduce purrr to its
+most useful core.
 
 \code{lift_xy()} is a composition helper. It helps you compose
 functions by lifting their domain from a kind of input to another
@@ -58,10 +62,6 @@ because it allows you to transform a regular function to one that
 takes a list. This is often essential for composition with purrr
 functional tools. Since this is such a common function,
 \code{lift()} is provided as an alias for that operation.
-
-We have deprecated these functions because we no longer believe "lifting"
-to be a mainstream operation, and we are striving to reduce purrr to its
-most useful core.
 }
 \section{from ... to \code{list(...)} or \code{c(...)}}{
 
