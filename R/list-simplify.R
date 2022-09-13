@@ -21,7 +21,8 @@
 list_simplify <- function(x, strict = TRUE, ptype = NULL) {
   if (!is_bool(strict)) {
     cli::cli_abort(
-      "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}."
+      "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}.",
+      arg = "strict"
     )
   }
 
@@ -82,7 +83,10 @@ simplify_impl <- function(x,
     )
   } else {
     if (strict) {
-      cli::cli_abort("All elements must be length-1 vectors.", call = error_call)
+      cli::cli_abort(
+        "All elements must be length-1 vectors.",
+        call = error_call
+      )
     } else {
       x
     }

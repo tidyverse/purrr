@@ -25,12 +25,12 @@ void copy_names(SEXP from, SEXP to) {
   UNPROTECT(1);
 }
 
-void check_vector(SEXP x, const char *name) {
+void check_vector(SEXP x, const char *name, SEXP env) {
   if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
     return;
   }
 
-  stop_bad_type(x, "a vector", NULL, name);
+  stop_bad_type(x, "a vector", NULL, name, env);
 }
 
 // call must involve i
@@ -53,8 +53,7 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
     SEXP res = PROTECT(R_forceAndCall(call, force_args, env));
 
     if (type != VECSXP && Rf_length(res) != 1) {
-      SEXP ptype = PROTECT(Rf_allocVector(type, 0));
-      stop_bad_element_vector(res, i + 1, ptype, 1, "Result", NULL, false);
+      stop_bad_element_length(res, i + 1, 1, "Result", NULL, false, env);
     }
 
     set_vector_value(out, i, res, 0);
@@ -76,7 +75,7 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_, SEXP progress) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x");
+  check_vector(x_val, ".x", env);
 
   int n = Rf_length(x_val);
   if (n == 0) {
@@ -112,9 +111,9 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, S
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x");
+  check_vector(x_val, ".x", env);
   SEXP y_val = PROTECT(Rf_eval(y, env));
-  check_vector(y_val, ".y");
+  check_vector(y_val, ".y", env);
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx != ny && nx != 1 && ny != 1) {
@@ -147,7 +146,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val)) {
-    stop_bad_type(l_val, "a list", NULL, l_name);
+    stop_bad_type(l_val, "a list", NULL, l_name, env);
   }
 
   // Check all elements are lists and find recycled length
@@ -158,7 +157,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
     SEXP j_val = VECTOR_ELT(l_val, j);
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
-      stop_bad_element_type(j_val, j + 1, "a vector", NULL, l_name);
+      stop_bad_element_type(j_val, j + 1, "a vector", NULL, l_name, env);
     }
 
     int nj = Rf_length(j_val);
@@ -170,7 +169,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
     if (n == -1) {
       n = nj;
     } else if (nj != n) {
-      stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
+      stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true, env);
     }
   }
 

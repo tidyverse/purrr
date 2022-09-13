@@ -176,8 +176,8 @@ test_that("attr_getter() uses exact (non-partial) matching", {
 # environments ------------------------------------------------------------
 
 test_that("pluck errors with invalid indices", {
-  expect_bad_element_vector_error(pluck(environment(), 1), "Index 1 must be a single string, not a single double")
-  expect_bad_element_vector_error(pluck(environment(), letters), "Index 1 must be a single string, not a character vector of length 26")
+  expect_snapshot(pluck(environment(), 1), error = TRUE)
+  expect_snapshot(pluck(environment(), letters), error = TRUE)
 })
 
 test_that("pluck returns missing with missing index", {
@@ -198,8 +198,8 @@ newA <- methods::setClass("A", list(a = "numeric", b = "numeric"))
 A <- newA(a = 1, b = 10)
 
 test_that("pluck errors with invalid indices", {
-  expect_bad_element_vector_error(pluck(A, 1), "Index 1 must be a single string, not a single double")
-  expect_bad_element_vector_error(pluck(A, letters), "Index 1 must be a single string, not a character vector of length 26")
+  expect_snapshot(pluck(A, 1), error = TRUE)
+  expect_snapshot(pluck(A, letters), error = TRUE)
 })
 
 test_that("pluck returns missing with missing index", {

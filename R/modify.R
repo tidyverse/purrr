@@ -274,21 +274,25 @@ modify_base <- function(mapper, .x, .y, .f, ...) {
 }
 
 # Internal version of map_lgl() that works with logical vectors
-probe <- function(.x, .p, ...) {
+probe <- function(.x, .p, ..., .error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE)
+    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = .error_call)
     map_lgl(.x, .p, ...)
   }
 }
 
-inv_which <- function(x, sel) {
+inv_which <- function(x, sel, error_call = caller_env()) {
   if (is.character(sel)) {
     names <- names(x)
     if (is.null(names)) {
-      stop("character indexing requires a named object", call. = FALSE)
+      cli::cli_abort(
+        "Character {.arg .at} must be used with a named {.arg x}.",
+        arg = ".at",
+        call = error_call
+      )
     }
     names %in% sel
   } else if (is.numeric(sel)) {
@@ -299,7 +303,11 @@ inv_which <- function(x, sel) {
     }
 
   } else {
-    stop("unrecognised index type", call. = FALSE)
+    cli::cli_abort(
+      "{.arg .at} must be a character or numeric vector, not {.obj_type_friendly {sel}}.",
+      arg = ".at",
+      call = error_call
+    )
   }
 }
 

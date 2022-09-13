@@ -20,13 +20,13 @@ test_that("modify_if/modify_at return same type as input", {
 })
 
 test_that("modify_at requires a named object", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(unname(df1), "x", toupper))
+  x <- list(1, 2)
+  expect_snapshot(modify_at(x, "x", toupper), error = TRUE)
 })
 
 test_that("modify_at operates on character and numeric indexing", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(df1, TRUE, toupper))
+  x <- list(x = 1, y = 2)
+  expect_snapshot(modify_at(x, mean, toupper), error = TRUE)
 })
 
 test_that("negative .at omits locations", {
@@ -85,8 +85,8 @@ test_that("modify2() recycles arguments", {
 })
 
 test_that("modify_if() requires predicate functions", {
-  expect_error(modify_if(list(1, 2), ~ NA, ~ "foo"), ", not a missing value")
-  expect_error(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), ", not a logical vector of length 2")
+  expect_snapshot(modify_if(list(1, 2), ~ NA, ~ "foo"), error = TRUE)
+  expect_snapshot(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), error = TRUE)
 })
 
 test_that("`.else` modifies false elements", {

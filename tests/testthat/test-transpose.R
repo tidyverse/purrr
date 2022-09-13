@@ -5,14 +5,14 @@ test_that("transpose() is deprecated", {
 test_that("input must be a list", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_bad_type_error(transpose(1:3), "`.l` must be a list, not an integer vector")
+  expect_snapshot(transpose(1:3), error = TRUE)
 })
 
 test_that("elements of input must be atomic vectors", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_bad_element_type_error(transpose(list(environment())), "Element 1 must be a vector, not an environment")
-  expect_bad_element_type_error(transpose(list(list(), environment())), "Element 2 must be a vector, not an environment")
+  expect_snapshot(transpose(list(environment())), error = TRUE)
+  expect_snapshot(transpose(list(list(), environment())), error = TRUE)
 })
 
 test_that("empty list returns empty list", {
@@ -76,10 +76,7 @@ test_that("can transpose lists of atomic vectors", {
 test_that("can't transpose expressions", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_bad_type_error(
-    transpose(list(expression(a))),
-    "Transposed element must be a vector, not an expression vector"
-  )
+  expect_snapshot(transpose(list(expression(a))), error = TRUE)
 })
 
 # Named based matching ----------------------------------------------------

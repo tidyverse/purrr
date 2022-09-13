@@ -133,10 +133,10 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
+reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE, error_call = caller_env()) {
   left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
-  out <- reduce_init(.x, .init, left = left)
+  out <- reduce_init(.x, .init, left = left, error_call = error_call)
   idx <- reduce_index(.x, .init, left = left)
 
   if (.acc) {
@@ -200,12 +200,16 @@ reduce_early <- function(out, prev, acc, acc_out, acc_idx, left = TRUE) {
   }
 }
 
-reduce_init <- function(x, init, left = TRUE) {
+reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
   if (!missing(init)) {
     init
   } else {
     if (is_empty(x)) {
-      stop("`.x` is empty, and no `.init` supplied", call. = FALSE)
+      cli::cli_abort(
+        "Must supply {.arg .init} when {.arg .x} is empty.",
+        arg = ".init",
+        call = error_call
+      )
     } else if (left) {
       x[[1]]
     } else {
@@ -253,13 +257,16 @@ accum_index <- function(out, left) {
   }
 }
 
-reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE) {
-  out <- reduce_init(.x, .init, left = .left)
+reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .error_call = caller_env()) {
+  out <- reduce_init(.x, .init, left = .left, error_call = .error_call)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
 
   if (length(x_idx) != length(y_idx)) {
-    stop("`.y` does not have length ", length(x_idx))
+    cli::cli_abort(
+      "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
+      arg = ".y",
+      call = .error_call)
   }
 
   .f <- as_mapper(.f, ...)

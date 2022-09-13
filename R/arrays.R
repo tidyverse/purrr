@@ -52,10 +52,10 @@ array_branch <- function(array, margin = NULL) {
     list(array)
   } else if (is.null(dim(array))) {
     if (!identical(as.integer(margin), 1L)) {
-      abort(sprintf(
-        "`margin` must be `NULL` or `1` with 1D arrays, not `%s`",
-        toString(margin)
-      ))
+      cli::cli_abort(
+        "{.arg margin} must be `NULL` or `1` with 1D arrays, not {.str {margin}}.",
+        arg = "margin"
+      )
     }
     as.list(array)
   } else {

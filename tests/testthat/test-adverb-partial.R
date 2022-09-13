@@ -172,6 +172,9 @@ test_that("`.first` still works", {
   expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
 })
 
+test_that("checks inputs", {
+  expect_snapshot(partial(1), error = TRUE)
+})
 
 # helpers -----------------------------------------------------------------
 
@@ -225,4 +228,3 @@ test_that("quo_invert() unwraps constants", {
   call <- expr(foo(!!foo, !!quo(NULL)))
   expect_identical(quo_invert(call), new_quosure(quote(foo(foo, NULL)), quo_get_env(foo)))
 })
-

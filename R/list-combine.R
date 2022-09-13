@@ -74,6 +74,7 @@ check_list_of_data_frames <- function(x, error_call = caller_env()) {
   bad <- which(!is_df)
   cli::cli_abort(
     "All elements of {.arg x} must be data frames. Elements {bad} are not.",
+    arg = "x",
     call = error_call
   )
 }

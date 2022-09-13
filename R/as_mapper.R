@@ -107,7 +107,16 @@ plucker <- function(i, default) {
   )
 }
 
-as_predicate <- function(.fn, ..., .mapper, .allow_na = FALSE) {
+as_predicate <- function(.fn,
+                         ...,
+                         .mapper,
+                         .allow_na = FALSE,
+                         .error_call = caller_env(),
+                         .error_arg = caller_arg(.fn)) {
+
+  force(.error_arg)
+  force(.error_call)
+
   if (.mapper) {
     .fn <- as_mapper(.fn, ...)
   }
@@ -120,10 +129,11 @@ as_predicate <- function(.fn, ..., .mapper, .allow_na = FALSE) {
         # Always return a logical NA
         return(NA)
       }
-      abort(sprintf(
-        "Predicate functions must return a single `TRUE` or `FALSE`, not %s.",
-        as_predicate_friendly_type_of(out)
-      ))
+      cli::cli_abort(
+        "{.fn { .error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
+        arg = .error_arg,
+        call = .error_call
+      )
     }
 
     out

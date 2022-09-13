@@ -25,7 +25,10 @@
 #'
 auto_browse <- function(.f) {
   if (is_primitive(.f)) {
-    abort("Can not auto_browse() primitive functions")
+    cli::cli_abort(
+      "{.arg .f} must not be a primitive function.",
+      arg = ".f"
+    )
   }
 
   function(...) {
@@ -43,9 +46,6 @@ auto_browse <- function(.f) {
           frame <- sys.frame(7)
           browse_in_frame(frame)
         }
-      },
-      interrupt = function(e) {
-        stop("Terminated by user", call. = FALSE)
       }
     )
   }

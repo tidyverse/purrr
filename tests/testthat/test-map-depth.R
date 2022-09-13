@@ -76,3 +76,11 @@ test_that("modify_depth() treats NULLs correctly", {
     list(a = NULL, b = list(b1 = FALSE, b2 = TRUE))
   )
 })
+
+
+# check_depth -------------------------------------------------------------
+
+test_that("validates depth", {
+  expect_snapshot(check_depth(mean), error = TRUE)
+})
+

@@ -123,6 +123,7 @@ match_template <- function(x, template, error_arg = caller_arg(x), error_call = 
       if (length(x) != length(template)) {
         cli::cli_abort(
           "Length of {.arg {error_arg}} ({length(x)}) and {.arg template} ({length(template)}) must be the same when transposing by position.",
+          arg = error_arg,
           call = error_call
         )
       }
