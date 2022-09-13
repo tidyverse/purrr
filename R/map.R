@@ -56,11 +56,7 @@
 #'
 #' # You can also use an anonymous function
 #' 1:10 |>
-#'   map(function(x) rnorm(10, x))
-#'
-#' # Or a formula
-#' 1:10 |>
-#'   map(~ rnorm(10, .x))
+#'   map(\(x) rnorm(10, x))
 #'
 #' # Simplify output to a vector instead of a list by computing the mean of the distributions
 #' 1:10 |>
@@ -73,7 +69,7 @@
 #'
 #' # Working with lists
 #' favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
-#' favorite_desserts |> map_chr(~ paste(.x, "rocks!"))
+#' favorite_desserts |> map_chr(\(food) paste(food, "rocks!"))
 #'
 #' # Extract by name or position
 #' # .default specifies value for elements that are missing or NULL
@@ -102,8 +98,8 @@
 #' # A more realistic example: split a data frame into pieces, fit a
 #' # model to each piece, summarise and extract R^2
 #' mtcars |>
-#'   split(.$cyl) |>
-#'   map(~ lm(mpg ~ wt, data = .x)) |>
+#'   split(mtcars$cyl) |>
+#'   map(\(df) lm(mpg ~ wt, data = df)) |>
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {

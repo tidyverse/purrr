@@ -47,20 +47,19 @@ Here is an example of equivalent usages for \code{cross()} and
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- list(
   id = c("John", "Jane"),
-  greeting = c("Hello.", "Bonjour."),
-  sep = c("! ", "... ")
+  sep = c("! ", "... "),
+  greeting = c("Hello.", "Bonjour.")
 )
 
 # With deprecated `cross()`
-data |> cross() |> map_chr(~ paste(..., collapse = " "))
-#> [1] "John Hello. ! "     "Jane Hello. ! "     "John Bonjour. ! "  
-#> [4] "Jane Bonjour. ! "   "John Hello. ... "   "Jane Hello. ... "  
-#> [7] "John Bonjour. ... " "Jane Bonjour. ... "
+data |> cross() |> map_chr(\\(...) paste0(..., collapse = ""))
+#> [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."  
+#> [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."
 
 # With `expand_grid()`
 tidyr::expand_grid(!!!data) |> pmap_chr(paste)
-#> [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
-#> [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
+#> [1] "John! Hello."     "John! Bonjour."   "John... Hello."   "John... Bonjour."
+#> [5] "Jane! Hello."     "Jane! Bonjour."   "Jane... Hello."   "Jane... Bonjour."
 }\if{html}{\out{</div>}}
 }
 \details{
@@ -120,7 +119,7 @@ for (i in seq_along(out))
 out
 
 # It's easier to transpose and then use invoke_map()
-args |> transpose() |> map_chr(~ invoke(paste, .))
+args |> transpose() |> map_chr(\(x) invoke(paste, x))
 
 # Unwanted combinations can be filtered out with a predicate function
 filter <- function(x, y) x >= y

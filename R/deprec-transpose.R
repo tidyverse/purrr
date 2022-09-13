@@ -27,7 +27,7 @@
 #' @keywords internal
 #' @export
 #' @examples
-#' x <- map(1:5, ~ list(x = runif(1), y = runif(5)))
+#' x <- map(1:5, \(i) list(x = runif(1), y = runif(5)))
 #' # was
 #' x |> transpose() |> str()
 #' # now

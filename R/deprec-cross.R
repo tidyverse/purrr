@@ -14,12 +14,12 @@
 #' ```{r}
 #' data <- list(
 #'   id = c("John", "Jane"),
-#'   greeting = c("Hello.", "Bonjour."),
-#'   sep = c("! ", "... ")
+#'   sep = c("! ", "... "),
+#'   greeting = c("Hello.", "Bonjour.")
 #' )
 #'
 #' # With deprecated `cross()`
-#' data |> cross() |> map_chr(~ paste(..., collapse = " "))
+#' data |> cross() |> map_chr(\(...) paste0(..., collapse = ""))
 #'
 #' # With `expand_grid()`
 #' tidyr::expand_grid(!!!data) |> pmap_chr(paste)
@@ -95,7 +95,7 @@
 #' out
 #'
 #' # It's easier to transpose and then use invoke_map()
-#' args |> transpose() |> map_chr(~ invoke(paste, .))
+#' args |> transpose() |> map_chr(\(x) invoke(paste, x))
 #'
 #' # Unwanted combinations can be filtered out with a predicate function
 #' filter <- function(x, y) x >= y

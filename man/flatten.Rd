@@ -53,7 +53,7 @@ and \code{\link[=list_cbind]{list_cbind()}} respectively.
 }
 }
 \examples{
-x <- map(1:3, ~ sample(4))
+x <- map(1:3, \(i) sample(4))
 x
 
 # was

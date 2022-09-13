@@ -120,7 +120,7 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #' # lift_vd():
 #' pmap_dbl(mtcars, lift_vd(mean))
 #' # now
-#' pmap_dbl(mtcars, ~ mean(c(...)))
+#' pmap_dbl(mtcars, \(...) mean(c(...)))
 lift_vl <- function(..f, ..., .type) {
   # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_vl()")
@@ -173,7 +173,7 @@ lift_vd <- function(..f, ..., .type) {
 #' # satisfying a condition:
 #' mtcars |> pmap_lgl(lift_ld(some, partial(`<`, 200)))
 #' # now
-#' mtcars |> pmap_lgl(~ any(c(...) > 200))
+#' mtcars |> pmap_lgl(\(...) any(c(...) > 200))
 #'
 lift_ld <- function(..f, ...) {
   # in 1.0.0

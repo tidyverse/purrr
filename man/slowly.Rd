@@ -40,7 +40,7 @@ in a package, be sure to read \link{faq-adverbs-export}.
 rate <- rate_delay(0.1)
 
 # slowly() causes a function to sleep for a given time between calls:
-slow_runif <- slowly(~ runif(1), rate = rate, quiet = FALSE)
+slow_runif <- slowly(\(x) runif(1), rate = rate, quiet = FALSE)
 out <- map(1:5, slow_runif)
 }
 \seealso{

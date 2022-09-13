@@ -127,7 +127,7 @@ exec(sum, 3, NA, 4, na.rm = TRUE)
 # lift_vd():
 pmap_dbl(mtcars, lift_vd(mean))
 # now
-pmap_dbl(mtcars, ~ mean(c(...)))
+pmap_dbl(mtcars, \(...) mean(c(...)))
 ### Lifting from list(...) to c(...) or ...
 
 # This kind of lifting is sometimes needed for function
@@ -137,7 +137,7 @@ pmap_dbl(mtcars, ~ mean(c(...)))
 # satisfying a condition:
 mtcars |> pmap_lgl(lift_ld(some, partial(`<`, 200)))
 # now
-mtcars |> pmap_lgl(~ any(c(...) > 200))
+mtcars |> pmap_lgl(\(...) any(c(...) > 200))
 
 }
 \seealso{

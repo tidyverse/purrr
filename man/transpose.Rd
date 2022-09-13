@@ -36,7 +36,7 @@ transpose operation on a matrix. You can get back the original
 input by transposing it twice.
 }
 \examples{
-x <- map(1:5, ~ list(x = runif(1), y = runif(5)))
+x <- map(1:5, \(i) list(x = runif(1), y = runif(5)))
 # was
 x |> transpose() |> str()
 # now

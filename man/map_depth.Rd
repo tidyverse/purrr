@@ -17,7 +17,7 @@ count up from the lowest level of the list.
 \itemize{
 \item \code{map_depth(x, 0, fun)} is equivalent to \code{fun(x)}.
 \item \code{map_depth(x, 1, fun)} is equivalent to \code{x <- map(x, fun)}
-\item \code{map_depth(x, 2, fun)} is equivalent to \code{x <- map(x, ~ map(., fun))}
+\item \code{map_depth(x, 2, fun)} is equivalent to \verb{x <- map(x, \\(y) map(y, fun))}
 }}
 
 \item{.f}{A function, specified in one of the following ways:
@@ -61,11 +61,11 @@ map(x, map, paste, collapse = "/")
 # When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
 x <- list(1, list(1, list(1, list(1, 1))))
 str(x)
-str(map_depth(x, 4, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 3, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 2, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 1, ~ length(unlist(.x)), .ragged = TRUE))
-str(map_depth(x, 0, ~ length(unlist(.x)), .ragged = TRUE))
+str(map_depth(x, 4, \(x) length(unlist(x)), .ragged = TRUE))
+str(map_depth(x, 3, \(x) length(unlist(x)), .ragged = TRUE))
+str(map_depth(x, 2, \(x) length(unlist(x)), .ragged = TRUE))
+str(map_depth(x, 1, \(x) length(unlist(x)), .ragged = TRUE))
+str(map_depth(x, 0, \(x) length(unlist(x)), .ragged = TRUE))
 
 # modify_depth() -------------------------------------------------
 l1 <- list(
@@ -101,5 +101,5 @@ l1 |> modify_depth(2, "param2") |> str()
 # a lower level. Here we ask pmap() to map paste() simultaneously over all
 # elements of the objects at the second level. paste() is effectively
 # mapped at level 3.
-l1 |> modify_depth(2, ~ pmap(., paste, sep = " / ")) |> str()
+l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
 }

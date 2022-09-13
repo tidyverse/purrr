@@ -10,7 +10,7 @@
 #'
 #'   * `map_depth(x, 0, fun)` is equivalent to `fun(x)`.
 #'   * `map_depth(x, 1, fun)` is equivalent to `x <- map(x, fun)`
-#'   * `map_depth(x, 2, fun)` is equivalent to `x <- map(x, ~ map(., fun))`
+#'   * `map_depth(x, 2, fun)` is equivalent to `x <- map(x, \(y) map(y, fun))`
 #' @param .ragged If `TRUE`, will apply to leaves, even if they're not
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
@@ -29,11 +29,11 @@
 #' # When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
 #' x <- list(1, list(1, list(1, list(1, 1))))
 #' str(x)
-#' str(map_depth(x, 4, ~ length(unlist(.x)), .ragged = TRUE))
-#' str(map_depth(x, 3, ~ length(unlist(.x)), .ragged = TRUE))
-#' str(map_depth(x, 2, ~ length(unlist(.x)), .ragged = TRUE))
-#' str(map_depth(x, 1, ~ length(unlist(.x)), .ragged = TRUE))
-#' str(map_depth(x, 0, ~ length(unlist(.x)), .ragged = TRUE))
+#' str(map_depth(x, 4, \(x) length(unlist(x)), .ragged = TRUE))
+#' str(map_depth(x, 3, \(x) length(unlist(x)), .ragged = TRUE))
+#' str(map_depth(x, 2, \(x) length(unlist(x)), .ragged = TRUE))
+#' str(map_depth(x, 1, \(x) length(unlist(x)), .ragged = TRUE))
+#' str(map_depth(x, 0, \(x) length(unlist(x)), .ragged = TRUE))
 #'
 #' # modify_depth() -------------------------------------------------
 #' l1 <- list(
@@ -69,7 +69,7 @@
 #' # a lower level. Here we ask pmap() to map paste() simultaneously over all
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
-#' l1 |> modify_depth(2, ~ pmap(., paste, sep = " / ")) |> str()
+#' l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
 map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   .depth <- check_depth(.depth, pluck_depth(.x))
   .f <- as_mapper(.f, ...)

@@ -57,15 +57,15 @@ under the hood, and have names that more clearly reflect their semantics.
 # map ---------------------------------------------
 # Was:
 mtcars |>
-  split(.$cyl) |>
-  map(~ lm(mpg ~ wt, data = .x)) |>
-  map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
+  split(mtcars$cyl) |>
+  map(\(df) lm(mpg ~ wt, data = df)) |>
+  map_dfr(\(mod) as.data.frame(t(as.matrix(coef(mod)))))
 
 # Now:
 mtcars |>
-  split(.$cyl) |>
-  map(~ lm(mpg ~ wt, data = .x)) |>
-  map(~ as.data.frame(t(as.matrix(coef(.))))) |>
+  split(mtcars$cyl) |>
+  map(\(df) lm(mpg ~ wt, data = df)) |>
+  map(\(mod) as.data.frame(t(as.matrix(coef(mod))))) |>
   list_rbind()
 
 # map2 ---------------------------------------------
