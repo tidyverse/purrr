@@ -31,7 +31,7 @@
 
 ### Flattening and simplification
 
-* `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
+* `flatten()` and friends are superseded in favour of `list_flatten()`, 
   `list_c()`, `list_cbind()`, and `list_rbind()`.
 
 * `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
