@@ -89,7 +89,9 @@
 </div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Some mapping functions have now a <code>.progress</code> argument to create a progress bar. See <code><a href="../reference/progress_bars.html">?progress_bars</a></code> (<a href="https://github.com/tidyverse/purrr/issues/149" class="external-link">#149</a>).</p></li>
+<ul><li><p><code>*_at()</code> can now take a function (or formula) that’s passed the vector of element names and returns the elements to select.</p></li>
+<li><p>New <code><a href="../reference/keep_at.html">keep_at()</a></code> and <code><a href="../reference/keep_at.html">discard_at()</a></code> that work like <code><a href="../reference/keep.html">keep()</a></code> and <code><a href="../reference/keep.html">discard()</a></code> but operation on element names rather than element contents (<a href="https://github.com/tidyverse/purrr/issues/817" class="external-link">#817</a>).</p></li>
+<li><p>Some mapping functions have now a <code>.progress</code> argument to create a progress bar. See <code><a href="../reference/progress_bars.html">?progress_bars</a></code> (<a href="https://github.com/tidyverse/purrr/issues/149" class="external-link">#149</a>).</p></li>
 <li><p>purrr is now licensed as MIT (<a href="https://github.com/tidyverse/purrr/issues/805" class="external-link">#805</a>).</p></li>
 </ul><div class="section level4">
 <h4 id="flattening-and-simplification-development-version-1">Flattening and simplification<a class="anchor" aria-label="anchor" href="#flattening-and-simplification-development-version-1"></a></h4>
