@@ -10,9 +10,10 @@
 #' @param name_repair One of `"minimal"`, `"unique"`, `"universal"`, or
 #'   `"check_unique"`. See [vctrs::vec_as_names()] for the meaning of these
 #'   options.
-#' @return A list. The list might be shorter if `x` contains empty lists,
-#'   the same length if it contains lists of length 1 or no sub-lists,
-#'   or longer if it contains lists of length > 1.
+#' @return A list of the same type as `x`. The list might be shorter
+#'   if `x` contains empty lists, the same length if it contains lists
+#'   of length 1 or no sub-lists, or longer if it contains lists of
+#'   length > 1.
 #' @export
 #' @examples
 #' x <- list(1, list(2, 3), list(4, list(5)))
@@ -45,11 +46,20 @@ list_flatten <- function(
   ) {
   vec_check_list(x)
 
-  x <- map_if(x, vec_is_list, identity, .else = list)
-  list_unchop(
-    x,
+  # Take the proxy as we restore on exit
+  proxy <- vec_proxy(x)
+
+  # Unclass S3 lists to avoid their coercion methods. Wrap atoms in a
+  # list of size 1 so the elements can be concatenated in a single list.
+  proxy <- map_if(proxy, vec_is_list, unclass, .else = list)
+
+  out <- list_unchop(
+    proxy,
     ptype = list(),
     name_spec = name_spec,
     name_repair = name_repair
   )
+
+  # Preserve input type
+  vec_restore(out, x)
 }

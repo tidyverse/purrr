@@ -1,5 +1,11 @@
 #' Transpose a list.
 #'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Please use [list_transpose()] instead of `transpose()`. It has a better name,
+#' and can now automatically simplify the output, as is commonly needed.
+#'
 #' Transpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
 #' list of pairs, or a list of pairs into pair of lists. For example,
 #' if you had a list of length n where each component had values `a` and
@@ -17,24 +23,28 @@
 #' @param .names For efficiency, `transpose()` bases the return structure on
 #'   the first component of `.l` by default. Specify `.names` to override this.
 #' @return A list with indexing transposed compared to `.l`.
+#' @keywords internal
 #' @export
 #' @examples
-#' x <- rerun(5, x = runif(1), y = runif(5))
-#' x %>% str()
+#' x <- map(1:5, ~ list(x = runif(1), y = runif(5)))
+#' # was
 #' x %>% transpose() %>% str()
-#' # Back to where we started
-#' x %>% transpose() %>% transpose() %>% str()
+#' # now
+#' x %>% list_transpose(simplify = FALSE) %>% str()
 #'
 #' # transpose() is useful in conjunction with safely() & quietly()
 #' x <- list("a", 1, 2)
 #' y <- x %>% map(safely(log))
-#' y %>% str()
+#' # was
 #' y %>% transpose() %>% str()
+#' # now:
+#' y %>% list_transpose() %>% str()
 #'
-#' # Use simplify_all() to reduce to atomic vectors where possible
+#' # Previously, output simplification required a call to another function
 #' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
-#' x %>% transpose()
 #' x %>% transpose() %>% simplify_all()
+#' # Now can take advantage of automatic simplification
+#' x %>% list_transpose()
 #'
 #' # Provide explicit component names to prevent loss of those that don't
 #' # appear in first component
@@ -44,7 +54,13 @@
 #' )
 #' ll %>% transpose()
 #' nms <- ll %>% map(names) %>% reduce(union)
+#' # was
 #' ll %>% transpose(.names = nms)
+#' # now
+#' ll %>% list_transpose(template = nms)
+#' # and can supply default value
+#' ll %>% list_transpose(template = nms, default = NA)
 transpose <- function(.l, .names = NULL) {
+  lifecycle::deprecate_warn("0.4.0", "transpose()", "list_transpose()")
   .Call(transpose_impl, .l, .names)
 }

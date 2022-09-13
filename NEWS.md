@@ -14,7 +14,7 @@
   use some form of non-standard evaluation which we now believe is a poor 
   fit for purrr.
 
-* The `lift_*` family of functions has been deprecated. We no longer believe
+* The `lift_*` family of functions has been superseded. We no longer believe
   these to be a good fit for purrr because they rely on a style of function 
   manipulation that is very uncommon in R code (#871).
 
@@ -31,11 +31,18 @@
 
 ### Flattening and simplification
 
-* `flatten()` and friends are all deprecated in favour of `list_flatten()`, 
+* `flatten()` and friends are superseded in favour of `list_flatten()`, 
   `list_c()`, `list_cbind()`, and `list_rbind()`.
 
-* `*_dfc()` and `*_dfr()` have been deprecated in favour of using the 
+* `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
   appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+
+* `simplify()`, `simplify_all()`, and `as_vector()` have been deprecated in
+  favour of `list_simplify()`. It provides a more consistent definition of 
+  simplification (#900).
+
+* `transpose()` has been deprecated in favour of `list_transpose()` (#875).
+  It has built-in simplification.
 
 ### Deprecation next steps
 
@@ -70,8 +77,14 @@
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
   `c()`, `rbind()`, or `cbind()` all of the elements in a list.
 
-* `accumulate()` now uses vctrs for simplifying the output. This
-  ensures a more principled and flexible coercion behaviour.
+* New `list_simplify()` reduces a list of length-1 vectors to a simpler atomic
+  or S3 vector (#900).
+
+* New `list_transpose()` which automatically simplifies if possible (#875).
+
+* `accumulate()` and `accumulate2()` now both simplify the output if possible
+  using vctrs. New arguments `simplify` and `ptype` allow you to control the 
+  details of simplification (#774, #809).
 
 ### Tidyverse consistency
 

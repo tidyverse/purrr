@@ -6,6 +6,14 @@
       Error in `reduce()`:
       ! Must supply `.init` when `.x` is empty.
 
+# accumulate() does fail when simpification is required
+
+    Code
+      accumulate(list(1, "a"), ~.y, .simplify = TRUE)
+    Condition
+      Error:
+      ! Can't combine `..1` <double> and `..2` <character>.
+
 # requires equal length vectors
 
     Code

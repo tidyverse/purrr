@@ -84,8 +84,9 @@ reference:
   - list_c
   - list_flatten
   - list_modify
+  - list_simplify
+  - list_transpose
   - reduce
-  - transpose
 
 - title: Adverbs
   desc: >
@@ -97,6 +98,5 @@ reference:
 - title: Misc
   contents:
   - array_tree
-  - as_vector
   - rate-helpers
   - progress_bars

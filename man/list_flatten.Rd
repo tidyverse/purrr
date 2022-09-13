@@ -22,9 +22,10 @@ variables \code{inner} and \code{outer}.}
 options.}
 }
 \value{
-A list. The list might be shorter if \code{x} contains empty lists,
-the same length if it contains lists of length 1 or no sub-lists,
-or longer if it contains lists of length > 1.
+A list of the same type as \code{x}. The list might be shorter
+if \code{x} contains empty lists, the same length if it contains lists
+of length 1 or no sub-lists, or longer if it contains lists of
+length > 1.
 }
 \description{
 Flattening a list removes a single layer of internal hierarchy,
