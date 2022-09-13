@@ -37,7 +37,7 @@ combination.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-These functions have been deprecated in purrr 0.4.0 because they
+These functions were deprecated in purrr 1.0.0 because they
 are slow and buggy, and we no longer think they are the right
 approach to solving this problem. Please use \code{tidyr::expand_grid()}
 instead.

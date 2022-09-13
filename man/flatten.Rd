@@ -42,7 +42,8 @@ be installed.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-These functions have been superseded because their behavior was inconsistent.`
+These functions were superseded in purrr 1.0.0 because their behavior was
+inconsistent.
 \itemize{
 \item \code{flatten()} has been superseded by \code{\link[=list_flatten]{list_flatten()}}.
 \item \code{flatten_lgl()}, \code{flatten_int()}, \code{flatten_dbl()}, and \code{flatten_chr()}

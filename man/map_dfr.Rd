@@ -42,15 +42,15 @@ Only applies to \verb{_dfr} variant.}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
 These variants of \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, and \code{\link[=pmap]{pmap()}} return data
-frames. They have been superseded because they use \code{dplyr::bind_rows()}
-and \code{dplyr::bind_cols()} which require dplyr to be installed, have confusing
-semantics with edges, and their names are suboptimal because they suggest
-they work like \verb{_lgl()}, \verb{_int()}, and friends which require length 1
-outputs, but actually they return results of any size because the results
-are combined together without any size checks.
+frames. They were superseded in purrr 1.0.0 because they use
+\code{dplyr::bind_rows()} and \code{dplyr::bind_cols()} which require dplyr to be
+installed and have confusing semantics with edge cases. They also have
+suboptimal names because they suggest they work like \verb{_lgl()}, \verb{_int()}, etc
+which require length 1 outputs, but actually they return results of any size
+because the results are combined without any size checks.
 
-Instead, we now recommend using \code{map()}, \code{map2()}, etc with \code{\link[=list_rbind]{list_rbind()}}
-and \code{\link[=list_cbind]{list_cbind()}}. These use \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}} and \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}
+We now recommend using \code{map()}, \code{map2()}, etc with \code{\link[=list_rbind]{list_rbind()}} and
+\code{\link[=list_cbind]{list_cbind()}}. These use \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}} and \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}
 under the hood, and have names that more clearly reflect their semantics.
 }
 \examples{

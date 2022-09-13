@@ -46,5 +46,5 @@
       . <- update_list(list())
     Condition
       Warning:
-      `update_list()` was deprecated in purrr 0.4.0.
+      `update_list()` was deprecated in purrr 1.0.0.
 

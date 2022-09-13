@@ -22,10 +22,12 @@ level list will be dropped. In this case, \code{rerun(n, x)} behaves like
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-This is a convenient way of generating sample data. It works similarly to
-\code{\link{replicate}(..., simplify = FALSE)}. \code{rerun()} is deprecated
-because we now believe that NSE functions are not a  good fit for purrr.
-Also, \code{rerun(n, x)} can just as easily be expressed as \code{map(1:n, ~ x)}
+This function was deprecated in purrr 1.0.0 because we believe that NSE
+functions are not a  good fit for purrr. Also, \code{rerun(n, x)} can just as
+easily be expressed as \code{map(1:n, ~ x)}
+
+\code{rerun()} is a convenient way of generating sample data. It works similarly to
+\code{\link{replicate}(..., simplify = FALSE)}.
 }
 \examples{
 # old

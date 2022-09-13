@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' These functions have been deprecated in purrr 0.4.0 because they
+#' These functions were deprecated in purrr 1.0.0 because they
 #' are slow and buggy, and we no longer think they are the right
 #' approach to solving this problem. Please use `tidyr::expand_grid()`
 #' instead.
@@ -114,7 +114,7 @@
 #'   cross(.filter = `==`)
 cross <- function(.l, .filter = NULL) {
   lifecycle::deprecate_soft(
-    "0.4.0",
+    "1.0.0",
     "purrr::cross()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
@@ -169,7 +169,7 @@ cross <- function(.l, .filter = NULL) {
 #' @rdname cross
 cross2 <- function(.x, .y, .filter = NULL) {
   lifecycle::deprecate_soft(
-    "0.4.0",
+    "1.0.0",
     "purrr::cross2()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
@@ -181,7 +181,7 @@ cross2 <- function(.x, .y, .filter = NULL) {
 #' @rdname cross
 cross3 <- function(.x, .y, .z, .filter = NULL) {
   lifecycle::deprecate_soft(
-    "0.4.0",
+    "1.0.0",
     "purrr::cross3()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
@@ -193,7 +193,7 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @export
 cross_df <- function(.l, .filter = NULL) {
   lifecycle::deprecate_soft(
-    "0.4.0",
+    "1.0.0",
     "purrr::cross_df()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")

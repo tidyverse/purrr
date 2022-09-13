@@ -3,7 +3,8 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' These functions have been superseded because their behavior was inconsistent.`
+#' These functions were superseded in purrr 1.0.0 because their behavior was
+#' inconsistent.
 #'
 #' * `flatten()` has been superseded by [list_flatten()].
 #' * `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`, and `flatten_chr()`
@@ -39,6 +40,7 @@
 #' # now
 #' x %>% list_flatten() %>% str()
 flatten <- function(.x) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten()", "list_flatten()")
   .Call(flatten_impl, .x)
 }
@@ -46,6 +48,7 @@ flatten <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_lgl <- function(.x) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "logical")
 }
@@ -60,6 +63,7 @@ flatten_int <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_dbl <- function(.x) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "double")
 }
@@ -67,6 +71,7 @@ flatten_dbl <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_chr <- function(.x) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "character")
 }
@@ -75,6 +80,7 @@ flatten_chr <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_dfr <- function(.x, .id = NULL) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten_dfr()", "list_rbind()")
   check_installed("dplyr", "for `flatten_dfr()`.")
 
@@ -85,6 +91,7 @@ flatten_dfr <- function(.x, .id = NULL) {
 #' @export
 #' @rdname flatten
 flatten_dfc <- function(.x) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten_dfc()", "list_cbind()")
   check_installed("dplyr", "for `flatten_dfc()`.")
 
@@ -96,6 +103,7 @@ flatten_dfc <- function(.x) {
 #' @rdname flatten
 #' @usage NULL
 flatten_df <- function(.x, .id = NULL) {
+  # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten_df()", "list_rbind()")
   check_installed("dplyr", "for `flatten_dfr()`.")
 

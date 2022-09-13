@@ -20,11 +20,12 @@ A list with indexing transposed compared to \code{.l}.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-Please use \code{\link[=list_transpose]{list_transpose()}} instead of \code{transpose()}. It has a better name,
-and can now automatically simplify the output, as is commonly needed.
+This function was deprecated in purrr 1.0.0 because \code{\link[=list_transpose]{list_transpose()}}
+has a better name and can automatically simplify the output, as is commonly
+needed.
 
-Transpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
-list of pairs, or a list of pairs into pair of lists. For example,
+\code{transpose()} turns a list-of-lists "inside-out"; it turns a pair of lists
+into a list of pairs, or a list of pairs into pair of lists. For example,
 if you had a list of length n where each component had values \code{a} and
 \code{b}, \code{transpose()} would make a list with elements \code{a} and
 \code{b} that contained lists of length n. It's called transpose because

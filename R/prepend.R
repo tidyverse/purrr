@@ -3,8 +3,8 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' This function has been deprecated since it's not related to the core purpose
-#' of purrr.
+#' This function was deprecated in purrr 1.0.0 because it's not related to the
+#' core purpose of purrr.
 #'
 #' This is a companion to [append()] to help merging two
 #' lists or atomic vectors. `prepend()` is a clearer semantic
@@ -26,7 +26,7 @@
 #' x %>% prepend(list("a", "b"), before = 3)
 #' prepend(list(), x)
 prepend <- function(x, values, before = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "prepend()", I("append(after = 0)"))
+  lifecycle::deprecate_warn("1.0.0", "prepend()", I("append(after = 0)"))
 
   n <- length(x)
   stopifnot(is.null(before) || (before > 0 && before <= n))

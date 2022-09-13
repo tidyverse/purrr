@@ -3,11 +3,12 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' This splices all arguments into a list. Non-list objects and lists
-#' with a S3 class are encapsulated in a list before concatenation.
+#' This function was deprecated in purrr 1.0.0 because we no longer believe that
+#' this style of implicit/automatic splicing is a good idea; instead use
+#' `rlang::list2()` + `!!!` or [list_flatten()].
 #'
-#' We no longer believe that implicit/automatic splicing is a good idea;
-#' instead use `rlang::list2()` + `!!!` or [list_flatten()].
+#' `splice()` splices all arguments into a list. Non-list objects and lists
+#' with a S3 class are encapsulated in a list before concatenation.
 #'
 #' @param ... Objects to concatenate.
 #' @return A list.
@@ -21,7 +22,7 @@
 #' c(inputs, arg3 = c("c1", "c2")) %>% str()
 #' @export
 splice <- function(...) {
-  lifecycle::deprecate_warn("0.4.0", "splice()", "list_flatten()")
+  lifecycle::deprecate_warn("1.0.0", "splice()", "list_flatten()")
 
   splice_if(list(...), is_bare_list)
 }

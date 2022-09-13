@@ -3,10 +3,12 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' This is a convenient way of generating sample data. It works similarly to
-#' \code{\link{replicate}(..., simplify = FALSE)}. `rerun()` is deprecated
-#' because we now believe that NSE functions are not a  good fit for purrr.
-#' Also, `rerun(n, x)` can just as easily be expressed as `map(1:n, ~ x)`
+#' This function was deprecated in purrr 1.0.0 because we believe that NSE
+#' functions are not a  good fit for purrr. Also, `rerun(n, x)` can just as
+#' easily be expressed as `map(1:n, ~ x)`
+#'
+#' `rerun()` is a convenient way of generating sample data. It works similarly to
+#' \code{\link{replicate}(..., simplify = FALSE)}.
 #'
 #' @param .n Number of times to run expressions
 #' @param ... Expressions to re-run.
@@ -62,7 +64,7 @@ deprec_rerun <- function(.n, ...) {
     new <- substitute(map(1:n, ~ list(...)))
   }
 
-  lifecycle::deprecate_warn("0.4.0", "rerun()", "map()", details = paste_line(
+  lifecycle::deprecate_warn("1.0.0", "rerun()", "map()", details = paste_line(
     "  # Previously",
     paste0("  ", expr_deparse(old)),
     "",

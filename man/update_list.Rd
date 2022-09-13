@@ -22,6 +22,9 @@ replacement values are stored in a list, you can splice that in with
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
+\code{update_list()} was deprecated in purrr 1.0.0, because we no longer believe
+that functions that use NSE are a good fit for purrr.
+
 \code{update_list()} handles formulas and quosures that can refer to
 values existing within the input list. This function is deprecated
 because we no longer believe that functions that use tidy evaluation are

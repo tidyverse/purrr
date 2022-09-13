@@ -24,7 +24,8 @@ the type, one of: "logical", "integer", "double", "complex",
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-These functions are deprecated in favour of \code{list_simplify()}:
+These functions were deprecated in purrr 1.0.0 in favour of
+\code{list_simplify()}:
 \itemize{
 \item \code{as_vector(x)} is now \code{list_simplify(x)}
 \item \code{simplify(x)} is now \code{list_simplify(x, strict = FALSE)}

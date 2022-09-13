@@ -16,8 +16,8 @@ A list of the same length as \code{x}.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-This function has been deprecated since it's not related to the core purpose
-of purrr.
+This function was deprecated in purrr 1.0.0 since it's not related to the
+core purpose of purrr.
 
 It can be useful to create an empty list that you plan to fill later. This is
 similar to the idea of \code{\link[=seq_along]{seq_along()}}, which creates a vector of the same

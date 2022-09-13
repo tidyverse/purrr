@@ -3,9 +3,9 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' We have supeseded these functions because we no longer believe "lifting"
-#' to be a mainstream operation, and we are striving to reduce purrr to its
-#' most useful core.
+#' These functions there superseded in purrr 1.0.0 because we no longer believe
+#' "lifting" to be a mainstream operation, and we are striving to reduce purrr
+#' to its most useful core.
 #'
 #' `lift_xy()` is a composition helper. It helps you compose
 #' functions by lifting their domain from a kind of input to another
@@ -67,6 +67,7 @@ NULL
 #' fun <- function(x) exec("sum", !!!x)
 #' exec(sum, 3, NA, 4, na.rm = TRUE)
 lift <- function(..f, ..., .unnamed = FALSE) {
+  # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift()")
 
   force(..f)
@@ -86,6 +87,7 @@ lift_dl <- lift
 #' @rdname lift
 #' @export
 lift_dv <- function(..f, ..., .unnamed = FALSE) {
+  # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_dv()")
 
   force(..f)
@@ -120,6 +122,7 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #' # now
 #' pmap_dbl(mtcars, ~ mean(c(...)))
 lift_vl <- function(..f, ..., .type) {
+  # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_vl()")
 
   force(..f)
@@ -135,6 +138,7 @@ lift_vl <- function(..f, ..., .type) {
 #' @rdname lift
 #' @export
 lift_vd <- function(..f, ..., .type) {
+  # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_vd()")
 
   force(..f)
@@ -172,6 +176,7 @@ lift_vd <- function(..f, ..., .type) {
 #' mtcars %>% pmap_lgl(~ any(c(...) > 200))
 #'
 lift_ld <- function(..f, ...) {
+  # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_ld()")
 
   force(..f)
@@ -184,6 +189,7 @@ lift_ld <- function(..f, ...) {
 #' @rdname lift
 #' @export
 lift_lv <- function(..f, ...) {
+  # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_lv()")
 
   force(..f)

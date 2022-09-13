@@ -20,8 +20,8 @@ A merged vector.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-This function has been deprecated since it's not related to the core purpose
-of purrr.
+This function was deprecated in purrr 1.0.0 because it's not related to the
+core purpose of purrr.
 
 This is a companion to \code{\link[=append]{append()}} to help merging two
 lists or atomic vectors. \code{prepend()} is a clearer semantic

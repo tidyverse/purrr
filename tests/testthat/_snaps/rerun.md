@@ -4,7 +4,7 @@
       . <- rerun(5, rnorm(1))
     Condition
       Warning:
-      `rerun()` was deprecated in purrr 0.4.0.
+      `rerun()` was deprecated in purrr 1.0.0.
       Please use `map()` instead.
         # Previously
         rerun(5, rnorm(1))
@@ -15,7 +15,7 @@
       . <- rerun(5, rnorm(1), rnorm(2))
     Condition
       Warning:
-      `rerun()` was deprecated in purrr 0.4.0.
+      `rerun()` was deprecated in purrr 1.0.0.
       Please use `map()` instead.
         # Previously
         rerun(5, rnorm(1), rnorm(2))

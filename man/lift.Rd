@@ -47,9 +47,9 @@ A function.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-We have supeseded these functions because we no longer believe "lifting"
-to be a mainstream operation, and we are striving to reduce purrr to its
-most useful core.
+These functions there superseded in purrr 1.0.0 because we no longer believe
+"lifting" to be a mainstream operation, and we are striving to reduce purrr
+to its most useful core.
 
 \code{lift_xy()} is a composition helper. It helps you compose
 functions by lifting their domain from a kind of input to another

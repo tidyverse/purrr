@@ -4,8 +4,8 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' This function has been deprecated since it's not related to the core purpose
-#' of purrr. You can now use [dplyr::case_when()] instead.
+#' This function was deprecated in purrr 1.0.0 because it's not related to the
+#' core purpose of purrr. You can now use [dplyr::case_when()] instead.
 #'
 #' `when` is a flavour of pattern matching (or an if-else abstraction) in
 #' which a value is matched against a sequence of condition-action sets. When a
@@ -63,7 +63,7 @@
 #'        ~ stop("Expected fewer than 10 rows."))
 #' @export
 when <- function(., ...) {
-  lifecycle::deprecate_warn("0.4.0", "when()", "dplyr::case_when()")
+  lifecycle::deprecate_warn("1.0.0", "when()", "dplyr::case_when()")
 
   dots   <- list(...)
   names  <- names(dots)

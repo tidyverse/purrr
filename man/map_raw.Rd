@@ -21,8 +21,8 @@ flatten_raw(.x)
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-These variants of \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, \code{\link[=pmap]{pmap()}}, and \code{\link[=flatten]{flatten()}}
-return raw vectors. They have been deprecated because they are of limited
-use and you can now use \code{map_vec()} instead.
+These functions were deprecated in purrr 1.0.0 because they are of limited
+use and you can now use \code{map_vec()} instead. They are variants of \code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, \code{\link[=pmap]{pmap()}}, and \code{\link[=flatten]{flatten()}} that return raw vectors.
 }
 \keyword{internal}

@@ -3,11 +3,12 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' Please use [list_transpose()] instead of `transpose()`. It has a better name,
-#' and can now automatically simplify the output, as is commonly needed.
+#' This function was deprecated in purrr 1.0.0 because [list_transpose()]
+#' has a better name and can automatically simplify the output, as is commonly
+#' needed.
 #'
-#' Transpose turns a list-of-lists "inside-out"; it turns a pair of lists into a
-#' list of pairs, or a list of pairs into pair of lists. For example,
+#' `transpose()` turns a list-of-lists "inside-out"; it turns a pair of lists
+#' into a list of pairs, or a list of pairs into pair of lists. For example,
 #' if you had a list of length n where each component had values `a` and
 #' `b`, `transpose()` would make a list with elements `a` and
 #' `b` that contained lists of length n. It's called transpose because
@@ -61,6 +62,6 @@
 #' # and can supply default value
 #' ll %>% list_transpose(template = nms, default = NA)
 transpose <- function(.l, .names = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "transpose()", "list_transpose()")
+  lifecycle::deprecate_warn("1.0.0", "transpose()", "list_transpose()")
   .Call(transpose_impl, .l, .names)
 }

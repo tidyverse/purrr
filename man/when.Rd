@@ -27,8 +27,8 @@ as opposed to the \code{ifelse} function.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-This function has been deprecated since it's not related to the core purpose
-of purrr. You can now use \code{\link[dplyr:case_when]{dplyr::case_when()}} instead.
+This function was deprecated in purrr 1.0.0 because it's not related to the
+core purpose of purrr. You can now use \code{\link[dplyr:case_when]{dplyr::case_when()}} instead.
 
 \code{when} is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets. When a

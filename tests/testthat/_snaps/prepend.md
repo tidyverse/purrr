@@ -4,6 +4,6 @@
       . <- prepend(1, 2)
     Condition
       Warning:
-      `prepend()` was deprecated in purrr 0.4.0.
+      `prepend()` was deprecated in purrr 1.0.0.
       Please use append(after = 0) instead.
 

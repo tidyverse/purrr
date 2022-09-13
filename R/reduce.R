@@ -503,7 +503,7 @@ accumulate_names <- function(nms, init, dir) {
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' These functions are retired as of purrr 0.3.0. Please use the
+#' These functions were deprecated in purrr 0.3.0. Please use the
 #' `.dir` argument of [reduce()] instead, or reverse your vectors
 #' and use a left reduction.
 #'

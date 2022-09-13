@@ -50,6 +50,8 @@ as \code{.f} the name of a function rather than its value, or as
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+These functions were superded in purrr 0.3.0 and deprecated in purrr 1.0.0.
 \itemize{
 \item \code{invoke()} is deprecated in favour of the simpler \code{exec()} function
 reexported from rlang. \code{exec()} evaluates a function call built
