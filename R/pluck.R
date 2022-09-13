@@ -115,13 +115,14 @@ pluck_exists <- function(.x, ...) {
   !is_zap(pluck_raw(.x, list2(...), .default = zap()))
 }
 
-pluck_raw <- function(.x, index, .default = NULL) {
+pluck_raw <- function(.x, index, .default = NULL, .error_call = caller_env()) {
   .Call(
     pluck_impl,
     x = .x,
     index = index,
     missing = .default,
-    strict = FALSE
+    strict = FALSE,
+    error_call = .error_call
   )
 }
 
@@ -154,7 +155,8 @@ chuck <- function(.x, ...) {
     x = .x,
     index = list2(...),
     missing = NULL,
-    strict = TRUE
+    strict = TRUE,
+    error_call = current_env()
   )
 }
 
@@ -244,7 +246,10 @@ modify_in <- function(.x, .where, .f, ...) {
 assign_in <- function(x, where, value) {
   n <- length(where)
   if (n == 0) {
-    abort("`where` must contain at least one element")
+    cli::cli_abort(
+      "{.arg where} must contain at least one element.",
+      arg = "where"
+    )
   } else if (n > 1) {
     old <- pluck(x, where[[1]], .default = list())
     if (!is_zap(value) || !identical(old, list())) {

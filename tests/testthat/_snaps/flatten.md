@@ -1,51 +1,40 @@
-# flatten functions are deprecated
+# input must be a list
 
     Code
-      . <- flatten(list())
+      flatten(1)
     Condition
-      Warning:
-      `flatten()` was deprecated in purrr 0.4.0.
-      Please use `list_flatten()` instead.
+      Error:
+      ! `.x` must be a list, not a number.
+
+---
+
     Code
-      . <- flatten_lgl(list())
+      flatten_dbl(1)
     Condition
-      Warning:
-      `flatten_lgl()` was deprecated in purrr 0.4.0.
-      Please use `list_c()` instead.
+      Error:
+      ! `.x` must be a list, not a number.
+
+# contents of list must be supported types
+
     Code
-      . <- flatten_int(list())
+      flatten(list(quote(a)))
     Condition
-      Warning:
-      `flatten_lgl()` was deprecated in purrr 0.4.0.
-      Please use `list_c()` instead.
+      Error:
+      ! `.x[[1]]` must be a vector, not a symbol.
+
+---
+
     Code
-      . <- flatten_dbl(list())
+      flatten(list(expression(a)))
     Condition
-      Warning:
-      `flatten_lgl()` was deprecated in purrr 0.4.0.
-      Please use `list_c()` instead.
+      Error:
+      ! `.x[[1]]` must be a vector, not an expression vector.
+
+# must be a list
+
     Code
-      . <- flatten_chr(list())
+      flatten_lgl(1)
     Condition
-      Warning:
-      `flatten_lgl()` was deprecated in purrr 0.4.0.
-      Please use `list_c()` instead.
-    Code
-      . <- flatten_dfr(list())
-    Condition
-      Warning:
-      `flatten_dfr()` was deprecated in purrr 0.4.0.
-      Please use `list_rbind()` instead.
-    Code
-      . <- flatten_dfc(list())
-    Condition
-      Warning:
-      `flatten_dfc()` was deprecated in purrr 0.4.0.
-      Please use `list_cbind()` instead.
-    Code
-      . <- flatten_df(list())
-    Condition
-      Warning:
-      `flatten_df()` was deprecated in purrr 0.4.0.
-      Please use `list_rbind()` instead.
+      Error:
+      ! `.x` must be a list, not a number.
 

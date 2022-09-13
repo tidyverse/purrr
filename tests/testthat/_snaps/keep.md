@@ -3,11 +3,11 @@
     Code
       keep(1:3, ~NA)
     Condition
-      Error in `.f()`:
-      ! Predicate functions must return a single `TRUE` or `FALSE`, not a missing value.
+      Error in `keep()`:
+      ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
     Code
       discard(1:3, ~NA)
     Condition
-      Error in `.f()`:
-      ! Predicate functions must return a single `TRUE` or `FALSE`, not a missing value.
+      Error in `discard()`:
+      ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 

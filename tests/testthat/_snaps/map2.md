@@ -1,3 +1,27 @@
+# map2 can't simplify if elements longer than length 1
+
+    Code
+      map2_int(1:4, 5:8, range)
+    Condition
+      Error in `map2_int()`:
+      ! Result 1 must have length 1, not 2.
+
+# fails on non-vectors
+
+    Code
+      map2(environment(), "a", identity)
+    Condition
+      Error in `map2()`:
+      ! `.x` must be a vector, not an environment.
+
+---
+
+    Code
+      map2("a", environment(), identity)
+    Condition
+      Error in `map2()`:
+      ! `.y` must be a vector, not an environment.
+
 # map2 recycles inputs
 
     Code

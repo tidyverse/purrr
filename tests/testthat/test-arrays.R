@@ -14,7 +14,7 @@ test_that("array_branch works on vectors", {
 })
 
 test_that("array_branch throws an error for wrong margins on a vector", {
-  expect_error(array_branch(1:3, 2), "must be `NULL` or `1`")
+  expect_snapshot(array_branch(1:3, 2), error = TRUE)
 })
 
 test_that("length depends on whether list is flattened or not", {

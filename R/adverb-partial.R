@@ -98,11 +98,12 @@ partial <- function(.f,
   fn_expr <- enexpr(.f)
   .fn <- switch(typeof(.f),
     builtin = ,
-    special =
-      as_closure(.f),
-    closure =
-      .f,
-    abort(sprintf("`.f` must be a function, not %s", friendly_type_of(.f)))
+    special = as_closure(.f),
+    closure = .f,
+    cli::cli_abort(
+      "{.arg .f} must be a function, not {.obj_friendly_type { .f }}.",
+      arg = ".f"
+    )
   )
 
   if (lifecycle::is_present(.env)) {
@@ -194,7 +195,7 @@ quo_invert <- function(call) {
     rest <- call
   }
   if (!is_call(rest)) {
-    abort("Internal error: Expected call in `quo_invert()`")
+    cli::cli_abort("Expected a call", .internal = TRUE)
   }
 
   first_quo <- NULL

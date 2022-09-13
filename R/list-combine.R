@@ -38,7 +38,7 @@
 #' list_cbind(x2)
 list_c <- function(x, ptype = NULL) {
   vec_check_list(x)
-  vctrs::vec_unchop(x, ptype = ptype)
+  list_unchop(x, ptype = ptype)
 }
 
 #' @export
@@ -50,7 +50,7 @@ list_cbind <- function(
   ) {
   check_list_of_data_frames(x)
 
-  vctrs::vec_cbind(!!!x, .name_repair = name_repair, .size = size, .call = current_env())
+  vec_cbind(!!!x, .name_repair = name_repair, .size = size, .call = current_env())
 }
 
 #' @export
@@ -58,7 +58,7 @@ list_cbind <- function(
 list_rbind <- function(x, id = rlang::zap(), ptype = NULL) {
   check_list_of_data_frames(x)
 
-  vctrs::vec_rbind(!!!x, .names_to = id, .ptype = ptype, .call = current_env())
+  vec_rbind(!!!x, .names_to = id, .ptype = ptype, .call = current_env())
 }
 
 
@@ -74,6 +74,7 @@ check_list_of_data_frames <- function(x, error_call = caller_env()) {
   bad <- which(!is_df)
   cli::cli_abort(
     "All elements of {.arg x} must be data frames. Elements {bad} are not.",
+    arg = "x",
     call = error_call
   )
 }

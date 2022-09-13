@@ -200,19 +200,36 @@ signal_rate_retry <- function(rate, length, quiet) {
   }
 }
 
-stop_rate_expired <- function(rate) {
-  msg <- paste_line(
-    "This `rate` object has already be run more than `max_times` allows.",
-    "Do you need to reset it with `rate_reset()`?"
+stop_rate_expired <- function(rate, error_call = caller_env()) {
+  cli::cli_abort(
+    c(
+      "This `rate` object has already be run more than `max_times` allows.",
+      i = "Do you need to reset it with `rate_reset()`?"
+    ),
+    class = "purrr_error_rate_expired",
+    call = error_call
   )
-  abort(msg, "purrr_error_rate_expired", rate = rate)
 }
-stop_rate_excess <- function(rate) {
+stop_rate_excess <- function(rate, error_call = caller_env()) {
   i <- rate_count(rate)
 
   # Bump counter to get an expired error next time around
   rate_bump_count(rate)
 
-  msg <- sprintf("Request failed after %d attempts", i)
-  abort(msg, "purrr_error_rate_excess", rate = rate)
+  cli::cli_abort(
+    "Request failed after {i} attempts.",
+    class = "purrr_error_rate_excess",
+    call = error_call
+  )
 }
+
+check_rate <- function(rate, error_call = caller_env()) {
+  if (!is_rate(rate)) {
+    cli::cli_abort(
+      "{.arg rate} must be a rate object, not {.obj_type_friendly {rate}}.",
+      arg = "rate",
+      call = error_call,
+    )
+  }
+}
+

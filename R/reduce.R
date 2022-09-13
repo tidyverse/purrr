@@ -133,10 +133,10 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE) {
+reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE, error_call = caller_env()) {
   left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
-  out <- reduce_init(.x, .init, left = left)
+  out <- reduce_init(.x, .init, left = left, error_call = error_call)
   idx <- reduce_index(.x, .init, left = left)
 
   if (.acc) {
@@ -200,12 +200,16 @@ reduce_early <- function(out, prev, acc, acc_out, acc_idx, left = TRUE) {
   }
 }
 
-reduce_init <- function(x, init, left = TRUE) {
+reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
   if (!missing(init)) {
     init
   } else {
     if (is_empty(x)) {
-      stop("`.x` is empty, and no `.init` supplied", call. = FALSE)
+      cli::cli_abort(
+        "Must supply {.arg .init} when {.arg .x} is empty.",
+        arg = ".init",
+        call = error_call
+      )
     } else if (left) {
       x[[1]]
     } else {
@@ -253,13 +257,16 @@ accum_index <- function(out, left) {
   }
 }
 
-reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE) {
-  out <- reduce_init(.x, .init, left = .left)
+reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .error_call = caller_env()) {
+  out <- reduce_init(.x, .init, left = .left, error_call = .error_call)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
 
   if (length(x_idx) != length(y_idx)) {
-    stop("`.y` does not have length ", length(x_idx))
+    cli::cli_abort(
+      "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
+      arg = ".y",
+      call = .error_call)
   }
 
   .f <- as_mapper(.f, ...)
@@ -342,11 +349,15 @@ seq_len2 <- function(start, end) {
 #'   the accumulation, rather than using `.x[[1]]`. This is useful if
 #'   you want to ensure that `reduce` returns a correct value when `.x`
 #'   is empty. If missing, and `.x` is empty, will throw an error.
-#'
 #' @param .dir The direction of accumulation as a string, one of
 #'   `"forward"` (the default) or `"backward"`. See the section about
 #'   direction below.
-#'
+#' @param .simplify If `NA`, the default, the accumulated list of
+#'   results is simplified to an atomic vector if possible.
+#'   If `TRUE`, the result is simplified, erroring if not possible.
+#'   If `FALSE`, the result is not simplified, always returning a list.
+#' @param .ptype If `simplify` is `NA` or `TRUE`, optionally supply a vector
+#'   prototype to enforce the output type.
 #' @return A vector the same length of `.x` with the same names as `.x`.
 #'
 #'   If `.init` is supplied, the length is extended by 1. If `.x` has
@@ -454,26 +465,22 @@ seq_len2 <- function(start, end) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 #' @export
-accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
+accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .simplify = NA, .ptype = NULL) {
   .dir <- arg_match(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
 
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
-  # It would be unappropriate to simplify the result rowwise with
-  # `accumulate()` because it has invariants defined in terms of
-  # `length()` rather than `vec_size()`
-  if (some(res, is.data.frame)) {
-    res
-  } else {
-    vec_simplify(res)
-  }
+  res <- list_simplify_internal(res, .simplify, .ptype)
+  res
 }
 #' @rdname accumulate
 #' @export
-accumulate2 <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
+accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
+  res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
+  res <- list_simplify_internal(res, .simplify, .ptype)
+  res
 }
 
 accumulate_names <- function(nms, init, dir) {
@@ -496,7 +503,7 @@ accumulate_names <- function(nms, init, dir) {
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' These functions are retired as of purrr 0.3.0. Please use the
+#' These functions were deprecated in purrr 0.3.0. Please use the
 #' `.dir` argument of [reduce()] instead, or reverse your vectors
 #' and use a left reduction.
 #'

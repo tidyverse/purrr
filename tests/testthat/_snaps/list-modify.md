@@ -11,8 +11,8 @@
     Code
       list_modify(list(a = 1), 2, a = 2)
     Condition
-      Error in `list_recurse()`:
-      ! `...` arguments must be either all named, or all unnamed
+      Error in `list_modify()`:
+      ! `...` arguments must be either all named or all unnamed.
 
 ---
 
@@ -46,5 +46,5 @@
       . <- update_list(list())
     Condition
       Warning:
-      `update_list()` was deprecated in purrr 0.4.0.
+      `update_list()` was deprecated in purrr 1.0.0.
 

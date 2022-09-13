@@ -12,7 +12,7 @@ coerce_chr <- function(x) coerce(x, "character")
 
 deprecate_to_char <- function(type) {
   lifecycle::deprecate_warn(
-    "0.4.0",
+    "1.0.0",
     I(paste0("Automatic coercion from ", type, " to character")),
     I("an explicit call to as.character() within map_chr()"),
     always = TRUE

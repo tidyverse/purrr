@@ -40,14 +40,15 @@ row-binding and column-binding respectively. They require dplyr to
 be installed.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-These functions have been deprecated because their behavior was inconsistent.
+These functions were superseded in purrr 1.0.0 because their behavior was
+inconsistent.
 \itemize{
-\item \code{flatten()} has been replaced by \code{\link[=list_flatten]{list_flatten()}}.
+\item \code{flatten()} has been superseded by \code{\link[=list_flatten]{list_flatten()}}.
 \item \code{flatten_lgl()}, \code{flatten_int()}, \code{flatten_dbl()}, and \code{flatten_chr()}
-have been replaced by \code{\link[=list_c]{list_c()}}.
-\item \code{flatten_dfr()} and \code{flatten_dfc()} have been replaced by \code{\link[=list_rbind]{list_rbind()}}
+have been superseded by \code{\link[=list_c]{list_c()}}.
+\item \code{flatten_dfr()} and \code{flatten_dfc()} have been superseded by \code{\link[=list_rbind]{list_rbind()}}
 and \code{\link[=list_cbind]{list_cbind()}} respectively.
 }
 }

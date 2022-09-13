@@ -5,9 +5,17 @@
 \alias{accumulate2}
 \title{Accumulate intermediate results of a vector reduction}
 \usage{
-accumulate(.x, .f, ..., .init, .dir = c("forward", "backward"))
+accumulate(
+  .x,
+  .f,
+  ...,
+  .init,
+  .dir = c("forward", "backward"),
+  .simplify = NA,
+  .ptype = NULL
+)
 
-accumulate2(.x, .y, .f, ..., .init)
+accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -37,6 +45,14 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 \item{.dir}{The direction of accumulation as a string, one of
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
+
+\item{.simplify}{If \code{NA}, the default, the accumulated list of
+results is simplified to an atomic vector if possible.
+If \code{TRUE}, the result is simplified, erroring if not possible.
+If \code{FALSE}, the result is not simplified, always returning a list.}
+
+\item{.ptype}{If \code{simplify} is \code{NA} or \code{TRUE}, optionally supply a vector
+prototype to enforce the output type.}
 
 \item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
 needs to be 1 element shorter than the vector to be accumulated (\code{.x}).

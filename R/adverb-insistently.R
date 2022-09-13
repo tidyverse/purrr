@@ -59,11 +59,8 @@
 #' possibly_insistent_risky_runif()
 insistently <- function(f, rate = rate_backoff(), quiet = TRUE) {
   f <- as_mapper(f)
+  check_rate(rate)
   force(quiet)
-
-  if (!is_rate(rate)) {
-    stop_bad_type(rate, "a rate", arg = "rate")
-  }
 
   function(...) {
     rate_reset(rate)

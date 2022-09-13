@@ -64,9 +64,12 @@ list_merge <- function(.x, ...) {
   list_recurse(.x, y, c)
 }
 
-list_recurse <- function(x, y, base_f, recurse = TRUE) {
+list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()) {
   if (!is_null(names(y)) && !is_named(y)) {
-    abort("`...` arguments must be either all named, or all unnamed")
+    cli::cli_abort(
+      "`...` arguments must be either all named or all unnamed.",
+      call = error_call
+    )
   }
 
   idx <- names(y) %||% rev(seq_along(y))
@@ -92,6 +95,9 @@ list_recurse <- function(x, y, base_f, recurse = TRUE) {
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
+#' `update_list()` was deprecated in purrr 1.0.0, because we no longer believe
+#' that functions that use NSE are a good fit for purrr.
+#'
 #' `update_list()` handles formulas and quosures that can refer to
 #' values existing within the input list. This function is deprecated
 #' because we no longer believe that functions that use tidy evaluation are
@@ -101,7 +107,7 @@ list_recurse <- function(x, y, base_f, recurse = TRUE) {
 #' @export
 #' @keywords internal
 update_list <- function(.x, ...) {
-  lifecycle::deprecate_warn("0.4.0", "update_list()")
+  lifecycle::deprecate_warn("1.0.0", "update_list()")
 
   dots <- dots_list(...)
 

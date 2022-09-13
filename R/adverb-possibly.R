@@ -22,9 +22,6 @@ possibly <- function(.f, otherwise, quiet = TRUE) {
         if (!quiet)
           message("Error: ", e$message)
         otherwise
-      },
-      interrupt = function(e) {
-        stop("Terminated by user", call. = FALSE)
       }
     )
   }

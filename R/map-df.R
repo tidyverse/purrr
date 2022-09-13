@@ -1,17 +1,18 @@
 #' Functions that return data frames
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("superseded")`
 #'
 #' These variants of [map()], [map2()], [imap()], and [pmap()] return data
-#' frames. They have been deprecated because they use `dplyr::bind_rows()`
-#' and `dplyr::bind_cols()` which often have confusing semantics, and their
-#' names are suboptimal because they suggest they work like `_lgl()`, `_int()`,
-#' and friends which require length 1 outputs, but actually they return results
-#' of any size because the results are combined together without any size checks.
+#' frames. They were superseded in purrr 1.0.0 because they use
+#' `dplyr::bind_rows()` and `dplyr::bind_cols()` which require dplyr to be
+#' installed and have confusing semantics with edge cases. They also have
+#' suboptimal names because they suggest they work like `_lgl()`, `_int()`, etc
+#' which require length 1 outputs, but actually they return results of any size
+#' because the results are combined without any size checks.
 #'
-#' Instead, we now recommend usin `map()`, `map2()`, etc with [list_rbind()]
-#' and [list_cbind()]. These use [vctrs::vec_rbind()] and [vctrs::vec_cbind()]
+#' We now recommend using `map()`, `map2()`, etc with [list_rbind()] and
+#' [list_cbind()]. These use [vctrs::vec_rbind()] and [vctrs::vec_cbind()]
 #' under the hood, and have names that more clearly reflect their semantics.
 #'
 #' @param .id Either a string or `NULL`. If a string, the output will contain
@@ -56,7 +57,8 @@
 #' # now
 #' map2(arg1, arg2, ex_fun) %>% list_cbind()
 map_dfr <- function(.x, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "map_dfr()", I("`map()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "map_dfr()", I("`map()` + `list_rbind()`"))
   check_installed("dplyr", "for `map_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -68,7 +70,8 @@ map_dfr <- function(.x, .f, ..., .id = NULL) {
 #' @usage NULL
 #' @export
 map_df <- function(.x, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "map_df()", I("`map()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "map_df()", I("`map()` + `list_rbind()`"))
   check_installed("dplyr", "for `map_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -79,7 +82,8 @@ map_df <- function(.x, .f, ..., .id = NULL) {
 #' @rdname map_dfr
 #' @export
 map_dfc <- function(.x, .f, ...) {
-  lifecycle::deprecate_warn("0.4.0", "map_dfc()", I("`map()` + `list_cbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "map_dfc()", I("`map()` + `list_cbind()`"))
   check_installed("dplyr", "for `map_dfc()`.")
 
   .f <- as_mapper(.f, ...)
@@ -90,7 +94,8 @@ map_dfc <- function(.x, .f, ...) {
 #' @rdname map_dfr
 #' @export
 imap_dfr <- function(.x, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "imap_dfr()", I("`imap()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "imap_dfr()", I("`imap()` + `list_rbind()`"))
 
   .f <- as_mapper(.f, ...)
   res <- map2(.x, vec_index(.x), .f, ...)
@@ -100,7 +105,8 @@ imap_dfr <- function(.x, .f, ..., .id = NULL) {
 #' @rdname map_dfr
 #' @export
 imap_dfc <- function(.x, .f, ...) {
-  lifecycle::deprecate_warn("0.4.0", "imap_dfc()", I("`imap()` + `list_cbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "imap_dfc()", I("`imap()` + `list_cbind()`"))
 
   .f <- as_mapper(.f, ...)
   res <- map2(.x, vec_index(.x), .f, ...)
@@ -110,7 +116,8 @@ imap_dfc <- function(.x, .f, ...) {
 #' @rdname map_dfr
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "map2_dfr()", I("`map2()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "map2_dfr()", I("`map2()` + `list_rbind()`"))
   check_installed("dplyr", "for `map2_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -121,7 +128,8 @@ map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
 #' @rdname map_dfr
 #' @export
 map2_dfc <- function(.x, .y, .f, ...) {
-  lifecycle::deprecate_warn("0.4.0", "map2_dfc()", I("`map2()` + `list_cbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "map2_dfc()", I("`map2()` + `list_cbind()`"))
   check_installed("dplyr", "for `map2_dfc()`.")
 
   .f <- as_mapper(.f, ...)
@@ -133,7 +141,8 @@ map2_dfc <- function(.x, .y, .f, ...) {
 #' @export
 #' @usage NULL
 map2_df <- function(.x, .y, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "map2_df()", I("`map2()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "map2_df()", I("`map2()` + `list_rbind()`"))
   check_installed("dplyr", "for `map2_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -144,7 +153,8 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
 #' @rdname map_dfr
 #' @export
 pmap_dfr <- function(.l, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "pmap_dfr()", I("`pmap()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "pmap_dfr()", I("`pmap()` + `list_rbind()`"))
   check_installed("dplyr", "for `pmap_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -155,7 +165,8 @@ pmap_dfr <- function(.l, .f, ..., .id = NULL) {
 #' @rdname map_dfr
 #' @export
 pmap_dfc <- function(.l, .f, ...) {
-  lifecycle::deprecate_warn("0.4.0", "pmap_dfc()", I("`pmap()` + `list_cbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "pmap_dfc()", I("`pmap()` + `list_cbind()`"))
   check_installed("dplyr", "for `pmap_dfc()`.")
 
   .f <- as_mapper(.f, ...)
@@ -167,7 +178,8 @@ pmap_dfc <- function(.l, .f, ...) {
 #' @export
 #' @usage NULL
 pmap_df <- function(.l, .f, ..., .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "pmap_df()", I("`pmap()` + `list_rbind()`"))
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "pmap_df()", I("`pmap()` + `list_rbind()`"))
   check_installed("dplyr", "for `pmap_dfr()`.")
 
   .f <- as_mapper(.f, ...)

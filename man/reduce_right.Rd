@@ -43,7 +43,7 @@ should be 1 element shorter than \code{.x}.}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-These functions are retired as of purrr 0.3.0. Please use the
+These functions were deprecated in purrr 0.3.0. Please use the
 \code{.dir} argument of \code{\link[=reduce]{reduce()}} instead, or reverse your vectors
 and use a left reduction.
 }

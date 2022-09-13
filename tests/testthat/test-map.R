@@ -9,8 +9,8 @@ test_that("creates simple call", {
 })
 
 test_that("fails on non-vectors", {
-  expect_bad_type_error(map(environment(), identity), "`.x` must be a vector, not an environment")
-  expect_bad_type_error(map(quote(a), identity), "`.x` must be a vector, not a symbol")
+  expect_snapshot(map(environment(), identity), error = TRUE)
+  expect_snapshot(map(quote(a), identity), error = TRUE)
 })
 
 test_that("0 length input gives 0 length output", {
@@ -75,10 +75,7 @@ test_that("primitive dispatch correctly", {
 
 test_that("error message follows style guide when result is not length 1", {
   x <- list(list(a = 1L), list(a = 2:3))
-  expect_bad_element_vector_error(
-    purrr::map_int(x, "a"),
-    "Result 2 must be a single integer, not an integer vector of length 2"
-  )
+  expect_snapshot(purrr::map_int(x, "a"), error = TRUE)
 })
 
 test_that("map() with empty input copies names", {

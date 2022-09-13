@@ -15,7 +15,6 @@ test_that("keep() and discard() require predicate functions", {
   })
 })
 
-
 # keep_at / discard_at ----------------------------------------------------
 
 test_that("can keep_at/discard_at with character vector", {

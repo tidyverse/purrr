@@ -16,9 +16,6 @@
 #'   elements of `.y` to `.f`, just like [map2()]. `imodify()` passes
 #'   the names or the indices to `.f` like [imap()] does.
 #'
-#' * `modify_depth()` only modifies elements at a given level of a
-#'   nested data structure.
-#'
 #' * [modify_in()] modifies a single element in a [pluck()] location.
 #'
 #' @param .x A vector.
@@ -27,12 +24,6 @@
 #' @inheritParams map
 #' @param .f A function specified in the same way as the corresponding map
 #'   function.
-#' @param .depth Level of `.x` to map on. Use a negative value to count up
-#'   from the lowest level of the list.
-#'
-#'   * `modify_depth(x, 0, fun)` is equivalent to `x[] <- fun(x)`.
-#'   * `modify_depth(x, 1, fun)` is equivalent to `x <- modify(x, fun)`
-#'   * `modify_depth(x, 2, fun)` is equivalent to `x <- modify(x, ~ modify(., fun))`
 #' @return An object the same class as `.x`
 #'
 #' @details
@@ -93,42 +84,6 @@
 #' # Specify an alternative with the `.else` argument:
 #' modify_if(iris, is.factor, as.character, .else = as.integer)
 #'
-#'
-#' # Modify at specified depth ---------------------------
-#' l1 <- list(
-#'   obj1 = list(
-#'     prop1 = list(param1 = 1:2, param2 = 3:4),
-#'     prop2 = list(param1 = 5:6, param2 = 7:8)
-#'   ),
-#'   obj2 = list(
-#'     prop1 = list(param1 = 9:10, param2 = 11:12),
-#'     prop2 = list(param1 = 12:14, param2 = 15:17)
-#'   )
-#' )
-#'
-#' # In the above list, "obj" is level 1, "prop" is level 2 and "param"
-#' # is level 3. To apply sum() on all params, we map it at depth 3:
-#' l1 %>% modify_depth(3, sum) %>% str()
-#'
-#' # Note that vectorised operations will yield the same result when
-#' # applied at the list level as when applied at the atomic result.
-#' # The former is more efficient because it takes advantage of
-#' # vectorisation.
-#' l1 %>% modify_depth(3, `+`, 100L)
-#' l1 %>% modify_depth(4, `+`, 100L)
-#'
-#' # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
-#' l1 %>% modify(c("prop1", "param2")) %>% str()
-#'
-#' # But what if we want to pluck all param2 elements? Then we need to
-#' # act at a lower level:
-#' l1 %>% modify_depth(2, "param2") %>% str()
-#'
-#' # modify_depth() can be with other purrr functions to make them operate at
-#' # a lower level. Here we ask pmap() to map paste() simultaneously over all
-#' # elements of the objects at the second level. paste() is effectively
-#' # mapped at level 3.
-#' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
 #' @export
 modify <- function(.x, .f, ...) {
   UseMethod("modify")
@@ -318,77 +273,26 @@ modify_base <- function(mapper, .x, .y, .f, ...) {
   .x
 }
 
-#' @rdname modify
-#' @export
-modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  if (!is_integerish(.depth, n = 1, finite = TRUE)) {
-    abort("`.depth` must be a single number")
-  }
-  UseMethod("modify_depth")
-}
-#' @rdname modify
-#' @export
-modify_depth.default <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  force(.ragged)
-
-  if (.depth < 0) {
-    .depth <- pluck_depth(.x) + .depth
-  }
-
-  .f <- as_mapper(.f, ...)
-  modify_depth_rec(.x, .depth, .f, ..., .ragged = .ragged, .atomic = FALSE)
-}
-
-modify_depth_rec <- function(.x, .depth, .f,
-                             ...,
-                             .ragged = FALSE,
-                             .atomic = FALSE) {
-  if (.depth < 0) {
-    abort("Invalid depth")
-  }
-
-  if (.atomic) {
-    if (!.ragged) {
-      abort("List not deep enough")
-    }
-    return(modify(.x, .f, ...))
-  }
-
-  if (.depth == 0) {
-    # TODO vctrs: Use `vec_cast()` on result?
-    .x[] <- .f(.x, ...)
-    return(.x)
-  }
-
-  if (.depth == 1) {
-    return(modify(.x, .f, ...))
-  }
-
-  # Should this be replaced with a generic way of figuring out atomic
-  # types?
-  .atomic <- is_atomic(.x)
-
-  modify(.x, function(x) {
-    modify_depth_rec(x, .depth - 1, .f, ..., .ragged = .ragged, .atomic = .atomic)
-  })
-}
-
 # Internal version of map_lgl() that works with logical vectors
-probe <- function(.x, .p, ...) {
+probe <- function(.x, .p, ..., .error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE)
+    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = .error_call)
     map_lgl(.x, .p, ...)
   }
 }
 
-inv_which <- function(x, sel) {
+inv_which <- function(x, sel, error_call = caller_env()) {
   if (is.character(sel)) {
     names <- names(x)
     if (is.null(names)) {
-      stop("character indexing requires a named object", call. = FALSE)
+      cli::cli_abort(
+        "Character {.arg .at} must be used with a named {.arg x}.",
+        arg = ".at",
+        call = error_call
+      )
     }
     names %in% sel
   } else if (is.numeric(sel)) {
@@ -399,7 +303,11 @@ inv_which <- function(x, sel) {
     }
 
   } else {
-    stop("unrecognised index type", call. = FALSE)
+    cli::cli_abort(
+      "{.arg .at} must be a character or numeric vector, not {.obj_type_friendly {sel}}.",
+      arg = ".at",
+      call = error_call
+    )
   }
 }
 

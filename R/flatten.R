@@ -1,14 +1,15 @@
 #' Flatten a list of lists into a simple vector.
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("superseded")`
 #'
-#' These functions have been deprecated because their behavior was inconsistent.
+#' These functions were superseded in purrr 1.0.0 because their behavior was
+#' inconsistent.
 #'
-#' * `flatten()` has been replaced by [list_flatten()].
+#' * `flatten()` has been superseded by [list_flatten()].
 #' * `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`, and `flatten_chr()`
-#'    have been replaced by [list_c()].
-#' * `flatten_dfr()` and `flatten_dfc()` have been replaced by [list_rbind()]
+#'    have been superseded by [list_c()].
+#' * `flatten_dfr()` and `flatten_dfc()` have been superseded by [list_rbind()]
 #'    and [list_cbind()] respectively.
 #'
 #' @param .x A list to flatten. The contents of the list can be anything for
@@ -39,35 +40,39 @@
 #' # now
 #' x %>% list_flatten() %>% str()
 flatten <- function(.x) {
-  lifecycle::deprecate_warn("0.4.0", "flatten()", "list_flatten()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten()", "list_flatten()")
   .Call(flatten_impl, .x)
 }
 
 #' @export
 #' @rdname flatten
 flatten_lgl <- function(.x) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_lgl()", "list_c()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "logical")
 }
 
 #' @export
 #' @rdname flatten
 flatten_int <- function(.x) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_lgl()", "list_c()")
+  lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "integer")
 }
 
 #' @export
 #' @rdname flatten
 flatten_dbl <- function(.x) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_lgl()", "list_c()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "double")
 }
 
 #' @export
 #' @rdname flatten
 flatten_chr <- function(.x) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_lgl()", "list_c()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten_lgl()", "list_c()")
   .Call(vflatten_impl, .x, "character")
 }
 
@@ -75,7 +80,8 @@ flatten_chr <- function(.x) {
 #' @export
 #' @rdname flatten
 flatten_dfr <- function(.x, .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_dfr()", "list_rbind()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten_dfr()", "list_rbind()")
   check_installed("dplyr", "for `flatten_dfr()`.")
 
   res <- .Call(flatten_impl, .x)
@@ -85,7 +91,8 @@ flatten_dfr <- function(.x, .id = NULL) {
 #' @export
 #' @rdname flatten
 flatten_dfc <- function(.x) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_dfc()", "list_cbind()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten_dfc()", "list_cbind()")
   check_installed("dplyr", "for `flatten_dfc()`.")
 
   res <- .Call(flatten_impl, .x)
@@ -96,7 +103,8 @@ flatten_dfc <- function(.x) {
 #' @rdname flatten
 #' @usage NULL
 flatten_df <- function(.x, .id = NULL) {
-  lifecycle::deprecate_warn("0.4.0", "flatten_df()", "list_rbind()")
+  # in 1.0.0
+  lifecycle::signal_stage("superseded", "flatten_df()", "list_rbind()")
   check_installed("dplyr", "for `flatten_dfr()`.")
 
   res <- .Call(flatten_impl, .x)

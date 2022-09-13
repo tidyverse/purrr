@@ -1,13 +1,10 @@
 test_that("map2 can't simplify if elements longer than length 1", {
-  expect_bad_element_vector_error(
-    map2_int(1:4, 5:8, range),
-    "Result 1 must be a single integer, not an integer vector of length 2"
-  )
+  expect_snapshot(map2_int(1:4, 5:8, range), error = TRUE)
 })
 
 test_that("fails on non-vectors", {
-  expect_bad_type_error(map2(environment(), "a", identity), "`.x` must be a vector, not an environment")
-  expect_bad_type_error(map2("a", environment(), identity), "`.y` must be a vector, not an environment")
+  expect_snapshot(map2(environment(), "a", identity), error = TRUE)
+  expect_snapshot(map2("a", environment(), identity), error = TRUE)
 })
 
 test_that("map2 recycles inputs", {
