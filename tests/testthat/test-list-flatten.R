@@ -30,9 +30,7 @@ test_that("list_flatten() restores", {
   new_my_num_list <- function(xs) {
     stopifnot(
       every(xs, function(x) {
-        is_null(x) ||
-          is.numeric(x) ||
-          inherits(x, "my_num_list")
+        is_null(x) || is.numeric(x) || inherits(x, "my_num_list")
       })
     )
     new_vctr(xs, class = "my_num_list")
