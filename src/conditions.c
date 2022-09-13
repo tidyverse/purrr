@@ -21,6 +21,30 @@ SEXP caller_env() {
   return out;
 }
 
+#define BUFSIZE 8192
+void purrr_abort(const char* fmt, ...) {
+  char buf[BUFSIZE];
+  va_list dots;
+  va_start(dots, fmt);
+  vsnprintf(buf, BUFSIZE, fmt, dots);
+  va_end(dots);
+  buf[BUFSIZE - 1] = '\0';
+
+  SEXP message = PROTECT(Rf_mkString(buf));
+  SEXP env = PROTECT(caller_env());
+
+  SEXP fn = PROTECT(
+    Rf_lang3(Rf_install("::"), Rf_install("rlang"), Rf_install("abort"))
+  );
+  SEXP call = PROTECT(Rf_lang3(fn, message, env));
+
+  SEXP node = CDDR(call);
+  SET_TAG(node, Rf_install("call"));
+
+  Rf_eval(call, R_BaseEnv);
+  while (1); // No return
+}
+
 void stop_bad_type(SEXP x, const char* expected, const char* what, const char* arg) {
   SEXP fn = Rf_lang3(Rf_install(":::"),
                      Rf_install("purrr"),

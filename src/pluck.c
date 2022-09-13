@@ -19,31 +19,6 @@ static int check_obj_length(SEXP n, bool strict);
 int obj_length(SEXP x, bool strict);
 SEXP obj_names(SEXP x, bool strict);
 
-#define BUFSIZE 8192
-void __attribute__ ((noreturn)) purrr_abort(const char* fmt, ...) {
-  char buf[BUFSIZE];
-  va_list dots;
-  va_start(dots, fmt);
-  vsnprintf(buf, BUFSIZE, fmt, dots);
-  va_end(dots);
-  buf[BUFSIZE - 1] = '\0';
-
-  SEXP message = PROTECT(Rf_mkString(buf));
-  SEXP env = PROTECT(caller_env());
-
-  SEXP fn = PROTECT(
-    Rf_lang3(Rf_install("::"), Rf_install("rlang"), Rf_install("abort"))
-  );
-  SEXP call = PROTECT(Rf_lang3(fn, message, env));
-
-  SEXP node = CDDR(call);
-  SET_TAG(node, Rf_install("call"));
-
-  Rf_eval(call, R_BaseEnv);
-  while (1); // No return
-}
-
-
 // S3 objects must implement a `length()` method in the case of a
 // numeric index and a `names()` method for the character case
 int find_offset(SEXP x, SEXP index, int i, bool strict) {

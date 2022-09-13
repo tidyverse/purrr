@@ -117,12 +117,13 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, S
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx != ny && nx != 1 && ny != 1) {
-    Rf_errorcall(R_NilValue,
-                 "Mapped vectors must have consistent lengths:\n"
-                 "* `.x` has length %d\n"
-                 "* `.y` has length %d",
-                 nx,
-                 ny);
+    purrr_abort(
+      "Mapped vectors must have consistent lengths:\n"
+      "* `.x` has length %d\n"
+      "* `.y` has length %d",
+      nx,
+      ny
+    );
   }
   int n = (nx == 1) ? ny : nx;
 
