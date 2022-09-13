@@ -28,3 +28,8 @@ test_that("can keep_at/discard_at with function", {
   expect_equal(keep_at(x, ~ . == "b"), list(b = 1))
   expect_equal(discard_at(x, ~ . == "b"), list(a = 1, c = 1))
 })
+
+test_that("discard_at works when nothing discarded", {
+  x <- list(a = 1, b = 1, c = 1)
+  expect_equal(discard_at(x, "d"), x)
+})

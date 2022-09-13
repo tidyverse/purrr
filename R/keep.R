@@ -83,5 +83,9 @@ keep_at <- function(x, at) {
 #' @rdname keep_at
 discard_at <- function(x, at) {
   where <- at_selection(x, at)
-  x[-where]
+  if (length(where) == 0) {
+    x[]
+  } else {
+    x[-where]
+  }
 }
