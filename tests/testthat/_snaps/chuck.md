@@ -3,7 +3,7 @@
     Code
       chuck(NULL, "a")
     Condition
-      Error:
+      Error in `chuck()`:
       ! Index 1 is attempting to pluck from an unnamed vector using a string name.
 
 # dots must be unnamed
@@ -29,16 +29,16 @@
     Code
       chuck(1:4, 10)
     Condition
-      Error:
+      Error in `chuck()`:
       ! Index 1 exceeds the length of plucked object (10 > 4).
     Code
       chuck(1:4, 0)
     Condition
-      Error:
+      Error in `chuck()`:
       ! Index 1 is zero.
     Code
       chuck(1:4, -10)
     Condition
-      Error:
+      Error in `chuck()`:
       ! Negative index 1 must be greater than or equal to -4, not -10.
 
