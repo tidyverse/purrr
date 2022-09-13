@@ -72,6 +72,10 @@
 
 * purrr is now licensed as MIT (#805).
 
+* purrr now uses the base pipe (`|>`) and anonymous function short hand (`\(x)`),
+  in all examples. This comes with the downside that examples will no longer 
+  work in R 4.0 and earlier (#936).
+
 ### Flattening and simplification
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
