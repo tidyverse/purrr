@@ -27,10 +27,10 @@
     Code
       at_selection(x, list())
     Condition
-      Error in `at_selection()`:
+      Error:
       ! `list()` must be a numeric vector, character vector, or function, not an empty list.
 
-# tidyselect in is deprecated
+# tidyselect `at` is deprecated
 
     Code
       . <- at_selection(data.frame(x = 1), vars("x"))
