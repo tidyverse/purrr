@@ -31,7 +31,7 @@ at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_
       call = error_call
     )
   } else if (is_quosures(at)) {
-    lifecycle::deprecate_warn("1.0.0", I("using `vars()` in .at"))
+    lifecycle::deprecate_warn("1.0.0", I("Using `vars()` in .at"))
     check_installed("tidyselect", "for using tidyselect in `map_at()`.")
 
     tidyselect::vars_select(.vars = names(x), !!!at)

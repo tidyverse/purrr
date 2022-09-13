@@ -49,5 +49,5 @@
       . <- at_selection(data.frame(x = 1), vars("x"))
     Condition
       Warning:
-      using `vars()` in .at was deprecated in purrr 1.0.0.
+      Using `vars()` in .at was deprecated in purrr 1.0.0.
 
