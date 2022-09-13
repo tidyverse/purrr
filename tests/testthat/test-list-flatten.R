@@ -24,6 +24,7 @@ test_that("requires a list", {
 })
 
 test_that("list_flatten() restores", {
+  # This simulates a recursive list-of type
   my_num_list <- function(...) {
     new_my_num_list(list2(...))
   }
