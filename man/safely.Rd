@@ -41,16 +41,16 @@ safe_log <- safely(log)
 safe_log(10)
 safe_log("a")
 
-list("a", 10, 100) \%>\%
-  map(safe_log) \%>\%
+list("a", 10, 100) |>
+  map(safe_log) |>
   transpose()
 
 # This is a bit easier to work with if you supply a default value
 # of the same type and use the simplify argument to transpose():
 safe_log <- safely(log, otherwise = NA_real_)
-list("a", 10, 100) \%>\%
-  map(safe_log) \%>\%
-  transpose() \%>\%
+list("a", 10, 100) |>
+  map(safe_log) |>
+  transpose() |>
   simplify_all()
 }
 \seealso{

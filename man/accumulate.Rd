@@ -120,11 +120,11 @@ reducing \code{list()} from the right produces a right-leaning list.
 # same, no matter the direction. You'll find it in the first element for a
 # backward (left) accumulation, and in the last element for forward
 # (right) one:
-1:5 \%>\% accumulate(`+`)
-1:5 \%>\% accumulate(`+`, .dir = "backward")
+1:5 |> accumulate(`+`)
+1:5 |> accumulate(`+`, .dir = "backward")
 
 # The final value is always equal to the equivalent reduction:
-1:5 \%>\% reduce(`+`)
+1:5 |> reduce(`+`)
 
 # It is easier to understand the details of the reduction with
 # `paste()`.
@@ -141,8 +141,8 @@ accumulate(1:10, ~ .x + rnorm(1), .init = 0)
 # `accumulate2()` is a version of `accumulate()` that works with
 # 3-argument functions and one additional vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
-letters[1:4] \%>\% accumulate(paste2)
-letters[1:4] \%>\% accumulate2(c("-", ".", "-"), paste2)
+letters[1:4] |> accumulate(paste2)
+letters[1:4] |> accumulate2(c("-", ".", "-"), paste2)
 
 
 # You can shortcircuit an accumulation and terminate it early by
@@ -155,7 +155,7 @@ paste3 <- function(out, input, sep = ".") {
   }
   paste(out, input, sep = sep)
 }
-letters \%>\% accumulate(paste3)
+letters |> accumulate(paste3)
 
 # Note how we get twice the same value in the accumulation. That's
 # because we have returned it twice. To prevent this, return an empty
@@ -167,7 +167,7 @@ paste3 <- function(out, input, sep = ".") {
   }
   paste(out, input, sep = sep)
 }
-letters \%>\% accumulate(paste3)
+letters |> accumulate(paste3)
 
 # Here the early return branch checks the incoming inputs passed on
 # the RHS:
@@ -177,7 +177,7 @@ paste4 <- function(out, input, sep = ".") {
   }
   paste(out, input, sep = sep)
 }
-letters \%>\% accumulate(paste4)
+letters |> accumulate(paste4)
 
 
 # Simulating stochastic processes with drift
@@ -185,11 +185,11 @@ letters \%>\% accumulate(paste4)
 library(dplyr)
 library(ggplot2)
 
-map(1:5, ~ rnorm(100)) \%>\%
-  set_names(paste0("sim", 1:5)) \%>\%
-  map(~ accumulate(., ~ .05 + .x + .y)) \%>\%
-  map(~ tibble(value = .x, step = 1:100)) \%>\%
-  list_rbind(id = "simulation") \%>\%
+map(1:5, ~ rnorm(100)) |>
+  set_names(paste0("sim", 1:5)) |>
+  map(~ accumulate(., ~ .05 + .x + .y)) |>
+  map(~ tibble(value = .x, step = 1:100)) |>
+  list_rbind(id = "simulation") |>
   ggplot(aes(x = step, y = value)) +
     geom_line(aes(color = simulation)) +
     ggtitle("Simulations of a random walk with drift")

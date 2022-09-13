@@ -27,8 +27,8 @@
 #' map2(x, y, `+`)
 #'
 #' # Split into pieces, fit model to each piece, then predict
-#' by_cyl <- mtcars %>% split(.$cyl)
-#' mods <- by_cyl %>% map(~ lm(mpg ~ wt, data = .))
+#' by_cyl <- mtcars |> split(.$cyl)
+#' mods <- by_cyl |> map(~ lm(mpg ~ wt, data = .))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)

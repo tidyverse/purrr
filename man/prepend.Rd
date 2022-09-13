@@ -31,9 +31,9 @@ another, especially in a pipe chain.
 \examples{
 x <- as.list(1:3)
 
-x \%>\% append("a")
-x \%>\% prepend("a")
-x \%>\% prepend(list("a", "b"), before = 3)
+x |> append("a")
+x |> prepend("a")
+x |> prepend(list("a", "b"), before = 3)
 prepend(list(), x)
 }
 \keyword{internal}

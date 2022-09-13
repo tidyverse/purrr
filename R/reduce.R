@@ -72,8 +72,8 @@
 #' @examples
 #' # Reducing `+` computes the sum of a vector while reducing `*`
 #' # computes the product:
-#' 1:3 %>% reduce(`+`)
-#' 1:10 %>% reduce(`*`)
+#' 1:3 |> reduce(`+`)
+#' 1:10 |> reduce(`*`)
 #'
 #' # By ignoring the input vector (.y), you can turn output of one step into
 #' # the input for the next. This code takes 10 steps of a random walk:
@@ -94,8 +94,8 @@
 #' # reduce2() takes a ternary function and a second vector that is
 #' # one element smaller than the first vector:
 #' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
-#' letters[1:4] %>% reduce(paste2)
-#' letters[1:4] %>% reduce2(c("-", ".", "-"), paste2)
+#' letters[1:4] |> reduce(paste2)
+#' letters[1:4] |> reduce2(c("-", ".", "-"), paste2)
 #'
 #' x <- list(c(0, 1), c(2, 3), c(4, 5))
 #' y <- list(c(6, 7), c(8, 9))
@@ -112,7 +112,7 @@
 #'   }
 #'   paste(out, input, sep = sep)
 #' }
-#' letters %>% reduce(paste3)
+#' letters |> reduce(paste3)
 #'
 #' # Here the early return branch checks the incoming inputs passed on
 #' # the RHS:
@@ -122,7 +122,7 @@
 #'   }
 #'   paste(out, input, sep = sep)
 #' }
-#' letters %>% reduce(paste4)
+#' letters |> reduce(paste4)
 #' @export
 reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
   reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
@@ -390,11 +390,11 @@ seq_len2 <- function(start, end) {
 #' # same, no matter the direction. You'll find it in the first element for a
 #' # backward (left) accumulation, and in the last element for forward
 #' # (right) one:
-#' 1:5 %>% accumulate(`+`)
-#' 1:5 %>% accumulate(`+`, .dir = "backward")
+#' 1:5 |> accumulate(`+`)
+#' 1:5 |> accumulate(`+`, .dir = "backward")
 #'
 #' # The final value is always equal to the equivalent reduction:
-#' 1:5 %>% reduce(`+`)
+#' 1:5 |> reduce(`+`)
 #'
 #' # It is easier to understand the details of the reduction with
 #' # `paste()`.
@@ -411,8 +411,8 @@ seq_len2 <- function(start, end) {
 #' # `accumulate2()` is a version of `accumulate()` that works with
 #' # 3-argument functions and one additional vector:
 #' paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
-#' letters[1:4] %>% accumulate(paste2)
-#' letters[1:4] %>% accumulate2(c("-", ".", "-"), paste2)
+#' letters[1:4] |> accumulate(paste2)
+#' letters[1:4] |> accumulate2(c("-", ".", "-"), paste2)
 #'
 #'
 #' # You can shortcircuit an accumulation and terminate it early by
@@ -425,7 +425,7 @@ seq_len2 <- function(start, end) {
 #'   }
 #'   paste(out, input, sep = sep)
 #' }
-#' letters %>% accumulate(paste3)
+#' letters |> accumulate(paste3)
 #'
 #' # Note how we get twice the same value in the accumulation. That's
 #' # because we have returned it twice. To prevent this, return an empty
@@ -437,7 +437,7 @@ seq_len2 <- function(start, end) {
 #'   }
 #'   paste(out, input, sep = sep)
 #' }
-#' letters %>% accumulate(paste3)
+#' letters |> accumulate(paste3)
 #'
 #' # Here the early return branch checks the incoming inputs passed on
 #' # the RHS:
@@ -447,7 +447,7 @@ seq_len2 <- function(start, end) {
 #'   }
 #'   paste(out, input, sep = sep)
 #' }
-#' letters %>% accumulate(paste4)
+#' letters |> accumulate(paste4)
 #'
 #'
 #' # Simulating stochastic processes with drift
@@ -455,11 +455,11 @@ seq_len2 <- function(start, end) {
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' map(1:5, ~ rnorm(100)) %>%
-#'   set_names(paste0("sim", 1:5)) %>%
-#'   map(~ accumulate(., ~ .05 + .x + .y)) %>%
-#'   map(~ tibble(value = .x, step = 1:100)) %>%
-#'   list_rbind(id = "simulation") %>%
+#' map(1:5, ~ rnorm(100)) |>
+#'   set_names(paste0("sim", 1:5)) |>
+#'   map(~ accumulate(., ~ .05 + .x + .y)) |>
+#'   map(~ tibble(value = .x, step = 1:100)) |>
+#'   list_rbind(id = "simulation") |>
 #'   ggplot(aes(x = step, y = value)) +
 #'     geom_line(aes(color = simulation)) +
 #'     ggtitle("Simulations of a random walk with drift")

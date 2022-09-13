@@ -52,13 +52,13 @@ Here is an example of equivalent usages for \code{cross()} and
 )
 
 # With deprecated `cross()`
-data \%>\% cross() \%>\% map_chr(~ paste(..., collapse = " "))
+data |> cross() |> map_chr(~ paste(..., collapse = " "))
 #> [1] "John Hello. ! "     "Jane Hello. ! "     "John Bonjour. ! "  
 #> [4] "Jane Bonjour. ! "   "John Hello. ... "   "Jane Hello. ... "  
 #> [7] "John Bonjour. ... " "Jane Bonjour. ... "
 
 # With `expand_grid()`
-tidyr::expand_grid(!!!data) \%>\% pmap_chr(paste)
+tidyr::expand_grid(!!!data) |> pmap_chr(paste)
 #> [1] "John! Hello."     "John... Hello."   "John! Bonjour."   "John... Bonjour."
 #> [5] "Jane! Hello."     "Jane... Hello."   "Jane! Bonjour."   "Jane... Bonjour."
 }\if{html}{\out{</div>}}
@@ -97,8 +97,8 @@ data <- list(
   sep = c("! ", "... ")
 )
 
-data \%>\%
-  cross() \%>\%
+data |>
+  cross() |>
   map(lift(paste))
 
 # cross() returns the combinations in long format: many elements,
@@ -106,36 +106,36 @@ data \%>\%
 # data frame in long format: crossing three objects produces a data
 # frame of three columns with each row being a particular
 # combination. This is the same format that expand.grid() returns.
-args <- data \%>\% cross_df()
+args <- data |> cross_df()
 
 # In case you need a list in long format (and not a data frame)
 # just run as.list() after cross_df()
-args \%>\% as.list()
+args |> as.list()
 
 # This format is often less practical for functional programming
 # because applying a function to the combinations requires a loop
 out <- vector("list", length = nrow(args))
 for (i in seq_along(out))
-  out[[i]] <- map(args, i) \%>\% invoke(paste, .)
+  out[[i]] <- map(args, i) |> invoke(paste, .)
 out
 
 # It's easier to transpose and then use invoke_map()
-args \%>\% transpose() \%>\% map_chr(~ invoke(paste, .))
+args |> transpose() |> map_chr(~ invoke(paste, .))
 
 # Unwanted combinations can be filtered out with a predicate function
 filter <- function(x, y) x >= y
-cross2(1:5, 1:5, .filter = filter) \%>\% str()
+cross2(1:5, 1:5, .filter = filter) |> str()
 
 # To give names to the components of the combinations, we map
 # setNames() on the product:
-seq_len(3) \%>\%
-  cross2(., ., .filter = `==`) \%>\%
+seq_len(3) |>
+  cross2(., ., .filter = `==`) |>
   map(setNames, c("x", "y"))
 
 # Alternatively we can encapsulate the arguments in a named list
 # before crossing to get named components:
-seq_len(3) \%>\%
-  list(x = ., y = .) \%>\%
+seq_len(3) |>
+  list(x = ., y = .) |>
   cross(.filter = `==`)
 }
 \seealso{

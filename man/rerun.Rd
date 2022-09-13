@@ -31,17 +31,17 @@ easily be expressed as \code{map(1:n, ~ x)}
 }
 \examples{
 # old
-5 \%>\% rerun(rnorm(5)) \%>\% str()
+5 |> rerun(rnorm(5)) |> str()
 # new
-1:5 \%>\% map(~ rnorm(5)) \%>\% str()
+1:5 |> map(~ rnorm(5)) |> str()
 
 # old
-5 \%>\%
-  rerun(x = rnorm(5), y = rnorm(5)) \%>\%
+5 |>
+  rerun(x = rnorm(5), y = rnorm(5)) |>
   map_dbl(~ cor(.x$x, .x$y))
 # new
-1:5 \%>\%
-  map(~ list(x = rnorm(5), y = rnorm(5))) \%>\%
+1:5 |>
+  map(~ list(x = rnorm(5), y = rnorm(5))) |>
   map_dbl(~ cor(.x$x, .x$y))
 }
 \keyword{internal}

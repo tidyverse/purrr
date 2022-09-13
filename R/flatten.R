@@ -30,15 +30,15 @@
 #' x
 #'
 #' # was
-#' x %>% flatten_int() %>% str()
+#' x |> flatten_int() |> str()
 #' # now
-#' x %>% list_c() %>% str()
+#' x |> list_c() |> str()
 #'
 #' x <- list(list(1, 2), list(3, 4))
 #' # was
-#' x %>% flatten() %>% str()
+#' x |> flatten() |> str()
 #' # now
-#' x %>% list_flatten() %>% str()
+#' x |> list_flatten() |> str()
 flatten <- function(.x) {
   # in 1.0.0
   lifecycle::signal_stage("superseded", "flatten()", "list_flatten()")

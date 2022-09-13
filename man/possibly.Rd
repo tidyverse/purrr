@@ -36,7 +36,7 @@ in a package, be sure to read \link{faq-adverbs-export}.
 
 \examples{
 # To replace errors with a default value, use possibly().
-list("a", 10, 100) \%>\%
+list("a", 10, 100) |>
   map_dbl(possibly(log, NA_real_))
 }
 \seealso{

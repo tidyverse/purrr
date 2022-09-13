@@ -57,14 +57,14 @@ x <- map(1:3, ~ sample(4))
 x
 
 # was
-x \%>\% flatten_int() \%>\% str()
+x |> flatten_int() |> str()
 # now
-x \%>\% list_c() \%>\% str()
+x |> list_c() |> str()
 
 x <- list(list(1, 2), list(3, 4))
 # was
-x \%>\% flatten() \%>\% str()
+x |> flatten() |> str()
 # now
-x \%>\% list_flatten() \%>\% str()
+x |> list_flatten() |> str()
 }
 \keyword{internal}

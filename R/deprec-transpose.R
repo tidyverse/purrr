@@ -29,23 +29,23 @@
 #' @examples
 #' x <- map(1:5, ~ list(x = runif(1), y = runif(5)))
 #' # was
-#' x %>% transpose() %>% str()
+#' x |> transpose() |> str()
 #' # now
-#' x %>% list_transpose(simplify = FALSE) %>% str()
+#' x |> list_transpose(simplify = FALSE) |> str()
 #'
 #' # transpose() is useful in conjunction with safely() & quietly()
 #' x <- list("a", 1, 2)
-#' y <- x %>% map(safely(log))
+#' y <- x |> map(safely(log))
 #' # was
-#' y %>% transpose() %>% str()
+#' y |> transpose() |> str()
 #' # now:
-#' y %>% list_transpose() %>% str()
+#' y |> list_transpose() |> str()
 #'
 #' # Previously, output simplification required a call to another function
 #' x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
-#' x %>% transpose() %>% simplify_all()
+#' x |> transpose() |> simplify_all()
 #' # Now can take advantage of automatic simplification
-#' x %>% list_transpose()
+#' x |> list_transpose()
 #'
 #' # Provide explicit component names to prevent loss of those that don't
 #' # appear in first component
@@ -53,14 +53,14 @@
 #'   list(x = 1, y = "one"),
 #'   list(z = "deux", x = 2)
 #' )
-#' ll %>% transpose()
-#' nms <- ll %>% map(names) %>% reduce(union)
+#' ll |> transpose()
+#' nms <- ll |> map(names) |> reduce(union)
 #' # was
-#' ll %>% transpose(.names = nms)
+#' ll |> transpose(.names = nms)
 #' # now
-#' ll %>% list_transpose(template = nms)
+#' ll |> list_transpose(template = nms)
 #' # and can supply default value
-#' ll %>% list_transpose(template = nms, default = NA)
+#' ll |> list_transpose(template = nms, default = NA)
 transpose <- function(.l, .names = NULL) {
   lifecycle::deprecate_warn("1.0.0", "transpose()", "list_transpose()")
   .Call(transpose_impl, .l, .names)

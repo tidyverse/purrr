@@ -70,10 +70,10 @@ map_if(iris, is.factor, as.character)
 map_if(iris, is.factor, as.character, .else = as.integer)
 
 # Use numeric vector of positions select elements to change:
-iris \%>\% map_at(c(4, 5), is.numeric)
+iris |> map_at(c(4, 5), is.numeric)
 
 # Use vector of names to specify which elements to change:
-iris \%>\% map_at("Species", toupper)
+iris |> map_at("Species", toupper)
 }
 \seealso{
 Other map variants: 

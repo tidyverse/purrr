@@ -45,7 +45,7 @@
 #'
 #' ```
 #' modify(x, identity) === x
-#' modify(x, compose(f, g)) === modify(x, g) %>% modify(f)
+#' modify(x, compose(f, g)) === modify(x, g) |> modify(f)
 #' ```
 #'
 #' These invariants are known as the [functor
@@ -56,20 +56,20 @@
 #' @family map variants
 #' @examples
 #' # Convert factors to characters
-#' iris %>%
-#'   modify_if(is.factor, as.character) %>%
+#' iris |>
+#'   modify_if(is.factor, as.character) |>
 #'   str()
 #'
 #' # Specify which columns to map with a numeric vector of positions:
-#' mtcars %>% modify_at(c(1, 4, 5), as.character) %>% str()
+#' mtcars |> modify_at(c(1, 4, 5), as.character) |> str()
 #'
 #' # Or with a vector of names:
-#' mtcars %>% modify_at(c("cyl", "am"), as.character) %>% str()
+#' mtcars |> modify_at(c("cyl", "am"), as.character) |> str()
 #'
-#' list(x = rbernoulli(100), y = 1:100) %>%
-#'   transpose() %>%
-#'   modify_if("x", ~ update_list(., y = ~ y * 100)) %>%
-#'   transpose() %>%
+#' list(x = rbernoulli(100), y = 1:100) |>
+#'   transpose() |>
+#'   modify_if("x", ~ update_list(., y = ~ y * 100)) |>
+#'   transpose() |>
 #'   simplify_all()
 #'
 #' # Use modify2() to map over two vectors and preserve the type of

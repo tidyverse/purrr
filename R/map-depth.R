@@ -49,27 +49,27 @@
 #'
 #' # In the above list, "obj" is level 1, "prop" is level 2 and "param"
 #' # is level 3. To apply sum() on all params, we map it at depth 3:
-#' l1 %>% modify_depth(3, sum) %>% str()
+#' l1 |> modify_depth(3, sum) |> str()
 #'
 #' # Note that vectorised operations will yield the same result when
 #' # applied at the list level as when applied at the atomic result.
 #' # The former is more efficient because it takes advantage of
 #' # vectorisation.
-#' l1 %>% modify_depth(3, `+`, 100L)
-#' l1 %>% modify_depth(4, `+`, 100L)
+#' l1 |> modify_depth(3, `+`, 100L)
+#' l1 |> modify_depth(4, `+`, 100L)
 #'
 #' # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
-#' l1 %>% modify(c("prop1", "param2")) %>% str()
+#' l1 |> modify(c("prop1", "param2")) |> str()
 #'
 #' # But what if we want to pluck all param2 elements? Then we need to
 #' # act at a lower level:
-#' l1 %>% modify_depth(2, "param2") %>% str()
+#' l1 |> modify_depth(2, "param2") |> str()
 #'
 #' # modify_depth() can be with other purrr functions to make them operate at
 #' # a lower level. Here we ask pmap() to map paste() simultaneously over all
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
-#' l1 %>% modify_depth(2, ~ pmap(., paste, sep = " / ")) %>% str()
+#' l1 |> modify_depth(2, ~ pmap(., paste, sep = " / ")) |> str()
 map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
   .depth <- check_depth(.depth, pluck_depth(.x))
   .f <- as_mapper(.f, ...)

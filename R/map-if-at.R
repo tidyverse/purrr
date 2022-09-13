@@ -53,10 +53,10 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #'   elements.
 #' @examples
 #' # Use numeric vector of positions select elements to change:
-#' iris %>% map_at(c(4, 5), is.numeric)
+#' iris |> map_at(c(4, 5), is.numeric)
 #'
 #' # Use vector of names to specify which elements to change:
-#' iris %>% map_at("Species", toupper)
+#' iris |> map_at("Species", toupper)
 #
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = NULL) {
