@@ -49,3 +49,26 @@ test_that("list_flatten() restores", {
     my_num_list(1, 2, 3:4)
   )
 })
+
+test_that("list_flatten() supports strict types", {
+  local_methods(
+    vec_cast.list.my_strict_list = function(x, to, ...) {
+      abort("Can't coerce to list.")
+    }
+  )
+
+  x <- structure(list(1), class = c("my_strict_list", "list"))
+
+  expect_equal(
+    list_flatten(list(x)),
+    list(1)
+  )
+})
+
+test_that("list_flatten() works with vctrs::list_of()", {
+  # Currently only with flat lists because list_of can't be recursive
+  expect_equal(
+    list_flatten(list_of(1, 2, 3)),
+    list_of(1, 2, 3)
+  )
+})
