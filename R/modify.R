@@ -138,17 +138,17 @@ modify_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @rdname modify
 #' @export
 modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
-  sel <- probe(.x, .p)
+  where <- if_idx(.x, .p)
   index <- seq_along(.x)
 
   .f <- as_mapper(.f, ...)
-  for (i in index[sel]) {
+  for (i in index[where]) {
     list_slice2(.x, i) <- .f(.x[[i]], ...)
   }
 
   if (!is_null(.else)) {
     .else <- as_mapper(.else, ...)
-    for (i in index[!sel]) {
+    for (i in index[!where]) {
       list_slice2(.x, i) <- .else(.x[[i]], ...)
     }
   }
@@ -173,11 +173,11 @@ modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
 }
 
 modify_if_base <- function(.fmap, .x, .p, .true, .false = NULL, ..., .error_call = caller_env()) {
-  sel <- probe(.x, .p, .error_call = .error_call)
-  .x[sel] <- .fmap(.x[sel], .true, ...)
+  where <- if_idx(.x, .p, .error_call = .error_call)
+  .x[where] <- .fmap(.x[where], .true, ...)
 
   if (!is.null(.false)) {
-    .x[!sel] <- .fmap(.x[!sel], .false, ...)
+    .x[!where] <- .fmap(.x[!where], .false, ...)
   }
 
   .x
@@ -194,36 +194,31 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @rdname modify
 #' @export
 modify_at.default <- function(.x, .at, .f, ...) {
-  where <- at_selection(.x, .at)
-  sel <- inv_which(.x, where)
-  modify_if(.x, sel, .f, ...)
+  where <- at_idx(.x, .at)
+  modify_if(.x, where, .f, ...)
 }
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
-  where <- at_selection(.x, .at)
-  sel <- inv_which(.x, where)
-  .x[sel] <- map_int(.x[sel], .f, ...)
+  where <- at_idx(.x, .at)
+  .x[where] <- map_int(.x[where], .f, ...)
   .x
 }
 #' @export
 modify_at.double <- function(.x, .at, .f, ...) {
-  where <- at_selection(.x, .at)
-  sel <- inv_which(.x, where)
-  .x[sel] <- map_dbl(.x[sel], .f, ...)
+  where <- at_idx(.x, .at)
+  .x[where] <- map_dbl(.x[where], .f, ...)
   .x
 }
 #' @export
 modify_at.character <- function(.x, .at, .f, ...) {
-  where <- at_selection(.x, .at)
-  sel <- inv_which(.x, where)
-  .x[sel] <- map_chr(.x[sel], .f, ...)
+  where <- at_idx(.x, .at)
+  .x[where] <- map_chr(.x[where], .f, ...)
   .x
 }
 #' @export
 modify_at.logical <- function(.x, .at, .f, ...) {
-  where <- at_selection(.x, .at)
-  sel <- inv_which(.x, where)
-  .x[sel] <- map_lgl(.x[sel], .f, ...)
+  where <- at_idx(.x, .at)
+  .x[where] <- map_lgl(.x[where], .f, ...)
   .x
 }
 

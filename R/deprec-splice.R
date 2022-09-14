@@ -28,7 +28,7 @@ splice <- function(...) {
 }
 
 splice_if <- function(.x, .p) {
-  unspliced <- !probe(.x, .p)
+  unspliced <- !if_idx(.x, .p)
   out <- modify_if(.x, unspliced, list)
   list_flatten(out, name_spec = "{inner}")
 }
