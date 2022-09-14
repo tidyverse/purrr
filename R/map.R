@@ -140,7 +140,6 @@ map_int <- function(.x, .f, ..., .progress = FALSE) {
 #' @param .ptype If `NULL`, the default, the output type is the common type
 #'   of the elements of the result. Otherwise, supply a "prototype" giving
 #'   the desired type of output.
-#' @importFrom vctrs vec_c vec_size vec_ptype_common
 #' @export
 map_vec <- function(.x, .f, ..., .ptype = NULL) {
   out <- map(.x, .f, ...)
