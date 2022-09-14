@@ -28,6 +28,11 @@ probably want either \code{\link[=list_c]{list_c()}} or \code{\link[=list_flatte
 \examples{
 list_simplify(list(1, 2, 3))
 
-try(list_simplify(list(1, 2, "x")))
+# Only works when vectors are length one and have compatible types:
 try(list_simplify(list(1, 2, 1:3)))
+try(list_simplify(list(1, 2, "x")))
+
+# Unless you strict = FALSE, in which case you get the input back:
+list_simplify(list(1, 2, 1:3), strict = FALSE)
+list_simplify(list(1, 2, "x"), strict = FALSE)
 }

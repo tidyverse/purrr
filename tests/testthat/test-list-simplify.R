@@ -15,6 +15,7 @@ test_that("ptype is enforced", {
 
 test_that("strict simplification will error", {
   expect_snapshot(error = TRUE, {
+    list_simplify(list(mean))
     list_simplify(list(1, "a"))
     list_simplify(list(1, 1:2))
     list_simplify(list(1, 2), ptype = character())
@@ -29,10 +30,12 @@ test_that("simplification requires length-1 vectors with common type", {
 
 # argument checking -------------------------------------------------------
 
-test_that("validates inputs", {
-  expect_snapshot(list_simplify_internal(1:5), error = TRUE)
+test_that("list_simplify() validates inputs", {
+  expect_snapshot(list_simplify(1:5), error = TRUE)
+  expect_snapshot(list_simplify(list(), strict = NA), error = TRUE)
+})
+
+test_that("list_simplify_internal() validates inputs", {
   expect_snapshot(list_simplify_internal(list(), simplify = 1), error = TRUE)
   expect_snapshot(list_simplify_internal(list(), simplify = FALSE, ptype = integer()), error = TRUE)
-
-  expect_snapshot(list_simplify(list(), strict = NA), error = TRUE)
 })

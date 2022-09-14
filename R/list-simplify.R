@@ -16,8 +16,13 @@
 #' @examples
 #' list_simplify(list(1, 2, 3))
 #'
-#' try(list_simplify(list(1, 2, "x")))
+#' # Only works when vectors are length one and have compatible types:
 #' try(list_simplify(list(1, 2, 1:3)))
+#' try(list_simplify(list(1, 2, "x")))
+#'
+#' # Unless you strict = FALSE, in which case you get the input back:
+#' list_simplify(list(1, 2, 1:3), strict = FALSE)
+#' list_simplify(list(1, 2, "x"), strict = FALSE)
 list_simplify <- function(x, strict = TRUE, ptype = NULL) {
   if (!is_bool(strict)) {
     cli::cli_abort(
@@ -33,6 +38,7 @@ list_simplify <- function(x, strict = TRUE, ptype = NULL) {
 list_simplify_internal <- function(x,
                                    simplify = NA,
                                    ptype = NULL,
+                                   error_arg = caller_arg(x),
                                    error_call = caller_env()) {
   if (length(simplify) > 1 || !is.logical(simplify)) {
     cli::cli_abort(
@@ -57,6 +63,7 @@ list_simplify_internal <- function(x,
     x,
     strict = !is.na(simplify),
     ptype = ptype,
+    error_arg = error_arg,
     error_call = error_call
   )
 }
@@ -64,10 +71,15 @@ list_simplify_internal <- function(x,
 simplify_impl <- function(x,
                           strict = TRUE,
                           ptype = NULL,
+                          error_arg = caller_arg(x),
                           error_call = caller_env()) {
-  vec_check_list(x, call = error_call)
+  vec_check_list(x, arg = error_arg, call = error_call)
 
-  can_simplify <- every(x, vec_is, size = 1)
+  if (strict) {
+    list_check_all_vectors(x, arg = error_arg, call = error_call)
+  }
+
+  can_simplify <- list_all_vectors(x) && all(list_sizes(x) == 1L)
 
   if (can_simplify) {
     tryCatch(
@@ -83,8 +95,12 @@ simplify_impl <- function(x,
     )
   } else {
     if (strict) {
+      bad <- detect_index(x, function(x) vec_size(x) != 1)
       cli::cli_abort(
-        "All elements must be length-1 vectors.",
+        c(
+          "All elements must be length 1",
+          i = "`{error_arg}[[{bad}]]` is length {length(x[[bad]])}."
+        ),
         call = error_call
       )
     } else {
