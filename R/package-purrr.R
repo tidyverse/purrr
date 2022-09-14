@@ -10,11 +10,3 @@
 .onLoad <- function(lib, pkg) {
   .Call(purrr_init_library, ns_env(pkg))
 }
-
-.onAttach <- function(...) {
-  if (interactive() && getRversion() < "4.1") {
-    packageStartupMessage(
-      "purrr examples use features only available in R 4.1 and greater"
-    )
-  }
-}
