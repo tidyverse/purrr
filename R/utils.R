@@ -34,6 +34,44 @@ at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_
   }
 }
 
+inv_which <- function(x, sel, error_call = caller_env()) {
+  if (is.character(sel)) {
+    names <- names(x)
+    if (is.null(names)) {
+      cli::cli_abort(
+        "Character {.arg .at} must be used with a named {.arg x}.",
+        arg = ".at",
+        call = error_call
+      )
+    }
+    names %in% sel
+  } else if (is.numeric(sel)) {
+    if (any(sel < 0)) {
+      !seq_along(x) %in% abs(sel)
+    } else {
+      seq_along(x) %in% sel
+    }
+
+  } else {
+    cli::cli_abort(
+      "{.arg .at} must be a character or numeric vector, not {.obj_type_friendly {sel}}.",
+      arg = ".at",
+      call = error_call
+    )
+  }
+}
+
+# Internal version of map_lgl() that works with logical vectors
+probe <- function(.x, .p, ..., .error_call = caller_env()) {
+  if (is_logical(.p)) {
+    stopifnot(length(.p) == length(.x))
+    .p
+  } else {
+    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = .error_call)
+    map_lgl(.x, .p, ...)
+  }
+}
+
 paste_line <- function(...) {
   paste(chr(...), collapse = "\n")
 }
@@ -43,4 +81,13 @@ is_number <- function(x) {
 }
 is_quantity <- function(x) {
   typeof(x) %in% c("integer", "double") && length(x) == 1 && !is.na(x)
+}
+
+`list_slice2<-` <- function(x, i, value) {
+  if (is.null(value)) {
+    x[i] <- list(NULL)
+  } else {
+    x[[i]] <- value
+  }
+  x
 }
