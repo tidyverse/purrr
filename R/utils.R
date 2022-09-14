@@ -38,6 +38,7 @@ at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_
   } else {
     cli::cli_abort(
       "{.arg {error_arg}} must be a numeric vector, character vector, or function, not {.obj_type_friendly {at}}.",
+      arg = error_arg,
       call = error_call
     )
   }
