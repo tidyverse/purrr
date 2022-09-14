@@ -144,17 +144,7 @@ map_int <- function(.x, .f, ..., .progress = FALSE) {
 #' @export
 map_vec <- function(.x, .f, ..., .ptype = NULL) {
   out <- map(.x, .f, ...)
-
-  .ptype <- vec_ptype_common(!!!out, .ptype = .ptype)
-  bad_sizes <- which(list_sizes(out) != 1L)
-  if (length(bad_sizes) >= 1) {
-    i <- bad_sizes[[1L]]
-    stop_bad_element_vector(out[[i]], i, .ptype, 1L, what = "Result")
-  }
-
-  out <- vec_set_names(out, NULL)
-  out <- vec_unchop(out, ptype = .ptype)
-  vec_set_names(out, names(.x))
+  simplify_impl(out, ptype = .ptype)
 }
 
 

@@ -27,15 +27,15 @@
     Code
       map_vec(1:2, ~ rep(1, .x))
     Condition
-      Error in `stop_bad_element_vector()`:
-      ! could not find function "stop_bad_element_vector"
+      Error in `map_vec()`:
+      ! All elements must be length-1 vectors.
 
 # requires common type of output
 
     Code
       map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
     Condition
-      Error in `map_vec()`:
+      Error:
       ! Can't combine `..1` <factor<bf275>> and `..2` <double>.
 
 # can enforce .ptype
@@ -43,9 +43,6 @@
     Code
       map_vec(1:2, ~ factor("x"), .ptype = integer())
     Condition
-      Warning:
-      `vec_unchop()` was deprecated in vctrs 0.5.0.
-      Please use `list_unchop()` instead.
       Error:
       ! Can't convert <factor<bf275>> to <integer>.
 
