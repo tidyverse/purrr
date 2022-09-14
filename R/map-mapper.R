@@ -139,11 +139,3 @@ as_predicate <- function(.fn,
     out
   }
 }
-
-as_predicate_friendly_type_of <- function(x) {
-  if (is_na(x)) {
-    "a missing value"
-  } else {
-    friendly_type_of(x, length = TRUE)
-  }
-}
