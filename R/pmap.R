@@ -10,8 +10,18 @@
 #'   arguments that `.f` will be called with. Arguments will be supply by
 #'   position if unnamed, and by name if named.
 #'
+#'   Vectors of length 1 will be recycled to any length; all other elements
+#'   must be have the same length.
+#'
 #'   A data frame is an important special case of `.l`. It will cause `.f`
 #'   to be called once for each row.
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function.
+#'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
+#'     `function(x, y, z) x + y / z`
+#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. This syntax is not recommended as
+#'     you can only refer to arguments by position.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants
@@ -64,102 +74,60 @@
 #' pmin(df$x, df$y)
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
-#'
-#' # If you want to bind the results of your function rowwise, use:
-#' # map2_dfr() or pmap_dfr()
-#' ex_fun <- function(arg1, arg2){
-#' col <- arg1 + arg2
-#' x <- as.data.frame(col)
-#' }
-#' arg1 <- 1:4
-#' arg2 <- 10:13
-#' map2_dfr(arg1, arg2, ex_fun)
-#' # If instead you want to bind by columns, use map2_dfc() or pmap_dfc()
-#' map2_dfc(arg1, arg2, ex_fun)
-pmap <- function(.l, .f, ...) {
+pmap <- function(.l, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
+  .progress <- .progress %||% FALSE
 
-  .Call(pmap_impl, environment(), ".l", ".f", "list")
+  .Call(pmap_impl, environment(), ".l", ".f", "list", .progress)
 }
 
 #' @export
 #' @rdname pmap
-pmap_lgl <- function(.l, .f, ...) {
+pmap_lgl <- function(.l, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
+  .progress <- .progress %||% FALSE
 
-  .Call(pmap_impl, environment(), ".l", ".f", "logical")
+  .Call(pmap_impl, environment(), ".l", ".f", "logical", .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_int <- function(.l, .f, ...) {
+pmap_int <- function(.l, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
+  .progress <- .progress %||% FALSE
 
-  .Call(pmap_impl, environment(), ".l", ".f", "integer")
+  .Call(pmap_impl, environment(), ".l", ".f", "integer", .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_dbl <- function(.l, .f, ...) {
+pmap_dbl <- function(.l, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
+  .progress <- .progress %||% FALSE
 
-  .Call(pmap_impl, environment(), ".l", ".f", "double")
+  .Call(pmap_impl, environment(), ".l", ".f", "double", .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_chr <- function(.l, .f, ...) {
+pmap_chr <- function(.l, .f, ..., .progress = NULL) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
+  .progress <- .progress %||% FALSE
 
-  .Call(pmap_impl, environment(), ".l", ".f", "character")
+  .Call(pmap_impl, environment(), ".l", ".f", "character", .progress)
 }
-#' @export
-#' @rdname pmap
-pmap_raw <- function(.l, .f, ...) {
-  .f <- as_mapper(.f, ...)
-  if (is.data.frame(.l)) {
-    .l <- as.list(.l)
-  }
-
-  .Call(pmap_impl, environment(), ".l", ".f", "raw")
-}
-
-#' @rdname pmap
-#' @export
-pmap_dfr <- function(.l, .f, ..., .id = NULL) {
-  check_installed("dplyr", "for `pmap_dfr()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- pmap(.l, .f, ...)
-  dplyr::bind_rows(res, .id = .id)
-}
-
-#' @rdname pmap
-#' @export
-pmap_dfc <- function(.l, .f, ...) {
-  check_installed("dplyr", "for `pmap_dfc()`.")
-
-  .f <- as_mapper(.f, ...)
-  res <- pmap(.l, .f, ...)
-  dplyr::bind_cols(res)
-}
-
-#' @rdname pmap
-#' @export
-#' @usage NULL
-pmap_df <- pmap_dfr
 
 #' @export
 #' @rdname pmap

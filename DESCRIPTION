@@ -1,6 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.3.4.9000
+Version: 0.9000.0.9000
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
     person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
@@ -12,14 +12,14 @@ URL: https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
     R (>= 3.2.3)
-Imports: 
-    lifecycle (>= 1.0.1.9000),
+Imports:
+    cli (>= 3.4.0),
+    lifecycle (>= 1.0.2),
     magrittr (>= 1.5.0),
     rlang (>= 0.4.10),
-    vctrs (>= 0.3.2)
+    vctrs (>= 0.4.1.9000)
 Suggests: 
     covr,
-    crayon,
     dplyr (>= 0.7.8),
     knitr,
     rmarkdown,
@@ -27,14 +27,14 @@ Suggests:
     tibble,
     tidyselect
 LinkingTo:
+    cli,
     vctrs
 VignetteBuilder: 
     knitr
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 Remotes:  
-    r-lib/lifecycle
+    r-lib/vctrs

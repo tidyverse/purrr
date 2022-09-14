@@ -19,7 +19,8 @@
 #' @inheritParams map_if
 #' @inheritParams map_at
 #' @inheritParams map
-#' @return A list. There are no guarantees about the length.
+#' @return A list or data frame, matching `.x`. There are no guarantees about
+#'   the length.
 #' @family map variants
 #' @export
 #' @examples
@@ -43,7 +44,7 @@
 #' # Or only where a condition is satisfied
 #' x %>% lmap_if(is.character, maybe_rep) %>% str()
 lmap <- function(.x, .f, ...) {
-  lmap_at(.x, seq_along(.x), .f, ...)
+  lmap_helper(.x, rep(TRUE, length(.x)), .f, ...)
 }
 
 #' @rdname lmap
@@ -56,18 +57,16 @@ lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @rdname lmap
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
 
   lmap_helper(.x, sel, .f, ...)
 }
 
-lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
-  if (is_formula(.f)) {
-    .f <- rlang::as_function(.f)
-  }
-  if (is_formula(.else)) {
-    .else <- rlang::as_function(.else)
+lmap_helper <- function(.x, .ind, .f, ..., .else = NULL, .error_call = caller_env()) {
+  .f <- rlang::as_function(.f, call = .error_call)
+  if (!is.null(.else)) {
+    .else <- rlang::as_function(.else, call = .error_call)
   }
 
   out <- vector("list", length(.x))
@@ -81,10 +80,17 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL) {
     }
 
     if (!is.list(res)) {
-      stop_bad_type(res, "list", what = paste0("Element ", i))
+      cli::cli_abort(
+        "{.code .f(.x[[{i}]])} must return a list, not {.obj_type_friendly {res}}.",
+        call = .error_call
+      )
     }
     out[[i]] <- res
   }
 
-  flatten(out)
+  if (is.data.frame(.x)) {
+    list_cbind(out)
+  } else {
+    list_flatten(out)
+  }
 }

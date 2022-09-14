@@ -1,23 +1,17 @@
 test_that("input must be a list of vectors", {
-  expect_bad_type_error(pmap(environment(), identity), "`.l` must be a list, not an environment")
-  expect_bad_type_error(pmap(list(environment()), identity), "Element 1 of `.l` must be a vector, not an environment")
+  expect_snapshot(pmap(environment(), identity), error = TRUE)
+  expect_snapshot(pmap(list(environment()), identity), error = TRUE)
 })
 
-test_that("elements must be same length", {
-  expect_bad_element_length_error(pmap(list(1:2, 1:3), identity), "Element 1 of `.l` must have length 1 or 3, not 2")
-})
+test_that("inputs are recycled", {
+  expect_equal(pmap(list(1, 1), c), list(c(1, 1)))
+  expect_equal(pmap(list(1:2, 1), c), list(c(1, 1), c(2, 1)))
 
-test_that("handles any length 0 input", {
-  expect_equal(pmap(list(list(), list(), list()), ~ 1), list())
-  expect_equal(pmap(list(NULL, NULL, NULL), ~ 1), list())
+  expect_equal(pmap(list(list(), 1), ~ 1), list())
+  expect_equal(pmap(list(NULL, 1), ~ 1), list())
 
-  expect_equal(pmap(list(list(), list(), 1:10), ~ 1), list())
-  expect_equal(pmap(list(NULL, NULL, 1:10), ~ 1), list())
-})
-
-test_that("length 1 elemetns are recycled", {
-  out <- pmap(list(1:2, 1), c)
-  expect_equal(out, list(c(1, 1), c(2, 1)))
+  expect_snapshot(pmap(list(1:2, 1:3), identity), error = TRUE)
+  expect_snapshot(pmap(list(1:2, integer()), identity), error = TRUE)
 })
 
 test_that(".f called with named arguments", {
@@ -28,6 +22,13 @@ test_that(".f called with named arguments", {
 test_that("names are preserved", {
   out <- pmap(list(c(x = 1, y = 2), 3:4), list)
   expect_equal(names(out), c("x", "y"))
+})
+
+test_that("pmap() recycles names (#779)", {
+  expect_identical(
+    pmap(list(c(a = 1), 1:2), ~ .x),
+    list(a = 1, a = 1)
+  )
 })
 
 test_that("... are passed on", {
@@ -44,17 +45,6 @@ test_that("outputs are suffixes have correct type", {
   expect_bare(pmap_int(list(x), length), "integer")
   expect_bare(pmap_dbl(list(x), mean), "double")
   expect_bare(pmap_chr(list(x), paste), "character")
-  expect_bare(pmap_raw(list(x), as.raw), "raw")
-})
-
-test_that("outputs are suffixes have correct type for data frames", {
-  skip_if_not_installed("dplyr")
-  local_name_repair_quiet()
-
-  local_options(rlang_message_verbosity = "quiet")
-  x <- 1:3
-  expect_s3_class(pmap_dfr(list(x), as.data.frame), "data.frame")
-  expect_s3_class(pmap_dfc(list(x), as.data.frame), "data.frame")
 })
 
 test_that("pmap on data frames performs rowwise operations", {
@@ -64,11 +54,10 @@ test_that("pmap on data frames performs rowwise operations", {
   expect_bare(pmap_int(mtcars2, function(mpg, cyl) as.integer(cyl)), "integer")
   expect_bare(pmap_dbl(mtcars2, function(mpg, cyl) mpg + cyl), "double")
   expect_bare(pmap_chr(mtcars2, paste), "character")
-  expect_bare(pmap_raw(mtcars2, function(mpg, cyl) as.raw(cyl)), "raw")
 })
 
 test_that("pmap works with empty lists", {
-  expect_identical(pmap(list(), identity), list())
+  expect_identical(pmap(list(), ~ 1), list())
 })
 
 test_that("preserves S3 class of input vectors (#358)", {
@@ -94,5 +83,4 @@ test_that("pmap() with empty input copies names", {
   expect_identical(pmap_int(named_list, identity), named(int()))
   expect_identical(pmap_dbl(named_list, identity), named(dbl()))
   expect_identical(pmap_chr(named_list, identity), named(chr()))
-  expect_identical(pmap_raw(named_list, identity), named(raw()))
 })

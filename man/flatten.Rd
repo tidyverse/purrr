@@ -6,7 +6,6 @@
 \alias{flatten_int}
 \alias{flatten_dbl}
 \alias{flatten_chr}
-\alias{flatten_raw}
 \alias{flatten_dfr}
 \alias{flatten_dfc}
 \alias{flatten_df}
@@ -22,8 +21,6 @@ flatten_dbl(.x)
 
 flatten_chr(.x)
 
-flatten_raw(.x)
-
 flatten_dfr(.x, .id = NULL)
 
 flatten_dfc(.x)
@@ -32,13 +29,6 @@ flatten_dfc(.x)
 \item{.x}{A list to flatten. The contents of the list can be anything for
 \code{flatten()} (as a list is returned), but the contents must match the
 type for the other functions.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
 }
 \value{
 \code{flatten()} returns a list, \code{flatten_lgl()} a logical
@@ -50,18 +40,31 @@ row-binding and column-binding respectively. They require dplyr to
 be installed.
 }
 \description{
-These functions remove a level hierarchy from a list. They are similar to
-\code{\link[=unlist]{unlist()}}, but they only ever remove a single layer of hierarchy and they
-are type-stable, so you always know what the type of the output is.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
+These functions were superseded in purrr 1.0.0 because their behavior was
+inconsistent.
+\itemize{
+\item \code{flatten()} has been superseded by \code{\link[=list_flatten]{list_flatten()}}.
+\item \code{flatten_lgl()}, \code{flatten_int()}, \code{flatten_dbl()}, and \code{flatten_chr()}
+have been superseded by \code{\link[=list_c]{list_c()}}.
+\item \code{flatten_dfr()} and \code{flatten_dfc()} have been superseded by \code{\link[=list_rbind]{list_rbind()}}
+and \code{\link[=list_cbind]{list_cbind()}} respectively.
+}
 }
 \examples{
-x <- rerun(2, sample(4))
+x <- map(1:3, ~ sample(4))
 x
-x \%>\% flatten()
-x \%>\% flatten_int()
 
-# You can use flatten in conjunction with map
-x \%>\% map(1L) \%>\% flatten_int()
-# But it's more efficient to use the typed map instead.
-x \%>\% map_int(1L)
+# was
+x \%>\% flatten_int() \%>\% str()
+# now
+x \%>\% list_c() \%>\% str()
+
+x <- list(list(1, 2), list(3, 4))
+# was
+x \%>\% flatten() \%>\% str()
+# now
+x \%>\% list_flatten() \%>\% str()
 }
+\keyword{internal}

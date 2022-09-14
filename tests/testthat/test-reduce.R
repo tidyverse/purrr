@@ -1,5 +1,6 @@
 test_that("empty input returns init or error", {
-  expect_error(reduce(list()), "no `.init` supplied")
+  expect_snapshot(reduce(list()), error = TRUE)
+
   expect_equal(reduce(list(), `+`, .init = 0), 0)
 })
 
@@ -113,21 +114,11 @@ test_that("accumulate() uses vctrs to simplify results", {
 test_that("accumulate() does not fail when input can't be simplified", {
   expect_identical(accumulate(list(1L, 2:3), ~ .y), list(1L, 2:3))
   expect_identical(accumulate(list(1, "a"), ~ .y), list(1, "a"))
-  expect_identical(accumulate(1:3, ~ .y), 1:3)
-  expect_identical(accumulate(list(identity), ~ .y), list(identity))
-  expect_identical(accumulate(mtcars, ~ .y), as.list(mtcars))
 })
 
-test_that("accumulate() does not simplify data frame rowwise", {
-  out <- accumulate(
-    1L,
-    ~ data.frame(new = .y),
-    .init = data.frame(new = 0L)
-  )
-  exp <- list(data.frame(new = 0L), data.frame(new = 1L))
-  expect_identical(out, exp)
+test_that("accumulate() does fail when simpification is required", {
+  expect_snapshot(accumulate(list(1, "a"), ~ .y, .simplify = TRUE), error = TRUE)
 })
-
 
 # reduce2 -----------------------------------------------------------------
 
@@ -137,6 +128,14 @@ test_that("basic application works", {
   x <- c("a", "b", "c")
   expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
+})
+
+test_that("requires equal length vectors", {
+  expect_snapshot(reduce2(1:3, 1, `+`), error = TRUE)
+})
+
+test_that("requires init if `.x` is empty", {
+  expect_snapshot(reduce2(list()), error = TRUE)
 })
 
 test_that("reduce returns original input if it was length one", {
@@ -162,8 +161,8 @@ test_that("basic accumulate2() works", {
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
 
   x <- c("a", "b", "c")
-  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b", "a-b.c"))
-  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b", "x.a-b.c"))
+  expect_equal(accumulate2(x, c("-", "."), paste2), c("a", "a-b", "a-b.c"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), c("x", "x.a", "x.a-b", "x.a-b.c"))
 })
 
 test_that("can terminate accumulate2() early", {
@@ -177,8 +176,8 @@ test_that("can terminate accumulate2() early", {
   }
 
   x <- c("a", "b", "c")
-  expect_equal(accumulate2(x, c("-", "."), paste2), list("a", "a-b"))
-  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), list("x", "x.a", "x.a-b"))
+  expect_equal(accumulate2(x, c("-", "."), paste2), c("a", "a-b"))
+  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), c("x", "x.a", "x.a-b"))
 })
 
 test_that("accumulate2() forces arguments (#643)", {
@@ -223,7 +222,6 @@ test_that("reduce2_right still works", {
   x <- list(c(0, 1), c(2, 3), c(4, 5))
   y <- list(c(6, 7), c(8, 9))
   expect_equal(reduce2_right(x, y, paste), c("4 2 8 0 6", "5 3 9 1 7"))
-  expect_error(reduce2_right(y, x, paste))
 })
 
 test_that("accumulate_right still works", {

@@ -1,10 +1,34 @@
+# fails on non-vectors
+
+    Code
+      map(environment(), identity)
+    Condition
+      Error in `map()`:
+      ! `.x` must be a vector, not an environment.
+
+---
+
+    Code
+      map(quote(a), identity)
+    Condition
+      Error in `map()`:
+      ! `.x` must be a vector, not a symbol.
+
+# error message follows style guide when result is not length 1
+
+    Code
+      purrr::map_int(x, "a")
+    Condition
+      Error in `purrr::map_int()`:
+      ! Result 2 must have length 1, not 2.
+
 # requires output be length 1
 
     Code
       map_vec(1:2, ~ rep(1, .x))
     Condition
-      Error in `stop_bad_type()`:
-      ! Result 2 must be a single double, not a double vector of length 2
+      Error in `stop_bad_element_vector()`:
+      ! could not find function "stop_bad_element_vector"
 
 # requires common type of output
 
@@ -19,6 +43,9 @@
     Code
       map_vec(1:2, ~ factor("x"), .ptype = integer())
     Condition
+      Warning:
+      `vec_unchop()` was deprecated in vctrs 0.5.0.
+      Please use `list_unchop()` instead.
       Error:
       ! Can't convert <factor<bf275>> to <integer>.
 

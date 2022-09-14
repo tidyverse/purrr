@@ -18,7 +18,10 @@ lmap_at(.x, .at, .f, ...)
 \item{.f}{A function that takes a length-1 list and returns a list (of any
 length.)}
 
-\item{...}{Additional arguments passed on to the mapped function.}
+\item{...}{Additional arguments passed on to the mapped function.
+
+Note that the arguments that differ in each call come before \code{.f},
+and the arguments that are the same come after \code{.f}.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -30,14 +33,17 @@ inner lists. Only those elements where \code{.p} evaluates to
 \item{.else}{A function applied to elements of \code{.x} for which \code{.p}
 returns \code{FALSE}.}
 
-\item{.at}{A character vector of names, positive numeric vector of
-positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to \code{.at} will be modified.
-If the \code{tidyselect} package is installed, you can use \code{vars()} and
-the \code{tidyselect} helpers to select elements.}
+\item{.at}{A logical, integer, or character vector giving the elements
+to select. Alternatively, a function that takes a vector of names,
+and returns a logical, integer, or character vector of elements to select.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
+installed, you can use \code{vars()} and tidyselect helpers to select
+elements.}
 }
 \value{
-A list. There are no guarantees about the length.
+A list or data frame, matching \code{.x}. There are no guarantees about
+the length.
 }
 \description{
 \code{lmap()}, \code{lmap_at()} and \code{lmap_if()} are similar to \code{map()}, \code{map_at()} and
@@ -77,7 +83,6 @@ x \%>\% lmap_if(is.character, maybe_rep) \%>\% str()
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},

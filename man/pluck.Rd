@@ -2,21 +2,22 @@
 % Please edit documentation in R/pluck.R
 \name{pluck}
 \alias{pluck}
-\alias{chuck}
 \alias{pluck<-}
-\title{Pluck or chuck a single element from a vector or environment}
+\alias{pluck_exists}
+\title{Safely get or set an element deep within a nested data structure}
 \usage{
 pluck(.x, ..., .default = NULL)
 
-chuck(.x, ...)
-
 pluck(.x, ...) <- value
+
+pluck_exists(.x, ...)
 }
 \arguments{
 \item{.x, x}{A vector or environment}
 
 \item{...}{A list of accessors for indexing into the object. Can be
-an integer position, a string name, or an accessor function
+an positive integer, a negative integer (to index from the right),
+a string (to index into names), or an accessor function
 (except for the assignment variants which only support names and
 positions). If the object being indexed is an S4 object,
 accessing it by name will return the corresponding slot.
@@ -27,13 +28,20 @@ your accessors are stored in a list, you can splice that in with
 
 \item{.default}{Value to use if target is \code{NULL} or absent.}
 
-\item{value}{A value to replace in \code{.x} at the pluck location.}
+\item{value}{A value to replace in \code{.x} at the pluck location.
+Use \code{zap()} to instead remove the element.}
 }
 \description{
-\code{pluck()} and \code{chuck()} implement a generalised form of \code{[[} that
-allow you to index deeply and flexibly into data structures.
-\code{pluck()} consistently returns \code{NULL} when an element does not
-exist while \code{chuck()} always throws (or chucks) an error.
+\code{pluck()} implements a generalised form of \code{[[} that allow you to index
+deeply and flexibly into data structures. It always succeeds, returning
+\code{.default} if the index you are trying to access does not exist or is \code{NULL}.
+
+\verb{pluck<-()} is the assignment equivalent, allowing you to modify an object
+deped within a nested data structure.
+
+\code{pluck_exists()} tells you whether or not an object exists using the
+same rules as pluck (i.e. a \code{NULL} element is equivalent to an absent
+element).
 }
 \details{
 \itemize{
@@ -55,22 +63,24 @@ obj1 <- list("a", list(1, elt = "foo"))
 obj2 <- list("b", list(2, elt = "bar"))
 x <- list(obj1, obj2)
 
-
 # pluck() provides a way of retrieving objects from such data
 # structures using a combination of numeric positions, vector or
 # list names, and accessor functions.
 
 # Numeric positions index into the list by position, just like `[[`:
 pluck(x, 1)
-x[[1]]
+# same as x[[1]]
+
+# Index from the back
+pluck(x, -1)
+# same as x[[2]]
 
 pluck(x, 1, 2)
-x[[1]][[2]]
+# same as x[[1]][[2]]
 
 # Supply names to index into named vectors:
 pluck(x, 1, 2, "elt")
-x[[1]][[2]][["elt"]]
-
+# same as x[[1]][[2]][["elt"]]
 
 # By default, pluck() consistently returns `NULL` when an element
 # does not exist:
@@ -80,43 +90,13 @@ try(x[[10]])
 # You can also supply a default value for non-existing elements:
 pluck(x, 10, .default = NA)
 
-# If you prefer to consistently fail for non-existing elements, use
-# the opinionated variant chuck():
-chuck(x, 1)
-try(chuck(x, 10))
-try(chuck(x, 1, 10))
-
-
 # The map() functions use pluck() by default to retrieve multiple
 # values from a list:
-map(x, 2)
-
-# Pass multiple indexes with a list:
-map(x, list(2, "elt"))
-
-# This is equivalent to:
-map(x, pluck, 2, "elt")
-
-# You can also supply a default:
-map(x, list(2, "elt", 10), .default = "superb default")
-
-# Or use the strict variant:
-try(map(x, chuck, 2, "elt", 10))
-
-
-# You can also assign a value in a pluck location with pluck<-:
-pluck(x, 2, 2, "elt") <- "quuux"
-x
-
-# This is a shortcut for the prefix function assign_in():
-y <- assign_in(x, list(2, 2, "elt"), value = "QUUUX")
-y
-
+map_chr(x, 1)
+map_int(x, c(2, 1))
 
 # pluck() also supports accessor functions:
 my_element <- function(x) x[[2]]$elt
-
-# The accessor can then be passed to pluck:
 pluck(x, 1, my_element)
 pluck(x, 2, my_element)
 
@@ -125,7 +105,6 @@ pluck(x, 2, my_element)
 # right-to-left and from left-to-right in different parts of the
 # expression:
 my_element(x[[1]])
-
 
 # If you have a list of accessors, you can splice those in with `!!!`:
 idx <- list(1, my_element)

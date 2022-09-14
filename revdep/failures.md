@@ -204,3 +204,259 @@ Status: 1 ERROR
 
 
 ```
+# kerastuneR
+
+<details>
+
+* Version: 0.1.0.5
+* GitHub: https://github.com/EagerAI/kerastuneR
+* Source code: https://github.com/cran/kerastuneR
+* Date/Publication: 2022-03-25 08:50:02 UTC
+* Number of recursive dependencies: 112
+
+Run `cloud_details(, "kerastuneR")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘kerastuneR’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/kerastuneR/new/kerastuneR.Rcheck/00install.out’ for details.
+    ```
+
+## Newly fixed
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘keras’
+      All declared Imports should be used.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘kerastuneR’ ...
+** package ‘kerastuneR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘kerastuneR’
+* removing ‘/tmp/workdir/kerastuneR/new/kerastuneR.Rcheck/kerastuneR’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘kerastuneR’ ...
+** package ‘kerastuneR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (kerastuneR)
+
+
+```
+# rATTAINS
+
+<details>
+
+* Version: 0.1.3
+* GitHub: https://github.com/mps9506/rATTAINS
+* Source code: https://github.com/cran/rATTAINS
+* Date/Publication: 2021-11-03 14:10:02 UTC
+* Number of recursive dependencies: 80
+
+Run `cloud_details(, "rATTAINS")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘rATTAINS’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/rATTAINS/new/rATTAINS.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘rATTAINS’ ...
+** package ‘rATTAINS’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘rATTAINS’
+* removing ‘/tmp/workdir/rATTAINS/new/rATTAINS.Rcheck/rATTAINS’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘rATTAINS’ ...
+** package ‘rATTAINS’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (rATTAINS)
+
+
+```
+# stoRy
+
+<details>
+
+* Version: 0.2.0
+* GitHub: https://github.com/theme-ontology/stoRy
+* Source code: https://github.com/cran/stoRy
+* Date/Publication: 2021-11-08 05:10:02 UTC
+* Number of recursive dependencies: 76
+
+Run `cloud_details(, "stoRy")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘stoRy’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘stoRy’ ...
+** package ‘stoRy’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+Warning: namespace ‘stoRy’ is not available and has been replaced
+by .GlobalEnv when processing object ‘background_collection’
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘stoRy’
+* removing ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/stoRy’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘stoRy’ ...
+** package ‘stoRy’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (stoRy)
+
+
+```
+# tidyjson
+
+<details>
+
+* Version: 0.3.1
+* GitHub: https://github.com/colearendt/tidyjson
+* Source code: https://github.com/cran/tidyjson
+* Date/Publication: 2020-05-31 21:30:03 UTC
+* Number of recursive dependencies: 96
+
+Run `cloud_details(, "tidyjson")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘tidyjson’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘tidyjson’ ...
+** package ‘tidyjson’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘tidyjson’
+* removing ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/tidyjson’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘tidyjson’ ...
+** package ‘tidyjson’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (tidyjson)
+
+
+```

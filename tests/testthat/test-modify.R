@@ -1,6 +1,11 @@
 test_that("modify returns same type as input", {
   df1 <- data.frame(x = 1:3, y = 4:6)
-  expect_equal(modify(df1, length), data.frame(x = rep(3, 3), y = rep(3, 3)))
+  df2 <- data.frame(x = 2:4, y = 5:7)
+  expect_equal(modify(df1, ~ .x + 1), df2)
+
+  x1 <- vctrs::list_of(c(1, 2), c(3, 6, 9))
+  x2 <- vctrs::list_of(c(2, 3), c(4, 7, 10))
+  expect_equal(modify(x1, ~ .x + 1), x2)
 })
 
 test_that("modify_if/modify_at return same type as input", {
@@ -15,13 +20,7 @@ test_that("modify_if/modify_at return same type as input", {
 })
 
 test_that("modify_at requires a named object", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(unname(df1), "x", toupper))
-})
-
-test_that("modify_at operates on character and numeric indexing", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  expect_error(modify_at(df1, TRUE, toupper))
+  expect_snapshot(modify_at(list(), "x", toupper), error = TRUE)
 })
 
 test_that("negative .at omits locations", {
@@ -80,14 +79,19 @@ test_that("modify2() recycles arguments", {
 })
 
 test_that("modify_if() requires predicate functions", {
-  expect_error(modify_if(list(1, 2), ~ NA, ~ "foo"), ", not a missing value")
-  expect_error(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), ", not a logical vector of length 2")
+  expect_snapshot(modify_if(list(1, 2), ~ NA, ~ "foo"), error = TRUE)
+  expect_snapshot(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), error = TRUE)
 })
 
 test_that("`.else` modifies false elements", {
   exp <- modify_if(iris, negate(is.factor), as.integer)
   exp <- modify_if(exp, is.factor, as.character)
   expect_identical(modify_if(iris, is.factor, as.character, .else = as.integer), exp)
+
+  expect_equal(modify_if(c(TRUE, FALSE), ~ .x, ~ FALSE, .else = ~ TRUE), c(FALSE, TRUE))
+  expect_equal(modify_if(1:2, ~ .x == 1, ~ 3L, .else = ~ 4L), c(3, 4))
+  expect_equal(modify_if(c(1, 10), ~ .x < 5, ~ .x * 10, .else = ~ .x / 2), c(10, 5))
+  expect_equal(modify_if(c("a", "b"), ~ .x == "a", ~ "A", .else = ~ "B"), c("A", "B"))
 })
 
 test_that("modify family preserves NULLs", {
@@ -105,61 +109,13 @@ test_that("modify family preserves NULLs", {
   )
 })
 
-
-# modify_depth ------------------------------------------------------------
-
-test_that("modify_depth modifies values at specified depth", {
-  x1 <- list(list(list(1:3, 4:6)))
-
-  expect_equal(modify_depth(x1, 0, length), list(1))
-  expect_equal(modify_depth(x1, 1, length), list(1))
-  expect_equal(modify_depth(x1, 2, length), list(list(2)))
-  expect_equal(modify_depth(x1, 3, length), list(list(list(3, 3))))
-  expect_equal(modify_depth(x1, -1, length), list(list(list(3, 3))))
-  expect_equal(modify_depth(x1, 4, length), list(list(list(c(1, 1, 1), c(1, 1, 1)))))
-  expect_error(modify_depth(x1, 5, length), "List not deep enough")
-  expect_error(modify_depth(x1, 6, length), "List not deep enough")
-  expect_error(modify_depth(x1, -5, length), "Invalid depth")
-})
-
-test_that(".ragged = TRUE operates on leaves", {
-  x1 <- list(
-    list(1),
-    list(list(2))
-  )
-  x2 <- list(
-    list(2),
-    list(list(3))
-  )
-
-  expect_equal(modify_depth(x1, 3, ~ . + 1, .ragged = TRUE), x2)
-  expect_equal(modify_depth(x1, -1, ~ . + 1, .ragged = TRUE), x2)
-  # .ragged should be TRUE is .depth < 0
-  expect_equal(modify_depth(x1, -1, ~ . + 1), x2)
-})
-
-test_that("vectorised operations on the recursive and atomic levels yield same results", {
-  x <- list(list(list(1:3, 4:6)))
-  exp <- list(list(list(11:13, 14:16)))
-  expect_identical(modify_depth(x, 3, `+`, 10L), exp)
-  expect_identical(modify_depth(x, 4, `+`, 10L), exp)
-  expect_error(modify_depth(x, 5, `+`, 10L), "not deep enough")
-})
-
 test_that("modify_at() can use tidyselect", {
   skip_if_not_installed("tidyselect")
+  local_options(lifecycle_verbosity = "quiet")
+
   one <-  modify_at(mtcars, vars(cyl, am), as.character)
   expect_bare(one$cyl, "character")
   expect_bare(one$am, "character")
   two <- modify_at(mtcars, vars(tidyselect::contains("cyl")), as.character)
   expect_bare(two$cyl, "character")
-})
-
-test_that("modify_depth() treats NULLs correctly", {
-  ll <- list(a = NULL, b = list(b1 = NULL, b2 = "hello"))
-  expect_equal(modify_depth(ll, .depth = 2, identity, .ragged = TRUE), ll)
-  expect_equal(
-    modify_depth(ll, .depth = 2, is.character, .ragged = TRUE),
-    list(a = NULL, b = list(b1 = FALSE, b2 = TRUE))
-  )
 })

@@ -1,26 +1,21 @@
 #' Modify a list
 #'
 #' @description
+#' * `list_update()` modifies the elements of a list by name or position.
+#' * `list_modify()` modifies the elements of a list recursively.
+#' * `list_modify()` merges the elements of a list recursively.
 #'
-#' `list_modify()` and `list_merge()` recursively combine two lists, matching
-#' elements either by name or position. If a sub-element is present in
-#' both lists, `list_modify()` takes the value from `y`, and `list_merge()`
-#' concatenates the values together.
-#'
-#' `update_list()` handles formulas and quosures that can refer to
-#' values existing within the input list. Note that this function
-#' might be deprecated in the future in favour of a `dplyr::mutate()`
-#' method for lists.
+#' `list_modify()` is inspired by [utils::modifyList()].
 #'
 #' @param .x List to modify.
 #' @param ... New values of a list. Use `zap()` to remove values.
 #'
 #'   These values should be either all named or all unnamed. When
 #'   inputs are all named, they are matched to `.x` by name. When they
-#'   are all unnamed, they are matched positionally.
+#'   are all unnamed, they are matched by position.
 #'
-#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if
-#'   your functions are stored in a list, you can splice that in with
+#'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if your
+#'   replacement values are stored in a list, you can splice that in with
 #'   `!!!`.
 #' @export
 #' @examples
@@ -28,93 +23,92 @@
 #' str(x)
 #'
 #' # Update values
-#' str(list_modify(x, a = 1))
+#' str(list_update(x, a = 1))
 #' # Replace values
-#' str(list_modify(x, z = 5))
+#' str(list_update(x, z = 5))
+#' str(list_update(x, z = NULL))
+#'
+#' str(list_update(x, z = list(a = 1:5)))
+#' # replace recursively, leaving the other elements of z alone
 #' str(list_modify(x, z = list(a = 1:5)))
 #'
 #' # Remove values
-#' str(list_modify(x, z = zap()))
+#' str(list_update(x, z = zap()))
 #'
-#' # Combine values
+#' # Combine values with list_merge()
 #' str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
-#'
 #'
 #' # All these functions support dynamic dots features. Use !!! to splice
 #' # a list of arguments:
 #' l <- list(new = 1, y = zap(), z = 5)
-#' str(list_modify(x, !!!l))
-list_modify <- function(.x, ...) {
-  list_recurse(.x, list2(...), function(x, y) y)
+#' str(list_update(x, !!!l))
+list_update <- function(.x, ...) {
+  vec_check_list(.x)
+  y <- dots_list(..., .named = NULL, .homonyms = "error")
+  list_recurse(.x, y, function(x, y) y, recurse = FALSE)
 }
+
 #' @export
-#' @rdname list_modify
-list_merge <- function(.x, ...) {
-  list_recurse(.x, list2(...), c)
+#' @rdname list_update
+list_modify <- function(.x, ...) {
+  vec_check_list(.x)
+  y <- dots_list(..., .named = NULL, .homonyms = "error")
+  list_recurse(.x, y, function(x, y) y)
 }
 
-list_recurse <- function(x, y, base_case) {
-  stopifnot(is.list(x), is.list(y))
+#' @export
+#' @rdname list_update
+list_merge <- function(.x, ...) {
+  vec_check_list(.x)
+  y <- dots_list(..., .named = NULL, .homonyms = "error")
+  list_recurse(.x, y, c)
+}
 
-  if (is_empty(x)) {
-    return(y)
+list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()) {
+  if (!is_null(names(y)) && !is_named(y)) {
+    cli::cli_abort(
+      "`...` arguments must be either all named or all unnamed.",
+      call = error_call
+    )
   }
-  if (is_empty(y)) {
-    return(x)
-  }
 
-  y_names <- names(y)
+  idx <- names(y) %||% rev(seq_along(y))
 
-  if (!is_null(y_names) && !is_names(y_names)) {
-    abort("`...` arguments must be either all named, or all unnamed")
-  }
+  for (i in idx) {
+    x_i <- pluck(x, i)
+    y_i <- pluck(y, i)
 
-  # N.B. is_list(zap()) is TRUE.
-  if (is_null(y_names)) {
-    for (i in rev(seq_along(y))) {
-      if (i <= length(x) && is_list(x[[i]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
-        x[[i]] <- list_recurse(x[[i]], y[[i]], base_case)
-      } else {
-        x[[i]] <- maybe_zap(base_case(x[[i]], y[[i]]))
-      }
-    }
-  } else {
-    for (i in seq_along(y_names)) {
-      nm <- y_names[[i]]
-      if (has_name(x, nm) && is_list(x[[nm]]) && is_list(y[[i]]) && !is_zap(y[[i]])) {
-        x[[nm]] <- list_recurse(x[[nm]], y[[i]], base_case)
-      } else {
-        x[[nm]] <- maybe_zap(base_case(x[[nm]], y[[i]]))
-      }
+    if (is_zap(y_i)) {
+      x[[i]] <- NULL
+    } else if (recurse && vec_is_list(x_i) && vec_is_list(y_i)) {
+      list_slice2(x, i) <- list_recurse(x_i, y_i, base_f)
+    } else {
+      list_slice2(x, i) <- base_f(x_i, y_i)
     }
   }
 
   x
 }
 
-maybe_zap <- function(x) {
-  if (is_zap(x)) {
-    return(NULL)
-  }
-  if (!is_null(x)) {
-    return(x)
-  }
-
-  lifecycle::deprecate_warn(
-    when = "0.3.0",
-    what = I("Removing elements with `NULL`"),
-    with = "zap()"
-  )
-  # Allow removing with `NULL` for now. In purrr 0.5.0, this
-  # functionality will be defunct and we'll allow setting elements to
-  # `NULL`.
-  NULL
-}
-
-#' @rdname list_modify
+#' Update a list with formulas
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `update_list()` was deprecated in purrr 1.0.0, because we no longer believe
+#' that functions that use NSE are a good fit for purrr.
+#'
+#' `update_list()` handles formulas and quosures that can refer to
+#' values existing within the input list. This function is deprecated
+#' because we no longer believe that functions that use tidy evaluation are
+#' a good fit for purrr.
+#'
+#' @inheritParams list_modify
 #' @export
-#' @usage NULL
+#' @keywords internal
 update_list <- function(.x, ...) {
+  lifecycle::deprecate_warn("1.0.0", "update_list()")
+
   dots <- dots_list(...)
 
   formulas <- map_lgl(dots, is_bare_formula, lhs = FALSE, scoped = TRUE)

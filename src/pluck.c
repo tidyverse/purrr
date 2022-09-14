@@ -7,7 +7,6 @@
 #include "coerce.h"
 #include "conditions.h"
 
-static int check_input_lengths(int n, SEXP index, int i, bool strict);
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
 static int check_double_index_length(double val, int n, int i, bool strict);
 static int check_character_index(SEXP string, int i, bool strict);
@@ -23,14 +22,15 @@ SEXP obj_names(SEXP x, bool strict);
 
 // S3 objects must implement a `length()` method in the case of a
 // numeric index and a `names()` method for the character case
-int find_offset(SEXP x, SEXP index, int i, bool strict) {
+int find_offset(SEXP x, SEXP index, int i, bool strict, SEXP env) {
   int n = obj_length(x, strict);
   if (n < 0) {
     return -1;
   }
 
-  if (check_input_lengths(n, index, i, strict)) {
-    return -1;
+  int index_n = Rf_length(index);
+  if (index_n != 1) {
+    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false, env);
   }
 
   switch (TYPEOF(index)) {
@@ -50,13 +50,15 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
       goto numeric_index_error;
     }
 
-    --val;
+    if (val < 0) {
+      val = n + val + 1;
+    }
     if (check_double_index_length(val, n, i, strict)) {
       goto numeric_index_error;
     }
 
     UNPROTECT(n_protect);
-    return val;
+    return val - 1;
 
    numeric_index_error:
     UNPROTECT(n_protect);
@@ -93,7 +95,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
     }
     if (strict) {
-      Rf_errorcall(R_NilValue, "Can't find name `%s` in vector", val);
+      Rf_errorcall(R_NilValue, "Can't find name `%s` in vector.", val);
     } else {
       UNPROTECT(1);
       return -1;
@@ -101,12 +103,12 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
   }
 
   default:
-    stop_bad_element_type(x, i + 1, "a character or numeric vector", "Index", NULL);
+    stop_bad_element_type(index, i + 1, "a character or numeric vector", "Index", NULL, env);
   }
 }
 
-SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
-  int offset = find_offset(x, index_i, i, strict);
+SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict, SEXP env) {
+  int offset = find_offset(x, index_i, i, strict, env);
   if (check_offset(offset, index_i, strict)) {
     return R_NilValue;
   }
@@ -130,7 +132,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
   default:
     Rf_errorcall(R_NilValue,
-      "Don't know how to index object of type %s at level %d",
+      "Don't know how to index object of type %s at level %d.",
       Rf_type2char(TYPEOF(x)), i + 1
     );
   }
@@ -138,10 +140,12 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   return R_NilValue;
 }
 
-SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
-  if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    SEXP ptype = PROTECT(Rf_allocVector(STRSXP, 0));
-    stop_bad_element_vector(index_i, i + 1, ptype, 1, "Index", NULL, false);
+SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict, SEXP env) {
+  if (TYPEOF(index_i) != STRSXP) {
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, env);
+  }
+  if (Rf_length(index_i) != 1) {
+    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, env);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -159,10 +163,12 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   return out;
 }
 
-SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict) {
-  if (TYPEOF(index_i) != STRSXP || Rf_length(index_i) != 1) {
-    SEXP ptype = PROTECT(Rf_allocVector(STRSXP, 0));
-    stop_bad_element_vector(index_i, i + 1, ptype, 1, "Index", NULL, false);
+SEXP extract_s4(SEXP x, SEXP index_i, int i, bool strict, SEXP env) {
+  if (TYPEOF(index_i) != STRSXP) {
+    stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL, env);
+  }
+  if (Rf_length(index_i) != 1) {
+    stop_bad_element_length(index_i, i + 1, 1, "Index", NULL, false, env);
   }
 
   SEXP index = STRING_ELT(index_i, 0);
@@ -196,9 +202,9 @@ static bool is_function(SEXP x) {
   }
 }
 
-SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
+SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg, SEXP env) {
   if (TYPEOF(index) != VECSXP) {
-    stop_bad_type(index, "a list", NULL, "where");
+    stop_bad_type(index, "a list", NULL, "where", env);
   }
 
   PROTECT_INDEX idx;
@@ -217,15 +223,16 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     }
     // Assume all S3 objects implement the vector interface
     if (OBJECT(x) && TYPEOF(x) != S4SXP) {
-      x = extract_vector(x, index_i, i, strict);
+      x = extract_vector(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       continue;
     }
 
     switch (TYPEOF(x)) {
     case NILSXP:
+      find_offset(x, index_i, i, strict, env);
       if (strict) {
-        Rf_errorcall(R_NilValue, "Plucked object can't be NULL");
+        Rf_errorcall(R_NilValue, "Plucked object can't be NULL.");
       }
       // Leave the indexing loop early
       goto end;
@@ -237,19 +244,19 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     case RAWSXP:
     case VECSXP:
     case EXPRSXP:
-      x = extract_vector(x, index_i, i, strict);
+      x = extract_vector(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       break;
     case ENVSXP:
-      x = extract_env(x, index_i, i, strict);
+      x = extract_env(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       break;
     case S4SXP:
-      x = extract_s4(x, index_i, i, strict);
+      x = extract_s4(x, index_i, i, strict, env);
       REPROTECT(x, idx);
       break;
     default:
-      Rf_errorcall(R_NilValue, "Can't pluck from a %s", Rf_type2char(TYPEOF(x)));
+      Rf_errorcall(R_NilValue, "Can't pluck from a %s.", Rf_type2char(TYPEOF(x)));
     }
 
   }
@@ -262,24 +269,6 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
 /* Type checking */
 
-static int check_input_lengths(int n, SEXP index, int i, bool strict) {
-  int index_n = Rf_length(index);
-
-  if (n == 0) {
-    if (strict) {
-      Rf_errorcall(R_NilValue, "Plucked object must have at least one element");
-    } else {
-      return -1;
-    }
-  }
-
-  if (index_n > 1 || (strict && index_n == 0)) {
-    stop_bad_element_length(index, i + 1, 1, "Index", NULL, false);
-  }
-
-  return 0;
-}
-
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict) {
   if (R_finite(val)) {
     return 0;
@@ -287,7 +276,7 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 
   if (strict) {
     Rf_errorcall(R_NilValue,
-                 "Index %d must be finite, not %s",
+                 "Index %d must be finite, not %s.",
                  i + 1,
                  Rf_translateCharUTF8(Rf_asChar(index)));
   } else {
@@ -296,21 +285,29 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 }
 
 static int check_double_index_length(double val, int n, int i, bool strict) {
-  if (val < 0) {
+  if (val == 0) {
     if (strict) {
-      Rf_errorcall(R_NilValue,
-                   "Index %d must be greater than 0, not %.0f",
-                   i + 1,
-                   val + 1);
+      Rf_errorcall(R_NilValue, "Index %d is zero.", i + 1);
     } else {
       return -1;
     }
-  } else if (val >= n) {
+  } else if (val < 0) {
+    if (strict) {
+      // Negative values have already been subtracted from end
+      Rf_errorcall(R_NilValue,
+                   "Negative index %d must be greater than or equal to %d, not %.0f.",
+                   i + 1,
+                   -n,
+                   val - n - 1);
+    } else {
+      return -1;
+    }
+  } else if (val > n) {
     if (strict) {
       Rf_errorcall(R_NilValue,
-                   "Index %d exceeds the length of plucked object (%.0f > %d)",
+                   "Index %d exceeds the length of plucked object (%.0f > %d).",
                    i + 1,
-                   val + 1,
+                   val,
                    n);
     } else {
       return -1;
@@ -323,7 +320,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
 static int check_character_index(SEXP string, int i, bool strict) {
   if (string == NA_STRING) {
     if (strict) {
-      Rf_errorcall(R_NilValue, "Index %d can't be NA", i + 1);
+      Rf_errorcall(R_NilValue, "Index %d can't be NA.", i + 1);
     } else {
       return -1;
     }
@@ -333,7 +330,7 @@ static int check_character_index(SEXP string, int i, bool strict) {
   const char* val = CHAR(string);
   if (val[0] == '\0') {
     if (strict) {
-      Rf_errorcall(R_NilValue, "Index %d can't be an empty string (\"\")", i + 1);
+      Rf_errorcall(R_NilValue, "Index %d can't be an empty string (\"\").", i + 1);
     } else {
       return -1;
     }
@@ -348,7 +345,7 @@ static int check_names(SEXP names, int i, bool strict) {
   }
 
   if (strict) {
-    Rf_errorcall(R_NilValue, "Index %d is attempting to pluck from an unnamed vector using a string name", i + 1);
+    Rf_errorcall(R_NilValue, "Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
   } else {
     return -1;
   }
@@ -361,7 +358,7 @@ static int check_offset(int offset, SEXP index_i, bool strict) {
 
   if (strict) {
     Rf_errorcall(R_NilValue,
-                 "Can't find index `%s` in vector",
+                 "Can't find index `%s` in vector.",
                  Rf_translateCharUTF8(Rf_asChar(index_i)));
   } else {
     return -1;
@@ -375,7 +372,7 @@ static int check_unbound_value(SEXP val, SEXP index_i, bool strict) {
 
   if (strict) {
     Rf_errorcall(R_NilValue,
-                 "Can't find object `%s` in environment",
+                 "Can't find object `%s` in environment.",
                  Rf_translateCharUTF8(Rf_asChar(index_i)));
   } else {
     return -1;
@@ -399,7 +396,7 @@ static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
 static int check_obj_length(SEXP n, bool strict) {
   if (TYPEOF(n) != INTSXP || Rf_length(n) != 1) {
     if (strict) {
-      Rf_errorcall(R_NilValue, "Length of S3 object must be a scalar integer");
+      Rf_errorcall(R_NilValue, "Length of S3 object must be a scalar integer.");
     } else {
       return -1;
     }

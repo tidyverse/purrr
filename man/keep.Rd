@@ -4,7 +4,7 @@
 \alias{keep}
 \alias{discard}
 \alias{compact}
-\title{Keep or discard elements using a predicate function.}
+\title{Keep/discard elements based on their values}
 \usage{
 keep(.x, .p, ...)
 
@@ -15,25 +15,28 @@ compact(.x, .p = identity)
 \arguments{
 \item{.x}{A list or vector.}
 
-\item{.p}{For \code{keep()} and \code{discard()}, a predicate function. Only
-those elements where \code{.p} evaluates to \code{TRUE} will be kept or
-discarded.
-
-For \code{compact()}, a function that is applied to each element of
-\code{.x}. Only those elements where \code{.p} evaluates to an empty vector
-will be discarded.}
+\item{.p}{A predicate function (i.e. a function that returns either \code{TRUE}
+or \code{FALSE}) specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{is.character}.
+\item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
+\item A formula, e.g. \code{~ all(.x < 0)}. You must use \code{.x} to refer to the first
+argument). Only recommended if you require backward compatibility with
+older versions of R.
+}}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
 }
 \description{
-\code{keep()} and \code{discard()} are opposites. \code{compact()} is a handy
-wrapper that removes all empty elements.
+\code{keep()} selects all elements where \code{.p} evaluates to \code{TRUE};
+\code{discard()} selects all elements where \code{.p} evaluates to \code{FALSE}.
+\code{compact()} discards elements where \code{.p} evaluates to an empty vector.
 }
 \details{
-These are usually called \code{select} or \code{filter} and \code{reject} or
-\code{drop}, but those names are already taken. \code{keep()} is similar to
-\code{\link[=Filter]{Filter()}}, but the argument order is more convenient, and the
-evaluation of the predicate function \code{.p} is stricter.
+In other languages, \code{keep()} and \code{discard()} are often called \code{select()}/
+\code{filter()} and \code{reject()}/ \code{drop()}, but those names are already taken
+in R. \code{keep()} is similar to \code{\link[=Filter]{Filter()}}, but the argument order is more
+convenient, and the evaluation of the predicate function \code{.p} is stricter.
 }
 \examples{
 rep(10, 10) \%>\%
@@ -55,4 +58,7 @@ x \%>\% discard("a")
 # compact() discards elements that are NULL or that have length zero
 list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) \%>\%
   compact()
+}
+\seealso{
+\code{\link[=keep_at]{keep_at()}}/\code{\link[=discard_at]{discard_at()}} to keep/discard elements by name.
 }

@@ -171,3 +171,60 @@ test_that("`.first` still works", {
   expect_identical(partialised_body(partial(runif, .first = TRUE)), expr(runif(...)))
   expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
 })
+
+test_that("checks inputs", {
+  expect_snapshot(partial(1), error = TRUE)
+})
+
+# helpers -----------------------------------------------------------------
+
+
+test_that("quo_invert() inverts quosured arguments", {
+  call <- expr(list(!!quo(foo), !!quo(bar)))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+
+  call <- expr(list(foo, !!quo(bar)))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+
+  call <- expr(list(!!quo(foo), bar))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+})
+
+test_that("quo_invert() detects local quosures", {
+  foo <- local(quo(foo))
+  call <- expr(list(!!foo, !!quo(bar)))
+  expect_identical(quo_invert(call), new_quosure(expr(list(foo, !!quo(bar))), quo_get_env(foo)))
+
+  bar <- local(quo(bar))
+  call <- expr(list(!!quo(foo), !!bar))
+  expect_identical(quo_invert(call), quo(list(foo, !!bar)))
+})
+
+test_that("quo_invert() supports quosures in function position", {
+  call <- expr((!!quo(list))(!!quo(foo), !!quo(bar)))
+  expect_identical(quo_invert(call), quo(list(foo, bar)))
+
+  fn <- local(quo(list))
+  env <- quo_get_env(fn)
+  call <- expr((!!fn)(!!quo(foo), !!new_quosure(quote(bar), env)))
+  expect_identical(quo_invert(call), new_quosure(expr(list(!!quo(foo), bar)), env))
+})
+
+test_that("quo_invert() supports quosures", {
+  bar <- local(quo(bar))
+  call <- quo(list(!!quo(foo), !!bar))
+  expect_identical(quo_invert(call), quo(list(foo, !!bar)))
+
+  foo <- quo(foo)
+  call <- local(quo(list(!!foo, !!bar)))
+  expect_identical(quo_invert(call), new_quosure(expr(list(!!foo, !!bar)), quo_get_env(call)))
+})
+
+test_that("quo_invert() unwraps constants", {
+  call <- expr(foo(!!quo(NULL)))
+  expect_identical(quo_invert(call), quote(foo(NULL)))
+
+  foo <- local(quo(foo))
+  call <- expr(foo(!!foo, !!quo(NULL)))
+  expect_identical(quo_invert(call), new_quosure(quote(foo(foo, NULL)), quo_get_env(foo)))
+})

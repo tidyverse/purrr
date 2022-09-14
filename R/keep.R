@@ -1,21 +1,24 @@
-#' Keep or discard elements using a predicate function.
+#' Keep/discard elements based on their values
 #'
-#' `keep()` and `discard()` are opposites. `compact()` is a handy
-#' wrapper that removes all empty elements.
+#' `keep()` selects all elements where `.p` evaluates to `TRUE`;
+#' `discard()` selects all elements where `.p` evaluates to `FALSE`.
+#' `compact()` discards elements where `.p` evaluates to an empty vector.
 #'
-#' These are usually called `select` or `filter` and `reject` or
-#' `drop`, but those names are already taken. `keep()` is similar to
-#' [Filter()], but the argument order is more convenient, and the
-#' evaluation of the predicate function `.p` is stricter.
+#' In other languages, `keep()` and `discard()` are often called `select()`/
+#' `filter()` and `reject()`/ `drop()`, but those names are already taken
+#' in R. `keep()` is similar to [Filter()], but the argument order is more
+#' convenient, and the evaluation of the predicate function `.p` is stricter.
 #'
 #' @param .x A list or vector.
-#' @param .p For `keep()` and `discard()`, a predicate function. Only
-#'   those elements where `.p` evaluates to `TRUE` will be kept or
-#'   discarded.
+#' @param .p A predicate function (i.e. a function that returns either `TRUE`
+#'   or `FALSE`) specified in one of the following ways:
 #'
-#'   For `compact()`, a function that is applied to each element of
-#'   `.x`. Only those elements where `.p` evaluates to an empty vector
-#'   will be discarded.
+#'   * A named function, e.g. `is.character`.
+#'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
+#'   * A formula, e.g. `~ all(.x < 0)`. You must use `.x` to refer to the first
+#'     argument). Only recommended if you require backward compatibility with
+#'     older versions of R.
+#' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
 #' @export
 #' @examples
@@ -55,4 +58,34 @@ discard <- function(.x, .p, ...) {
 compact <- function(.x, .p = identity) {
   .f <- as_mapper(.p)
   discard(.x, function(x) is_empty(.f(x)))
+}
+
+
+#' Keep/discard elements based on their name/position
+#'
+#' @inheritParams map_at
+#' @seealso [keep()]/[discard()] to keep/discard elements by value.
+#' @export
+#' @examples
+#' x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)
+#' x %>% keep_at(letters)
+#' x %>% discard_at(letters)
+#'
+#' # Can also use a function
+#' x %>% keep_at(~ nchar(.x) == 3)
+#' x %>% discard_at(~ nchar(.x) == 3)
+keep_at <- function(x, at) {
+  where <- at_selection(x, at)
+  x[where]
+}
+
+#' @export
+#' @rdname keep_at
+discard_at <- function(x, at) {
+  where <- at_selection(x, at)
+  if (length(where) == 0) {
+    x[]
+  } else {
+    x[-where]
+  }
 }

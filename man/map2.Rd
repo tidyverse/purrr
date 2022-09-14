@@ -6,86 +6,52 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
-\alias{map2_raw}
-\alias{map2_dfr}
-\alias{map2_dfc}
-\alias{map2_df}
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
-map2(.x, .y, .f, ...)
+map2(.x, .y, .f, ..., .progress = NULL)
 
-map2_lgl(.x, .y, .f, ...)
+map2_lgl(.x, .y, .f, ..., .progress = NULL)
 
-map2_int(.x, .y, .f, ...)
+map2_int(.x, .y, .f, ..., .progress = NULL)
 
-map2_dbl(.x, .y, .f, ...)
+map2_dbl(.x, .y, .f, ..., .progress = NULL)
 
-map2_chr(.x, .y, .f, ...)
-
-map2_raw(.x, .y, .f, ...)
-
-map2_dfr(.x, .y, .f, ..., .id = NULL)
-
-map2_dfc(.x, .y, .f, ...)
+map2_chr(.x, .y, .f, ..., .progress = NULL)
 
 walk2(.x, .y, .f, ...)
 }
 \arguments{
-\item{.x, .y}{Vectors of the same length. A vector of length 1 will
-be recycled.
+\item{.x, .y}{A pair of vectors, usually the same length. If not, a vector
+of length 1 will be recycled to the length of the other.}
+
+\item{.f}{A function, specified in one of the following ways:
+\itemize{
+\item A named function.
+\item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
+\item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the current
+element of \code{x} and \code{.y} to refer to the current element of \code{y}. Only
+recommended if you require backward compatibility with older versions
+of R.
+}}
+
+\item{...}{Additional arguments passed on to the mapped function.
 
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 
-\item{.f}{A function, formula, or vector (not necessarily atomic).
-
-If a \strong{function}, it is used as is.
-
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
-\itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
-
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
-
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
-
-\item{...}{Additional arguments passed on to the mapped function.}
-
-\item{.id}{Either a string or \code{NULL}. If a string, the output will contain
-a variable with that name, storing either the name (if \code{.x} is named) or
-the index (if \code{.x} is unnamed) of the input. If \code{NULL}, the default, no
-variable will be created.
-
-Only applies to \verb{_dfr} variant.}
+\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
+for details.}
 }
 \value{
+The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: returns a list the same length as the input. It will be
-named if the input was named.
+\item No suffix: a list.
 \item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. The output of \code{.f} will only be
-automatically coerced upwards (i.e. logical -> integer -> double ->
-character). It will be named if the input was named.
-\item \verb{_dfc} and \verb{_dfr()} all return a data frame created by row-binding and
-column-binding respectively. They require dplyr to be installed.
-}
-
-\itemize{
+or character vector respectively. It will be named if the input was named.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in pipe.
+use in a pipe.
 }
 }
 \description{
@@ -108,7 +74,6 @@ map2(mods, by_cyl, predict)
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
-\code{\link{invoke}()},
 \code{\link{lmap}()},
 \code{\link{map_if}()},
 \code{\link{map}()},

@@ -8,4 +8,13 @@ coerce_lgl <- function(x) coerce(x, "logical")
 coerce_int <- function(x) coerce(x, "integer")
 coerce_dbl <- function(x) coerce(x, "double")
 coerce_chr <- function(x) coerce(x, "character")
-coerce_raw <- function(x) coerce(x, "raw")
+
+
+deprecate_to_char <- function(type) {
+  lifecycle::deprecate_warn(
+    "1.0.0",
+    I(paste0("Automatic coercion from ", type, " to character")),
+    I("an explicit call to as.character() within map_chr()"),
+    always = TRUE
+  )
+}
