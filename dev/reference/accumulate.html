@@ -245,9 +245,8 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># By ignoring the input vector (.y), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
 <span class="r-in"><span><span class="fu">accumulate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.00000000 -0.04779662  0.13756029 -1.12027994 -1.09560573</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.47256752 -1.63223408 -1.53873651 -1.61405898 -0.64800247</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] -1.64308193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0000000 -0.6320401 -1.1847080  2.3601703  4.8338047  5.5881559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  5.4162320  5.2629756  5.8725858  4.0221802  4.3262508</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `accumulate2()` is a version of `accumulate()` that works with</span></span></span>
 <span class="r-in"><span><span class="co"># 3-argument functions and one additional vector:</span></span></span>
