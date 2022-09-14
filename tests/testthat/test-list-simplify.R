@@ -6,6 +6,11 @@ test_that("simplifies using vctrs principles", {
   expect_equal(list_simplify(x), data.frame(x = c(1, NA), y = c(NA, 2)))
 })
 
+test_that("only uses outer names", {
+  out <- list_simplify(list(a = 1, c(b = 1), c = c(d = 1)))
+  expect_named(out, c("a", "", "c"))
+})
+
 test_that("ptype is enforced", {
   expect_equal(list_simplify(list(1, 2), ptype = double()), c(1, 2))
   expect_snapshot(list_simplify(list(1, 2), ptype = character()), error = TRUE)
