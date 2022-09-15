@@ -1,3 +1,16 @@
+# contents must be a vector
+
+    Code
+      pluck(quote(x), 1)
+    Condition
+      Error in `pluck_raw()`:
+      ! Can't pluck from a symbol at level 1.
+    Code
+      pluck(expression(1), 1)
+    Condition
+      Error in `pluck_raw()`:
+      ! Can't pluck from an expression vector at level 1.
+
 # dots must be unnamed
 
     Code

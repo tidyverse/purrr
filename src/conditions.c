@@ -45,6 +45,15 @@ void r_abort(const char* fmt, ...) {
   while (1); // No return
 }
 
+const char* rlang_obj_type_friendly_full(SEXP x, bool value, bool length) {
+  const char* (*rlang_ptr)(SEXP x, bool value, bool length) = NULL;
+  if (rlang_ptr == NULL) {
+    rlang_ptr = (const char* (*)(SEXP, bool, bool))
+      R_GetCCallable("rlang", "rlang_obj_type_friendly_full");
+  }
+  return rlang_ptr(x, value, length);
+}
+
 void stop_bad_type(SEXP x, const char* expected, const char* what, const char* arg) {
   SEXP fn = Rf_lang3(Rf_install(":::"),
                      Rf_install("purrr"),

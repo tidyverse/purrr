@@ -129,10 +129,11 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   case STRSXP:  return Rf_ScalarString(STRING_ELT(x, offset));
   case VECSXP:  return VECTOR_ELT(x, offset);
   case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
+  case CPLXSXP: return Rf_ScalarComplex(COMPLEX_ELT(x, offset));
   default:
     r_abort(
-      "Don't know how to index object of type %s at level %d.",
-      Rf_type2char(TYPEOF(x)), i + 1
+      "Internal error: found in extract_vector()",
+      Rf_type2char(TYPEOF(x))
     );
   }
 
@@ -231,7 +232,10 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     case NILSXP:
       find_offset(x, index_i, i, strict);
       if (strict) {
-        r_abort("Plucked object can't be NULL.");
+        r_abort(
+          "Can't pluck from NULL at level %d.",
+          rlang_obj_type_friendly_full(x, true, false), i + 1
+        );
       }
       // Leave the indexing loop early
       goto end;
@@ -242,7 +246,6 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     case STRSXP:
     case RAWSXP:
     case VECSXP:
-    case EXPRSXP:
       x = extract_vector(x, index_i, i, strict);
       REPROTECT(x, idx);
       break;
@@ -255,7 +258,10 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
       REPROTECT(x, idx);
       break;
     default:
-      r_abort("Can't pluck from a %s.", Rf_type2char(TYPEOF(x)));
+      r_abort(
+        "Can't pluck from %s at level %d.",
+        rlang_obj_type_friendly_full(x, true, false), i + 1
+      );
     }
 
   }
