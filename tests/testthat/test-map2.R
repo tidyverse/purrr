@@ -1,15 +1,31 @@
-test_that("map2 can't simplify if elements longer than length 1", {
-  expect_snapshot(map2_int(1:4, 5:8, range), error = TRUE)
+test_that("variants return expected types", {
+  x <- list(1, 2, 3)
+  expect_true(is_bare_list(map2(x, 0, ~ 1)))
+  expect_true(is_bare_logical(map2_lgl(x, 0, ~ TRUE)))
+  expect_true(is_bare_integer(map2_int(x, 0, ~ 1)))
+  expect_true(is_bare_double(map2_dbl(x, 0, ~ 1.5)))
+  expect_true(is_bare_character(map2_chr(x, 0, ~ "x")))
+  expect_equal(walk2(x, 0, ~ "x"), x)
+
+  x <- list(FALSE, 1L, 1)
+  expect_true(is_bare_double(map2_vec(x, 0, ~ .x)))
 })
 
-test_that("fails on non-vectors", {
-  expect_snapshot(map2(environment(), "a", identity), error = TRUE)
-  expect_snapshot(map2("a", environment(), identity), error = TRUE)
+test_that("verifies result types and length", {
+  expect_snapshot(error = TRUE, {
+    map2_int(1, 1, ~ "x")
+    map2_int(1, 1, ~ 1:2)
+  })
 })
 
-test_that("map2 recycles inputs", {
-  expect_equal(map2(1, 1, `+`), list(2))
+test_that("requires vector inputs", {
+  expect_snapshot(error = TRUE, {
+    map2(environment(), "a", identity)
+    map2("a", environment(), "a", identity)
+  })
+})
 
+test_that("recycles inputs", {
   expect_equal(map2(1:2, 1, `+`), list(2, 3))
   expect_equal(map2(integer(), 1, `+`), list())
   expect_equal(map2(NULL, 1, `+`), list())
@@ -17,30 +33,16 @@ test_that("map2 recycles inputs", {
   expect_snapshot(map2(1:2, 1:3, `+`), error = TRUE)
 })
 
-test_that("map2 takes only names from x", {
-  x1 <- 1:3
-  x2 <- set_names(x1)
+test_that("takes only names from x", {
+  x1 <- 1:2
+  x2 <- set_names(x1, letters[1:2])
+  x3 <- set_names(x1, "")
 
-  expect_equal(names(map2(x1, x2, `+`)), NULL)
-  expect_equal(names(map2(x2, x1, `+`)), names(x2))
-})
+  expect_named(map2(x1, 1, `+`), NULL)
+  expect_named(map2(x2, 1, `+`), c("a", "b"))
+  expect_named(map2(x3, 1, `+`), c("", ""))
 
-test_that("map2 always returns a list", {
-  expect_bare(map2(mtcars, 0, ~mtcars), "list")
-})
-
-test_that("map2() with empty input copies names", {
-  named_list <- named(list())
-  expect_identical(    map2(named_list, list(), identity), named(list()))
-  expect_identical(map2_lgl(named_list, list(), identity), named(lgl()))
-  expect_identical(map2_int(named_list, list(), identity), named(int()))
-  expect_identical(map2_dbl(named_list, list(), identity), named(dbl()))
-  expect_identical(map2_chr(named_list, list(), identity), named(chr()))
-})
-
-test_that("map2() recycle names (#779)", {
-  expect_identical(
-    map2(c(a = 1), 1:2, ~ .x),
-    list(a = 1, a = 1)
-  )
+  # recycling them if needed (#779)
+  x4 <- c(a = 1)
+  expect_named(map2(x4, 1:2, `+`), c("a", "a"))
 })
