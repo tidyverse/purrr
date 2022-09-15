@@ -92,12 +92,21 @@ list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, defa
     res <- map(x, idx, .default = default[[i]])
     res <- list_simplify_internal(res,
       simplify = simplify[[i]] %||% NA,
-      ptype = ptype[[i]]
+      ptype = ptype[[i]],
+      error_arg = result_index(idx)
     )
     out[[i]] <- res
   }
 
   out
+}
+
+result_index <- function(idx) {
+  if (is.character(idx)) {
+    paste0("result$", idx)
+  } else {
+    paste0("result[[", idx, "]]")
+  }
 }
 
 match_template <- function(x, template, error_arg = caller_arg(x), error_call = caller_env()) {
