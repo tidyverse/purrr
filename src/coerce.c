@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 void cant_coerce(SEXP from, SEXP to, int i) {
-  Rf_errorcall(R_NilValue, "Can't coerce element %i from a %s to a %s",
-    i + 1, Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
+  Rf_errorcall(R_NilValue, "Can't coerce from a %s to a %s",
+    Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
 }
 
 int real_to_logical(double x, SEXP from, SEXP to, int i) {

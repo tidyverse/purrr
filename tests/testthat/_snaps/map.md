@@ -29,7 +29,7 @@
       Error in `map_int()`:
       ! Computation failed in index 1
       Caused by error:
-      ! Can't coerce element 1 from a character to a integer
+      ! Can't coerce from a character to a integer
     Code
       map(1:3, ~ fail_at_3(stop("Doesn't work")))
     Condition
