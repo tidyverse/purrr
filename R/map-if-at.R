@@ -30,7 +30,7 @@
 #' map_if(iris, is.factor, as.character, .else = as.integer)
 #'
 map_if <- function(.x, .p, .f, ..., .else = NULL) {
-  where <- if_idx(.x, .p)
+  where <- where_if(.x, .p)
 
   out <- vector("list", length(.x))
   out[where]  <- map(.x[where], .f, ...)
@@ -60,7 +60,7 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = NULL) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
 
   out <- vector("list", length(.x))
   out[where]  <- map(.x[where], .f, ..., .progress = .progress)

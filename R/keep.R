@@ -42,14 +42,14 @@
 #' list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) %>%
 #'   compact()
 keep <- function(.x, .p, ...) {
-  where <- if_idx(.x, .p, ...)
+  where <- where_if(.x, .p, ...)
   .x[!is.na(where) & where]
 }
 
 #' @export
 #' @rdname keep
 discard <- function(.x, .p, ...) {
-  where <- if_idx(.x, .p, ...)
+  where <- where_if(.x, .p, ...)
   .x[is.na(where) | !where]
 }
 
@@ -75,13 +75,13 @@ compact <- function(.x, .p = identity) {
 #' x %>% keep_at(~ nchar(.x) == 3)
 #' x %>% discard_at(~ nchar(.x) == 3)
 keep_at <- function(x, at) {
-  where <- at_idx(x, at)
+  where <- where_at(x, at)
   x[where]
 }
 
 #' @export
 #' @rdname keep_at
 discard_at <- function(x, at) {
-  where <- at_idx(x, at)
+  where <- where_at(x, at)
   x[!where]
 }

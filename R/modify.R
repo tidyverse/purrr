@@ -138,7 +138,7 @@ modify_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @rdname modify
 #' @export
 modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
-  where <- if_idx(.x, .p)
+  where <- where_if(.x, .p)
   index <- seq_along(.x)
 
   .f <- as_mapper(.f, ...)
@@ -173,7 +173,7 @@ modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
 }
 
 modify_if_base <- function(.fmap, .x, .p, .true, .false = NULL, ..., .error_call = caller_env()) {
-  where <- if_idx(.x, .p, .error_call = .error_call)
+  where <- where_if(.x, .p, .error_call = .error_call)
   .x[where] <- .fmap(.x[where], .true, ...)
 
   if (!is.null(.false)) {
@@ -194,30 +194,30 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @rdname modify
 #' @export
 modify_at.default <- function(.x, .at, .f, ...) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
   modify_if(.x, where, .f, ...)
 }
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
   .x[where] <- map_int(.x[where], .f, ...)
   .x
 }
 #' @export
 modify_at.double <- function(.x, .at, .f, ...) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
   .x[where] <- map_dbl(.x[where], .f, ...)
   .x
 }
 #' @export
 modify_at.character <- function(.x, .at, .f, ...) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
   .x[where] <- map_chr(.x[where], .f, ...)
   .x
 }
 #' @export
 modify_at.logical <- function(.x, .at, .f, ...) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
   .x[where] <- map_lgl(.x[where], .f, ...)
   .x
 }

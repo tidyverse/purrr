@@ -50,14 +50,14 @@ lmap <- function(.x, .f, ...) {
 #' @rdname lmap
 #' @export
 lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
-  where <- if_idx(.x, .p)
+  where <- where_if(.x, .p)
   lmap_helper(.x, where, .f, ..., .else = .else)
 }
 
 #' @rdname lmap
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
-  where <- at_idx(.x, .at)
+  where <- where_at(.x, .at)
   lmap_helper(.x, where, .f, ...)
 }
 

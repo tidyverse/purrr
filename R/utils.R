@@ -1,4 +1,4 @@
-at_idx <- function(x, at, error_arg = caller_arg(at), error_call = caller_env()) {
+where_at <- function(x, at, error_arg = caller_arg(at), error_call = caller_env()) {
   if (is_formula(at)) {
     at <- rlang::as_function(at, arg = error_arg, call = error_call)
   }
@@ -36,7 +36,7 @@ at_idx <- function(x, at, error_arg = caller_arg(at), error_call = caller_env())
   }
 }
 
-if_idx <- function(.x, .p, ..., .error_call = caller_env()) {
+where_if <- function(.x, .p, ..., .error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
