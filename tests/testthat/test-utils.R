@@ -23,6 +23,12 @@ test_that("function at is passed names", {
   expect_equal(where_at(x, ~ intersect(.x, LETTERS)), c(FALSE, TRUE, FALSE))
 })
 
+test_that("where_at works with unnamed input", {
+  x <- list(1, 1, 1)
+  expect_equal(where_at(x, letters), rep(FALSE, 3))
+  expect_equal(where_at(x, ~ intersect(.x, LETTERS)), rep(FALSE, 3))
+})
+
 test_that("validates its inputs", {
   x <- list(a = 1, b = 1, c = 1)
   expect_snapshot(where_at(x, list()), error = TRUE)

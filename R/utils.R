@@ -3,14 +3,14 @@ where_at <- function(x, at, error_arg = caller_arg(at), error_call = caller_env(
     at <- rlang::as_function(at, arg = error_arg, call = error_call)
   }
   if (is.function(at)) {
-    at <- at(names(x))
+    at <- at(names2(x))
   }
 
   if (is_quosures(at)) {
     lifecycle::deprecate_warn("1.0.0", I("Using `vars()` in .at"))
     check_installed("tidyselect", "for using tidyselect in `map_at()`.")
 
-    at <- tidyselect::vars_select(.vars = names(x), !!!at)
+    at <- tidyselect::vars_select(.vars = names2(x), !!!at)
   }
 
   if (is.numeric(at) || is.logical(at) || is.character(at)) {
@@ -21,7 +21,7 @@ where_at <- function(x, at, error_arg = caller_arg(at), error_call = caller_env(
     loc <- vec_as_location(
       at,
       length(x),
-      names(x),
+      names2(x),
       missing = "error",
       arg = "at",
       call = error_call
