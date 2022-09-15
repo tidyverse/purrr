@@ -5,8 +5,8 @@
 \alias{map_lgl}
 \alias{map_chr}
 \alias{map_int}
-\alias{map_vec}
 \alias{map_dbl}
+\alias{map_vec}
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
@@ -18,9 +18,9 @@ map_chr(.x, .f, ..., .progress = FALSE)
 
 map_int(.x, .f, ..., .progress = FALSE)
 
-map_vec(.x, .f, ..., .ptype = NULL)
-
 map_dbl(.x, .f, ..., .progress = FALSE)
+
+map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
 
 walk(.x, .f, ...)
 }
@@ -57,8 +57,10 @@ The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
 \item No suffix: a list.
-\item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
+\item \verb{_lgl()}, \verb{_int()}, \verb{_dbl()}, \verb{_chr()} return a logical, integer, double,
 or character vector respectively. It will be named if the input was named.
+\item \verb{_vec()} return an atomic or S3 vector, that is guaranteed to be
+simpler than list.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in a pipe.
 }

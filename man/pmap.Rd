@@ -6,6 +6,7 @@
 \alias{pmap_int}
 \alias{pmap_dbl}
 \alias{pmap_chr}
+\alias{pmap_vec}
 \alias{pwalk}
 \title{Map over multiple input simultaneously (in "parallel")}
 \usage{
@@ -18,6 +19,8 @@ pmap_int(.l, .f, ..., .progress = NULL)
 pmap_dbl(.l, .f, ..., .progress = NULL)
 
 pmap_chr(.l, .f, ..., .progress = NULL)
+
+pmap_vec(.l, .f, ..., .progress = NULL)
 
 pwalk(.l, .f, ...)
 }
@@ -54,8 +57,10 @@ The output length is determined by the length of the input.
 The output type is determined by the suffix:
 \itemize{
 \item No suffix: a list.
-\item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
+\item \verb{_lgl()}, \verb{_int()}, \verb{_dbl()}, \verb{_chr()} return a logical, integer, double,
 or character vector respectively. It will be named if the input was named.
+\item \verb{_vec()} return an atomic or S3 vector, that is guaranteed to be
+simpler than list.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in a pipe.
 }

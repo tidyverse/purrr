@@ -43,8 +43,11 @@
 #'
 #' * No suffix: a list.
 #'
-#' * `_lgl`, `_int`, `_dbl`, `_chr` return a logical, integer, double,
+#' * `_lgl()`, `_int()`, `_dbl()`, `_chr()` return a logical, integer, double,
 #'   or character vector respectively. It will be named if the input was named.
+#'
+#' * `_vec()` return an atomic or S3 vector, that is guaranteed to be
+#'   simpler than list.
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
 #'    use in a pipe.
@@ -135,23 +138,21 @@ map_int <- function(.x, .f, ..., .progress = FALSE) {
   .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
 }
 
+#' @rdname map
+#' @export
+map_dbl <- function(.x, .f, ..., .progress = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_impl, environment(), ".x", ".f", "double", .progress)
+}
 
 #' @rdname map
 #' @param .ptype If `NULL`, the default, the output type is the common type
 #'   of the elements of the result. Otherwise, supply a "prototype" giving
 #'   the desired type of output.
 #' @export
-map_vec <- function(.x, .f, ..., .ptype = NULL) {
-  out <- map(.x, .f, ...)
+map_vec <- function(.x, .f, ..., .ptype = NULL, .progress = FALSE) {
+  out <- map(.x, .f, ..., .progress = .progress)
   simplify_impl(out, ptype = .ptype)
-}
-
-
-#' @rdname map
-#' @export
-map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "double", .progress)
 }
 
 #' @rdname map
