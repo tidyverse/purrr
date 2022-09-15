@@ -93,14 +93,12 @@ modify <- function(.x, .f, ...) {
 modify.default <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  if (is.null(.x)) {
-    NULL
-  } else if (vec_is_list(.x) || is.data.frame(.x)) {
+  if (vec_is_list(.x) || is.data.frame(.x)) {
     out <- map(vec_proxy(.x), .f, ...)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
     map_vec(.x, .f, ..., .ptype = .x)
-  } else if (is.list(x)) {
+  } else if (is.null(.x) || is.list(.x)) {
     .x[] <- map(.x, .f, ...)
     .x
   } else {
@@ -177,16 +175,14 @@ modify_at <- function(.x, .at, .f, ...) {
 modify_at.default <- function(.x, .at, .f, ...) {
   where <- where_at(.x, .at)
 
-  if (is.null(.x)) {
-    NULL
-  } else if (vec_is_list(.x) || is.data.frame(.x)) {
+  if (vec_is_list(.x) || is.data.frame(.x)) {
     out <- vec_proxy(.x)
     out[where] <- map(out[where], .f, ...)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
     .x[where] <- map_vec(.x[where], .f, ..., .ptype = .x)
     .x
-  } else if (is.list(x)) {
+  } else if (is.null(.x) || is.list(.x)) {
     .x[where] <- map(.x[where], .f, ...)
     .x
   } else {
@@ -203,36 +199,23 @@ modify2 <- function(.x, .y, .f, ...) {
 }
 #' @export
 modify2.default <- function(.x, .y, .f, ...) {
-  modify2_base(map2, .x, .y, .f, ...)
-}
-# TODO: Improve genericity (see above)
-#' @export
-modify2.integer  <- function(.x, .y, .f, ...) {
-  modify2_base(map2_int, .x, .y, .f, ...)
-}
-#' @export
-modify2.double  <- function(.x, .y, .f, ...) {
-  modify2_base(map2_dbl, .x, .y, .f, ...)
-}
-#' @export
-modify2.character  <- function(.x, .y, .f, ...) {
-  modify2_base(map2_chr, .x, .y, .f, ...)
-}
-#' @export
-modify2.logical  <- function(.x, .y, .f, ...) {
-  modify2_base(map2_lgl, .x, .y, .f, ...)
-}
-
-modify2_base <- function(mapper, .x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
-  out <- mapper(.x, .y, .f, ...)
 
-  # if .x got recycled by map2
-  if (length(out) > length(.x)) {
-    .x <- .x[rep(1L, length(out))]
+  if (vec_is_list(.x) || is.data.frame(.x)) {
+    out <- map2(vec_proxy(.x), .y, .f, ...)
+    vec_restore(out, .x)
+  } else if (vec_is(.x)) {
+    map2_vec(.x, .y, .f, ..., .ptype = .x)
+  } else if (is.null(.x) || is.list(.x)) {
+    out <- map(.x, .y, .f, ...)
+    if (length(out) > length(.x)) {
+      .x <- .x[rep(1L, length(out))]
+    }
+    .x[] <- out
+    .x
+  } else {
+    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
   }
-  .x[] <- out
-  .x
 }
 
 #' @rdname modify
