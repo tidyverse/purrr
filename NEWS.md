@@ -70,6 +70,10 @@
 * `*_at()` can now take a function (or formula) that's passed the vector of
   element names and returns the elements to select.
 
+* New `map_vec()`, `map2_vec()`, and `pmap_vec()` work on all types of vectors,
+  extending `map_lgl()`, `map_int()`, and friends so that you can easily work
+  with dates, factors, date-times and more (#435).
+
 * New `keep_at()` and `discard_at()` that work like `keep()` and `discard()`
   but operation on element names rather than element contents (#817).
 
@@ -116,6 +120,10 @@
 
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
+
+* `modify()`, `modify_if()`, and `modify_at()` have been reimplemented using
+  vctrs principles. This shouldn't have an user facing impact, but it does
+  make the implementation much simpler.
 
 ### Plucking
 
