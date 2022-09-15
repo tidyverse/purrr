@@ -1,3 +1,8 @@
+test_that("x and y mapped to first and second argument", {
+  expect_equal(map2(1, 2, function(x, y) x), list(1))
+  expect_equal(map2(1, 2, function(x, y) y), list(2))
+})
+
 test_that("variants return expected types", {
   x <- list(1, 2, 3)
   expect_true(is_bare_list(map2(x, 0, ~ 1)))
@@ -30,10 +35,13 @@ test_that("recycles inputs", {
   expect_equal(map2(integer(), 1, `+`), list())
   expect_equal(map2(NULL, 1, `+`), list())
 
-  expect_snapshot(map2(1:2, 1:3, `+`), error = TRUE)
+  expect_snapshot(error = TRUE, {
+    map2(1:2, 1:3, `+`)
+    map2(1:2, integer(), `+`)
+  })
 })
 
-test_that("takes only names from x", {
+test_that("only takes names from x", {
   x1 <- 1:2
   x2 <- set_names(x1, letters[1:2])
   x3 <- set_names(x1, "")
@@ -45,4 +53,9 @@ test_that("takes only names from x", {
   # recycling them if needed (#779)
   x4 <- c(a = 1)
   expect_named(map2(x4, 1:2, `+`), c("a", "a"))
+})
+
+test_that("don't evaluate symbolic objects (#428)", {
+  map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+  walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
 })

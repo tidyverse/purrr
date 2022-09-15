@@ -1,59 +1,82 @@
-test_that("input must be a list of vectors", {
-  expect_snapshot(pmap(environment(), identity), error = TRUE)
-  expect_snapshot(pmap(list(environment()), identity), error = TRUE)
-})
-
-test_that("inputs are recycled", {
-  expect_equal(pmap(list(1, 1), c), list(c(1, 1)))
-  expect_equal(pmap(list(1:2, 1), c), list(c(1, 1), c(2, 1)))
-
-  expect_equal(pmap(list(list(), 1), ~ 1), list())
-  expect_equal(pmap(list(NULL, 1), ~ 1), list())
-
-  expect_snapshot(pmap(list(1:2, 1:3), identity), error = TRUE)
-  expect_snapshot(pmap(list(1:2, integer()), identity), error = TRUE)
-})
-
 test_that(".f called with named arguments", {
-  out <- pmap(list(x = 1, 2, y = 3), list)[[1]]
-  expect_equal(names(out), c("x", "", "y"))
+  x <- list(x = 1, 2, y = 3)
+  expect_equal(pmap(x, list), list(x))
 })
 
-test_that("names are preserved", {
-  out <- pmap(list(c(x = 1, y = 2), 3:4), list)
-  expect_equal(names(out), c("x", "y"))
-})
-
-test_that("pmap() recycles names (#779)", {
-  expect_identical(
-    pmap(list(c(a = 1), 1:2), ~ .x),
-    list(a = 1, a = 1)
-  )
-})
-
-test_that("... are passed on", {
-  out <- pmap(list(x = 1:2), list, n = 1)
+test_that("... are passed after varying argumetns", {
+  out <- pmap(list(x = 1:2), list, n = 1:2)
   expect_equal(out, list(
-    list(x = 1, n = 1),
-    list(x = 2, n = 1)
+    list(x = 1, n = 1:2),
+    list(x = 2, n = 1:2)
   ))
 })
 
-test_that("outputs are suffixes have correct type", {
-  x <- 1:3
-  expect_bare(pmap_lgl(list(x), is.numeric), "logical")
-  expect_bare(pmap_int(list(x), length), "integer")
-  expect_bare(pmap_dbl(list(x), mean), "double")
-  expect_bare(pmap_chr(list(x), paste), "character")
+test_that("variants return expected types", {
+  l <- list(list(1, 2, 3))
+  expect_true(is_bare_list(pmap(l, ~ 1)))
+  expect_true(is_bare_logical(pmap_lgl(l, ~ TRUE)))
+  expect_true(is_bare_integer(pmap_int(l, ~ 1)))
+  expect_true(is_bare_double(pmap_dbl(l, ~ 1.5)))
+  expect_true(is_bare_character(pmap_chr(l, ~ "x")))
+  expect_equal(pwalk(l, ~ "x"), l)
+
+  l <- list(list(FALSE, 1L, 1))
+  expect_true(is_bare_double(pmap_vec(l, ~ .x)))
 })
 
-test_that("pmap on data frames performs rowwise operations", {
-  mtcars2 <- mtcars[c("mpg", "cyl")]
-  expect_length(pmap(mtcars2, paste), nrow(mtcars))
-  expect_bare(pmap_lgl(mtcars2, function(mpg, cyl) mpg > cyl), "logical")
-  expect_bare(pmap_int(mtcars2, function(mpg, cyl) as.integer(cyl)), "integer")
-  expect_bare(pmap_dbl(mtcars2, function(mpg, cyl) mpg + cyl), "double")
-  expect_bare(pmap_chr(mtcars2, paste), "character")
+test_that("verifies result types and length", {
+  expect_snapshot(error = TRUE, {
+    pmap_int(list(1), ~ "x")
+    pmap_int(list(1), ~ 1:2)
+  })
+})
+
+test_that("requires list of vectors", {
+  expect_snapshot(error = TRUE, {
+    pmap(environment(), identity)
+    pmap(list(environment()), identity)
+  })
+})
+
+test_that("recycles inputs", {
+  expect_equal(pmap(list(1:2, 1), `+`), list(2, 3))
+  expect_equal(pmap(list(integer(), 1), `+`), list())
+  expect_equal(pmap(list(NULL, 1), `+`), list())
+
+  expect_snapshot(error = TRUE, {
+    pmap(list(1:2, 1:3), `+`)
+    pmap(list(1:2, integer()), `+`)
+  })
+})
+
+test_that("only takes names from x", {
+  x1 <- 1:2
+  x2 <- set_names(x1, letters[1:2])
+  x3 <- set_names(x1, "")
+
+  expect_named(pmap(list(x1, x2), `+`), NULL)
+  expect_named(pmap(list(x2, x2), `+`), c("a", "b"))
+  expect_named(pmap(list(x3, x2), `+`), c("", ""))
+
+  # recycling them if needed (#779)
+  x4 <- c(a = 1)
+  expect_named(pmap(list(x4, 1:2), `+`), c("a", "a"))
+})
+
+test_that("avoid expensive [[ method on data frames", {
+  local_bindings(
+    `[[.mydf` = function(x, ...) stop("Not allowed!"),
+    .env = global_env()
+  )
+
+  df <- data.frame(x = 1:2, y = 2:1)
+  class(df) <- c("mydf", "data.frame")
+
+  expect_equal(pmap(df, list), list(list(x = 1, y = 2), list(x = 2, y = 1)))
+  expect_equal(pmap_lgl(df, ~ TRUE), c(TRUE, TRUE))
+  expect_equal(pmap_int(df, ~ 2), c(2, 2))
+  expect_equal(pmap_dbl(df, ~ 3.5), c(3.5, 3.5))
+  expect_equal(pmap_chr(df, ~ "x"), c("x", "x"))
 })
 
 test_that("pmap works with empty lists", {
@@ -66,21 +89,7 @@ test_that("preserves S3 class of input vectors (#358)", {
   expect_output(pwalk(list(date), print), format(date))
 })
 
-test_that("walk2() and pwalk() don't evaluate symbolic objects", {
-  walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
-  pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
-})
-
-test_that("map2() and pmap() don't evaluate symbolic objects", {
-  map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+test_that("don't evaluate symbolic objects (#428)", {
   pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
-})
-
-test_that("pmap() with empty input copies names", {
-  named_list <- list(named(list()))
-  expect_identical(    pmap(named_list, identity), named(list()))
-  expect_identical(pmap_lgl(named_list, identity), named(lgl()))
-  expect_identical(pmap_int(named_list, identity), named(int()))
-  expect_identical(pmap_dbl(named_list, identity), named(dbl()))
-  expect_identical(pmap_chr(named_list, identity), named(chr()))
+  pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
