@@ -108,35 +108,50 @@
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  call_mapper(map_impl, environment(), ".x", ".f", "list", .progress = .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(map_impl, environment(), ".x", ".f", "list", .progress)
+  )
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  call_mapper(map_impl, environment(), ".x", ".f", "logical", .progress = .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(map_impl, environment(), ".x", ".f", "logical", .progress)
+  )
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  call_mapper(map_impl, environment(), ".x", ".f", "character", .progress = .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(map_impl, environment(), ".x", ".f", "character", .progress)
+  )
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  call_mapper(map_impl, environment(), ".x", ".f", "integer", .progress = .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
+  )
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  call_mapper(map_impl, environment(), ".x", ".f", "double", .progress = .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(map_impl, environment(), ".x", ".f", "double", .progress)
+  )
 }
 
 #' @rdname map
@@ -146,21 +161,14 @@ walk <- function(.x, .f, ...) {
   invisible(.x)
 }
 
-call_mapper <- function(callable,
-                        env,
-                        ...,
-                        .progress = FALSE,
-                        .error_call = caller_env()) {
-  force(.error_call)
-  .progress <- .progress %||% NULL
-
+with_indexed_errors <- function(expr, i, error_call = caller_env()) {
   try_fetch(
-    .Call(callable, env, ..., .progress),
+    expr,
     error = function(cnd) {
       cli::cli_abort(
-        "Computation failed in index {env$i}",
+        "Computation failed in index {i}",
         parent = cnd,
-        call = .error_call
+        call = error_call
       )
     }
   )

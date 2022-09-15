@@ -53,7 +53,7 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
     SEXP res = PROTECT(R_forceAndCall(call, force_args, env));
 
     if (type != VECSXP && Rf_length(res) != 1) {
-      stop_bad_element_length(res, i + 1, 1, "Result", NULL, false);
+      r_abort("Result must be length 1, not %i", Rf_length(res));
     }
 
     set_vector_value(out, i, res, 0);

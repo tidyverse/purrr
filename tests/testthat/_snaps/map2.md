@@ -4,7 +4,7 @@
       map2_int(1:4, 5:8, range)
     Condition
       Error in `map2_int()`:
-      ! Result 1 must have length 1, not 2.
+      ! Result must be length 1, not 2
 
 # fails on non-vectors
 
