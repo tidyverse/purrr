@@ -19,10 +19,6 @@ test_that("modify_if/modify_at return same type as input", {
   expect_equal(df2b, exp)
 })
 
-test_that("modify_at requires a named object", {
-  expect_snapshot(modify_at(list(), "x", toupper), error = TRUE)
-})
-
 test_that("negative .at omits locations", {
   x <- list(1, 2, 3)
   out <- modify_at(x, -1, ~ .x * 2)

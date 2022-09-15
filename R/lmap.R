@@ -50,17 +50,15 @@ lmap <- function(.x, .f, ...) {
 #' @rdname lmap
 #' @export
 lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
-  sel <- probe(.x, .p)
-  lmap_helper(.x, sel, .f, ..., .else = .else)
+  where <- where_if(.x, .p)
+  lmap_helper(.x, where, .f, ..., .else = .else)
 }
 
 #' @rdname lmap
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
-  where <- at_selection(.x, .at)
-  sel <- inv_which(.x, where)
-
-  lmap_helper(.x, sel, .f, ...)
+  where <- where_at(.x, .at)
+  lmap_helper(.x, where, .f, ...)
 }
 
 lmap_helper <- function(.x, .ind, .f, ..., .else = NULL, .error_call = caller_env()) {

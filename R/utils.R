@@ -1,9 +1,16 @@
-at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_env()) {
+where_at <- function(x, at, error_arg = caller_arg(at), error_call = caller_env()) {
   if (is_formula(at)) {
     at <- rlang::as_function(at, arg = error_arg, call = error_call)
   }
   if (is.function(at)) {
-    at <- at(names(x))
+    at <- at(names2(x))
+  }
+
+  if (is_quosures(at)) {
+    lifecycle::deprecate_warn("1.0.0", I("Using `vars()` in .at"))
+    check_installed("tidyselect", "for using tidyselect in `map_at()`.")
+
+    at <- tidyselect::vars_select(.vars = names2(x), !!!at)
   }
 
   if (is.numeric(at) || is.logical(at) || is.character(at)) {
@@ -11,20 +18,15 @@ at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_
       at <- intersect(at, names2(x))
     }
 
-    # at <- vec_as_subscript(at, arg = "at", call = error_call)
-    vec_as_location(
+    loc <- vec_as_location(
       at,
       length(x),
-      names(x),
+      names2(x),
       missing = "error",
       arg = "at",
       call = error_call
     )
-  } else if (is_quosures(at)) {
-    lifecycle::deprecate_warn("1.0.0", I("Using `vars()` in .at"))
-    check_installed("tidyselect", "for using tidyselect in `map_at()`.")
-
-    tidyselect::vars_select(.vars = names(x), !!!at)
+    seq_along(x) %in% loc
   } else {
     cli::cli_abort(
       "{.arg {error_arg}} must be a numeric vector, character vector, or function, not {.obj_type_friendly {at}}.",
@@ -34,41 +36,46 @@ at_selection <- function(x, at, error_arg = caller_arg(at), error_call = caller_
   }
 }
 
-inv_which <- function(x, sel, error_call = caller_env()) {
-  if (is.character(sel)) {
-    names <- names(x)
-    if (is.null(names)) {
-      cli::cli_abort(
-        "Character {.arg .at} must be used with a named {.arg x}.",
-        arg = ".at",
-        call = error_call
-      )
-    }
-    names %in% sel
-  } else if (is.numeric(sel)) {
-    if (any(sel < 0)) {
-      !seq_along(x) %in% abs(sel)
-    } else {
-      seq_along(x) %in% sel
-    }
-
-  } else {
-    cli::cli_abort(
-      "{.arg .at} must be a character or numeric vector, not {.obj_type_friendly {sel}}.",
-      arg = ".at",
-      call = error_call
-    )
-  }
-}
-
-# Internal version of map_lgl() that works with logical vectors
-probe <- function(.x, .p, ..., .error_call = caller_env()) {
+where_if <- function(.x, .p, ..., .error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
     .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = .error_call)
     map_lgl(.x, .p, ...)
+  }
+}
+
+as_predicate <- function(.fn,
+                         ...,
+                         .mapper,
+                         .allow_na = FALSE,
+                         .error_call = caller_env(),
+                         .error_arg = caller_arg(.fn)) {
+
+  force(.error_arg)
+  force(.error_call)
+
+  if (.mapper) {
+    .fn <- as_mapper(.fn, ...)
+  }
+
+  function(...) {
+    out <- .fn(...)
+
+    if (!is_bool(out)) {
+      if (is_na(out) && .allow_na) {
+        # Always return a logical NA
+        return(NA)
+      }
+      cli::cli_abort(
+        "{.fn { .error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
+        arg = .error_arg,
+        call = .error_call
+      )
+    }
+
+    out
   }
 }
 
