@@ -77,9 +77,10 @@ simplify_impl <- function(x,
 
   if (strict) {
     list_check_all_vectors(x, arg = error_arg, call = error_call)
+    can_simplify <- all(list_sizes(x) == 1L)
+  } else {
+    can_simplify <- list_all_vectors(x) && all(list_sizes(x) == 1L)
   }
-
-  can_simplify <- list_all_vectors(x) && all(list_sizes(x) == 1L)
 
   if (can_simplify) {
 
@@ -104,8 +105,8 @@ simplify_impl <- function(x,
       bad <- detect_index(x, function(x) vec_size(x) != 1)
       cli::cli_abort(
         c(
-          "All elements must be length 1",
-          i = "`{error_arg}[[{bad}]]` is length {length(x[[bad]])}."
+          "All elements must be length 1.",
+          i = "`{error_arg}[[{bad}]]` is length {vec_size(x[[bad]])}."
         ),
         call = error_call
       )
