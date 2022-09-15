@@ -102,7 +102,7 @@ modify.default <- function(.x, .f, ...) {
     .x[] <- map(.x, .f, ...)
     .x
   } else {
-    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
+    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}.")
   }
 }
 
@@ -161,7 +161,7 @@ modify2.default <- function(.x, .y, .f, ...) {
     .x[] <- out
     .x
   } else {
-    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
+    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}.")
   }
 }
 
@@ -174,7 +174,7 @@ imodify <- function(.x, .f, ...) {
 
 # helpers -----------------------------------------------------------------
 
-modify_where <- function(.x, .where, .f, ...) {
+modify_where <- function(.x, .where, .f, ..., .error_call = caller_env()) {
   if (vec_is_list(.x) || is.data.frame(.x)) {
     out <- vec_proxy(.x)
     out[.where] <- map(out[.where], .f, ...)
@@ -186,6 +186,9 @@ modify_where <- function(.x, .where, .f, ...) {
     .x[.where] <- map(.x[.where], .f, ...)
     .x
   } else {
-    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
+    cli::cli_abort(
+      "Don't know how to modify {.obj_type_friendly {.x}}.",
+      call = .error_call
+    )
   }
 }

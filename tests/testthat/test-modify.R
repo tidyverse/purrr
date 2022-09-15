@@ -125,3 +125,12 @@ test_that("can still modify non-vector lists", {
   expect_equal(modify2(x, list(3, 4), ~ .y), notlist(x = 3, y = 4))
   expect_equal(modify2(notlist(1), list(3, 4), ~ .y), notlist(3, 4))
 })
+
+test_that("user friendly error for non-supported cases", {
+  expect_snapshot(error = TRUE, {
+    modify(mean, identity)
+    modify_if(mean, TRUE, identity)
+    modify_at(mean, "x", identity)
+    modify2(mean, 1, identity)
+  })
+})

@@ -37,3 +37,26 @@
       Error in `modify_if()`:
       ! `.p()` must return a single `TRUE` or `FALSE`, not a logical vector.
 
+# user friendly error for non-supported cases
+
+    Code
+      modify(mean, identity)
+    Condition
+      Error in `modify()`:
+      ! Don't know how to modify a function.
+    Code
+      modify_if(mean, TRUE, identity)
+    Condition
+      Error in `modify_if()`:
+      ! Don't know how to modify a function.
+    Code
+      modify_at(mean, "x", identity)
+    Condition
+      Error in `modify_at()`:
+      ! Don't know how to modify a function.
+    Code
+      modify2(mean, 1, identity)
+    Condition
+      Error in `modify2()`:
+      ! Don't know how to modify a function.
+
