@@ -28,7 +28,8 @@
       map_vec(1:2, ~ rep(1, .x))
     Condition
       Error in `map_vec()`:
-      ! All elements must be length-1 vectors.
+      ! All elements must be size 1.
+      i `out[[2]]` is size 2.
 
 # requires common type of output
 
