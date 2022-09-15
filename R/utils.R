@@ -46,6 +46,39 @@ where_if <- function(.x, .p, ..., .error_call = caller_env()) {
   }
 }
 
+as_predicate <- function(.fn,
+                         ...,
+                         .mapper,
+                         .allow_na = FALSE,
+                         .error_call = caller_env(),
+                         .error_arg = caller_arg(.fn)) {
+
+  force(.error_arg)
+  force(.error_call)
+
+  if (.mapper) {
+    .fn <- as_mapper(.fn, ...)
+  }
+
+  function(...) {
+    out <- .fn(...)
+
+    if (!is_bool(out)) {
+      if (is_na(out) && .allow_na) {
+        # Always return a logical NA
+        return(NA)
+      }
+      cli::cli_abort(
+        "{.fn { .error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
+        arg = .error_arg,
+        call = .error_call
+      )
+    }
+
+    out
+  }
+}
+
 paste_line <- function(...) {
   paste(chr(...), collapse = "\n")
 }
