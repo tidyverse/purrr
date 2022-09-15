@@ -27,7 +27,7 @@
     Code
       map2(1:2, 1:3, `+`)
     Condition
-      Error:
+      Error in `map2()`:
       ! Mapped vectors must have consistent lengths:
       * `.x` has length 2
       * `.y` has length 3

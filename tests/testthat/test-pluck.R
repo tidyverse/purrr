@@ -1,5 +1,8 @@
 test_that("contents must be a vector", {
-  expect_error(pluck(quote(x), list(1)), "Can't pluck from a symbol")
+  expect_snapshot(error = TRUE, {
+    pluck(quote(x), 1)
+    pluck(expression(1), 1)
+  })
 })
 
 test_that("dots must be unnamed", {
@@ -8,47 +11,41 @@ test_that("dots must be unnamed", {
 
 # pluck vector --------------------------------------------------------------
 
-test_that("can pluck by position", {
-  x <- list("a", 1, c(TRUE, FALSE))
+test_that("can pluck vector types ", {
+  x <- list(
+    lgl = c(TRUE, FALSE),
+    int = 1:2,
+    dbl = c(1, 2.5),
+    chr = c("a", "b"),
+    cpx = c(1 + 1i, 2 + 2i),
+    raw = charToRaw("ab"),
+    lst = list(1, 2)
+  )
 
-  # double
-  expect_identical(pluck(x, 1), x[[1]])
-  expect_identical(pluck(x, 2), x[[2]])
-  expect_identical(pluck(x, 3), x[[3]])
-
-  # integer
-  expect_identical(pluck(x, 1L), x[[1]])
-  expect_identical(pluck(x, 2L), x[[2]])
-  expect_identical(pluck(x, 3L), x[[3]])
+  expect_equal(pluck(x, "lgl", 2), FALSE)
+  expect_identical(pluck(x, "int", 2), 2L)
+  expect_equal(pluck(x, "dbl", 2), 2.5)
+  expect_equal(pluck(x, "chr", 2), "b")
+  expect_equal(pluck(x, "cpx", 2), 2 + 2i)
+  expect_equal(pluck(x, "raw", 2), charToRaw("b"))
+  expect_equal(pluck(x, "lst", 2), 2)
 })
 
-test_that("can pluck from back", {
-  x <- list(1, 2, 3)
-  expect_equal(pluck(x, -1), 3)
-  expect_equal(pluck(x, -2), 2)
-  expect_equal(pluck(x, -3), 1)
+test_that("can pluck by position (positive and negative)", {
+  x <- list("a", "b", "c")
+
+  expect_equal(pluck(x, 1), "a")
+  expect_equal(pluck(x, 4), NULL)
+
+  expect_equal(pluck(x, -1), "c")
   expect_equal(pluck(x, -4), NULL)
-  expect_equal(pluck(x, -5), NULL)
 })
 
 test_that("can pluck by name", {
   x <- list(a = "a", b = 1, c = c(TRUE, FALSE))
 
   expect_identical(pluck(x, "a"), x[["a"]])
-  expect_identical(pluck(x, "b"), x[["b"]])
   expect_identical(pluck(x, "c"), x[["c"]])
-})
-
-test_that("can pluck from atomic vectors", {
-  expect_identical(pluck(TRUE, 1), TRUE)
-  expect_identical(pluck(1L, 1), 1L)
-  expect_identical(pluck(1, 1), 1)
-  expect_identical(pluck("a", 1), "a")
-})
-
-test_that("can pluck by name and position", {
-  x <- list(a = list(list(b = 1)))
-  expect_equal(pluck(x, "a", 1, "b"), 1)
 })
 
 test_that("require length 1 character/double vectors", {
@@ -65,7 +62,6 @@ test_that("validate index even when indexing NULL", {
     pluck(NULL, 1:2)
     pluck(NULL, TRUE)
   })
-
 })
 
 test_that("special indexes never match", {
@@ -209,11 +205,6 @@ test_that("pluck returns missing with missing index", {
 test_that("plucks by name", {
   expect_equal(pluck(A, "a"), 1)
 })
-
-test_that("can't pluck from complex", {
-  expect_error( pluck( 1+2i, 1 ), "Don't know how to index object of type complex at level 1" )
-})
-
 
 # assign_in() ----------------------------------------------------------
 
