@@ -67,6 +67,12 @@
 
 ## New features
 
+* `*_at()` can now take a function (or formula) that's passed the vector of
+  element names and returns the elements to select.
+
+* New `keep_at()` and `discard_at()` that work like `keep()` and `discard()`
+  but operation on element names rather than element contents (#817).
+
 * Some mapping functions have now a `.progress` argument to create a
   progress bar. See `?progress_bars` (#149).
 

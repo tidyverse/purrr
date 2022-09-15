@@ -99,6 +99,35 @@ modify.default <- function(.x, .f, ...) {
 
   .x
 }
+# TODO: Replace all the following methods with a generic strategy that
+# implements sane coercion rules for base vectors
+#' @export
+modify.integer  <- function (.x, .f, ...) {
+  .x[] <- map_int(.x, .f, ...)
+  .x
+}
+#' @export
+modify.double  <- function (.x, .f, ...) {
+  .x[] <- map_dbl(.x, .f, ...)
+  .x
+}
+#' @export
+modify.character  <- function (.x, .f, ...) {
+  .x[] <- map_chr(.x, .f, ...)
+  .x
+}
+#' @export
+modify.logical  <- function (.x, .f, ...) {
+  .x[] <- map_lgl(.x, .f, ...)
+  .x
+}
+#' @export
+modify.pairlist <- function(.x, .f, ...) {
+  as.pairlist(map(.x, .f, ...))
+}
+
+
+# modify_if ---------------------------------------------------------------
 
 #' @rdname modify
 #' @inheritParams map_if
@@ -126,6 +155,35 @@ modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
 
   .x
 }
+#' @export
+modify_if.integer <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_base(map_int, .x, .p, .true = .f, .false = .else, ...)
+}
+#' @export
+modify_if.double <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_base(map_dbl, .x, .p, .true = .f, .false = .else, ...)
+}
+#' @export
+modify_if.character <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_base(map_chr, .x, .p, .true = .f, .false = .else, ...)
+}
+#' @export
+modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
+  modify_if_base(map_lgl, .x, .p, .true = .f, .false = .else, ...)
+}
+
+modify_if_base <- function(.fmap, .x, .p, .true, .false = NULL, ..., .error_call = caller_env()) {
+  sel <- probe(.x, .p, .error_call = .error_call)
+  .x[sel] <- .fmap(.x[sel], .true, ...)
+
+  if (!is.null(.false)) {
+    .x[!sel] <- .fmap(.x[!sel], .false, ...)
+  }
+
+  .x
+}
+
+# modify_at ---------------------------------------------------------------
 
 #' @rdname modify
 #' @inheritParams map_at
@@ -136,96 +194,40 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @rdname modify
 #' @export
 modify_at.default <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
   modify_if(.x, sel, .f, ...)
 }
-
-# TODO: Replace all the following methods with a generic strategy that
-# implements sane coercion rules for base vectors
-
-#' @export
-modify.integer  <- function (.x, .f, ...) {
-  .x[] <- map_int(.x, .f, ...)
-  .x
-}
-#' @export
-modify.double  <- function (.x, .f, ...) {
-  .x[] <- map_dbl(.x, .f, ...)
-  .x
-}
-#' @export
-modify.character  <- function (.x, .f, ...) {
-  .x[] <- map_chr(.x, .f, ...)
-  .x
-}
-#' @export
-modify.logical  <- function (.x, .f, ...) {
-  .x[] <- map_lgl(.x, .f, ...)
-  .x
-}
-#' @export
-modify.pairlist <- function(.x, .f, ...) {
-  as.pairlist(map(.x, .f, ...))
-}
-
-#' @export
-modify_if.integer <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_atomic(map_int, .x, .p, .true = .f, .false = .else, ...)
-}
-#' @export
-modify_if.double <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_atomic(map_dbl, .x, .p, .true = .f, .false = .else, ...)
-}
-#' @export
-modify_if.character <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_atomic(map_chr, .x, .p, .true = .f, .false = .else, ...)
-}
-#' @export
-modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_atomic(map_lgl, .x, .p, .true = .f, .false = .else, ...)
-}
-
-modify_if_atomic <- function(.fmap, .x, .p, .true, .false = NULL, ...) {
-  sel <- probe(.x, .p)
-  .x[sel] <- .fmap(.x[sel], .true, ...)
-
-  if (!is.null(.false)) {
-    .x[!sel] <- .fmap(.x[!sel], .false, ...)
-  }
-
-  .x
-}
-
-
 #' @export
 modify_at.integer <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_int(.x[sel], .f, ...)
   .x
 }
 #' @export
 modify_at.double <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_dbl(.x[sel], .f, ...)
   .x
 }
 #' @export
 modify_at.character <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_chr(.x[sel], .f, ...)
   .x
 }
 #' @export
 modify_at.logical <- function(.x, .at, .f, ...) {
-  where <- at_selection(names(.x), .at)
+  where <- at_selection(.x, .at)
   sel <- inv_which(.x, where)
   .x[sel] <- map_lgl(.x[sel], .f, ...)
   .x
 }
+
+# modify2 -----------------------------------------------------------------
 
 #' @rdname modify
 #' @export
@@ -234,34 +236,27 @@ modify2 <- function(.x, .y, .f, ...) {
 }
 #' @export
 modify2.default <- function(.x, .y, .f, ...) {
-  modify_base(map2, .x, .y, .f, ...)
+  modify2_base(map2, .x, .y, .f, ...)
 }
-
-#' @rdname modify
-#' @export
-imodify <- function(.x, .f, ...) {
-  modify2(.x, vec_index(.x), .f, ...)
-}
-
 # TODO: Improve genericity (see above)
 #' @export
 modify2.integer  <- function(.x, .y, .f, ...) {
-  modify_base(map2_int, .x, .y, .f, ...)
+  modify2_base(map2_int, .x, .y, .f, ...)
 }
 #' @export
 modify2.double  <- function(.x, .y, .f, ...) {
-  modify_base(map2_dbl, .x, .y, .f, ...)
+  modify2_base(map2_dbl, .x, .y, .f, ...)
 }
 #' @export
 modify2.character  <- function(.x, .y, .f, ...) {
-  modify_base(map2_chr, .x, .y, .f, ...)
+  modify2_base(map2_chr, .x, .y, .f, ...)
 }
 #' @export
 modify2.logical  <- function(.x, .y, .f, ...) {
-  modify_base(map2_lgl, .x, .y, .f, ...)
+  modify2_base(map2_lgl, .x, .y, .f, ...)
 }
 
-modify_base <- function(mapper, .x, .y, .f, ...) {
+modify2_base <- function(mapper, .x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
   out <- mapper(.x, .y, .f, ...)
 
@@ -273,49 +268,8 @@ modify_base <- function(mapper, .x, .y, .f, ...) {
   .x
 }
 
-# Internal version of map_lgl() that works with logical vectors
-probe <- function(.x, .p, ..., .error_call = caller_env()) {
-  if (is_logical(.p)) {
-    stopifnot(length(.p) == length(.x))
-    .p
-  } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = .error_call)
-    map_lgl(.x, .p, ...)
-  }
-}
-
-inv_which <- function(x, sel, error_call = caller_env()) {
-  if (is.character(sel)) {
-    names <- names(x)
-    if (is.null(names)) {
-      cli::cli_abort(
-        "Character {.arg .at} must be used with a named {.arg x}.",
-        arg = ".at",
-        call = error_call
-      )
-    }
-    names %in% sel
-  } else if (is.numeric(sel)) {
-    if (any(sel < 0)) {
-      !seq_along(x) %in% abs(sel)
-    } else {
-      seq_along(x) %in% sel
-    }
-
-  } else {
-    cli::cli_abort(
-      "{.arg .at} must be a character or numeric vector, not {.obj_type_friendly {sel}}.",
-      arg = ".at",
-      call = error_call
-    )
-  }
-}
-
-`list_slice2<-` <- function(x, i, value) {
-  if (is.null(value)) {
-    x[i] <- list(NULL)
-  } else {
-    x[[i]] <- value
-  }
-  x
+#' @rdname modify
+#' @export
+imodify <- function(.x, .f, ...) {
+  modify2(.x, vec_index(.x), .f, ...)
 }
