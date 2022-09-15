@@ -93,39 +93,20 @@ modify <- function(.x, .f, ...) {
 modify.default <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  for (i in seq_along(.x)) {
-    list_slice2(.x, i) <- .f(.x[[i]], ...)
+  if (is.null(.x)) {
+    NULL
+  } else if (vec_is_list(.x) || is.data.frame(.x)) {
+    out <- map(vec_proxy(.x), .f, ...)
+    vec_restore(out, .x)
+  } else if (vec_is(.x)) {
+    map_vec(.x, .f, ..., .ptype = .x)
+  } else if (is.list(x)) {
+    .x[] <- map(.x, .f, ...)
+    .x
+  } else {
+    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
   }
-
-  .x
 }
-# TODO: Replace all the following methods with a generic strategy that
-# implements sane coercion rules for base vectors
-#' @export
-modify.integer  <- function (.x, .f, ...) {
-  .x[] <- map_int(.x, .f, ...)
-  .x
-}
-#' @export
-modify.double  <- function (.x, .f, ...) {
-  .x[] <- map_dbl(.x, .f, ...)
-  .x
-}
-#' @export
-modify.character  <- function (.x, .f, ...) {
-  .x[] <- map_chr(.x, .f, ...)
-  .x
-}
-#' @export
-modify.logical  <- function (.x, .f, ...) {
-  .x[] <- map_lgl(.x, .f, ...)
-  .x
-}
-#' @export
-modify.pairlist <- function(.x, .f, ...) {
-  as.pairlist(map(.x, .f, ...))
-}
-
 
 # modify_if ---------------------------------------------------------------
 
@@ -195,31 +176,22 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @export
 modify_at.default <- function(.x, .at, .f, ...) {
   where <- where_at(.x, .at)
-  modify_if(.x, where, .f, ...)
-}
-#' @export
-modify_at.integer <- function(.x, .at, .f, ...) {
-  where <- where_at(.x, .at)
-  .x[where] <- map_int(.x[where], .f, ...)
-  .x
-}
-#' @export
-modify_at.double <- function(.x, .at, .f, ...) {
-  where <- where_at(.x, .at)
-  .x[where] <- map_dbl(.x[where], .f, ...)
-  .x
-}
-#' @export
-modify_at.character <- function(.x, .at, .f, ...) {
-  where <- where_at(.x, .at)
-  .x[where] <- map_chr(.x[where], .f, ...)
-  .x
-}
-#' @export
-modify_at.logical <- function(.x, .at, .f, ...) {
-  where <- where_at(.x, .at)
-  .x[where] <- map_lgl(.x[where], .f, ...)
-  .x
+
+  if (is.null(.x)) {
+    NULL
+  } else if (vec_is_list(.x) || is.data.frame(.x)) {
+    out <- vec_proxy(.x)
+    out[where] <- map(out[where], .f, ...)
+    vec_restore(out, .x)
+  } else if (vec_is(.x)) {
+    .x[where] <- map_vec(.x[where], .f, ..., .ptype = .x)
+    .x
+  } else if (is.list(x)) {
+    .x[where] <- map(.x[where], .f, ...)
+    .x
+  } else {
+    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
+  }
 }
 
 # modify2 -----------------------------------------------------------------

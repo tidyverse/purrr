@@ -1,3 +1,26 @@
+# modify() and variants implement sane coercion rules for base vectors
+
+    Code
+      modify(1:3, ~"foo")
+    Condition
+      Error:
+      ! Can't convert <character> to <integer>.
+    Code
+      modify_at(1:3, 1, ~"foo")
+    Condition
+      Error:
+      ! Can't convert <character> to <integer>.
+    Code
+      modify_if(1:3, is_integer, ~"foo")
+    Condition
+      Error:
+      ! Can't coerce element 1 from a character to a integer
+    Code
+      modify2(1:3, "foo", ~.y)
+    Condition
+      Error:
+      ! Can't coerce element 1 from a character to a integer
+
 # modify_if() requires predicate functions
 
     Code

@@ -155,6 +155,8 @@
 
 ## Minor improvements and bug fixes
 
+* `modify()` no longer supports modifying calls or pairlists.
+
 * `modify_depth()` is no longer a generic. This makes it more consistent
   with `map_depth()`.
 

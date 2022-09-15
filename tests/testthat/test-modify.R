@@ -25,14 +25,6 @@ test_that("negative .at omits locations", {
   expect_equal(out, list(1, 4, 6))
 })
 
-test_that("modify works with calls and pairlists", {
-  out <- modify(quote(f(x)), ~ quote(z))
-  expect_equal(out, quote(z(z)))
-
-  out <- modify(pairlist(1, 2), ~ . + 1)
-  expect_equal(out, pairlist(2, 3))
-})
-
 test_that("modify{,_at,_if} preserves atomic vector classes", {
   expect_type(modify("a", identity), "character")
   expect_type(modify(1L,  identity), "integer")
@@ -51,10 +43,12 @@ test_that("modify{,_at,_if} preserves atomic vector classes", {
 })
 
 test_that("modify() and variants implement sane coercion rules for base vectors", {
-  expect_error(modify(1:3, ~ "foo"), "Can't coerce")
-  expect_error(modify_at(1:3, 1, ~ "foo"), "Can't coerce")
-  expect_error(modify_if(1:3, is_integer, ~ "foo"), "Can't coerce")
-  expect_error(modify2(1:3, "foo", ~ .y), "Can't coerce")
+  expect_snapshot(error = TRUE, {
+    modify(1:3, ~ "foo")
+    modify_at(1:3, 1, ~ "foo")
+    modify_if(1:3, is_integer, ~ "foo")
+    modify2(1:3, "foo", ~ .y)
+  })
 })
 
 test_that("modify2() and imodify() preserve type of first input", {
