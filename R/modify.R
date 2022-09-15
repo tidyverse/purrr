@@ -106,8 +106,6 @@ modify.default <- function(.x, .f, ...) {
   }
 }
 
-# modify_if ---------------------------------------------------------------
-
 #' @rdname modify
 #' @inheritParams map_if
 #' @export
@@ -118,51 +116,15 @@ modify_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @export
 modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
-  index <- seq_along(.x)
+  .x <- modify_where(.x, where, .f, ...)
 
-  .f <- as_mapper(.f, ...)
-  for (i in index[where]) {
-    list_slice2(.x, i) <- .f(.x[[i]], ...)
-  }
-
-  if (!is_null(.else)) {
+  if (!is.null(.else)) {
     .else <- as_mapper(.else, ...)
-    for (i in index[!where]) {
-      list_slice2(.x, i) <- .else(.x[[i]], ...)
-    }
+    .x <- modify_where(.x, !where, .else, ...)
   }
 
   .x
 }
-#' @export
-modify_if.integer <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_base(map_int, .x, .p, .true = .f, .false = .else, ...)
-}
-#' @export
-modify_if.double <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_base(map_dbl, .x, .p, .true = .f, .false = .else, ...)
-}
-#' @export
-modify_if.character <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_base(map_chr, .x, .p, .true = .f, .false = .else, ...)
-}
-#' @export
-modify_if.logical <- function(.x, .p, .f, ..., .else = NULL) {
-  modify_if_base(map_lgl, .x, .p, .true = .f, .false = .else, ...)
-}
-
-modify_if_base <- function(.fmap, .x, .p, .true, .false = NULL, ..., .error_call = caller_env()) {
-  where <- where_if(.x, .p, .error_call = .error_call)
-  .x[where] <- .fmap(.x[where], .true, ...)
-
-  if (!is.null(.false)) {
-    .x[!where] <- .fmap(.x[!where], .false, ...)
-  }
-
-  .x
-}
-
-# modify_at ---------------------------------------------------------------
 
 #' @rdname modify
 #' @inheritParams map_at
@@ -174,23 +136,8 @@ modify_at <- function(.x, .at, .f, ...) {
 #' @export
 modify_at.default <- function(.x, .at, .f, ...) {
   where <- where_at(.x, .at)
-
-  if (vec_is_list(.x) || is.data.frame(.x)) {
-    out <- vec_proxy(.x)
-    out[where] <- map(out[where], .f, ...)
-    vec_restore(out, .x)
-  } else if (vec_is(.x)) {
-    .x[where] <- map_vec(.x[where], .f, ..., .ptype = .x)
-    .x
-  } else if (is.null(.x) || is.list(.x)) {
-    .x[where] <- map(.x[where], .f, ...)
-    .x
-  } else {
-    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
-  }
+  modify_where(.x, where, .f, ...)
 }
-
-# modify2 -----------------------------------------------------------------
 
 #' @rdname modify
 #' @export
@@ -222,4 +169,23 @@ modify2.default <- function(.x, .y, .f, ...) {
 #' @export
 imodify <- function(.x, .f, ...) {
   modify2(.x, vec_index(.x), .f, ...)
+}
+
+
+# helpers -----------------------------------------------------------------
+
+modify_where <- function(.x, .where, .f, ...) {
+  if (vec_is_list(.x) || is.data.frame(.x)) {
+    out <- vec_proxy(.x)
+    out[.where] <- map(out[.where], .f, ...)
+    vec_restore(out, .x)
+  } else if (vec_is(.x)) {
+    .x[.where] <- map_vec(.x[.where], .f, ..., .ptype = .x)
+    .x
+  } else if (is.null(.x) || is.list(.x)) {
+    .x[.where] <- map(.x[.where], .f, ...)
+    .x
+  } else {
+    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}")
+  }
 }

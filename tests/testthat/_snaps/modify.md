@@ -14,7 +14,7 @@
       modify_if(1:3, is_integer, ~"foo")
     Condition
       Error:
-      ! Can't coerce element 1 from a character to a integer
+      ! Can't convert <character> to <integer>.
     Code
       modify2(1:3, "foo", ~.y)
     Condition
