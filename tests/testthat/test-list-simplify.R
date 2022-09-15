@@ -23,6 +23,7 @@ test_that("strict simplification will error", {
     list_simplify(list(mean))
     list_simplify(list(1, "a"))
     list_simplify(list(1, 1:2))
+    list_simplify(list(data.frame(x = 1), data.frame(x = 1:2)))
     list_simplify(list(1, 2), ptype = character())
   })
 })

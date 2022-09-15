@@ -1,9 +1,10 @@
 #' Simplify a list to an atomic or S3 vector
 #'
 #' Simplification maintains a one-to-one correspondence between the input
-#' and output, implying that each element of `x` must contain a vector of
-#' length 1. If you don't want to maintain this correspondence, then you
-#' probably want either [list_c()] or [list_flatten()].
+#' and output, implying that each element of `x` must contain a one element
+#' vector or a one-row data frame. If you don't want to maintain this
+#' correspondence, then you probably want either [list_c()]/[list_rbind()] or
+#' [list_flatten()].
 #'
 #' @param x A list.
 #' @param strict What should happen if simplification fails? If `TRUE`,
@@ -105,8 +106,8 @@ simplify_impl <- function(x,
       bad <- detect_index(x, function(x) vec_size(x) != 1)
       cli::cli_abort(
         c(
-          "All elements must be length 1.",
-          i = "`{error_arg}[[{bad}]]` is length {vec_size(x[[bad]])}."
+          "All elements must be size 1.",
+          i = "`{error_arg}[[{bad}]]` is size {vec_size(x[[bad]])}."
         ),
         call = error_call
       )

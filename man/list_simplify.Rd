@@ -21,9 +21,10 @@ A vector the same length as \code{x}.
 }
 \description{
 Simplification maintains a one-to-one correspondence between the input
-and output, implying that each element of \code{x} must contain a vector of
-length 1. If you don't want to maintain this correspondence, then you
-probably want either \code{\link[=list_c]{list_c()}} or \code{\link[=list_flatten]{list_flatten()}}.
+and output, implying that each element of \code{x} must contain a one element
+vector or a one-row data frame. If you don't want to maintain this
+correspondence, then you probably want either \code{\link[=list_c]{list_c()}}/\code{\link[=list_rbind]{list_rbind()}} or
+\code{\link[=list_flatten]{list_flatten()}}.
 }
 \examples{
 list_simplify(list(1, 2, 3))

@@ -30,8 +30,14 @@
       list_simplify(list(1, 1:2))
     Condition
       Error in `list_simplify()`:
-      ! All elements must be length 1.
-      i `x[[2]]` is length 2.
+      ! All elements must be size 1.
+      i `x[[2]]` is size 2.
+    Code
+      list_simplify(list(data.frame(x = 1), data.frame(x = 1:2)))
+    Condition
+      Error in `list_simplify()`:
+      ! All elements must be size 1.
+      i `x[[2]]` is size 2.
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
