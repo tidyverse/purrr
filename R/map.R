@@ -165,11 +165,17 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
   try_fetch(
     expr,
     error = function(cnd) {
-      cli::cli_abort(
-        "Computation failed in index {i}",
-        parent = cnd,
-        call = error_call
-      )
+      if (i == 0) {
+        # error happened before or after loop
+        cnd_signal(cnd)
+      } else {
+        cli::cli_abort(
+          "Computation failed in index {i}",
+          parent = cnd,
+          call = error_call
+        )
+      }
+
     }
   )
 }

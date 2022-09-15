@@ -59,6 +59,8 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);
   }
+
+  INTEGER(i_val)[0] = 0;
   cli_progress_done(bar);
 
   UNPROTECT(3);

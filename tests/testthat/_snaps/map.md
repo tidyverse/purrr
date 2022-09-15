@@ -3,9 +3,7 @@
     Code
       map(environment(), identity)
     Condition
-      Error in `map()`:
-      ! Computation failed in index 0
-      Caused by error in `withCallingHandlers()`:
+      Error in `withCallingHandlers()`:
       ! `.x` must be a vector, not an environment.
 
 ---
@@ -13,9 +11,7 @@
     Code
       map(quote(a), identity)
     Condition
-      Error in `map()`:
-      ! Computation failed in index 0
-      Caused by error in `withCallingHandlers()`:
+      Error in `withCallingHandlers()`:
       ! `.x` must be a vector, not a symbol.
 
 # all inform about location of problem
