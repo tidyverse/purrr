@@ -11,7 +11,6 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 static int check_double_index_length(double val, int n, int i, bool strict);
 static int check_character_index(SEXP string, int i, bool strict);
 static int check_names(SEXP names, int i, bool strict);
-static int check_offset(int offset, SEXP index_i, bool strict);
 static int check_unbound_value(SEXP val, SEXP index_i, bool strict);
 static int check_s4_slot(SEXP val, SEXP index_i, bool strict);
 static int check_obj_length(SEXP n, bool strict);
@@ -108,13 +107,12 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
 SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   int offset = find_offset(x, index_i, i, strict);
-  if (check_offset(offset, index_i, strict)) {
+  if (offset < 0) {
     return R_NilValue;
   }
 
   if (OBJECT(x)) {
-    // We check `index_i` with `check_offset()` but pass the original
-    // index rather than an offset in order to support unordered
+    // We check `offset` pass the original index to support unordered
     // vector classes
     SEXP extract_call = PROTECT(Rf_lang3(Rf_install("[["), x, index_i));
     SEXP out = Rf_eval(extract_call, R_GlobalEnv);
@@ -230,13 +228,10 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
 
     switch (TYPEOF(x)) {
     case NILSXP:
-      find_offset(x, index_i, i, strict);
       if (strict) {
-        r_abort(
-          "Can't pluck from NULL at level %d.",
-          rlang_obj_type_friendly_full(x, true, false), i + 1
-        );
+        r_abort("Can't pluck from NULL at level %d.", i + 1);
       }
+      find_offset(x, index_i, i, strict);
       // Leave the indexing loop early
       goto end;
     case LGLSXP:
@@ -263,7 +258,6 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
         rlang_obj_type_friendly_full(x, true, false), i + 1
       );
     }
-
   }
 
  end:
@@ -349,21 +343,6 @@ static int check_names(SEXP names, int i, bool strict) {
 
   if (strict) {
     r_abort("Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
-  } else {
-    return -1;
-  }
-}
-
-static int check_offset(int offset, SEXP index_i, bool strict) {
-  if (offset >= 0) {
-    return 0;
-  }
-
-  if (strict) {
-    r_abort(
-      "Can't find index `%s` in vector.",
-      Rf_translateCharUTF8(Rf_asChar(index_i))
-    );
   } else {
     return -1;
   }
