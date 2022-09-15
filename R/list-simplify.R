@@ -76,34 +76,14 @@ simplify_impl <- function(x,
                           error_call = caller_env()) {
   vec_check_list(x, arg = error_arg, call = error_call)
 
+  # Handle the cases where we definitely can't simplify
   if (strict) {
     list_check_all_vectors(x, arg = error_arg, call = error_call)
-    can_simplify <- all(list_sizes(x) == 1L)
-  } else {
-    can_simplify <- list_all_vectors(x) && all(list_sizes(x) == 1L)
-  }
+    size_one <- list_sizes(x) == 1L
+    can_simplify <- all(size_one)
 
-  if (can_simplify) {
-
-    # TODO: use `error_call` when available
-    tryCatch(
-      {
-        names <- vec_names(x)
-        x <- vec_set_names(x, NULL)
-        out <- list_unchop(x, ptype = ptype)
-        vec_set_names(out, names)
-      },
-      vctrs_error_incompatible_type = function(err) {
-        if (strict || !is.null(ptype)) {
-          cnd_signal(err)
-        } else {
-          x
-        }
-      }
-    )
-  } else {
-    if (strict) {
-      bad <- detect_index(x, function(x) vec_size(x) != 1)
+    if (!can_simplify) {
+      bad <- which(!size_one)[[1]]
       cli::cli_abort(
         c(
           "All elements must be size 1.",
@@ -111,8 +91,28 @@ simplify_impl <- function(x,
         ),
         call = error_call
       )
-    } else {
-      x
+    }
+  } else {
+    can_simplify <- list_all_vectors(x) && all(list_sizes(x) == 1L)
+
+    if (!can_simplify) {
+      return(x)
     }
   }
+
+  names <- vec_names(x)
+  x <- vec_set_names(x, NULL)
+
+  # TODO: use `error_call` when available
+  out <- tryCatch(
+    list_unchop(x, ptype = ptype),
+    vctrs_error_incompatible_type = function(err) {
+      if (strict || !is.null(ptype)) {
+        cnd_signal(err)
+      } else {
+        x
+      }
+    }
+  )
+  vec_set_names(out, names)
 }
