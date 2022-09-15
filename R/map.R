@@ -126,13 +126,6 @@ map_lgl <- function(.x, .f, ..., .progress = FALSE) {
 
 #' @rdname map
 #' @export
-map_chr <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "character", .progress)
-}
-
-#' @rdname map
-#' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
@@ -143,6 +136,13 @@ map_int <- function(.x, .f, ..., .progress = FALSE) {
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "double", .progress)
+}
+
+#' @rdname map
+#' @export
+map_chr <- function(.x, .f, ..., .progress = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_impl, environment(), ".x", ".f", "character", .progress)
 }
 
 #' @rdname map

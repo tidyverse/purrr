@@ -3,9 +3,9 @@
 \name{map}
 \alias{map}
 \alias{map_lgl}
-\alias{map_chr}
 \alias{map_int}
 \alias{map_dbl}
+\alias{map_chr}
 \alias{map_vec}
 \alias{walk}
 \title{Apply a function to each element of a vector}
@@ -14,11 +14,11 @@ map(.x, .f, ..., .progress = FALSE)
 
 map_lgl(.x, .f, ..., .progress = FALSE)
 
-map_chr(.x, .f, ..., .progress = FALSE)
-
 map_int(.x, .f, ..., .progress = FALSE)
 
 map_dbl(.x, .f, ..., .progress = FALSE)
+
+map_chr(.x, .f, ..., .progress = FALSE)
 
 map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
 
