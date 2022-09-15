@@ -113,9 +113,10 @@ your accessors are stored in a list, you can splice that in with
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># chuck() consistently errors:</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">chuck</span><span class="op">(</span><span class="va">x</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Can't find name `y` in vector.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in chuck(x, "y") : Can't find name `y` in vector.</span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">chuck</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error : Index 1 exceeds the length of plucked object (3 &gt; 2).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in chuck(x, 3) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Index 1 exceeds the length of plucked object (3 &gt; 2).</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
