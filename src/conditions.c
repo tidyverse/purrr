@@ -22,7 +22,7 @@ SEXP caller_env() {
 }
 
 #define BUFSIZE 8192
-void purrr_abort(const char* fmt, ...) {
+void r_abort(const char* fmt, ...) {
   char buf[BUFSIZE];
   va_list dots;
   va_start(dots, fmt);

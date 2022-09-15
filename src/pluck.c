@@ -94,7 +94,7 @@ int find_offset(SEXP x, SEXP index, int i, bool strict) {
 
     }
     if (strict) {
-      purrr_abort("Can't find name `%s` in vector.", val);
+      r_abort("Can't find name `%s` in vector.", val);
     } else {
       UNPROTECT(1);
       return -1;
@@ -130,7 +130,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   case VECSXP:  return VECTOR_ELT(x, offset);
   case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
   default:
-    purrr_abort(
+    r_abort(
       "Don't know how to index object of type %s at level %d.",
       Rf_type2char(TYPEOF(x)), i + 1
     );
@@ -231,7 +231,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
     case NILSXP:
       find_offset(x, index_i, i, strict);
       if (strict) {
-        purrr_abort("Plucked object can't be NULL.");
+        r_abort("Plucked object can't be NULL.");
       }
       // Leave the indexing loop early
       goto end;
@@ -255,7 +255,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
       REPROTECT(x, idx);
       break;
     default:
-      purrr_abort("Can't pluck from a %s.", Rf_type2char(TYPEOF(x)));
+      r_abort("Can't pluck from a %s.", Rf_type2char(TYPEOF(x)));
     }
 
   }
@@ -274,7 +274,7 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
   }
 
   if (strict) {
-    purrr_abort(
+    r_abort(
       "Index %d must be finite, not %s.",
       i + 1, Rf_translateCharUTF8(Rf_asChar(index))
     );
@@ -286,14 +286,14 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 static int check_double_index_length(double val, int n, int i, bool strict) {
   if (val == 0) {
     if (strict) {
-      purrr_abort("Index %d is zero.", i + 1);
+      r_abort("Index %d is zero.", i + 1);
     } else {
       return -1;
     }
   } else if (val < 0) {
     if (strict) {
       // Negative values have already been subtracted from end
-      purrr_abort(
+      r_abort(
         "Negative index %d must be greater than or equal to %d, not %.0f.",
         i + 1, -n, val - n - 1
       );
@@ -302,7 +302,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
     }
   } else if (val > n) {
     if (strict) {
-      purrr_abort(
+      r_abort(
         "Index %d exceeds the length of plucked object (%.0f > %d).",
         i + 1, val, n
       );
@@ -317,7 +317,7 @@ static int check_double_index_length(double val, int n, int i, bool strict) {
 static int check_character_index(SEXP string, int i, bool strict) {
   if (string == NA_STRING) {
     if (strict) {
-      purrr_abort("Index %d can't be NA.", i + 1);
+      r_abort("Index %d can't be NA.", i + 1);
     } else {
       return -1;
     }
@@ -327,7 +327,7 @@ static int check_character_index(SEXP string, int i, bool strict) {
   const char* val = CHAR(string);
   if (val[0] == '\0') {
     if (strict) {
-      purrr_abort("Index %d can't be an empty string (\"\").", i + 1);
+      r_abort("Index %d can't be an empty string (\"\").", i + 1);
     } else {
       return -1;
     }
@@ -342,7 +342,7 @@ static int check_names(SEXP names, int i, bool strict) {
   }
 
   if (strict) {
-    purrr_abort("Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
+    r_abort("Index %d is attempting to pluck from an unnamed vector using a string name.", i + 1);
   } else {
     return -1;
   }
@@ -354,7 +354,7 @@ static int check_offset(int offset, SEXP index_i, bool strict) {
   }
 
   if (strict) {
-    purrr_abort(
+    r_abort(
       "Can't find index `%s` in vector.",
       Rf_translateCharUTF8(Rf_asChar(index_i))
     );
@@ -369,7 +369,7 @@ static int check_unbound_value(SEXP val, SEXP index_i, bool strict) {
   }
 
   if (strict) {
-    purrr_abort(
+    r_abort(
       "Can't find object `%s` in environment.",
       Rf_translateCharUTF8(Rf_asChar(index_i))
     );
@@ -384,7 +384,7 @@ static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
   }
 
   if (strict) {
-    purrr_abort(
+    r_abort(
       "Can't find slot `%s`.",
       Rf_translateCharUTF8(Rf_asChar(index_i))
     );
@@ -396,7 +396,7 @@ static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
 static int check_obj_length(SEXP n, bool strict) {
   if (TYPEOF(n) != INTSXP || Rf_length(n) != 1) {
     if (strict) {
-      purrr_abort("Length of S3 object must be a scalar integer.");
+      r_abort("Length of S3 object must be a scalar integer.");
     } else {
       return -1;
     }
