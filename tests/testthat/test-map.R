@@ -84,12 +84,6 @@ test_that("primitive dispatch correctly", {
   expect_identical(map(list(x, x), as.character), list("dispatched!", "dispatched!"))
 })
 
-
-test_that("error message follows style guide when result is not length 1", {
-  x <- list(list(a = 1L), list(a = 2:3))
-  expect_snapshot(purrr::map_int(x, "a"), error = TRUE)
-})
-
 test_that("map() with empty input copies names", {
   named_list <- named(list())
   expect_identical(    map(named_list, identity), named(list()))

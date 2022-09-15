@@ -38,13 +38,3 @@
       Caused by error in `fail_at_3()`:
       ! Doesn't work
 
-# error message follows style guide when result is not length 1
-
-    Code
-      purrr::map_int(x, "a")
-    Condition
-      Error in `purrr::map_int()`:
-      ! Computation failed in index 2
-      Caused by error in `withCallingHandlers()`:
-      ! Result must be length 1, not 2
-
