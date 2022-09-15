@@ -30,7 +30,7 @@
       list_simplify(list(1, 1:2))
     Condition
       Error in `list_simplify()`:
-      ! All elements must be length 1
+      ! All elements must be length 1.
       i `x[[2]]` is length 2.
     Code
       list_simplify(list(1, 2), ptype = character())
