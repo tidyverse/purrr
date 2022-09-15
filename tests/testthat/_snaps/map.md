@@ -21,7 +21,7 @@
     Condition
       Error in `map_int()`:
       ! Computation failed in index 3
-      Caused by error in `withCallingHandlers()`:
+      Caused by error:
       ! Result must be length 1, not 2
     Code
       map_int(1:3, ~ fail_at_3("x"))
