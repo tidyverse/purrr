@@ -95,9 +95,10 @@ test_that("still iterates using [[", {
   expect_equal(map_vec(df, length), c(x = 1, y = 1, z = 1))
 })
 
-test_that("requires output be length 1", {
+test_that("requires output be length 1 and have common type", {
   expect_snapshot(error = TRUE, {
     map_vec(1:2, ~ rep(1, .x))
+    map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
   })
 })
 
@@ -111,23 +112,8 @@ test_that("concatenates list output", {
   expect_equal(out, list(1, 2))
 })
 
-test_that("requires common type of output", {
-  out <- map_vec(1:2, ~ factor("x"))
-  expect_equal(out, factor(c("x", "x")))
-
-  expect_snapshot(error = TRUE, {
-    map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
-  })
-})
-
 test_that("can enforce .ptype", {
   expect_snapshot(error = TRUE, {
     map_vec(1:2, ~ factor("x"), .ptype = integer())
   })
-})
-
-test_that("preserves names of input", {
-  x <- c(x = 1, y = 2)
-  out <- map_vec(x, ~ set_names(1, letters[.x]))
-  expect_named(out, c("x", "y"))
 })
