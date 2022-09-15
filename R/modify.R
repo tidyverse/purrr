@@ -154,7 +154,7 @@ modify2.default <- function(.x, .y, .f, ...) {
   } else if (vec_is(.x)) {
     map2_vec(.x, .y, .f, ..., .ptype = .x)
   } else if (is.null(.x) || is.list(.x)) {
-    out <- map(.x, .y, .f, ...)
+    out <- map2(.x, .y, .f, ...)
     if (length(out) > length(.x)) {
       .x <- .x[rep(1L, length(out))]
     }

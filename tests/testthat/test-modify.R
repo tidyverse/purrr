@@ -109,3 +109,19 @@ test_that("modify_at() can use tidyselect", {
   two <- modify_at(mtcars, vars(tidyselect::contains("cyl")), as.character)
   expect_bare(two$cyl, "character")
 })
+
+test_that("can still modify non-vector lists", {
+  notlist <- function(...) structure(list(...), class = "notlist")
+  x <- notlist(x = 1, y = "a")
+
+  expect_equal(modify(x, ~ 2), notlist(x = 2, y = 2))
+  expect_equal(modify_if(x, is.character, ~ 2), notlist(x = 1, y = 2))
+  expect_equal(modify_at(x, "y", ~ 2), notlist(x = 1, y = 2))
+
+  local_bindings(
+    "[.notlist" = function(...) structure(NextMethod(), class = "notlist"),
+    .env = globalenv()
+  )
+  expect_equal(modify2(x, list(3, 4), ~ .y), notlist(x = 3, y = 4))
+  expect_equal(modify2(notlist(1), list(3, 4), ~ .y), notlist(3, 4))
+})
