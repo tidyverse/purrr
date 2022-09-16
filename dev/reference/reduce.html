@@ -167,15 +167,15 @@ values of the reduction.</p></div>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Reducing `+` computes the sum of a vector while reducing `*`</span></span></span>
 <span class="r-in"><span><span class="co"># computes the product:</span></span></span>
-<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">reduce</span><span class="op">(</span><span class="va">`+`</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">|&gt;</span> <span class="fu">reduce</span><span class="op">(</span><span class="va">`+`</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
-<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">reduce</span><span class="op">(</span><span class="va">`*`</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">|&gt;</span> <span class="fu">reduce</span><span class="op">(</span><span class="va">`*`</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3628800</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># By ignoring the input vector (.y), you can turn output of one step into</span></span></span>
+<span class="r-in"><span><span class="co"># By ignoring the input vector (nxt), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
-<span class="r-in"><span><span class="fu">reduce</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.720841</span>
+<span class="r-in"><span><span class="fu">reduce</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, \<span class="op">(</span><span class="va">acc</span>, <span class="va">nxt</span><span class="op">)</span> <span class="va">acc</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.293988</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># When the operation is associative, the direction of reduction</span></span></span>
 <span class="r-in"><span><span class="co"># does not matter:</span></span></span>
@@ -208,9 +208,9 @@ values of the reduction.</p></div>
 <span class="r-in"><span><span class="co"># reduce2() takes a ternary function and a second vector that is</span></span></span>
 <span class="r-in"><span><span class="co"># one element smaller than the first vector:</span></span></span>
 <span class="r-in"><span><span class="va">paste2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">sep</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">reduce</span><span class="op">(</span><span class="va">paste2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">reduce</span><span class="op">(</span><span class="va">paste2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a.b.c.d"</span>
-<span class="r-in"><span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"."</span>, <span class="st">"-"</span><span class="op">)</span>, <span class="va">paste2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">reduce2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"."</span>, <span class="st">"-"</span><span class="op">)</span>, <span class="va">paste2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a-b.c-d"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -229,7 +229,7 @@ values of the reduction.</p></div>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="va">letters</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">reduce</span><span class="op">(</span><span class="va">paste3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">letters</span> <span class="op">|&gt;</span> <span class="fu">reduce</span><span class="op">(</span><span class="va">paste3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a.b.c"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Here the early return branch checks the incoming inputs passed on</span></span></span>
@@ -240,7 +240,7 @@ values of the reduction.</p></div>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">input</span>, sep <span class="op">=</span> <span class="va">sep</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="va">letters</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">reduce</span><span class="op">(</span><span class="va">paste4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">letters</span> <span class="op">|&gt;</span> <span class="fu">reduce</span><span class="op">(</span><span class="va">paste4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a.b.c.d.e.f.g.h.i"</span>
 </code></pre></div>
     </div>

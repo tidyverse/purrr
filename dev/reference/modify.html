@@ -189,7 +189,7 @@ own methods.</p>
 <p>If you implement your own <code>modify()</code> method, make sure it satisfies
 the following invariants:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, identity) <span class="sc">==</span><span class="er">=</span> x</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, <span class="fu">compose</span>(f, g)) <span class="sc">==</span><span class="er">=</span> <span class="fu">modify</span>(x, g) <span class="sc">%&gt;%</span> <span class="fu">modify</span>(f)</span></code></pre><p></p></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, <span class="fu">compose</span>(f, g)) <span class="sc">==</span><span class="er">=</span> <span class="fu">modify</span>(x, g) <span class="sc">|</span><span class="er">&gt;</span> <span class="fu">modify</span>(f)</span></code></pre><p></p></div>
 <p>These invariants are known as the <a href="https://wiki.haskell.org/Functor#Functor_Laws" class="external-link">functor laws</a> in computer
 science.</p>
     </div>
@@ -207,8 +207,8 @@ science.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Convert factors to characters</span></span></span>
-<span class="r-in"><span><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	150 obs. of  5 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
@@ -218,7 +218,7 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr  "setosa" "setosa" "setosa" "setosa" ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Specify which columns to map with a numeric vector of positions:</span></span></span>
-<span class="r-in"><span><span class="va">mtcars</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	32 obs. of  11 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ mpg : chr  "21" "21" "22.8" "21.4" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span>
@@ -233,7 +233,7 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or with a vector of names:</span></span></span>
-<span class="r-in"><span><span class="va">mtcars</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	32 obs. of  11 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ cyl : chr  "6" "6" "4" "6" ...</span>
@@ -247,34 +247,32 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="rbernoulli.html">rbernoulli</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="st">"x"</span>, <span class="op">~</span> <span class="fu"><a href="update_list.html">update_list</a></span><span class="op">(</span><span class="va">.</span>, y <span class="op">=</span> <span class="op">~</span> <span class="va">y</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="as_vector.html">simplify_all</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`update_list()` was deprecated in purrr 1.0.0.</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="list_transpose.html">list_transpose</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="st">"x"</span>, \<span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="va">x</span>, y <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="va">y</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="list_transpose.html">list_transpose</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [23]  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [34]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [100]  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     1     2     3     4   500   600   700     8     9    10    11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [12]    12    13    14    15  1600    17  1800    19  2000  2100    22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [23]  2300  2400  2500  2600    27    28  2900  3000  3100  3200  3300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [34]  3400    35    36  3700  3800    39    40    41    42  4300  4400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [45]    45  4600    47    48  4900    50  5100  5200  5300    54    55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56]    56  5700  5800  5900    60    61  6200    63    64    65  6600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]    67  6800  6900  7000    71  7200    73    74  7500    76    77</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78]    78    79  8000  8100  8200    83    84    85  8600    87    88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  8900  9000  9100    92  9300    94  9500  9600    97    98    99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     1   200   300     4     5     6     7   800     9  1000  1100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12]    12  1300  1400  1500    16  1700    18  1900    20  2100  2200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23]    23  2400  2500    26    27  2800    29  3000    31  3200    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34]    34    35  3600    37    38    39    40    41  4200    43    44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45]    45    46  4700    48    49  5000    51  5200    53  5400  5500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56]    56  5700  5800    59    60    61    62    63  6400  6500    66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]    67  6800    69    70  7100  7200  7300  7400  7500    76    77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78]    78    79  8000    81  8200    83  8400  8500  8600    87    88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  8900  9000    91    92  9300  9400    95    96  9700    98  9900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [100] 10000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -282,7 +280,7 @@ science.</p>
 <span class="r-in"><span><span class="co"># the first one:</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1L</span>, bar <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">modify2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="op">~</span> <span class="kw">if</span> <span class="op">(</span><span class="va">.y</span><span class="op">)</span> <span class="va">.x</span> <span class="kw">else</span> <span class="fl">0L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">modify2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">cond</span><span class="op">)</span> <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="va">x</span> <span class="kw">else</span> <span class="fl">0L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> foo bar </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   0 </span>
 <span class="r-in"><span></span></span>
@@ -593,7 +591,6 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 148            6           3            5           2  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 149            6           3            5           2  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150            5           3            5           1  virginica</span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

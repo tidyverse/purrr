@@ -126,8 +126,8 @@ Alternatively, a named list specifying the default by output element.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># list_transpose() is useful in conjunction with safely()</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="fu"><a href="safely.html">safely</a></span><span class="op">(</span><span class="va">log</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="fu"><a href="safely.html">safely</a></span><span class="op">(</span><span class="va">log</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ result: NULL</span>
@@ -142,7 +142,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ result: num 0.693</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ error : NULL</span>
 <span class="r-in"><span><span class="co"># Put all the errors and results together</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ result:List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : NULL</span>
@@ -156,7 +156,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : NULL</span>
 <span class="r-in"><span><span class="co"># Supply a default result to further simplify</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span>default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>result <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span>default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>result <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ result: num [1:3] NA 0 0.693</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ error :List of 3</span>
@@ -169,7 +169,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># list_transpose() will try to simplify by default:</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">3</span>, b <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">5</span>, b <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 3 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -177,7 +177,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 4 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># this makes list_tranpose() not completely symmetric</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a b </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 2 </span>
@@ -192,7 +192,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use simplify = FALSE to always return lists:</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ a:List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 1</span>
@@ -202,9 +202,9 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 6</span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">list_transpose</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">list_transpose</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">list_transpose</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">list_transpose</span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ a: num 1</span>
@@ -221,7 +221,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="st">"one"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="st">"deux"</span>, x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ll</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ll</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -233,7 +233,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">ll</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span>template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ll</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span>template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -253,7 +253,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "deux"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">ll</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span>template <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ll</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span>template <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]][[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
@@ -264,7 +264,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># And specify a default if you want to simplify</span></span></span>
-<span class="r-in"><span><span class="va">ll</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">list_transpose</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>, default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ll</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>, default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

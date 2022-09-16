@@ -86,7 +86,7 @@
 <dd><p>Level of <code>.x</code> to map on. Use a negative value to
 count up from the lowest level of the list.</p><ul><li><p><code>map_depth(x, 0, fun)</code> is equivalent to <code>fun(x)</code>.</p></li>
 <li><p><code>map_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- map(x, fun)</code></p></li>
-<li><p><code>map_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- map(x, ~ map(., fun))</code></p></li>
+<li><p><code>map_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- map(x, \(y) map(y, fun))</code></p></li>
 </ul></dd>
 
 
@@ -172,7 +172,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. .. ..$ : num 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. .. ..$ : num 1</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int 1</span>
@@ -185,7 +185,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. .. ..$ : int 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. .. ..$ : int 1</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int 1</span>
@@ -195,18 +195,18 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : int 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : int 2</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int 3</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : int 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : int 4</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">0</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">0</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, .ragged <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  int 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modify_depth() -------------------------------------------------</span></span></span>
@@ -223,7 +223,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># In the above list, "obj" is level 1, "prop" is level 2 and "param"</span></span></span>
 <span class="r-in"><span><span class="co"># is level 3. To apply sum() on all params, we map it at depth 3:</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">|&gt;</span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
@@ -244,7 +244,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-in"><span><span class="co"># applied at the list level as when applied at the atomic result.</span></span></span>
 <span class="r-in"><span><span class="co"># The former is more efficient because it takes advantage of</span></span></span>
 <span class="r-in"><span><span class="co"># vectorisation.</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">|&gt;</span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $obj1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param1</span>
@@ -281,7 +281,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">4</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">|&gt;</span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">4</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $obj1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param1</span>
@@ -320,14 +320,14 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modify() lets us pluck the elements prop1/param2 in obj1 and obj2:</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="modify.html">modify</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prop1"</span>, <span class="st">"param2"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">|&gt;</span> <span class="fu"><a href="modify.html">modify</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prop1"</span>, <span class="st">"param2"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1: int [1:2] 3 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2: int [1:2] 11 12</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># But what if we want to pluck all param2 elements? Then we need to</span></span></span>
 <span class="r-in"><span><span class="co"># act at a lower level:</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="st">"param2"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">|&gt;</span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="st">"param2"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1: int [1:2] 3 4</span>
@@ -340,7 +340,7 @@ no elements at depth <code>.depth</code>.</p></dd>
 <span class="r-in"><span><span class="co"># a lower level. Here we ask pmap() to map paste() simultaneously over all</span></span></span>
 <span class="r-in"><span><span class="co"># elements of the objects at the second level. paste() is effectively</span></span></span>
 <span class="r-in"><span><span class="co"># mapped at level 3.</span></span></span>
-<span class="r-in"><span><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="op">~</span> <span class="fu"><a href="pmap.html">pmap</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">paste</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">l1</span> <span class="op">|&gt;</span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="pmap.html">pmap</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">paste</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>

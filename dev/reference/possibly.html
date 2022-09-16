@@ -119,7 +119,7 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># To replace errors with a default value, use possibly().</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map_dbl</a></span><span class="op">(</span><span class="fu">possibly</span><span class="op">(</span><span class="va">log</span>, <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]       NA 2.302585 4.605170</span>
 </code></pre></div>

@@ -154,7 +154,7 @@ Use <code><a href="https://rlang.r-lib.org/reference/zap.html" class="external-l
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modify_in() applies a function to that location and update the</span></span></span>
 <span class="r-in"><span><span class="co"># element in place:</span></span></span>
-<span class="r-in"><span><span class="fu">modify_in</span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"foo"</span><span class="op">)</span>, <span class="op">~</span> <span class="va">.x</span> <span class="op">*</span> <span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">modify_in</span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"foo"</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">200</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$bar</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>

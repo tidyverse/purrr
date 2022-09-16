@@ -117,13 +117,13 @@ older versions of R.</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">5.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">every</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">every</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">every</span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">every</span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">some</span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">some</span><span class="op">(</span><span class="va">is.integer</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span><span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">none</span><span class="op">(</span><span class="va">is.character</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">none</span><span class="op">(</span><span class="va">is.character</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Missing values are propagated:</span></span></span>
