@@ -10,6 +10,11 @@
     Condition
       Error in `pmap_int()`:
       ! Result 1 must have length 1, not 2.
+    Code
+      pmap_vec(list(1), ~1, .ptype = character())
+    Condition
+      Error:
+      ! Can't convert <double> to <character>.
 
 # requires list of vectors
 

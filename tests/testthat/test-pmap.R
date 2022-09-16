@@ -28,6 +28,7 @@ test_that("verifies result types and length", {
   expect_snapshot(error = TRUE, {
     pmap_int(list(1), ~ "x")
     pmap_int(list(1), ~ 1:2)
+    pmap_vec(list(1), ~ 1, .ptype = character())
   })
 })
 

@@ -20,6 +20,7 @@ test_that("verifies result types and length", {
   expect_snapshot(error = TRUE, {
     map2_int(1, 1, ~ "x")
     map2_int(1, 1, ~ 1:2)
+    map2_vec(1, 1, ~ 1, .ptype = character())
   })
 })
 

@@ -10,6 +10,11 @@
     Condition
       Error in `map2_int()`:
       ! Result 1 must have length 1, not 2.
+    Code
+      map2_vec(1, 1, ~1, .ptype = character())
+    Condition
+      Error:
+      ! Can't convert <double> to <character>.
 
 # requires vector inputs
 
