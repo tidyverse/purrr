@@ -16,7 +16,7 @@
 #' @examples
 #' x <- list(list(1, list(2), list(3)))
 #' x %>% str()
-#' x %>% rmodify(function(x) x + 1) %>% str()
+#' x %>% rmodify(\(x) x + 1) %>% str()
 rmodify <- function(x,
                     f_leaf = identity,
                     f_pre = identity,

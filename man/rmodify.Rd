@@ -34,5 +34,5 @@ to either modify each leaf or each node (or both).
 \examples{
 x <- list(list(1, list(2), list(3)))
 x \%>\% str()
-x \%>\% rmodify(function(x) x + 1) \%>\% str()
+x \%>\% rmodify(\(x) x + 1) \%>\% str()
 }
