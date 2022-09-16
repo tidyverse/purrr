@@ -5,14 +5,14 @@
 #'
 #' @param x A list.
 #' @param f_leaf A function applied to each leaf.
-#' @param f_pre,f_post Functions applied to each node. `f_pre` is applied
-#'   the tree is traversed "down", i.e. before the leaves are transformed
-#'   with `f_leaf`, while `f_post` is applied on the way "up", i.e.
-#'   after the leaves are transformed.
 #' @param p_leaf A predicate function that returns `TRUE` when an element is
 #'   a leaf, determining whether `f_leaf` or `f_pre`/`f_post` is applied to
 #'   it. The default value, `NULL`, treats lists as nodes and everything else
 #'   as leaves.
+#' @param f_pre,f_post Functions applied to each node. `f_pre` is applied
+#'   the tree is traversed "down", i.e. before the leaves are transformed
+#'   with `f_leaf`, while `f_post` is applied on the way "up", i.e.
+#'   after the leaves are transformed.
 #' @family map variants
 #' @export
 #' @examples
@@ -34,9 +34,9 @@
 #' x |> rmodify(f_post = sort_named) |> str()
 rmodify <- function(x,
                     f_leaf = identity,
+                    p_leaf = NULL,
                     f_pre = identity,
-                    f_post = identity,
-                    p_leaf = NULL) {
+                    f_post = identity) {
   if (!is_vector(x)) {
     cli::cli_abort("{.arg x} must be a vector, not {.obj_type_friendly {x}}.")
   }

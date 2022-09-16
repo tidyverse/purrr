@@ -7,9 +7,9 @@
 rmodify(
   x,
   f_leaf = identity,
+  p_leaf = NULL,
   f_pre = identity,
-  f_post = identity,
-  p_leaf = NULL
+  f_post = identity
 )
 }
 \arguments{
@@ -17,15 +17,15 @@ rmodify(
 
 \item{f_leaf}{A function applied to each leaf.}
 
-\item{f_pre, f_post}{Functions applied to each node. \code{f_pre} is applied
-the tree is traversed "down", i.e. before the leaves are transformed
-with \code{f_leaf}, while \code{f_post} is applied on the way "up", i.e.
-after the leaves are transformed.}
-
 \item{p_leaf}{A predicate function that returns \code{TRUE} when an element is
 a leaf, determining whether \code{f_leaf} or \code{f_pre}/\code{f_post} is applied to
 it. The default value, \code{NULL}, treats lists as nodes and everything else
 as leaves.}
+
+\item{f_pre, f_post}{Functions applied to each node. \code{f_pre} is applied
+the tree is traversed "down", i.e. before the leaves are transformed
+with \code{f_leaf}, while \code{f_post} is applied on the way "up", i.e.
+after the leaves are transformed.}
 }
 \description{
 \code{rmodify()} allows you to recursively modify a list, supplying functions
