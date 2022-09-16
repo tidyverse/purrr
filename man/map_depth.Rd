@@ -103,3 +103,7 @@ l1 |> modify_depth(2, "param2") |> str()
 # mapped at level 3.
 l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
 }
+\seealso{
+\code{\link[=rmodify]{rmodify()}} for a recursive version of \code{modify_depth()} that
+allows you allow apply a function to every leaf or every node.
+}

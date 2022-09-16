@@ -78,6 +78,7 @@ Other map variants:
 \code{\link{map_if}()},
 \code{\link{map}()},
 \code{\link{modify}()},
-\code{\link{pmap}()}
+\code{\link{pmap}()},
+\code{\link{rmodify}()}
 }
 \concept{map variants}

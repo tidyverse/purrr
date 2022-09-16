@@ -49,3 +49,14 @@ sort_named <- function(x) {
 }
 x |> rmodify(f_post = sort_named) |> str()
 }
+\seealso{
+Other map variants: 
+\code{\link{imap}()},
+\code{\link{lmap}()},
+\code{\link{map2}()},
+\code{\link{map_if}()},
+\code{\link{map}()},
+\code{\link{modify}()},
+\code{\link{pmap}()}
+}
+\concept{map variants}

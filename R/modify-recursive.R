@@ -13,6 +13,7 @@
 #'   a leaf, determining whether `f_leaf` or `f_pre`/`f_post` is applied to
 #'   it. The default value, `NULL`, treats lists as nodes and everything else
 #'   as leaves.
+#' @family map variants
 #' @export
 #' @examples
 #' x <- list(list(a = 2:1, c = list(b1 = 2), b = list(c2 = 3, c1 = 4)))
