@@ -33,7 +33,7 @@
 #' @param ... Additional arguments passed on to methods.
 #' @export
 #' @examples
-#' as_mapper(~ . + 1)
+#' as_mapper(\(x) x + 1)
 #' as_mapper(1)
 #'
 #' as_mapper(c("a", "b", "c"))

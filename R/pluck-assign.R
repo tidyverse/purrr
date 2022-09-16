@@ -34,7 +34,7 @@
 #'
 #' # modify_in() applies a function to that location and update the
 #' # element in place:
-#' modify_in(x, list(1, "foo"), ~ .x * 200)
+#' modify_in(x, list(1, "foo"), \(x) x * 200)
 #'
 #' # Additional arguments are passed to the function in the ordinary way:
 #' modify_in(x, list(1, "foo"), `+`, 100)

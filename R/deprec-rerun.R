@@ -5,7 +5,7 @@
 #'
 #' This function was deprecated in purrr 1.0.0 because we believe that NSE
 #' functions are not a  good fit for purrr. Also, `rerun(n, x)` can just as
-#' easily be expressed as `map(1:n, ~ x)`
+#' easily be expressed as `map(1:n, \(i) x)`
 #'
 #' `rerun()` is a convenient way of generating sample data. It works similarly to
 #' \code{\link{replicate}(..., simplify = FALSE)}.
@@ -22,18 +22,18 @@
 #' @keywords internal
 #' @examples
 #' # old
-#' 5 %>% rerun(rnorm(5)) %>% str()
+#' 5 |> rerun(rnorm(5)) |> str()
 #' # new
-#' 1:5 %>% map(~ rnorm(5)) %>% str()
+#' 1:5 |> map(\(i) rnorm(5)) |> str()
 #'
 #' # old
-#' 5 %>%
-#'   rerun(x = rnorm(5), y = rnorm(5)) %>%
-#'   map_dbl(~ cor(.x$x, .x$y))
+#' 5 |>
+#'   rerun(x = rnorm(5), y = rnorm(5)) |>
+#'   map_dbl(\(l) cor(l$x, l$y))
 #' # new
-#' 1:5 %>%
-#'   map(~ list(x = rnorm(5), y = rnorm(5))) %>%
-#'   map_dbl(~ cor(.x$x, .x$y))
+#' 1:5 |>
+#'   map(\(i) list(x = rnorm(5), y = rnorm(5))) |>
+#'   map_dbl(\(l) cor(l$x, l$y))
 rerun <- function(.n, ...) {
   deprec_rerun(.n, ...)
 

@@ -89,12 +89,12 @@ about a use case for a right reduction with a ternary function.
 \examples{
 # Reducing `+` computes the sum of a vector while reducing `*`
 # computes the product:
-1:3 \%>\% reduce(`+`)
-1:10 \%>\% reduce(`*`)
+1:3 |> reduce(`+`)
+1:10 |> reduce(`*`)
 
-# By ignoring the input vector (.y), you can turn output of one step into
+# By ignoring the input vector (nxt), you can turn output of one step into
 # the input for the next. This code takes 10 steps of a random walk:
-reduce(1:10, ~ .x + rnorm(1), .init = 0)
+reduce(1:10, \(acc, nxt) acc + rnorm(1), .init = 0)
 
 # When the operation is associative, the direction of reduction
 # does not matter:
@@ -111,8 +111,8 @@ str(reduce(1:4, list, .dir = "backward"))
 # reduce2() takes a ternary function and a second vector that is
 # one element smaller than the first vector:
 paste2 <- function(x, y, sep = ".") paste(x, y, sep = sep)
-letters[1:4] \%>\% reduce(paste2)
-letters[1:4] \%>\% reduce2(c("-", ".", "-"), paste2)
+letters[1:4] |> reduce(paste2)
+letters[1:4] |> reduce2(c("-", ".", "-"), paste2)
 
 x <- list(c(0, 1), c(2, 3), c(4, 5))
 y <- list(c(6, 7), c(8, 9))
@@ -129,7 +129,7 @@ paste3 <- function(out, input, sep = ".") {
   }
   paste(out, input, sep = sep)
 }
-letters \%>\% reduce(paste3)
+letters |> reduce(paste3)
 
 # Here the early return branch checks the incoming inputs passed on
 # the RHS:
@@ -139,7 +139,7 @@ paste4 <- function(out, input, sep = ".") {
   }
   paste(out, input, sep = sep)
 }
-letters \%>\% reduce(paste4)
+letters |> reduce(paste4)
 }
 \seealso{
 \code{\link[=accumulate]{accumulate()}} for a version that returns all intermediate

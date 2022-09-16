@@ -31,10 +31,10 @@ in a package, be sure to read \link{faq-adverbs-export}.
 
 \examples{
 x <- list(x = 1:10, y = rbernoulli(10), z = letters)
-x \%>\% keep(is.numeric) \%>\% names()
-x \%>\% keep(negate(is.numeric)) \%>\% names()
+x |> keep(is.numeric) |> names()
+x |> keep(negate(is.numeric)) |> names()
 # Same as
-x \%>\% discard(is.numeric)
+x |> discard(is.numeric)
 }
 \seealso{
 Other adverbs: 
