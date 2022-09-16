@@ -104,7 +104,9 @@ modify <- function(.x, .f, ...) {
     .x[] <- map(.x, .f, ...)
     .x
   } else {
-    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}.")
+    cli::cli_abort(
+      "{.arg .x} must be a vector, list, or data frame, not {.obj_type_friendly {.x}}."
+    )
   }
 }
 
@@ -156,7 +158,9 @@ modify2 <- function(.x, .y, .f, ...) {
     .x[] <- out
     .x
   } else {
-    cli::cli_abort("Don't know how to modify {.obj_type_friendly {.x}}.")
+    cli::cli_abort(
+      "{.arg .x} must be a vector, list, or data frame, not {.obj_type_friendly {.x}}."
+    )
   }
 }
 
@@ -188,7 +192,7 @@ modify_where <- function(.x, .where, .f, ..., .error_call = caller_env()) {
     .x
   } else {
     cli::cli_abort(
-      "Don't know how to modify {.obj_type_friendly {.x}}.",
+      "{.arg .x} must be a vector, list, or data frame, not {.obj_type_friendly {.x}}.",
       call = .error_call
     )
   }
