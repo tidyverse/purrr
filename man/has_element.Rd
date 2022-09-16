@@ -16,6 +16,6 @@ Does a list contain an object?
 }
 \examples{
 x <- list(1:10, 5, 9.9)
-x \%>\% has_element(1:10)
-x \%>\% has_element(3)
+x |> has_element(1:10)
+x |> has_element(3)
 }

@@ -54,7 +54,7 @@
 #'   subset(Sepal.Length > 10) %>%
 #'   when(
 #'     nrow(.) > 0 ~ .,
-#'     ~ iris %>% head(10)
+#'     ~ head(iris, 10)
 #'   )
 #'
 #' iris %>%

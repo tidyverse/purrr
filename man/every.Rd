@@ -39,10 +39,10 @@ A logical vector of length 1.
 }
 \examples{
 x <- list(0:10, 5.5)
-x \%>\% every(is.numeric)
-x \%>\% every(is.integer)
-x \%>\% some(is.integer)
-x \%>\% none(is.character)
+x |> every(is.numeric)
+x |> every(is.integer)
+x |> some(is.integer)
+x |> none(is.character)
 
 # Missing values are propagated:
 some(list(NA, FALSE), identity)

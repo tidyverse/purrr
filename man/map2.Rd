@@ -62,13 +62,13 @@ a time.
 x <- list(1, 1, 1)
 y <- list(10, 20, 30)
 
-map2(x, y, ~ .x + .y)
+map2(x, y, \(x, y) x + y)
 # Or just
 map2(x, y, `+`)
 
 # Split into pieces, fit model to each piece, then predict
-by_cyl <- mtcars \%>\% split(.$cyl)
-mods <- by_cyl \%>\% map(~ lm(mpg ~ wt, data = .))
+by_cyl <- mtcars |> split(mtcars$cyl)
+mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 map2(mods, by_cyl, predict)
 }
 \seealso{

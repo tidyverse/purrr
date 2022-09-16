@@ -24,24 +24,24 @@ level list will be dropped. In this case, \code{rerun(n, x)} behaves like
 
 This function was deprecated in purrr 1.0.0 because we believe that NSE
 functions are not a  good fit for purrr. Also, \code{rerun(n, x)} can just as
-easily be expressed as \code{map(1:n, ~ x)}
+easily be expressed as \verb{map(1:n, \\(i) x)}
 
 \code{rerun()} is a convenient way of generating sample data. It works similarly to
 \code{\link{replicate}(..., simplify = FALSE)}.
 }
 \examples{
 # old
-5 \%>\% rerun(rnorm(5)) \%>\% str()
+5 |> rerun(rnorm(5)) |> str()
 # new
-1:5 \%>\% map(~ rnorm(5)) \%>\% str()
+1:5 |> map(\(i) rnorm(5)) |> str()
 
 # old
-5 \%>\%
-  rerun(x = rnorm(5), y = rnorm(5)) \%>\%
-  map_dbl(~ cor(.x$x, .x$y))
+5 |>
+  rerun(x = rnorm(5), y = rnorm(5)) |>
+  map_dbl(\(l) cor(l$x, l$y))
 # new
-1:5 \%>\%
-  map(~ list(x = rnorm(5), y = rnorm(5))) \%>\%
-  map_dbl(~ cor(.x$x, .x$y))
+1:5 |>
+  map(\(i) list(x = rnorm(5), y = rnorm(5))) |>
+  map_dbl(\(l) cor(l$x, l$y))
 }
 \keyword{internal}
