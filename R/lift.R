@@ -55,13 +55,13 @@ NULL
 #' exec(mean, !!!x)
 #'
 #' # Default arguments can also be specified directly in lift_dl()
-#' list(c(1:100, NA, 1000)) %>% lift_dl(mean, na.rm = TRUE)()
+#' list(c(1:100, NA, 1000)) |> lift_dl(mean, na.rm = TRUE)()
 #' # now:
 #' mean(c(1:100, NA, 1000), na.rm = TRUE)
 #'
 #' # lift_dl() and lift_ld() are inverse of each other.
 #' # Here we transform sum() so that it takes a list
-#' fun <- sum %>% lift_dl()
+#' fun <- sum |> lift_dl()
 #' fun(list(3, NA, 4, na.rm = TRUE))
 #' # now:
 #' fun <- function(x) exec("sum", !!!x)
@@ -120,7 +120,7 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #' # lift_vd():
 #' pmap_dbl(mtcars, lift_vd(mean))
 #' # now
-#' pmap_dbl(mtcars, ~ mean(c(...)))
+#' pmap_dbl(mtcars, \(...) mean(c(...)))
 lift_vl <- function(..f, ..., .type) {
   # in 1.0.0
   lifecycle::signal_stage("deprecated", "lift_vl()")
@@ -171,9 +171,9 @@ lift_vd <- function(..f, ..., .type) {
 #' # that takes a list. In the following, we use some() on each row of
 #' # a data frame to check they each contain at least one element
 #' # satisfying a condition:
-#' mtcars %>% pmap_lgl(lift_ld(some, partial(`<`, 200)))
+#' mtcars |> pmap_lgl(lift_ld(some, partial(`<`, 200)))
 #' # now
-#' mtcars %>% pmap_lgl(~ any(c(...) > 200))
+#' mtcars |> pmap_lgl(\(...) any(c(...) > 200))
 #'
 lift_ld <- function(..f, ...) {
   # in 1.0.0

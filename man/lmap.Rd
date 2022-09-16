@@ -72,13 +72,13 @@ maybe_rep <- function(x) {
 
 # The output size varies each time we map f()
 x <- list(a = 1:4, b = letters[5:7], c = 8:9, d = letters[10])
-x \%>\% lmap(maybe_rep) \%>\% str()
+x |> lmap(maybe_rep) |> str()
 
 # We can apply f() on a selected subset of x
-x \%>\% lmap_at(c("a", "d"), maybe_rep) \%>\% str()
+x |> lmap_at(c("a", "d"), maybe_rep) |> str()
 
 # Or only where a condition is satisfied
-x \%>\% lmap_if(is.character, maybe_rep) \%>\% str()
+x |> lmap_if(is.character, maybe_rep) |> str()
 }
 \seealso{
 Other map variants: 

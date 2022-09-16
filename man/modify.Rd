@@ -85,7 +85,7 @@ If you implement your own \code{modify()} method, make sure it satisfies
 the following invariants:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{modify(x, identity) === x
-modify(x, compose(f, g)) === modify(x, g) \%>\% modify(f)
+modify(x, compose(f, g)) === modify(x, g) |> modify(f)
 }\if{html}{\out{</div>}}
 
 These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
@@ -94,34 +94,32 @@ science.
 
 \examples{
 # Convert factors to characters
-iris \%>\%
-  modify_if(is.factor, as.character) \%>\%
+iris |>
+  modify_if(is.factor, as.character) |>
   str()
 
 # Specify which columns to map with a numeric vector of positions:
-mtcars \%>\% modify_at(c(1, 4, 5), as.character) \%>\% str()
+mtcars |> modify_at(c(1, 4, 5), as.character) |> str()
 
 # Or with a vector of names:
-mtcars \%>\% modify_at(c("cyl", "am"), as.character) \%>\% str()
+mtcars |> modify_at(c("cyl", "am"), as.character) |> str()
 
-list(x = rbernoulli(100), y = 1:100) \%>\%
-  transpose() \%>\%
-  modify_if("x", ~ update_list(., y = ~ y * 100)) \%>\%
-  transpose() \%>\%
-  simplify_all()
+list(x = sample(c(TRUE, FALSE), 100, replace = TRUE), y = 1:100) |>
+  list_transpose(simplify = FALSE) |>
+  modify_if("x", \(l) list(x = l$x, y = l$y * 100)) |>
+  list_transpose()
 
 # Use modify2() to map over two vectors and preserve the type of
 # the first one:
 x <- c(foo = 1L, bar = 2L)
 y <- c(TRUE, FALSE)
-modify2(x, y, ~ if (.y) .x else 0L)
+modify2(x, y, \(x, cond) if (cond) x else 0L)
 
 # Use a predicate function to decide whether to map a function:
 modify_if(iris, is.factor, as.character)
 
 # Specify an alternative with the `.else` argument:
 modify_if(iris, is.factor, as.character, .else = as.integer)
-
 }
 \seealso{
 Other map variants: 

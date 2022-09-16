@@ -51,11 +51,9 @@ and the position of an element.
 \examples{
 imap_chr(sample(10), paste)
 
-imap_chr(sample(10), function(x, indx) paste0(indx, ": ", x))
-# same as
-imap_chr(sample(10), ~ paste0(.y, ": ", .x))
+imap_chr(sample(10), \(x, idx) paste0(idx, ": ", x))
 
-iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = ""))
+iwalk(mtcars, \(x, idx) cat(idx, ": ", median(x), "\n", sep = ""))
 }
 \seealso{
 Other map variants: 
