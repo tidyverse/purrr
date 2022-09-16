@@ -17,22 +17,35 @@ rmodify(
 
 \item{f_leaf}{A function applied to each leaf.}
 
-\item{f_pre}{A function applied to each node or leaf, before leaves are
-transformed.}
+\item{f_pre, f_post}{Functions applied to each node. \code{f_pre} is applied
+the tree is traversed "down", i.e. before the leaves are transformed
+with \code{f_leaf}, while \code{f_post} is applied on the way "up", i.e.
+after the leaves are transformed.}
 
-\item{f_post}{A function applied to each node or leaf, after leaves are
-transformed.}
-
-\item{p_leaf}{A function that determines whether an element is a leaf or a
-node. The default value, \code{NULL}, will treats lists as nodes and everything
-else as leaves.}
+\item{p_leaf}{A predicate function that returns \code{TRUE} when an element is
+a leaf, determining whether \code{f_leaf} or \code{f_pre}/\code{f_post} is applied to
+it. The default value, \code{NULL}, treats lists as nodes and everything else
+as leaves.}
 }
 \description{
-\code{rmodify()} allows you to recursively modify a vector, supplying functions
-to either modify each leaf or each node (or both).
+\code{rmodify()} allows you to recursively modify a list, supplying functions
+that either modify each leaf or each node (or both).
 }
 \examples{
-x <- list(list(1, list(2), list(3)))
-x \%>\% str()
-x \%>\% rmodify(\(x) x + 1) \%>\% str()
+x <- list(list(a = 2:1, c = list(b1 = 2), b = list(c2 = 3, c1 = 4)))
+x |> str()
+
+# Transform each leaf
+x |> rmodify(f_leaf = \(x) x + 100) |>  str()
+
+# Recursively sort the nodes
+sort_named <- function(x) {
+  nms <- names(x)
+  if (!is.null(nms)) {
+    x[order(nms)]
+  } else {
+    x
+   }
+}
+x |> rmodify(f_post = sort_named) |> str()
 }
