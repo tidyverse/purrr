@@ -37,18 +37,24 @@ rmodify <- function(x,
                     f_pre = identity,
                     f_post = identity,
                     p_leaf = NULL) {
+  if (!is_vector(x)) {
+    cli::cli_abort("{.arg x} must be a vector, not {.obj_type_friendly {x}}.")
+  }
 
   f_post <- rlang::as_function(f_post)
   f_pre <- rlang::as_function(f_pre)
   f_leaf <- rlang::as_function(f_leaf)
   if (is.null(p_leaf)) {
-    p_leaf <- is_leaf
+    is_leaf <- function(x) {
+      !is.list(x)
+    }
   } else {
-    p_leaf <- as_predicate(p_leaf)
+    p_leaf <- rlang::as_function(p_leaf)
+    is_leaf <- as_predicate(p_leaf, .mapper = FALSE)
   }
 
   worker <- function(x) {
-    if (p_leaf(x)) {
+    if (is_leaf(x)) {
       out <- f_leaf(x)
     } else {
       out <- f_pre(x)
@@ -59,8 +65,4 @@ rmodify <- function(x,
   }
 
   worker(x)
-}
-
-is_leaf <- function(x) {
-  !is.list(x)
 }
