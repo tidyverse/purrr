@@ -86,11 +86,6 @@
 #'
 #' @export
 modify <- function(.x, .f, ...) {
-  UseMethod("modify")
-}
-#' @rdname modify
-#' @export
-modify.default <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
   if (is.null(.x)) {
@@ -119,11 +114,6 @@ modify.default <- function(.x, .f, ...) {
 #' @inheritParams map_if
 #' @export
 modify_if <- function(.x, .p, .f, ..., .else = NULL) {
-  UseMethod("modify_if")
-}
-#' @rdname modify
-#' @export
-modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
   .x <- modify_where(.x, where, .f, ...)
 
@@ -139,11 +129,6 @@ modify_if.default <- function(.x, .p, .f, ..., .else = NULL) {
 #' @inheritParams map_at
 #' @export
 modify_at <- function(.x, .at, .f, ...) {
-  UseMethod("modify_at")
-}
-#' @rdname modify
-#' @export
-modify_at.default <- function(.x, .at, .f, ...) {
   where <- where_at(.x, .at)
   modify_where(.x, where, .f, ...)
 }
@@ -151,10 +136,6 @@ modify_at.default <- function(.x, .at, .f, ...) {
 #' @rdname modify
 #' @export
 modify2 <- function(.x, .y, .f, ...) {
-  UseMethod("modify2")
-}
-#' @export
-modify2.default <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
 
   if (vec_is_list(.x) || is.data.frame(.x)) {

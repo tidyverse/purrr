@@ -82,6 +82,11 @@
 
 * purrr is now licensed as MIT (#805).
 
+* `modify()`, `modify_if()`, `modify_at()`, and `modify2()` are no longer
+  generics. We have discovered a simple implementation that no longer requires
+  genericity and methods were only provided by a very small number of packages
+  (#894).
+
 ### Flattening and simplification
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
