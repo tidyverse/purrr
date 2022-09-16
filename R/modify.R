@@ -88,9 +88,7 @@
 modify <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  if (is.null(.x)) {
-    NULL
-  } else if (vec_is_list(.x)) {
+  if (vec_is_list(.x)) {
     out <- map(vec_proxy(.x), .f, ...)
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
@@ -102,7 +100,7 @@ modify <- function(.x, .f, ...) {
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
     map_vec(.x, .f, ..., .ptype = .x)
-  } else if (is.list(.x)) {
+  } else if (is.list(.x) || is.null(.x)) {
     .x[] <- map(.x, .f, ...)
     .x
   } else {
@@ -138,8 +136,15 @@ modify_at <- function(.x, .at, .f, ...) {
 modify2 <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  if (vec_is_list(.x) || is.data.frame(.x)) {
+  if (vec_is_list(.x)) {
     out <- map2(vec_proxy(.x), .y, .f, ...)
+    vec_restore(out, .x)
+  } else if (is.data.frame(.x)) {
+    size <- vec_size(.x)
+    out <- vec_proxy(.x)
+    out <- map2(out, .y, .f, ...)
+    out <- vec_recycle_common(!!!out, .size = size, .arg = "out")
+    out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
     map2_vec(.x, .y, .f, ..., .ptype = .x)
@@ -161,13 +166,19 @@ imodify <- function(.x, .f, ...) {
   modify2(.x, vec_index(.x), .f, ...)
 }
 
-
 # helpers -----------------------------------------------------------------
 
 modify_where <- function(.x, .where, .f, ..., .error_call = caller_env()) {
-  if (vec_is_list(.x) || is.data.frame(.x)) {
+  if (vec_is_list(.x)) {
     out <- vec_proxy(.x)
     out[.where] <- map(out[.where], .f, ...)
+    vec_restore(out, .x)
+  } else if (is.data.frame(.x)) {
+    size <- vec_size(.x)
+    out <- vec_proxy(.x)
+    new <- map(out[.where], .f, ...)
+    out[.where] <- vec_recycle_common(!!!new, .size = size, .arg = "out")
+    out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
     .x[.where] <- map_vec(.x[.where], .f, ..., .ptype = .x)

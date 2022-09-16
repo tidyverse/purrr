@@ -1,17 +1,27 @@
-# preserves size of data frame
+# modfiying data.frame preserves type and size
 
     Code
       modify(df1, ~ integer())
     Condition
       Error in `modify()`:
-      ! Can't recycle `out$x` (size 0) to size 3.
+      ! Can't recycle `out$x` (size 0) to size 2.
     Code
       modify(df1, ~ 1:4)
     Condition
       Error in `modify()`:
-      ! Can't recycle `out$x` (size 4) to size 3.
+      ! Can't recycle `out$x` (size 4) to size 2.
+    Code
+      modify_at(df1, 2, ~ integer())
+    Condition
+      Error in `modify_where()`:
+      ! Can't recycle `out$y` (size 0) to size 2.
+    Code
+      modify2(df1, list(1, 1:3), ~.y)
+    Condition
+      Error in `modify2()`:
+      ! Can't recycle `out$y` (size 3) to size 2.
 
-# modify() and variants implement sane coercion rules for base vectors
+# bad type has useful error
 
     Code
       modify(1:3, ~"foo")
@@ -34,6 +44,23 @@
       Error:
       ! Can't convert <character> to <integer>.
 
+# modify2() recycles arguments
+
+    Code
+      modify2(1:3, integer(), `+`)
+    Condition
+      Error in `map2()`:
+      ! Mapped vectors must have consistent lengths:
+      * `.x` has length 3
+      * `.y` has length 0
+    Code
+      modify2(1:3, 1:4, `+`)
+    Condition
+      Error in `map2()`:
+      ! Mapped vectors must have consistent lengths:
+      * `.x` has length 3
+      * `.y` has length 4
+
 # modify_if() requires predicate functions
 
     Code
@@ -41,14 +68,6 @@
     Condition
       Error in `modify_if()`:
       ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
-
----
-
-    Code
-      modify_if(1:2, ~ c(TRUE, FALSE), ~"foo")
-    Condition
-      Error in `modify_if()`:
-      ! `.p()` must return a single `TRUE` or `FALSE`, not a logical vector.
 
 # user friendly error for non-supported cases
 
