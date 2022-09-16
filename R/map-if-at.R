@@ -30,23 +30,23 @@
 #' map_if(iris, is.factor, as.character, .else = as.integer)
 #'
 map_if <- function(.x, .p, .f, ..., .else = NULL) {
-  sel <- probe(.x, .p)
+  where <- where_if(.x, .p)
 
   out <- vector("list", length(.x))
-  out[sel]  <- map(.x[sel], .f, ...)
+  out[where]  <- map(.x[where], .f, ...)
 
   if (is_null(.else)) {
-    out[!sel] <- .x[!sel]
+    out[!where] <- .x[!where]
   } else {
-    out[!sel]  <- map(.x[!sel], .else, ...)
+    out[!where]  <- map(.x[!where], .else, ...)
   }
 
   set_names(out, names(.x))
 }
 #' @rdname map_if
-#' @param .at A character vector of names, positive numeric vector of
-#'   positions to include, or a negative numeric vector of positions to
-#'   exlude. Only those elements corresponding to `.at` will be modified.
+#' @param .at A logical, integer, or character vector giving the elements
+#'   to select. Alternatively, a function that takes a vector of names,
+#'   and returns a logical, integer, or character vector of elements to select.
 #'
 #'   `r lifecycle::badge("deprecated")`: if the tidyselect package is
 #'   installed, you can use `vars()` and tidyselect helpers to select
@@ -60,13 +60,11 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = NULL) {
-
-  where <- at_selection(names(.x), .at)
-  sel <- inv_which(.x, where)
+  where <- where_at(.x, .at)
 
   out <- vector("list", length(.x))
-  out[sel]  <- map(.x[sel], .f, ..., .progress = .progress)
-  out[!sel] <- .x[!sel]
+  out[where]  <- map(.x[where], .f, ..., .progress = .progress)
+  out[!where] <- .x[!where]
 
   set_names(out, names(.x))
 }

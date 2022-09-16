@@ -33,9 +33,9 @@ inner lists. Only those elements where \code{.p} evaluates to
 \item{.else}{A function applied to elements of \code{.x} for which \code{.p}
 returns \code{FALSE}.}
 
-\item{.at}{A character vector of names, positive numeric vector of
-positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to \code{.at} will be modified.
+\item{.at}{A logical, integer, or character vector giving the elements
+to select. Alternatively, a function that takes a vector of names,
+and returns a logical, integer, or character vector of elements to select.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
 installed, you can use \code{vars()} and tidyselect helpers to select

@@ -1,46 +1,41 @@
-test_that("rdunif and rbernoulli are deprecated", {
-  expect_snapshot({
-    . <- rdunif(10, 1)
-    . <- rbernoulli(10)
+# where_at ------------------------------------------------------------
+
+test_that("allows valid logical, numeric, and character vectors", {
+  x <- list(a = 1, b = 1, c = 1)
+  expect_equal(where_at(x, TRUE), c(TRUE, TRUE, TRUE))
+  expect_equal(where_at(x, 1), c(TRUE, FALSE, FALSE))
+  expect_equal(where_at(x, -2), c(TRUE, FALSE, TRUE))
+  expect_equal(where_at(x, "b"), c(FALSE, TRUE, FALSE))
+})
+
+test_that("errors on invalid subsetting vectors", {
+  x <- list(a = 1, b = 1, c = 1)
+  expect_snapshot(error = TRUE, {
+    where_at(x, c(FALSE, TRUE))
+    where_at(x, NA_real_)
+    where_at(x, 4)
   })
 })
 
-test_that("rbernoulli is a special case of rbinom", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  set.seed(1)
-  x <- rbernoulli(10)
-
-  set.seed(1)
-  y <- ifelse(rbinom(10, 1, 0.5) == 1, TRUE, FALSE)
-
-  expect_equal(x, y)
+test_that("function at is passed names", {
+  x <- list(a = 1, B = 1, c = 1)
+  expect_equal(where_at(x, ~ .x %in% LETTERS), c(FALSE, TRUE, FALSE))
+  expect_equal(where_at(x, ~ intersect(.x, LETTERS)), c(FALSE, TRUE, FALSE))
 })
 
-test_that("rdunif works", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  expect_length(rdunif(100, 10), 100)
+test_that("where_at works with unnamed input", {
+  x <- list(1, 1, 1)
+  expect_equal(where_at(x, letters), rep(FALSE, 3))
+  expect_equal(where_at(x, ~ intersect(.x, LETTERS)), rep(FALSE, 3))
 })
 
-test_that("rdunif fails if a and b are not unit length numbers", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  expect_error(rdunif(1000, 1, "a"))
-  expect_error(rdunif(1000, 1, c(0.5, 0.2)))
-  expect_error(rdunif(1000, FALSE, 2))
-  expect_error(rdunif(1000, c(2, 3), 2))
+test_that("validates its inputs", {
+  x <- list(a = 1, b = 1, c = 1)
+  expect_snapshot(where_at(x, list()), error = TRUE)
 })
 
-# Lifecycle ---------------------------------------------------------------
-
-test_that("%@% is an infix attribute accessor", {
-  local_options(lifecycle_verbosity = "quiet")
-  expect_identical(mtcars %@% "names", attr(mtcars, "names"))
-})
-
-test_that("using tidyselect in .at is deprecated", {
+test_that("tidyselect `at` is deprecated", {
   expect_snapshot({
-    . <- at_selection(letters, vars("x"))
+    . <- where_at(data.frame(x = 1), vars("x"))
   })
 })

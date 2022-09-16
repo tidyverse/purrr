@@ -1,7 +1,7 @@
 #' Compose multiple functions together to create a new function
 #'
 #' Create a new function that is the composition of multiple functions,
-#' i.e. `compose(f, g)` is equivalwnt to `function(...) f(g(...))`.
+#' i.e. `compose(f, g)` is equivalent to `function(...) f(g(...))`.
 #'
 #' @param ... Functions to apply in order (from right to left by
 #'   default). Formulas are converted to functions in the usual way.

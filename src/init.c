@@ -40,13 +40,9 @@ export void R_init_purrr(DllInfo *dll)
     R_useDynamicSymbols(dll, FALSE);
 }
 
-
-
 void vctrs_init_api(); // From <vctrs.c>
-void rlang_utils_init(SEXP ns);
 
 SEXP purrr_init_library(SEXP ns) {
-  rlang_utils_init(ns);
   vctrs_init_api();
   return R_NilValue;
 }

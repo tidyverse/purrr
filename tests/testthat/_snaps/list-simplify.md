@@ -17,6 +17,11 @@
 # strict simplification will error
 
     Code
+      list_simplify(list(mean))
+    Condition
+      Error in `list_simplify()`:
+      ! `x[[1]]` must be a vector, not a function.
+    Code
       list_simplify(list(1, "a"))
     Condition
       Error:
@@ -25,22 +30,37 @@
       list_simplify(list(1, 1:2))
     Condition
       Error in `list_simplify()`:
-      ! All elements must be length-1 vectors.
+      ! All elements must be size 1.
+      i `x[[2]]` is size 2.
+    Code
+      list_simplify(list(data.frame(x = 1), data.frame(x = 1:2)))
+    Condition
+      Error in `list_simplify()`:
+      ! All elements must be size 1.
+      i `x[[2]]` is size 2.
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
       Error:
       ! Can't convert <double> to <character>.
 
-# validates inputs
+# list_simplify() validates inputs
 
     Code
-      list_simplify_internal(1:5)
+      list_simplify(1:5)
     Condition
-      Error:
+      Error in `list_simplify()`:
       ! `x` must be a list, not an integer vector.
 
 ---
+
+    Code
+      list_simplify(list(), strict = NA)
+    Condition
+      Error in `list_simplify()`:
+      ! `strict` must be `TRUE` or `FALSE`, not `NA`.
+
+# list_simplify_internal() validates inputs
 
     Code
       list_simplify_internal(list(), simplify = 1)
@@ -55,12 +75,4 @@
     Condition
       Error:
       ! Can't specify `ptype` when `simplify = FALSE`.
-
----
-
-    Code
-      list_simplify(list(), strict = NA)
-    Condition
-      Error in `list_simplify()`:
-      ! `strict` must be `TRUE` or `FALSE`, not `NA`.
 

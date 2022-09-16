@@ -6,7 +6,7 @@
 
 SEXP transpose_impl(SEXP x, SEXP names_template) {
   if (TYPEOF(x) != VECSXP) {
-    stop_bad_type(x, "a list", NULL, ".l", R_BaseEnv);
+    stop_bad_type(x, "a list", NULL, ".l");
   }
 
   int n = Rf_length(x);
@@ -18,7 +18,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
 
   SEXP x1 = VECTOR_ELT(x, 0);
   if (!Rf_isVector(x1)) {
-    stop_bad_element_type(x1, 1, "a vector", NULL, NULL, R_BaseEnv);
+    stop_bad_element_type(x1, 1, "a vector", NULL, NULL);
   }
   int m = has_template ? Rf_length(names_template) : Rf_length(x1);
 
@@ -44,7 +44,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
   for (int i = 0; i < n; ++i) {
     SEXP xi = VECTOR_ELT(x, i);
     if (!Rf_isVector(xi)) {
-      stop_bad_element_type(xi, i + 1, "a vector", NULL, NULL, R_BaseEnv);
+      stop_bad_element_type(xi, i + 1, "a vector", NULL, NULL);
     }
 
 
@@ -93,7 +93,7 @@ SEXP transpose_impl(SEXP x, SEXP names_template) {
         SET_VECTOR_ELT(VECTOR_ELT(out, j), i, VECTOR_ELT(xi, pos));
         break;
       default:
-        stop_bad_type(xi, "a vector", "Transposed element", NULL, R_BaseEnv);
+        stop_bad_type(xi, "a vector", "Transposed element", NULL);
       }
     }
 

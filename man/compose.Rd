@@ -23,7 +23,7 @@ A function
 }
 \description{
 Create a new function that is the composition of multiple functions,
-i.e. \code{compose(f, g)} is equivalwnt to \code{function(...) f(g(...))}.
+i.e. \code{compose(f, g)} is equivalent to \code{function(...) f(g(...))}.
 }
 \section{Adverbs}{
 This function is called an adverb because it modifies the effect of a

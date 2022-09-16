@@ -4,7 +4,7 @@
 \alias{keep}
 \alias{discard}
 \alias{compact}
-\title{Keep or discard elements using a predicate function.}
+\title{Keep/discard elements based on their values}
 \usage{
 keep(.x, .p, ...)
 
@@ -58,4 +58,7 @@ x |> discard("a")
 # compact() discards elements that are NULL or that have length zero
 list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) |>
   compact()
+}
+\seealso{
+\code{\link[=keep_at]{keep_at()}}/\code{\link[=discard_at]{discard_at()}} to keep/discard elements by name.
 }
