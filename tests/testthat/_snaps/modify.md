@@ -1,3 +1,16 @@
+# preserves size of data frame
+
+    Code
+      modify(df1, ~ integer())
+    Condition
+      Error in `modify()`:
+      ! Can't recycle `out$x` (size 0) to size 3.
+    Code
+      modify(df1, ~ 1:4)
+    Condition
+      Error in `modify()`:
+      ! Can't recycle `out$x` (size 4) to size 3.
+
 # modify() and variants implement sane coercion rules for base vectors
 
     Code

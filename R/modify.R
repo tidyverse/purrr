@@ -93,12 +93,21 @@ modify <- function(.x, .f, ...) {
 modify.default <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  if (vec_is_list(.x) || is.data.frame(.x)) {
+  if (is.null(.x)) {
+    NULL
+  } else if (vec_is_list(.x)) {
     out <- map(vec_proxy(.x), .f, ...)
+    vec_restore(out, .x)
+  } else if (is.data.frame(.x)) {
+    size <- vec_size(.x)
+    out <- vec_proxy(.x)
+    out <- map(out, .f, ...)
+    out <- vec_recycle_common(!!!out, .size = size, .arg = "out")
+    out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
     map_vec(.x, .f, ..., .ptype = .x)
-  } else if (is.null(.x) || is.list(.x)) {
+  } else if (is.list(.x)) {
     .x[] <- map(.x, .f, ...)
     .x
   } else {
