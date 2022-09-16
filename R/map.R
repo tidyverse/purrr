@@ -39,18 +39,20 @@
 #'   for details.
 #' @returns
 #' The output length is determined by the length of the input.
+#' The output names are determined by the input names.
 #' The output type is determined by the suffix:
 #'
-#' * No suffix: a list.
+#' * No suffix: a list; `.f()` can return anything.
 #'
 #' * `_lgl()`, `_int()`, `_dbl()`, `_chr()` return a logical, integer, double,
-#'   or character vector respectively. It will be named if the input was named.
+#'   or character vector respectively; `.f()` must return a compatible atomic
+#'   vector of length 1.
 #'
-#' * `_vec()` return an atomic or S3 vector, that is guaranteed to be
-#'   simpler than list.
+#' * `_vec()` return an atomic or S3 vector, the same type that `.f` returns.
+#'   `.f` can return pretty much any type of vector, as long as its length 1.
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
-#'    use in a pipe.
+#'    use in a pipe. The return value of `.f()` is ignored.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements

@@ -54,15 +54,17 @@ the desired type of output.}
 }
 \value{
 The output length is determined by the length of the input.
+The output names are determined by the input names.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: a list.
+\item No suffix: a list; \code{.f()} can return anything.
 \item \verb{_lgl()}, \verb{_int()}, \verb{_dbl()}, \verb{_chr()} return a logical, integer, double,
-or character vector respectively. It will be named if the input was named.
-\item \verb{_vec()} return an atomic or S3 vector, that is guaranteed to be
-simpler than list.
+or character vector respectively; \code{.f()} must return a compatible atomic
+vector of length 1.
+\item \verb{_vec()} return an atomic or S3 vector, the same type that \code{.f} returns.
+\code{.f} can return pretty much any type of vector, as long as its length 1.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in a pipe.
+use in a pipe. The return value of \code{.f()} is ignored.
 }
 }
 \description{
