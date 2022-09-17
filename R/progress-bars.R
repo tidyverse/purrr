@@ -1,4 +1,3 @@
-
 #' Progress bars in purrr
 #'
 #' Some purrr functions have a `.progress` argument, that you can use to
@@ -6,12 +5,9 @@
 #'
 #' Possible values for `.progress`:
 #'
-#' * `NULL`: This is the default. purrr does not create a progress bar.
-#' * `FALSE`: A synonym of `NULL`. purrr does not create a progress bar.
-#' * `TRUE`: purrr creates a progress bar with the default settings and
-#'   without a name.
-#' * A character scalar. Used as the name of the progress bar, which
-#'   otherwise has the default settings.
+#' * `FALSE`, the default: purrr does not create a progress bar.
+#' * `TRUE`: purrr creates a basic unnamed progress bar.
+#' * A string: creates a basic progress bar with the given name.
 #' * A named list of progress bar parameters, see below.
 #'
 #' ## Progress bar parameters

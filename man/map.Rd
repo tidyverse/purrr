@@ -45,8 +45,9 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 
-\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
-for details.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 
 \item{.ptype}{If \code{NULL}, the default, the output type is the common type
 of the elements of the result. Otherwise, supply a "prototype" giving

@@ -10,17 +10,17 @@
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
-map2(.x, .y, .f, ..., .progress = NULL)
+map2(.x, .y, .f, ..., .progress = FALSE)
 
-map2_lgl(.x, .y, .f, ..., .progress = NULL)
+map2_lgl(.x, .y, .f, ..., .progress = FALSE)
 
-map2_int(.x, .y, .f, ..., .progress = NULL)
+map2_int(.x, .y, .f, ..., .progress = FALSE)
 
-map2_dbl(.x, .y, .f, ..., .progress = NULL)
+map2_dbl(.x, .y, .f, ..., .progress = FALSE)
 
-map2_chr(.x, .y, .f, ..., .progress = NULL)
+map2_chr(.x, .y, .f, ..., .progress = FALSE)
 
-map2_vec(.x, .y, .f, ..., .ptype = NULL, .progress = NULL)
+map2_vec(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE)
 
 walk2(.x, .y, .f, ...)
 }
@@ -43,8 +43,9 @@ of R.
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 
-\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
-for details.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 
 \item{.ptype}{If \code{NULL}, the default, the output type is the common type
 of the elements of the result. Otherwise, supply a "prototype" giving
