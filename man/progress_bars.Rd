@@ -4,11 +4,11 @@
 \alias{progress_bars}
 \title{Progress bars in purrr}
 \description{
-purrr's map functions come have a \code{.progress} argument, that you can use to
+purrr's map functions have a \code{.progress} argument that you can use to
 create a progress bar. \code{.progress} can be:
 \itemize{
-\item \code{FALSE}, the default: purrr does not create a progress bar.
-\item \code{TRUE}: purrr creates a basic unnamed progress bar.
+\item \code{FALSE}, the default: does not create a progress bar.
+\item \code{TRUE}: creates a basic unnamed progress bar.
 \item A string: creates a basic progress bar with the given name.
 \item A named list of progress bar parameters, as described below.
 }
