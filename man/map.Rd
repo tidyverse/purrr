@@ -22,7 +22,7 @@ map_chr(.x, .f, ..., .progress = FALSE)
 
 map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
 
-walk(.x, .f, ...)
+walk(.x, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

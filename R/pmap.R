@@ -136,7 +136,7 @@ pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = FALSE) {
 
 #' @export
 #' @rdname pmap
-pwalk <- function(.l, .f, ...) {
-  pmap(.l, .f, ...)
+pwalk <- function(.l, .f, ..., .progress = FALSE) {
+  pmap(.l, .f, ..., .progress = .progress)
   invisible(.l)
 }

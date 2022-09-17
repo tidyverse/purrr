@@ -156,7 +156,7 @@ map_vec <- function(.x, .f, ..., .ptype = NULL, .progress = FALSE) {
 
 #' @rdname map
 #' @export
-walk <- function(.x, .f, ...) {
-  map(.x, .f, ...)
+walk <- function(.x, .f, ..., .progress = FALSE) {
+  map(.x, .f, ..., .progress = .progress)
   invisible(.x)
 }

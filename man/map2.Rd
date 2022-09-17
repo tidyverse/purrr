@@ -22,7 +22,7 @@ map2_chr(.x, .y, .f, ..., .progress = FALSE)
 
 map2_vec(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE)
 
-walk2(.x, .y, .f, ...)
+walk2(.x, .y, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x, .y}{A pair of vectors, usually the same length. If not, a vector

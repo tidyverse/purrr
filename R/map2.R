@@ -68,7 +68,7 @@ map2_vec <- function(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE) {
 
 #' @export
 #' @rdname map2
-walk2 <- function(.x, .y, .f, ...) {
-  map2(.x, .y, .f, ...)
+walk2 <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2(.x, .y, .f, ..., .progress = .progress)
   invisible(.x)
 }

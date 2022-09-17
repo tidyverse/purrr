@@ -22,7 +22,7 @@ pmap_chr(.l, .f, ..., .progress = FALSE)
 
 pmap_vec(.l, .f, ..., .ptype = NULL, .progress = FALSE)
 
-pwalk(.l, .f, ...)
+pwalk(.l, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.l}{A list of vectors. The length of \code{.l} determines the number of
