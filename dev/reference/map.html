@@ -7,6 +7,8 @@ versions that return an object of the same type as the input.
 map_lgl(), map_int(), map_dbl() and map_chr() return an
 atomic vector of the indicated type (or die trying). For these functions,
 .f must return a length-1 vector of the appropriate type.
+map_vec() simplifies to the common type of the output. It works with
+most types of simple vectors like Date, POSIXct, factors, etc.
 walk() calls .f for its side-effect and returns
 the input .x.
 
@@ -18,6 +20,8 @@ versions that return an object of the same type as the input.
 map_lgl(), map_int(), map_dbl() and map_chr() return an
 atomic vector of the indicated type (or die trying). For these functions,
 .f must return a length-1 vector of the appropriate type.
+map_vec() simplifies to the common type of the output. It works with
+most types of simple vectors like Date, POSIXct, factors, etc.
 walk() calls .f for its side-effect and returns
 the input .x.
 
@@ -89,6 +93,8 @@ versions that return an object of the same type as the input.</p></li>
 <li><p><code>map_lgl()</code>, <code>map_int()</code>, <code>map_dbl()</code> and <code>map_chr()</code> return an
 atomic vector of the indicated type (or die trying). For these functions,
 <code>.f</code> must return a length-1 vector of the appropriate type.</p></li>
+<li><p><code>map_vec()</code> simplifies to the common type of the output. It works with
+most types of simple vectors like Date, POSIXct, factors, etc.</p></li>
 <li><p><code>walk()</code> calls <code>.f</code> for its side-effect and returns
 the input <code>.x</code>.</p></li>
 </ul></div>
@@ -99,11 +105,13 @@ the input <code>.x</code>.</p></li>
 <span></span>
 <span><span class="fu">map_lgl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">map_int</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">map_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">map_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">map_vec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .ptype <span class="op">=</span> <span class="cn">NULL</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">walk</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -137,17 +145,27 @@ and the arguments that are the same come after <code>.f</code>.</p></dd>
 <dd><p>Whether to show a progress bar. See <a href="progress_bars.html">progress_bars</a>
 for details.</p></dd>
 
+
+<dt>.ptype</dt>
+<dd><p>If <code>NULL</code>, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
 <p>The output length is determined by the length of the input.
-The output type is determined by the suffix:</p><ul><li><p>No suffix: a list.</p></li>
-<li><p><code>_lgl</code>, <code>_int</code>, <code>_dbl</code>, <code>_chr</code> return a logical, integer, double,
-or character vector respectively. It will be named if the input was named.</p></li>
+The output names are determined by the input names.
+The output type is determined by the suffix:</p><ul><li><p>No suffix: a list; <code>.f()</code> can return anything.</p></li>
+<li><p><code>_lgl()</code>, <code>_int()</code>, <code>_dbl()</code>, <code>_chr()</code> return a logical, integer, double,
+or character vector respectively; <code>.f()</code> must return a compatible atomic
+vector of length 1.</p></li>
+<li><p><code>_vec()</code> return an atomic or S3 vector, the same type that <code>.f</code> returns.
+<code>.f</code> can return pretty much any type of vector, as long as its length 1.</p></li>
 <li><p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
-use in a pipe.</p></li>
+use in a pipe. The return value of <code>.f()</code> is ignored.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
