@@ -64,6 +64,12 @@ map2_chr <- function(.x, .y, .f, ..., .progress = NULL) {
   .Call(map2_impl, environment(), ".x", ".y", ".f", "character", .progress)
 }
 
+#' @rdname map2
+#' @export
+map2_vec <- function(.x, .y, .f, ..., .ptype = NULL, .progress = NULL) {
+  out <- map2(.x, .y, .f, ..., .progress = .progress)
+  simplify_impl(out, ptype = .ptype)
+}
 
 #' @export
 #' @rdname map2
@@ -71,4 +77,3 @@ walk2 <- function(.x, .y, .f, ...) {
   map2(.x, .y, .f, ...)
   invisible(.x)
 }
-

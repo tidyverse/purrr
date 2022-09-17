@@ -3,9 +3,10 @@
 \name{map}
 \alias{map}
 \alias{map_lgl}
-\alias{map_chr}
 \alias{map_int}
 \alias{map_dbl}
+\alias{map_chr}
+\alias{map_vec}
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
@@ -13,11 +14,13 @@ map(.x, .f, ..., .progress = FALSE)
 
 map_lgl(.x, .f, ..., .progress = FALSE)
 
-map_chr(.x, .f, ..., .progress = FALSE)
-
 map_int(.x, .f, ..., .progress = FALSE)
 
 map_dbl(.x, .f, ..., .progress = FALSE)
+
+map_chr(.x, .f, ..., .progress = FALSE)
+
+map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
 
 walk(.x, .f, ...)
 }
@@ -44,16 +47,24 @@ and the arguments that are the same come after \code{.f}.}
 
 \item{.progress}{Whether to show a progress bar. See \link{progress_bars}
 for details.}
+
+\item{.ptype}{If \code{NULL}, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.}
 }
 \value{
 The output length is determined by the length of the input.
+The output names are determined by the input names.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: a list.
-\item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. It will be named if the input was named.
+\item No suffix: a list; \code{.f()} can return anything.
+\item \verb{_lgl()}, \verb{_int()}, \verb{_dbl()}, \verb{_chr()} return a logical, integer, double,
+or character vector respectively; \code{.f()} must return a compatible atomic
+vector of length 1.
+\item \verb{_vec()} return an atomic or S3 vector, the same type that \code{.f} returns.
+\code{.f} can return pretty much any type of vector, as long as its length 1.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in a pipe.
+use in a pipe. The return value of \code{.f()} is ignored.
 }
 }
 \description{
@@ -66,6 +77,8 @@ versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
 atomic vector of the indicated type (or die trying). For these functions,
 \code{.f} must return a length-1 vector of the appropriate type.
+\item \code{map_vec()} simplifies to the common type of the output. It works with
+most types of simple vectors like Date, POSIXct, factors, etc.
 \item \code{walk()} calls \code{.f} for its side-effect and returns
 the input \code{.x}.
 }

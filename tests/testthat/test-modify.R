@@ -1,83 +1,83 @@
-test_that("modify returns same type as input", {
-  df1 <- data.frame(x = 1:3, y = 4:6)
-  df2 <- data.frame(x = 2:4, y = 5:7)
-  expect_equal(modify(df1, ~ .x + 1), df2)
+# Input types, ordered by apperance
 
+test_that("modifying vectors list preserves type", {
   x1 <- vctrs::list_of(c(1, 2), c(3, 6, 9))
   x2 <- vctrs::list_of(c(2, 3), c(4, 7, 10))
   expect_equal(modify(x1, ~ .x + 1), x2)
 })
 
-test_that("modify_if/modify_at return same type as input", {
-  df1 <- data.frame(x = "a", y = 2, stringsAsFactors = FALSE)
-  exp <- data.frame(x = "A", y = 2, stringsAsFactors = FALSE)
+test_that("modfiying data.frame preserves type and size", {
+  df1 <- data.frame(x = 1:2, y = 2:1)
+  expect_equal(modify(df1, ~ 1), data.frame(x = c(1, 1), y = c(1, 1)))
+  expect_equal(modify_at(df1, 1, ~ 1), data.frame(x = c(1, 1), y = 2:1))
+  expect_equal(modify2(df1, df1, ~ .x + .y), data.frame(x = c(2, 4), y = c(4, 2)))
 
-  df2a <- modify_if(df1, is.character, toupper)
-  expect_equal(df2a, exp)
+  df2 <- new_data_frame(n = 5L)
+  expect_equal(modify(df2, ~ 1), df2)
 
-  df2b <- modify_at(df1, "x", toupper)
-  expect_equal(df2b, exp)
+  expect_snapshot(error = TRUE, {
+    modify(df1, ~ integer())
+    modify(df1, ~ 1:4)
+
+    modify_at(df1, 2, ~ integer())
+    modify2(df1, list(1, 1:3), ~ .y)
+  })
 })
 
-test_that("negative .at omits locations", {
-  x <- list(1, 2, 3)
-  out <- modify_at(x, -1, ~ .x * 2)
-  expect_equal(out, list(1, 4, 6))
+test_that("data.frames are modified by column, not row", {
+  df1 <- data.frame(x = 1:3, y = letters[1:3])
+  df2 <- data.frame(x = 2:4, y = letters[1:3])
+
+  expect_equal(modify(df1, ~ if (is.numeric(.x)) .x + 1 else .x), df2)
+  expect_equal(modify_at(df1, "x",  ~ .x + 1), df2)
 })
 
-test_that("modify works with calls and pairlists", {
-  out <- modify(quote(f(x)), ~ quote(z))
-  expect_equal(out, quote(z(z)))
+test_that("modifying vectors preserves type", {
+  expect_identical(modify(1:3, ~ .x + 1), 2:4)
+  expect_equal(modify("a", ~ factor("b")), "b")
 
-  out <- modify(pairlist(1, 2), ~ . + 1)
-  expect_equal(out, pairlist(2, 3))
+  expect_identical(modify_if(1:2, ~ .x %% 2 == 0, ~ 3), c(1L, 3L))
+  expect_identical(modify_at(1:2, 2, ~ 3), c(1L, 3L))
+  expect_identical(modify2(1:2, c(0, 1), `+`), c(1L, 3L))
 })
 
-test_that("modify{,_at,_if} preserves atomic vector classes", {
-  expect_type(modify("a", identity), "character")
-  expect_type(modify(1L,  identity), "integer")
-  expect_type(modify(1,   identity), "double")
-  expect_type(modify(TRUE, identity), "logical")
-
-  expect_type(modify_at("a",   1L, identity), "character")
-  expect_type(modify_at(1L,    1L, identity), "integer")
-  expect_type(modify_at(1,     1L, identity), "double")
-  expect_type(modify_at(TRUE,  1L, identity), "logical")
-
-  expect_type(modify_if("a",   TRUE, identity), "character")
-  expect_type(modify_if(1L,    TRUE, identity), "integer")
-  expect_type(modify_if(1,     TRUE, identity), "double")
-  expect_type(modify_if(TRUE,  TRUE, identity), "logical")
+test_that("bad type has useful error", {
+  expect_snapshot(error = TRUE, {
+    modify(1:3, ~ "foo")
+    modify_at(1:3, 1, ~ "foo")
+    modify_if(1:3, is_integer, ~ "foo")
+    modify2(1:3, "foo", ~ .y)
+  })
 })
 
-test_that("modify() and variants implement sane coercion rules for base vectors", {
-  expect_error(modify(1:3, ~ "foo"), "Can't coerce")
-  expect_error(modify_at(1:3, 1, ~ "foo"), "Can't coerce")
-  expect_error(modify_if(1:3, is_integer, ~ "foo"), "Can't coerce")
-  expect_error(modify2(1:3, "foo", ~ .y), "Can't coerce")
+test_that("modifying lists preserves NULLs", {
+  l <- list(a = 1, b = NULL, c = 3)
+  expect_equal(modify(l, identity), l)
+  expect_equal(modify_at(l, "b", identity), l)
+  expect_equal(modify_if(l, is.null, identity), l)
+  expect_equal(
+    modify2(l, list(NULL, 1, NULL), ~ .y),
+    list(a = NULL, b = 1, c = NULL)
+  )
 })
 
-test_that("modify2() and imodify() preserve type of first input", {
-  x <- c(foo = 1L, bar = 2L)
-  y <- c(TRUE, FALSE)
-  expect_identical(modify2(x, y, ~ if (.y) .x else 0L), c(foo = 1L, bar = 0L))
+test_that("can modify non-vector lists", {
+  notlist <- function(...) structure(list(...), class = "notlist")
+  x <- notlist(x = 1, y = "a")
 
-  out <- imodify(mtcars, paste)
-  expect_s3_class(out, "data.frame")
-  expect_identical(out$vs, paste(mtcars$vs, "vs"))
+  expect_equal(modify(x, ~ 2), notlist(x = 2, y = 2))
+  expect_equal(modify_if(x, is.character, ~ 2), notlist(x = 1, y = 2))
+  expect_equal(modify_at(x, "y", ~ 2), notlist(x = 1, y = 2))
+
+  local_bindings(
+    "[.notlist" = function(...) structure(NextMethod(), class = "notlist"),
+    .env = globalenv()
+  )
+  expect_equal(modify2(x, list(3, 4), ~ .y), notlist(x = 3, y = 4))
+  expect_equal(modify2(notlist(1), list(3, 4), ~ .y), notlist(3, 4))
 })
 
-test_that("modify2() recycles arguments", {
-  expect_identical(modify2(1:3, 1L, `+`), int(2, 3, 4))
-  expect_identical(modify2(1, 1:3, `+`), dbl(2, 3, 4))
-  expect_identical(modify2(mtcars, seq_along(mtcars), `+`)$carb, mtcars$carb + ncol(mtcars))
-  expect_identical(modify2(mtcars, 1, `+`)$carb, mtcars$carb + 1L)
-})
-
-test_that("modify_if() requires predicate functions", {
-  expect_snapshot(modify_if(list(1, 2), ~ NA, ~ "foo"), error = TRUE)
-  expect_snapshot(modify_if(1:2, ~ c(TRUE, FALSE), ~ "foo"), error = TRUE)
-})
+# other properties --------------------------------------------------------
 
 test_that("`.else` modifies false elements", {
   exp <- modify_if(iris, negate(is.factor), as.integer)
@@ -90,28 +90,44 @@ test_that("`.else` modifies false elements", {
   expect_equal(modify_if(c("a", "b"), ~ .x == "a", ~ "A", .else = ~ "B"), c("A", "B"))
 })
 
-test_that("modify family preserves NULLs", {
-  l <- list(a = 1, b = NULL, c = 3)
-  expect_equal(modify(l, identity), l)
-  expect_equal(modify_at(l, "b", identity), l)
-  expect_equal(modify_if(l, is.null, identity), l)
+test_that("modify_at() can use tidyselect", {
+  local_options(lifecycle_verbosity = "quiet")
+
+  df <- data.frame(x = 1, y = 3)
   expect_equal(
-    modify(l, ~ if (!is.null(.x)) .x + .y, 10),
-    list(a = 11, b = NULL, c = 13)
-  )
-  expect_equal(
-    modify_if(list(1, 2), ~ .x == 2, ~NULL),
-    list(1, NULL)
+    modify_at(df, vars(x), ~ 2),
+    data.frame(x = 2, y = 3)
   )
 })
 
-test_that("modify_at() can use tidyselect", {
-  skip_if_not_installed("tidyselect")
-  local_options(lifecycle_verbosity = "quiet")
+test_that("imodify uses index", {
+  expect_equal(imodify(list(2), ~ .y), list(1))
+  expect_equal(imodify(list(a = 2), ~ .y), list(a = "a"))
+})
 
-  one <-  modify_at(mtcars, vars(cyl, am), as.character)
-  expect_bare(one$cyl, "character")
-  expect_bare(one$am, "character")
-  two <- modify_at(mtcars, vars(tidyselect::contains("cyl")), as.character)
-  expect_bare(two$cyl, "character")
+# input validation --------------------------------------------------------
+
+test_that("modify2() recycles arguments", {
+  expect_equal(modify2(1:3, 1L, `+`), c(2, 3, 4))
+  expect_equal(modify2(1, 1:3, `+`), c(2, 3, 4))
+
+  expect_snapshot(error = TRUE, {
+    modify2(1:3, integer(), `+`)
+    modify2(1:3, 1:4, `+`)
+  })
+})
+
+test_that("modify_if() requires predicate functions", {
+  expect_snapshot(error = TRUE, {
+    modify_if(list(1, 2), ~ NA, ~ "foo")
+  })
+})
+
+test_that("user friendly error for non-supported cases", {
+  expect_snapshot(error = TRUE, {
+    modify(mean, identity)
+    modify_if(mean, TRUE, identity)
+    modify_at(mean, "x", identity)
+    modify2(mean, 1, identity)
+  })
 })
