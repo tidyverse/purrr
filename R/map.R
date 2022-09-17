@@ -35,8 +35,9 @@
 #'
 #'   Note that the arguments that differ in each call come before `.f`,
 #'   and the arguments that are the same come after `.f`.
-#' @param .progress Whether to show a progress bar. See [progress_bars]
-#'   for details.
+#' @param .progress Whether to show a progress bar. Use `TRUE` to a turn on
+#'   a basic progress bar, use a string to give it a name, or see
+#'   [progress_bars] for more details.
 #' @returns
 #' The output length is determined by the length of the input.
 #' The output names are determined by the input names.
@@ -155,7 +156,7 @@ map_vec <- function(.x, .f, ..., .ptype = NULL, .progress = FALSE) {
 
 #' @rdname map
 #' @export
-walk <- function(.x, .f, ...) {
-  map(.x, .f, ...)
+walk <- function(.x, .f, ..., .progress = FALSE) {
+  map(.x, .f, ..., .progress = .progress)
   invisible(.x)
 }
