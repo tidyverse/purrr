@@ -1,11 +1,11 @@
 #' Progress bars in purrr
 #'
 #' @description
-#' purrr's map functions come have a `.progress` argument, that you can use to
+#' purrr's map functions have a `.progress` argument that you can use to
 #' create a progress bar. `.progress` can be:
 #'
-#' * `FALSE`, the default: purrr does not create a progress bar.
-#' * `TRUE`: purrr creates a basic unnamed progress bar.
+#' * `FALSE`, the default: does not create a progress bar.
+#' * `TRUE`: creates a basic unnamed progress bar.
 #' * A string: creates a basic progress bar with the given name.
 #' * A named list of progress bar parameters, as described below.
 #'
