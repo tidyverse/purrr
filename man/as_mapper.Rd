@@ -53,7 +53,7 @@ generic. The default method forwards its arguments to
 \code{\link[rlang:as_function]{rlang::as_function()}}.
 }
 \examples{
-as_mapper(~ . + 1)
+as_mapper(\(x) x + 1)
 as_mapper(1)
 
 as_mapper(c("a", "b", "c"))

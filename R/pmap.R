@@ -131,6 +131,16 @@ pmap_chr <- function(.l, .f, ..., .progress = NULL) {
 
 #' @export
 #' @rdname pmap
+pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = NULL) {
+  .f <- as_mapper(.f, ...)
+
+  out <- pmap(.l, .f, ..., .progress = .progress)
+  simplify_impl(out, ptype = .ptype)
+}
+
+
+#' @export
+#' @rdname pmap
 pwalk <- function(.l, .f, ...) {
   pmap(.l, .f, ...)
   invisible(.l)

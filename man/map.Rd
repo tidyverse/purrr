@@ -3,9 +3,10 @@
 \name{map}
 \alias{map}
 \alias{map_lgl}
-\alias{map_chr}
 \alias{map_int}
 \alias{map_dbl}
+\alias{map_chr}
+\alias{map_vec}
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
@@ -13,11 +14,13 @@ map(.x, .f, ..., .progress = FALSE)
 
 map_lgl(.x, .f, ..., .progress = FALSE)
 
-map_chr(.x, .f, ..., .progress = FALSE)
-
 map_int(.x, .f, ..., .progress = FALSE)
 
 map_dbl(.x, .f, ..., .progress = FALSE)
+
+map_chr(.x, .f, ..., .progress = FALSE)
+
+map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
 
 walk(.x, .f, ...)
 }
@@ -44,16 +47,24 @@ and the arguments that are the same come after \code{.f}.}
 
 \item{.progress}{Whether to show a progress bar. See \link{progress_bars}
 for details.}
+
+\item{.ptype}{If \code{NULL}, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.}
 }
 \value{
 The output length is determined by the length of the input.
+The output names are determined by the input names.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: a list.
-\item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. It will be named if the input was named.
+\item No suffix: a list; \code{.f()} can return anything.
+\item \verb{_lgl()}, \verb{_int()}, \verb{_dbl()}, \verb{_chr()} return a logical, integer, double,
+or character vector respectively; \code{.f()} must return a compatible atomic
+vector of length 1.
+\item \verb{_vec()} return an atomic or S3 vector, the same type that \code{.f} returns.
+\code{.f} can return pretty much any type of vector, as long as its length 1.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in a pipe.
+use in a pipe. The return value of \code{.f()} is ignored.
 }
 }
 \description{
@@ -66,42 +77,40 @@ versions that return an object of the same type as the input.
 \item \code{map_lgl()}, \code{map_int()}, \code{map_dbl()} and \code{map_chr()} return an
 atomic vector of the indicated type (or die trying). For these functions,
 \code{.f} must return a length-1 vector of the appropriate type.
+\item \code{map_vec()} simplifies to the common type of the output. It works with
+most types of simple vectors like Date, POSIXct, factors, etc.
 \item \code{walk()} calls \code{.f} for its side-effect and returns
 the input \code{.x}.
 }
 }
 \examples{
 # Compute normal distributions from an atomic vector
-1:10 \%>\%
+1:10 |>
   map(rnorm, n = 10)
 
 # You can also use an anonymous function
-1:10 \%>\%
-  map(function(x) rnorm(10, x))
-
-# Or a formula
-1:10 \%>\%
-  map(~ rnorm(10, .x))
+1:10 |>
+  map(\(x) rnorm(10, x))
 
 # Simplify output to a vector instead of a list by computing the mean of the distributions
-1:10 \%>\%
-  map(rnorm, n = 10) \%>\%  # output a list
+1:10 |>
+  map(rnorm, n = 10) |>  # output a list
   map_dbl(mean)           # output an atomic vector
 
 # Using set_names() with character vectors is handy to keep track
 # of the original inputs:
-set_names(c("foo", "bar")) \%>\% map_chr(paste0, ":suffix")
+set_names(c("foo", "bar")) |> map_chr(paste0, ":suffix")
 
 # Working with lists
 favorite_desserts <- list(Sophia = "banana bread", Eliott = "pancakes", Karina = "chocolate cake")
-favorite_desserts \%>\% map_chr(~ paste(.x, "rocks!"))
+favorite_desserts |> map_chr(\(food) paste(food, "rocks!"))
 
 # Extract by name or position
 # .default specifies value for elements that are missing or NULL
 l1 <- list(list(a = 1L), list(a = NULL, b = 2L), list(b = 3L))
-l1 \%>\% map("a", .default = "???")
-l1 \%>\% map_int("b", .default = NA)
-l1 \%>\% map_int(2, .default = NA)
+l1 |> map("a", .default = "???")
+l1 |> map_int("b", .default = NA)
+l1 |> map_int(2, .default = NA)
 
 # Supply multiple values to index deeply into a list
 l2 <- list(
@@ -109,23 +118,23 @@ l2 <- list(
   list(num = 101:103, letters[4:6]),
   list()
 )
-l2 \%>\% map(c(2, 2))
+l2 |> map(c(2, 2))
 
 # Use a list to build an extractor that mixes numeric indices and names,
 # and .default to provide a default value if the element does not exist
-l2 \%>\% map(list("num", 3))
-l2 \%>\% map_int(list("num", 3), .default = NA)
+l2 |> map(list("num", 3))
+l2 |> map_int(list("num", 3), .default = NA)
 
 # Working with data frames
 # Use map_lgl(), map_dbl(), etc to return a vector instead of a list:
-mtcars \%>\% map_dbl(sum)
+mtcars |> map_dbl(sum)
 
 # A more realistic example: split a data frame into pieces, fit a
 # model to each piece, summarise and extract R^2
-mtcars \%>\%
-  split(.$cyl) \%>\%
-  map(~ lm(mpg ~ wt, data = .x)) \%>\%
-  map(summary) \%>\%
+mtcars |>
+  split(mtcars$cyl) |>
+  map(\(df) lm(mpg ~ wt, data = df)) |>
+  map(summary) |>
   map_dbl("r.squared")
 }
 \seealso{

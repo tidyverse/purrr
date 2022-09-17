@@ -13,7 +13,7 @@
 #'   list(list(list(1)))
 #' )
 #' pluck_depth(x)
-#' x %>% map_int(pluck_depth)
+#' x |> map_int(pluck_depth)
 pluck_depth <- function(x) {
   if (is.list(x) || is.expression(x)) {
     depths <- map_int(x, pluck_depth)

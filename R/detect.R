@@ -17,11 +17,11 @@
 #' @examples
 #' is_even <- function(x) x %% 2 == 0
 #'
-#' 3:10 %>% detect(is_even)
-#' 3:10 %>% detect_index(is_even)
+#' 3:10 |> detect(is_even)
+#' 3:10 |> detect_index(is_even)
 #'
-#' 3:10 %>% detect(is_even, .dir = "backward")
-#' 3:10 %>% detect_index(is_even, .dir = "backward")
+#' 3:10 |> detect(is_even, .dir = "backward")
+#' 3:10 |> detect_index(is_even, .dir = "backward")
 #'
 #'
 #' # Since `.f` is passed to as_mapper(), you can supply a
@@ -96,8 +96,8 @@ index <- function(x, dir, right = NULL, fn) {
 #' @export
 #' @examples
 #' x <- list(1:10, 5, 9.9)
-#' x %>% has_element(1:10)
-#' x %>% has_element(3)
+#' x |> has_element(1:10)
+#' x |> has_element(3)
 has_element <- function(.x, .y) {
   some(.x, identical, .y)
 }

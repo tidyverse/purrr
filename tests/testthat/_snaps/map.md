@@ -38,3 +38,25 @@
       Caused by error in `fail_at_3()`:
       ! Doesn't work
 
+# requires output be length 1 and have common type
+
+    Code
+      map_vec(1:2, ~ rep(1, .x))
+    Condition
+      Error in `map_vec()`:
+      ! All elements must be size 1.
+      i `out[[2]]` is size 2.
+    Code
+      map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
+    Condition
+      Error:
+      ! Can't combine `..1` <factor<bf275>> and `..2` <double>.
+
+# can enforce .ptype
+
+    Code
+      map_vec(1:2, ~ factor("x"), .ptype = integer())
+    Condition
+      Error:
+      ! Can't convert <factor<bf275>> to <integer>.
+

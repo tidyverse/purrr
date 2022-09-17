@@ -26,16 +26,16 @@
 #' @examples
 #' # map ---------------------------------------------
 #' # Was:
-#' mtcars %>%
-#'   split(.$cyl) %>%
-#'   map(~ lm(mpg ~ wt, data = .x)) %>%
-#'   map_dfr(~ as.data.frame(t(as.matrix(coef(.)))))
+#' mtcars |>
+#'   split(mtcars$cyl) |>
+#'   map(\(df) lm(mpg ~ wt, data = df)) |>
+#'   map_dfr(\(mod) as.data.frame(t(as.matrix(coef(mod)))))
 #'
 #' # Now:
-#' mtcars %>%
-#'   split(.$cyl) %>%
-#'   map(~ lm(mpg ~ wt, data = .x)) %>%
-#'   map(~ as.data.frame(t(as.matrix(coef(.))))) %>%
+#' mtcars |>
+#'   split(mtcars$cyl) |>
+#'   map(\(df) lm(mpg ~ wt, data = df)) |>
+#'   map(\(mod) as.data.frame(t(as.matrix(coef(mod))))) |>
 #'   list_rbind()
 #'
 #' # map2 ---------------------------------------------
@@ -50,12 +50,12 @@
 #' # was
 #' map2_dfr(arg1, arg2, ex_fun)
 #' # now
-#' map2(arg1, arg2, ex_fun) %>% list_rbind()
+#' map2(arg1, arg2, ex_fun) |> list_rbind()
 #'
 #' # was
 #' map2_dfc(arg1, arg2, ex_fun)
 #' # now
-#' map2(arg1, arg2, ex_fun) %>% list_cbind()
+#' map2(arg1, arg2, ex_fun) |> list_cbind()
 map_dfr <- function(.x, .f, ..., .id = NULL) {
   # in 1.0.0
   lifecycle::signal_stage("superseded", "map_dfr()", I("`map()` + `list_rbind()`"))

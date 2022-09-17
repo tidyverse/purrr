@@ -34,13 +34,13 @@ These functions were deprecated in purrr 1.0.0 in favour of
 }
 \examples{
 # was
-as.list(letters) \%>\% as_vector("character")
+as.list(letters) |> as_vector("character")
 # now
-as.list(letters) \%>\% list_simplify(ptype = character())
+as.list(letters) |> list_simplify(ptype = character())
 
 # was:
-list(1:2, 3:4, 5:6) \%>\% as_vector(integer(2))
+list(1:2, 3:4, 5:6) |> as_vector(integer(2))
 # now:
-list(1:2, 3:4, 5:6) \%>\% list_c(ptype = integer())
+list(1:2, 3:4, 5:6) |> list_c(ptype = integer())
 }
 \keyword{internal}

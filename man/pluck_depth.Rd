@@ -24,5 +24,5 @@ x <- list(
   list(list(list(1)))
 )
 pluck_depth(x)
-x \%>\% map_int(pluck_depth)
+x |> map_int(pluck_depth)
 }

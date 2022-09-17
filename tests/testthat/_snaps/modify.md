@@ -1,3 +1,66 @@
+# modfiying data.frame preserves type and size
+
+    Code
+      modify(df1, ~ integer())
+    Condition
+      Error in `modify()`:
+      ! Can't recycle `out$x` (size 0) to size 2.
+    Code
+      modify(df1, ~ 1:4)
+    Condition
+      Error in `modify()`:
+      ! Can't recycle `out$x` (size 4) to size 2.
+    Code
+      modify_at(df1, 2, ~ integer())
+    Condition
+      Error in `modify_where()`:
+      ! Can't recycle `out$y` (size 0) to size 2.
+    Code
+      modify2(df1, list(1, 1:3), ~.y)
+    Condition
+      Error in `modify2()`:
+      ! Can't recycle `out$y` (size 3) to size 2.
+
+# bad type has useful error
+
+    Code
+      modify(1:3, ~"foo")
+    Condition
+      Error:
+      ! Can't convert <character> to <integer>.
+    Code
+      modify_at(1:3, 1, ~"foo")
+    Condition
+      Error:
+      ! Can't convert <character> to <integer>.
+    Code
+      modify_if(1:3, is_integer, ~"foo")
+    Condition
+      Error:
+      ! Can't convert <character> to <integer>.
+    Code
+      modify2(1:3, "foo", ~.y)
+    Condition
+      Error:
+      ! Can't convert <character> to <integer>.
+
+# modify2() recycles arguments
+
+    Code
+      modify2(1:3, integer(), `+`)
+    Condition
+      Error in `map2()`:
+      ! Mapped vectors must have consistent lengths:
+      * `.x` has length 3
+      * `.y` has length 0
+    Code
+      modify2(1:3, 1:4, `+`)
+    Condition
+      Error in `map2()`:
+      ! Mapped vectors must have consistent lengths:
+      * `.x` has length 3
+      * `.y` has length 4
+
 # modify_if() requires predicate functions
 
     Code
@@ -8,13 +71,26 @@
       Caused by error in `modify_if()`:
       ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 
----
+# user friendly error for non-supported cases
 
     Code
-      modify_if(1:2, ~ c(TRUE, FALSE), ~"foo")
+      modify(mean, identity)
     Condition
-      Error in `map_lgl()`:
-      ! Computation failed in index 1
-      Caused by error in `modify_if()`:
-      ! `.p()` must return a single `TRUE` or `FALSE`, not a logical vector.
+      Error in `modify()`:
+      ! `.x` must be a vector, list, or data frame, not a function.
+    Code
+      modify_if(mean, TRUE, identity)
+    Condition
+      Error in `modify_if()`:
+      ! `.x` must be a vector, list, or data frame, not a function.
+    Code
+      modify_at(mean, "x", identity)
+    Condition
+      Error in `modify_at()`:
+      ! `.x` must be a vector, list, or data frame, not a function.
+    Code
+      modify2(mean, 1, identity)
+    Condition
+      Error in `modify2()`:
+      ! `.x` must be a vector, list, or data frame, not a function.
 

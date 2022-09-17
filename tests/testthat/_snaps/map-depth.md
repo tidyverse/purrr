@@ -25,7 +25,13 @@
     Code
       modify_depth(x1, 5, length)
     Condition
-      Error in `modify_depth()`:
+      Error in `map()`:
+      ! Computation failed in index 1
+      Caused by error in `map()`:
+      ! Computation failed in index 1
+      Caused by error in `map()`:
+      ! Computation failed in index 1
+      Caused by error in `modify_depth()`:
       ! List not deep enough
 
 ---
