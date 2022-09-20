@@ -73,7 +73,10 @@ check_list_of_data_frames <- function(x, error_call = caller_env()) {
 
   bad <- which(!is_df_or_null)
   cli::cli_abort(
-    "Each element of {.arg x} must be either a data frame or NULL. Elements {bad} are not.",
+    c(
+      "Each element of {.arg x} must be either a data frame or {.code NULL}.",
+      i = "Elements {bad} are not."
+    ),
     arg = "x",
     call = error_call
   )
