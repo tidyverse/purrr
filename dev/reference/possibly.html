@@ -68,7 +68,7 @@ whenever an error occurs.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">possibly</span><span class="op">(</span><span class="va">.f</span>, <span class="va">otherwise</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">possibly</span><span class="op">(</span><span class="va">.f</span>, otherwise <span class="op">=</span> <span class="cn">NULL</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -122,6 +122,12 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map_dbl</a></span><span class="op">(</span><span class="fu">possibly</span><span class="op">(</span><span class="va">log</span>, <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]       NA 2.302585 4.605170</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The default, NULL, will be discarded with `list_c()`</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="fu">possibly</span><span class="op">(</span><span class="va">log</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="list_c.html">list_c</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.302585 4.605170</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
