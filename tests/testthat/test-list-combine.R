@@ -61,6 +61,16 @@ test_that("NULLs are ignored", {
   expect_equal(list_cbind(list(df1, NULL, df2)), vec_cbind(df1, df2))
 })
 
+test_that("empty inputs return expected output", {
+  expect_equal(list_c(list()), NULL)
+  expect_equal(list_c(list(NULL)), NULL)
+
+  expect_equal(list_rbind(list()), data.frame())
+  expect_equal(list_rbind(list(NULL)), data.frame())
+  expect_equal(list_cbind(list()), data.frame())
+  expect_equal(list_cbind(list(NULL)), data.frame())
+})
+
 test_that("assert input is a list", {
   expect_snapshot(error = TRUE, {
     list_c(1)
