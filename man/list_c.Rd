@@ -18,7 +18,7 @@ list_rbind(x, names_to = rlang::zap(), ptype = NULL)
 }
 \arguments{
 \item{x}{A list. For \code{list_rbind()} and \code{list_cbind()} the list must
-only contain data frames.}
+only contain only data frames or \code{NULL}.}
 
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}

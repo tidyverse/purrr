@@ -89,10 +89,10 @@
       list_rbind(list(1, mtcars, 3))
     Condition
       Error in `list_rbind()`:
-      ! All elements of `x` must be data frames. Elements 1 and 3 are not.
+      ! Each element of `x` must be either a data frame or NULL. Elements 1 and 3 are not.
     Code
       list_cbind(list(1, mtcars, 3))
     Condition
       Error in `list_cbind()`:
-      ! All elements of `x` must be data frames. Elements 1 and 3 are not.
+      ! Each element of `x` must be either a data frame or NULL. Elements 1 and 3 are not.
 

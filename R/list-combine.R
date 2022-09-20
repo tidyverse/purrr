@@ -11,7 +11,7 @@
 #'   together with [vctrs::vec_cbind()].
 #'
 #' @param x A list. For `list_rbind()` and `list_cbind()` the list must
-#'   only contain data frames.
+#'   only contain only data frames or `NULL`.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
 #' @param names_to By default, `names(x)` are lost. To keep them, supply a
@@ -65,15 +65,15 @@ list_rbind <- function(x, names_to = rlang::zap(), ptype = NULL) {
 check_list_of_data_frames <- function(x, error_call = caller_env()) {
   vec_check_list(x, call = error_call)
 
-  is_df <- map_lgl(x, is.data.frame)
+  is_df_or_null <- map_lgl(x, \(x) is.data.frame(x) || is.null(x))
 
-  if (all(is_df)) {
+  if (all(is_df_or_null)) {
     return()
   }
 
-  bad <- which(!is_df)
+  bad <- which(!is_df_or_null)
   cli::cli_abort(
-    "All elements of {.arg x} must be data frames. Elements {bad} are not.",
+    "Each element of {.arg x} must be either a data frame or NULL. Elements {bad} are not.",
     arg = "x",
     call = error_call
   )

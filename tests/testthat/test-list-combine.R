@@ -52,6 +52,15 @@ test_that("list_rbind() can enforce ptype", {
   })
 })
 
+test_that("NULLs are ignored", {
+  df1 <- data.frame(x = 1)
+  df2 <- data.frame(y = 1)
+
+  expect_equal(list_c(list(1, NULL, 2)), c(1, 2))
+  expect_equal(list_rbind(list(df1, NULL, df1)), vec_rbind(df1, df1))
+  expect_equal(list_cbind(list(df1, NULL, df2)), vec_cbind(df1, df2))
+})
+
 test_that("assert input is a list", {
   expect_snapshot(error = TRUE, {
     list_c(1)
