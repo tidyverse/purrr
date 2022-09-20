@@ -38,6 +38,11 @@ in a package, be sure to read \link{faq-adverbs-export}.
 # To replace errors with a default value, use possibly().
 list("a", 10, 100) |>
   map_dbl(possibly(log, NA_real_))
+
+# The default, NULL, will be discarded with `list_c()`
+list("a", 10, 100) |>
+  map(possibly(log)) |>
+  list_c()
 }
 \seealso{
 Other adverbs: 
