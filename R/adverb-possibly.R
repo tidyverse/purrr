@@ -12,7 +12,7 @@
 #' # To replace errors with a default value, use possibly().
 #' list("a", 10, 100) |>
 #'   map_dbl(possibly(log, NA_real_))
-possibly <- function(.f, otherwise, quiet = TRUE) {
+possibly <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_mapper(.f)
   force(otherwise)
 

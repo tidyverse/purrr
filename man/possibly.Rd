@@ -4,7 +4,7 @@
 \alias{possibly}
 \title{Wrap a function to return a value instead of an error}
 \usage{
-possibly(.f, otherwise, quiet = TRUE)
+possibly(.f, otherwise = NULL, quiet = TRUE)
 }
 \arguments{
 \item{.f}{A function to modify, specified in one of the following ways:
