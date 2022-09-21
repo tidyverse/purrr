@@ -15,7 +15,7 @@
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
 #' @seealso [modify_tree()] for a recursive version of `modify_depth()` that
-#'   allows you allow apply a function to every leaf or every node.
+#'   allows you to apply a function to every leaf or every node.
 #' @family map variants
 #' @family modify variants
 #' @export
