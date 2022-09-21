@@ -12,6 +12,7 @@
 #' indices in a similar way to transposing a matrix.
 #'
 #' @param x A list of vectors to transpose.
+#' @param ... Reserved for future usage. Must be empty.
 #' @param template A "template" that describes the output list. Can either be
 #'   a character vector (where elements are extracted by name), or an integer
 #'   vector (where elements are extracted by position). Defaults to the names
@@ -61,9 +62,15 @@
 #' ll |> list_transpose(template = 1)
 #'
 #' # And specify a default if you want to simplify
-#' ll |> list_transpose(c("x", "y", "z"), default = NA)
-list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, default = NULL) {
+#' ll |> list_transpose(template = c("x", "y", "z"), default = NA)
+list_transpose <- function(x,
+                           ...,
+                           template = NULL,
+                           simplify = NA,
+                           ptype = NULL,
+                           default = NULL) {
   vec_check_list(x)
+  check_dots_empty()
 
   if (length(x) == 0) {
     template <- integer()

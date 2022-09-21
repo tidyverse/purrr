@@ -4,6 +4,7 @@
 #' i.e. it inlines elements that are lists leaving non-lists alone.
 #'
 #' @param x A list.
+#' @param ... Reserved for future usage. Must be empty.
 #' @param name_spec If both inner and outer names are present, control
 #'   how they are combined. Should be a glue specification that uses
 #'   variables `inner` and `outer`.
@@ -41,10 +42,12 @@
 #' x |> list_flatten(name_spec = "{inner}") |> names()
 list_flatten <- function(
     x,
+    ...,
     name_spec = "{outer}_{inner}",
     name_repair = c("minimal", "unique", "check_unique", "universal")
   ) {
   vec_check_list(x)
+  check_dots_empty()
 
   # Take the proxy as we restore on exit
   proxy <- vec_proxy(x)

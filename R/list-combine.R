@@ -12,6 +12,7 @@
 #'
 #' @param x A list. For `list_rbind()` and `list_cbind()` the list must
 #'   only contain only data frames or `NULL`.
+#' @param ... Reserved for future usage. Must be empty.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
 #' @param names_to By default, `names(x)` are lost. To keep them, supply a
@@ -36,8 +37,9 @@
 #' list_rbind(unname(x2), names_to = "id")
 #'
 #' list_cbind(x2)
-list_c <- function(x, ptype = NULL) {
+list_c <- function(x, ..., ptype = NULL) {
   vec_check_list(x)
+  check_dots_empty()
   list_unchop(x, ptype = ptype)
 }
 
@@ -45,18 +47,21 @@ list_c <- function(x, ptype = NULL) {
 #' @rdname list_c
 list_cbind <- function(
     x,
+    ...,
     name_repair = c("unique", "universal", "check_unique"),
     size = NULL
   ) {
   check_list_of_data_frames(x)
+  check_dots_empty()
 
   vec_cbind(!!!x, .name_repair = name_repair, .size = size, .call = current_env())
 }
 
 #' @export
 #' @rdname list_c
-list_rbind <- function(x, names_to = rlang::zap(), ptype = NULL) {
+list_rbind <- function(x, ..., names_to = rlang::zap(), ptype = NULL) {
   check_list_of_data_frames(x)
+  check_dots_empty()
 
   vec_rbind(!!!x, .names_to = names_to, .ptype = ptype, .call = current_env())
 }

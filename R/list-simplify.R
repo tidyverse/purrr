@@ -7,6 +7,7 @@
 #' [list_flatten()].
 #'
 #' @param x A list.
+#' @param ... Reserved for future usage. Must be empty.
 #' @param strict What should happen if simplification fails? If `TRUE`,
 #'   it will error. If `FALSE` and `ptype` is not supplied, it will return `x`
 #'   unchanged.
@@ -24,7 +25,8 @@
 #' # Unless you strict = FALSE, in which case you get the input back:
 #' list_simplify(list(1, 2, 1:3), strict = FALSE)
 #' list_simplify(list(1, 2, "x"), strict = FALSE)
-list_simplify <- function(x, strict = TRUE, ptype = NULL) {
+list_simplify <- function(x, ..., strict = TRUE, ptype = NULL) {
+  check_dots_empty()
   if (!is_bool(strict)) {
     cli::cli_abort(
       "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}.",
