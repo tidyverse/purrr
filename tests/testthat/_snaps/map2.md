@@ -25,12 +25,12 @@
     Code
       map2(environment(), "a", identity)
     Condition
-      Error in `withCallingHandlers()`:
+      Error in `map2()`:
       ! `.x` must be a vector, not an environment.
     Code
       map2("a", environment(), "a", identity)
     Condition
-      Error in `withCallingHandlers()`:
+      Error in `map2()`:
       ! `.y` must be a vector, not an environment.
 
 # recycles inputs
@@ -38,14 +38,14 @@
     Code
       map2(1:2, 1:3, `+`)
     Condition
-      Error in `withCallingHandlers()`:
+      Error in `map2()`:
       ! Mapped vectors must have consistent lengths:
       * `.x` has length 2
       * `.y` has length 3
     Code
       map2(1:2, integer(), `+`)
     Condition
-      Error in `withCallingHandlers()`:
+      Error in `map2()`:
       ! Mapped vectors must have consistent lengths:
       * `.x` has length 2
       * `.y` has length 0

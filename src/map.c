@@ -29,8 +29,11 @@ void check_vector(SEXP x, const char *name, SEXP env) {
   if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
     return;
   }
-
-  stop_bad_type(x, "a vector", NULL, name);
+  r_abort_call(
+    env,
+    "`%s` must be a vector, not %s.",
+    name, rlang_obj_type_friendly_full(x, true, false)
+  );
 }
 
 // call must involve i
@@ -110,7 +113,8 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress) {
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx != ny && nx != 1 && ny != 1) {
-    r_abort(
+    r_abort_call(
+      env,
       "Mapped vectors must have consistent lengths:\n"
       "* `.x` has length %d\n"
       "* `.y` has length %d",
@@ -139,7 +143,11 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val)) {
-    stop_bad_type(l_val, "a list", NULL, ".l");
+    r_abort_call(
+      env,
+      "`.l` must be a list, not %s.",
+      rlang_obj_type_friendly_full(l_val, true, false)
+    );
   }
 
   // Check all elements are lists and find recycled length
@@ -150,7 +158,12 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
     SEXP j_val = VECTOR_ELT(l_val, j);
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
-      stop_bad_element_type(j_val, j + 1, "a vector", NULL, ".l");
+      r_abort_call(
+        env,
+        "`.l[[%i]]` must be a vector, not %s.",
+        j + 1,
+        rlang_obj_type_friendly_full(j_val, true, false)
+      );
     }
 
     int nj = Rf_length(j_val);
@@ -162,7 +175,11 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
     if (n == -1) {
       n = nj;
     } else if (nj != n) {
-      stop_bad_element_length(j_val, j + 1, n, NULL, ".l", true);
+      r_abort_call(
+        env,
+        "`.l[[%i]]` must have length 1 or %i, not %i.",
+        j + 1, n, nj
+      );
     }
   }
 
