@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 void cant_coerce(SEXP from, SEXP to, int i) {
-  Rf_errorcall(R_NilValue, "Can't coerce from a %s to a %s",
+  Rf_errorcall(R_NilValue, "Can't coerce from a %s to a %s.",
     Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
 }
 

@@ -4,14 +4,14 @@
       map2_int(1, 1, ~"x")
     Condition
       Error in `map2_int()`:
-      ! Can't compute index 1
+      ! Can't compute index 1.
       Caused by error:
-      ! Can't coerce from a character to a integer
+      ! Can't coerce from a character to a integer.
     Code
       map2_int(1, 1, ~ 1:2)
     Condition
       Error in `map2_int()`:
-      ! Can't compute index 1
+      ! Can't compute index 1.
       Caused by error:
       ! Result must be length 1, not 2
     Code

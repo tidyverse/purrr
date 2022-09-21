@@ -185,7 +185,7 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
         cnd_signal(cnd)
       } else {
         cli::cli_abort(
-          "Can't compute index {i}",
+          "Can't compute index {i}.",
           parent = cnd,
           call = error_call
         )
