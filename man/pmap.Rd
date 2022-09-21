@@ -134,7 +134,7 @@ Other map variants:
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
-\code{\link{modify}()},
-\code{\link{rmodify}()}
+\code{\link{modify_tree}()},
+\code{\link{modify}()}
 }
 \concept{map variants}

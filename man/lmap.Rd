@@ -86,8 +86,8 @@ Other map variants:
 \code{\link{map2}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
+\code{\link{modify_tree}()},
 \code{\link{modify}()},
-\code{\link{pmap}()},
-\code{\link{rmodify}()}
+\code{\link{pmap}()}
 }
 \concept{map variants}

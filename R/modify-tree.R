@@ -1,6 +1,6 @@
 #' Recursively modify a list
 #'
-#' `rmodify()` allows you to recursively modify a list, supplying functions
+#' `modify_tree()` allows you to recursively modify a list, supplying functions
 #' that either modify each leaf or each node (or both).
 #'
 #' @param x A list.
@@ -20,7 +20,7 @@
 #' x |> str()
 #'
 #' # Transform each leaf
-#' x |> rmodify(f_leaf = \(x) x + 100) |>  str()
+#' x |> modify_tree(f_leaf = \(x) x + 100) |>  str()
 #'
 #' # Recursively sort the nodes
 #' sort_named <- function(x) {
@@ -31,8 +31,8 @@
 #'     x
 #'    }
 #' }
-#' x |> rmodify(f_post = sort_named) |> str()
-rmodify <- function(x,
+#' x |> modify_tree(f_post = sort_named) |> str()
+modify_tree <- function(x,
                     f_leaf = identity,
                     p_leaf = NULL,
                     f_pre = identity,

@@ -14,7 +14,7 @@
 #' @param .ragged If `TRUE`, will apply to leaves, even if they're not
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
-#' @seealso [rmodify()] for a recursive version of `modify_depth()` that
+#' @seealso [modify_tree()] for a recursive version of `modify_depth()` that
 #'   allows you allow apply a function to every leaf or every node.
 #' @export
 #' @examples
