@@ -33,10 +33,10 @@
 #' }
 #' x |> modify_tree(f_post = sort_named) |> str()
 modify_tree <- function(x,
-                    f_leaf = identity,
-                    p_leaf = NULL,
-                    f_pre = identity,
-                    f_post = identity) {
+                        f_leaf = identity,
+                        p_leaf = NULL,
+                        f_pre = identity,
+                        f_post = identity) {
   if (!is_vector(x)) {
     cli::cli_abort("{.arg x} must be a vector, not {.obj_type_friendly {x}}.")
   }
