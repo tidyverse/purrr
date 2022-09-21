@@ -34,7 +34,7 @@
 #' rbernoulli(10)
 #' rbernoulli(100, 0.1)
 rbernoulli <- function(n, p = 0.5) {
-  lifecycle::deprecate_warn("1.0.0", "rbernoulli()")
+  lifecycle::deprecate_soft("1.0.0", "rbernoulli()")
   stats::runif(n) > (1 - p)
 }
 
@@ -54,7 +54,7 @@ rbernoulli <- function(n, p = 0.5) {
 #' table(rdunif(1e3, 10))
 #' table(rdunif(1e3, 10, -5))
 rdunif <- function(n, b, a = 1) {
-  lifecycle::deprecate_warn("1.0.0", "rdunif()")
+  lifecycle::deprecate_soft("1.0.0", "rdunif()")
 
   stopifnot(is.numeric(a), length(a) == 1)
   stopifnot(is.numeric(b), length(b) == 1)

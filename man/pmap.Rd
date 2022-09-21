@@ -10,19 +10,19 @@
 \alias{pwalk}
 \title{Map over multiple input simultaneously (in "parallel")}
 \usage{
-pmap(.l, .f, ..., .progress = NULL)
+pmap(.l, .f, ..., .progress = FALSE)
 
-pmap_lgl(.l, .f, ..., .progress = NULL)
+pmap_lgl(.l, .f, ..., .progress = FALSE)
 
-pmap_int(.l, .f, ..., .progress = NULL)
+pmap_int(.l, .f, ..., .progress = FALSE)
 
-pmap_dbl(.l, .f, ..., .progress = NULL)
+pmap_dbl(.l, .f, ..., .progress = FALSE)
 
-pmap_chr(.l, .f, ..., .progress = NULL)
+pmap_chr(.l, .f, ..., .progress = FALSE)
 
-pmap_vec(.l, .f, ..., .ptype = NULL, .progress = NULL)
+pmap_vec(.l, .f, ..., .ptype = NULL, .progress = FALSE)
 
-pwalk(.l, .f, ...)
+pwalk(.l, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.l}{A list of vectors. The length of \code{.l} determines the number of
@@ -49,8 +49,9 @@ you can only refer to arguments by position.
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 
-\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
-for details.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 
 \item{.ptype}{If \code{NULL}, the default, the output type is the common type
 of the elements of the result. Otherwise, supply a "prototype" giving

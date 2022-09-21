@@ -4,7 +4,7 @@
 \alias{possibly}
 \title{Wrap a function to return a value instead of an error}
 \usage{
-possibly(.f, otherwise, quiet = TRUE)
+possibly(.f, otherwise = NULL, quiet = TRUE)
 }
 \arguments{
 \item{.f}{A function to modify, specified in one of the following ways:
@@ -38,6 +38,11 @@ in a package, be sure to read \link{faq-adverbs-export}.
 # To replace errors with a default value, use possibly().
 list("a", 10, 100) |>
   map_dbl(possibly(log, NA_real_))
+
+# The default, NULL, will be discarded with `list_c()`
+list("a", 10, 100) |>
+  map(possibly(log)) |>
+  list_c()
 }
 \seealso{
 Other adverbs: 

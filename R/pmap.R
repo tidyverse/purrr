@@ -74,64 +74,59 @@
 #' pmin(df$x, df$y)
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
-pmap <- function(.l, .f, ..., .progress = NULL) {
+pmap <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-  .progress <- .progress %||% FALSE
 
   .Call(pmap_impl, environment(), ".l", ".f", "list", .progress)
 }
 
 #' @export
 #' @rdname pmap
-pmap_lgl <- function(.l, .f, ..., .progress = NULL) {
+pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-  .progress <- .progress %||% FALSE
 
   .Call(pmap_impl, environment(), ".l", ".f", "logical", .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_int <- function(.l, .f, ..., .progress = NULL) {
+pmap_int <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-  .progress <- .progress %||% FALSE
 
   .Call(pmap_impl, environment(), ".l", ".f", "integer", .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_dbl <- function(.l, .f, ..., .progress = NULL) {
+pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-  .progress <- .progress %||% FALSE
 
   .Call(pmap_impl, environment(), ".l", ".f", "double", .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_chr <- function(.l, .f, ..., .progress = NULL) {
+pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-  .progress <- .progress %||% FALSE
 
   .Call(pmap_impl, environment(), ".l", ".f", "character", .progress)
 }
 
 #' @export
 #' @rdname pmap
-pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = NULL) {
+pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = FALSE) {
   .f <- as_mapper(.f, ...)
 
   out <- pmap(.l, .f, ..., .progress = .progress)
@@ -141,7 +136,7 @@ pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = NULL) {
 
 #' @export
 #' @rdname pmap
-pwalk <- function(.l, .f, ...) {
-  pmap(.l, .f, ...)
+pwalk <- function(.l, .f, ..., .progress = FALSE) {
+  pmap(.l, .f, ..., .progress = .progress)
   invisible(.l)
 }

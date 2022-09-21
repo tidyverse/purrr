@@ -184,6 +184,8 @@
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
 
+* `possibly()` now defaults `otherwise` to NULL.
+
 * `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
   #701).
    
