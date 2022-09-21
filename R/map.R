@@ -177,7 +177,7 @@ walk <- function(.x, .f, ..., .progress = FALSE) {
 }
 
 with_indexed_errors <- function(expr, i, error_call = caller_env()) {
-  try_fetch(
+  withCallingHandlers(
     expr,
     error = function(cnd) {
       if (i == 0) {
