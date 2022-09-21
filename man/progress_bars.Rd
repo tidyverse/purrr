@@ -4,20 +4,19 @@
 \alias{progress_bars}
 \title{Progress bars in purrr}
 \description{
-Some purrr functions have a \code{.progress} argument, that you can use to
-create a progress bar.
-}
-\details{
-Possible values for \code{.progress}:
+purrr's map functions have a \code{.progress} argument that you can use to
+create a progress bar. \code{.progress} can be:
 \itemize{
-\item \code{NULL}: This is the default. purrr does not create a progress bar.
-\item \code{FALSE}: A synonym of \code{NULL}. purrr does not create a progress bar.
-\item \code{TRUE}: purrr creates a progress bar with the default settings and
-without a name.
-\item A character scalar. Used as the name of the progress bar, which
-otherwise has the default settings.
-\item A named list of progress bar parameters, see below.
+\item \code{FALSE}, the default: does not create a progress bar.
+\item \code{TRUE}: creates a basic unnamed progress bar.
+\item A string: creates a basic progress bar with the given name.
+\item A named list of progress bar parameters, as described below.
 }
+
+It's good practice to name your progress bars, to make it clear what
+calculation or process they belong to. We recommending keeping the names
+under 20 characters, so the whole progress bar fits comfortably even on
+on narrower displays.
 \subsection{Progress bar parameters}{
 \itemize{
 \item \code{clear}: whether to remove the progress bar from the screen after
@@ -48,18 +47,11 @@ The default display is different for each progress bar type.
 }
 }
 
-\subsection{Naming your progress bars}{
-
-It is good practice to name your progress bars, to make it clear what
-calculation or process they belong to. It is best to keep the names
-shorter than 20 characters, so the whole progress bar fits comfortably
-on narrower displays as well.
-}
-
 \subsection{Further documentation}{
 
-See \href{https://cli.r-lib.org/articles/progress.html}{Introduction to progress bars in cli}
+purrr's progress bars are powered by cli, so see
+\href{https://cli.r-lib.org/articles/progress.html}{Introduction to progress bars in cli}
 and \href{https://cli.r-lib.org/articles/progress-advanced.html}{Advanced cli progress bars}
-in the cli documentation.
+for more details.
 }
 }

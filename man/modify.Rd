@@ -2,26 +2,17 @@
 % Please edit documentation in R/modify.R
 \name{modify}
 \alias{modify}
-\alias{modify.default}
 \alias{modify_if}
-\alias{modify_if.default}
 \alias{modify_at}
-\alias{modify_at.default}
 \alias{modify2}
 \alias{imodify}
 \title{Modify elements selectively}
 \usage{
 modify(.x, .f, ...)
 
-\method{modify}{default}(.x, .f, ...)
-
 modify_if(.x, .p, .f, ..., .else = NULL)
 
-\method{modify_if}{default}(.x, .p, .f, ..., .else = NULL)
-
 modify_at(.x, .at, .f, ...)
-
-\method{modify_at}{default}(.x, .at, .f, ...)
 
 modify2(.x, .y, .f, ...)
 

@@ -7,7 +7,7 @@
 \usage{
 map_if(.x, .p, .f, ..., .else = NULL)
 
-map_at(.x, .at, .f, ..., .progress = NULL)
+map_at(.x, .at, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -48,8 +48,9 @@ and returns a logical, integer, or character vector of elements to select.
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 
-\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
-for details.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 }
 \description{
 The functions \code{map_if()} and \code{map_at()} take \code{.x} as input, apply

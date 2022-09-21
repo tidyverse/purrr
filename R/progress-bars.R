@@ -1,18 +1,18 @@
-
 #' Progress bars in purrr
 #'
-#' Some purrr functions have a `.progress` argument, that you can use to
-#' create a progress bar.
+#' @description
+#' purrr's map functions have a `.progress` argument that you can use to
+#' create a progress bar. `.progress` can be:
 #'
-#' Possible values for `.progress`:
+#' * `FALSE`, the default: does not create a progress bar.
+#' * `TRUE`: creates a basic unnamed progress bar.
+#' * A string: creates a basic progress bar with the given name.
+#' * A named list of progress bar parameters, as described below.
 #'
-#' * `NULL`: This is the default. purrr does not create a progress bar.
-#' * `FALSE`: A synonym of `NULL`. purrr does not create a progress bar.
-#' * `TRUE`: purrr creates a progress bar with the default settings and
-#'   without a name.
-#' * A character scalar. Used as the name of the progress bar, which
-#'   otherwise has the default settings.
-#' * A named list of progress bar parameters, see below.
+#' It's good practice to name your progress bars, to make it clear what
+#' calculation or process they belong to. We recommending keeping the names
+#' under 20 characters, so the whole progress bar fits comfortably even on
+#' on narrower displays.
 #'
 #' ## Progress bar parameters
 #'
@@ -40,18 +40,12 @@
 #'   * `custom`: custom type, `format` must not be `NULL` for this type.
 #'   The default display is different for each progress bar type.
 #'
-#' ## Naming your progress bars
-#'
-#' It is good practice to name your progress bars, to make it clear what
-#' calculation or process they belong to. It is best to keep the names
-#' shorter than 20 characters, so the whole progress bar fits comfortably
-#' on narrower displays as well.
-#'
 #' ## Further documentation
 #'
-#' See [Introduction to progress bars in cli](https://cli.r-lib.org/articles/progress.html)
+#' purrr's progress bars are powered by cli, so see
+#' [Introduction to progress bars in cli](https://cli.r-lib.org/articles/progress.html)
 #' and [Advanced cli progress bars](https://cli.r-lib.org/articles/progress-advanced.html)
-#' in the cli documentation.
+#' for more details.
 #'
 #' @name progress_bars
 NULL

@@ -29,7 +29,7 @@
 #' # now:
 #' list(1:2, 3:4, 5:6) |> list_c(ptype = integer())
 as_vector <- function(.x, .type = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "as_vector()", "list_simplify()")
+  lifecycle::deprecate_soft("1.0.0", "as_vector()", "list_simplify()")
   as_vector_(.x, .type)
 }
 as_vector_ <- function(.x, .type = NULL) {
@@ -46,7 +46,7 @@ as_vector_ <- function(.x, .type = NULL) {
 #' @export
 #' @rdname as_vector
 simplify <- function(.x, .type = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "as_vector()", "list_simplify()")
+  lifecycle::deprecate_soft("1.0.0", "as_vector()", "list_simplify()")
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {
@@ -57,7 +57,7 @@ simplify <- function(.x, .type = NULL) {
 #' @export
 #' @rdname as_vector
 simplify_all <- function(.x, .type = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "as_vector()", I("map() + list_simplify()"))
+  lifecycle::deprecate_soft("1.0.0", "as_vector()", I("map() + list_simplify()"))
 
   # Inline simplify to avoid double deprecation
   simplify <- function(.x) {

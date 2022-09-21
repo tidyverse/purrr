@@ -6,20 +6,23 @@
 \alias{map2_int}
 \alias{map2_dbl}
 \alias{map2_chr}
+\alias{map2_vec}
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
-map2(.x, .y, .f, ..., .progress = NULL)
+map2(.x, .y, .f, ..., .progress = FALSE)
 
-map2_lgl(.x, .y, .f, ..., .progress = NULL)
+map2_lgl(.x, .y, .f, ..., .progress = FALSE)
 
-map2_int(.x, .y, .f, ..., .progress = NULL)
+map2_int(.x, .y, .f, ..., .progress = FALSE)
 
-map2_dbl(.x, .y, .f, ..., .progress = NULL)
+map2_dbl(.x, .y, .f, ..., .progress = FALSE)
 
-map2_chr(.x, .y, .f, ..., .progress = NULL)
+map2_chr(.x, .y, .f, ..., .progress = FALSE)
 
-walk2(.x, .y, .f, ...)
+map2_vec(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE)
+
+walk2(.x, .y, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x, .y}{A pair of vectors, usually the same length. If not, a vector
@@ -40,18 +43,27 @@ of R.
 Note that the arguments that differ in each call come before \code{.f},
 and the arguments that are the same come after \code{.f}.}
 
-\item{.progress}{Whether to show a progress bar. See \link{progress_bars}
-for details.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
+
+\item{.ptype}{If \code{NULL}, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.}
 }
 \value{
 The output length is determined by the length of the input.
+The output names are determined by the input names.
 The output type is determined by the suffix:
 \itemize{
-\item No suffix: a list.
-\item \verb{_lgl}, \verb{_int}, \verb{_dbl}, \verb{_chr} return a logical, integer, double,
-or character vector respectively. It will be named if the input was named.
+\item No suffix: a list; \code{.f()} can return anything.
+\item \verb{_lgl()}, \verb{_int()}, \verb{_dbl()}, \verb{_chr()} return a logical, integer, double,
+or character vector respectively; \code{.f()} must return a compatible atomic
+vector of length 1.
+\item \verb{_vec()} return an atomic or S3 vector, the same type that \code{.f} returns.
+\code{.f} can return pretty much any type of vector, as long as its length 1.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
-use in a pipe.
+use in a pipe. The return value of \code{.f()} is ignored.
 }
 }
 \description{

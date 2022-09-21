@@ -70,6 +70,10 @@
 * `*_at()` can now take a function (or formula) that's passed the vector of
   element names and returns the elements to select.
 
+* New `map_vec()`, `map2_vec()`, and `pmap_vec()` work on all types of vectors,
+  extending `map_lgl()`, `map_int()`, and friends so that you can easily work
+  with dates, factors, date-times and more (#435).
+
 * New `keep_at()` and `discard_at()` that work like `keep()` and `discard()`
   but operation on element names rather than element contents (#817).
 
@@ -77,6 +81,11 @@
   progress bar. See `?progress_bars` (#149).
 
 * purrr is now licensed as MIT (#805).
+
+* `modify()`, `modify_if()`, `modify_at()`, and `modify2()` are no longer
+  generics. We have discovered a simple implementation that no longer requires
+  genericity and methods were only provided by a very small number of packages
+  (#894).
 
 * purrr now uses the base pipe (`|>`) and anonymous function short hand (`\(x)`),
   in all examples. This means that examples will no longer work in R 4.0 and 
@@ -122,6 +131,10 @@
 * `map2()` and `pmap()` now recycle names of their first input if
   needed (#783).
 
+* `modify()`, `modify_if()`, and `modify_at()` have been reimplemented using
+  vctrs principles. This shouldn't have an user facing impact, but it does
+  make the implementation much simpler.
+
 ### Plucking
 
 * `vec_depth()` is now `pluck_depth()` and works with more types of input
@@ -160,6 +173,8 @@
 
 ## Minor improvements and bug fixes
 
+* `modify()` no longer supports modifying calls or pairlists.
+
 * `modify_depth()` is no longer a generic. This makes it more consistent
   with `map_depth()`.
 
@@ -168,6 +183,8 @@
 
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
+
+* `possibly()` now defaults `otherwise` to NULL.
 
 * `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
   #701).

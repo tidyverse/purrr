@@ -59,7 +59,7 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' iris |> map_at("Species", toupper)
 #
 #' @export
-map_at <- function(.x, .at, .f, ..., .progress = NULL) {
+map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
   where <- where_at(.x, .at)
 
   out <- vector("list", length(.x))

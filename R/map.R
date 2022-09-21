@@ -12,6 +12,9 @@
 #'   atomic vector of the indicated type (or die trying). For these functions,
 #'   `.f` must return a length-1 vector of the appropriate type.
 #'
+#' * `map_vec()` simplifies to the common type of the output. It works with
+#'   most types of simple vectors like Date, POSIXct, factors, etc.
+#'
 #' * `walk()` calls `.f` for its side-effect and returns
 #'   the input `.x`.
 #'
@@ -32,19 +35,25 @@
 #'
 #'   Note that the arguments that differ in each call come before `.f`,
 #'   and the arguments that are the same come after `.f`.
-#' @param .progress Whether to show a progress bar. See [progress_bars]
-#'   for details.
+#' @param .progress Whether to show a progress bar. Use `TRUE` to a turn on
+#'   a basic progress bar, use a string to give it a name, or see
+#'   [progress_bars] for more details.
 #' @returns
 #' The output length is determined by the length of the input.
+#' The output names are determined by the input names.
 #' The output type is determined by the suffix:
 #'
-#' * No suffix: a list.
+#' * No suffix: a list; `.f()` can return anything.
 #'
-#' * `_lgl`, `_int`, `_dbl`, `_chr` return a logical, integer, double,
-#'   or character vector respectively. It will be named if the input was named.
+#' * `_lgl()`, `_int()`, `_dbl()`, `_chr()` return a logical, integer, double,
+#'   or character vector respectively; `.f()` must return a compatible atomic
+#'   vector of length 1.
+#'
+#' * `_vec()` return an atomic or S3 vector, the same type that `.f` returns.
+#'   `.f` can return pretty much any type of vector, as long as its length 1.
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
-#'    use in a pipe.
+#'    use in a pipe. The return value of `.f()` is ignored.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
@@ -116,13 +125,6 @@ map_lgl <- function(.x, .f, ..., .progress = FALSE) {
 
 #' @rdname map
 #' @export
-map_chr <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map_impl, environment(), ".x", ".f", "character", .progress)
-}
-
-#' @rdname map
-#' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
@@ -137,7 +139,24 @@ map_dbl <- function(.x, .f, ..., .progress = FALSE) {
 
 #' @rdname map
 #' @export
-walk <- function(.x, .f, ...) {
-  map(.x, .f, ...)
+map_chr <- function(.x, .f, ..., .progress = FALSE) {
+  .f <- as_mapper(.f, ...)
+  .Call(map_impl, environment(), ".x", ".f", "character", .progress)
+}
+
+#' @rdname map
+#' @param .ptype If `NULL`, the default, the output type is the common type
+#'   of the elements of the result. Otherwise, supply a "prototype" giving
+#'   the desired type of output.
+#' @export
+map_vec <- function(.x, .f, ..., .ptype = NULL, .progress = FALSE) {
+  out <- map(.x, .f, ..., .progress = .progress)
+  simplify_impl(out, ptype = .ptype)
+}
+
+#' @rdname map
+#' @export
+walk <- function(.x, .f, ..., .progress = FALSE) {
+  map(.x, .f, ..., .progress = .progress)
   invisible(.x)
 }
