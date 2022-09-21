@@ -190,7 +190,6 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
           call = error_call
         )
       }
-
     }
   )
 }
