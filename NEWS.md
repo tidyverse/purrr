@@ -92,6 +92,8 @@
   earlier so in those versions of R, the examples are automatically converted 
   to a regular section with a note that they might not work (#936).
 
+* New `modify_tree()` for recursively modifying nested data structures (#720).
+
 ### Flattening and simplification
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to

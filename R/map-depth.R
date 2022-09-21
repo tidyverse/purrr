@@ -14,6 +14,10 @@
 #' @param .ragged If `TRUE`, will apply to leaves, even if they're not
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
+#' @seealso [modify_tree()] for a recursive version of `modify_depth()` that
+#'   allows you to apply a function to every leaf or every node.
+#' @family map variants
+#' @family modify variants
 #' @export
 #' @examples
 #' # map_depth() -------------------------------------------------
