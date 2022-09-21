@@ -50,16 +50,12 @@
       modify2(1:3, integer(), `+`)
     Condition
       Error in `map2()`:
-      ! Mapped vectors must have consistent lengths:
-      * `.x` has length 3
-      * `.y` has length 0
+      ! `.y must have length 1 or 3, not 0.
     Code
       modify2(1:3, 1:4, `+`)
     Condition
       Error in `map2()`:
-      ! Mapped vectors must have consistent lengths:
-      * `.x` has length 3
-      * `.y` has length 4
+      ! `.y must have length 1 or 3, not 4.
 
 # modify_if() requires predicate functions
 

@@ -115,11 +115,8 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress) {
   if (nx != ny && nx != 1 && ny != 1) {
     r_abort_call(
       env,
-      "Mapped vectors must have consistent lengths:\n"
-      "* `.x` has length %d\n"
-      "* `.y` has length %d",
-      nx,
-      ny
+      "`.y must have length 1 or %i, not %i.",
+      nx, ny
     );
   }
   int n = (nx == 1) ? ny : nx;

@@ -39,14 +39,10 @@
       map2(1:2, 1:3, `+`)
     Condition
       Error in `map2()`:
-      ! Mapped vectors must have consistent lengths:
-      * `.x` has length 2
-      * `.y` has length 3
+      ! `.y must have length 1 or 2, not 3.
     Code
       map2(1:2, integer(), `+`)
     Condition
       Error in `map2()`:
-      ! Mapped vectors must have consistent lengths:
-      * `.x` has length 2
-      * `.y` has length 0
+      ! `.y must have length 1 or 2, not 0.
 
