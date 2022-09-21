@@ -92,6 +92,8 @@
   earlier so in those versions of R, the examples are automatically converted 
   to a regular section with a note that they might not work (#936).
 
+* When map functions fail, they now report the element they failed at (#945).
+
 ### Flattening and simplification
 
 * New `list_c()`, `list_rbind()`, and `list_cbind()` make it easy to
