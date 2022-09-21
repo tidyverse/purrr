@@ -62,6 +62,6 @@
 #' # and can supply default value
 #' ll |> list_transpose(template = nms, default = NA)
 transpose <- function(.l, .names = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "transpose()", "list_transpose()")
+  lifecycle::deprecate_soft("1.0.0", "transpose()", "list_transpose()")
   .Call(transpose_impl, .l, .names)
 }

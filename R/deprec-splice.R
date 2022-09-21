@@ -22,7 +22,7 @@
 #' c(inputs, arg3 = c("c1", "c2")) |> str()
 #' @export
 splice <- function(...) {
-  lifecycle::deprecate_warn("1.0.0", "splice()", "list_flatten()")
+  lifecycle::deprecate_soft("1.0.0", "splice()", "list_flatten()")
 
   splice_if(list(...), is_bare_list)
 }
