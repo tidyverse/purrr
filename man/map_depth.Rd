@@ -106,4 +106,19 @@ l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
 \seealso{
 \code{\link[=modify_tree]{modify_tree()}} for a recursive version of \code{modify_depth()} that
 allows you allow apply a function to every leaf or every node.
+
+Other map variants: 
+\code{\link{imap}()},
+\code{\link{lmap}()},
+\code{\link{map2}()},
+\code{\link{map_if}()},
+\code{\link{map}()},
+\code{\link{modify}()},
+\code{\link{pmap}()}
+
+Other modify variants: 
+\code{\link{modify_tree}()},
+\code{\link{modify}()}
 }
+\concept{map variants}
+\concept{modify variants}

@@ -16,6 +16,8 @@
 #'   no elements at depth `.depth`.
 #' @seealso [modify_tree()] for a recursive version of `modify_depth()` that
 #'   allows you allow apply a function to every leaf or every node.
+#' @family map variants
+#' @family modify variants
 #' @export
 #' @examples
 #' # map_depth() -------------------------------------------------

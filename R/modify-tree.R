@@ -13,7 +13,7 @@
 #'   the tree is traversed "down", i.e. before the leaves are transformed
 #'   with `f_leaf`, while `f_post` is applied on the way "up", i.e.
 #'   after the leaves are transformed.
-#' @family map variants
+#' @family modify variants
 #' @export
 #' @examples
 #' x <- list(list(a = 2:1, c = list(b1 = 2), b = list(c2 = 3, c1 = 4)))

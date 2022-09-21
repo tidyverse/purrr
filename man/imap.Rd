@@ -59,9 +59,9 @@ iwalk(mtcars, \(x, idx) cat(idx, ": ", median(x), "\n", sep = ""))
 Other map variants: 
 \code{\link{lmap}()},
 \code{\link{map2}()},
+\code{\link{map_depth}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
-\code{\link{modify_tree}()},
 \code{\link{modify}()},
 \code{\link{pmap}()}
 }
