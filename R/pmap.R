@@ -80,7 +80,10 @@ pmap <- function(.l, .f, ..., .progress = FALSE) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "list", .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(pmap_impl, environment(), ".l", ".f", "list", .progress)
+  )
 }
 
 #' @export
@@ -91,7 +94,10 @@ pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "logical", .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(pmap_impl, environment(), ".l", ".f", "logical", .progress)
+  )
 }
 #' @export
 #' @rdname pmap
@@ -101,7 +107,10 @@ pmap_int <- function(.l, .f, ..., .progress = FALSE) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "integer", .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(pmap_impl, environment(), ".l", ".f", "integer", .progress)
+  )
 }
 #' @export
 #' @rdname pmap
@@ -111,7 +120,10 @@ pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "double", .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(pmap_impl, environment(), ".l", ".f", "double", .progress)
+  )
 }
 #' @export
 #' @rdname pmap
@@ -121,7 +133,10 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
     .l <- as.list(.l)
   }
 
-  .Call(pmap_impl, environment(), ".l", ".f", "character", .progress)
+  i <- 0
+  with_indexed_errors(i = i,
+    .Call(pmap_impl, environment(), ".l", ".f", "character", .progress)
+  )
 }
 
 #' @export
@@ -132,7 +147,6 @@ pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = FALSE) {
   out <- pmap(.l, .f, ..., .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
-
 
 #' @export
 #' @rdname pmap

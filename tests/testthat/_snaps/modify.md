@@ -49,14 +49,14 @@
     Code
       modify2(1:3, integer(), `+`)
     Condition
-      Error in `map2()`:
+      Error in `withCallingHandlers()`:
       ! Mapped vectors must have consistent lengths:
       * `.x` has length 3
       * `.y` has length 0
     Code
       modify2(1:3, 1:4, `+`)
     Condition
-      Error in `map2()`:
+      Error in `withCallingHandlers()`:
       ! Mapped vectors must have consistent lengths:
       * `.x` has length 3
       * `.y` has length 4
