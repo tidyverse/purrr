@@ -115,7 +115,7 @@ map <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map_impl, environment(), ".x", ".f", "list", .progress)
+    .Call(map_impl, environment(), "list", .progress)
   )
 }
 
@@ -125,7 +125,7 @@ map_lgl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map_impl, environment(), ".x", ".f", "logical", .progress)
+    .Call(map_impl, environment(), "logical", .progress)
   )
 }
 
@@ -135,7 +135,7 @@ map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map_impl, environment(), ".x", ".f", "integer", .progress)
+    .Call(map_impl, environment(), "integer", .progress)
   )
 }
 
@@ -145,7 +145,7 @@ map_dbl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map_impl, environment(), ".x", ".f", "double", .progress)
+    .Call(map_impl, environment(), "double", .progress)
   )
 }
 
@@ -155,7 +155,7 @@ map_chr <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map_impl, environment(), ".x", ".f", "character", .progress)
+    .Call(map_impl, environment(), "character", .progress)
   )
 }
 

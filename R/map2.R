@@ -34,7 +34,7 @@ map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map2_impl, environment(), ".x", ".y", ".f", "list", .progress)
+    .Call(map2_impl, environment(), "list", .progress)
   )
 }
 #' @export
@@ -43,7 +43,7 @@ map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map2_impl, environment(), ".x", ".y", ".f", "logical", .progress)
+    .Call(map2_impl, environment(), "logical", .progress)
   )
 }
 #' @export
@@ -52,7 +52,7 @@ map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map2_impl, environment(), ".x", ".y", ".f", "integer", .progress)
+    .Call(map2_impl, environment(), "integer", .progress)
   )
 }
 #' @export
@@ -61,7 +61,7 @@ map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map2_impl, environment(), ".x", ".y", ".f", "double", .progress)
+    .Call(map2_impl, environment(), "double", .progress)
   )
 }
 #' @export
@@ -70,7 +70,7 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
   i <- 0
   with_indexed_errors(i = i,
-    .Call(map2_impl, environment(), ".x", ".y", ".f", "character", .progress)
+    .Call(map2_impl, environment(), "character", .progress)
   )
 }
 

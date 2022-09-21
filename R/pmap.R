@@ -82,7 +82,7 @@ pmap <- function(.l, .f, ..., .progress = FALSE) {
 
   i <- 0
   with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), ".l", ".f", "list", .progress)
+    .Call(pmap_impl, environment(), "list", .progress)
   )
 }
 
@@ -96,7 +96,7 @@ pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
 
   i <- 0
   with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), ".l", ".f", "logical", .progress)
+    .Call(pmap_impl, environment(), "logical", .progress)
   )
 }
 #' @export
@@ -109,7 +109,7 @@ pmap_int <- function(.l, .f, ..., .progress = FALSE) {
 
   i <- 0
   with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), ".l", ".f", "integer", .progress)
+    .Call(pmap_impl, environment(), "integer", .progress)
   )
 }
 #' @export
@@ -122,7 +122,7 @@ pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
 
   i <- 0
   with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), ".l", ".f", "double", .progress)
+    .Call(pmap_impl, environment(), "double", .progress)
   )
 }
 #' @export
@@ -135,7 +135,7 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
 
   i <- 0
   with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), ".l", ".f", "character", .progress)
+    .Call(pmap_impl, environment(), "character", .progress)
   )
 }
 

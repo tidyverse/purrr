@@ -67,12 +67,9 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
   return out;
 }
 
-SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_, SEXP progress) {
-  const char* x_name = CHAR(Rf_asChar(x_name_));
-  const char* f_name = CHAR(Rf_asChar(f_name_));
-
-  SEXP x = Rf_install(x_name);
-  SEXP f = Rf_install(f_name);
+SEXP map_impl(SEXP env, SEXP type_, SEXP progress) {
+  SEXP x = Rf_install(".x");
+  SEXP f = Rf_install(".f");
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
@@ -101,14 +98,10 @@ SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_, SEXP progress) {
   return out;
 }
 
-SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, SEXP progress) {
-  const char* x_name = CHAR(Rf_asChar(x_name_));
-  const char* y_name = CHAR(Rf_asChar(y_name_));
-  const char* f_name = CHAR(Rf_asChar(f_name_));
-
-  SEXP x = Rf_install(x_name);
-  SEXP y = Rf_install(y_name);
-  SEXP f = Rf_install(f_name);
+SEXP map2_impl(SEXP env, SEXP type_, SEXP progress) {
+  SEXP x = Rf_install(".x");
+  SEXP y = Rf_install(".y");
+  SEXP f = Rf_install(".f");
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
@@ -142,14 +135,13 @@ SEXP map2_impl(SEXP env, SEXP x_name_, SEXP y_name_, SEXP f_name_, SEXP type_, S
   return out;
 }
 
-SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) {
-  const char* l_name = CHAR(Rf_asChar(l_name_));
-  SEXP l = Rf_install(l_name);
+SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
+  SEXP l = Rf_install(".l");
   SEXP l_val = PROTECT(Rf_eval(l, env));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val)) {
-    stop_bad_type(l_val, "a list", NULL, l_name);
+    stop_bad_type(l_val, "a list", NULL, ".l");
   }
 
   // Check all elements are lists and find recycled length
@@ -160,7 +152,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
     SEXP j_val = VECTOR_ELT(l_val, j);
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
-      stop_bad_element_type(j_val, j + 1, "a vector", NULL, l_name);
+      stop_bad_element_type(j_val, j + 1, "a vector", NULL, ".l");
     }
 
     int nj = Rf_length(j_val);
@@ -183,8 +175,7 @@ SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress) 
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));
   int has_names = !Rf_isNull(l_names);
 
-  const char* f_name = CHAR(Rf_asChar(f_name_));
-  SEXP f = Rf_install(f_name);
+  SEXP f = Rf_install(".f");
   SEXP i = Rf_install("i");
   SEXP one = PROTECT(Rf_ScalarInteger(1));
 
