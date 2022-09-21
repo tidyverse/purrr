@@ -36,10 +36,8 @@ void check_vector(SEXP x, const char *name, SEXP env) {
 // call must involve i
 SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
                SEXP progress) {
-  // Create variable "i" and map to scalar integer
-  SEXP i_val = PROTECT(Rf_ScalarInteger(1));
   SEXP i = Rf_install("i");
-  Rf_defineVar(i, i_val, env);
+  SEXP i_val = Rf_findVarInFrame(env, i);
 
   SEXP bar = PROTECT(cli_progress_bar(n, progress));
   SEXP out = PROTECT(Rf_allocVector(type, n));
@@ -63,7 +61,7 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
   INTEGER(i_val)[0] = 0;
   cli_progress_done(bar);
 
-  UNPROTECT(3);
+  UNPROTECT(2);
   return out;
 }
 

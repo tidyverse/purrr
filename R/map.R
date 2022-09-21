@@ -113,7 +113,7 @@
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  i <- 0
+  i <- 0L
   with_indexed_errors(i = i,
     .Call(map_impl, environment(), "list", .progress)
   )
@@ -123,7 +123,7 @@ map <- function(.x, .f, ..., .progress = FALSE) {
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  i <- 0
+  i <- 0L
   with_indexed_errors(i = i,
     .Call(map_impl, environment(), "logical", .progress)
   )
@@ -133,7 +133,7 @@ map_lgl <- function(.x, .f, ..., .progress = FALSE) {
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  i <- 0
+  i <- 0L
   with_indexed_errors(i = i,
     .Call(map_impl, environment(), "integer", .progress)
   )
@@ -143,7 +143,7 @@ map_int <- function(.x, .f, ..., .progress = FALSE) {
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  i <- 0
+  i <- 0L
   with_indexed_errors(i = i,
     .Call(map_impl, environment(), "double", .progress)
   )
@@ -153,7 +153,7 @@ map_dbl <- function(.x, .f, ..., .progress = FALSE) {
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
-  i <- 0
+  i <- 0L
   with_indexed_errors(i = i,
     .Call(map_impl, environment(), "character", .progress)
   )
