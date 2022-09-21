@@ -180,7 +180,7 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
   withCallingHandlers(
     expr,
     error = function(cnd) {
-      if (i == 0) {
+      if (i == 0L) {
         # error happened before or after loop
         cnd_signal(cnd)
       } else {
