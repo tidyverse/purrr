@@ -107,7 +107,7 @@ list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()
 #' @export
 #' @keywords internal
 update_list <- function(.x, ...) {
-  lifecycle::deprecate_warn("1.0.0", "update_list()")
+  lifecycle::deprecate_soft("1.0.0", "update_list()")
 
   dots <- dots_list(...)
 

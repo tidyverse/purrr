@@ -21,7 +21,7 @@
 #' @rdname along
 #' @export
 list_along <- function(x) {
-  lifecycle::deprecate_warn("1.0.0", "list_along()", I("rep_along(x, list())"))
+  lifecycle::deprecate_soft("1.0.0", "list_along()", I("rep_along(x, list())"))
 
   vector("list", length(x))
 }

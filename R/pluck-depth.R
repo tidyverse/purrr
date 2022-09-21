@@ -29,6 +29,6 @@ pluck_depth <- function(x) {
 #' @rdname pluck_depth
 #' @usage NULL
 vec_depth <- function(x) {
-  lifecycle::deprecate_warn("1.0.0", "vec_depth()", "pluck_depth()")
+  lifecycle::deprecate_soft("1.0.0", "vec_depth()", "pluck_depth()")
   pluck_depth(x)
 }

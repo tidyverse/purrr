@@ -64,7 +64,7 @@ deprec_rerun <- function(.n, ...) {
     new <- substitute(map(1:n, ~ list(...)))
   }
 
-  lifecycle::deprecate_warn("1.0.0", "rerun()", "map()", details = paste_line(
+  lifecycle::deprecate_soft("1.0.0", "rerun()", "map()", details = paste_line(
     "  # Previously",
     paste0("  ", expr_deparse(old)),
     "",
