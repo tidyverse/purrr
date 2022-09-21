@@ -4,15 +4,14 @@
 #' that either modify each leaf or each node (or both).
 #'
 #' @param x A list.
-#' @param f_leaf A function applied to each leaf.
-#' @param p_leaf A predicate function that returns `TRUE` when an element is
-#'   a leaf, determining whether `f_leaf` or `f_pre`/`f_post` is applied to
-#'   it. The default value, `NULL`, treats lists as nodes and everything else
-#'   as leaves.
-#' @param f_pre,f_post Functions applied to each node. `f_pre` is applied
-#'   the tree is traversed "down", i.e. before the leaves are transformed
-#'   with `f_leaf`, while `f_post` is applied on the way "up", i.e.
-#'   after the leaves are transformed.
+#' @param ... Reserved for future use. Must be empty
+#' @param leaf A function applied to each leaf.
+#' @param is_leaf A predicate function that determines whether an element is
+#'   a leaf (by returning `FALSE`) or a node (by returning `FALSE`). The
+#'   default value, `NULL`, treats lists as nodes and everything else as leaves.
+#' @param pre,post Functions applied to each node. `pre` is applied on the
+#'   way "down", i.e. before the leaves are transformed with `leaf`, while
+#'   `post` is applied on the way "up", i.e. after the leaves are transformed.
 #' @family modify variants
 #' @export
 #' @examples
@@ -20,7 +19,7 @@
 #' x |> str()
 #'
 #' # Transform each leaf
-#' x |> modify_tree(f_leaf = \(x) x + 100) |>  str()
+#' x |> modify_tree(leaf = \(x) x + 100) |>  str()
 #'
 #' # Recursively sort the nodes
 #' sort_named <- function(x) {
@@ -31,35 +30,33 @@
 #'     x
 #'    }
 #' }
-#' x |> modify_tree(f_post = sort_named) |> str()
+#' x |> modify_tree(post = sort_named) |> str()
 modify_tree <- function(x,
-                        f_leaf = identity,
-                        p_leaf = NULL,
-                        f_pre = identity,
-                        f_post = identity) {
-  if (!is_vector(x)) {
-    cli::cli_abort("{.arg x} must be a vector, not {.obj_type_friendly {x}}.")
-  }
-
-  f_post <- rlang::as_function(f_post)
-  f_pre <- rlang::as_function(f_pre)
-  f_leaf <- rlang::as_function(f_leaf)
-  if (is.null(p_leaf)) {
+                        ...,
+                        leaf = identity,
+                        is_leaf = NULL,
+                        pre = identity,
+                        post = identity) {
+  check_dots_empty()
+  leaf <- rlang::as_function(leaf)
+  if (is.null(is_leaf)) {
     is_leaf <- function(x) {
       !is.list(x)
     }
   } else {
-    p_leaf <- rlang::as_function(p_leaf)
-    is_leaf <- as_predicate(p_leaf, .mapper = FALSE)
+    is_leaf_f <- rlang::as_function(is_leaf)
+    is_leaf <- as_predicate(is_leaf_f, .mapper = FALSE, .error_arg = "is_leaf")
   }
+  post <- rlang::as_function(post)
+  pre <- rlang::as_function(pre)
 
   worker <- function(x) {
     if (is_leaf(x)) {
-      out <- f_leaf(x)
+      out <- leaf(x)
     } else {
-      out <- f_pre(x)
+      out <- pre(x)
       out <- modify(out, worker)
-      out <- f_post(out)
+      out <- post(out)
     }
     out
   }

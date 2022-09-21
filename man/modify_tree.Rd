@@ -6,26 +6,27 @@
 \usage{
 modify_tree(
   x,
-  f_leaf = identity,
-  p_leaf = NULL,
-  f_pre = identity,
-  f_post = identity
+  ...,
+  leaf = identity,
+  is_leaf = NULL,
+  pre = identity,
+  post = identity
 )
 }
 \arguments{
 \item{x}{A list.}
 
-\item{f_leaf}{A function applied to each leaf.}
+\item{...}{Reserved for future use. Must be empty}
 
-\item{p_leaf}{A predicate function that returns \code{TRUE} when an element is
-a leaf, determining whether \code{f_leaf} or \code{f_pre}/\code{f_post} is applied to
-it. The default value, \code{NULL}, treats lists as nodes and everything else
-as leaves.}
+\item{leaf}{A function applied to each leaf.}
 
-\item{f_pre, f_post}{Functions applied to each node. \code{f_pre} is applied
-the tree is traversed "down", i.e. before the leaves are transformed
-with \code{f_leaf}, while \code{f_post} is applied on the way "up", i.e.
-after the leaves are transformed.}
+\item{is_leaf}{A predicate function that determines whether an element is
+a leaf (by returning \code{FALSE}) or a node (by returning \code{FALSE}). The
+default value, \code{NULL}, treats lists as nodes and everything else as leaves.}
+
+\item{pre, post}{Functions applied to each node. \code{pre} is applied on the
+way "down", i.e. before the leaves are transformed with \code{leaf}, while
+\code{post} is applied on the way "up", i.e. after the leaves are transformed.}
 }
 \description{
 \code{modify_tree()} allows you to recursively modify a list, supplying functions
@@ -36,7 +37,7 @@ x <- list(list(a = 2:1, c = list(b1 = 2), b = list(c2 = 3, c1 = 4)))
 x |> str()
 
 # Transform each leaf
-x |> modify_tree(f_leaf = \(x) x + 100) |>  str()
+x |> modify_tree(leaf = \(x) x + 100) |>  str()
 
 # Recursively sort the nodes
 sort_named <- function(x) {
@@ -47,7 +48,7 @@ sort_named <- function(x) {
     x
    }
 }
-x |> modify_tree(f_post = sort_named) |> str()
+x |> modify_tree(post = sort_named) |> str()
 }
 \seealso{
 Other modify variants: 
