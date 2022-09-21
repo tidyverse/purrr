@@ -247,8 +247,6 @@ result.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`cross_df()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tidyr::expand_grid()` instead.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`as_vector()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use map() + list_simplify() instead.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># In case you need a list in long format (and not a data frame)</span></span></span>
 <span class="r-in"><span><span class="co"># just run as.list() after cross_df()</span></span></span>
@@ -271,6 +269,20 @@ result.</p>
 <span class="r-in"><span>  <span class="va">out</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="invoke.html">invoke</a></span><span class="op">(</span><span class="st">"paste"</span>, <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">args</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
 <span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "Jane! Bonjour."   "John... Hello."   "Jane... Hello."  </span>
@@ -278,6 +290,8 @@ result.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># It's easier to transpose and then use invoke_map()</span></span></span>
 <span class="r-in"><span><span class="va">args</span> <span class="op">|&gt;</span> <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="map.html">map_chr</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec</a></span><span class="op">(</span><span class="va">paste</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`transpose()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `list_transpose()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "Jane! Bonjour."   "John... Hello."   "Jane... Hello."  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7] "John... Bonjour." "Jane... Bonjour."</span>
