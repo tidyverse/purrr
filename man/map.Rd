@@ -146,6 +146,7 @@ Other map variants:
 \code{\link{imap}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
+\code{\link{map_depth}()},
 \code{\link{map_if}()},
 \code{\link{modify}()},
 \code{\link{pmap}()}

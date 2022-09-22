@@ -126,8 +126,14 @@ Other map variants:
 \code{\link{imap}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
+\code{\link{map_depth}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
 \code{\link{pmap}()}
+
+Other modify variants: 
+\code{\link{map_depth}()},
+\code{\link{modify_tree}()}
 }
 \concept{map variants}
+\concept{modify variants}

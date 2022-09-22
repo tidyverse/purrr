@@ -87,6 +87,7 @@ map2(mods, by_cyl, predict)
 Other map variants: 
 \code{\link{imap}()},
 \code{\link{lmap}()},
+\code{\link{map_depth}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
 \code{\link{modify}()},
