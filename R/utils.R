@@ -41,8 +41,8 @@ where_if <- function(.x, .p, ..., .error_call = caller_env()) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = .error_call)
-    map_lgl(.x, .p, ...)
+    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = NULL)
+    map_(.x, .p, ..., .type = "logical", .error_call = .error_call)
   }
 }
 

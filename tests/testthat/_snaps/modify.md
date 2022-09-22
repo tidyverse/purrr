@@ -62,9 +62,9 @@
     Code
       modify_if(list(1, 2), ~NA, ~"foo")
     Condition
-      Error in `map_lgl()`:
+      Error in `modify_if()`:
       ! In index 1.
-      Caused by error in `modify_if()`:
+      Caused by error:
       ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 
 # user friendly error for non-supported cases

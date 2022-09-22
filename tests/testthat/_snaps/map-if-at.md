@@ -3,8 +3,8 @@
     Code
       map_if(1:3, ~NA, ~"foo")
     Condition
-      Error in `map_lgl()`:
+      Error in `map_if()`:
       ! In index 1.
-      Caused by error in `map_if()`:
+      Caused by error:
       ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 
