@@ -35,8 +35,17 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 
 \item{...}{Additional arguments passed on to the mapped function.
 
-Note that the arguments that differ in each call come before \code{.f},
-and the arguments that are the same come after \code{.f}.}
+We now generally recommend against using \code{...} to pass additional
+(constant) arguments to \code{f}. Instead use a shorthand anonymous function:
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{# Instead of
+x |> map(f, 1, 2, collapse = ",")
+# do:
+x |> map(\\(x) f(x, 1, 2, collapse = ","))
+}\if{html}{\out{</div>}}
+
+This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.}
 
 \item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
 at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
