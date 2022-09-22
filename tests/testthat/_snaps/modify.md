@@ -50,12 +50,12 @@
       modify2(1:3, integer(), `+`)
     Condition
       Error in `map2()`:
-      ! `.y must have length 1 or 3, not 0.
+      ! Can't recycle `.x` (size 3) to match `.y` (size 0).
     Code
       modify2(1:3, 1:4, `+`)
     Condition
       Error in `map2()`:
-      ! `.y must have length 1 or 3, not 4.
+      ! Can't recycle `.x` (size 3) to match `.y` (size 4).
 
 # modify_if() requires predicate functions
 

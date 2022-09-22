@@ -57,6 +57,18 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
 map2_ <- function(.x, .y, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   i <- 0L
+
+  if (is.list(.x) && !vec_is_list(.x)) {
+    .x <- unclass(.x)
+  }
+  if (is.list(.y) && !vec_is_list(.y)) {
+    .y <- unclass(.y)
+  }
+
+  args <- vec_recycle_common(.x = .x, .y = .y, .call = .error_call)
+  .x <- args$.x
+  .y <- args$.y
+
   with_indexed_errors(
     i = i,
     error_call = .error_call,

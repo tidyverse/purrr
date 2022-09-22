@@ -100,10 +100,13 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
 }
 
 pmap_ <- function(.l, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
-  .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
+  vec_check_list(.l, call = .error_call)
+  .l <- vec_recycle_common(!!!.l, .arg = ".l", .call = .error_call)
+
+  .f <- as_mapper(.f, ...)
   i <- 0L
 
   with_indexed_errors(
