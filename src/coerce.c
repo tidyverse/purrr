@@ -3,9 +3,15 @@
 #include <Rinternals.h>
 #include <stdio.h>
 
+#include "conditions.h"
+
 void cant_coerce(SEXP from, SEXP to, int i) {
-  Rf_errorcall(R_NilValue, "Can't coerce from a %s to a %s.",
-    Rf_type2char(TYPEOF(from)), Rf_type2char(TYPEOF(to)));
+  Rf_errorcall(
+    R_NilValue,
+    "Can't coerce from %s to %s.",
+    rlang_obj_type_friendly_full(from, false, false),
+    rlang_obj_type_friendly_full(to, false, false)
+  );
 }
 
 int real_to_logical(double x, SEXP from, SEXP to, int i) {

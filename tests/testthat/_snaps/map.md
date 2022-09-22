@@ -29,7 +29,7 @@
       Error in `map_int()`:
       ! In index 1.
       Caused by error:
-      ! Can't coerce from a character to a integer.
+      ! Can't coerce from a character vector to an integer vector.
     Code
       map(1:3, ~ fail_at_3(stop("Doesn't work")))
     Condition
