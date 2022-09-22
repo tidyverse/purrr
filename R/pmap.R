@@ -75,31 +75,31 @@
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
 pmap <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_(.l, .f, ..., .type = "list", .progress = .progress)
+  pmap_("list", .l, .f, ..., .progress = .progress)
 }
 
 #' @export
 #' @rdname pmap
 pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_(.l, .f, ..., .type = "logical", .progress = .progress)
+  pmap_("logical", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_int <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_(.l, .f, ..., .type = "integer", .progress = .progress)
+  pmap_("integer", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_(.l, .f, ..., .type = "double", .progress = .progress)
+  pmap_("double", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_(.l, .f, ..., .type = "character", .progress = .progress)
+  pmap_("character", .l, .f, ..., .progress = .progress)
 }
 
-pmap_ <- function(.l, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
+pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, .error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)

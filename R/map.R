@@ -112,34 +112,34 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "list", .progress = .progress)
+  map_("list", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "logical", .progress = .progress)
+  map_("logical", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "integer", .progress = .progress)
+  map_("integer", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "double", .progress = .progress)
+  map_("double", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "character", .progress = .progress)
+  map_("character", .x, .f, ..., .progress = .progress)
 }
 
-map_ <- function(.x, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
+map_ <- function(.type, .x, .f, ..., .progress = FALSE, .error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   i <- 0L
   with_indexed_errors(
