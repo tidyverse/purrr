@@ -13,7 +13,7 @@
       Error in `pmap_int()`:
       ! In index 1.
       Caused by error:
-      ! Result must be length 1, not 2
+      ! Result must be length 1, not 2.
     Code
       pmap_vec(list(1), ~1, .ptype = character())
     Condition

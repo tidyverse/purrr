@@ -22,7 +22,7 @@
       Error in `map_int()`:
       ! In index 3.
       Caused by error:
-      ! Result must be length 1, not 2
+      ! Result must be length 1, not 2.
     Code
       map_int(1:3, ~ fail_at_3("x"))
     Condition

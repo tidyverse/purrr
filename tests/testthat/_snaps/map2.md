@@ -13,7 +13,7 @@
       Error in `map2_int()`:
       ! In index 1.
       Caused by error:
-      ! Result must be length 1, not 2
+      ! Result must be length 1, not 2.
     Code
       map2_vec(1, 1, ~1, .ptype = character())
     Condition
