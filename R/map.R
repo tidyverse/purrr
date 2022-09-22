@@ -172,10 +172,10 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
     expr,
     error = function(cnd) {
       if (i == 0L) {
-        # error happened before or after loop
+        # Error happened before or after loop
       } else {
         cli::cli_abort(
-          "Can't compute index {i}.",
+          "In index {i}.",
           parent = cnd,
           call = error_call
         )

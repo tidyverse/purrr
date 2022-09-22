@@ -4,11 +4,11 @@
       map_depth(x1, 6, length)
     Condition
       Error in `.fmap()`:
-      ! Can't compute index 1.
+      ! In index 1.
       Caused by error in `.fmap()`:
-      ! Can't compute index 1.
+      ! In index 1.
       Caused by error in `.fmap()`:
-      ! Can't compute index 1.
+      ! In index 1.
       Caused by error in `map_depth()`:
       ! List not deep enough
 
@@ -26,11 +26,11 @@
       modify_depth(x1, 5, length)
     Condition
       Error in `map()`:
-      ! Can't compute index 1.
+      ! In index 1.
       Caused by error in `map()`:
-      ! Can't compute index 1.
+      ! In index 1.
       Caused by error in `map()`:
-      ! Can't compute index 1.
+      ! In index 1.
       Caused by error in `modify_depth()`:
       ! List not deep enough
 
