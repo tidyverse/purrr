@@ -112,52 +112,43 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(map_impl, environment(), "list", .progress)
-  )
+  map_(.x, .f, ..., .type = "list", .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(map_impl, environment(), "logical", .progress)
-  )
+  map_(.x, .f, ..., .type = "logical", .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(map_impl, environment(), "integer", .progress)
-  )
+  map_(.x, .f, ..., .type = "integer", .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(map_impl, environment(), "double", .progress)
-  )
+  map_(.x, .f, ..., .type = "double", .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
+  map_(.x, .f, ..., .type = "character", .progress = .progress)
+}
+
+map_ <- function(.x, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   i <- 0L
-  with_indexed_errors(i = i,
-    .Call(map_impl, environment(), "character", .progress)
+  with_indexed_errors(
+    i = i,
+    error_call = .error_call,
+    .Call(map_impl, environment(), .type, .progress, .error_call)
   )
 }
+
 
 #' @rdname map
 #' @param .ptype If `NULL`, the default, the output type is the common type
@@ -182,7 +173,6 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
     error = function(cnd) {
       if (i == 0L) {
         # error happened before or after loop
-        cnd_signal(cnd)
       } else {
         cli::cli_abort(
           "Can't compute index {i}.",

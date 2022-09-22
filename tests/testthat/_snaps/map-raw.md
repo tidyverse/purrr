@@ -18,9 +18,6 @@
       Warning:
       `imap_raw()` was deprecated in purrr 1.0.0.
       Please use `imap_vec()` instead.
-      Warning:
-      `map2_raw()` was deprecated in purrr 1.0.0.
-      Please use `map2_vec()` instead.
     Code
       . <- pmap_raw(list(), ~.x)
     Condition

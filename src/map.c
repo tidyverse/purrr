@@ -25,12 +25,12 @@ void copy_names(SEXP from, SEXP to) {
   UNPROTECT(1);
 }
 
-void check_vector(SEXP x, const char *name, SEXP env) {
+void check_vector(SEXP x, const char *name, SEXP error_call) {
   if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
     return;
   }
   r_abort_call(
-    env,
+    error_call,
     "`%s` must be a vector, not %s.",
     name, rlang_obj_type_friendly_full(x, true, false)
   );
@@ -68,14 +68,14 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
   return out;
 }
 
-SEXP map_impl(SEXP env, SEXP type_, SEXP progress) {
+SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP x = Rf_install(".x");
   SEXP f = Rf_install(".f");
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x", env);
+  check_vector(x_val, ".x", error_call);
 
   int n = Rf_length(x_val);
   if (n == 0) {
@@ -99,7 +99,7 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress) {
   return out;
 }
 
-SEXP map2_impl(SEXP env, SEXP type_, SEXP progress) {
+SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP x = Rf_install(".x");
   SEXP y = Rf_install(".y");
   SEXP f = Rf_install(".f");
@@ -107,14 +107,14 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x", env);
+  check_vector(x_val, ".x", error_call);
   SEXP y_val = PROTECT(Rf_eval(y, env));
-  check_vector(y_val, ".y", env);
+  check_vector(y_val, ".y", error_call);
 
   int nx = Rf_length(x_val), ny = Rf_length(y_val);
   if (nx != ny && nx != 1 && ny != 1) {
     r_abort_call(
-      env,
+      error_call,
       "`.y must have length 1 or %i, not %i.",
       nx, ny
     );
@@ -134,14 +134,14 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress) {
   return out;
 }
 
-SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
+SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP l = Rf_install(".l");
   SEXP l_val = PROTECT(Rf_eval(l, env));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   if (!Rf_isVectorList(l_val)) {
     r_abort_call(
-      env,
+      error_call,
       "`.l` must be a list, not %s.",
       rlang_obj_type_friendly_full(l_val, true, false)
     );
@@ -156,7 +156,7 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
 
     if (!Rf_isVector(j_val) && !Rf_isNull(j_val)) {
       r_abort_call(
-        env,
+        error_call,
         "`.l[[%i]]` must be a vector, not %s.",
         j + 1,
         rlang_obj_type_friendly_full(j_val, true, false)
@@ -173,7 +173,7 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress) {
       n = nj;
     } else if (nj != n) {
       r_abort_call(
-        env,
+        error_call,
         "`.l[[%i]]` must have length 1 or %i, not %i.",
         j + 1, n, nj
       );

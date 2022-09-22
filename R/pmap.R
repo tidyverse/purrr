@@ -75,69 +75,44 @@
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
 pmap <- function(.l, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  if (is.data.frame(.l)) {
-    .l <- as.list(.l)
-  }
-
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), "list", .progress)
-  )
+  pmap_(.l, .f, ..., .type = "list", .progress = .progress)
 }
 
 #' @export
 #' @rdname pmap
 pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  if (is.data.frame(.l)) {
-    .l <- as.list(.l)
-  }
-
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), "logical", .progress)
-  )
+  pmap_(.l, .f, ..., .type = "logical", .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_int <- function(.l, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  if (is.data.frame(.l)) {
-    .l <- as.list(.l)
-  }
-
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), "integer", .progress)
-  )
+  pmap_(.l, .f, ..., .type = "integer", .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  if (is.data.frame(.l)) {
-    .l <- as.list(.l)
-  }
-
-  i <- 0L
-  with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), "double", .progress)
-  )
+  pmap_(.l, .f, ..., .type = "double", .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_(.l, .f, ..., .type = "character", .progress = .progress)
+}
+
+pmap_ <- function(.l, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
   }
-
   i <- 0L
-  with_indexed_errors(i = i,
-    .Call(pmap_impl, environment(), "character", .progress)
+
+  with_indexed_errors(
+    i = i,
+    error_call = .error_call,
+    .Call(pmap_impl, environment(), .type, .progress, .error_call)
   )
 }
+
 
 #' @export
 #' @rdname pmap
