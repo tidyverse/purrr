@@ -23,7 +23,7 @@ test_that("has_element checks whether a list contains an object", {
 
 test_that("`detect()` requires a predicate function", {
   expect_snapshot(detect(list(1:2, 2), is.na), error = TRUE)
-  expect_snapshot(detect(list(1:2, 2), function(...) NA), error = TRUE)
+  expect_snapshot(detect_index(list(1:2, 2), is.na), error = TRUE)
 })
 
 

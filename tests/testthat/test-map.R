@@ -13,6 +13,18 @@ test_that("fails on non-vectors", {
   expect_snapshot(map(quote(a), identity), error = TRUE)
 })
 
+test_that("all inform about location of problem", {
+  fail_at_3 <- function(x, bad) {
+    if (x == 3) bad else x
+  }
+
+  expect_snapshot(error = TRUE, {
+    map_int(1:3, ~ fail_at_3(.x, 2:1))
+    map_int(1:3, ~ fail_at_3("x"))
+    map(1:3, ~ fail_at_3(stop("Doesn't work")))
+  })
+})
+
 test_that("0 length input gives 0 length output", {
   out1 <- map(list(), identity)
   expect_equal(out1, list())
@@ -70,12 +82,6 @@ test_that("primitive dispatch correctly", {
   )
   x <- structure(list(), class = "test_class")
   expect_identical(map(list(x, x), as.character), list("dispatched!", "dispatched!"))
-})
-
-
-test_that("error message follows style guide when result is not length 1", {
-  x <- list(list(a = 1L), list(a = 2:3))
-  expect_snapshot(purrr::map_int(x, "a"), error = TRUE)
 })
 
 test_that("map() with empty input copies names", {

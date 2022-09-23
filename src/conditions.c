@@ -21,17 +21,9 @@ SEXP caller_env() {
   return out;
 }
 
-#define BUFSIZE 8192
-void r_abort(const char* fmt, ...) {
-  char buf[BUFSIZE];
-  va_list dots;
-  va_start(dots, fmt);
-  vsnprintf(buf, BUFSIZE, fmt, dots);
-  va_end(dots);
-  buf[BUFSIZE - 1] = '\0';
 
+void r_abort0(SEXP env, char* buf) {
   SEXP message = PROTECT(Rf_mkString(buf));
-  SEXP env = PROTECT(caller_env());
 
   SEXP fn = PROTECT(
     Rf_lang3(Rf_install("::"), Rf_install("rlang"), Rf_install("abort"))
@@ -43,6 +35,30 @@ void r_abort(const char* fmt, ...) {
 
   Rf_eval(call, R_BaseEnv);
   while (1); // No return
+}
+
+#define BUFSIZE 8192
+void r_abort(const char* fmt, ...) {
+  char buf[BUFSIZE];
+  va_list dots;
+  va_start(dots, fmt);
+  vsnprintf(buf, BUFSIZE, fmt, dots);
+  va_end(dots);
+  buf[BUFSIZE - 1] = '\0';
+
+  SEXP env = PROTECT(caller_env());
+  r_abort0(env, buf);
+}
+
+void r_abort_call(SEXP env, const char* fmt, ...) {
+  char buf[BUFSIZE];
+  va_list dots;
+  va_start(dots, fmt);
+  vsnprintf(buf, BUFSIZE, fmt, dots);
+  va_end(dots);
+  buf[BUFSIZE - 1] = '\0';
+
+  r_abort0(env, buf);
 }
 
 const char* rlang_obj_type_friendly_full(SEXP x, bool value, bool length) {

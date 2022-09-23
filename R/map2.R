@@ -31,32 +31,37 @@
 #' mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "list", .progress)
+  map2_("list", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "logical", .progress)
+  map2_("logical", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "integer", .progress)
+  map2_("integer", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "double", .progress)
+  map2_("double", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2_("character", .x, .y, .f, ..., .progress = .progress)
+}
+
+map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, .error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
-  .Call(map2_impl, environment(), ".x", ".y", ".f", "character", .progress)
+  i <- 0L
+  with_indexed_errors(
+    i = i,
+    error_call = .error_call,
+    .Call(map2_impl, environment(), .type, .progress, .error_call)
+  )
 }
 
 #' @rdname map2
