@@ -86,13 +86,24 @@ indices in a similar way to transposing a matrix.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_transpose</span><span class="op">(</span><span class="va">x</span>, template <span class="op">=</span> <span class="cn">NULL</span>, simplify <span class="op">=</span> <span class="cn">NA</span>, ptype <span class="op">=</span> <span class="cn">NULL</span>, default <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_transpose</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  template <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  ptype <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  default <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A list of vectors to transpose.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>These dots are for future extensions and must be empty.</p></dd>
 
 
 <dt>template</dt>
@@ -264,7 +275,7 @@ Alternatively, a named list specifying the default by output element.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># And specify a default if you want to simplify</span></span></span>
-<span class="r-in"><span><span class="va">ll</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>, default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ll</span> <span class="op">|&gt;</span> <span class="fu">list_transpose</span><span class="op">(</span>template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>, default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
