@@ -12,7 +12,6 @@
 #' indices in a similar way to transposing a matrix.
 #'
 #' @param x A list of vectors to transpose.
-#' @param ... Reserved for future usage. Must be empty.
 #' @param template A "template" that describes the output list. Can either be
 #'   a character vector (where elements are extracted by name), or an integer
 #'   vector (where elements are extracted by position). Defaults to the names
@@ -29,6 +28,7 @@
 #'   Alternatively, a named list specifying the prototype by output element.
 #' @param default A default value to use if a value is absent or `NULL`.
 #'   Alternatively, a named list specifying the default by output element.
+#' @inheritParams rlang::args_dots_empty
 #' @export
 #' @examples
 #' # list_transpose() is useful in conjunction with safely()

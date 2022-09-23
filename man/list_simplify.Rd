@@ -9,7 +9,7 @@ list_simplify(x, ..., strict = TRUE, ptype = NULL)
 \arguments{
 \item{x}{A list.}
 
-\item{...}{Reserved for future usage. Must be empty.}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{strict}{What should happen if simplification fails? If \code{TRUE},
 it will error. If \code{FALSE} and \code{ptype} is not supplied, it will return \code{x}

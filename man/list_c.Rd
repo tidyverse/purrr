@@ -21,7 +21,7 @@ list_rbind(x, ..., names_to = rlang::zap(), ptype = NULL)
 \item{x}{A list. For \code{list_rbind()} and \code{list_cbind()} the list must
 only contain only data frames or \code{NULL}.}
 
-\item{...}{Reserved for future usage. Must be empty.}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}

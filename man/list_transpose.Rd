@@ -16,7 +16,7 @@ list_transpose(
 \arguments{
 \item{x}{A list of vectors to transpose.}
 
-\item{...}{Reserved for future usage. Must be empty.}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{template}{A "template" that describes the output list. Can either be
 a character vector (where elements are extracted by name), or an integer

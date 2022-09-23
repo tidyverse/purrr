@@ -12,7 +12,6 @@
 #'
 #' @param x A list. For `list_rbind()` and `list_cbind()` the list must
 #'   only contain only data frames or `NULL`.
-#' @param ... Reserved for future usage. Must be empty.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
 #' @param names_to By default, `names(x)` are lost. To keep them, supply a
@@ -23,6 +22,7 @@
 #'   same size (i.e. number of rows).
 #' @param name_repair One of `"unique"`, `"universal"`, or `"check_unique"`.
 #'   See [vctrs::vec_as_names()] for the meaning of these options.
+#' @inheritParams rlang::args_dots_empty
 #' @export
 #' @examples
 #' x1 <- list(a = 1, b = 2, c = 3)

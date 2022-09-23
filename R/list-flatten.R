@@ -4,13 +4,13 @@
 #' i.e. it inlines elements that are lists leaving non-lists alone.
 #'
 #' @param x A list.
-#' @param ... Reserved for future usage. Must be empty.
 #' @param name_spec If both inner and outer names are present, control
 #'   how they are combined. Should be a glue specification that uses
 #'   variables `inner` and `outer`.
 #' @param name_repair One of `"minimal"`, `"unique"`, `"universal"`, or
 #'   `"check_unique"`. See [vctrs::vec_as_names()] for the meaning of these
 #'   options.
+#' @inheritParams rlang::args_dots_empty
 #' @return A list of the same type as `x`. The list might be shorter
 #'   if `x` contains empty lists, the same length if it contains lists
 #'   of length 1 or no sub-lists, or longer if it contains lists of
