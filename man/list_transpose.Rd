@@ -4,10 +4,19 @@
 \alias{list_transpose}
 \title{Transpose a list}
 \usage{
-list_transpose(x, template = NULL, simplify = NA, ptype = NULL, default = NULL)
+list_transpose(
+  x,
+  ...,
+  template = NULL,
+  simplify = NA,
+  ptype = NULL,
+  default = NULL
+)
 }
 \arguments{
 \item{x}{A list of vectors to transpose.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{template}{A "template" that describes the output list. Can either be
 a character vector (where elements are extracted by name), or an integer
@@ -74,5 +83,5 @@ ll |> list_transpose(template = c("x", "y", "z"))
 ll |> list_transpose(template = 1)
 
 # And specify a default if you want to simplify
-ll |> list_transpose(c("x", "y", "z"), default = NA)
+ll |> list_transpose(template = c("x", "y", "z"), default = NA)
 }

@@ -18,17 +18,17 @@ test_that("can use character template", {
 
   # Change order
   expect_equal(
-    list_transpose(x, c("b", "a"), default = NA),
+    list_transpose(x, template = c("b", "a"), default = NA),
     list(b = c(2, 3), a = c(1, NA))
   )
   # Remove
   expect_equal(
-    list_transpose(x, "b", default = NA),
+    list_transpose(x, template = "b", default = NA),
     list(b = c(2, 3))
   )
   # Add
   expect_equal(
-    list_transpose(x, c("a", "b", "c"), default = NA),
+    list_transpose(x, template = c("a", "b", "c"), default = NA),
     list(a = c(1, NA), b = c(2, 3), c = c(NA, 4))
   )
 })
@@ -43,17 +43,17 @@ test_that("can use integer template", {
 
   # Change order
   expect_equal(
-    list_transpose(x, c(3, 2, 1), default = NA),
+    list_transpose(x, template = c(3, 2, 1), default = NA),
     list(c(3, NA), c(2, 5), c(1, 4))
   )
   # Remove
   expect_equal(
-    list_transpose(x, 2, default = NA),
+    list_transpose(x, template = 2, default = NA),
     list(c(2, 5))
   )
   # Add
   expect_equal(
-    list_transpose(x, 1:4, default = NA),
+    list_transpose(x, template = 1:4, default = NA),
     list(c(1, 4), c(2, 5), c(3, NA), c(NA, NA))
   )
 })
@@ -114,11 +114,11 @@ test_that("can supply `ptype` globally or individually", {
 test_that("can supply `default` globally or individually", {
   x <- list(list(x = 1), list(y = "a"))
   expect_equal(
-    list_transpose(x, c("x", "y"), default = NA),
+    list_transpose(x, template = c("x", "y"), default = NA),
     list(x = c(1, NA), y = c(NA, "a"))
   )
   expect_equal(
-    list_transpose(x, c("x", "y"), default = list(x = NA, y = "")),
+    list_transpose(x, template = c("x", "y"), default = list(x = NA, y = "")),
     list(x = c(1, NA), y = c("", "a"))
   )
   expect_snapshot(list_transpose(x, default = list(c = NA)), error = TRUE)

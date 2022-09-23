@@ -51,6 +51,7 @@ reference:
   - map2
   - pmap
   - modify
+  - modify_tree
   - imap
   - lmap
 

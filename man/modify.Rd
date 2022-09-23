@@ -26,8 +26,17 @@ function.}
 
 \item{...}{Additional arguments passed on to the mapped function.
 
-Note that the arguments that differ in each call come before \code{.f},
-and the arguments that are the same come after \code{.f}.}
+We now generally recommend against using \code{...} to pass additional
+(constant) arguments to \code{.f}. Instead use a shorthand anonymous function:
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{# Instead of
+x |> map(f, 1, 2, collapse = ",")
+# do:
+x |> map(\\(x) f(x, 1, 2, collapse = ","))
+}\if{html}{\out{</div>}}
+
+This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
@@ -126,8 +135,14 @@ Other map variants:
 \code{\link{imap}()},
 \code{\link{lmap}()},
 \code{\link{map2}()},
+\code{\link{map_depth}()},
 \code{\link{map_if}()},
 \code{\link{map}()},
 \code{\link{pmap}()}
+
+Other modify variants: 
+\code{\link{map_depth}()},
+\code{\link{modify_tree}()}
 }
 \concept{map variants}
+\concept{modify variants}

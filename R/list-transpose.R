@@ -28,6 +28,7 @@
 #'   Alternatively, a named list specifying the prototype by output element.
 #' @param default A default value to use if a value is absent or `NULL`.
 #'   Alternatively, a named list specifying the default by output element.
+#' @inheritParams rlang::args_dots_empty
 #' @export
 #' @examples
 #' # list_transpose() is useful in conjunction with safely()
@@ -61,9 +62,15 @@
 #' ll |> list_transpose(template = 1)
 #'
 #' # And specify a default if you want to simplify
-#' ll |> list_transpose(c("x", "y", "z"), default = NA)
-list_transpose <- function(x, template = NULL, simplify = NA, ptype = NULL, default = NULL) {
+#' ll |> list_transpose(template = c("x", "y", "z"), default = NA)
+list_transpose <- function(x,
+                           ...,
+                           template = NULL,
+                           simplify = NA,
+                           ptype = NULL,
+                           default = NULL) {
   vec_check_list(x)
+  check_dots_empty()
 
   if (length(x) == 0) {
     template <- integer()

@@ -33,8 +33,19 @@
 #'
 #' @param ... Additional arguments passed on to the mapped function.
 #'
-#'   Note that the arguments that differ in each call come before `.f`,
-#'   and the arguments that are the same come after `.f`.
+#'   We now generally recommend against using `...` to pass additional
+#'   (constant) arguments to `.f`. Instead use a shorthand anonymous function:
+#'
+#'   ```R
+#'   # Instead of
+#'   x |> map(f, 1, 2, collapse = ",")
+#'   # do:
+#'   x |> map(\(x) f(x, 1, 2, collapse = ","))
+#'   ```
+#'
+#'   This makes it easier to understand which arguments belong to which
+#'   function and will tend to yield better error messages.
+#'
 #' @param .progress Whether to show a progress bar. Use `TRUE` to a turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
@@ -112,25 +123,25 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "list", .progress = .progress)
+  map_("list", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "logical", .progress = .progress)
+  map_("logical", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "integer", .progress = .progress)
+  map_("integer", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  map_(.x, .f, ..., .type = "double", .progress = .progress)
+  map_("double", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
@@ -139,13 +150,13 @@ map_chr <- function(.x, .f, ..., .progress = FALSE) {
   map_(.x, .f, ..., .type = "character", .progress = .progress)
 }
 
-map_ <- function(.x, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
+map_ <- function(.type, .x, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   i <- 0L
   with_indexed_errors(
     i = i,
-    error_call = .error_call,
-    .Call(map_impl, environment(), .type, .progress, .error_call)
+    error_call = ..error_call,
+    .Call(map_impl, environment(), .type, .progress, ..error_call)
   )
 }
 

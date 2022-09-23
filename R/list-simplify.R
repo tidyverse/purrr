@@ -12,6 +12,7 @@
 #'   unchanged.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
+#' @inheritParams rlang::args_dots_empty
 #' @returns A vector the same length as `x`.
 #' @export
 #' @examples
@@ -24,7 +25,8 @@
 #' # Unless you strict = FALSE, in which case you get the input back:
 #' list_simplify(list(1, 2, 1:3), strict = FALSE)
 #' list_simplify(list(1, 2, "x"), strict = FALSE)
-list_simplify <- function(x, strict = TRUE, ptype = NULL) {
+list_simplify <- function(x, ..., strict = TRUE, ptype = NULL) {
+  check_dots_empty()
   if (!is_bool(strict)) {
     cli::cli_abort(
       "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}.",

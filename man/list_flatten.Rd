@@ -6,12 +6,15 @@
 \usage{
 list_flatten(
   x,
+  ...,
   name_spec = "{outer}_{inner}",
   name_repair = c("minimal", "unique", "check_unique", "universal")
 )
 }
 \arguments{
 \item{x}{A list.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{name_spec}{If both inner and outer names are present, control
 how they are combined. Should be a glue specification that uses

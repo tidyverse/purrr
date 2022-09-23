@@ -54,6 +54,7 @@
 #'
 #'
 #' @family map variants
+#' @family modify variants
 #' @examples
 #' # Convert factors to characters
 #' iris |>

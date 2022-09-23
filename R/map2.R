@@ -31,30 +31,30 @@
 #' mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_(.x, .y, .f, ..., .type = "list", .progress = .progress)
+  map2_("list", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_(.x, .y, .f, ..., .type = "logical", .progress = .progress)
+  map2_("logical", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_(.x, .y, .f, ..., .type = "integer", .progress = .progress)
+  map2_("integer", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_(.x, .y, .f, ..., .type = "double", .progress = .progress)
+  map2_("double", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_(.x, .y, .f, ..., .type = "character", .progress = .progress)
+  map2_("character", .x, .y, .f, ..., .progress = .progress)
 }
 
-map2_ <- function(.x, .y, .f, ..., .type, .progress = FALSE, .error_call = caller_env()) {
+map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   i <- 0L
 
@@ -65,14 +65,14 @@ map2_ <- function(.x, .y, .f, ..., .type, .progress = FALSE, .error_call = calle
     .y <- unclass(.y)
   }
 
-  args <- vec_recycle_common(.x = .x, .y = .y, .call = .error_call)
+  args <- vec_recycle_common(.x = .x, .y = .y, .call = ..error_call)
   .x <- args$.x
   .y <- args$.y
 
   with_indexed_errors(
     i = i,
-    error_call = .error_call,
-    .Call(map2_impl, environment(), .type, .progress, .error_call)
+    error_call = ..error_call,
+    .Call(map2_impl, environment(), .type, .progress, ..error_call)
   )
 }
 
