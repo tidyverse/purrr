@@ -34,7 +34,7 @@
 #' @param ... Additional arguments passed on to the mapped function.
 #'
 #'   We now generally recommend against using `...` to pass additional
-#'   (constant) arguments to `f`. Instead use a shorthand anonymous function:
+#'   (constant) arguments to `.f`. Instead use a shorthand anonymous function:
 #'
 #'   ```R
 #'   # Instead of
