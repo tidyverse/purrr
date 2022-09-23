@@ -58,13 +58,8 @@ map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, ..error_call = call
   .f <- as_mapper(.f, ...)
   i <- 0L
 
-  if (is.list(.x) && !vec_is_list(.x)) {
-    .x <- unclass(.x)
-  }
-  if (is.list(.y) && !vec_is_list(.y)) {
-    .y <- unclass(.y)
-  }
-
+  .x <- vctrs_list_compat(.x)
+  .y <- vctrs_list_compat(.y)
   args <- vec_recycle_common(.x = .x, .y = .y, .call = ..error_call)
   .x <- args$.x
   .y <- args$.y
