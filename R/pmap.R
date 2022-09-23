@@ -99,7 +99,7 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
   pmap_("character", .l, .f, ..., .progress = .progress)
 }
 
-pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, .error_call = caller_env()) {
+pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   if (is.data.frame(.l)) {
     .l <- as.list(.l)
@@ -108,8 +108,8 @@ pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, .error_call = caller_en
 
   with_indexed_errors(
     i = i,
-    error_call = .error_call,
-    .Call(pmap_impl, environment(), .type, .progress, .error_call)
+    error_call = ..error_call,
+    .Call(pmap_impl, environment(), .type, .progress, ..error_call)
   )
 }
 
