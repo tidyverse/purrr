@@ -98,8 +98,14 @@ a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-li
 
 <dt>...</dt>
 <dd><p>Additional arguments passed on to the mapped function.</p>
-<p>Note that the arguments that differ in each call come before <code>.f</code>,
-and the arguments that are the same come after <code>.f</code>.</p></dd>
+<p>We now generally recommend against using <code>...</code> to pass additional
+(constant) arguments to <code>.f</code>. Instead use a shorthand anonymous function:</p>
+<p></p><div class="sourceCode R"><pre><code><span><span class="co"># Instead of</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co"># do:</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.</p></dd>
 
 
 <dt>.init</dt>

@@ -105,8 +105,14 @@ if you require backward compatibility with older versions of R.</p></li>
 
 <dt>...</dt>
 <dd><p>Additional arguments passed on to the mapped function.</p>
-<p>Note that the arguments that differ in each call come before <code>.f</code>,
-and the arguments that are the same come after <code>.f</code>.</p></dd>
+<p>We now generally recommend against using <code>...</code> to pass additional
+(constant) arguments to <code>.f</code>. Instead use a shorthand anonymous function:</p>
+<p></p><div class="sourceCode R"><pre><code><span><span class="co"># Instead of</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co"># do:</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,11 +136,11 @@ and the arguments that are the same come after <code>.f</code>.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="va">paste</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "5 1"  "9 2"  "10 3" "2 4"  "3 5"  "8 6"  "4 7"  "7 8"  "6 9"  "1 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "8 1"  "10 2" "7 3"  "1 4"  "2 5"  "9 6"  "5 7"  "6 8"  "4 9"  "3 10"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">idx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">": "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 2"  "2: 5"  "3: 7"  "4: 9"  "5: 10" "6: 4"  "7: 1"  "8: 6" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 8"  "10: 3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 5"  "2: 2"  "3: 6"  "4: 3"  "5: 9"  "6: 7"  "7: 4"  "8: 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 8"  "10: 1"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">idx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>

@@ -128,8 +128,14 @@ a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-li
 
 <dt>...</dt>
 <dd><p>Additional arguments passed on to the mapped function.</p>
-<p>Note that the arguments that differ in each call come before <code>.f</code>,
-and the arguments that are the same come after <code>.f</code>.</p></dd>
+<p>We now generally recommend against using <code>...</code> to pass additional
+(constant) arguments to <code>.f</code>. Instead use a shorthand anonymous function:</p>
+<p></p><div class="sourceCode R"><pre><code><span><span class="co"># Instead of</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co"># do:</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.</p></dd>
 
 
 <dt>.init</dt>
@@ -245,9 +251,8 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># By ignoring the input vector (nxt), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
 <span class="r-in"><span><span class="fu">accumulate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, \<span class="op">(</span><span class="va">acc</span>, <span class="va">nxt</span><span class="op">)</span> <span class="va">acc</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.00000000 -0.29016863 -1.05224709 -0.83550336  1.26396558</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] -0.08197661  0.60265429  1.23852857  0.54741415  2.41103461</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11]  3.91248941</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0000000  0.3644624 -0.3683020  0.7349818  0.4030571 -0.3113986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -2.5954896 -3.1541463 -3.9814888 -3.5043777 -2.5223785</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `accumulate2()` is a version of `accumulate()` that works with</span></span></span>
 <span class="r-in"><span><span class="co"># 3-argument functions and one additional vector:</span></span></span>
