@@ -33,8 +33,19 @@
 #'
 #' @param ... Additional arguments passed on to the mapped function.
 #'
-#'   Note that the arguments that differ in each call come before `.f`,
-#'   and the arguments that are the same come after `.f`.
+#'   We now generally recommend against using `...` to pass additional
+#'   (constant) arguments to `.f`. Instead use a shorthand anonymous function:
+#'
+#'   ```R
+#'   # Instead of
+#'   x |> map(f, 1, 2, collapse = ",")
+#'   # do:
+#'   x |> map(\(x) f(x, 1, 2, collapse = ","))
+#'   ```
+#'
+#'   This makes it easier to understand which arguments belong to which
+#'   function and will tend to yield better error messages.
+#'
 #' @param .progress Whether to show a progress bar. Use `TRUE` to a turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
