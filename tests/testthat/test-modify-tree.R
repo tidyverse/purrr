@@ -18,6 +18,8 @@ test_that("can modify nodes", {
 })
 
 test_that("default doesn't recurse into data frames, but can customise", {
+  withr::local_options(stringsAsFactors = FALSE)
+
   x <- list(data.frame(x = 1), data.frame(y = 2))
   expect_equal(
     modify_tree(x, leaf = class),
