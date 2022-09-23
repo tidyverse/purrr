@@ -25,7 +25,8 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     tibble,
-    tidyselect
+    tidyselect,
+    withr
 LinkingTo:
     cli,
     vctrs
