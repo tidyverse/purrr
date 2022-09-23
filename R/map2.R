@@ -54,13 +54,13 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
   map2_("character", .x, .y, .f, ..., .progress = .progress)
 }
 
-map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, .error_call = caller_env()) {
+map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
   .f <- as_mapper(.f, ...)
   i <- 0L
   with_indexed_errors(
     i = i,
-    error_call = .error_call,
-    .Call(map2_impl, environment(), .type, .progress, .error_call)
+    error_call = ..error_call,
+    .Call(map2_impl, environment(), .type, .progress, ..error_call)
   )
 }
 
