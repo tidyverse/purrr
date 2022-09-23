@@ -39,10 +39,10 @@
       map2(1:2, 1:3, `+`)
     Condition
       Error in `map2()`:
-      ! `.y must have length 1 or 2, not 3.
+      ! Can't recycle `.x` (size 2) to match `.y` (size 3).
     Code
       map2(1:2, integer(), `+`)
     Condition
       Error in `map2()`:
-      ! `.y must have length 1 or 2, not 0.
+      ! Can't recycle `.x` (size 2) to match `.y` (size 0).
 

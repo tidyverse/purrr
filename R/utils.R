@@ -98,3 +98,12 @@ is_quantity <- function(x) {
   }
   x
 }
+
+# When we want to use vctrs, but treat lists like purrr does
+vctrs_list_compat <- function(x) {
+  if (is.list(x) && !vec_is_list(x)) {
+    unclass(x)
+  } else {
+    x
+  }
+}
