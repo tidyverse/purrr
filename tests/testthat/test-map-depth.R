@@ -8,9 +8,19 @@ test_that("map_depth modifies values at specified depth", {
   expect_equal(map_depth(x1, 2, length), list(list(2)))
   expect_equal(map_depth(x1, 3, length), list(list(list(3, 3))))
   expect_equal(map_depth(x1, -1, length), list(list(list(3, 3))))
-  expect_equal(map_depth(x1, 4, length), list(list(list(list(1, 1, 1), list(1, 1, 1)))))
   expect_snapshot(map_depth(x1, 6, length), error = TRUE)
   expect_snapshot(map_depth(x1, -5, length), error = TRUE)
+})
+
+test_that("default doesn't recurse into data frames, but can customise", {
+  x <- list(data.frame(x = 1), data.frame(y = 2))
+  expect_error(map_depth(x, 2, class), "not deep enough")
+
+  x <- list(data.frame(x = 1), data.frame(y = 1))
+  expect_equal(
+    map_depth(x, 2, class, .is_leaf = Negate(is.list)),
+    list(list(x = "numeric"), list(y = "numeric"))
+  )
 })
 
 test_that("map_depth() with .ragged = TRUE operates on leaves", {
@@ -39,7 +49,6 @@ test_that("modify_depth modifies values at specified depth", {
   expect_equal(modify_depth(x1, 2, length), list(list(2)))
   expect_equal(modify_depth(x1, 3, length), list(list(list(3, 3))))
   expect_equal(modify_depth(x1, -1, length), list(list(list(3, 3))))
-  expect_equal(modify_depth(x1, 4, length), list(list(list(c(1, 1, 1), c(1, 1, 1)))))
   expect_snapshot(modify_depth(x1, 5, length), error = TRUE)
   expect_snapshot(modify_depth(x1, -5, length), error = TRUE)
 })
@@ -64,7 +73,6 @@ test_that("vectorised operations on the recursive and atomic levels yield same r
   x <- list(list(list(1:3, 4:6)))
   exp <- list(list(list(11:13, 14:16)))
   expect_identical(modify_depth(x, 3, `+`, 10L), exp)
-  expect_identical(modify_depth(x, 4, `+`, 10L), exp)
   expect_error(modify_depth(x, 5, `+`, 10L), "not deep enough")
 })
 

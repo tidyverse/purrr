@@ -17,6 +17,18 @@ test_that("can modify nodes", {
   )
 })
 
+test_that("default doesn't recurse into data frames, but can customise", {
+  x <- list(data.frame(x = 1), data.frame(y = 2))
+  expect_equal(
+    modify_tree(x, leaf = class),
+    list("data.frame", "data.frame")
+  )
+  expect_equal(
+    modify_tree(x, leaf = class, is_leaf = Negate(is.list)),
+    list(data.frame(x = "numeric"), data.frame(y = "numeric"))
+  )
+})
+
 test_that("leaf() is applied to non-node input", {
   expect_equal(modify_tree(1:3, leaf = identity), 1:3)
 })
