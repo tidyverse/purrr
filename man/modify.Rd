@@ -27,7 +27,7 @@ function.}
 \item{...}{Additional arguments passed on to the mapped function.
 
 We now generally recommend against using \code{...} to pass additional
-(constant) arguments to \code{f}. Instead use a shorthand anonymous function:
+(constant) arguments to \code{.f}. Instead use a shorthand anonymous function:
 
 \if{html}{\out{<div class="sourceCode R">}}\preformatted{# Instead of
 x |> map(f, 1, 2, collapse = ",")
