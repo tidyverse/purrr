@@ -147,7 +147,7 @@ invoke_map_raw <- function(.f, .x = list(NULL), ..., .env = NULL) {
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
 
-  map2_raw_(.f, .x, invoke, ..., .env = .env)
+  map2_("raw", .f, .x, invoke, ...)
 }
 
 #' @rdname invoke

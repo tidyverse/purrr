@@ -8,6 +8,7 @@ void __attribute__ ((noreturn)) stop_bad_element_type(SEXP x, R_xlen_t index, co
 void __attribute__ ((noreturn)) stop_bad_element_length(SEXP x, R_xlen_t index, R_xlen_t expected_length, const char* what, const char* arg, bool recycle) __attribute__((noreturn));
 SEXP caller_env();
 void __attribute__ ((noreturn)) r_abort(const char* fmt, ...);
+void __attribute__ ((noreturn)) r_abort_call(SEXP env, const char* fmt, ...);
 
 const char* rlang_obj_type_friendly_full(SEXP x, bool value, bool length);
 

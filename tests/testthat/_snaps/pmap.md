@@ -3,13 +3,17 @@
     Code
       pmap_int(list(1), ~"x")
     Condition
-      Error:
-      ! Can't coerce element 1 from a character to a integer
+      Error in `pmap_int()`:
+      ! In index 1.
+      Caused by error:
+      ! Can't coerce from a character vector to an integer vector.
     Code
       pmap_int(list(1), ~ 1:2)
     Condition
       Error in `pmap_int()`:
-      ! Result 1 must have length 1, not 2.
+      ! In index 1.
+      Caused by error:
+      ! Result must be length 1, not 2.
     Code
       pmap_vec(list(1), ~1, .ptype = character())
     Condition

@@ -9,10 +9,10 @@
 ---
 
     Code
-      detect(list(1:2, 2), function(...) NA)
+      detect_index(list(1:2, 2), is.na)
     Condition
-      Error in `detect()`:
-      ! `.f()` must return a single `TRUE` or `FALSE`, not `NA`.
+      Error in `detect_index()`:
+      ! `.f()` must return a single `TRUE` or `FALSE`, not a logical vector.
 
 # `.right` argument is retired
 
