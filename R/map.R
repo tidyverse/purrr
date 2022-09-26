@@ -186,7 +186,7 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
         # Error happened before or after loop
       } else {
         cli::cli_abort(
-          c(i = "In index {i}."),
+          c(i = "In index: {i}."),
           parent = cnd,
           call = error_call
         )
