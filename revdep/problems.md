@@ -36,72 +36,6 @@ Run `cloud_details(, "allhomes")` for more info
       Execution halted
     ```
 
-# autoReg
-
-<details>
-
-* Version: 0.2.6
-* GitHub: https://github.com/cardiomoon/autoReg
-* Source code: https://github.com/cran/autoReg
-* Date/Publication: 2022-04-05 06:20:02 UTC
-* Number of recursive dependencies: 205
-
-Run `cloud_details(, "autoReg")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘autoReg-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: ggcmprsk
-    > ### Title: Draw Cumulative Incidence Curves for Competing Risks
-    > ### Aliases: ggcmprsk
-    > 
-    > ### ** Examples
-    > 
-    > data(melanoma,package="boot")
-    ...
-      5. │ └─tidycmprsk:::cuminc.formula(...)
-      6. │   └─tidycmprsk:::cuminc_bridge(...)
-      7. │     └─tidycmprsk:::new_cuminc(...)
-      8. │       └─new_cuminc %>% ...
-      9. ├─purrr::list_modify(., tidy = first_cuminc_tidy(new_cuminc, conf.level = conf.level))
-     10. │ └─vctrs::vec_check_list(.x)
-     11. └─vctrs:::stop_non_list_type(x, y, z)
-     12.   └─cli::cli_abort(...)
-     13.     └─rlang::abort(...)
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘Automatic_Regression_Modeling.Rmd’ using rmarkdown
-    --- finished re-building ‘Automatic_Regression_Modeling.Rmd’
-    
-    --- re-building ‘Bootstrap_Prediction.Rmd’ using rmarkdown
-    --- finished re-building ‘Bootstrap_Prediction.Rmd’
-    
-    --- re-building ‘Getting_started.Rmd’ using rmarkdown
-    --- finished re-building ‘Getting_started.Rmd’
-    
-    ...
-    Error: processing vignette 'Survival.Rmd' failed with diagnostics:
-    `.x` must be a list, not a <tidycuminc/hardhat_model/hardhat_scalar>
-    object.
-    --- failed re-building ‘Survival.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘Survival.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # broom.helpers
 
 <details>
@@ -320,31 +254,6 @@ Run `cloud_details(, "codebook")` for more info
 
 ## Newly broken
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘codebook-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: codebook_table
-    > ### Title: Codebook metadata table
-    > ### Aliases: codebook_table
-    > 
-    > ### ** Examples
-    > 
-    > data("bfi")
-    ...
-     25. │                       └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
-     26. │                         └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
-     27. │                           └─base::eval(expr, data_mask)
-     28. │                             └─base::eval(expr, data_mask)
-     29. │                               ├─min
-     30. │                               └─rlang:::`$.rlang_data_pronoun`(.data, min)
-     31. │                                 └─rlang:::data_pronoun_get(...)
-     32. └─rlang:::abort_data_pronoun(x, call = y)
-     33.   └─rlang::abort(msg, "rlang_error_data_pronoun_not_found", call = call)
-    Execution halted
-    ```
-
 *   checking re-building of vignette outputs ... WARNING
     ```
     Error(s) in re-building vignettes:
@@ -358,13 +267,13 @@ Run `cloud_details(, "codebook")` for more info
     
     The following objects are masked from 'package:base':
     ...
-    Could not summarise item C1. Error in `dplyr::mutate_at()`:
+    Could not summarise item age. Error in `dplyr::mutate_at()`:
     ! Column `min` not found in `.data`.
     
     --- failed re-building ‘codebook_tutorial.Rmd’
     
     SUMMARY: processing the following files failed:
-      ‘codebook.Rmd’ ‘codebook_sav.Rmd’ ‘codebook_tutorial.Rmd’
+      ‘codebook.Rmd’ ‘codebook_tutorial.Rmd’
     
     Error: Vignette re-building failed.
     Execution halted
@@ -387,129 +296,6 @@ Run `cloud_details(, "codebook")` for more info
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 65 marked UTF-8 strings
-    ```
-
-# cohortBuilder
-
-<details>
-
-* Version: 0.1
-* GitHub: https://github.com/r-world-devs/cohortBuilder
-* Source code: https://github.com/cran/cohortBuilder
-* Date/Publication: 2022-06-01 16:00:04 UTC
-* Number of recursive dependencies: 80
-
-Run `cloud_details(, "cohortBuilder")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        7.   ├─cohortBuilder:::substitute_q(...) at cohortBuilder/R/repro_code_utils.R:29:2
-        8.   │ └─base::eval(call) at cohortBuilder/R/repro_code_utils.R:3:2
-        9.   │   └─base::eval(call)
-       10.   ├─base::append(...) at cohortBuilder/R/repro_code_utils.R:29:2
-       11.   └─purrr::keep(formals(func), Negate(is.symbol)) at cohortBuilder/R/repro_code_utils.R:29:2
-       12.     └─purrr:::where_if(.x, .p, ...)
-       13.       └─purrr:::map_(.x, .p, ..., .type = "logical", ..error_call = .error_call)
-       14.         └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       15.           └─vctrs:::stop_scalar_type(x, arg, call = call)
-       16.             └─vctrs:::stop_vctrs(...)
-       17.               └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 2 | WARN 33 | SKIP 0 | PASS 267 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘binding-keys.Rmd’ using rmarkdown
-    --- finished re-building ‘binding-keys.Rmd’
-    
-    --- re-building ‘cohort-configuration.Rmd’ using rmarkdown
-    --- finished re-building ‘cohort-configuration.Rmd’
-    
-    --- re-building ‘cohortBuilder.Rmd’ using rmarkdown
-    Quitting from lines 374-375 (cohortBuilder.Rmd) 
-    Error: processing vignette 'cohortBuilder.Rmd' failed with diagnostics:
-    ...
-    Quitting from lines 153-166 (managing-cohort.Rmd) 
-    Error: processing vignette 'managing-cohort.Rmd' failed with diagnostics:
-    `.x` must be a vector, not a pairlist node.
-    --- failed re-building ‘managing-cohort.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘cohortBuilder.Rmd’ ‘managing-cohort.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘R6’ ‘formatR’ ‘jsonlite’ ‘yaml’
-      All declared Imports should be used.
-    ```
-
-# conflr
-
-<details>
-
-* Version: 0.1.1
-* GitHub: https://github.com/line/conflr
-* Source code: https://github.com/cran/conflr
-* Date/Publication: 2020-04-08 12:50:02 UTC
-* Number of recursive dependencies: 68
-
-Run `cloud_details(, "conflr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        8.   │ └─base::eval(code[[length(code)]], parent.frame())
-        9.   │   └─base::eval(code[[length(code)]], parent.frame())
-       10.   └─conflr::confl_create_post_from_Rmd(...)
-       11.     └─rmarkdown::render(...)
-       12.       └─output_format$post_processor(...)
-       13.         └─purrr::map(formals(confluence_document), eval_bare)
-       14.           └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       15.             └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       16.               └─vctrs:::stop_scalar_type(x, arg, call = call)
-       17.                 └─vctrs:::stop_vctrs(...)
-       18.                   └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 111 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘R6’
-      All declared Imports should be used.
-    ```
-
-*   checking LazyData ... NOTE
-    ```
-      'LazyData' is specified without a 'data' directory
     ```
 
 # connectapi
@@ -538,7 +324,7 @@ Run `cloud_details(, "connectapi")` for more info
       ────────────────────────────────────────────────────────────────────────────────
       
       ══ Results ═════════════════════════════════════════════════════════════════════
-      Duration: 0.9 s
+      Duration: 1.1 s
       
     ...
       ── Skipped tests  ──────────────────────────────────────────────────────────────
@@ -551,125 +337,6 @@ Run `cloud_details(, "connectapi")` for more info
       [ FAIL 1 | WARN 0 | SKIP 6 | PASS 116 ]
       Error: Test failures
       Execution halted
-    ```
-
-# covidcast
-
-<details>
-
-* Version: 0.4.2
-* GitHub: https://github.com/cmu-delphi/covidcast
-* Source code: https://github.com/cran/covidcast
-* Date/Publication: 2021-05-04 07:00:12 UTC
-* Number of recursive dependencies: 92
-
-Run `cloud_details(, "covidcast")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘correlation-utils.Rmd’ using rmarkdown
-    --- finished re-building ‘correlation-utils.Rmd’
-    
-    --- re-building ‘covidcast.Rmd’ using rmarkdown
-    We encourage COVIDcast API users to register on our mailing list:
-    https://lists.andrew.cmu.edu/mailman/listinfo/delphi-covidcast-api
-    We'll send announcements about new data sources, package updates,
-    server maintenance, and new features.
-    
-    ...
-    Quitting from lines 130-135 (plotting-signals.Rmd) 
-    Error: processing vignette 'plotting-signals.Rmd' failed with diagnostics:
-    Bad Gateway (HTTP 502). Failed to fetch data from API.
-    --- failed re-building ‘plotting-signals.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘plotting-signals.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-## In both
-
-*   checking data for non-ASCII characters ... NOTE
-    ```
-      Note: found 20 marked UTF-8 strings
-    ```
-
-# crossmap
-
-<details>
-
-* Version: 0.3.3
-* GitHub: https://github.com/rossellhayes/crossmap
-* Source code: https://github.com/cran/crossmap
-* Date/Publication: 2022-08-12 17:30:05 UTC
-* Number of recursive dependencies: 76
-
-Run `cloud_details(, "crossmap")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘crossmap-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: cross_fit
-    > ### Title: Cross map a model across multiple formulas, subsets, and weights
-    > ### Aliases: cross_fit
-    > 
-    > ### ** Examples
-    > 
-    > cross_fit(mtcars, mpg ~ wt, cyl)
-    ...
-      2.   └─crossmap:::cross_fit_internal(...)
-      3.     └─crossmap:::add_weights(data, weights)
-      4.       └─purrr::map_dfr(...)
-      5.         └─purrr::map(.x, .f, ...)
-      6.           └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-      7.             └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-      8.               └─vctrs:::stop_scalar_type(x, arg, call = call)
-      9.                 └─vctrs:::stop_vctrs(...)
-     10.                   └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-    Execution halted
-    ```
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        2. │ └─base::withCallingHandlers(...)
-        3. └─crossmap::cross_fit_glm(...)
-        4.   └─crossmap:::cross_fit_internal(...)
-        5.     └─crossmap:::add_weights(data, weights)
-        6.       └─purrr::map_dfr(...)
-        7.         └─purrr::map(.x, .f, ...)
-        8.           └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-        9.             └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       10.               └─vctrs:::stop_scalar_type(x, arg, call = call)
-       11.                 └─vctrs:::stop_vctrs(...)
-       12.                   └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 2 | WARN 8 | SKIP 0 | PASS 300 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘utils’
-      All declared Imports should be used.
     ```
 
 # crosstable
@@ -693,19 +360,19 @@ Run `cloud_details(, "crosstable")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-        5. │       ├─testthat (local) .capture(...)
-        6. │       │ └─base::withCallingHandlers(...)
-        7. │       └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-        8. ├─crosstable::crosstable(iris2, Sepal.Length, Sepal.Width, by = Species)
-        9. │ └─substitute(list(...))[-1L] %>% map(deparse)
-       10. └─purrr::map(., deparse)
-       11.   └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       12.     └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       13.       └─vctrs:::stop_scalar_type(x, arg, call = call)
-       14.         └─vctrs:::stop_vctrs(...)
-       15.           └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
+      `.` produced warnings.
+      Backtrace:
+          ▆
+       1. ├─... %>% expect_silent() at test-selection.R:52:2
+       2. └─testthat::expect_silent(.)
+      ── Failure (test-selection.R:57:3): crosstable with external character vector ──
+      `.` produced warnings.
+      Backtrace:
+          ▆
+       1. ├─... %>% expect_silent() at test-selection.R:57:2
+       2. └─testthat::expect_silent(.)
       
-      [ FAIL 8 | WARN 702 | SKIP 40 | PASS 335 ]
+      [ FAIL 7 | WARN 705 | SKIP 40 | PASS 338 ]
       Error: Test failures
       Execution halted
     ```
@@ -876,58 +543,17 @@ Run `cloud_details(, "DataFakeR")` for more info
       All declared Imports should be used.
     ```
 
-# dcurves
+# dibble
 
 <details>
 
-* Version: 0.3.0
-* GitHub: https://github.com/ddsjoberg/dcurves
-* Source code: https://github.com/cran/dcurves
-* Date/Publication: 2022-05-25 22:40:05 UTC
-* Number of recursive dependencies: 102
+* Version: 0.2.1
+* GitHub: https://github.com/UchidaMizuki/dibble
+* Source code: https://github.com/cran/dibble
+* Date/Publication: 2022-08-07 14:20:02 UTC
+* Number of recursive dependencies: 50
 
-Run `cloud_details(, "dcurves")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘dca.Rmd’ using rmarkdown
-    #BlackLivesMatter
-    
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
-    ...
-    Quitting from lines 48-51 (dca.Rmd) 
-    Error: processing vignette 'dca.Rmd' failed with diagnostics:
-    `.x` must be a list, not a <gtsummary> object.
-    --- failed re-building ‘dca.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘dca.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# dkanr
-
-<details>
-
-* Version: 0.1.3
-* GitHub: NA
-* Source code: https://github.com/cran/dkanr
-* Date/Publication: 2019-02-18 15:50:02 UTC
-* Number of recursive dependencies: 63
-
-Run `cloud_details(, "dkanr")` for more info
+Run `cloud_details(, "dibble")` for more info
 
 </details>
 
@@ -938,28 +564,21 @@ Run `cloud_details(, "dkanr")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      > 
-      > 
-      > test_check("dkanr")
-      [ FAIL 1 | WARN 1 | SKIP 0 | PASS 91 ]
+       10. │   │ ├─base::withVisible(eval(mc, parent.frame()))
+       11. │   │ └─base::eval(mc, parent.frame())
+       12. │   │   └─base::eval(mc, parent.frame())
+       13. │   └─dibble (local) `<fn>`(...)
+       14. │     └─purrr::map2(...)
+       15. │       └─purrr:::map2_("list", .x, .y, .f, ..., .progress = .progress)
+       16. │         └─vctrs::vec_recycle_common(.x = .x, .y = .y, .call = ..error_call)
+       17. └─vctrs::stop_incompatible_size(...)
+       18.   └─vctrs:::stop_incompatible(...)
+       19.     └─vctrs:::stop_vctrs(...)
+       20.       └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
       
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test-query_builder.R:198:3): Empty string for parameters ───────────
-      build_search_query(...) not equal to "fields=&pagesize=10&page=1".
-      1/1 mismatches
-      x[1]: "fields=&parameters[]=&pagesize=10&page=1"
-      y[1]: "fields=&pagesize=10&page=1"
-      
-      [ FAIL 1 | WARN 1 | SKIP 0 | PASS 91 ]
+      [ FAIL 1 | WARN 11 | SKIP 0 | PASS 61 ]
       Error: Test failures
       Execution halted
-    ```
-
-## In both
-
-*   checking LazyData ... NOTE
-    ```
-      'LazyData' is specified without a 'data' directory
     ```
 
 # dm
@@ -1094,15 +713,15 @@ Run `cloud_details(, "ergm")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
+       11. │   └─ergm:::ergm_proposal.ergm_conlist(...)
        12. │     └─ergm:::select_ergm_proposal(...)
        13. │       └─ergm (local) score_proposals(candidates, conlist)
        14. │         └─... %>% as_tibble
        15. ├─tibble::as_tibble(.)
        16. ├─purrr::map(., simplify_simple, toNA = "keep")
        17. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       18. │   └─purrr:::vctrs_list_compat(.x)
-       19. │     └─base::is.data.frame(x)
-       20. └─purrr::transpose(.)
+       18. │   └─purrr:::vctrs_vec_compat(.x)
+       19. └─purrr::transpose(.)
       ── Failure (test-predict.ergm.R:31:3): predict.formula(conditional=FALSE) ──────
       `... <- NULL` produced warnings.
       
@@ -1160,45 +779,6 @@ Run `cloud_details(, "ergm.ego")` for more info
       Execution halted
     ```
 
-# exampletestr
-
-<details>
-
-* Version: 1.6.5
-* GitHub: https://github.com/rorynolan/exampletestr
-* Source code: https://github.com/cran/exampletestr
-* Date/Publication: 2021-08-08 22:30:02 UTC
-* Number of recursive dependencies: 96
-
-Run `cloud_details(, "exampletestr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        9. │ └─... %>% purrr::map(styler::style_text)
-       10. ├─purrr::map(., styler::style_text)
-       11. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       12. │   └─purrr:::vctrs_list_compat(.x)
-       13. │     └─base::is.data.frame(x)
-       14. └─purrr::map(., deparse)
-       15.   └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       16.     └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       17.       └─vctrs:::stop_scalar_type(x, arg, call = call)
-       18.         └─vctrs:::stop_vctrs(...)
-       19.           └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 5 | WARN 0 | SKIP 0 | PASS 9 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # ffscrapr
 
 <details>
@@ -1248,69 +828,6 @@ Run `cloud_details(, "ffscrapr")` for more info
       All declared Imports should be used.
     ```
 
-# fgdr
-
-<details>
-
-* Version: 1.1.1
-* GitHub: https://github.com/uribo/fgdr
-* Source code: https://github.com/cran/fgdr
-* Date/Publication: 2022-02-22 05:00:02 UTC
-* Number of recursive dependencies: 121
-
-Run `cloud_details(, "fgdr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘fgdr-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: read_fgd
-    > ### Title: Read and Parse Fundamental Geospatial Data (FGD) file
-    > ### Aliases: read_fgd
-    > 
-    > ### ** Examples
-    > 
-    > # Administrative Area
-    ...
-        ▆
-     1. ├─fgdr::read_fgd(...)
-     2. │ └─... %>% tibble::new_tibble(class = "sf", nrow = nrow(res))
-     3. ├─tibble::new_tibble(., class = "sf", nrow = nrow(res))
-     4. ├─purrr::list_modify(...)
-     5. │ └─vctrs::vec_check_list(.x)
-     6. └─vctrs:::stop_non_list_type(x, y, z)
-     7.   └─cli::cli_abort(...)
-     8.     └─rlang::abort(...)
-    Execution halted
-    ```
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-          31034)), intToUtf8(c(38750, 34920, 31034))), elem_vis, NA_character_))`: `.x` must be a list, not a <sf/data.frame> object.
-      Backtrace:
-          ▆
-       1. ├─fgdr::read_fgd(...) at test-read_fgd.R:4:2
-       2. │ └─... %>% tibble::new_tibble(class = "sf", nrow = nrow(res))
-       3. ├─tibble::new_tibble(., class = "sf", nrow = nrow(res))
-       4. ├─purrr::list_modify(...)
-       5. │ └─vctrs::vec_check_list(.x)
-       6. └─vctrs:::stop_non_list_type(x, y, z)
-       7.   └─cli::cli_abort(...)
-       8.     └─rlang::abort(...)
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 48 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # finetune
 
 <details>
@@ -1350,42 +867,80 @@ Run `cloud_details(, "finetune")` for more info
       Execution halted
     ```
 
-# functiondepends
+# flexsurv
 
 <details>
 
-* Version: 0.2.3
-* GitHub: NA
-* Source code: https://github.com/cran/functiondepends
-* Date/Publication: 2022-02-21 19:00:05 UTC
-* Number of recursive dependencies: 79
+* Version: 2.2
+* GitHub: https://github.com/chjackson/flexsurv-dev
+* Source code: https://github.com/cran/flexsurv
+* Date/Publication: 2022-06-17 23:10:08 UTC
+* Number of recursive dependencies: 135
 
-Run `cloud_details(, "functiondepends")` for more info
+Run `cloud_details(, "flexsurv")` for more info
 
 </details>
 
 ## Newly broken
 
-*   checking tests ... ERROR
+*   checking examples ... ERROR
     ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      > library(testthat)
-      > library(functiondepends)
-      > 
-      > test_check("functiondepends")
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 15 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Error (tests-find-functions.R:20:3): find_dependencies: side effects ────────
-      Error in `map(.x, .f, ...)`: ℹ In index: 1.
-      Caused by error in `map_chr()`:
-      ! `.x` must be a vector, not an expression vector.
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 15 ]
-      Error: Test failures
-      Execution halted
+    Running examples in ‘flexsurv-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: tidy.flexsurvreg
+    > ### Title: Tidy a flexsurv model object
+    > ### Aliases: tidy.flexsurvreg
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+     1. ├─generics::tidy(fitg)
+     2. ├─flexsurv:::tidy.flexsurvreg(fitg)
+     3. │ └─purrr::map2_dbl(...)
+     4. │   └─purrr:::map2_("double", .x, .y, .f, ..., .progress = .progress)
+     5. │     └─vctrs::vec_recycle_common(.x = .x, .y = .y, .call = ..error_call)
+     6. └─vctrs::stop_incompatible_size(...)
+     7.   └─vctrs:::stop_incompatible(...)
+     8.     └─vctrs:::stop_vctrs(...)
+     9.       └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
+    Execution halted
+    ```
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.4Mb
+      sub-directories of 1Mb or more:
+        doc    1.1Mb
+        libs   4.3Mb
+    ```
+
+*   checking re-building of vignette outputs ... NOTE
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘standsurv.Rmd’ using rmarkdown
+    Loading required package: survival
+    
+    Attaching package: 'dplyr'
+    
+    The following objects are masked from 'package:stats':
+    
+        filter, lag
+    
+    ...
+                        [T1]{fontenc}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘flexsurv-examples.Rnw’
+    
+    SUMMARY: processing the following files failed:
+      ‘flexsurv.Rnw’ ‘multistate.Rnw’ ‘distributions.Rnw’
+      ‘flexsurv-examples.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # GDPuc
@@ -1556,19 +1111,19 @@ Run `cloud_details(, "gtreg")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-              tbl <- gtsummary::tbl_strata(data = df_ae, strata = "strata", 
-                  .tbl_fun = ~fn_tbl_ae(data = .x), .combine_with = "tbl_merge", 
-                  .header = "{strata}")
-          }
-          else {
-              tbl <- fn_tbl_ae(data = df_ae)
-          }
-          gtsummary::tbl_butcher(tbl)
-      })`: i In index: 1.
-      Caused by error in `purrr::list_modify()`:
-      ! `.x` must be a list, not a <tbl_strata/tbl_merge/gtsummary> object.
+        6. │     └─purrr:::map2_("list", .x, .y, .f, ..., .progress = .progress)
+        7. │       ├─purrr:::with_indexed_errors(...)
+        8. │       │ └─base::withCallingHandlers(...)
+        9. │       └─gtreg (local) .f(.x[[i]], .y[[i]], ...)
+       10. │         └─gtsummary::tbl_stack(list(.x, .y), quiet = TRUE)
+       11. │           └─base::stop(...)
+       12. ├─gtsummary::tbl_stack(., quiet = TRUE)
+       13. └─base::.handleSimpleError(...)
+       14.   └─purrr (local) h(simpleError(msg, call))
+       15.     └─cli::cli_abort(c(i = "In index: {i}."), parent = cnd, call = error_call)
+       16.       └─rlang::abort(...)
       
-      [ FAIL 2 | WARN 249 | SKIP 4 | PASS 49 ]
+      [ FAIL 2 | WARN 323 | SKIP 4 | PASS 49 ]
       Error: Test failures
       Execution halted
     ```
@@ -1581,8 +1136,8 @@ Run `cloud_details(, "gtreg")` for more info
     Quitting from lines 92-101 (counting-methods.Rmd) 
     Error: processing vignette 'counting-methods.Rmd' failed with diagnostics:
     ℹ In index: 1.
-    Caused by error in `purrr::list_modify()`:
-    ! `.x` must be a list, not a <tbl_summary/gtsummary> object.
+    Caused by error:
+    ! All objects in 'tbls' must be class 'gtsummary'
     --- failed re-building ‘counting-methods.Rmd’
     
     SUMMARY: processing the following file failed:
@@ -1639,46 +1194,21 @@ Run `cloud_details(, "gtsummary")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-       11. │ └─... %>% purrr::discard(is.null)
-       12. ├─purrr::discard(., is.null)
-       13. │ └─purrr:::where_if(.x, .p, ...)
-       14. │   └─purrr:::map_(.x, .p, ..., .type = "logical", ..error_call = .error_call)
-       15. │     └─purrr:::vctrs_list_compat(.x)
-       16. │       └─base::is.data.frame(x)
-       17. ├─purrr::list_modify(...)
-       18. │ └─vctrs::vec_check_list(.x)
-       19. └─vctrs:::stop_non_list_type(x, y, z)
-       20.   └─cli::cli_abort(...)
-       21.     └─rlang::abort(...)
+      `actual[[5]]` is NULL
+      `expected[[5]]` is absent
       
-      [ FAIL 6 | WARN 84 | SKIP 74 | PASS 5 ]
+      `actual[[6]]` is NULL
+      `expected[[6]]` is absent
+      
+      `actual[[7]]` is NULL
+      `expected[[7]]` is absent
+      
+      `actual[[8]]` is NULL
+      `expected[[8]]` is absent
+      
+      [ FAIL 3 | WARN 125 | SKIP 74 | PASS 11 ]
       Error: Test failures
       Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘gallery.Rmd’ using rmarkdown
-    --- finished re-building ‘gallery.Rmd’
-    
-    --- re-building ‘gtsummary_definition.Rmd’ using rmarkdown
-    Quitting from lines 27-38 (gtsummary_definition.Rmd) 
-    Error: processing vignette 'gtsummary_definition.Rmd' failed with diagnostics:
-    `.x` must be a list, not a <gtsummary> object.
-    --- failed re-building ‘gtsummary_definition.Rmd’
-    
-    ...
-    Warning: Since gt v0.6.0 the `fmt_missing()` function is deprecated and will soon be
-    removed.
-    • Use the `sub_missing()` function instead.
-    --- finished re-building ‘themes.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘gtsummary_definition.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # gwasrapidd
@@ -1784,69 +1314,6 @@ Run `cloud_details(, "ICD10gm")` for more info
 *   checking data for non-ASCII characters ... NOTE
     ```
       Note: found 329984 marked UTF-8 strings
-    ```
-
-# infer
-
-<details>
-
-* Version: 1.0.3
-* GitHub: https://github.com/tidymodels/infer
-* Source code: https://github.com/cran/infer
-* Date/Publication: 2022-08-22 18:50:03 UTC
-* Number of recursive dependencies: 126
-
-Run `cloud_details(, "infer")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      • visualize/viz-assume-t-p-val-left.svg
-      • visualize/viz-assume-t-p-val-right.svg
-      • visualize/viz-assume-t-sim.svg
-      • visualize/viz-assume-t.svg
-      • visualize/viz-assume-z-ci.svg
-      • visualize/viz-assume-z-p-val-both.svg
-      • visualize/viz-assume-z-p-val-left.svg
-      • visualize/viz-assume-z-p-val-right.svg
-      • visualize/viz-assume-z.svg
-      • visualize/viz-fit-conf-int.svg
-      • visualize/viz-fit-p-val-both.svg
-      • visualize/viz-fit-p-val-left.svg
-      • visualize/viz-fit-p-val-right.svg
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘anova.Rmd’ using rmarkdown
-    
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
-    
-    The following objects are masked from 'package:base':
-    ...
-      p_value
-        <dbl>
-    1   0.262
-    --- finished re-building ‘t_test.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘observed_stat_examples.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # ipmr
@@ -2178,195 +1645,6 @@ Run `cloud_details(, "mskcc.oncotree")` for more info
       All declared Imports should be used.
     ```
 
-# multinma
-
-<details>
-
-* Version: 0.5.0
-* GitHub: https://github.com/dmphillippo/multinma
-* Source code: https://github.com/cran/multinma
-* Date/Publication: 2022-08-29 21:00:02 UTC
-* Number of recursive dependencies: 138
-
-Run `cloud_details(, "multinma")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘multinma-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: summary.nma_prior
-    > ### Title: Summary of prior distributions
-    > ### Aliases: summary.nma_prior
-    > 
-    > ### ** Examples
-    > 
-    > summary(normal(location = 0, scale = 1))
-    ...
-     1. ├─base::summary(normal(location = 0, scale = 1))
-     2. ├─multinma:::summary.nma_prior(normal(location = 0, scale = 1))
-     3. │ ├─base::print(object)
-     4. │ └─multinma:::print.nma_prior(object)
-     5. │   └─purrr::list_modify(x, dist = purrr::zap(), fun = purrr::zap())
-     6. │     └─vctrs::vec_check_list(.x)
-     7. └─vctrs:::stop_non_list_type(x, y, z)
-     8.   └─cli::cli_abort(...)
-     9.     └─rlang::abort(...)
-    Execution halted
-    ```
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        8. │   │     └─base::withVisible(code)
-        9. │   └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-       10. ├─base::summary(p, probs = 0.95, digits = 2)
-       11. ├─multinma:::summary.nma_prior(p, probs = 0.95, digits = 2)
-       12. │ ├─base::print(object)
-       13. │ └─multinma:::print.nma_prior(object)
-       14. │   └─purrr::list_modify(x, dist = purrr::zap(), fun = purrr::zap())
-       15. │     └─vctrs::vec_check_list(.x)
-       16. └─vctrs:::stop_non_list_type(x, y, z)
-       17.   └─cli::cli_abort(...)
-       18.     └─rlang::abort(...)
-      
-      [ FAIL 4 | WARN 0 | SKIP 18 | PASS 898 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 250.2Mb
-      sub-directories of 1Mb or more:
-        doc     4.0Mb
-        libs  244.7Mb
-    ```
-
-*   checking for GNU extensions in Makefiles ... NOTE
-    ```
-    GNU make is a SystemRequirements.
-    ```
-
-# multiverse
-
-<details>
-
-* Version: 0.6.1
-* GitHub: https://github.com/MUCollective/multiverse
-* Source code: https://github.com/cran/multiverse
-* Date/Publication: 2022-07-04 13:20:02 UTC
-* Number of recursive dependencies: 119
-
-Run `cloud_details(, "multiverse")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      Backtrace:
-          ▆
-       1. └─multiverse::inside(...) at test-utils.R:44:2
-       2.   └─multiverse:::add_and_parse_code(multiverse, .code, .label)
-       3.     └─multiverse:::expand_branch_options(.expr)
-       4.       └─purrr::map(.expr, ~expand_branch_options(.x))
-       5.         └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       6.           └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       7.             └─vctrs:::stop_scalar_type(x, arg, call = call)
-       8.               └─vctrs:::stop_vctrs(...)
-       9.                 └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 53 | WARN 0 | SKIP 0 | PASS 69 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘branch.Rmd’ using rmarkdown
-    
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
-    
-    The following objects are masked from 'package:base':
-    ...
-        expand
-    
-    --- finished re-building ‘visualising-multiverse.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘branch.Rmd’ ‘conditions.Rmd’ ‘execution-multiverse.Rmd’
-      ‘frequentist-multiverse-analysis.Rmd’ ‘multiverse-in-rmd.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# parsnip
-
-<details>
-
-* Version: 1.0.1
-* GitHub: https://github.com/tidymodels/parsnip
-* Source code: https://github.com/cran/parsnip
-* Date/Publication: 2022-08-18 07:30:02 UTC
-* Number of recursive dependencies: 134
-
-Run `cloud_details(, "parsnip")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘parsnip-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: repair_call
-    > ### Title: Repair a model call object
-    > ### Aliases: repair_call
-    > 
-    > ### ** Examples
-    > 
-    > 
-    ...
-    Backtrace:
-        ▆
-     1. └─parsnip::repair_call(fitted_model, mtcars)
-     2.   └─purrr::map_lgl(fit_call, rlang::is_quosure)
-     3.     └─purrr:::map_("logical", .x, .f, ..., .progress = .progress)
-     4.       └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-     5.         └─vctrs:::stop_scalar_type(x, arg, call = call)
-     6.           └─vctrs:::stop_vctrs(...)
-     7.             └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-    Execution halted
-    ```
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Packages unavailable to check Rd xrefs: ‘rules’, ‘h2o’, ‘agua’, ‘baguette’, ‘ipred’, ‘dbarts’, ‘lightgbm’, ‘bonsai’, ‘mboost’, ‘mda’, ‘sda’, ‘sparsediscrim’, ‘klaR’, ‘workflows’, ‘brulee’, ‘glmnet’, ‘rstan’, ‘rstanarm’, ‘naivebayes’, ‘plsmod’, ‘pscl’, ‘randomForest’, ‘xrf’, ‘flexsurv’, ‘broom’
-    ```
-
 # partialised
 
 <details>
@@ -2464,14 +1742,14 @@ Run `cloud_details(, "pkgdown")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-       15. │         └─base::is.data.frame(x)
-       16. └─purrr::imap(., data_reference_index_rows, pkg = pkg)
-       17.   └─purrr::map2(.x, vec_index(.x), .f, ...)
-       18.     └─purrr:::map2_("list", .x, .y, .f, ..., .progress = .progress)
-       19.       ├─purrr:::with_indexed_errors(...)
-       20.       │ └─base::withCallingHandlers(...)
-       21.       └─pkgdown (local) .f(.x[[i]], .y[[i]], ...)
-       22.         └─purrr::transpose(topics)
+       14. │       └─purrr:::vctrs_vec_compat(.x)
+       15. └─purrr::imap(., data_reference_index_rows, pkg = pkg)
+       16.   └─purrr::map2(.x, vec_index(.x), .f, ...)
+       17.     └─purrr:::map2_("list", .x, .y, .f, ..., .progress = .progress)
+       18.       ├─purrr:::with_indexed_errors(...)
+       19.       │ └─base::withCallingHandlers(...)
+       20.       └─pkgdown (local) .f(.x[[i]], .y[[i]], ...)
+       21.         └─purrr::transpose(topics)
       
       [ FAIL 1 | WARN 23 | SKIP 87 | PASS 543 ]
       Deleting unused snapshots:
@@ -2517,15 +1795,15 @@ Run `cloud_details(, "psfmi")` for more info
     > ### ** Examples
     > 
     ...
+        ▆
      1. └─psfmi::psfmi_validate(...)
      2.   └─psfmi::cv_MI(...)
      3.     ├─purrr::map(...)
      4.     │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-     5.     │   └─purrr:::vctrs_list_compat(.x)
-     6.     │     └─base::is.data.frame(x)
-     7.     └─rsample::vfold_cv(data_orig, v = folds, strata = unlist(data_orig[pobj$Outcome]))
-     8.       └─rsample:::strata_check(strata, data)
-     9.         └─rlang::abort("`strata` should be a single name or character value.")
+     5.     │   └─purrr:::vctrs_vec_compat(.x)
+     6.     └─rsample::vfold_cv(data_orig, v = folds, strata = unlist(data_orig[pobj$Outcome]))
+     7.       └─rsample:::strata_check(strata, data)
+     8.         └─rlang::abort("`strata` should be a single name or character value.")
     Execution halted
     ```
 
@@ -2591,7 +1869,7 @@ Run `cloud_details(, "quincunx")` for more info
     > 
     > # Get information about specific cohorts by their symbols (acronyms)
     ...
-     18. │     └─base::is.data.frame(x)
+     18. │     └─purrr:::vctrs_vec_compat(x)
      19. ├─base::loadNamespace(x)
      20. │ └─base::namespaceImportFrom(...)
      21. │   └─base::importIntoEnv(impenv, impnames, ns, impvars)
@@ -2833,69 +2111,6 @@ Run `cloud_details(, "recipes")` for more info
     Packages unavailable to check Rd xrefs: ‘fastICA’, ‘dimRed’
     ```
 
-# roclang
-
-<details>
-
-* Version: 0.2.0
-* GitHub: https://github.com/zhuxr11/roclang
-* Source code: https://github.com/cran/roclang
-* Date/Publication: 2022-05-15 10:50:02 UTC
-* Number of recursive dependencies: 56
-
-Run `cloud_details(, "roclang")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘roclang-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: extract_roc_text
-    > ### Title: Extract a section, parameter or set of dot-parameters from a
-    > ###   function documentation
-    > ### Aliases: extract_roc_text
-    > 
-    > ### ** Examples
-    > 
-    ...
-     22. │                     └─roxygen2:::usage_args(formals)
-     23. │                       └─purrr::map_chr(args, arg_to_text)
-     24. │                         └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-     25. │                           └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-     26. │                             └─vctrs:::stop_scalar_type(x, arg, call = call)
-     27. │                               └─vctrs:::stop_vctrs(...)
-     28. │                                 └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-     29. └─purrr::pluck(., "my_fun.Rd")
-     30.   └─purrr:::pluck_raw(.x, list2(...), .default = .default)
-    Execution halted
-    ```
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-       24. │                     ├─roxygen2:::args_string(usage_args(formals))
-       25. │                     │ └─base::ifelse(...)
-       26. │                     └─roxygen2:::usage_args(formals)
-       27. │                       └─purrr::map_chr(args, arg_to_text)
-       28. │                         └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-       29. │                           └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       30. │                             └─vctrs:::stop_scalar_type(x, arg, call = call)
-       31. │                               └─vctrs:::stop_vctrs(...)
-       32. │                                 └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-       33. └─purrr::pluck(., "my_fun.Rd")
-       34.   └─purrr:::pluck_raw(.x, list2(...), .default = .default)
-      
-      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 32 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # roxygen2
 
 <details>
@@ -2912,76 +2127,26 @@ Run `cloud_details(, "roxygen2")` for more info
 
 ## Newly broken
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘roxygen2-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: roxy_block
-    > ### Title: Blocks
-    > ### Aliases: roxy_block block_has_tags block_get_tags block_get_tag
-    > ###   block_get_tag_value
-    > ### Keywords: internal
-    > 
-    > ### ** Examples
-    ...
-     15.                   ├─roxygen2:::args_string(usage_args(formals))
-     16.                   │ └─base::ifelse(...)
-     17.                   └─roxygen2:::usage_args(formals)
-     18.                     └─purrr::map_chr(args, arg_to_text)
-     19.                       └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-     20.                         └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-     21.                           └─vctrs:::stop_scalar_type(x, arg, call = call)
-     22.                             └─vctrs:::stop_vctrs(...)
-     23.                               └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-    Execution halted
-    ```
-
 *   checking tests ... ERROR
     ```
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-       14.                 └─roxygen2:::function_usage(x$alias, formals(x$value), identity)
-       15.                   └─roxygen2:::wrap_usage(name, format_name, formals)
-       16.                     ├─roxygen2:::args_string(usage_args(formals))
-       17.                     │ └─base::ifelse(...)
-       18.                     └─roxygen2:::usage_args(formals)
-       19.                       └─purrr::map_chr(args, arg_to_text)
-       20.                         └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-       21.                           └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       22.                             └─vctrs:::stop_scalar_type(x, arg, call = call)
-       23.                               └─vctrs:::stop_vctrs(...)
-       24.                                 └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
+      • On CRAN (84)
+      • file.exists(test_path("../../DESCRIPTION")) is not TRUE (1)
+      • rmarkdown::pandoc_available("2.17") is not TRUE (10)
       
-      [ FAIL 103 | WARN 1 | SKIP 73 | PASS 619 ]
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure (test-block.R:123:3): whitespace is not detected as details ─────────
+      `out <- roc_proc_text(rd_roclet(), "\n        #' Title\n        #'\n        #'\n        #' Description\n        #'\n        #'\n        #'\n        foo <- function(x) {}")[[1]]` produced warnings.
+      ── Failure (test-rd-r6.R:207:3): R6 edge cases, class without (documented) fields ──
+      `topic_add_r6_methods(rd, block, environment())` produced warnings.
+      ── Failure (test-rd-r6.R:250:3): R6 edge cases, class without active bindings ──
+      `topic_add_r6_methods(rd, block, environment())` produced warnings.
+      
+      [ FAIL 3 | WARN 181 | SKIP 95 | PASS 759 ]
       Error: Test failures
       Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘extending.Rmd’ using rmarkdown
-    Quitting from lines 73-86 (extending.Rmd) 
-    Error: processing vignette 'extending.Rmd' failed with diagnostics:
-    `.x` must be a vector, not a pairlist node.
-    --- failed re-building ‘extending.Rmd’
-    
-    --- re-building ‘index-crossref.Rmd’ using rmarkdown
-    --- finished re-building ‘index-crossref.Rmd’
-    
-    ...
-    Quitting from lines 93-98 (roxygen2.Rmd) 
-    Error: processing vignette 'roxygen2.Rmd' failed with diagnostics:
-    `.x` must be a vector, not a pairlist node.
-    --- failed re-building ‘roxygen2.Rmd’
-    
-    SUMMARY: processing the following files failed:
-      ‘extending.Rmd’ ‘roxygen2.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # ruta
@@ -3286,76 +2451,26 @@ Run `cloud_details(, "simpr")` for more info
 
 ## Newly broken
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘simpr-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: specify.formula
-    > ### Title: Specify data-generating mechanisms
-    > ### Aliases: specify.formula
-    > 
-    > ### ** Examples
-    > 
-    > ## specify a variable and generate it in the simulation
-    ...
-      9. │       │ └─base::withCallingHandlers(...)
-     10. │       └─simpr (local) .f(.l[[1L]][[i]], .l[[2L]][[i]], .l[[3L]][[i]], ...)
-     11. │         └─x[[2]][-1] %>% purrr::map_chr(deparse)
-     12. └─purrr::map_chr(., deparse)
-     13.   └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-     14.     └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-     15.       └─vctrs:::stop_scalar_type(x, arg, call = call)
-     16.         └─vctrs:::stop_vctrs(...)
-     17.           └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-    Execution halted
-    ```
-
 *   checking tests ... ERROR
     ```
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-                      if (!named) 
-                        stop("Right-hand formulas must be named.")
-                      x_out = x
-                      attr(x_out, "varnames") = n
-                      x_out
-                  }
-              }
-          }
-      })`: ℹ In index: 1.
-      Caused by error in `purrr::map_chr()`:
-      ! `.x` must be a vector, not a call.
+      ── Failure (test_errors.R:17:1): errors produce new column ─────────────────────
+      all(na.omit(err_out$.sim_error) == "Error in errgt(x1): x < 3 are not all TRUE\n") is not TRUE
       
-      [ FAIL 5 | WARN 0 | SKIP 0 | PASS 42 ]
+      `actual`:   FALSE
+      `expected`: TRUE 
+      ── Failure (test_generate.R:17:3): .quiet, .warn_on_error, .stop_on_error options work as expected ──
+      `generate(buggy_spec, 1, .warn_on_error = FALSE, .quiet = FALSE)` produced unexpected messages.
+      Expected match: invalid arguments
+      Actual values:
+      * Error: In index: 1.
+      
+      
+      [ FAIL 3 | WARN 0 | SKIP 0 | PASS 44 ]
       Error: Test failures
       Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘optimization.Rmd’ using rmarkdown
-    
-    Attaching package: 'simpr'
-    
-    The following object is masked from 'package:stats':
-    
-        filter
-    
-    The following objects are masked from 'package:base':
-    ...
-    
-        intersect, setdiff, setequal, union
-    
-    --- finished re-building ‘simulation-errors.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘simpr.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
 # sketch
@@ -3374,49 +2489,24 @@ Run `cloud_details(, "sketch")` for more info
 
 ## Newly broken
 
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘sketch-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: compile_exprs
-    > ### Title: Compile R code into JavaScript code
-    > ### Aliases: compile_exprs
-    > 
-    > ### ** Examples
-    > 
-    > compile_exprs("R + Cpp", list(make_rule('Cpp', 'JS')))
-    ...
-     11.     └─sketch (local) .f(.x[[i]], ...)
-     12.       └─sketch (local) check(ast)
-     13.         └─purrr::walk(ast, check)
-     14.           └─purrr::map(.x, .f, ..., .progress = .progress)
-     15.             └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-     16.               └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-     17.                 └─vctrs:::stop_scalar_type(x, arg, call = call)
-     18.                   └─vctrs:::stop_vctrs(...)
-     19.                     └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-    Execution halted
-    ```
-
 *   checking tests ... ERROR
     ```
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      Error in `purrr::map(., safeguard, rules = rules, deparsers = deparsers)`: ℹ In index: 1.
-      Caused by error in `map()`:
-      ! `.x` must be a vector, not a call.
-      ── Error (test_source.R:38:5): basic_tags() ────────────────────────────────────
-      Error in `purrr::map(., safeguard, rules = rules, deparsers = deparsers)`: ℹ In index: 1.
-      Caused by error in `map()`:
-      ! `.x` must be a vector, not a call.
-      ── Error (test_testthat.R:21:5): Test 'testthat' report ────────────────────────
-      Error in `purrr::map(., safeguard, rules = rules, deparsers = deparsers)`: ℹ In index: 1.
-      Caused by error in `map()`:
-      ! `.x` must be a vector, not a call.
+        6. │   └─purrr::map_chr(res, deparse_js, deparsers = deparsers)
+        7. │     └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
+        8. │       ├─purrr:::with_indexed_errors(...)
+        9. │       │ └─base::withCallingHandlers(...)
+       10. │       └─sketch (local) .f(.x[[i]], ...)
+       11. │         └─deparser$deparse(ast, deparsers)
+       12. │           └─base::get(deparse1(ast[[2]]), envir = find_compile_exprs_env())
+       13. └─base::.handleSimpleError(...)
+       14.   └─purrr (local) h(simpleError(msg, call))
+       15.     └─cli::cli_abort(c(i = "In index: {i}."), parent = cnd, call = error_call)
+       16.       └─rlang::abort(...)
       
-      [ FAIL 19 | WARN 0 | SKIP 0 | PASS 171 ]
+      [ FAIL 2 | WARN 0 | SKIP 1 | PASS 439 ]
       Error: Test failures
       Execution halted
     ```
@@ -3437,26 +2527,76 @@ Run `cloud_details(, "skimr")` for more info
 
 ## Newly broken
 
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘skimr-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: skim
+    > ### Title: Skim a data frame, getting useful summary statistics
+    > ### Aliases: skim skim_tee skim_without_charts
+    > 
+    > ### ** Examples
+    > 
+    > skim(iris)
+    ...
+     18.       └─dplyr:::summarise.data.frame(data, dplyr::across(variable_names, mangled_skimmers$funs))
+     19.         └─dplyr:::summarise_cols(.data, dplyr_quosures(...), caller_env = caller_env())
+     20.           ├─base::withCallingHandlers(...)
+     21.           └─dplyr:::expand_across(dots[[i]])
+     22.             └─dplyr:::as_across_fn_call(fns[[j]], var, env, mask)
+     23.               ├─rlang::call2(as_function(fn), sym(var))
+     24.               └─rlang::as_function(fn)
+     25.                 └─rlang:::abort_coercion(x, "a function", arg = arg)
+     26.                   └─rlang::abort(msg, call = call)
+    Execution halted
+    ```
+
 *   checking tests ... ERROR
     ```
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      ── Failure (test-skim_with.R:177:3): Defining an integer sfl changes behavior ──
-      "integer.int_mean" %in% names(input) is not TRUE
+      Component "numeric": Lengths (8, 7) differ (string compare on first 7)
+      ── Error (test-skim_with.R:175:3): Defining an integer sfl changes behavior ────
+      Error in `dplyr::summarize(grouped, skimmed = purrr::map2(.data$skimmers, 
+          .data$skim_variable, skim_by_type, data))`: Problem while computing `skimmed = purrr::map2(...)`.
+      Caused by error in `purrr::map2()`:
+      ℹ In index: 1.
+      Caused by error in `dplyr::summarize()`:
+      ! Problem while computing `..1 = dplyr::across(variable_names,
+        mangled_skimmers$funs)`.
+      Caused by error in `as_across_fn_call()`:
+      ! Can't convert `fn`, NULL, to a function.
       
-      `actual`:   FALSE
-      `expected`: TRUE 
-      ── Failure (test-skim_with.R:179:3): Defining an integer sfl changes behavior ──
-      `used` not identical to list(...).
-      Names: 1 string mismatch
-      Length mismatch: comparison on first 1 components
-      Component 1: Lengths (8, 1) differ (string compare on first 1)
-      Component 1: 1 string mismatch
-      
-      [ FAIL 18 | WARN 3 | SKIP 25 | PASS 613 ]
+      [ FAIL 7 | WARN 0 | SKIP 24 | PASS 623 ]
       Error: Test failures
       Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... WARNING
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘Skimr_defaults.Rmd’ using rmarkdown
+    --- finished re-building ‘Skimr_defaults.Rmd’
+    
+    --- re-building ‘Using_fonts.Rmd’ using rmarkdown
+    --- finished re-building ‘Using_fonts.Rmd’
+    
+    --- re-building ‘extending_skimr.Rmd’ using rmarkdown
+    --- finished re-building ‘extending_skimr.Rmd’
+    
+    ...
+      mangled_skimmers$funs)`.
+    Caused by error in `as_across_fn_call()`:
+    ! Can't convert `fn`, NULL, to a function.
+    --- failed re-building ‘skimr.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘skimr.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
     ```
 
 # stoRy
@@ -3551,12 +2691,12 @@ Run `cloud_details(, "tergm")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     ...
+       11. │           └─... %>% as_tibble
        12. ├─tibble::as_tibble(.)
        13. ├─purrr::map(., simplify_simple, toNA = "keep")
        14. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       15. │   └─purrr:::vctrs_list_compat(.x)
-       16. │     └─base::is.data.frame(x)
-       17. └─purrr::transpose(.)
+       15. │   └─purrr:::vctrs_vec_compat(.x)
+       16. └─purrr::transpose(.)
       
       [ FAIL 3 | WARN 1258 | SKIP 0 | PASS 3617 ]
       Error: Test failures
@@ -3592,15 +2732,15 @@ Run `cloud_details(, "tidycmprsk")` for more info
     > ### ** Examples
     > 
     ...
-      6. ├─tidycmprsk:::cuminc.formula(Surv(ttdeath, death_cr) ~ 1, trial)
-      7. │ └─tidycmprsk:::cuminc_bridge(...)
-      8. │   └─tidycmprsk:::new_cuminc(...)
-      9. │     └─new_cuminc %>% ...
-     10. ├─purrr::list_modify(., tidy = first_cuminc_tidy(new_cuminc, conf.level = conf.level))
-     11. │ └─vctrs::vec_check_list(.x)
-     12. └─vctrs:::stop_non_list_type(x, y, z)
-     13.   └─cli::cli_abort(...)
-     14.     └─rlang::abort(...)
+    > # Example 1 ----------------------------------
+    > add_cuminc_ex1 <-
+    +   cuminc(Surv(ttdeath, death_cr) ~ 1, trial) %>%
+    +   tbl_cuminc(times = c(12, 24), label_header = "**Month {time}**") %>%
+    +   add_nevent() %>%
+    +   add_n()
+    Error in UseMethod("tbl_cuminc") : 
+      no applicable method for 'tbl_cuminc' applied to an object of class "list"
+    Calls: %>% -> add_n -> add_nevent -> tbl_cuminc
     Execution halted
     ```
 
@@ -3610,9 +2750,9 @@ Run `cloud_details(, "tidycmprsk")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-       18. └─vctrs:::stop_non_list_type(x, y, z)
-       19.   └─cli::cli_abort(...)
-       20.     └─rlang::abort(...)
+        8. ├─gtsummary::add_n(., location = c("label", "level"))
+        9. ├─gtsummary::add_nevent(., location = c("label", "level"))
+       10. └─tidycmprsk::tbl_cuminc(., times = c(12, 24), label_header = "**Month {time}**")
       ── Error (test-tbl_cuminc.R:10:3): tbl_cuminc() works ──────────────────────────
       Error in `inline_text(tbl0, time = 12)`: object 'tbl0' not found
       Backtrace:
@@ -3622,7 +2762,7 @@ Run `cloud_details(, "tidycmprsk")` for more info
        3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
        4. └─gtsummary::inline_text(tbl0, time = 12)
       
-      [ FAIL 14 | WARN 252 | SKIP 0 | PASS 25 ]
+      [ FAIL 8 | WARN 585 | SKIP 0 | PASS 43 ]
       Error: Test failures
       Execution halted
     ```
@@ -3916,45 +3056,6 @@ Run `cloud_details(, "Tplyr")` for more info
       Execution halted
     ```
 
-# usethis
-
-<details>
-
-* Version: 2.1.6
-* GitHub: https://github.com/r-lib/usethis
-* Source code: https://github.com/cran/usethis
-* Date/Publication: 2022-05-25 20:50:02 UTC
-* Number of recursive dependencies: 82
-
-Run `cloud_details(, "usethis")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        7.     └─roxygen2::roxygenise(proj_get(), "namespace")
-        8.       └─base::lapply(roclets, roclet_preprocess, blocks = blocks, base_path = base_path)
-        9.         ├─roxygen2 (local) FUN(X[[i]], ...)
-       10.         └─roxygen2:::roclet_preprocess.roclet_namespace(X[[i]], ...)
-       11.           └─roxygen2:::namespace_exports(NAMESPACE)
-       12.             └─purrr::map_lgl(parsed, is_import)
-       13.               └─purrr:::map_("logical", .x, .f, ..., .progress = .progress)
-       14.                 └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       15.                   └─vctrs:::stop_scalar_type(x, arg, call = call)
-       16.                     └─vctrs:::stop_vctrs(...)
-       17.                       └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 5 | WARN 27 | SKIP 53 | PASS 610 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # utile.tools
 
 <details>
@@ -4033,101 +3134,5 @@ Run `cloud_details(, "workflowsets")` for more info
       [ FAIL 1 | WARN 483 | SKIP 10 | PASS 376 ]
       Error: Test failures
       Execution halted
-    ```
-
-# xportr
-
-<details>
-
-* Version: 0.1.0
-* GitHub: https://github.com/atorus-research/xportr
-* Source code: https://github.com/cran/xportr
-* Date/Publication: 2022-06-21 09:00:02 UTC
-* Number of recursive dependencies: 138
-
-Run `cloud_details(, "xportr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
-        3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-        4. ├─mtcars %>% x("cyl") at test-utils-xportr.R:10:16
-        5. └─xportr (local) x(., "cyl")
-        6.   └─xportr:::get_pipe_call() at test-utils-xportr.R:3:4
-        7.     └─purrr::map_chr(sys.calls(), as_label)
-        8.       └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-        9.         └─vctrs::vec_assert(.x, arg = ".x", call = ..error_call)
-       10.           └─vctrs:::stop_scalar_type(x, arg, call = call)
-       11.             └─vctrs:::stop_vctrs(...)
-       12.               └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      
-      [ FAIL 1 | WARN 4 | SKIP 1 | PASS 37 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘xportr.Rmd’ using rmarkdown
-    
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
-    
-    The following objects are masked from 'package:base':
-    ...
-    Quitting from lines 168-169 (xportr.Rmd) 
-    Error: processing vignette 'xportr.Rmd' failed with diagnostics:
-    `.x` must be a vector, not a pairlist node.
-    --- failed re-building ‘xportr.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘xportr.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# zmisc
-
-<details>
-
-* Version: 0.2.2
-* GitHub: https://github.com/torfason/zmisc
-* Source code: https://github.com/cran/zmisc
-* Date/Publication: 2022-04-29 19:10:02 UTC
-* Number of recursive dependencies: 57
-
-Run `cloud_details(, "zmisc")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘zmisc.Rmd’ using rmarkdown
-    Quitting from lines 13-29 (zmisc.Rmd) 
-    Error: processing vignette 'zmisc.Rmd' failed with diagnostics:
-    `.x` must be a vector, not a pairlist node.
-    --- failed re-building ‘zmisc.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘zmisc.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
     ```
 
