@@ -103,7 +103,9 @@ is_quantity <- function(x) {
 # Treat data frames and S3 scalar lists like bare lists.
 # But ensure rcrd vctrs retain their class.
 vctrs_list_compat <- function(x) {
-  if (is.data.frame(x) || (is.list(x) && !vec_is(x))) {
+  if (is.null(x)) {
+    list()
+  } else if (is.data.frame(x) || (is.list(x) && !vec_is(x))) {
     unclass(x)
   } else {
     x
