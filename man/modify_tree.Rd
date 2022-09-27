@@ -22,7 +22,8 @@ modify_tree(
 
 \item{is_leaf}{A predicate function that determines whether an element is
 a leaf (by returning \code{FALSE}) or a node (by returning \code{FALSE}). The
-default value, \code{NULL}, treats lists as nodes and everything else as leaves.}
+default value, \code{NULL}, treats bare lists as nodes and everything else
+(including data frames) as leaves.}
 
 \item{pre, post}{Functions applied to each node. \code{pre} is applied on the
 way "down", i.e. before the leaves are transformed with \code{leaf}, while

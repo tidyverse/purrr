@@ -14,6 +14,7 @@
 #' @param .ragged If `TRUE`, will apply to leaves, even if they're not
 #'   at depth `.depth`. If `FALSE`, will throw an error if there are
 #'   no elements at depth `.depth`.
+#' @inheritParams modify_tree
 #' @seealso [modify_tree()] for a recursive version of `modify_depth()` that
 #'   allows you to apply a function to every leaf or every node.
 #' @family map variants
@@ -24,20 +25,20 @@
 #' # Use `map_depth()` to recursively traverse nested vectors and map
 #' # a function at a certain depth:
 #' x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
-#' str(x)
-#' map_depth(x, 2, paste, collapse = "/")
+#' x |> str()
+#' x |> map_depth(2, \(y) paste(y, collapse = "/")) |> str()
 #'
 #' # Equivalent to:
-#' map(x, map, paste, collapse = "/")
+#' x |> map(\(y) map(y, \(z) paste(z, collapse = "/"))) |> str()
 #'
 #' # When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
 #' x <- list(1, list(1, list(1, list(1, 1))))
-#' str(x)
-#' str(map_depth(x, 4, \(x) length(unlist(x)), .ragged = TRUE))
-#' str(map_depth(x, 3, \(x) length(unlist(x)), .ragged = TRUE))
-#' str(map_depth(x, 2, \(x) length(unlist(x)), .ragged = TRUE))
-#' str(map_depth(x, 1, \(x) length(unlist(x)), .ragged = TRUE))
-#' str(map_depth(x, 0, \(x) length(unlist(x)), .ragged = TRUE))
+#' x |> str()
+#' x |> map_depth(4, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+#' x |> map_depth(3, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+#' x |> map_depth(2, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+#' x |> map_depth(1, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+#' x |> map_depth(0, \(x) length(unlist(x)), .ragged = TRUE) |> str()
 #'
 #' # modify_depth() -------------------------------------------------
 #' l1 <- list(
@@ -55,13 +56,6 @@
 #' # is level 3. To apply sum() on all params, we map it at depth 3:
 #' l1 |> modify_depth(3, sum) |> str()
 #'
-#' # Note that vectorised operations will yield the same result when
-#' # applied at the list level as when applied at the atomic result.
-#' # The former is more efficient because it takes advantage of
-#' # vectorisation.
-#' l1 |> modify_depth(3, `+`, 100L)
-#' l1 |> modify_depth(4, `+`, 100L)
-#'
 #' # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
 #' l1 |> modify(c("prop1", "param2")) |> str()
 #'
@@ -74,18 +68,22 @@
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
 #' l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
-map_depth <- function(.x, .depth, .f, ..., .ragged = FALSE) {
-  .depth <- check_depth(.depth, pluck_depth(.x))
+map_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL) {
+  force(.ragged)
+  .depth <- check_depth(.depth, pluck_depth(.x, .is_leaf))
   .f <- as_mapper(.f, ...)
-  map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged)
+  .is_leaf <- as_is_leaf(.is_leaf)
+  map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged, .is_leaf = .is_leaf)
 }
 
 #' @rdname map_depth
 #' @export
-modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0) {
-  .depth <- check_depth(.depth, pluck_depth(.x))
+modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL) {
+  force(.ragged)
+  .depth <- check_depth(.depth, pluck_depth(.x, .is_leaf))
   .f <- as_mapper(.f, ...)
-  map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged)
+  .is_leaf <- as_is_leaf(.is_leaf)
+  map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged, .is_leaf = .is_leaf)
 }
 
 map_depth_rec <- function(.fmap,
@@ -94,36 +92,40 @@ map_depth_rec <- function(.fmap,
                           .f,
                           ...,
                           .ragged,
+                          .is_leaf,
                           .error_call = caller_env()) {
   if (.depth == 0) {
     if (identical(.fmap, map)) {
-      .f(.x, ...)
+      return(.f(.x, ...))
     } else {
       .x[] <- .f(.x, ...)
-      .x
+      return(.x)
     }
-  } else if (.depth == 1) {
+  }
+
+  if (.is_leaf(.x)) {
+    if (.ragged) {
+      return(.fmap(.x, .f, ...))
+    } else {
+      cli::cli_abort("List not deep enough", call = .error_call)
+    }
+  }
+
+  if (.depth == 1) {
     .fmap(.x, .f, ...)
   } else {
-    if (is.list(.x)) {
-      .fmap(.x, function(x) {
-        map_depth_rec(
-          .fmap = .fmap,
-          .x = x,
-          .depth = .depth - 1,
-          .f = .f,
-          ...,
-          .ragged = .ragged,
-          .error_call = .error_call
-        )
-      })
-    } else {
-      if (.ragged) {
-        .fmap(.x, .f, ...)
-      } else {
-        cli::cli_abort("List not deep enough", call = .error_call)
-      }
-    }
+    .fmap(.x, function(x) {
+      map_depth_rec(
+        .fmap = .fmap,
+        .x = x,
+        .depth = .depth - 1,
+        .f = .f,
+        ...,
+        .ragged = .ragged,
+        .is_leaf = .is_leaf,
+        .error_call = .error_call
+      )
+    })
   }
 }
 

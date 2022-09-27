@@ -5,9 +5,9 @@
 \alias{modify_depth}
 \title{Map/modify elements at given depth}
 \usage{
-map_depth(.x, .depth, .f, ..., .ragged = FALSE)
+map_depth(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL)
 
-modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0)
+modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -50,6 +50,11 @@ function and will tend to yield better error messages.}
 \item{.ragged}{If \code{TRUE}, will apply to leaves, even if they're not
 at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
 no elements at depth \code{.depth}.}
+
+\item{.is_leaf}{A predicate function that determines whether an element is
+a leaf (by returning \code{FALSE}) or a node (by returning \code{FALSE}). The
+default value, \code{NULL}, treats bare lists as nodes and everything else
+(including data frames) as leaves.}
 }
 \description{
 \code{map_depth()} calls \code{map(.y, .f)} on all \code{.y} at the specified \code{.depth} in
@@ -61,20 +66,20 @@ no elements at depth \code{.depth}.}
 # Use `map_depth()` to recursively traverse nested vectors and map
 # a function at a certain depth:
 x <- list(a = list(foo = 1:2, bar = 3:4), b = list(baz = 5:6))
-str(x)
-map_depth(x, 2, paste, collapse = "/")
+x |> str()
+x |> map_depth(2, \(y) paste(y, collapse = "/")) |> str()
 
 # Equivalent to:
-map(x, map, paste, collapse = "/")
+x |> map(\(y) map(y, \(z) paste(z, collapse = "/"))) |> str()
 
 # When ragged is TRUE, `.f()` will also be passed leaves at depth < `.depth`
 x <- list(1, list(1, list(1, list(1, 1))))
-str(x)
-str(map_depth(x, 4, \(x) length(unlist(x)), .ragged = TRUE))
-str(map_depth(x, 3, \(x) length(unlist(x)), .ragged = TRUE))
-str(map_depth(x, 2, \(x) length(unlist(x)), .ragged = TRUE))
-str(map_depth(x, 1, \(x) length(unlist(x)), .ragged = TRUE))
-str(map_depth(x, 0, \(x) length(unlist(x)), .ragged = TRUE))
+x |> str()
+x |> map_depth(4, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+x |> map_depth(3, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+x |> map_depth(2, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+x |> map_depth(1, \(x) length(unlist(x)), .ragged = TRUE) |> str()
+x |> map_depth(0, \(x) length(unlist(x)), .ragged = TRUE) |> str()
 
 # modify_depth() -------------------------------------------------
 l1 <- list(
@@ -91,13 +96,6 @@ l1 <- list(
 # In the above list, "obj" is level 1, "prop" is level 2 and "param"
 # is level 3. To apply sum() on all params, we map it at depth 3:
 l1 |> modify_depth(3, sum) |> str()
-
-# Note that vectorised operations will yield the same result when
-# applied at the list level as when applied at the atomic result.
-# The former is more efficient because it takes advantage of
-# vectorisation.
-l1 |> modify_depth(3, `+`, 100L)
-l1 |> modify_depth(4, `+`, 100L)
 
 # modify() lets us pluck the elements prop1/param2 in obj1 and obj2:
 l1 |> modify(c("prop1", "param2")) |> str()

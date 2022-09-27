@@ -8,7 +8,8 @@
 #' @param leaf A function applied to each leaf.
 #' @param is_leaf A predicate function that determines whether an element is
 #'   a leaf (by returning `FALSE`) or a node (by returning `FALSE`). The
-#'   default value, `NULL`, treats lists as nodes and everything else as leaves.
+#'   default value, `NULL`, treats bare lists as nodes and everything else
+#'   (including data frames) as leaves.
 #' @param pre,post Functions applied to each node. `pre` is applied on the
 #'   way "down", i.e. before the leaves are transformed with `leaf`, while
 #'   `post` is applied on the way "up", i.e. after the leaves are transformed.
@@ -39,14 +40,7 @@ modify_tree <- function(x,
                         post = identity) {
   check_dots_empty()
   leaf <- rlang::as_function(leaf)
-  if (is.null(is_leaf)) {
-    is_leaf <- function(x) {
-      !is.list(x)
-    }
-  } else {
-    is_leaf_f <- rlang::as_function(is_leaf)
-    is_leaf <- as_predicate(is_leaf_f, .mapper = FALSE, .error_arg = "is_leaf")
-  }
+  is_leaf <- as_is_leaf(is_leaf)
   post <- rlang::as_function(post)
   pre <- rlang::as_function(pre)
 
@@ -62,4 +56,20 @@ modify_tree <- function(x,
   }
 
   worker(x)
+}
+
+as_is_leaf <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) {
+  if (is.null(f)) {
+    function(x) {
+      !vec_is_list(x)
+    }
+  } else {
+    is_leaf_f <- rlang::as_function(f, call = error_call, arg = error_arg)
+    as_predicate(
+      is_leaf_f,
+      .mapper = FALSE,
+      .error_call = error_call,
+      .error_arg = error_arg
+    )
+  }
 }

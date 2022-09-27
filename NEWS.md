@@ -185,8 +185,12 @@
 * `modify_depth()` is no longer a generic. This makes it more consistent
   with `map_depth()`.
 
-* `map_depth()` now uses `is.list()` to determine if there's more depth
-  to recurse into, as opposed to `!is_atomic(.x)` (#920).
+* `map_depth()` and `modify_depth()` have a new `is_leaf` argument that 
+  allows you to control what counts as a level. The default uses 
+  `!vec_is_list()` to avoid recursing into rich S3 objects like linear models
+  or data.frames (#958, #920).
+
+* `map_depth()` and `modify_depth()` now correctly recurse at depth 1.
 
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
