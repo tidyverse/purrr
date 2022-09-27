@@ -1,8 +1,8 @@
 ## revdepcheck results
 
-We checked 1373 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 1397 reverse dependencies (1392 from CRAN + 5 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 31 new problems
+ * We saw 59 new problems
  * We failed to check 7 packages
 
 Issues with CRAN packages are summarised below.
@@ -10,42 +10,69 @@ Issues with CRAN packages are summarised below.
 ### New problems
 (This reports the first line of each new failure)
 
-* autothresholdr
-  checking re-building of vignette outputs ... WARNING
+* allhomes
+  checking tests ... ERROR
 
-* campsis
+* broom.helpers
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* casino
-  checking re-building of vignette outputs ... WARNING
+* bumbl
+  checking tests ... ERROR
 
 * cattonum
   checking R code for possible problems ... NOTE
 
+* cheese
+  checking examples ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* codebook
+  checking re-building of vignette outputs ... WARNING
+
+* connectapi
+  checking tests ... ERROR
+
+* crosstable
+  checking tests ... ERROR
+
 * csvwr
   checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* cubelyr
+  checking tests ... ERROR
+
+* DataFakeR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
 
 * dibble
   checking tests ... ERROR
 
-* egor
-  checking examples ... ERROR
+* dm
   checking tests ... ERROR
 
-* emba
+* embed
   checking tests ... ERROR
 
-* escalation
-  checking examples ... ERROR
-  checking re-building of vignette outputs ... WARNING
+* ergm
+  checking tests ... ERROR
 
-* eventr
-  checking examples ... ERROR
+* ergm.ego
+  checking tests ... ERROR
 
 * ffscrapr
-  checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
+
+* finetune
+  checking tests ... ERROR
+
+* flexsurv
+  checking examples ... ERROR
+
+* GDPuc
+  checking tests ... ERROR
 
 * gghighlight
   checking re-building of vignette outputs ... WARNING
@@ -56,16 +83,35 @@ Issues with CRAN packages are summarised below.
 * grizbayr
   checking tests ... ERROR
 
+* gtreg
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* gtsummary
+  checking examples ... ERROR
+  checking tests ... ERROR
+
 * gwasrapidd
   checking tests ... ERROR
 
 * healthcareai
   checking R code for possible problems ... NOTE
 
-* immunarch
+* ICD10gm
+  checking tests ... ERROR
+
+* ipmr
+  checking tests ... ERROR
+
+* ir
   checking examples ... ERROR
 
-* linea
+* jpmesh
+  checking examples ... ERROR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* jstor
   checking tests ... ERROR
 
 * mskcc.oncotree
@@ -75,20 +121,31 @@ Issues with CRAN packages are summarised below.
   checking tests ... ERROR
 
 * PHEindicatormethods
-  checking examples ... ERROR
   checking tests ... ERROR
 
-* PLNmodels
+* pkgdown
   checking tests ... ERROR
+
+* psfmi
+  checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
 * quincunx
   checking examples ... ERROR
   checking tests ... ERROR
 
-* rb3
+* RCLabels
   checking tests ... ERROR
-  checking re-building of vignette outputs ... WARNING
+
+* rearrr
+  checking tests ... ERROR
+
+* recipes
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* roxygen2
+  checking tests ... ERROR
 
 * ruta
   checking examples ... ERROR
@@ -98,22 +155,55 @@ Issues with CRAN packages are summarised below.
 * sbm
   checking tests ... ERROR
 
+* scImmuneGraph
+  checking examples ... ERROR
+
 * scrutiny
   checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* tidybins
+* simMetric
+  checking tests ... ERROR
+
+* simpr
+  checking tests ... ERROR
+
+* sketch
+  checking tests ... ERROR
+
+* skimr
   checking examples ... ERROR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* tergm
+  checking tests ... ERROR
+
+* tidycmprsk
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* tidypredict
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* tidyr
+  checking tests ... ERROR
+
+* tidytext
+  checking tests ... ERROR
 
 * tidywikidatar
   checking examples ... ERROR
 
-* TT
+* Tplyr
+  checking tests ... ERROR
+
+* utile.tools
   checking examples ... ERROR
 
-* varsExplore
-  checking examples ... ERROR
-  checking re-building of vignette outputs ... WARNING
+* workflowsets
+  checking tests ... ERROR
 
 ### Failed to check
 

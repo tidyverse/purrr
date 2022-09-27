@@ -9,6 +9,9 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
+* Use of map functions with expressions, calls, and pairlists has been
+  deprecated (#961).
+
 * `update_list()` (#858) and `rerun()` (#877), and the use of tidyselect
   with `map_at()` and friends (#874) have been deprecated. These functions 
   use some form of non-standard evaluation which we now believe is a poor 
@@ -177,7 +180,7 @@
 
 ## Minor improvements and bug fixes
 
-* `modify()` no longer supports modifying calls or pairlists.
+* `modify()` no longer works with calls or pairlists.
 
 * `modify_depth()` is no longer a generic. This makes it more consistent
   with `map_depth()`.

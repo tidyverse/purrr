@@ -38,3 +38,30 @@
       Warning:
       Using `vars()` in .at was deprecated in purrr 1.0.0.
 
+# pairlists, expressions, and calls are deprecated
+
+    Code
+      x <- vctrs_vec_compat(expression(1, 2))
+    Condition
+      Warning:
+      Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
+      Please coerce explicitly with `as.list()`
+
+---
+
+    Code
+      x <- vctrs_vec_compat(pairlist(1, 2))
+    Condition
+      Warning:
+      Use of pairlists in map functions was deprecated in purrr 1.0.0.
+      Please coerce explicitly with `as.list()`
+
+---
+
+    Code
+      x <- vctrs_vec_compat(quote(f(a, b = 1)))
+    Condition
+      Warning:
+      Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
+      Please coerce explicitly with `as.list()`
+

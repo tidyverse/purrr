@@ -151,7 +151,11 @@ map_chr <- function(.x, .f, ..., .progress = FALSE) {
 }
 
 map_ <- function(.type, .x, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
+  .x <- vctrs_vec_compat(.x)
+  vec_assert(.x, arg = ".x", call = ..error_call)
+
   .f <- as_mapper(.f, ...)
+
   i <- 0L
   with_indexed_errors(
     i = i,

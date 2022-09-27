@@ -68,14 +68,6 @@ test_that("walk is used for side-effects", {
   expect_output(walk(1:3, str))
 })
 
-test_that("map works with calls and pairlists", {
-  out <- map(quote(f(x)), ~ quote(z))
-  expect_equal(out, list(quote(z), quote(z)))
-
-  out <- map(pairlist(1, 2), ~ . + 1)
-  expect_equal(out, list(2, 3))
-})
-
 test_that("primitive dispatch correctly", {
   local_bindings(.env = global_env(),
     as.character.test_class = function(x) "dispatched!"

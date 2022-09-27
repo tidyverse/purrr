@@ -39,10 +39,10 @@
       pmap(list(1:2, 1:3), `+`)
     Condition
       Error in `pmap()`:
-      ! `.l[[2]]` must have length 1 or 2, not 3.
+      ! Can't recycle `.l[[1]]` (size 2) to match `.l[[2]]` (size 3).
     Code
       pmap(list(1:2, integer()), `+`)
     Condition
       Error in `pmap()`:
-      ! `.l[[2]]` must have length 1 or 2, not 0.
+      ! Can't recycle `.l[[1]]` (size 2) to match `.l[[2]]` (size 0).
 
