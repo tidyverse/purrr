@@ -8,7 +8,7 @@ modify_tree(
   x,
   ...,
   leaf = identity,
-  is_leaf = NULL,
+  is_node = NULL,
   pre = identity,
   post = identity
 )
@@ -20,10 +20,10 @@ modify_tree(
 
 \item{leaf}{A function applied to each leaf.}
 
-\item{is_leaf}{A predicate function that determines whether an element is
-a leaf (by returning \code{FALSE}) or a node (by returning \code{FALSE}). The
+\item{is_node}{A predicate function that determines whether an element is
+a node (by returning \code{TRUE}) or a leaf (by returning \code{FALSE}). The
 default value, \code{NULL}, treats bare lists as nodes and everything else
-(including data frames) as leaves.}
+(including data frames) as leaves, using \code{\link[vctrs:vec_is_list]{vctrs::vec_is_list()}}.}
 
 \item{pre, post}{Functions applied to each node. \code{pre} is applied on the
 way "down", i.e. before the leaves are transformed with \code{leaf}, while

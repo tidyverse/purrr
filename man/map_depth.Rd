@@ -5,9 +5,9 @@
 \alias{modify_depth}
 \title{Map/modify elements at given depth}
 \usage{
-map_depth(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL)
+map_depth(.x, .depth, .f, ..., .ragged = .depth < 0, .is_node = NULL)
 
-modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL)
+modify_depth(.x, .depth, .f, ..., .ragged = .depth < 0, .is_node = NULL)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -51,10 +51,10 @@ function and will tend to yield better error messages.}
 at depth \code{.depth}. If \code{FALSE}, will throw an error if there are
 no elements at depth \code{.depth}.}
 
-\item{.is_leaf}{A predicate function that determines whether an element is
-a leaf (by returning \code{FALSE}) or a node (by returning \code{FALSE}). The
+\item{.is_node}{A predicate function that determines whether an element is
+a node (by returning \code{TRUE}) or a leaf (by returning \code{FALSE}). The
 default value, \code{NULL}, treats bare lists as nodes and everything else
-(including data frames) as leaves.}
+(including data frames) as leaves, using \code{\link[vctrs:vec_is_list]{vctrs::vec_is_list()}}.}
 }
 \description{
 \code{map_depth()} calls \code{map(.y, .f)} on all \code{.y} at the specified \code{.depth} in

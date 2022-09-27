@@ -6,10 +6,10 @@
 #' @param x A list.
 #' @param ... Reserved for future use. Must be empty
 #' @param leaf A function applied to each leaf.
-#' @param is_leaf A predicate function that determines whether an element is
-#'   a leaf (by returning `FALSE`) or a node (by returning `FALSE`). The
+#' @param is_node A predicate function that determines whether an element is
+#'   a node (by returning `TRUE`) or a leaf (by returning `FALSE`). The
 #'   default value, `NULL`, treats bare lists as nodes and everything else
-#'   (including data frames) as leaves.
+#'   (including data frames) as leaves, using [vctrs::vec_is_list()].
 #' @param pre,post Functions applied to each node. `pre` is applied on the
 #'   way "down", i.e. before the leaves are transformed with `leaf`, while
 #'   `post` is applied on the way "up", i.e. after the leaves are transformed.
@@ -35,22 +35,22 @@
 modify_tree <- function(x,
                         ...,
                         leaf = identity,
-                        is_leaf = NULL,
+                        is_node = NULL,
                         pre = identity,
                         post = identity) {
   check_dots_empty()
   leaf <- rlang::as_function(leaf)
-  is_leaf <- as_is_leaf(is_leaf)
+  is_node <- as_is_node(is_node)
   post <- rlang::as_function(post)
   pre <- rlang::as_function(pre)
 
   worker <- function(x) {
-    if (is_leaf(x)) {
-      out <- leaf(x)
-    } else {
+    if (is_node(x)) {
       out <- pre(x)
       out <- modify(out, worker)
       out <- post(out)
+    } else {
+      out <- leaf(x)
     }
     out
   }
@@ -58,15 +58,15 @@ modify_tree <- function(x,
   worker(x)
 }
 
-as_is_leaf <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) {
+as_is_node <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) {
   if (is.null(f)) {
     function(x) {
-      !vec_is_list(x)
+      vec_is_list(x)
     }
   } else {
-    is_leaf_f <- rlang::as_function(f, call = error_call, arg = error_arg)
+    is_node_f <- rlang::as_function(f, call = error_call, arg = error_arg)
     as_predicate(
-      is_leaf_f,
+      is_node_f,
       .mapper = FALSE,
       .error_call = error_call,
       .error_arg = error_arg

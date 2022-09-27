@@ -68,22 +68,22 @@
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
 #' l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
-map_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL) {
+map_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_node = NULL) {
   force(.ragged)
-  .depth <- check_depth(.depth, pluck_depth(.x, .is_leaf))
+  .depth <- check_depth(.depth, pluck_depth(.x, .is_node))
   .f <- as_mapper(.f, ...)
-  .is_leaf <- as_is_leaf(.is_leaf)
-  map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged, .is_leaf = .is_leaf)
+  .is_node <- as_is_node(.is_node)
+  map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged, .is_node = .is_node)
 }
 
 #' @rdname map_depth
 #' @export
-modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_leaf = NULL) {
+modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_node = NULL) {
   force(.ragged)
-  .depth <- check_depth(.depth, pluck_depth(.x, .is_leaf))
+  .depth <- check_depth(.depth, pluck_depth(.x, .is_node))
   .f <- as_mapper(.f, ...)
-  .is_leaf <- as_is_leaf(.is_leaf)
-  map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged, .is_leaf = .is_leaf)
+  .is_node <- as_is_node(.is_node)
+  map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged, .is_node = .is_node)
 }
 
 map_depth_rec <- function(.fmap,
@@ -92,7 +92,7 @@ map_depth_rec <- function(.fmap,
                           .f,
                           ...,
                           .ragged,
-                          .is_leaf,
+                          .is_node,
                           .error_call = caller_env()) {
   if (.depth == 0) {
     if (identical(.fmap, map)) {
@@ -103,7 +103,7 @@ map_depth_rec <- function(.fmap,
     }
   }
 
-  if (.is_leaf(.x)) {
+  if (!.is_node(.x)) {
     if (.ragged) {
       return(.fmap(.x, .f, ...))
     } else {
@@ -122,7 +122,7 @@ map_depth_rec <- function(.fmap,
         .f = .f,
         ...,
         .ragged = .ragged,
-        .is_leaf = .is_leaf,
+        .is_node = .is_node,
         .error_call = .error_call
       )
     })

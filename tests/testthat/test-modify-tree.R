@@ -26,7 +26,7 @@ test_that("default doesn't recurse into data frames, but can customise", {
     list("data.frame", "data.frame")
   )
   expect_equal(
-    modify_tree(x, leaf = class, is_leaf = Negate(is.list)),
+    modify_tree(x, leaf = class, is_node = is.list),
     list(data.frame(x = "numeric"), data.frame(y = "numeric"))
   )
 })
@@ -37,7 +37,7 @@ test_that("leaf() is applied to non-node input", {
 
 test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
-    modify_tree(list(), is_leaf = ~ 1)
-    modify_tree(list(), is_leaf = 1)
+    modify_tree(list(), is_node = ~ 1)
+    modify_tree(list(), is_node = 1)
   })
 })

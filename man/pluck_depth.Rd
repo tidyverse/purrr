@@ -5,12 +5,12 @@
 \alias{vec_depth}
 \title{Compute the depth of a vector}
 \usage{
-pluck_depth(x, is_leaf = NULL)
+pluck_depth(x, is_node = NULL)
 }
 \arguments{
 \item{x}{A vector}
 
-\item{is_leaf}{Optionally override the default criteria for determine an
+\item{is_node}{Optionally override the default criteria for determine an
 element can be recursed within. The default matches the behaviour of
 \code{pluck()} which can recurse into lists and expressions.}
 }

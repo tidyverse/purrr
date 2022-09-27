@@ -18,7 +18,7 @@ test_that("default doesn't recurse into data frames, but can customise", {
 
   x <- list(data.frame(x = 1), data.frame(y = 1))
   expect_equal(
-    map_depth(x, 2, class, .is_leaf = Negate(is.list)),
+    map_depth(x, 2, class, .is_node = is.list),
     list(list(x = "numeric"), list(y = "numeric"))
   )
 })
