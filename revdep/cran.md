@@ -1,8 +1,8 @@
 ## revdepcheck results
 
-We checked 1373 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 1397 reverse dependencies (1392 from CRAN + 5 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 31 new problems
+ * We saw 75 new problems
  * We failed to check 7 packages
 
 Issues with CRAN packages are summarised below.
@@ -10,42 +10,98 @@ Issues with CRAN packages are summarised below.
 ### New problems
 (This reports the first line of each new failure)
 
-* autothresholdr
+* allhomes
+  checking tests ... ERROR
+
+* autoReg
+  checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* campsis
+* broom.helpers
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* casino
-  checking re-building of vignette outputs ... WARNING
+* bumbl
+  checking tests ... ERROR
 
 * cattonum
   checking R code for possible problems ... NOTE
 
+* cheese
+  checking examples ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* codebook
+  checking examples ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* cohortBuilder
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* conflr
+  checking tests ... ERROR
+
+* connectapi
+  checking tests ... ERROR
+
+* covidcast
+  checking re-building of vignette outputs ... WARNING
+
+* crossmap
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* crosstable
+  checking tests ... ERROR
+
 * csvwr
   checking tests ... ERROR
-
-* dibble
-  checking tests ... ERROR
-
-* egor
-  checking examples ... ERROR
-  checking tests ... ERROR
-
-* emba
-  checking tests ... ERROR
-
-* escalation
-  checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* eventr
-  checking examples ... ERROR
+* cubelyr
+  checking tests ... ERROR
+
+* DataFakeR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* dcurves
+  checking re-building of vignette outputs ... WARNING
+
+* dkanr
+  checking tests ... ERROR
+
+* dm
+  checking tests ... ERROR
+
+* embed
+  checking tests ... ERROR
+
+* ergm
+  checking tests ... ERROR
+
+* ergm.ego
+  checking tests ... ERROR
+
+* exampletestr
+  checking tests ... ERROR
 
 * ffscrapr
-  checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
+
+* fgdr
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* finetune
+  checking tests ... ERROR
+
+* functiondepends
+  checking tests ... ERROR
+
+* GDPuc
+  checking tests ... ERROR
 
 * gghighlight
   checking re-building of vignette outputs ... WARNING
@@ -56,37 +112,89 @@ Issues with CRAN packages are summarised below.
 * grizbayr
   checking tests ... ERROR
 
+* gtreg
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* gtsummary
+  checking examples ... ERROR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
 * gwasrapidd
   checking tests ... ERROR
 
 * healthcareai
   checking R code for possible problems ... NOTE
 
-* immunarch
+* ICD10gm
+  checking tests ... ERROR
+
+* infer
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* ipmr
+  checking tests ... ERROR
+
+* ir
   checking examples ... ERROR
 
-* linea
+* jpmesh
+  checking examples ... ERROR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* jstor
   checking tests ... ERROR
 
 * mskcc.oncotree
+  checking examples ... ERROR
+
+* multinma
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* multiverse
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* parsnip
   checking examples ... ERROR
 
 * partialised
   checking tests ... ERROR
 
 * PHEindicatormethods
-  checking examples ... ERROR
   checking tests ... ERROR
 
-* PLNmodels
+* pkgdown
   checking tests ... ERROR
+
+* psfmi
+  checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
 * quincunx
   checking examples ... ERROR
   checking tests ... ERROR
 
-* rb3
+* RCLabels
+  checking tests ... ERROR
+
+* rearrr
+  checking tests ... ERROR
+
+* recipes
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* roclang
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* roxygen2
+  checking examples ... ERROR
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
 
@@ -98,21 +206,65 @@ Issues with CRAN packages are summarised below.
 * sbm
   checking tests ... ERROR
 
+* scImmuneGraph
+  checking examples ... ERROR
+
 * scrutiny
   checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* tidybins
+* simMetric
+  checking tests ... ERROR
+
+* simpr
   checking examples ... ERROR
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* sketch
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* skimr
+  checking tests ... ERROR
+
+* tergm
+  checking tests ... ERROR
+
+* tidycmprsk
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* tidypredict
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* tidyr
+  checking tests ... ERROR
+
+* tidytext
+  checking tests ... ERROR
 
 * tidywikidatar
   checking examples ... ERROR
 
-* TT
+* Tplyr
+  checking tests ... ERROR
+
+* usethis
+  checking tests ... ERROR
+
+* utile.tools
   checking examples ... ERROR
 
-* varsExplore
-  checking examples ... ERROR
+* workflowsets
+  checking tests ... ERROR
+
+* xportr
+  checking tests ... ERROR
+  checking re-building of vignette outputs ... WARNING
+
+* zmisc
   checking re-building of vignette outputs ... WARNING
 
 ### Failed to check
