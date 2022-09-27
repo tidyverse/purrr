@@ -107,8 +107,6 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  SEXP y_val = PROTECT(Rf_eval(y, env));
-
   int n = Rf_length(x_val);
 
   // Constructs a call like f(x[[i]], y[[i]], ...)
@@ -119,7 +117,7 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP out = PROTECT(call_loop(env, f_call, n, type, 2, progress));
   copy_names(x_val, out);
 
-  UNPROTECT(6);
+  UNPROTECT(5);
   return out;
 }
 
