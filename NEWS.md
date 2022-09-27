@@ -185,7 +185,7 @@
   `!vec_is_list()` to avoid recursing into rich S3 objects like linear models
   or data.frames (#958, #920).
 
-* `map_depth()` and `modify_depth()` now correct recurse at depth 1.
+* `map_depth()` and `modify_depth()` now correctly recurse at depth 1.
 
 * `as_mapper()` is now around twice as fast when used with character,
   integer, or list (#820).
