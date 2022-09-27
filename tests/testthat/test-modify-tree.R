@@ -38,5 +38,6 @@ test_that("leaf() is applied to non-node input", {
 test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
     modify_tree(list(), is_leaf = ~ 1)
+    modify_tree(list(), is_leaf = 1)
   })
 })

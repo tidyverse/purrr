@@ -64,7 +64,7 @@ as_is_leaf <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) 
       !vec_is_list(x)
     }
   } else {
-    is_leaf_f <- rlang::as_function(f)
+    is_leaf_f <- rlang::as_function(f, call = error_call, arg = error_arg)
     as_predicate(
       is_leaf_f,
       .mapper = FALSE,
