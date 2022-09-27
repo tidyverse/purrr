@@ -25,17 +25,6 @@ void copy_names(SEXP from, SEXP to) {
   UNPROTECT(1);
 }
 
-void check_vector(SEXP x, const char *name, SEXP error_call) {
-  if (Rf_isNull(x) || Rf_isVector(x) || Rf_isPairList(x)) {
-    return;
-  }
-  r_abort_call(
-    error_call,
-    "`%s` must be a vector, not %s.",
-    name, rlang_obj_type_friendly_full(x, true, false)
-  );
-}
-
 // call must involve i
 SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
                SEXP progress) {
@@ -75,7 +64,6 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-  check_vector(x_val, ".x", error_call);
 
   int n = Rf_length(x_val);
   if (n == 0) {

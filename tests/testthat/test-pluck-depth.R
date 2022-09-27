@@ -21,10 +21,6 @@ test_that("depth of nested is depth of deepest element + 1", {
   expect_equal(pluck_depth(x), 3)
 })
 
-test_that("handles other expressions, like pluck", {
-  expect_equal(pluck_depth(expression(1, 2)), 2)
-})
-
 test_that("vec_depth() is deprecated", {
   expect_snapshot({
     . <- vec_depth(list())
