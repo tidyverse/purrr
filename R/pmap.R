@@ -100,9 +100,8 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
 }
 
 pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
-  .l <- vctrs_list_compat(.l)
-  vec_check_list(.l, call = ..error_call)
-  .l <- map(.l, vctrs_list_compat)
+  .l <- vctrs_list_compat(.l, error_call = ..error_call)
+  .l <- map(.l, vctrs_vec_compat)
   .l <- vec_recycle_common(!!!.l, .arg = ".l", .call = ..error_call)
 
   .f <- as_mapper(.f, ...)

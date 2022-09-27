@@ -55,8 +55,8 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
 }
 
 map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
-  .x <- vctrs_list_compat(.x)
-  .y <- vctrs_list_compat(.y)
+  .x <- vctrs_vec_compat(.x)
+  .y <- vctrs_vec_compat(.y)
   args <- vec_recycle_common(.x = .x, .y = .y, .call = ..error_call)
   .x <- args$.x
   .y <- args$.y

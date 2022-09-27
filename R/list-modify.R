@@ -43,7 +43,7 @@
 #' l <- list(new = 1, y = zap(), z = 5)
 #' str(list_update(x, !!!l))
 list_update <- function(.x, ...) {
-  vec_check_list(.x)
+  .x <- vctrs_list_compat(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, function(x, y) y, recurse = FALSE)
 }
@@ -51,7 +51,7 @@ list_update <- function(.x, ...) {
 #' @export
 #' @rdname list_update
 list_modify <- function(.x, ...) {
-  vec_check_list(.x)
+  .x <- vctrs_list_compat(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, function(x, y) y)
 }
@@ -59,7 +59,7 @@ list_modify <- function(.x, ...) {
 #' @export
 #' @rdname list_update
 list_merge <- function(.x, ...) {
-  vec_check_list(.x)
+  .x <- vctrs_list_compat(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, c)
 }

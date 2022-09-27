@@ -99,12 +99,31 @@ is_quantity <- function(x) {
   x
 }
 
+vctrs_list_compat <- function(x, error_call = caller_env(), error_arg = caller_arg(x)) {
+  force(error_arg)
+  x <- vctrs_vec_compat(x)
+  vec_check_list(x, call = error_call, arg = error_arg)
+  x
+}
+
 # When we want to use vctrs, but treat lists like purrr does
 # Treat data frames and S3 scalar lists like bare lists.
 # But ensure rcrd vctrs retain their class.
-vctrs_list_compat <- function(x) {
+vctrs_vec_compat <- function(x) {
   if (is.null(x)) {
     list()
+  } else if (is.pairlist(x)) {
+    lifecycle::deprecate_soft("1.0.0",
+      I("Use of pairlists in map functions"),
+      details = "Please coerce explicitly with `as.list()`"
+    )
+    as.list(x)
+  } else if (is_call(x) || is.expression(x)) {
+    lifecycle::deprecate_soft("1.0.0",
+      I("Use of calls and pairlists in map functions"),
+      details = "Please coerce explicitly with `as.list()`"
+    )
+    as.list(x)
   } else if (is.data.frame(x) || (is.list(x) && !vec_is(x))) {
     unclass(x)
   } else {
