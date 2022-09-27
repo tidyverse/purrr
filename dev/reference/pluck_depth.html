@@ -68,13 +68,19 @@ pluck_depth() was previously called vec_depth()."><meta property="og:image" cont
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pluck_depth</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pluck_depth</span><span class="op">(</span><span class="va">x</span>, is_leaf <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A vector</p></dd>
+
+
+<dt>is_leaf</dt>
+<dd><p>Optionally override the default criteria for determine an
+element can be recursed within. The default matches the behaviour of
+<code><a href="pluck.html">pluck()</a></code> which can recurse into lists and expressions.</p></dd>
 
 </dl></div>
     <div class="section level2">

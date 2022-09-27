@@ -95,7 +95,8 @@ that either modify each leaf or each node (or both).</p>
 <dt>is_leaf</dt>
 <dd><p>A predicate function that determines whether an element is
 a leaf (by returning <code>FALSE</code>) or a node (by returning <code>FALSE</code>). The
-default value, <code>NULL</code>, treats lists as nodes and everything else as leaves.</p></dd>
+default value, <code>NULL</code>, treats bare lists as nodes and everything else
+(including data frames) as leaves.</p></dd>
 
 
 <dt>pre, post</dt>
