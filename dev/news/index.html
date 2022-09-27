@@ -65,6 +65,7 @@
 <div class="section level4">
 <h4 id="core-purpose-refinements-development-version">Core purpose refinements<a class="anchor" aria-label="anchor" href="#core-purpose-refinements-development-version"></a></h4>
 <ul><li><p><code><a href="../reference/cross.html">cross()</a></code> and all its variants have been deprecated in favour of <code>tidyr::expand_grid()</code>. These functions were slow and buggy and we no longer think they are the right approach to solving this problem. See <a href="https://github.com/tidyverse/purrr/issues/768" class="external-link">#768</a> for more information.</p></li>
+<li><p>Use of map functions with expressions, calls, and pairlists has been deprecated (<a href="https://github.com/tidyverse/purrr/issues/961" class="external-link">#961</a>).</p></li>
 <li><p><code><a href="../reference/update_list.html">update_list()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/858" class="external-link">#858</a>) and <code><a href="../reference/rerun.html">rerun()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/877" class="external-link">#877</a>), and the use of tidyselect with <code><a href="../reference/map_if.html">map_at()</a></code> and friends (<a href="https://github.com/tidyverse/purrr/issues/874" class="external-link">#874</a>) have been deprecated. These functions use some form of non-standard evaluation which we now believe is a poor fit for purrr.</p></li>
 <li><p>The <code>lift_*</code> family of functions has been superseded. We no longer believe these to be a good fit for purrr because they rely on a style of function manipulation that is very uncommon in R code (<a href="https://github.com/tidyverse/purrr/issues/871" class="external-link">#871</a>).</p></li>
 <li><p><code>*_raw()</code> have been deprecated because they are of limited use and you can now use <code><a href="../reference/map.html">map_vec()</a></code> instead (<a href="https://github.com/tidyverse/purrr/issues/903" class="external-link">#903</a>).</p></li>
@@ -141,7 +142,7 @@
 </div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/modify.html">modify()</a></code> no longer supports modifying calls or pairlists.</p></li>
+<ul><li><p><code><a href="../reference/modify.html">modify()</a></code> no longer works with calls or pairlists.</p></li>
 <li><p><code><a href="../reference/map_depth.html">modify_depth()</a></code> is no longer a generic. This makes it more consistent with <code><a href="../reference/map_depth.html">map_depth()</a></code>.</p></li>
 <li><p><code><a href="../reference/map_depth.html">map_depth()</a></code> now uses <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.list()</a></code> to determine if there’s more depth to recurse into, as opposed to <code>!is_atomic(.x)</code> (<a href="https://github.com/tidyverse/purrr/issues/920" class="external-link">#920</a>).</p></li>
 <li><p><code><a href="../reference/as_mapper.html">as_mapper()</a></code> is now around twice as fast when used with character, integer, or list (<a href="https://github.com/tidyverse/purrr/issues/820" class="external-link">#820</a>).</p></li>
