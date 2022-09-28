@@ -25,8 +25,38 @@ void copy_names(SEXP from, SEXP to) {
   UNPROTECT(1);
 }
 
+size_t length_dispatch(SEXP x, SEXP env) {
+  SEXP length = PROTECT(Rf_install("length"));
+  SEXP call = PROTECT(Rf_lang2(length, x));
+  SEXP n = PROTECT(Rf_eval(call, env));
+
+  int nn = Rf_length(n);
+  if (nn != 1) {
+    Rf_errorcall(R_NilValue, "Object length must have size 1, not %i", nn);
+  }
+
+  size_t out;
+
+  switch (TYPEOF(n)) {
+  case INTSXP:
+    out = (size_t) INTEGER(n)[0];
+    break;
+  case REALSXP:
+    out = REAL(n)[0];
+    break;
+  default:
+    Rf_errorcall(R_NilValue,
+      "Object length has unknown type %s",
+      rlang_obj_type_friendly_full(n, true, false)
+    );
+  }
+
+  UNPROTECT(3);
+  return out;
+}
+
 // call must involve i
-SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
+SEXP call_loop(SEXP env, SEXP call, size_t n, SEXPTYPE type, int force_args,
                SEXP progress) {
   SEXP i = Rf_install("i");
   SEXP i_val = Rf_findVarInFrame(env, i);
@@ -63,15 +93,8 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP x_val = PROTECT(Rf_eval(x, env));
-
-  int n = Rf_length(x_val);
-  if (n == 0) {
-    SEXP out = PROTECT(Rf_allocVector(type, 0));
-    copy_names(x_val, out);
-    UNPROTECT(2);
-    return out;
-  }
+  SEXP x_val = PROTECT(Rf_findVarInFrame(env, x));
+  size_t n = length_dispatch(x_val, env);
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
   // actual values for f or x, because they may be long, which creates
@@ -94,8 +117,8 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP x_val = PROTECT(Rf_eval(x, env));
-  int n = Rf_length(x_val);
+  SEXP x_val = PROTECT(Rf_findVarInFrame(env, x));
+  size_t n = length_dispatch(x_val, env);
 
   // Constructs a call like f(x[[i]], y[[i]], ...)
   SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
@@ -111,12 +134,12 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
 
 SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP l = Rf_install(".l");
-  SEXP l_val = PROTECT(Rf_eval(l, env));
+  SEXP l_val = PROTECT(Rf_findVarInFrame(env, l));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   // Check all elements are lists and find recycled length
   int m = Rf_length(l_val);
-  int n = m == 0 ? 0 : Rf_length(VECTOR_ELT(l_val, 0));
+  size_t n = m == 0 ? 0 : length_dispatch(VECTOR_ELT(l_val, 0), env);
 
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));
   int has_names = !Rf_isNull(l_names);
