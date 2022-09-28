@@ -60,7 +60,10 @@ pmap_dfc(.l, .f, ...)
 pwalk(.l, .f, ...)
 }
 \arguments{
-\item{.x, .y}{Vectors of the same length. A vector of length 1 will
+\item{.x}{Vectors of the same length. A vector of length 1 will
+be recycled.}
+
+\item{.y}{Vectors of the same length. A vector of length 1 will
 be recycled.}
 
 \item{.f}{A function, formula, or vector (not necessarily atomic).
@@ -108,7 +111,7 @@ input is length 1, it will be recycled to the length of the longest.
 These functions are variants of \code{\link[=map]{map()}} that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing. They
-share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
+share the same notion of "parallel" as \code{\link[base:Extremes]{base::pmax()}} and \code{\link[base:Extremes]{base::pmin()}}.
 \code{map2()} and \code{walk2()} are specialised for the two argument case; \code{pmap()}
 and \code{pwalk()} allow you to provide any number of arguments in a list. Note
 that a data frame is a very important special case, in which case \code{pmap()}

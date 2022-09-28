@@ -124,9 +124,11 @@ is not compatible for your class, you can override them with your
 own methods.
 
 If you implement your own \code{modify()} method, make sure it satisfies
-the following invariants:\preformatted{modify(x, identity) === x
+the following invariants:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{modify(x, identity) === x
 modify(x, compose(f, g)) === modify(x, g) \%>\% modify(f)
-}
+}\if{html}{\out{</div>}}
 
 These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
 science.

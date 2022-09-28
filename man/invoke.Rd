@@ -66,22 +66,26 @@ package undefinitely.
 \itemize{
 \item \code{invoke()} is retired in favour of the simpler \code{exec()} function
 reexported from rlang. \code{exec()} evaluates a function call built
-from its inputs and supports tidy dots:\preformatted{# Before:
+from its inputs and supports tidy dots:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Before:
 invoke(mean, list(na.rm = TRUE), x = 1:10)
 
 # After
 exec(mean, 1:10, !!!list(na.rm = TRUE))
-}
+}\if{html}{\out{</div>}}
 \item \code{invoke_map()} is is retired without replacement because it is
 more complex to understand than the corresponding code using
-\code{map()}, \code{map2()} and \code{exec()}:\preformatted{# Before:
+\code{map()}, \code{map2()} and \code{exec()}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Before:
 invoke_map(fns, list(args))
 invoke_map(fns, list(args1, args2))
 
 # After:
 map(fns, exec, !!!args)
 map2(fns, list(args1, args2), function(fn, args) exec(fn, !!!args))
-}
+}\if{html}{\out{</div>}}
 }
 }
 

@@ -15,7 +15,9 @@
 #' and arguments that are supplied to every call come after `.f`.
 #'
 #' @inheritParams map
-#' @param .x,.y Vectors of the same length. A vector of length 1 will
+#' @param .x Vectors of the same length. A vector of length 1 will
+#'   be recycled.
+#' @param .y Vectors of the same length. A vector of length 1 will
 #'   be recycled.
 #' @param .l A list of vectors, such as a data frame. The length of `.l`
 #'   determines the number of arguments that `.f` will be called with. List
