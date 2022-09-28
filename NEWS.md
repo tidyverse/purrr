@@ -1,3 +1,8 @@
+# purrr 0.3.5
+
+* Fixes for CRAN checks.
+
+
 # purrr 0.3.4
 
 * Added documentation for exporting functions created with purrr
