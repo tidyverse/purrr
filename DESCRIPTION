@@ -15,7 +15,7 @@ Authors@R:
 Description: A complete and consistent functional programming
     toolkit for R.
 License: GPL-3 | file LICENSE
-URL: http://purrr.tidyverse.org,
+URL: https://purrr.tidyverse.org/,
     https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
