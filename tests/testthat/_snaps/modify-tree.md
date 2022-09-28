@@ -1,13 +1,13 @@
 # validates inputs
 
     Code
-      modify_tree(list(), is_leaf = ~1)
+      modify_tree(list(), is_node = ~1)
     Condition
       Error in `modify_tree()`:
-      ! `is_leaf()` must return a single `TRUE` or `FALSE`, not a number.
+      ! `is_node()` must return a single `TRUE` or `FALSE`, not a number.
     Code
-      modify_tree(list(), is_leaf = 1)
+      modify_tree(list(), is_node = 1)
     Condition
       Error in `modify_tree()`:
-      ! Can't convert `is_leaf`, a number, to a function.
+      ! Can't convert `is_node`, a number, to a function.
 
