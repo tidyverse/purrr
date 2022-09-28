@@ -176,13 +176,9 @@ as <code>.f</code> the name of a function rather than its value, or as
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># was</span></span></span>
 <span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3277343 0.6021007 0.6043941 0.1246334 0.2946009 0.5776099 0.6309793</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.5120159 0.5050239 0.5340354</span>
 <span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.55724944 0.86791949 0.82970869 0.11144915 0.70368836 0.89748826</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.27973255 0.22820188 0.01532989 0.12898156</span>
 <span class="r-in"><span><span class="co"># now</span></span></span>
@@ -193,8 +189,6 @@ as <code>.f</code> the name of a function rather than its value, or as
 <span class="r-in"><span><span class="co"># was</span></span></span>
 <span class="r-in"><span><span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"01a"</span>, <span class="st">"01b"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">paste</span>, <span class="va">args</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "01a-01b"</span>
 <span class="r-in"><span><span class="co"># now</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec</a></span><span class="op">(</span><span class="va">paste</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></span>
@@ -212,8 +206,6 @@ as <code>.f</code> the name of a function rather than its value, or as
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.1998116 -0.5784837 -0.9423007 -0.2037282 -1.6664748</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">funs</span> <span class="op">|&gt;</span> <span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke_map()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use map() + exec() instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3140315 0.8006411 0.2293247 0.2129984 0.8771009 0.9932220 0.8442470</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.9104365 0.4712697 0.2244184</span>
@@ -256,8 +248,6 @@ as <code>.f</code> the name of a function rather than its value, or as
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># was</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">invoke_map</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke_map()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use map() + exec() instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.973252</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

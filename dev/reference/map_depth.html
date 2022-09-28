@@ -71,9 +71,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span>, .is_leaf <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span>, .is_node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">modify_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span>, .is_leaf <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">modify_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span>, .is_node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -121,11 +121,13 @@ at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if ther
 no elements at depth <code>.depth</code>.</p></dd>
 
 
-<dt>.is_leaf</dt>
+<dt>.is_node</dt>
 <dd><p>A predicate function that determines whether an element is
-a leaf (by returning <code>FALSE</code>) or a node (by returning <code>FALSE</code>). The
-default value, <code>NULL</code>, treats bare lists as nodes and everything else
-(including data frames) as leaves.</p></dd>
+a node (by returning <code>TRUE</code>) or a leaf (by returning <code>FALSE</code>). The
+default value, <code>NULL</code>, treats simple lists as nodes and everything else
+(including richer objects like data frames and linear models) as leaves,
+using <code><a href="https://vctrs.r-lib.org/reference/vec_is_list.html" class="external-link">vctrs::vec_is_list()</a></code>. To recurse into all objects built on lists
+use <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.list()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

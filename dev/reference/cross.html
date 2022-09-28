@@ -212,7 +212,7 @@ result.</p>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="fu"><a href="lift.html">lift</a></span><span class="op">(</span><span class="va">paste</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`cross()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tidyr::expand_grid()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "John! Hello."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -246,7 +246,7 @@ result.</p>
 <span class="r-in"><span><span class="va">args</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> <span class="fu">cross_df</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`cross_df()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tidyr::expand_grid()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># In case you need a list in long format (and not a data frame)</span></span></span>
 <span class="r-in"><span><span class="co"># just run as.list() after cross_df()</span></span></span>
@@ -269,20 +269,6 @@ result.</p>
 <span class="r-in"><span>  <span class="va">out</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="invoke.html">invoke</a></span><span class="op">(</span><span class="st">"paste"</span>, <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">args</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `exec()` instead.</span>
 <span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "Jane! Bonjour."   "John... Hello."   "Jane... Hello."  </span>
@@ -301,7 +287,7 @@ result.</p>
 <span class="r-in"><span><span class="fu">cross2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, .filter <span class="op">=</span> <span class="va">filter</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`cross2()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tidyr::expand_grid()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int 1</span>
@@ -339,9 +325,6 @@ result.</p>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">cross2</span><span class="op">(</span><span class="va">x</span>, <span class="va">x</span>, .filter <span class="op">=</span> <span class="va">`==`</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">setNames</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`cross2()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tidyr::expand_grid()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
@@ -395,9 +378,6 @@ result.</p>
 <span class="r-in"><span><span class="co"># before crossing to get named components:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">cross</span><span class="op">(</span>.filter <span class="op">=</span> <span class="va">`==`</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`cross()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tidyr::expand_grid()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$x</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>

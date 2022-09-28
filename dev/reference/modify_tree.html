@@ -72,7 +72,7 @@ that either modify each leaf or each node (or both).</p>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  leaf <span class="op">=</span> <span class="va">identity</span>,</span>
-<span>  is_leaf <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  is_node <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pre <span class="op">=</span> <span class="va">identity</span>,</span>
 <span>  post <span class="op">=</span> <span class="va">identity</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -92,11 +92,13 @@ that either modify each leaf or each node (or both).</p>
 <dd><p>A function applied to each leaf.</p></dd>
 
 
-<dt>is_leaf</dt>
+<dt>is_node</dt>
 <dd><p>A predicate function that determines whether an element is
-a leaf (by returning <code>FALSE</code>) or a node (by returning <code>FALSE</code>). The
-default value, <code>NULL</code>, treats bare lists as nodes and everything else
-(including data frames) as leaves.</p></dd>
+a node (by returning <code>TRUE</code>) or a leaf (by returning <code>FALSE</code>). The
+default value, <code>NULL</code>, treats simple lists as nodes and everything else
+(including richer objects like data frames and linear models) as leaves,
+using <code><a href="https://vctrs.r-lib.org/reference/vec_is_list.html" class="external-link">vctrs::vec_is_list()</a></code>. To recurse into all objects built on lists
+use <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.list()</a></code>.</p></dd>
 
 
 <dt>pre, post</dt>
