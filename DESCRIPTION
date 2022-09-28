@@ -27,11 +27,13 @@ Suggests:
     covr,
     crayon,
     dplyr (>= 0.7.8),
+    httr,
     knitr,
     rmarkdown,
     testthat,
     tibble,
-    tidyselect
+    tidyselect,
+    vctrs
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
