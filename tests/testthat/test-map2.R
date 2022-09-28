@@ -16,6 +16,13 @@ test_that("variants return expected types", {
   expect_true(is_bare_double(map2_vec(x, 0, ~ .x)))
 })
 
+test_that("0 length input gives 0 length output", {
+  expect_equal(map2(list(), list(), identity), list())
+  expect_equal(map2(NULL, NULL, identity), list())
+
+  expect_equal(map2_lgl(NULL, NULL, identity), logical())
+})
+
 test_that("verifies result types and length", {
   expect_snapshot(error = TRUE, {
     map2_int(1, 1, ~ "x")

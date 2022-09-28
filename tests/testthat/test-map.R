@@ -26,11 +26,10 @@ test_that("all inform about location of problem", {
 })
 
 test_that("0 length input gives 0 length output", {
-  out1 <- map(list(), identity)
-  expect_equal(out1, list())
+  expect_equal(map(list(), identity), list())
+  expect_equal(map(NULL, identity), list())
 
-  out2 <- map(NULL, identity)
-  expect_equal(out2, list())
+  expect_equal(map_lgl(NULL, identity), logical())
 })
 
 test_that("map() always returns a list", {

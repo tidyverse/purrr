@@ -32,6 +32,16 @@ test_that("verifies result types and length", {
   })
 })
 
+test_that("0 length input gives 0 length output", {
+  expect_equal(pmap(list(list(), list()), identity), list())
+  expect_equal(pmap(list(NULL, NULL), identity), list())
+  expect_equal(pmap(list(), identity), list())
+  expect_equal(pmap(NULL, identity), list())
+
+  expect_equal(pmap_lgl(NULL, identity), logical())
+})
+
+
 test_that("requires list of vectors", {
   expect_snapshot(error = TRUE, {
     pmap(environment(), identity)

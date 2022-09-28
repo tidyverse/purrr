@@ -64,14 +64,7 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP x_val = PROTECT(Rf_eval(x, env));
-
   int n = Rf_length(x_val);
-  if (n == 0) {
-    SEXP out = PROTECT(Rf_allocVector(type, 0));
-    copy_names(x_val, out);
-    UNPROTECT(2);
-    return out;
-  }
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
   // actual values for f or x, because they may be long, which creates
