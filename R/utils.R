@@ -100,10 +100,9 @@ is_quantity <- function(x) {
 }
 
 vctrs_list_compat <- function(x, error_call = caller_env(), error_arg = caller_arg(x)) {
-  force(error_arg)
-  x <- vctrs_vec_compat(x)
-  vec_check_list(x, call = error_call, arg = error_arg)
-  x
+  out <- vctrs_vec_compat(x)
+  vec_check_list(out, call = error_call, arg = error_arg)
+  out
 }
 
 # When we want to use vctrs, but treat lists like purrr does
