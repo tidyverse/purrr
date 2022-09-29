@@ -3,7 +3,7 @@
     Code
       list_c(list("a", 1))
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't combine `..1` <character> and `..2` <double>.
 
 # list_c() can enforce ptype
@@ -11,7 +11,7 @@
     Code
       list_c(list("a"), ptype = integer())
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <character> to <integer>.
 
 # list_cbind() column-binds compatible data frames

@@ -3,7 +3,7 @@
     Code
       list_transpose(x, ptype = list())
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <double> to <list>.
 
 ---
@@ -19,7 +19,7 @@
     Code
       list_transpose(list(list(x = 1), list(x = "b")), simplify = TRUE)
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't combine `..1` <double> and `..2` <character>.
     Code
       list_transpose(list(list(x = 1), list(x = 2:3)), simplify = TRUE)

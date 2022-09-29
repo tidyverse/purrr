@@ -17,7 +17,7 @@
     Code
       pmap_vec(list(1), ~1, .ptype = character())
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <double> to <character>.
 
 # requires list of vectors

@@ -26,22 +26,22 @@
     Code
       modify(1:3, ~"foo")
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <character> to <integer>.
     Code
       modify_at(1:3, 1, ~"foo")
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <character> to <integer>.
     Code
       modify_if(1:3, is_integer, ~"foo")
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <character> to <integer>.
     Code
       modify2(1:3, "foo", ~.y)
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't convert <character> to <integer>.
 
 # modify2() recycles arguments
