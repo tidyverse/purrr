@@ -41,46 +41,53 @@ SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
 }
 
 SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
-  SEXP x = Rf_install(".x");
-  SEXP f = Rf_install(".f");
-  SEXP i = Rf_install("i");
-  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
+  static SEXP f_call = NULL;
+  if (f_call == NULL) {
+    SEXP x = Rf_install(".x");
+    SEXP f = Rf_install(".f");
+    SEXP i = Rf_install("i");
+
+    // Constructs a call like f(x[[i]], ...) - don't want to substitute
+    // actual values for f or x, because they may be long, which creates
+    // bad tracebacks()
+    SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
+    f_call = PROTECT(Rf_lang3(f, Xi, R_DotsSymbol));
+
+    R_PreserveObject(f_call);
+    UNPROTECT(2);
+  }
 
   SEXP n = Rf_install("n");
   int n_val = INTEGER(Rf_findVarInFrame(env, n))[0];
 
-  // Constructs a call like f(x[[i]], ...) - don't want to substitute
-  // actual values for f or x, because they may be long, which creates
-  // bad tracebacks()
-  SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
-  SEXP f_call = PROTECT(Rf_lang3(f, Xi, R_DotsSymbol));
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n_val, type, 1, progress));
-
-  UNPROTECT(3);
-
-  return out;
+  return call_loop(env, f_call, n_val, type, 1, progress);
 }
 
 SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
-  SEXP x = Rf_install(".x");
-  SEXP y = Rf_install(".y");
-  SEXP f = Rf_install(".f");
-  SEXP i = Rf_install("i");
-  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
+  static SEXP f_call = NULL;
+  if (f_call == NULL) {
+    SEXP x = Rf_install(".x");
+    SEXP y = Rf_install(".y");
+    SEXP f = Rf_install(".f");
+    SEXP i = Rf_install("i");
 
-  // Constructs a call like f(x[[i]], y[[i]], ...)
-  SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
-  SEXP Yi = PROTECT(Rf_lang3(R_Bracket2Symbol, y, i));
-  SEXP f_call = PROTECT(Rf_lang4(f, Xi, Yi, R_DotsSymbol));
+    // Constructs a call like f(x[[i]], y[[i]], ...)
+    SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
+    SEXP Yi = PROTECT(Rf_lang3(R_Bracket2Symbol, y, i));
+    f_call = PROTECT(Rf_lang4(f, Xi, Yi, R_DotsSymbol));
+
+    R_PreserveObject(f_call);
+    UNPROTECT(3);
+  }
 
   SEXP n = Rf_install("n");
   int n_val = INTEGER(Rf_findVarInFrame(env, n))[0];
 
-  SEXP out = PROTECT(call_loop(env, f_call, n_val, type, 2, progress));
+  SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  UNPROTECT(4);
-  return out;
+  return call_loop(env, f_call, n_val, type, 2, progress);
 }
 
 SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
@@ -127,8 +134,7 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
 
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
-  SEXP out = PROTECT(call_loop(env, f_call, n_val, type, m, progress));
-
-  UNPROTECT(4);
+  SEXP out = call_loop(env, f_call, n_val, type, m, progress);
+  UNPROTECT(3);
   return out;
 }
