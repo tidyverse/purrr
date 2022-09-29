@@ -121,7 +121,7 @@ pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, ..error_call = caller_e
   with_indexed_errors(
     i = i,
     error_call = ..error_call,
-    .Call(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n, ..error_call)
+    .Call(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n)
   )
 }
 

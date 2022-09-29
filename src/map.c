@@ -16,7 +16,6 @@ SEXP call_loop(SEXP env,
                int n,
                SEXP names,
                int* p_i,
-               SEXP error_call,
                int force) {
   SEXP bar = PROTECT(cli_progress_bar(n, progress));
 
@@ -55,8 +54,7 @@ SEXP map_impl(SEXP env,
               SEXP progress,
               SEXP ffi_n,
               SEXP names,
-              SEXP i,
-              SEXP error_call) {
+              SEXP i) {
   static SEXP call = NULL;
   if (call == NULL) {
     SEXP x_sym = Rf_install(".x");
@@ -87,7 +85,6 @@ SEXP map_impl(SEXP env,
     n,
     names,
     p_i,
-    error_call,
     force
   );
 }
@@ -97,8 +94,7 @@ SEXP map2_impl(SEXP env,
                SEXP progress,
                SEXP ffi_n,
                SEXP names,
-               SEXP i,
-               SEXP error_call) {
+               SEXP i) {
   static SEXP call = NULL;
   if (call == NULL) {
     SEXP x_sym = Rf_install(".x");
@@ -129,7 +125,6 @@ SEXP map2_impl(SEXP env,
     n,
     names,
     p_i,
-    error_call,
     force
   );
 }
@@ -141,8 +136,7 @@ SEXP pmap_impl(SEXP env,
                SEXP names,
                SEXP i,
                SEXP call_names,
-               SEXP ffi_call_n,
-               SEXP error_call) {
+               SEXP ffi_call_n) {
   // Construct call like f(.l[[1]][[i]], .l[[2]][[i]], ...)
   //
   // Currently accessing S3 vectors in a list like .l[[c(1, i)]] will not
@@ -199,7 +193,6 @@ SEXP pmap_impl(SEXP env,
     n,
     names,
     p_i,
-    error_call,
     force
   );
 

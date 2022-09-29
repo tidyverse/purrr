@@ -7,8 +7,7 @@ extern "C" {
                 SEXP progress,
                 SEXP ffi_n,
                 SEXP names,
-                SEXP i,
-                SEXP error_call);
+                SEXP i);
 
   SEXP pmap_impl(SEXP env,
                  SEXP ffi_type,
@@ -17,8 +16,7 @@ extern "C" {
                  SEXP names,
                  SEXP i,
                  SEXP call_names,
-                 SEXP ffi_call_n,
-                 SEXP error_call);
+                 SEXP ffi_call_n);
 }
 
 #endif
