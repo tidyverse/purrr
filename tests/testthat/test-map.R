@@ -13,6 +13,12 @@ test_that("fails on non-vectors", {
   expect_snapshot(map(quote(a), identity), error = TRUE)
 })
 
+test_that("works with vctrs records (#963)", {
+  x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
+  out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
+  expect_identical(map(x, identity), out)
+})
+
 test_that("all inform about location of problem", {
   fail_at_3 <- function(x, bad) {
     if (x == 3) bad else x
@@ -26,11 +32,10 @@ test_that("all inform about location of problem", {
 })
 
 test_that("0 length input gives 0 length output", {
-  out1 <- map(list(), identity)
-  expect_equal(out1, list())
+  expect_equal(map(list(), identity), list())
+  expect_equal(map(NULL, identity), list())
 
-  out2 <- map(NULL, identity)
-  expect_equal(out2, list())
+  expect_equal(map_lgl(NULL, identity), logical())
 })
 
 test_that("map() always returns a list", {

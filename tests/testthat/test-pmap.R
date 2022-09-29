@@ -32,6 +32,16 @@ test_that("verifies result types and length", {
   })
 })
 
+test_that("0 length input gives 0 length output", {
+  expect_equal(pmap(list(list(), list()), identity), list())
+  expect_equal(pmap(list(NULL, NULL), identity), list())
+  expect_equal(pmap(list(), identity), list())
+  expect_equal(pmap(NULL, identity), list())
+
+  expect_equal(pmap_lgl(NULL, identity), logical())
+})
+
+
 test_that("requires list of vectors", {
   expect_snapshot(error = TRUE, {
     pmap(environment(), identity)
@@ -88,6 +98,12 @@ test_that("preserves S3 class of input vectors (#358)", {
   date <- as.Date("2018-09-27")
   expect_equal(pmap(list(date), identity), list(date))
   expect_output(pwalk(list(date), print), format(date))
+})
+
+test_that("works with vctrs records (#963)", {
+  x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
+  out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
+  expect_identical(pmap(list(x, 1, 1:2), ~ .x), out)
 })
 
 test_that("don't evaluate symbolic objects (#428)", {

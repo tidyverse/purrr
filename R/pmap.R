@@ -102,9 +102,15 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
 pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
   .l <- vctrs_list_compat(.l, error_call = ..error_call)
   .l <- map(.l, vctrs_vec_compat)
-  .l <- vec_recycle_common(!!!.l, .arg = ".l", .call = ..error_call)
+  n <- vec_size_common(!!!.l, .arg = ".l", .call = ..error_call)
+  .l <- vec_recycle_common(!!!.l, .size = n, .arg = ".l", .call = ..error_call)
 
   .f <- as_mapper(.f, ...)
+  if (length(.l) > 0L) {
+    names <- vec_names(.l[[1L]])
+  } else {
+    names <- NULL
+  }
 
   i <- 0L
   with_indexed_errors(
