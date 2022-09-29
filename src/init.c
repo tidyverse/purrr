@@ -19,7 +19,7 @@ extern SEXP vflatten_impl(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
   {"coerce_impl",           (DL_FUNC) &coerce_impl,    2},
-  {"pluck_impl",            (DL_FUNC) &pluck_impl,   5},
+  {"pluck_impl",            (DL_FUNC) &pluck_impl,     5},
   {"flatten_impl",          (DL_FUNC) &flatten_impl,   1},
   {"map_impl",              (DL_FUNC) &map_impl,       7},
   {"map2_impl",             (DL_FUNC) &map2_impl,      7},
