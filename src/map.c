@@ -107,7 +107,6 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP l_val = PROTECT(Rf_eval(l, env));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  // Check all elements are lists and find recycled length
   int m = Rf_length(l_val);
   int n = m == 0 ? 0 : Rf_length(VECTOR_ELT(l_val, 0));
 
