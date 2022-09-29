@@ -2,8 +2,23 @@
 #define MAP_H
 
 extern "C" {
-  SEXP map_impl(SEXP env, SEXP x_name_, SEXP f_name_, SEXP type_, SEXP progress);
-  SEXP pmap_impl(SEXP env, SEXP l_name_, SEXP f_name_, SEXP type_, SEXP progress);
+  SEXP map_impl(SEXP env,
+                SEXP ffi_type,
+                SEXP progress,
+                SEXP ffi_n,
+                SEXP names,
+                SEXP i,
+                SEXP error_call);
+
+  SEXP pmap_impl(SEXP env,
+                 SEXP ffi_type,
+                 SEXP progress,
+                 SEXP ffi_n,
+                 SEXP names,
+                 SEXP i,
+                 SEXP call_names,
+                 SEXP ffi_call_n,
+                 SEXP error_call);
 }
 
 #endif
