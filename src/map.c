@@ -8,23 +8,6 @@
 
 #include "cli/progress.h"
 
-void copy_names(SEXP from, SEXP to) {
-  SEXP names = Rf_getAttrib(from, R_NamesSymbol);
-  if (names == R_NilValue) {
-    return;
-  }
-
-  R_len_t n = Rf_length(to);
-
-  if (Rf_length(names) != n) {
-    names = short_vec_recycle(names, n);
-  }
-  PROTECT(names);
-
-  Rf_setAttrib(to, R_NamesSymbol, names);
-  UNPROTECT(1);
-}
-
 // call must involve i
 SEXP call_loop(SEXP env, SEXP call, int n, SEXPTYPE type, int force_args,
                SEXP progress) {
@@ -74,10 +57,7 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
 
   SEXP out = PROTECT(call_loop(env, f_call, n_val, type, 1, progress));
 
-  SEXP x_val = PROTECT(Rf_eval(x, env));
-  copy_names(x_val, out);
-
-  UNPROTECT(4);
+  UNPROTECT(3);
 
   return out;
 }
@@ -99,10 +79,7 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
 
   SEXP out = PROTECT(call_loop(env, f_call, n_val, type, 2, progress));
 
-  SEXP x_val = PROTECT(Rf_eval(x, env));
-  copy_names(x_val, out);
-
-  UNPROTECT(5);
+  UNPROTECT(4);
   return out;
 }
 
@@ -151,10 +128,6 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
   SEXP out = PROTECT(call_loop(env, f_call, n_val, type, m, progress));
-
-  if (Rf_length(l_val)) {
-    copy_names(VECTOR_ELT(l_val, 0), out);
-  }
 
   UNPROTECT(4);
   return out;

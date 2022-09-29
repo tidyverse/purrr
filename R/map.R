@@ -161,8 +161,10 @@ map_ <- function(.type, .x, .f, ..., .progress = FALSE, ..error_call = caller_en
   with_indexed_errors(
     i = i,
     error_call = ..error_call,
-    .Call(map_impl, environment(), .type, .progress, ..error_call)
+    out <- .Call(map_impl, environment(), .type, .progress, ..error_call)
   )
+
+  vec_set_names(out, vec_names(.x))
 }
 
 

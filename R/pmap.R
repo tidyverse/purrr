@@ -111,8 +111,13 @@ pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, ..error_call = caller_e
   with_indexed_errors(
     i = i,
     error_call = ..error_call,
-    .Call(pmap_impl, environment(), .type, .progress, ..error_call)
+    out <- .Call(pmap_impl, environment(), .type, .progress, ..error_call)
   )
+
+  if (length(.l) > 0) {
+    out <- vec_set_names(out, vec_names(.l[[1]]))
+  }
+  out
 }
 
 
