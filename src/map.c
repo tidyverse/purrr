@@ -85,7 +85,7 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
 
 SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP l = Rf_install(".l");
-  SEXP l_val = PROTECT(Rf_eval(l, env));
+  SEXP l_val = PROTECT(Rf_findVarInFrame(env, l));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));
