@@ -63,15 +63,14 @@ map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, ..error_call = call
   .y <- args$.y
 
   .f <- as_mapper(.f, ...)
+  names <- vec_names(.x)
 
   i <- 0L
   with_indexed_errors(
     i = i,
     error_call = ..error_call,
-    out <- .Call(map2_impl, environment(), .type, .progress, ..error_call)
+    .Call(map2_impl, environment(), .type, .progress, ..error_call)
   )
-
-  vec_set_names(out, vec_names(.x))
 }
 
 #' @rdname map2

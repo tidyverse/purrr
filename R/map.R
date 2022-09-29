@@ -156,15 +156,14 @@ map_ <- function(.type, .x, .f, ..., .progress = FALSE, ..error_call = caller_en
   n <- vec_size(.x)
 
   .f <- as_mapper(.f, ...)
+  names <- vec_names(.x)
 
   i <- 0L
   with_indexed_errors(
     i = i,
     error_call = ..error_call,
-    out <- .Call(map_impl, environment(), .type, .progress, ..error_call)
+    .Call(map_impl, environment(), .type, .progress, ..error_call)
   )
-
-  vec_set_names(out, vec_names(.x))
 }
 
 
