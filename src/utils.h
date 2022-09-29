@@ -2,7 +2,6 @@
 #define UTILS_H
 
 #include <stdbool.h>
-#include <vctrs.h>
 
 
 SEXP sym_protect(SEXP x);
