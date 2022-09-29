@@ -63,8 +63,8 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP x_val = PROTECT(Rf_eval(x, env));
-  int n = Rf_length(x_val);
+  SEXP n = Rf_install("n");
+  int n_val = INTEGER(Rf_findVarInFrame(env, n))[0];
 
   // Constructs a call like f(x[[i]], ...) - don't want to substitute
   // actual values for f or x, because they may be long, which creates
@@ -72,7 +72,9 @@ SEXP map_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
   SEXP f_call = PROTECT(Rf_lang3(f, Xi, R_DotsSymbol));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type, 1, progress));
+  SEXP out = PROTECT(call_loop(env, f_call, n_val, type, 1, progress));
+
+  SEXP x_val = PROTECT(Rf_eval(x, env));
   copy_names(x_val, out);
 
   UNPROTECT(4);
@@ -87,15 +89,17 @@ SEXP map2_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP i = Rf_install("i");
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  SEXP x_val = PROTECT(Rf_eval(x, env));
-  int n = Rf_length(x_val);
-
   // Constructs a call like f(x[[i]], y[[i]], ...)
   SEXP Xi = PROTECT(Rf_lang3(R_Bracket2Symbol, x, i));
   SEXP Yi = PROTECT(Rf_lang3(R_Bracket2Symbol, y, i));
   SEXP f_call = PROTECT(Rf_lang4(f, Xi, Yi, R_DotsSymbol));
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type, 2, progress));
+  SEXP n = Rf_install("n");
+  int n_val = INTEGER(Rf_findVarInFrame(env, n))[0];
+
+  SEXP out = PROTECT(call_loop(env, f_call, n_val, type, 2, progress));
+
+  SEXP x_val = PROTECT(Rf_eval(x, env));
   copy_names(x_val, out);
 
   UNPROTECT(5);
@@ -107,14 +111,14 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP l_val = PROTECT(Rf_eval(l, env));
   SEXPTYPE type = Rf_str2type(CHAR(Rf_asChar(type_)));
 
-  int m = Rf_length(l_val);
-  int n = m == 0 ? 0 : Rf_length(VECTOR_ELT(l_val, 0));
-
   SEXP l_names = PROTECT(Rf_getAttrib(l_val, R_NamesSymbol));
   int has_names = !Rf_isNull(l_names);
 
   SEXP f = Rf_install(".f");
   SEXP i = Rf_install("i");
+
+  SEXP n = Rf_install("n");
+  int n_val = INTEGER(Rf_findVarInFrame(env, n))[0];
 
   // Construct call like f(.l[[1]][[i]], .l[[2]][[i]], ...)
   //
@@ -128,6 +132,8 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
   SEXP f_call = Rf_lang1(R_DotsSymbol);
   PROTECT_INDEX fi;
   PROTECT_WITH_INDEX(f_call, &fi);
+
+  int m = Rf_length(l_val);
 
   for (int j = m - 1; j >= 0; --j) {
     // Construct call like .l[[j]][[i]]
@@ -144,7 +150,7 @@ SEXP pmap_impl(SEXP env, SEXP type_, SEXP progress, SEXP error_call) {
 
   REPROTECT(f_call = Rf_lcons(f, f_call), fi);
 
-  SEXP out = PROTECT(call_loop(env, f_call, n, type, m, progress));
+  SEXP out = PROTECT(call_loop(env, f_call, n_val, type, m, progress));
 
   if (Rf_length(l_val)) {
     copy_names(VECTOR_ELT(l_val, 0), out);
