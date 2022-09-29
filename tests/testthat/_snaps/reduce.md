@@ -11,7 +11,7 @@
     Code
       accumulate(list(1, "a"), ~.y, .simplify = TRUE)
     Condition
-      Error:
+      Error in `list_unchop()`:
       ! Can't combine `..1` <double> and `..2` <character>.
 
 # requires equal length vectors
