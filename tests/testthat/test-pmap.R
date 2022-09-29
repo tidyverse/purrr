@@ -100,7 +100,7 @@ test_that("preserves S3 class of input vectors (#358)", {
   expect_output(pwalk(list(date), print), format(date))
 })
 
-test_that("works with vctrs records", {
+test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
   expect_identical(pmap(list(x, 1, 1:2), ~ .x), out)

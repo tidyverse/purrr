@@ -31,7 +31,7 @@ test_that("verifies result types and length", {
   })
 })
 
-test_that("works with vctrs records", {
+test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
   expect_identical(map2(x, 1, ~ .x), out)

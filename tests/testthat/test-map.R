@@ -13,7 +13,7 @@ test_that("fails on non-vectors", {
   expect_snapshot(map(quote(a), identity), error = TRUE)
 })
 
-test_that("works with vctrs records", {
+test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
   expect_identical(map(x, identity), out)
