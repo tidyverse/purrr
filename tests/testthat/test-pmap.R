@@ -100,6 +100,12 @@ test_that("preserves S3 class of input vectors (#358)", {
   expect_output(pwalk(list(date), print), format(date))
 })
 
+test_that("works with vctrs records", {
+  x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
+  out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
+  expect_identical(pmap(list(x, 1, 1:2), ~ .x), out)
+})
+
 test_that("don't evaluate symbolic objects (#428)", {
   pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
   pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
