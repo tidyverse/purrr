@@ -27,8 +27,7 @@ Suggests:
     tibble,
     tidyselect
 LinkingTo:
-    cli,
-    vctrs
+    cli
 VignetteBuilder: 
     knitr
 Config/Needs/website: tidyverse/tidytemplate
