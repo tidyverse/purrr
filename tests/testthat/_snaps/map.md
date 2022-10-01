@@ -58,5 +58,5 @@
       map_vec(1:2, ~ factor("x"), .ptype = integer())
     Condition
       Error in `list_unchop()`:
-      ! Can't convert <factor<bf275>> to <integer>.
+      ! Can't convert `..1` <factor<bf275>> to <integer>.
 

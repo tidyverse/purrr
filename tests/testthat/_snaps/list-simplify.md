@@ -4,7 +4,7 @@
       list_simplify(list(1, 2), ptype = character())
     Condition
       Error in `list_unchop()`:
-      ! Can't convert <double> to <character>.
+      ! Can't convert `..1` <double> to <character>.
 
 ---
 
@@ -12,7 +12,7 @@
       list_simplify(list(1, 2), ptype = character(), strict = FALSE)
     Condition
       Error in `list_unchop()`:
-      ! Can't convert <double> to <character>.
+      ! Can't convert `..1` <double> to <character>.
 
 # strict simplification will error
 
@@ -42,7 +42,7 @@
       list_simplify(list(1, 2), ptype = character())
     Condition
       Error in `list_unchop()`:
-      ! Can't convert <double> to <character>.
+      ! Can't convert `..1` <double> to <character>.
 
 # list_simplify() validates inputs
 

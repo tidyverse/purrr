@@ -12,7 +12,7 @@
       list_c(list("a"), ptype = integer())
     Condition
       Error in `list_unchop()`:
-      ! Can't convert <character> to <integer>.
+      ! Can't convert `..1` <character> to <integer>.
 
 # list_cbind() column-binds compatible data frames
 

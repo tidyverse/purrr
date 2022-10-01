@@ -4,7 +4,7 @@
       list_transpose(x, ptype = list())
     Condition
       Error in `list_unchop()`:
-      ! Can't convert <double> to <list>.
+      ! Can't convert `..1` <double> to <list>.
 
 ---
 
