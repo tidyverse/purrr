@@ -155,7 +155,7 @@
 * `pluck()` and `chuck()` now fail if you provide named inputs to ... (#788).
 
 * `pluck()` no longer replaces 0-length vectors with `default`; it now
-  only applies absent and `NULL` components.
+  only applies absent and `NULL` components (#480).
 
 * `pluck<-`/`assign_in()` can now modify non-existing locations (#704).
 
