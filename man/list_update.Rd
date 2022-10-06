@@ -29,7 +29,7 @@ replacement values are stored in a list, you can splice that in with
 \itemize{
 \item \code{list_update()} modifies the elements of a list by name or position.
 \item \code{list_modify()} modifies the elements of a list recursively.
-\item \code{list_modify()} merges the elements of a list recursively.
+\item \code{list_merge()} merges the elements of a list recursively.
 }
 
 \code{list_modify()} is inspired by \code{\link[utils:modifyList]{utils::modifyList()}}.
