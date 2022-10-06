@@ -5,7 +5,7 @@
     Condition
       Warning:
       `transpose()` was deprecated in purrr 1.0.0.
-      Please use `list_transpose()` instead.
+      i Please use `list_transpose()` instead.
 
 # input must be a list
 
