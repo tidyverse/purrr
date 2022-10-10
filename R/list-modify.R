@@ -3,7 +3,7 @@
 #' @description
 #' * `list_update()` modifies the elements of a list by name or position.
 #' * `list_modify()` modifies the elements of a list recursively.
-#' * `list_modify()` merges the elements of a list recursively.
+#' * `list_merge()` merges the elements of a list recursively.
 #'
 #' `list_modify()` is inspired by [utils::modifyList()].
 #'
