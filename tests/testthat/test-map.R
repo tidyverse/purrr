@@ -19,6 +19,13 @@ test_that("works with vctrs records (#963)", {
   expect_identical(map(x, identity), out)
 })
 
+test_that("works with matrices/arrays (#970)", {
+  expect_identical(
+    map_int(matrix(1:4, nrow = 2), identity),
+    1:4
+  )
+})
+
 test_that("all inform about location of problem", {
   fail_at_3 <- function(x, bad) {
     if (x == 3) bad else x

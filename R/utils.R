@@ -117,6 +117,9 @@ vctrs_vec_compat <- function(x) {
       details = "Please coerce explicitly with `as.list()`"
     )
     as.list(x)
+  } else if (is.array(x)) {
+    dim(x) <- NULL
+    x
   } else if (is_call(x) || is.expression(x)) {
     lifecycle::deprecate_soft("1.0.0",
       I("Use of calls and pairlists in map functions"),
