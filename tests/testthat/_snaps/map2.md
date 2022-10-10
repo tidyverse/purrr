@@ -18,7 +18,7 @@
       map2_vec(1, 1, ~1, .ptype = character())
     Condition
       Error in `list_unchop()`:
-      ! Can't convert `..1` <double> to <character>.
+      ! Can't convert `x[[1]]` <double> to <character>.
 
 # requires vector inputs
 
