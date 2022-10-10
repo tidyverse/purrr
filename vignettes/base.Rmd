@@ -82,10 +82,10 @@ Here `x` denotes a vector and `f` denotes a function
 Since a common use case for map functions is list extracting components, purrr provides a handful of shortcut functions for various uses of `[[`.
 
 | Input                      | base R                                                            | purrr                      |
-|-------------------|--------------------------|----------------------------|
+|-------------------|--------------------------|---------------------------|
 | Extract by name            | `` lapply(x, `[[`, "a") ``                                        | `map(x, "a")`              |
 | Extract by position        | `` lapply(x, `[[`, 3) ``                                          | `map(x, 3)`                |
-| Extract deeply             | `lapply(x, \(y) x[[1]][["x"]][[3]])`                              | `map(x, list(1, "x", 3))`  |
+| Extract deeply             | `lapply(x, \(y) y[[1]][["x"]][[3]])`                              | `map(x, list(1, "x", 3))`  |
 | Extract with default value | `lapply(x, function(y) tryCatch(y[[3]], error = function(e) NA))` | `map(x, 3, .default = NA)` |
 
 ### Predicates
@@ -279,6 +279,7 @@ means |>
 
 The pipe is particularly compelling when working with longer transformations.
 For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
+
 ```{r, eval = modern_r}
 mtcars %>% 
   split(mtcars$cyl) %>% 
