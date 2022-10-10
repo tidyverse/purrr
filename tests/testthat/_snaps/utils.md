@@ -45,7 +45,7 @@
     Condition
       Warning:
       Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
-      Please coerce explicitly with `as.list()`
+      i Please coerce explicitly with `as.list()`
 
 ---
 
@@ -54,7 +54,7 @@
     Condition
       Warning:
       Use of pairlists in map functions was deprecated in purrr 1.0.0.
-      Please coerce explicitly with `as.list()`
+      i Please coerce explicitly with `as.list()`
 
 ---
 
@@ -63,5 +63,5 @@
     Condition
       Warning:
       Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
-      Please coerce explicitly with `as.list()`
+      i Please coerce explicitly with `as.list()`
 
