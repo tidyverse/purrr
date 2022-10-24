@@ -4,14 +4,13 @@
       where_at(x, c(FALSE, TRUE))
     Condition
       Error:
-      ! Must subset elements with a valid subscript vector.
-      i Logical subscripts must match the size of the indexed input.
-      x Input has size 3 but subscript `at` has size 2.
+      ! Can't subset elements with `at`.
+      x Logical subscript `at` must be size 1 or 3, not 2.
     Code
       where_at(x, NA_real_)
     Condition
       Error:
-      ! Must subset elements with a valid subscript vector.
+      ! Can't subset elements.
       x Subscript can't contain missing values.
       x It has a missing value at location 1.
     Code
