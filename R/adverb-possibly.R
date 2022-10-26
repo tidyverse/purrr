@@ -20,6 +20,7 @@
 possibly <- function(.f, otherwise = NULL, quiet = TRUE) {
   .f <- as_mapper(.f)
   force(otherwise)
+  check_bool(quiet)
 
   function(...) {
     tryCatch(.f(...),

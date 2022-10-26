@@ -26,23 +26,23 @@
     Code
       modify(1:3, ~"foo")
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <character> to <integer>.
+      Error in `map_vec()`:
+      ! Can't convert `<list>[[1]]` <character> to <integer>.
     Code
       modify_at(1:3, 1, ~"foo")
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <character> to <integer>.
+      Error in `map_vec()`:
+      ! Can't convert `<list>[[1]]` <character> to <integer>.
     Code
       modify_if(1:3, is_integer, ~"foo")
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <character> to <integer>.
+      Error in `map_vec()`:
+      ! Can't convert `<list>[[1]]` <character> to <integer>.
     Code
       modify2(1:3, "foo", ~.y)
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <character> to <integer>.
+      Error in `map2_vec()`:
+      ! Can't convert `<list>[[1]]` <character> to <integer>.
 
 # modify2() recycles arguments
 

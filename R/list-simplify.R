@@ -27,12 +27,7 @@
 #' list_simplify(list(1, 2, "x"), strict = FALSE)
 list_simplify <- function(x, ..., strict = TRUE, ptype = NULL) {
   check_dots_empty()
-  if (!is_bool(strict)) {
-    cli::cli_abort(
-      "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}.",
-      arg = "strict"
-    )
-  }
+  check_bool(strict)
 
   simplify_impl(x, strict = strict, ptype = ptype)
 }
@@ -43,13 +38,8 @@ list_simplify_internal <- function(x,
                                    ptype = NULL,
                                    error_arg = caller_arg(x),
                                    error_call = caller_env()) {
-  if (length(simplify) > 1 || !is.logical(simplify)) {
-    cli::cli_abort(
-      "{.arg simplify} must be `TRUE`, `FALSE`, or `NA`.",
-      arg = "simplify",
-      call = error_call
-    )
-  }
+
+  check_bool(simplify, allow_na = TRUE, call = error_call)
   if (!is.null(ptype) && isFALSE(simplify)) {
     cli::cli_abort(
       "Can't specify {.arg ptype} when `simplify = FALSE`.",
@@ -81,19 +71,7 @@ simplify_impl <- function(x,
   # Handle the cases where we definitely can't simplify
   if (strict) {
     list_check_all_vectors(x, arg = error_arg, call = error_call)
-    size_one <- list_sizes(x) == 1L
-    can_simplify <- all(size_one)
-
-    if (!can_simplify) {
-      bad <- which(!size_one)[[1]]
-      cli::cli_abort(
-        c(
-          "All elements must be size 1.",
-          i = "`{error_arg}[[{bad}]]` is size {vec_size(x[[bad]])}."
-        ),
-        call = error_call
-      )
-    }
+    list_check_all_size(x, 1, arg = error_arg, call = error_call)
   } else {
     can_simplify <- list_all_vectors(x) && all(list_sizes(x) == 1L)
 
@@ -105,9 +83,8 @@ simplify_impl <- function(x,
   names <- vec_names(x)
   x <- vec_set_names(x, NULL)
 
-  # TODO: use `error_call` when available
   out <- tryCatch(
-    list_unchop(x, ptype = ptype),
+    list_unchop(x, ptype = ptype, error_arg = error_arg, error_call = error_call),
     vctrs_error_incompatible_type = function(err) {
       if (strict || !is.null(ptype)) {
         cnd_signal(err)

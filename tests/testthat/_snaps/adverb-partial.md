@@ -31,5 +31,5 @@
       partial(1)
     Condition
       Error in `partial()`:
-      ! `.f` must be a function, not 1.
+      ! `.f` must be a function, not a number.
 

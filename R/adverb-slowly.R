@@ -20,7 +20,7 @@
 slowly <- function(f, rate = rate_delay(), quiet = TRUE) {
   f <- as_mapper(f)
   check_rate(rate)
-  force(quiet)
+  check_bool(quiet)
 
   function(...) {
     rate_sleep(rate, quiet = quiet)

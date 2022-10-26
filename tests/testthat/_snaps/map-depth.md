@@ -48,5 +48,5 @@
       check_depth(mean)
     Condition
       Error:
-      ! `.depth` must be a single number, not a function.
+      ! `depth` must be a whole number, not a function.
 

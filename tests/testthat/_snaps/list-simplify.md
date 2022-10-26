@@ -3,16 +3,16 @@
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <double> to <character>.
+      Error in `list_simplify()`:
+      ! Can't convert `<list>[[1]]` <double> to <character>.
 
 ---
 
     Code
       list_simplify(list(1, 2), ptype = character(), strict = FALSE)
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <double> to <character>.
+      Error in `list_simplify()`:
+      ! Can't convert `<list>[[1]]` <double> to <character>.
 
 # strict simplification will error
 
@@ -24,25 +24,23 @@
     Code
       list_simplify(list(1, "a"))
     Condition
-      Error in `list_unchop()`:
-      ! Can't combine `x[[1]]` <double> and `x[[2]]` <character>.
+      Error in `list_simplify()`:
+      ! Can't combine `<list>[[1]]` <double> and `<list>[[2]]` <character>.
     Code
       list_simplify(list(1, 1:2))
     Condition
       Error in `list_simplify()`:
-      ! All elements must be size 1.
-      i `x[[2]]` is size 2.
+      ! `x[[2]]` must have size 1, not size 2.
     Code
       list_simplify(list(data.frame(x = 1), data.frame(x = 1:2)))
     Condition
       Error in `list_simplify()`:
-      ! All elements must be size 1.
-      i `x[[2]]` is size 2.
+      ! `x[[2]]` must have size 1, not size 2.
     Code
       list_simplify(list(1, 2), ptype = character())
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <double> to <character>.
+      Error in `list_simplify()`:
+      ! Can't convert `<list>[[1]]` <double> to <character>.
 
 # list_simplify() validates inputs
 
@@ -66,7 +64,7 @@
       list_simplify_internal(list(), simplify = 1)
     Condition
       Error:
-      ! `simplify` must be `TRUE`, `FALSE`, or `NA`.
+      ! `simplify` must be `TRUE`, `FALSE`, or `NA`, not the number 1.
 
 ---
 

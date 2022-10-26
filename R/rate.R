@@ -22,7 +22,9 @@ NULL
 #' @export
 rate_delay <- function(pause = 1,
                        max_times = Inf) {
-  stopifnot(is_quantity(pause))
+
+  check_number_decimal(pause, allow_infinite = TRUE, min = 0)
+
   new_rate(
     "purrr_rate_delay",
     pause = pause,
@@ -44,11 +46,13 @@ rate_backoff <- function(pause_base = 1,
                          pause_min = 1,
                          max_times = 3,
                          jitter = TRUE) {
-  stopifnot(
-    is_quantity(pause_base),
-    is_quantity(pause_cap),
-    is_quantity(pause_min)
-  )
+
+  check_number_decimal(pause_base, min = 0)
+  check_number_decimal(pause_cap, allow_infinite = TRUE, min = 0)
+  check_number_decimal(pause_min, allow_infinite = TRUE, min = 0)
+  check_number_whole(max_times, min = 1)
+  check_bool(jitter)
+
   new_rate(
     "purrr_rate_backoff",
     pause_base = pause_base,
