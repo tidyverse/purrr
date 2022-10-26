@@ -101,7 +101,7 @@ partial <- function(.f,
     special = as_closure(.f),
     closure = .f,
     cli::cli_abort(
-      "{.arg .f} must be a function, not {.obj_friendly_type { .f }}.",
+      "{.arg .f} must be a function, not {.obj_type_friendly { .f }}.",
       arg = ".f"
     )
   )
