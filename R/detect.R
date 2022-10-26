@@ -43,7 +43,7 @@
 #' which(map_lgl(x, "foo"))
 detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, .default = NULL) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
-  .dir <- arg_match(.dir, c("forward", "backward"))
+  .dir <- arg_match(.dir)
 
   for (i in index(.x, .dir, .right, "detect")) {
     if (.f(.x[[i]], ...)) {
@@ -58,7 +58,7 @@ detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, 
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
-  .dir <- arg_match(.dir, c("forward", "backward"))
+  .dir <- arg_match(.dir)
 
   for (i in index(.x, .dir, .right, "detect_index")) {
     if (.f(.x[[i]], ...)) {

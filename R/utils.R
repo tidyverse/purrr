@@ -83,13 +83,6 @@ paste_line <- function(...) {
   paste(chr(...), collapse = "\n")
 }
 
-is_number <- function(x) {
-  is_integerish(x, n = 1, finite = TRUE)
-}
-is_quantity <- function(x) {
-  typeof(x) %in% c("integer", "double") && length(x) == 1 && !is.na(x)
-}
-
 `list_slice2<-` <- function(x, i, value) {
   if (is.null(value)) {
     x[i] <- list(NULL)

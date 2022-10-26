@@ -48,6 +48,7 @@ list_flatten <- function(
   ) {
   vec_check_list(x)
   check_dots_empty()
+  check_string(name_spec)
 
   # Take the proxy as we restore on exit
   proxy <- vec_proxy(x)

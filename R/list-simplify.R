@@ -27,12 +27,7 @@
 #' list_simplify(list(1, 2, "x"), strict = FALSE)
 list_simplify <- function(x, ..., strict = TRUE, ptype = NULL) {
   check_dots_empty()
-  if (!is_bool(strict)) {
-    cli::cli_abort(
-      "{.arg strict} must be `TRUE` or `FALSE`, not {.obj_type_friendly {strict}}.",
-      arg = "strict"
-    )
-  }
+  check_bool(strict)
 
   simplify_impl(x, strict = strict, ptype = ptype)
 }
