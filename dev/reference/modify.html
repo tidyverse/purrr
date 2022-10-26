@@ -186,7 +186,7 @@ own methods.</p>
 <p>If you implement your own <code>modify()</code> method, make sure it satisfies
 the following invariants:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, identity) <span class="sc">==</span><span class="er">=</span> x</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, <span class="fu">compose</span>(f, g)) <span class="sc">==</span><span class="er">=</span> <span class="fu">modify</span>(x, g) <span class="sc">|</span><span class="er">&gt;</span> <span class="fu">modify</span>(f)</span></code></pre><p></p></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, <span class="fu">compose</span>(f, g)) <span class="sc">==</span><span class="er">=</span> <span class="fu">modify</span>(x, g) <span class="sc">|&gt;</span> <span class="fu">modify</span>(f)</span></code></pre><p></p></div>
 <p>These invariants are known as the <a href="https://wiki.haskell.org/Functor#Functor_Laws" class="external-link">functor laws</a> in computer
 science.</p>
     </div>

@@ -14,7 +14,7 @@ the elements of the tree."><meta property="og:image" content="https://purrr.tidy
     
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.4.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9000.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,13 +59,13 @@ the elements of the tree."><meta property="og:image" content="https://purrr.tidy
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Map at depth</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/purrr/blob/HEAD/R/modify.R" class="external-link"><code>R/modify.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/purrr/blob/HEAD/R/deprec-map.R" class="external-link"><code>R/deprec-map.R</code></a></small>
       <div class="d-none name"><code>at_depth.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>This function is defunct and has been replaced by <code><a href="map_if.html">map_depth()</a></code>.
-See also <code><a href="modify.html">modify_depth()</a></code> for a version that preserves the types of
+    <p>This function is defunct and has been replaced by <code><a href="map_depth.html">map_depth()</a></code>.
+See also <code><a href="map_depth.html">modify_depth()</a></code> for a version that preserves the types of
 the elements of the tree.</p>
     </div>
 
@@ -74,45 +74,8 @@ the elements of the tree.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">at_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>.x</dt>
-<dd><p>A list or atomic vector.</p></dd>
 
-
-<dt>.depth</dt>
-<dd><p>Level of <code>.x</code> to map on. Use a negative value to
-count up from the lowest level of the list.</p><ul><li><p><code>map_depth(x, 0, fun)</code> is equivalent to <code>fun(x)</code>.</p></li>
-<li><p><code>map_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- map(x, fun)</code></p></li>
-<li><p><code>map_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- map(x, ~ map(., fun))</code></p></li>
-</ul></dd>
-
-
-<dt>.f</dt>
-<dd><p>A function, formula, or vector (not necessarily atomic).</p>
-<p>If a <strong>function</strong>, it is used as is.</p>
-<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
-are three ways to refer to the arguments:</p><ul><li><p>For a single argument function, use <code>.</code></p></li>
-<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
-<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
-</ul><p>This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use <code>..1</code> etc). They silently ignore
-additional arguments that are not used in the formula expression.</p>
-<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of <code>.default</code> will be returned.</p></dd>
-
-
-<dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
-
-</dl></div>
-
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside></div>
+  </main></div>
 
 
    </div>

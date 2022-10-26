@@ -101,17 +101,36 @@
 <p>purrr draws inspiration from many related tools:</p>
 <ul>
 <li><p>List operations defined in the Haskell <a href="http://hackage.haskell.org/package/base-4.7.0.1/docs/Prelude.html#g:11" class="external-link">prelude</a></p></li>
-<li><p>Scala’s <a href="https://www.scala-lang.org/api/current/index.html" class="external-link">list methods</a>.</p></li>
+<li><p>Scala’s <a href="https://www.scala-lang.org/api/current/index.html" class="external-link">list
+methods</a>.</p></li>
 <li><p>Functional programming libraries for javascript: <a href="http://underscorejs.org" class="external-link">underscore.js</a>, <a href="https://lodash.com" class="external-link">lodash</a> and <a href="http://danieltao.com/lazy.js/" class="external-link">lazy.js</a>.</p></li>
-<li><p><a href="https://renkun-ken.github.io/rlist/" class="external-link">rlist</a>, another R package to support working with lists. Similar goals but somewhat different philosophy.</p></li>
+<li><p><a href="https://renkun-ken.github.io/rlist/" class="external-link">rlist</a>, another
+R package to support working with lists. Similar goals but somewhat
+different philosophy.</p></li>
 </ul>
-<p>However, the goal of purrr is not to try and simulate a purer functional programming language in R; we don’t want to implement a second-class version of Haskell in R. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R:</p>
+<p>However, the goal of purrr is not to try and simulate a purer
+functional programming language in R; we don’t want to implement a
+second-class version of Haskell in R. The goal is to give you similar
+expressiveness to an FP language, while allowing you to write code that
+looks and works like R:</p>
 <ul>
-<li><p>Instead of point free (tacit) style, we use the pipe, <code>%&gt;%</code>, to write code that can be read from left to right.</p></li>
-<li><p>Instead of currying, we use <code>...</code> to pass in extra arguments.</p></li>
-<li><p>Before R 4.1, anonymous functions were verbose, so we provide two convenient shorthands. For unary functions, <code>~ .x + 1</code> is equivalent to <code>function(.x) .x + 1</code>.</p></li>
-<li><p>R is weakly typed, so we need <code>map</code> variants that describe the output type (like <code><a href="../reference/map.html">map_int()</a></code>, <code><a href="../reference/map.html">map_dbl()</a></code>, etc) because we don’t know the return type of <code>.f</code>.</p></li>
-<li><p>R has named arguments, so instead of providing different functions for minor variations (e.g. <code><a href="../reference/detect.html">detect()</a></code> and <code>detectLast()</code>) we use a named argument, <code>.right</code>. Type-stable functions are easy to reason about so additional arguments will never change the type of the output.</p></li>
+<li><p>Instead of point free (tacit) style, we use the pipe,
+<code>%&gt;%</code>, to write code that can be read from left to
+right.</p></li>
+<li><p>Instead of currying, we use <code>...</code> to pass in extra
+arguments.</p></li>
+<li><p>Before R 4.1, anonymous functions were verbose, so we provide two
+convenient shorthands. For unary functions, <code>~ .x + 1</code> is
+equivalent to <code>function(.x) .x + 1</code>.</p></li>
+<li><p>R is weakly typed, so we need <code>map</code> variants that
+describe the output type (like <code><a href="../reference/map.html">map_int()</a></code>,
+<code><a href="../reference/map.html">map_dbl()</a></code>, etc) because we don’t know the return type of
+<code>.f</code>.</p></li>
+<li><p>R has named arguments, so instead of providing different
+functions for minor variations (e.g. <code><a href="../reference/detect.html">detect()</a></code> and
+<code>detectLast()</code>) we use a named argument, <code>.right</code>.
+Type-stable functions are easy to reason about so additional arguments
+will never change the type of the output.</p></li>
 </ul></main>
 </div>
 

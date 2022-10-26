@@ -101,30 +101,54 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette compares purrr’s functionals to their base R equivalents, focusing primarily on the map family and related functions. This helps those familiar with base R understand better what purrr does, and shows purrr users how you might express the same ideas in base R code. We’ll start with a rough overview of the major differences, give a rough translation guide, and then show a few examples.</p>
+<p>This vignette compares purrr’s functionals to their base R
+equivalents, focusing primarily on the map family and related functions.
+This helps those familiar with base R understand better what purrr does,
+and shows purrr users how you might express the same ideas in base R
+code. We’ll start with a rough overview of the major differences, give a
+rough translation guide, and then show a few examples.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="key-differences">Key differences<a class="anchor" aria-label="anchor" href="#key-differences"></a>
 </h3>
-<p>There are two primary differences between the base apply family and the purrr map family: purrr functions are named more consistently, and more fully explore the space of input and output variants.</p>
+<p>There are two primary differences between the base apply family and
+the purrr map family: purrr functions are named more consistently, and
+more fully explore the space of input and output variants.</p>
 <ul>
-<li><p>purrr functions consistently use <code>.</code> as prefix to avoid <a href="https://adv-r.hadley.nz/functionals.html#argument-names" class="external-link">inadvertently matching arguments</a> of the purrr function, instead of the function that you’re trying to call. Base functions use a variety of techniques including upper case (e.g. <code>lapply(X, FUN, ...)</code>) or require anonymous functions (e.g. <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>).</p></li>
-<li><p>All map functions are type stable: you can predict the type of the output using little information about the inputs. In contrast, the base functions <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code> and <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code> automatically simplify making the return value hard to predict.</p></li>
-<li><p>The map functions all start with the data, followed by the function, then any additional constant argument. Most base apply functions also follow this pattern, but <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code> starts with the function, and <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> has no way to supply additional constant arguments.</p></li>
-<li><p>purrr functions provide all combinations of input and output variants, and include variants specifically for the common two argument case.</p></li>
+<li><p>purrr functions consistently use <code>.</code> as prefix to
+avoid <a href="https://adv-r.hadley.nz/functionals.html#argument-names" class="external-link">inadvertently
+matching arguments</a> of the purrr function, instead of the function
+that you’re trying to call. Base functions use a variety of techniques
+including upper case (e.g. <code>lapply(X, FUN, ...)</code>) or require
+anonymous functions (e.g. <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>).</p></li>
+<li><p>All map functions are type stable: you can predict the type of
+the output using little information about the inputs. In contrast, the
+base functions <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code> and <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>
+automatically simplify making the return value hard to predict.</p></li>
+<li><p>The map functions all start with the data, followed by the
+function, then any additional constant argument. Most base apply
+functions also follow this pattern, but <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code> starts
+with the function, and <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> has no way to supply
+additional constant arguments.</p></li>
+<li><p>purrr functions provide all combinations of input and output
+variants, and include variants specifically for the common two argument
+case.</p></li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="direct-translations">Direct translations<a class="anchor" aria-label="anchor" href="#direct-translations"></a>
 </h3>
-<p>The following sections give a high-level translation between base R commands and their purrr equivalents. See function documentation for the details.</p>
+<p>The following sections give a high-level translation between base R
+commands and their purrr equivalents. See function documentation for the
+details.</p>
 <div class="section level4">
 <h4 id="map-functions">
 <code>Map</code> functions<a class="anchor" aria-label="anchor" href="#map-functions"></a>
 </h4>
-<p>Here <code>x</code> denotes a vector and <code>f</code> denotes a function</p>
+<p>Here <code>x</code> denotes a vector and <code>f</code> denotes a
+function</p>
 <table class="table">
 <colgroup>
 <col width="24%">
@@ -166,23 +190,31 @@
 <td>1 vector</td>
 <td><code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code></td>
 <td>
-<code><a href="../reference/map.html">map_lgl()</a></code> (logical), <code><a href="../reference/map.html">map_int()</a></code> (integer), <code><a href="../reference/map.html">map_dbl()</a></code> (double), <code><a href="../reference/map.html">map_chr()</a></code> (character), <code><a href="../reference/map_raw.html">map_raw()</a></code> (raw)</td>
+<code><a href="../reference/map.html">map_lgl()</a></code> (logical), <code><a href="../reference/map.html">map_int()</a></code> (integer),
+<code><a href="../reference/map.html">map_dbl()</a></code> (double), <code><a href="../reference/map.html">map_chr()</a></code> (character),
+<code><a href="../reference/map_raw.html">map_raw()</a></code> (raw)</td>
 </tr>
 <tr class="odd">
 <td>Atomic vector of desired type</td>
 <td>2 vectors</td>
 <td>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, then <code>is.*()</code> to check type</td>
+<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, then <code>is.*()</code>
+to check type</td>
 <td>
-<code><a href="../reference/map2.html">map2_lgl()</a></code> (logical), <code><a href="../reference/map2.html">map2_int()</a></code> (integer), <code><a href="../reference/map2.html">map2_dbl()</a></code> (double), <code><a href="../reference/map2.html">map2_chr()</a></code> (character), <code><a href="../reference/map_raw.html">map2_raw()</a></code> (raw)</td>
+<code><a href="../reference/map2.html">map2_lgl()</a></code> (logical), <code><a href="../reference/map2.html">map2_int()</a></code>
+(integer), <code><a href="../reference/map2.html">map2_dbl()</a></code> (double), <code><a href="../reference/map2.html">map2_chr()</a></code>
+(character), <code><a href="../reference/map_raw.html">map2_raw()</a></code> (raw)</td>
 </tr>
 <tr class="even">
 <td>Atomic vector of desired type</td>
 <td>&gt;2 vectors</td>
 <td>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, then <code>is.*()</code> to check type</td>
+<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, then <code>is.*()</code>
+to check type</td>
 <td>
-<code><a href="../reference/pmap.html">pmap_lgl()</a></code> (logical), <code><a href="../reference/pmap.html">pmap_int()</a></code> (integer), <code><a href="../reference/pmap.html">pmap_dbl()</a></code> (double), <code><a href="../reference/pmap.html">pmap_chr()</a></code> (character), <code><a href="../reference/map_raw.html">pmap_raw()</a></code> (raw)</td>
+<code><a href="../reference/pmap.html">pmap_lgl()</a></code> (logical), <code><a href="../reference/pmap.html">pmap_int()</a></code>
+(integer), <code><a href="../reference/pmap.html">pmap_dbl()</a></code> (double), <code><a href="../reference/pmap.html">pmap_chr()</a></code>
+(character), <code><a href="../reference/map_raw.html">pmap_raw()</a></code> (raw)</td>
 </tr>
 <tr class="odd">
 <td>Side effect only</td>
@@ -214,7 +246,8 @@
 <td>Data frame (<code>rbind</code> outputs)</td>
 <td>2 vectors</td>
 <td>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
+<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
+<code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
 <td><code><a href="../reference/map_dfr.html">map2_dfr()</a></code></td>
 </tr>
@@ -222,7 +255,8 @@
 <td>Data frame (<code>rbind</code> outputs)</td>
 <td>&gt;2 vectors</td>
 <td>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
+<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
+<code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
 <td><code><a href="../reference/map_dfr.html">pmap_dfr()</a></code></td>
 </tr>
@@ -238,7 +272,8 @@
 <td>Data frame (<code>cbind</code> outputs)</td>
 <td>2 vectors</td>
 <td>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
+<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
+<code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
 <td><code><a href="../reference/map_dfr.html">map2_dfc()</a></code></td>
 </tr>
@@ -246,7 +281,8 @@
 <td>Data frame (<code>cbind</code> outputs)</td>
 <td>&gt;2 vectors</td>
 <td>
-<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
+<code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
+<code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
 <td><code><a href="../reference/map_dfr.html">pmap_dfc()</a></code></td>
 </tr>
@@ -254,10 +290,13 @@
 <td>Any</td>
 <td>Vector and its names</td>
 <td>
-<code>l/s/vapply(X, function(x) f(x, names(x)))</code> or <code>mapply/Map(f, x, names(x))</code>
+<code>l/s/vapply(X, function(x) f(x, names(x)))</code> or
+<code>mapply/Map(f, x, names(x))</code>
 </td>
 <td>
-<code><a href="../reference/imap.html">imap()</a></code>, <code>imap_*()</code> (<code>lgl</code>, <code>dbl</code>, <code>dfr</code>, and etc. just like for <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code>, and <code><a href="../reference/pmap.html">pmap()</a></code>)</td>
+<code><a href="../reference/imap.html">imap()</a></code>, <code>imap_*()</code> (<code>lgl</code>,
+<code>dbl</code>, <code>dfr</code>, and etc. just like for
+<code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code>, and <code><a href="../reference/pmap.html">pmap()</a></code>)</td>
 </tr>
 <tr class="odd">
 <td>Any</td>
@@ -278,7 +317,8 @@
 <td>List only</td>
 <td><code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code></td>
 <td>
-<code><a href="../reference/lmap.html">lmap()</a></code>, <code><a href="../reference/lmap.html">lmap_at()</a></code>, <code><a href="../reference/lmap.html">lmap_if()</a></code>
+<code><a href="../reference/lmap.html">lmap()</a></code>, <code><a href="../reference/lmap.html">lmap_at()</a></code>,
+<code><a href="../reference/lmap.html">lmap_if()</a></code>
 </td>
 </tr>
 </tbody>
@@ -287,7 +327,9 @@
 <div class="section level4">
 <h4 id="extractor-shorthands">Extractor shorthands<a class="anchor" aria-label="anchor" href="#extractor-shorthands"></a>
 </h4>
-<p>Since a common use case for map functions is list extracting components, purrr provides a handful of shortcut functions for various uses of <code>[[</code>.</p>
+<p>Since a common use case for map functions is list extracting
+components, purrr provides a handful of shortcut functions for various
+uses of <code>[[</code>.</p>
 <table class="table">
 <colgroup>
 <col width="26%">
@@ -326,7 +368,9 @@
 <div class="section level4">
 <h4 id="predicates">Predicates<a class="anchor" aria-label="anchor" href="#predicates"></a>
 </h4>
-<p>Here <code>p</code>, a predicate, denotes a function that returns <code>TRUE</code> or <code>FALSE</code> indicating whether an object fulfills a criterion, e.g. <code><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character()</a></code>.</p>
+<p>Here <code>p</code>, a predicate, denotes a function that returns
+<code>TRUE</code> or <code>FALSE</code> indicating whether an object
+fulfills a criterion, e.g. <code><a href="https://rdrr.io/r/base/character.html" class="external-link">is.character()</a></code>.</p>
 <table class="table">
 <colgroup>
 <col width="40%">
@@ -412,7 +456,8 @@
 </td>
 </tr>
 <tr class="odd">
-<td>Reduce a list to a single value by iteratively applying a binary function</td>
+<td>Reduce a list to a single value by iteratively applying a binary
+function</td>
 <td><code>Reduce(f, x)</code></td>
 <td><code>reduce(x, f)</code></td>
 </tr>
@@ -429,7 +474,8 @@
 <div class="section level5">
 <h5 id="one-input">One input<a class="anchor" aria-label="anchor" href="#one-input"></a>
 </h5>
-<p>Suppose we would like to generate a list of samples of 5 from normal distributions with different means:</p>
+<p>Suppose we would like to generate a list of samples of 5 from normal
+distributions with different means:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">means</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span></code></pre></div>
 <p>There’s little difference when generating the samples:</p>
@@ -463,13 +509,15 @@
 <div class="section level5">
 <h5 id="two-inputs">Two inputs<a class="anchor" aria-label="anchor" href="#two-inputs"></a>
 </h5>
-<p>Lets make the example a little more complicated by also varying the standard deviations:</p>
+<p>Lets make the example a little more complicated by also varying the
+standard deviations:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">means</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span>
 <span><span class="va">sds</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span></code></pre></div>
 <ul>
 <li>
-<p>This is relatively tricky in base R because we have to adjust a number of <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>’s defaults.</p>
+<p>This is relatively tricky in base R because we have to adjust a
+number of <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>’s defaults.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span></span>
 <span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span></span>
@@ -485,15 +533,19 @@
 <span><span class="co">#&gt;  $ : num [1:5] 3.44 3.88 1.54 5.52 2.23</span></span>
 <span><span class="co">#&gt;  $ : num [1:5] 0.441 5.728 6.589 1.885 2.63</span></span>
 <span><span class="co">#&gt;  $ : num [1:5] 11.2 10.82 -8.16 -5.16 4.23</span></span></code></pre></div>
-<p>Alternatively, we could use <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> which doesn’t simply, but also doesn’t take any constant arguments, so we need to use an anonymous function:</p>
+<p>Alternatively, we could use <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> which doesn’t simply,
+but also doesn’t take any constant arguments, so we need to use an
+anonymous function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">...</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span><span class="op">)</span></span></code></pre></div>
-<p>In R 4.1 and up, you could use the shorter anonymous function form:</p>
+<p>In R 4.1 and up, you could use the shorter anonymous function
+form:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">...</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
-<p>Working with a pair of vectors is a common situation so purrr provides the <code><a href="../reference/map2.html">map2()</a></code> family of functions:</p>
+<p>Working with a pair of vectors is a common situation so purrr
+provides the <code><a href="../reference/map2.html">map2()</a></code> family of functions:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span></span>
 <span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/map2.html">map2</a></span><span class="op">(</span><span class="va">means</span>, <span class="va">sds</span>, <span class="va">rnorm</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
@@ -509,12 +561,14 @@
 <div class="section level5">
 <h5 id="any-number-of-inputs">Any number of inputs<a class="anchor" aria-label="anchor" href="#any-number-of-inputs"></a>
 </h5>
-<p>We can make the challenge still more complex by also varying the number of samples:</p>
+<p>We can make the challenge still more complex by also varying the
+number of samples:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ns</span> <span class="op">&lt;-</span> <span class="fl">4</span><span class="op">:</span><span class="fl">1</span></span></code></pre></div>
 <ul>
 <li>
-<p>Using base R’s <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> becomes more straightforward because there are no constant arguments.</p>
+<p>Using base R’s <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> becomes more straightforward
+because there are no constant arguments.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span></span>
 <span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">rnorm</span>, mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span>, n <span class="op">=</span> <span class="va">ns</span><span class="op">)</span></span>
@@ -526,7 +580,8 @@
 <span><span class="co">#&gt;  $ : num 4.47</span></span></code></pre></div>
 </li>
 <li>
-<p>In purrr, we need to switch from <code><a href="../reference/map2.html">map2()</a></code> to <code><a href="../reference/pmap.html">pmap()</a></code> which takes a list of any number of arguments.</p>
+<p>In purrr, we need to switch from <code><a href="../reference/map2.html">map2()</a></code> to
+<code><a href="../reference/pmap.html">pmap()</a></code> which takes a list of any number of arguments.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span></span>
 <span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmap.html">pmap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span>, n <span class="op">=</span> <span class="va">ns</span><span class="op">)</span>, <span class="va">rnorm</span><span class="op">)</span></span>
@@ -543,10 +598,16 @@
 <div class="section level4">
 <h4 id="outputs">Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
 </h4>
-<p>Given the samples, imagine we want to compute their means. A mean is a single number, so we want the output to be a numeric vector rather than a list.</p>
+<p>Given the samples, imagine we want to compute their means. A mean is
+a single number, so we want the output to be a numeric vector rather
+than a list.</p>
 <ul>
 <li>
-<p>There are two options in base R: <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code> or <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code> requires you to specific the output type (so is relatively verbose), but will always return a numeric vector. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code> is concise, but if you supply an empty list you’ll get a list instead of a numeric vector.</p>
+<p>There are two options in base R: <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code> or
+<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code> requires you to specific
+the output type (so is relatively verbose), but will always return a
+numeric vector. <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code> is concise, but if you supply an
+empty list you’ll get a list instead of a numeric vector.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># type stable</span></span>
 <span><span class="va">medians</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">samples</span>, <span class="va">median</span>, FUN.VALUE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">)</span><span class="op">)</span></span>
@@ -557,17 +618,20 @@
 <span><span class="va">medians</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">samples</span>, <span class="va">median</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
-<p>purrr is little more compact because we can use <code><a href="../reference/map.html">map_dbl()</a></code>.</p>
+<p>purrr is little more compact because we can use
+<code><a href="../reference/map.html">map_dbl()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medians</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">samples</span>, <span class="va">median</span><span class="op">)</span></span>
 <span><span class="va">medians</span></span>
 <span><span class="co">#&gt; [1] 0.6017626 3.4411470 5.2946304 4.4694671</span></span></code></pre></div>
 </li>
 </ul>
-<p>What if we want just the side effect, such as a plot or a file output, but not the returned values?</p>
+<p>What if we want just the side effect, such as a plot or a file
+output, but not the returned values?</p>
 <ul>
 <li>
-<p>In base R we can either use a for loop or hide the results of <code>lapply</code>.</p>
+<p>In base R we can either use a for loop or hide the results of
+<code>lapply</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># for loop</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">s</span> <span class="kw">in</span> <span class="va">samples</span><span class="op">)</span> <span class="op">{</span></span>
@@ -589,7 +653,8 @@
 <div class="section level4">
 <h4 id="pipes">Pipes<a class="anchor" aria-label="anchor" href="#pipes"></a>
 </h4>
-<p>You can join multiple steps together either using the magrittr pipe:</p>
+<p>You can join multiple steps together either using the magrittr
+pipe:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">)</span></span>
 <span><span class="va">means</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -603,8 +668,13 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">rnorm</span>, n <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">median</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -0.09802317  2.72057350  2.87673977  4.05830349</span></span></code></pre></div>
-<p>(And of course you can mix and match the piping style with either base R or purrr.)</p>
-<p>The pipe is particularly compelling when working with longer transformations. For example, the following code splits <code>mtcars</code> up by <code>cyl</code>, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).</p>
+<p>(And of course you can mix and match the piping style with either
+base R or purrr.)</p>
+<p>The pipe is particularly compelling when working with longer
+transformations. For example, the following code splits
+<code>mtcars</code> up by <code>cyl</code>, fits a linear model,
+extracts the coefficients, and extracts the first one (the
+intercept).</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
