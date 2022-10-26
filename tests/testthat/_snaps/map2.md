@@ -17,8 +17,8 @@
     Code
       map2_vec(1, 1, ~1, .ptype = character())
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <double> to <character>.
+      Error in `map2_vec()`:
+      ! Can't convert `<list>[[1]]` <double> to <character>.
 
 # requires vector inputs
 

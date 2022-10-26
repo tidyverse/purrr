@@ -3,8 +3,8 @@
     Code
       list_transpose(x, ptype = list())
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <double> to <list>.
+      Error in `list_transpose()`:
+      ! Can't convert `result[[1]][[1]]` <double> to <list>.
 
 ---
 
@@ -19,8 +19,8 @@
     Code
       list_transpose(list(list(x = 1), list(x = "b")), simplify = TRUE)
     Condition
-      Error in `list_unchop()`:
-      ! Can't combine `x[[1]]` <double> and `x[[2]]` <character>.
+      Error in `list_transpose()`:
+      ! Can't combine `result$x[[1]]` <double> and `result$x[[2]]` <character>.
     Code
       list_transpose(list(list(x = 1), list(x = 2:3)), simplify = TRUE)
     Condition

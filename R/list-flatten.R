@@ -61,7 +61,9 @@ list_flatten <- function(
     proxy,
     ptype = list(),
     name_spec = name_spec,
-    name_repair = name_repair
+    name_repair = name_repair,
+    error_arg = x,
+    error_call = current_env()
   )
 
   # Preserve input type

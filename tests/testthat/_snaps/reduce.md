@@ -11,8 +11,8 @@
     Code
       accumulate(list(1, "a"), ~.y, .simplify = TRUE)
     Condition
-      Error in `list_unchop()`:
-      ! Can't combine `x[[1]]` <double> and `x[[2]]` <character>.
+      Error in `accumulate()`:
+      ! Can't combine `res[[1]]` <double> and `res[[2]]` <character>.
 
 # requires equal length vectors
 

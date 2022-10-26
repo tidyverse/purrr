@@ -100,9 +100,8 @@ simplify_impl <- function(x,
   names <- vec_names(x)
   x <- vec_set_names(x, NULL)
 
-  # TODO: use `error_call` when available
   out <- tryCatch(
-    list_unchop(x, ptype = ptype),
+    list_unchop(x, ptype = ptype, error_arg = error_arg, error_call = error_call),
     vctrs_error_incompatible_type = function(err) {
       if (strict || !is.null(ptype)) {
         cnd_signal(err)

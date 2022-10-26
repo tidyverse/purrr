@@ -49,14 +49,14 @@
     Code
       map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
     Condition
-      Error in `list_unchop()`:
-      ! Can't combine `x[[1]]` <factor<bf275>> and `x[[2]]` <double>.
+      Error in `map_vec()`:
+      ! Can't combine `<list>[[1]]` <factor<bf275>> and `<list>[[2]]` <double>.
 
 # can enforce .ptype
 
     Code
       map_vec(1:2, ~ factor("x"), .ptype = integer())
     Condition
-      Error in `list_unchop()`:
-      ! Can't convert `x[[1]]` <factor<bf275>> to <integer>.
+      Error in `map_vec()`:
+      ! Can't convert `<list>[[1]]` <factor<bf275>> to <integer>.
 
