@@ -51,7 +51,7 @@ capture_error <- function(code, otherwise = NULL, quiet = TRUE) {
     list(result = code, error = NULL),
     error = function(e) {
       if (!quiet)
-        message("Error: ", e$message)
+        message("Error: ", conditionMessage(e))
 
       list(result = otherwise, error = e)
     }
