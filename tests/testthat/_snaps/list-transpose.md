@@ -25,8 +25,7 @@
       list_transpose(list(list(x = 1), list(x = 2:3)), simplify = TRUE)
     Condition
       Error in `list_transpose()`:
-      ! All elements must be size 1.
-      i `result$x[[2]]` is size 2.
+      ! `result$x[[2]]` must have size 1, not size 2.
 
 # can supply `simplify` globally or individually
 
