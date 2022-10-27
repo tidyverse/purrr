@@ -63,3 +63,13 @@ test_that("pairlists, expressions, and calls are deprecated", {
   expect_equal(x, list(quote(f), quote(a),b = 1))
 })
 
+test_that("can work with S4 objects", {
+  foo <- methods::setClass("foo", contains = "list", where = current_env())
+  on.exit(methods::removeClass("foo", where = current_env()), add = TRUE)
+
+  x1 <- foo(list(1, 2, 3))
+  expect_equal(map(x1, identity), list(1, 2, 3))
+
+  x2 <- foo(list(x = 1, y = 2, z = 3))
+  expect_equal(map(x2, identity), list(x = 1, y = 2, z = 3))
+})

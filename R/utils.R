@@ -120,7 +120,11 @@ vctrs_vec_compat <- function(x) {
     )
     as.list(x)
   } else if (is.data.frame(x) || (is.list(x) && !vec_is(x))) {
-    unclass(x)
+    if (!isS4(x)) {
+      unclass(x)
+    } else {
+      set_names(x@.Data, names(x))
+    }
   } else {
     x
   }
