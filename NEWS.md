@@ -219,7 +219,13 @@
 
 * `partial()` no longer inlines the function in the call stack. This
   fixes issues when `partial()` is used with `lm()` for instance (#707).
-  
+
+
+# purrr 0.3.5
+
+* Fixes for CRAN checks.
+
+
 # purrr 0.3.4
 
 * Fixed issue in `list_modify()` that prevented lists from being
