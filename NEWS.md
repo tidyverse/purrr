@@ -200,9 +200,6 @@
 * `modify_if(.else)` is now actually evaluated for atomic vectors (@mgirlich, 
   #701).
    
-* `lmap()` now always returns a list, even if `.x` is a data frame. 
-  This makes it more consistent with other functions in the `map` family.
-
 * `lmap_if()` correctly handles `.else` functions (#847).
 
 * `every()` now correctly propagates missing values using the same

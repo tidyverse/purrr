@@ -1,6 +1,4 @@
 test_that("lmap output is list if input is list", {
-  expect_bare(lmap(as.list(mtcars), as.list), "list")
-
   x <- list(a = 1:4, b = letters[5:7], c = 8:9, d = letters[10])
   maybe_rep <- function(x) {
     n <- rpois(1, 2)
@@ -11,6 +9,18 @@ test_that("lmap output is list if input is list", {
     out
   }
   expect_bare(lmap_at(x, "a", maybe_rep), "list")
+})
+
+test_that("lmap() returns a data frame if input is a data frame", {
+  df <- data.frame(x = 1, y = 2)
+
+  # as.data.frame() handles repeated names
+  out <- lmap(df, function(x) as.data.frame(rep(x, 2)))
+  expect_equal(out, data.frame(x = 1, x.1 = 1, y = 2, y.1 = 2))
+
+  # even if we return bare lists
+  out <- lmap(df, function(x) as.list(rep(x, 2)))
+  expect_equal(out, data.frame(x = 1, x.1 = 1, y = 2, y.1 = 2))
 })
 
 test_that("lmap() can increase and decrease elements", {

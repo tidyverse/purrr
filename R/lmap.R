@@ -87,6 +87,7 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL, .error_call = caller_en
   }
 
   if (is.data.frame(.x)) {
+    out <- lapply(out, as.data.frame)
     list_cbind(out)
   } else {
     list_flatten(out)
