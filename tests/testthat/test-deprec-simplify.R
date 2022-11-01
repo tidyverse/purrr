@@ -31,3 +31,11 @@ test_that("numeric is an alias for double", {
 test_that("double is not coercible to integer", {
   expect_false(can_simplify(list(1, 2), "integer"))
 })
+
+test_that("simplify functions are deprecated", {
+  expect_snapshot({
+    x <- simplify(list())
+    x <- simplify_all(list())
+    x <- as_vector(list())
+  })
+})

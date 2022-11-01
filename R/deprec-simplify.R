@@ -46,7 +46,7 @@ as_vector_ <- function(.x, .type = NULL) {
 #' @export
 #' @rdname as_vector
 simplify <- function(.x, .type = NULL) {
-  lifecycle::deprecate_soft("1.0.0", "as_vector()", "list_simplify()")
+  lifecycle::deprecate_soft("1.0.0", "simplify()", I("`list_simplify(strict = FALSE)`"))
   if (can_simplify(.x, .type)) {
     unlist(.x)
   } else {
@@ -57,7 +57,7 @@ simplify <- function(.x, .type = NULL) {
 #' @export
 #' @rdname as_vector
 simplify_all <- function(.x, .type = NULL) {
-  lifecycle::deprecate_soft("1.0.0", "as_vector()", I("map() + list_simplify()"))
+  lifecycle::deprecate_soft("1.0.0", "simplify_all()", I("`map(xs, \\(x) list_simplify(strict = FALSE))`"))
 
   # Inline simplify to avoid double deprecation
   simplify <- function(.x) {
