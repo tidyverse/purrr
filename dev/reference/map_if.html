@@ -166,267 +166,40 @@ a basic progress bar, use a string to give it a name, or see
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use a predicate function to decide whether to map a function:</span></span></span>
-<span class="r-in"><span><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8 6.7 6.7 6.3 6.5 6.2 5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3.1 3.2 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 3.2 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 3.4 3.1 2.3 3.0 2.5 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3.0 2.9 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2 3.3 3.0 2.5 3.0 3.4 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 0.3 0.3 0.3 0.2 0.4 0.2 0.5 0.2 0.2 0.4 0.2 0.2 0.2 0.2 0.4 0.1 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 0.2 0.2 0.2 0.1 0.2 0.2 0.3 0.3 0.2 0.6 0.4 0.3 0.2 0.2 0.2 0.2 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 1.5 1.5 1.3 1.5 1.3 1.6 1.0 1.3 1.4 1.0 1.5 1.0 1.4 1.3 1.4 1.5 1.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 1.5 1.1 1.8 1.3 1.5 1.2 1.3 1.4 1.4 1.7 1.5 1.0 1.1 1.0 1.2 1.6 1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 1.6 1.5 1.3 1.3 1.3 1.2 1.4 1.2 1.0 1.3 1.2 1.3 1.3 1.1 1.3 2.5 1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 2.1 1.8 2.2 2.1 1.7 1.8 1.8 2.5 2.0 1.9 2.1 2.0 2.4 2.3 1.8 2.2 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 1.5 2.3 2.0 2.0 1.8 2.1 1.8 1.8 1.8 2.1 1.6 1.9 2.0 2.2 1.5 1.4 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 2.4 1.8 1.8 2.1 2.4 2.3 1.9 2.3 2.5 2.3 1.9 2.0 2.3 1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr [1:150] "setosa" "setosa" "setosa" "setosa" ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Specify an alternative with the `.else` argument:</span></span></span>
-<span class="r-in"><span><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5 4 4 4 5 5 4 5 4 4 5 4 4 4 5 5 5 5 5 5 5 5 4 5 4 5 5 5 5 4 4 5 5 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4 5 5 4 4 5 5 4 4 5 5 4 5 4 5 5 7 6 6 5 6 5 6 4 6 5 5 5 6 6 5 6 5 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6 5 5 6 6 6 6 6 6 6 6 5 5 5 5 6 5 6 6 6 5 5 5 6 5 5 5 5 5 6 5 5 6 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7 6 6 7 4 7 6 7 6 6 6 5 5 6 6 7 7 6 6 5 7 6 6 7 6 6 6 7 7 7 6 6 6 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6 6 6 6 6 6 5 6 6 6 6 6 6 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3 3 3 3 3 3 3 3 2 3 3 3 3 3 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 3 3 3 2 2 2 3 2 2 2 2 3 2 2 2 3 3 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2 2 3 2 2 2 2 3 2 3 2 2 2 2 2 2 3 3 3 2 3 2 2 3 2 2 2 3 2 2 2 2 3 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3 2 3 3 2 2 2 3 3 2 3 2 2 3 3 3 2 2 3 2 2 2 3 3 2 3 2 3 2 3 2 2 2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3 3 3 3 3 3 2 3 3 3 2 3 3 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 4 4 4 4 4 4 4 3 4 3 3 4 4 4 3 4 4 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4 3 4 4 4 4 4 4 4 5 4 3 3 3 3 5 4 4 4 4 4 4 4 4 4 3 4 4 4 4 3 4 6 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5 5 5 6 4 6 5 6 5 5 5 5 5 5 5 6 6 5 5 4 6 4 5 6 4 4 5 5 6 6 5 5 5 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5 5 4 5 5 5 5 5 5 5 5 5 5 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 2 1 2 2 1 1 1 2 2 1 2 2 2 2 1 2 2 1 2 2 2 1 2 1 1 1 2 1 1 2 2 1 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 2 1 1 2 2 2 1 2 2 2 1 2 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: int [1:150] 5 4 4 4 5 5 4 5 4 4 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : int [1:150] 3 3 3 3 3 3 3 3 2 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: int [1:150] 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : int [1:150] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr [1:150] "setosa" "setosa" "setosa" "setosa" ...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use numeric vector of positions select elements to change:</span></span></span>
-<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">is.numeric</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8 6.7 6.7 6.3 6.5 6.2 5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3.1 3.2 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 3.2 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 3.4 3.1 2.3 3.0 2.5 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3.0 2.9 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2 3.3 3.0 2.5 3.0 3.4 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">is.numeric</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : logi FALSE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use vector of names to specify which elements to change:</span></span></span>
-<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_at</span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">toupper</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8 6.7 6.7 6.3 6.5 6.2 5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3.1 3.2 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 3.2 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 3.4 3.1 2.3 3.0 2.5 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3.0 2.9 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2 3.3 3.0 2.5 3.0 3.4 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 0.3 0.3 0.3 0.2 0.4 0.2 0.5 0.2 0.2 0.4 0.2 0.2 0.2 0.2 0.4 0.1 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 0.2 0.2 0.2 0.1 0.2 0.2 0.3 0.3 0.2 0.6 0.4 0.3 0.2 0.2 0.2 0.2 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 1.5 1.5 1.3 1.5 1.3 1.6 1.0 1.3 1.4 1.0 1.5 1.0 1.4 1.3 1.4 1.5 1.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 1.5 1.1 1.8 1.3 1.5 1.2 1.3 1.4 1.4 1.7 1.5 1.0 1.1 1.0 1.2 1.6 1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 1.6 1.5 1.3 1.3 1.3 1.2 1.4 1.2 1.0 1.3 1.2 1.3 1.3 1.1 1.3 2.5 1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 2.1 1.8 2.2 2.1 1.7 1.8 1.8 2.5 2.0 1.9 2.1 2.0 2.4 2.3 1.8 2.2 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 1.5 2.3 2.0 2.0 1.8 2.1 1.8 1.8 1.8 2.1 1.6 1.9 2.0 2.2 1.5 1.4 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 2.4 1.8 1.8 2.1 2.4 2.3 1.9 2.3 2.5 2.3 1.9 2.0 2.3 1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [146] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_at</span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">toupper</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr [1:150] "SETOSA" "SETOSA" "SETOSA" "SETOSA" ...</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
