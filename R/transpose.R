@@ -1,9 +1,9 @@
 #' Transpose a list.
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("superseded")`
 #'
-#' This function was deprecated in purrr 1.0.0 because [list_transpose()]
+#' This function was superseded in purrr 1.0.0 because [list_transpose()]
 #' has a better name and can automatically simplify the output, as is commonly
 #' needed.
 #'
@@ -62,6 +62,7 @@
 #' # and can supply default value
 #' ll |> list_transpose(template = nms, default = NA)
 transpose <- function(.l, .names = NULL) {
-  lifecycle::deprecate_soft("1.0.0", "transpose()", "list_transpose()")
+  # 1.0.0
+  lifecycle::signal_stage("superseded", "transpose()", "list_transpose()")
   .Call(transpose_impl, .l, .names)
 }

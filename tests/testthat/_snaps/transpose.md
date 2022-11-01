@@ -1,12 +1,3 @@
-# transpose() is deprecated
-
-    Code
-      . <- transpose(list())
-    Condition
-      Warning:
-      `transpose()` was deprecated in purrr 1.0.0.
-      i Please use `list_transpose()` instead.
-
 # input must be a list
 
     Code

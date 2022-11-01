@@ -44,7 +44,7 @@
   favour of `list_simplify()`. It provides a more consistent definition of 
   simplification (#900).
 
-* `transpose()` has been deprecated in favour of `list_transpose()` (#875).
+* `transpose()` has been superseded in favour of `list_transpose()` (#875).
   It has built-in simplification.
 
 ### Deprecation next steps
