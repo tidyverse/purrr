@@ -173,8 +173,8 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">safe_log</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_vector.html">simplify_all</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`as_vector()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use map() + list_simplify() instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`simplify_all()` was deprecated in purrr 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `map(xs, \(x) list_simplify(strict = FALSE))` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $result</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]       NA 2.302585 4.605170</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
