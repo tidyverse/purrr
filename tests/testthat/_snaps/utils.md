@@ -64,3 +64,11 @@
       Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
       i Please coerce explicitly with `as.list()`
 
+# can't work with regular S4 objects
+
+    Code
+      map(foo(), identity)
+    Condition
+      Error in `x[[i]]`:
+      ! this S4 class is not subsettable
+

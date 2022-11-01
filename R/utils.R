@@ -119,6 +119,8 @@ vctrs_vec_compat <- function(x) {
       details = "Please coerce explicitly with `as.list()`"
     )
     as.list(x)
+  } else if (isS4(x)) {
+    set_names(lapply(seq_along(x), function(i) x[[i]]), names(x))
   } else if (is.data.frame(x) || (is.list(x) && !vec_is(x))) {
     unclass(x)
   } else {

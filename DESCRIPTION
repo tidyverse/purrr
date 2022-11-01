@@ -22,6 +22,7 @@ Suggests:
     covr,
     dplyr (>= 0.7.8),
     httr,
+    lubridate,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
