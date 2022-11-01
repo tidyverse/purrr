@@ -13,4 +13,4 @@ fi
 # is set, so this should work everywhere.
 RBIN="${R_HOME}/bin${R_ARCH_BIN}/R"
 
- "$RBIN" --vanilla --slave -f inst/tools/examples.R
+ "$RBIN" --vanilla --slave -f tools/examples.R
