@@ -61,15 +61,15 @@ double integer_to_real(int x) {
   return (x == NA_INTEGER) ? NA_REAL : x;
 }
 
-void deprecate_to_char(const char* type) {
-  SEXP call = PROTECT(Rf_lang2(
-    Rf_install("deprecate_to_char"),
-    PROTECT(Rf_mkString("type"))
-  ));
+void deprecate_to_char(const char* type_char) {
   SEXP env = PROTECT(caller_env());
+  SEXP type = PROTECT(Rf_mkString(type_char));
 
-  Rf_eval(call, env);
-  UNPROTECT(3);
+  SEXP fun = PROTECT(Rf_lang3(Rf_install(":::"), Rf_install("purrr"), Rf_install("deprecate_to_char")));
+  SEXP call = PROTECT(Rf_lang3(fun, type, env));
+
+  Rf_eval(call, R_GetCurrentEnv());
+  UNPROTECT(4);
 }
 
 SEXP logical_to_char(int x, SEXP from, SEXP to, int i) {
