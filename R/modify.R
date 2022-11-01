@@ -92,7 +92,7 @@ modify <- function(.x, .f, ...) {
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
-    out <- vec_proxy(.x)
+    out <- unclass(vec_proxy(.x))
     out <- map(out, .f, ...)
     out <- vec_recycle_common(!!!out, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)
@@ -142,7 +142,7 @@ modify2 <- function(.x, .y, .f, ...) {
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
-    out <- vec_proxy(.x)
+    out <- unclass(vec_proxy(.x))
     out <- map2(out, .y, .f, ...)
     out <- vec_recycle_common(!!!out, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)
@@ -178,7 +178,7 @@ modify_where <- function(.x, .where, .f, ..., .error_call = caller_env()) {
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
-    out <- vec_proxy(.x)
+    out <- unclass(vec_proxy(.x))
     new <- map(out[.where], .f, ...)
     out[.where] <- vec_recycle_common(!!!new, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)

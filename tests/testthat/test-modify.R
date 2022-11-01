@@ -77,6 +77,20 @@ test_that("can modify non-vector lists", {
   expect_equal(modify2(notlist(1), list(3, 4), ~ .y), notlist(3, 4))
 })
 
+test_that("modifying data frame ignores [<- methods", {
+  df <- function(...) structure(data.frame(...), class = c("df", "data.frame"))
+  local_bindings(
+    "[<-.df" = function(...) stop("Forbidden"),
+    .env = globalenv()
+  )
+
+  x <- df(list(x = 1, y = "x"))
+  expect_equal(modify(x, ~ 2), df(x = 2, y = 2))
+  expect_equal(modify_if(x, is.character, ~ 2), df(x = 1, y = 2))
+  expect_equal(modify_at(x, "y", ~ 2), df(x = 1, y = 2))
+  expect_equal(modify2(x, list(2, 3), ~ .y), df(x = 2, y = 3))
+})
+
 # other properties --------------------------------------------------------
 
 test_that("`.else` modifies false elements", {
