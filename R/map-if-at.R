@@ -24,11 +24,16 @@
 #' @family map variants
 #' @examples
 #' # Use a predicate function to decide whether to map a function:
-#' map_if(iris, is.factor, as.character)
+#' iris |> map_if(is.factor, as.character) |> str()
 #'
 #' # Specify an alternative with the `.else` argument:
-#' map_if(iris, is.factor, as.character, .else = as.integer)
+#' iris |> map_if(is.factor, as.character, .else = as.integer) |> str()
 #'
+#' # Use numeric vector of positions select elements to change:
+#' iris |> map_at(c(4, 5), is.numeric) |> str()
+#'
+#' # Use vector of names to specify which elements to change:
+#' iris |> map_at("Species", toupper) |> str()
 map_if <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
 
@@ -51,13 +56,6 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #'   `r lifecycle::badge("deprecated")`: if the tidyselect package is
 #'   installed, you can use `vars()` and tidyselect helpers to select
 #'   elements.
-#' @examples
-#' # Use numeric vector of positions select elements to change:
-#' iris |> map_at(c(4, 5), is.numeric)
-#'
-#' # Use vector of names to specify which elements to change:
-#' iris |> map_at("Species", toupper)
-#
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
   where <- where_at(.x, .at)
