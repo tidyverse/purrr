@@ -21,6 +21,7 @@ Imports:
 Suggests: 
     covr,
     dplyr (>= 0.7.8),
+    httr,
     lubridate,
     knitr,
     rmarkdown,
