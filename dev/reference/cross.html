@@ -276,8 +276,6 @@ result.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># It's easier to transpose and then use invoke_map()</span></span></span>
 <span class="r-in"><span><span class="va">args</span> <span class="op">|&gt;</span> <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="map.html">map_chr</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec</a></span><span class="op">(</span><span class="va">paste</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`transpose()` was deprecated in purrr 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `list_transpose()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "John! Hello."     "Jane! Hello."     "John! Bonjour."  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "Jane! Bonjour."   "John... Hello."   "Jane... Hello."  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7] "John... Bonjour." "Jane... Bonjour."</span>
