@@ -90,6 +90,17 @@ reference:
   - list_transpose
   - reduce
 
+- title: Superseded
+  description: |
+     Superseded functions have been replaced by superior solutions, but
+     due to their widespread use will not go away. However, they will not
+     get any new features and will only receive critical bug fixes.
+  contents:
+  - flatten
+  - map_df
+  - simplify
+  - transpose
+
 - title: Adverbs
   desc: >
     Adverbs modify the action of a function; they take a function as input and

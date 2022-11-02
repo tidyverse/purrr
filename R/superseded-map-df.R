@@ -3,15 +3,18 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' These variants of [map()], [map2()], [imap()], and [pmap()] return data
-#' frames. They were superseded in purrr 1.0.0 because they use
-#' `dplyr::bind_rows()` and `dplyr::bind_cols()` which require dplyr to be
-#' installed and have confusing semantics with edge cases. They also have
-#' suboptimal names because they suggest they work like `_lgl()`, `_int()`, etc
-#' which require length 1 outputs, but actually they return results of any size
-#' because the results are combined without any size checks.
+#' These [map()], [map2()], [imap()], and [pmap()] variants return data
+#' frames by row-binding or column-binding the outputs together.
 #'
-#' We now recommend using `map()`, `map2()`, etc with [list_rbind()] and
+#' The functions were superseded in purrr 1.0.0 because their names
+#' suggest they work like `_lgl()`, `_int()`, etc which require length
+#' 1 outputs, but actually they return results of any size because the results
+#' are combined without any size checks. Additionally, they use
+#' `dplyr::bind_rows()` and `dplyr::bind_cols()` which require dplyr to be
+#' installed and have confusing semantics with edge cases. Superseded
+#' functions will not go away, but will only receive critical bug fixes.
+#'
+#' Instead, we recommend using `map()`, `map2()`, etc with [list_rbind()] and
 #' [list_cbind()]. These use [vctrs::vec_rbind()] and [vctrs::vec_cbind()]
 #' under the hood, and have names that more clearly reflect their semantics.
 #'

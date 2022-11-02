@@ -3,10 +3,6 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' These functions there superseded in purrr 1.0.0 because we no longer believe
-#' "lifting" to be a mainstream operation, and we are striving to reduce purrr
-#' to its most useful core.
-#'
 #' `lift_xy()` is a composition helper. It helps you compose
 #' functions by lifting their domain from a kind of input to another
 #' kind. The domain can be changed from and to a list (l), a vector
@@ -18,6 +14,11 @@
 #' takes a list. This is often essential for composition with purrr
 #' functional tools. Since this is such a common function,
 #' `lift()` is provided as an alias for that operation.
+#'
+#' These functions were superseded in purrr 1.0.0 because we no longer believe
+#' "lifting" to be a mainstream operation, and we are striving to reduce purrr
+#' to its most useful core. Superseded functions will not go away, but will only
+#' receive critical bug fixes.
 #'
 #' @inheritParams as_vector
 #' @param ..f A function to lift.
@@ -67,8 +68,7 @@ NULL
 #' fun <- function(x) exec("sum", !!!x)
 #' exec(sum, 3, NA, 4, na.rm = TRUE)
 lift <- function(..f, ..., .unnamed = FALSE) {
-  # in 1.0.0
-  lifecycle::signal_stage("deprecated", "lift()")
+  lifecycle::deprecate_soft("1.0.0", "lift()")
 
   force(..f)
   defaults <- list(...)
@@ -87,8 +87,7 @@ lift_dl <- lift
 #' @rdname lift
 #' @export
 lift_dv <- function(..f, ..., .unnamed = FALSE) {
-  # in 1.0.0
-  lifecycle::signal_stage("deprecated", "lift_dv()")
+  lifecycle::deprecate_soft("1.0.0", "lift_dv()")
 
   force(..f)
   defaults <- list(...)
@@ -122,8 +121,7 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #' # now
 #' pmap_dbl(mtcars, \(...) mean(c(...)))
 lift_vl <- function(..f, ..., .type) {
-  # in 1.0.0
-  lifecycle::signal_stage("deprecated", "lift_vl()")
+  lifecycle::deprecate_soft("1.0.0", "lift_vl()")
 
   force(..f)
   defaults <- list(...)
@@ -138,8 +136,7 @@ lift_vl <- function(..f, ..., .type) {
 #' @rdname lift
 #' @export
 lift_vd <- function(..f, ..., .type) {
-  # in 1.0.0
-  lifecycle::signal_stage("deprecated", "lift_vd()")
+  lifecycle::deprecate_soft("1.0.0", "lift_vd()")
 
   force(..f)
   defaults <- list(...)
@@ -176,8 +173,7 @@ lift_vd <- function(..f, ..., .type) {
 #' mtcars |> pmap_lgl(\(...) any(c(...) > 200))
 #'
 lift_ld <- function(..f, ...) {
-  # in 1.0.0
-  lifecycle::signal_stage("deprecated", "lift_ld()")
+  lifecycle::deprecate_soft("1.0.0", "lift_ld()")
 
   force(..f)
   defaults <- list(...)
@@ -189,8 +185,7 @@ lift_ld <- function(..f, ...) {
 #' @rdname lift
 #' @export
 lift_lv <- function(..f, ...) {
-  # in 1.0.0
-  lifecycle::signal_stage("deprecated", "lift_lv()")
+  lifecycle::deprecate_soft("1.0.0", "lift_lv()")
 
   force(..f)
   defaults <- list(...)

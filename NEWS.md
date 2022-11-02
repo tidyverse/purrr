@@ -1,6 +1,6 @@
 # purrr (development version)
 
-## Lifecycle updates
+## Breaking changes
 
 ### Core purpose refinements
 
@@ -9,20 +9,14 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
-* Use of map functions with expressions, calls, and pairlists has been
-  deprecated (#961).
-
 * `update_list()` (#858) and `rerun()` (#877), and the use of tidyselect
   with `map_at()` and friends (#874) have been deprecated. These functions 
   use some form of non-standard evaluation which we now believe is a poor 
   fit for purrr.
 
-* The `lift_*` family of functions has been superseded. We no longer believe
+* The `lift_*` family of functions has been deprecated. We no longer believe
   these to be a good fit for purrr because they rely on a style of function 
   manipulation that is very uncommon in R code (#871).
-
-* `*_raw()` have been deprecated because they are of limited use and you can 
-  now use `map_vec()` instead (#903).
 
 * `prepend()`, `rdunif()`, `rbernoulli()`, `when()`, and `list_along()` have 
   all been deprecated (#925). It's now clear that they don't align with the
@@ -32,20 +26,17 @@
   splicing makes for good UI. Instead use `list2()` + `!!!` or
   `list_flatten()` (#869).
 
-### Flattening and simplification
+### Mapping
 
-* `flatten()` and friends are superseded in favour of `list_flatten()`, 
-  `list_c()`, `list_cbind()`, and `list_rbind()`.
+* Use of map functions with expressions, calls, and pairlists has been
+  deprecated (#961).
 
-* `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
-  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+* All map `_raw()` variants have been deprecated because they are of limited 
+  use and you can now use `map_vec()` instead (#903).
 
-* `simplify()`, `simplify_all()`, and `as_vector()` have been deprecated in
-  favour of `list_simplify()`. It provides a more consistent definition of 
-  simplification (#900).
-
-* `transpose()` has been superseded in favour of `list_transpose()` (#875).
-  It has built-in simplification.
+* In `map_chr()`, automatic conversion from logical, integer, and double to
+  character is now deprecated. Use an explicit `as.character()` if needed 
+  (#904).
 
 ### Deprecation next steps
 
@@ -66,7 +57,7 @@
   3.5 years later, we have decided to deprecate it as part of the API 
   refinement in the 1.0.0 release.
 
-* `map_call()` has been removed. It was made defunct in 0.3.0.
+* `map_call()` has been removed. It was made defunct in 0.3.0 (Jan 2019).
 
 ## New features
 
@@ -112,6 +103,19 @@
 * `accumulate()` and `accumulate2()` now both simplify the output if possible
   using vctrs. New arguments `simplify` and `ptype` allow you to control the 
   details of simplification (#774, #809).
+
+* `flatten()` and friends are superseded in favour of `list_flatten()`, 
+  `list_c()`, `list_cbind()`, and `list_rbind()`.
+
+* `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
+  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+
+* `simplify()`, `simplify_all()`, and `as_vector()` have been superseded in
+  favour of `list_simplify()`. It provides a more consistent definition of 
+  simplification (#900).
+
+* `transpose()` has been superseded in favour of `list_transpose()` (#875).
+  It has built-in simplification.
 
 ### Tidyverse consistency
 
