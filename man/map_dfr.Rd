@@ -41,11 +41,11 @@ Only applies to \verb{_dfr} variant.}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-These \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, and \code{\link[=pmap]{pmap()}} variant return data
+These \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, and \code{\link[=pmap]{pmap()}} variants return data
 frames by row-binding or column-binding the outputs together.
 
-The functions were superseded in purrr 1.0.0 because their names because
-they suggest they work like \verb{_lgl()}, \verb{_int()}, etc which require length
+The functions were superseded in purrr 1.0.0 because their names
+suggest they work like \verb{_lgl()}, \verb{_int()}, etc which require length
 1 outputs, but actually they return results of any size because the results
 are combined without any size checks. Additionally, they use
 \code{dplyr::bind_rows()} and \code{dplyr::bind_cols()} which require dplyr to be

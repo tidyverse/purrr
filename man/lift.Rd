@@ -59,7 +59,7 @@ takes a list. This is often essential for composition with purrr
 functional tools. Since this is such a common function,
 \code{lift()} is provided as an alias for that operation.
 
-These functions there superseded in purrr 1.0.0 because we no longer believe
+These functions were superseded in purrr 1.0.0 because we no longer believe
 "lifting" to be a mainstream operation, and we are striving to reduce purrr
 to its most useful core. Superseded functions will not go away, but will only
 receive critical bug fixes.
