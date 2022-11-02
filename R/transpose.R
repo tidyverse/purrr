@@ -3,10 +3,6 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' This function was superseded in purrr 1.0.0 because [list_transpose()]
-#' has a better name and can automatically simplify the output, as is commonly
-#' needed.
-#'
 #' `transpose()` turns a list-of-lists "inside-out"; it turns a pair of lists
 #' into a list of pairs, or a list of pairs into pair of lists. For example,
 #' if you had a list of length n where each component had values `a` and
@@ -14,9 +10,10 @@
 #' `b` that contained lists of length n. It's called transpose because
 #' \code{x[[1]][[2]]} is equivalent to \code{transpose(x)[[2]][[1]]}.
 #'
-#' Note that `transpose()` is its own inverse, much like the
-#' transpose operation on a matrix. You can get back the original
-#' input by transposing it twice.
+#' This function was superseded in purrr 1.0.0 because [list_transpose()]
+#' has a better name and can automatically simplify the output, as is commonly
+#' needed. Superseded functions will not go away, but will only receive critical
+#' bug fixes.
 #'
 #' @param .l A list of vectors to transpose. The first element is used as the
 #'   template; you'll get a warning if a subsequent element has a different
@@ -24,6 +21,9 @@
 #' @param .names For efficiency, `transpose()` bases the return structure on
 #'   the first component of `.l` by default. Specify `.names` to override this.
 #' @return A list with indexing transposed compared to `.l`.
+#'
+#'   `transpose()` is its own inverse, much like the transpose operation on a
+#'    matrix. You can get back the original input by transposing it twice.
 #' @keywords internal
 #' @export
 #' @examples

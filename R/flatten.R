@@ -1,10 +1,11 @@
-#' Flatten a list of lists into a simple vector.
+#' Flatten a list of lists into a simple vector
 #'
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' These functions were superseded in purrr 1.0.0 because their behavior was
-#' inconsistent.
+#' These functions were superseded in purrr 1.0.0 because their behaviour was
+#' inconsistent. Superseded functions will not go away, but will only receive
+#' critical bug fixes.
 #'
 #' * `flatten()` has been superseded by [list_flatten()].
 #' * `flatten_lgl()`, `flatten_int()`, `flatten_dbl()`, and `flatten_chr()`

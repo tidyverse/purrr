@@ -9,7 +9,7 @@
 \alias{flatten_dfr}
 \alias{flatten_dfc}
 \alias{flatten_df}
-\title{Flatten a list of lists into a simple vector.}
+\title{Flatten a list of lists into a simple vector}
 \usage{
 flatten(.x)
 
@@ -42,8 +42,9 @@ be installed.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-These functions were superseded in purrr 1.0.0 because their behavior was
-inconsistent.
+These functions were superseded in purrr 1.0.0 because their behaviour was
+inconsistent. Superseded functions will not go away, but will only receive
+critical bug fixes.
 \itemize{
 \item \code{flatten()} has been superseded by \code{\link[=list_flatten]{list_flatten()}}.
 \item \code{flatten_lgl()}, \code{flatten_int()}, \code{flatten_dbl()}, and \code{flatten_chr()}

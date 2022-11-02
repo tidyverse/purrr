@@ -41,15 +41,18 @@ Only applies to \verb{_dfr} variant.}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-These variants of \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, and \code{\link[=pmap]{pmap()}} return data
-frames. They were superseded in purrr 1.0.0 because they use
-\code{dplyr::bind_rows()} and \code{dplyr::bind_cols()} which require dplyr to be
-installed and have confusing semantics with edge cases. They also have
-suboptimal names because they suggest they work like \verb{_lgl()}, \verb{_int()}, etc
-which require length 1 outputs, but actually they return results of any size
-because the results are combined without any size checks.
+These \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=imap]{imap()}}, and \code{\link[=pmap]{pmap()}} variant return data
+frames by row-binding or column-binding the outputs together.
 
-We now recommend using \code{map()}, \code{map2()}, etc with \code{\link[=list_rbind]{list_rbind()}} and
+The functions were superseded in purrr 1.0.0 because their names because
+they suggest they work like \verb{_lgl()}, \verb{_int()}, etc which require length
+1 outputs, but actually they return results of any size because the results
+are combined without any size checks. Additionally, they use
+\code{dplyr::bind_rows()} and \code{dplyr::bind_cols()} which require dplyr to be
+installed and have confusing semantics with edge cases. Superseded
+functions will not go away, but will only receive critical bug fixes.
+
+Instead, we recommend using \code{map()}, \code{map2()}, etc with \code{\link[=list_rbind]{list_rbind()}} and
 \code{\link[=list_cbind]{list_cbind()}}. These use \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}} and \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}
 under the hood, and have names that more clearly reflect their semantics.
 }

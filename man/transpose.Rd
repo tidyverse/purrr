@@ -16,13 +16,12 @@ the first component of \code{.l} by default. Specify \code{.names} to override t
 }
 \value{
 A list with indexing transposed compared to \code{.l}.
+
+\code{transpose()} is its own inverse, much like the transpose operation on a
+matrix. You can get back the original input by transposing it twice.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
-
-This function was superseded in purrr 1.0.0 because \code{\link[=list_transpose]{list_transpose()}}
-has a better name and can automatically simplify the output, as is commonly
-needed.
 
 \code{transpose()} turns a list-of-lists "inside-out"; it turns a pair of lists
 into a list of pairs, or a list of pairs into pair of lists. For example,
@@ -31,9 +30,10 @@ if you had a list of length n where each component had values \code{a} and
 \code{b} that contained lists of length n. It's called transpose because
 \code{x[[1]][[2]]} is equivalent to \code{transpose(x)[[2]][[1]]}.
 
-Note that \code{transpose()} is its own inverse, much like the
-transpose operation on a matrix. You can get back the original
-input by transposing it twice.
+This function was superseded in purrr 1.0.0 because \code{\link[=list_transpose]{list_transpose()}}
+has a better name and can automatically simplify the output, as is commonly
+needed. Superseded functions will not go away, but will only receive critical
+bug fixes.
 }
 \examples{
 x <- map(1:5, \(i) list(x = runif(1), y = runif(5)))
