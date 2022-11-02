@@ -3,7 +3,7 @@
 #include "utils.h"
 #include <R_ext/Parse.h>
 
-SEXP caller_env() {
+SEXP current_env() {
   ParseStatus status;
   SEXP code = PROTECT(Rf_mkString("as.call(list(sys.frame, -1))"));
   SEXP parsed = PROTECT(R_ParseVector(code, -1, &status, R_NilValue));
@@ -46,7 +46,7 @@ void r_abort(const char* fmt, ...) {
   va_end(dots);
   buf[BUFSIZE - 1] = '\0';
 
-  SEXP env = PROTECT(caller_env());
+  SEXP env = PROTECT(current_env());
   r_abort0(env, buf);
 }
 
@@ -89,7 +89,7 @@ void stop_bad_type(SEXP x, const char* expected, const char* what, const char* a
   node = CDR(node);
   SET_TAG(node, Rf_install("arg"));
 
-  SEXP env = PROTECT(caller_env());
+  SEXP env = PROTECT(current_env());
   Rf_eval(call, env);
   while (1); // No return
 }
@@ -114,7 +114,7 @@ void stop_bad_element_type(SEXP x, R_xlen_t index, const char* expected, const c
   node = CDR(node);
   SET_TAG(node, Rf_install("arg"));
 
-  SEXP env = PROTECT(caller_env());
+  SEXP env = PROTECT(current_env());
   Rf_eval(call, env);
   while (1); // No return
 }
@@ -148,7 +148,7 @@ void stop_bad_element_length(SEXP x,
   node = CDR(node);
   SET_TAG(node, Rf_install("recycle"));
 
-  SEXP env = PROTECT(caller_env());
+  SEXP env = PROTECT(current_env());
   Rf_eval(call, env);
   while (1); // No return
 }
