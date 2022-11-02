@@ -99,6 +99,7 @@ reference:
   - flatten
   - lift
   - map_df
+  - simplify
   - transpose
 
 - title: Adverbs

@@ -46,7 +46,7 @@
 * `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
   appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
 
-* `simplify()`, `simplify_all()`, and `as_vector()` have been deprecated in
+* `simplify()`, `simplify_all()`, and `as_vector()` have been superseded in
   favour of `list_simplify()`. It provides a more consistent definition of 
   simplification (#900).
 
