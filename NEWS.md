@@ -9,9 +9,6 @@
   no longer think they are the right approach to solving this problem.
   See #768 for more information.
 
-* Use of map functions with expressions, calls, and pairlists has been
-  deprecated (#961).
-
 * `update_list()` (#858) and `rerun()` (#877), and the use of tidyselect
   with `map_at()` and friends (#874) have been deprecated. These functions 
   use some form of non-standard evaluation which we now believe is a poor 
@@ -21,9 +18,6 @@
   these to be a good fit for purrr because they rely on a style of function 
   manipulation that is very uncommon in R code (#871).
 
-* `*_raw()` have been deprecated because they are of limited use and you can 
-  now use `map_vec()` instead (#903).
-
 * `prepend()`, `rdunif()`, `rbernoulli()`, `when()`, and `list_along()` have 
   all been deprecated (#925). It's now clear that they don't align with the
   core purpose of purrr.
@@ -31,6 +25,18 @@
 * `splice()` is deprecated because we no longer believe that automatic 
   splicing makes for good UI. Instead use `list2()` + `!!!` or
   `list_flatten()` (#869).
+
+### Mapping
+
+* Use of map functions with expressions, calls, and pairlists has been
+  deprecated (#961).
+
+* All map `_raw()` variants have been deprecated because they are of limited 
+  use and you can now use `map_vec()` instead (#903).
+
+* In `map_chr()`, automatic conversion from logical, integer, and double to
+  character is now depreacted. Use an explicit `as.character()` if needed 
+  (#904).
 
 ### Flattening and simplification
 
