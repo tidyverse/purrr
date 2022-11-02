@@ -78,7 +78,12 @@ test_that("can modify non-vector lists", {
 })
 
 test_that("modifying data frame ignores [<- methods", {
-  df <- function(...) structure(data.frame(...), class = c("df", "data.frame"))
+  df <- function(...) {
+    structure(
+      data.frame(..., stringsAsFactors = FALSE),
+      class = c("df", "data.frame")
+    )
+  }
   local_bindings(
     "[<-.df" = function(...) stop("Forbidden"),
     .env = globalenv()
