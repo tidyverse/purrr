@@ -62,14 +62,13 @@ double integer_to_real(int x) {
 }
 
 void deprecate_to_char(const char* type_char) {
-  SEXP env = PROTECT(current_env());
   SEXP type = PROTECT(Rf_mkString(type_char));
 
   SEXP fun = PROTECT(Rf_lang3(Rf_install(":::"), Rf_install("purrr"), Rf_install("deprecate_to_char")));
-  SEXP call = PROTECT(Rf_lang3(fun, type, env));
+  SEXP call = PROTECT(Rf_lang2(fun, type));
 
   Rf_eval(call, R_GlobalEnv);
-  UNPROTECT(4);
+  UNPROTECT(3);
 }
 
 SEXP logical_to_char(int x, SEXP from, SEXP to, int i) {

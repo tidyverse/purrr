@@ -147,6 +147,7 @@ map_dbl <- function(.x, .f, ..., .progress = FALSE) {
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
+  local_deprecation_user_env()
   map_("character", .x, .f, ..., .progress = .progress)
 }
 

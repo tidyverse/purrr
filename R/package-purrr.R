@@ -5,3 +5,5 @@
 #' @importFrom lifecycle deprecated
 #' @useDynLib purrr, .registration = TRUE
 "_PACKAGE"
+
+the <- new_environment()

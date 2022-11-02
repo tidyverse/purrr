@@ -23,6 +23,10 @@
 
     Code
       map_chr(1:4, identity)
+    Condition
+      Warning:
+      Automatic coercion from integer to character was deprecated in purrr 1.0.0.
+      i Please use an explicit call to as.character() within map_chr() instead.
     Output
       [1] "1" "2" "3" "4"
 
