@@ -97,7 +97,6 @@ reference:
      get any new features and will only receive critical bug fixes.
   contents:
   - flatten
-  - lift
   - map_df
   - simplify
   - transpose

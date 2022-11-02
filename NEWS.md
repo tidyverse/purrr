@@ -14,7 +14,7 @@
   use some form of non-standard evaluation which we now believe is a poor 
   fit for purrr.
 
-* The `lift_*` family of functions has been superseded. We no longer believe
+* The `lift_*` family of functions has been deprecated. We no longer believe
   these to be a good fit for purrr because they rely on a style of function 
   manipulation that is very uncommon in R code (#871).
 
