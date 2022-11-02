@@ -78,18 +78,13 @@ test_that("can modify non-vector lists", {
 })
 
 test_that("modifying data frame ignores [<- methods", {
-  df <- function(...) {
-    structure(
-      data_frame(...),
-      class = c("df", "data.frame")
-    )
-  }
+  df <- function(...) structure(data_frame(...), class = c("df", "data.frame"))
   local_bindings(
     "[<-.df" = function(...) stop("Forbidden"),
     .env = globalenv()
   )
 
-  x <- df(list(x = 1, y = "x"))
+  x <- df(x = 1, y = "x")
   expect_equal(modify(x, ~ 2), df(x = 2, y = 2))
   expect_equal(modify_if(x, is.character, ~ 2), df(x = 1, y = 2))
   expect_equal(modify_at(x, "y", ~ 2), df(x = 1, y = 2))
