@@ -29,4 +29,8 @@
       i Please use an explicit call to `as.character()` within `map_chr()` instead.
     Output
       [1] "1" "2" "3" "4"
+    Code
+      indirect()
+    Output
+      [1] "1" "2" "3" "4"
 

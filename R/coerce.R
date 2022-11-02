@@ -23,9 +23,9 @@ deprecate_to_char <- function(type) {
   )
 }
 
-local_deprecation_user_env <- function(frame = caller_env()) {
+local_deprecation_user_env <- function(user_env = caller_env(2), frame = caller_env()) {
   local_bindings(
-    deprecation_user_env = frame,
+    deprecation_user_env = user_env,
     .env = the,
     .frame = frame
   )
