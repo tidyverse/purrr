@@ -43,6 +43,19 @@ test_that("can coerce to character vectors", {
   expect_equal(coerce_chr("x"), "x")
 })
 
+test_that("error captures correct env", {
+  indirect <- function() {
+    purrr::map_chr(1:4, identity)
+  }
+  environment(indirect) <- ns_env("rlang")
+
+  expect_snapshot({
+    map_chr(1:4, identity)
+    indirect()
+  })
+
+})
+
 test_that("warns once per vector", {
   expect_warning(expect_warning(coerce_chr(1:5)), NA)
 })
