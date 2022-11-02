@@ -1,16 +1,35 @@
 # Revdeps
 
-## New problems (35)
+## Failed to check (13)
+
+|package      |version |error |warning |note |
+|:------------|:-------|:-----|:-------|:----|
+|elbird       |0.2.5   |1     |        |     |
+|ggPMX        |?       |      |        |     |
+|ggraptR      |1.3     |1     |        |     |
+|ImputeRobust |?       |      |        |     |
+|NA           |?       |      |        |     |
+|NA           |?       |      |        |     |
+|NA           |?       |      |        |     |
+|NA           |?       |      |        |     |
+|NA           |?       |      |        |     |
+|Platypus     |?       |      |        |     |
+|NA           |?       |      |        |     |
+|rdddr        |1.0.0   |1     |        |1    |
+|NA           |?       |      |        |     |
+
+## New problems (37)
 
 |package             |version |error  |warning |note     |
 |:-------------------|:-------|:------|:-------|:--------|
+|[arrow](problems.md#arrow)|10.0.0  |__+1__ |        |2        |
 |[broom.helpers](problems.md#broomhelpers)|1.9.0   |__+1__ |__+1__  |         |
 |[cattonum](problems.md#cattonum)|0.0.5   |       |        |1 __+1__ |
 |[cheese](problems.md#cheese)|0.1.1   |__+1__ |__+1__  |         |
 |[codebook](problems.md#codebook)|0.9.2   |       |__+1__  |3        |
 |[connectapi](problems.md#connectapi)|0.1.2   |__+1__ |        |         |
 |[crosstable](problems.md#crosstable)|0.5.0   |__+2__ |__+1__  |2        |
-|[csvwr](problems.md#csvwr)|0.1.6   |__+1__ |__+1__  |         |
+|[csvwr](problems.md#csvwr)|0.1.6   |__+1__ |        |         |
 |[cubelyr](problems.md#cubelyr)|1.0.1   |__+1__ |        |         |
 |[DataFakeR](problems.md#datafaker)|0.1.2   |__+1__ |__+1__  |1        |
 |[dibble](problems.md#dibble)|0.2.1   |__+1__ |        |         |
@@ -22,10 +41,13 @@
 |[gwasrapidd](problems.md#gwasrapidd)|0.99.13 |__+1__ |        |         |
 |[healthcareai](problems.md#healthcareai)|2.5.1   |       |        |__+1__   |
 |[ipmr](problems.md#ipmr)|0.0.5   |__+1__ |        |2        |
-|[jpmesh](problems.md#jpmesh)|2.1.0   |__+2__ |__+1__  |1        |
+|[multinma](problems.md#multinma)|0.5.0   |__+1__ |        |2        |
+|[naive](problems.md#naive)|1.2.0   |__+1__ |        |         |
+|[nestedmodels](problems.md#nestedmodels)|1.0.1   |__+2__ |__+1__  |         |
 |[partialised](problems.md#partialised)|0.1.0   |__+1__ |        |         |
-|[PHEindicatormethods](problems.md#pheindicatormethods)|1.4.1   |__+2__ |        |         |
-|[RCLabels](problems.md#rclabels)|0.1.1   |__+1__ |        |         |
+|[PHEindicatormethods](problems.md#pheindicatormethods)|1.4.1   |__+1__ |        |         |
+|[psychmeta](problems.md#psychmeta)|2.6.5   |__+2__ |        |         |
+|[rATTAINS](problems.md#rattains)|0.1.3   |__+1__ |__+1__  |         |
 |[rearrr](problems.md#rearrr)|0.3.1   |__+1__ |        |         |
 |[recipes](problems.md#recipes)|1.0.2   |__+2__ |        |1        |
 |[ruta](problems.md#ruta)|1.1.0   |__+2__ |__+1__  |1        |
@@ -36,7 +58,5 @@
 |[skimr](problems.md#skimr)|2.1.4   |__+2__ |__+1__  |         |
 |[tidycmprsk](problems.md#tidycmprsk)|0.2.0   |__+2__ |        |         |
 |[tidypredict](problems.md#tidypredict)|0.4.9   |__+1__ |__+1__  |         |
-|[tidytext](problems.md#tidytext)|0.3.4   |__+1__ |        |         |
-|[tidywikidatar](problems.md#tidywikidatar)|0.5.4   |__+1__ |        |         |
 |[utile.tools](problems.md#utiletools)|0.2.7   |__+1__ |        |         |
 
