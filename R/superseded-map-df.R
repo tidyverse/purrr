@@ -3,11 +3,11 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
-#' These [map()], [map2()], [imap()], and [pmap()] variant return data
+#' These [map()], [map2()], [imap()], and [pmap()] variants return data
 #' frames by row-binding or column-binding the outputs together.
 #'
-#' The functions were superseded in purrr 1.0.0 because their names because
-#' they suggest they work like `_lgl()`, `_int()`, etc which require length
+#' The functions were superseded in purrr 1.0.0 because their names
+#' suggest they work like `_lgl()`, `_int()`, etc which require length
 #' 1 outputs, but actually they return results of any size because the results
 #' are combined without any size checks. Additionally, they use
 #' `dplyr::bind_rows()` and `dplyr::bind_cols()` which require dplyr to be
