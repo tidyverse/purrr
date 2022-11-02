@@ -1,6 +1,6 @@
 # purrr (development version)
 
-## Lifecycle updates
+## Breaking changes
 
 ### Core purpose refinements
 
@@ -35,23 +35,8 @@
   use and you can now use `map_vec()` instead (#903).
 
 * In `map_chr()`, automatic conversion from logical, integer, and double to
-  character is now depreacted. Use an explicit `as.character()` if needed 
+  character is now deprecated. Use an explicit `as.character()` if needed 
   (#904).
-
-### Flattening and simplification
-
-* `flatten()` and friends are superseded in favour of `list_flatten()`, 
-  `list_c()`, `list_cbind()`, and `list_rbind()`.
-
-* `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
-  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
-
-* `simplify()`, `simplify_all()`, and `as_vector()` have been superseded in
-  favour of `list_simplify()`. It provides a more consistent definition of 
-  simplification (#900).
-
-* `transpose()` has been superseded in favour of `list_transpose()` (#875).
-  It has built-in simplification.
 
 ### Deprecation next steps
 
@@ -72,7 +57,7 @@
   3.5 years later, we have decided to deprecate it as part of the API 
   refinement in the 1.0.0 release.
 
-* `map_call()` has been removed. It was made defunct in 0.3.0.
+* `map_call()` has been removed. It was made defunct in 0.3.0 (Jan 2019).
 
 ## New features
 
@@ -118,6 +103,19 @@
 * `accumulate()` and `accumulate2()` now both simplify the output if possible
   using vctrs. New arguments `simplify` and `ptype` allow you to control the 
   details of simplification (#774, #809).
+
+* `flatten()` and friends are superseded in favour of `list_flatten()`, 
+  `list_c()`, `list_cbind()`, and `list_rbind()`.
+
+* `*_dfc()` and `*_dfr()` have been superseded in favour of using the 
+  appropriate map function along with `list_rbind()` or `list_cbind()` (#912).
+
+* `simplify()`, `simplify_all()`, and `as_vector()` have been superseded in
+  favour of `list_simplify()`. It provides a more consistent definition of 
+  simplification (#900).
+
+* `transpose()` has been superseded in favour of `list_transpose()` (#875).
+  It has built-in simplification.
 
 ### Tidyverse consistency
 
