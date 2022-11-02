@@ -80,7 +80,7 @@ test_that("can modify non-vector lists", {
 test_that("modifying data frame ignores [<- methods", {
   df <- function(...) {
     structure(
-      data.frame(..., stringsAsFactors = FALSE),
+      data_frame(...),
       class = c("df", "data.frame")
     )
   }
