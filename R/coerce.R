@@ -17,7 +17,7 @@ deprecate_to_char <- function(type) {
   lifecycle::deprecate_warn(
     "1.0.0",
     I(paste0("Automatic coercion from ", type, " to character")),
-    I("an explicit call to as.character() within map_chr()"),
+    I("an explicit call to `as.character()` within `map_chr()`"),
     always = TRUE,
     user_env = the$deprecation_user_env
   )
