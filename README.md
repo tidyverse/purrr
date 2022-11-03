@@ -32,8 +32,8 @@ install.packages("tidyverse")
 install.packages("purrr")
 
 # Or the the development version from GitHub:
-# install.packages("devtools")
-devtools::install_github("tidyverse/purrr")
+# install.packages("remotes")
+remotes::install_github("tidyverse/purrr")
 ```
 
 ## Cheatsheet
@@ -61,16 +61,16 @@ mtcars |>
 This example illustrates some of the advantages of purrr functions over
 the equivalents in base R:
 
--   The first argument is always the data, so purrr works naturally with
-    the pipe.
+- The first argument is always the data, so purrr works naturally with
+  the pipe.
 
--   All purrr functions are type-stable. They always return the
-    advertised output type (`map()` returns lists; `map_dbl()` returns
-    double vectors), or they throw an error.
+- All purrr functions are type-stable. They always return the advertised
+  output type (`map()` returns lists; `map_dbl()` returns double
+  vectors), or they throw an error.
 
--   All `map()` functions accept functions (named, anonymous, and
-    lambda), character vector (used to extract components by name), or
-    numeric vectors (used to extract by position).
+- All `map()` functions accept functions (named, anonymous, and lambda),
+  character vector (used to extract components by name), or numeric
+  vectors (used to extract by position).
 
 ------------------------------------------------------------------------
 

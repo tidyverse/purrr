@@ -34,8 +34,8 @@ install.packages("tidyverse")
 install.packages("purrr")
 
 # Or the the development version from GitHub:
-# install.packages("devtools")
-devtools::install_github("tidyverse/purrr")
+# install.packages("remotes")
+remotes::install_github("tidyverse/purrr")
 ```
 
 ## Cheatsheet
