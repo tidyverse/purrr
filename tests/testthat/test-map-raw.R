@@ -8,7 +8,7 @@ test_that("_raw funtions are deprecated", {
   })
 })
 
-test_that("multiplication works", {
+test_that("_raw functions still work", {
   local_options(lifecycle_verbosity = "quiet")
   expect_equal(map_raw("a", charToRaw), charToRaw("a"))
   expect_identical(map_raw(set_names(list()), identity), named(raw()))
