@@ -74,6 +74,29 @@ test_that("can work with S4 vector objects", {
   expect_equal(map(x2, identity), list(x = 1, y = 2, z = 3))
 })
 
+test_that("preserves names of 1d arrays", {
+  v <- array(list(1, 2), dim = 2, dimnames = list(c("a", "b")))
+  expect_equal(map_dbl(v, identity), c(a = 1, b = 2))
+})
+
+test_that("can work with output of by", {
+  df <- data.frame(x = 1:2)
+
+  # 1d keeps names
+  x <- by(df, c("a", "b"), function(df) df$x)
+  expect_equal(map_dbl(x, identity), c(a = 1, b = 2))
+
+  x <- by(df, c("a", "b"), function(df) df$x, simplify = FALSE)
+  expect_equal(map_dbl(x, identity), c(a = 1, b = 2))
+
+  # 2d loses names
+  x <- by(df, list(c("a", "b"), c("a", "b")), function(df) df$x)
+  expect_equal(map_dbl(x, identity), c(1, NA, NA, 2))
+
+  x <- by(df, list(c("a", "b"), c("a", "b")), function(df) df$x, simplify = FALSE)
+  expect_equal(map(x, identity), list(1, NULL, NULL, 2))
+})
+
 test_that("can work with lubridate periods", {
   days <- lubridate::days(1:2)
 
