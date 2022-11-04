@@ -102,6 +102,10 @@ vctrs_list_compat <- function(x, error_call = caller_env(), error_arg = caller_a
 # Treat data frames and S3 scalar lists like bare lists.
 # But ensure rcrd vctrs retain their class.
 vctrs_vec_compat <- function(x) {
+  if (inherits(x, "by")) {
+    class(x) <- NULL
+  }
+
   if (is.null(x)) {
     list()
   } else if (is.pairlist(x)) {
@@ -110,7 +114,7 @@ vctrs_vec_compat <- function(x) {
       details = "Please coerce explicitly with `as.list()`"
     )
     as.list(x)
-  } else if (is.array(x)) {
+  } else if (is.array(x) && length(dim(x)) > 1) {
     dim(x) <- NULL
     x
   } else if (is_call(x) || is.expression(x)) {
