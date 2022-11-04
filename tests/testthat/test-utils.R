@@ -83,17 +83,17 @@ test_that("can work with output of by", {
   df <- data.frame(x = 1:2)
 
   # 1d keeps names
-  x <- by(df, c("a", "b"), \(df) df$x)
+  x <- by(df, c("a", "b"), function(df) df$x)
   expect_equal(map_dbl(x, identity), c(a = 1, b = 2))
 
-  x <- by(df, c("a", "b"), \(df) df$x, simplify = FALSE)
+  x <- by(df, c("a", "b"), function(df) df$x, simplify = FALSE)
   expect_equal(map_dbl(x, identity), c(a = 1, b = 2))
 
   # 2d loses names
-  x <- by(df, list(c("a", "b"), c("a", "b")), \(df) df$x)
+  x <- by(df, list(c("a", "b"), c("a", "b")), function(df) df$x)
   expect_equal(map_dbl(x, identity), c(1, NA, NA, 2))
 
-  x <- by(df, list(c("a", "b"), c("a", "b")), \(df) df$x, simplify = FALSE)
+  x <- by(df, list(c("a", "b"), c("a", "b")), function(df) df$x, simplify = FALSE)
   expect_equal(map(x, identity), list(1, NULL, NULL, 2))
 })
 
