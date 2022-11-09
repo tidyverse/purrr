@@ -5,5 +5,5 @@
     Condition
       Warning:
       `when()` was deprecated in purrr 1.0.0.
-      i Please use `dplyr::case_when()` instead.
+      i Please use `if` instead.
 

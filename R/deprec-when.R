@@ -5,7 +5,8 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' This function was deprecated in purrr 1.0.0 because it's not related to the
-#' core purpose of purrr. You can now use [dplyr::case_when()] instead.
+#' core purpose of purrr. You can pull your code our of a pipe and use regular
+#' `if` statements instead.
 #'
 #' `when` is a flavour of pattern matching (or an if-else abstraction) in
 #' which a value is matched against a sequence of condition-action sets. When a
@@ -42,28 +43,18 @@
 #'     ~ 0
 #'   )
 #'
-#' 1:10 %>%
-#'   when(
-#'     sum(.) <=   x ~ sum(.),
-#'     sum(.) <= 2*x ~ sum(.)/2,
-#'     ~ 0,
-#'     x = 60
-#'   )
-#'
-#' iris %>%
-#'   subset(Sepal.Length > 10) %>%
-#'   when(
-#'     nrow(.) > 0 ~ .,
-#'     ~ head(iris, 10)
-#'   )
-#'
-#' iris %>%
-#'   head %>%
-#'   when(nrow(.) < 10 ~ .,
-#'        ~ stop("Expected fewer than 10 rows."))
+#' # now
+#' x <- 1:10
+#' if (sum(x) < 10) {
+#'   sum(x)
+#' } else if (sum(x) < 100) {
+#'   sum(x) / 2
+#' } else {
+#'   0
+#' }
 #' @export
 when <- function(., ...) {
-  lifecycle::deprecate_soft("1.0.0", "when()", "dplyr::case_when()")
+  lifecycle::deprecate_soft("1.0.0", "when()", I("`if`"))
 
   dots   <- list(...)
   names  <- names(dots)

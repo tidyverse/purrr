@@ -28,7 +28,8 @@ as opposed to the \code{ifelse} function.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 This function was deprecated in purrr 1.0.0 because it's not related to the
-core purpose of purrr. You can now use \code{\link[dplyr:case_when]{dplyr::case_when()}} instead.
+core purpose of purrr. You can pull your code our of a pipe and use regular
+\code{if} statements instead.
 
 \code{when} is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets. When a
@@ -43,24 +44,14 @@ action is returned.
     ~ 0
   )
 
-1:10 \%>\%
-  when(
-    sum(.) <=   x ~ sum(.),
-    sum(.) <= 2*x ~ sum(.)/2,
-    ~ 0,
-    x = 60
-  )
-
-iris \%>\%
-  subset(Sepal.Length > 10) \%>\%
-  when(
-    nrow(.) > 0 ~ .,
-    ~ head(iris, 10)
-  )
-
-iris \%>\%
-  head \%>\%
-  when(nrow(.) < 10 ~ .,
-       ~ stop("Expected fewer than 10 rows."))
+# now
+x <- 1:10
+if (sum(x) < 10) {
+  sum(x)
+} else if (sum(x) < 100) {
+  sum(x) / 2
+} else {
+  0
+}
 }
 \keyword{internal}
