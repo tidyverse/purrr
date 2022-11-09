@@ -71,9 +71,3 @@ the equivalents in base R:
 - All `map()` functions accept functions (named, anonymous, and lambda),
   character vector (used to extract components by name), or numeric
   vectors (used to extract by position).
-
-------------------------------------------------------------------------
-
-Please note that this project is released with a [Contributor Code of
-Conduct](https://purrr.tidyverse.org/CODE_OF_CONDUCT). By participating
-in this project you agree to abide by its terms.
