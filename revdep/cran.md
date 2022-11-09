@@ -1,17 +1,14 @@
 ## revdepcheck results
 
-We checked 1407 reverse dependencies (1400 from CRAN + 7 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 1415 reverse dependencies (1408 from CRAN + 7 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 37 new problems
- * We failed to check 6 packages
+ * We saw 26 new problems
+ * We failed to check 9 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
-
-* arrow
-  checking tests ... ERROR
 
 * broom.helpers
   checking tests ... ERROR
@@ -24,21 +21,10 @@ Issues with CRAN packages are summarised below.
   checking examples ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* codebook
-  checking re-building of vignette outputs ... WARNING
-
 * connectapi
   checking tests ... ERROR
 
-* crosstable
-  checking examples ... ERROR
-  checking tests ... ERROR
-  checking re-building of vignette outputs ... WARNING
-
 * csvwr
-  checking tests ... ERROR
-
-* cubelyr
   checking tests ... ERROR
 
 * DataFakeR
@@ -58,9 +44,6 @@ Issues with CRAN packages are summarised below.
 * grizbayr
   checking tests ... ERROR
 
-* gtreg
-  checking tests ... ERROR
-
 * gtsummary
   checking tests ... ERROR
 
@@ -73,37 +56,18 @@ Issues with CRAN packages are summarised below.
 * ipmr
   checking tests ... ERROR
 
-* multinma
-  checking tests ... ERROR
-
 * naive
-  checking examples ... ERROR
-
-* nestedmodels
-  checking examples ... ERROR
   checking tests ... ERROR
+
+* openalexR
   checking re-building of vignette outputs ... WARNING
 
-* partialised
-  checking tests ... ERROR
-
 * PHEindicatormethods
-  checking tests ... ERROR
-
-* psychmeta
-  checking examples ... ERROR
   checking tests ... ERROR
 
 * rATTAINS
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
-
-* rearrr
-  checking tests ... ERROR
-
-* recipes
-  checking examples ... ERROR
-  checking tests ... ERROR
 
 * ruta
   checking examples ... ERROR
@@ -128,10 +92,6 @@ Issues with CRAN packages are summarised below.
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* tidycmprsk
-  checking examples ... ERROR
-  checking tests ... ERROR
-
 * tidypredict
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
@@ -141,9 +101,12 @@ Issues with CRAN packages are summarised below.
 
 ### Failed to check
 
-* elbird       (NA)
-* ggPMX        (NA)
-* ggraptR      (NA)
-* ImputeRobust (NA)
-* Platypus     (NA)
-* rdddr        (NA)
+* echor          (NA)
+* elbird         (NA)
+* ggPMX          (NA)
+* immcp          (NA)
+* ImputeRobust   (NA)
+* pathwayTMB     (NA)
+* Platypus       (NA)
+* RVA            (NA)
+* youtubecaption (NA)

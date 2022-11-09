@@ -1,3 +1,79 @@
+# echor
+
+<details>
+
+* Version: 0.1.6
+* GitHub: https://github.com/mps9506/echor
+* Source code: https://github.com/cran/echor
+* Date/Publication: 2021-08-21 04:40:02 UTC
+* Number of recursive dependencies: 123
+
+Run `revdepcheck::cloud_details(, "echor")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/echor/new/echor.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘echor/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘echor’ version ‘0.1.6’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+...
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+  ‘introduction.Rmd’ using ‘UTF-8’... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 1 NOTE
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/echor/old/echor.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘echor/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘echor’ version ‘0.1.6’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+...
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+  ‘introduction.Rmd’ using ‘UTF-8’... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 1 NOTE
+
+
+
+
+
+```
 # elbird
 
 <details>
@@ -90,7 +166,7 @@ Run `revdepcheck::cloud_details(, "ggPMX")` for more info
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
 ...
-  [ FAIL 1 | WARN 12 | SKIP 8 | PASS 327 ]
+  [ FAIL 1 | WARN 14 | SKIP 8 | PASS 327 ]
   Error: Test failures
   Execution halted
 * checking for unstated dependencies in vignettes ... OK
@@ -120,7 +196,7 @@ Status: 1 ERROR, 2 NOTEs
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
 ...
-  [ FAIL 1 | WARN 11 | SKIP 8 | PASS 327 ]
+  [ FAIL 1 | WARN 13 | SKIP 8 | PASS 327 ]
   Error: Test failures
   Execution halted
 * checking for unstated dependencies in vignettes ... OK
@@ -136,61 +212,69 @@ Status: 1 ERROR, 2 NOTEs
 
 
 ```
-# ggraptR
+# immcp
 
 <details>
 
-* Version: 1.3
-* GitHub: https://github.com/cargomoose/raptR
-* Source code: https://github.com/cran/ggraptR
-* Date/Publication: 2020-06-24 05:00:03 UTC
-* Number of recursive dependencies: 66
+* Version: 1.0.3
+* GitHub: https://github.com/YuanlongHu/immcp
+* Source code: https://github.com/cran/immcp
+* Date/Publication: 2022-05-12 05:50:02 UTC
+* Number of recursive dependencies: 195
 
-Run `revdepcheck::cloud_details(, "ggraptR")` for more info
+Run `revdepcheck::cloud_details(, "immcp")` for more info
 
 </details>
 
-## In both
-
-*   checking whether package ‘ggraptR’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/tmp/workdir/ggraptR/new/ggraptR.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
+## Error before installation
 
 ### Devel
 
 ```
-* installing *source* package ‘ggraptR’ ...
-** package ‘ggraptR’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error: package or namespace load failed for ‘dplyr’ in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
- there is no package called ‘pkgconfig’
-Execution halted
-ERROR: lazy loading failed for package ‘ggraptR’
-* removing ‘/tmp/workdir/ggraptR/new/ggraptR.Rcheck/ggraptR’
+* using log directory ‘/tmp/workdir/immcp/new/immcp.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘immcp/DESCRIPTION’ ... OK
+* this is package ‘immcp’ version ‘1.0.3’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘clusterProfiler’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
 
 
 ```
 ### CRAN
 
 ```
-* installing *source* package ‘ggraptR’ ...
-** package ‘ggraptR’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-Error: package or namespace load failed for ‘dplyr’ in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
- there is no package called ‘pkgconfig’
-Execution halted
-ERROR: lazy loading failed for package ‘ggraptR’
-* removing ‘/tmp/workdir/ggraptR/old/ggraptR.Rcheck/ggraptR’
+* using log directory ‘/tmp/workdir/immcp/old/immcp.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘immcp/DESCRIPTION’ ... OK
+* this is package ‘immcp’ version ‘1.0.3’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘clusterProfiler’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
 
 
 ```
@@ -437,6 +521,74 @@ Run `revdepcheck::cloud_details(, "NA")` for more info
 
 
 ```
+# pathwayTMB
+
+<details>
+
+* Version: 0.1.3
+* GitHub: NA
+* Source code: https://github.com/cran/pathwayTMB
+* Date/Publication: 2022-08-09 13:50:02 UTC
+* Number of recursive dependencies: 221
+
+Run `revdepcheck::cloud_details(, "pathwayTMB")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/pathwayTMB/new/pathwayTMB.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘pathwayTMB/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘pathwayTMB’ version ‘0.1.3’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘clusterProfiler’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/pathwayTMB/old/pathwayTMB.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘pathwayTMB/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘pathwayTMB’ version ‘0.1.3’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘clusterProfiler’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
 # Platypus
 
 <details>
@@ -445,7 +597,7 @@ Run `revdepcheck::cloud_details(, "NA")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/Platypus
 * Date/Publication: 2022-08-15 07:20:20 UTC
-* Number of recursive dependencies: 353
+* Number of recursive dependencies: 354
 
 Run `revdepcheck::cloud_details(, "Platypus")` for more info
 
@@ -467,16 +619,16 @@ Run `revdepcheck::cloud_details(, "Platypus")` for more info
 * package encoding: UTF-8
 * checking package namespace information ... OK
 ...
-* checking installed files from ‘inst/doc’ ... OK
-* checking files in ‘vignettes’ ... OK
-* checking examples ... OK
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes in ‘inst/doc’ ... OK
-* checking running R code from vignettes ... NONE
-  ‘PlatypusV3_agedCNS.Rmd’ using ‘UTF-8’... OK
-* checking re-building of vignette outputs ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘ggtree’
+
+Packages suggested but not available for checking:
+  'harmony', 'Matrix.utils', 'monocle3', 'ProjecTILs', 'SeuratWrappers'
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
 * DONE
-Status: 1 NOTE
+Status: 1 ERROR
 
 
 
@@ -497,41 +649,198 @@ Status: 1 NOTE
 * package encoding: UTF-8
 * checking package namespace information ... OK
 ...
+* checking package dependencies ... ERROR
+Package required but not available: ‘ggtree’
+
+Packages suggested but not available for checking:
+  'harmony', 'Matrix.utils', 'monocle3', 'ProjecTILs', 'SeuratWrappers'
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+# NA
+
+<details>
+
+* Version: NA
+* GitHub: NA
+* Source code: https://github.com/cran/NA
+* Number of recursive dependencies: 0
+
+Run `revdepcheck::cloud_details(, "NA")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+
+
+
+
+
+
+```
+# RVA
+
+<details>
+
+* Version: 0.0.5
+* GitHub: https://github.com/THERMOSTATS/RVA
+* Source code: https://github.com/cran/RVA
+* Date/Publication: 2021-11-01 21:40:02 UTC
+* Number of recursive dependencies: 208
+
+Run `revdepcheck::cloud_details(, "RVA")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/RVA/new/RVA.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘RVA/DESCRIPTION’ ... OK
+* this is package ‘RVA’ version ‘0.0.5’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘clusterProfiler’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/RVA/old/RVA.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘RVA/DESCRIPTION’ ... OK
+* this is package ‘RVA’ version ‘0.0.5’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘clusterProfiler’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+# NA
+
+<details>
+
+* Version: NA
+* GitHub: NA
+* Source code: https://github.com/cran/NA
+* Number of recursive dependencies: 0
+
+Run `revdepcheck::cloud_details(, "NA")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+
+
+
+
+
+
+```
+# youtubecaption
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/jooyoungseo/youtubecaption
+* Source code: https://github.com/cran/youtubecaption
+* Date/Publication: 2020-05-15 05:50:02 UTC
+* Number of recursive dependencies: 57
+
+Run `revdepcheck::cloud_details(, "youtubecaption")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/youtubecaption/new/youtubecaption.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘youtubecaption/DESCRIPTION’ ... OK
+* this is package ‘youtubecaption’ version ‘1.0.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+...
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
 * checking examples ... OK
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
-  ‘PlatypusV3_agedCNS.Rmd’ using ‘UTF-8’... OK
+  ‘youtubecaption_vignette.Rmd’ using ‘UTF-8’... OK
 * checking re-building of vignette outputs ... OK
 * DONE
-Status: 1 NOTE
-
-
-
-
-
-```
-# NA
-
-<details>
-
-* Version: NA
-* GitHub: NA
-* Source code: https://github.com/cran/NA
-* Number of recursive dependencies: 0
-
-Run `revdepcheck::cloud_details(, "NA")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-
+Status: 2 NOTEs
 
 
 
@@ -541,109 +850,27 @@ Run `revdepcheck::cloud_details(, "NA")` for more info
 ### CRAN
 
 ```
-
-
-
-
-
-
-```
-# rdddr
-
-<details>
-
-* Version: 1.0.0
-* GitHub: NA
-* Source code: https://github.com/cran/rdddr
-* Date/Publication: 2022-07-03 09:20:02 UTC
-* Number of recursive dependencies: 203
-
-Run `revdepcheck::cloud_details(, "rdddr")` for more info
-
-</details>
-
-## In both
-
-*   checking whether package ‘rdddr’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/tmp/workdir/rdddr/new/rdddr.Rcheck/00install.out’ for details.
-    ```
-
-*   checking package dependencies ... NOTE
-    ```
-    Package suggested but not available for checking: ‘CausalQueries’
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘rdddr’ ...
-** package ‘rdddr’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘gtable’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘rdddr’
-* removing ‘/tmp/workdir/rdddr/new/rdddr.Rcheck/rdddr’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘rdddr’ ...
-** package ‘rdddr’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** byte-compile and prepare package for lazy loading
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  there is no package called ‘gtable’
-Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
-Execution halted
-ERROR: lazy loading failed for package ‘rdddr’
-* removing ‘/tmp/workdir/rdddr/old/rdddr.Rcheck/rdddr’
-
-
-```
-# NA
-
-<details>
-
-* Version: NA
-* GitHub: NA
-* Source code: https://github.com/cran/NA
-* Number of recursive dependencies: 0
-
-Run `revdepcheck::cloud_details(, "NA")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-
-
-
-
-
-
-```
-### CRAN
-
-```
-
+* using log directory ‘/tmp/workdir/youtubecaption/old/youtubecaption.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘youtubecaption/DESCRIPTION’ ... OK
+* this is package ‘youtubecaption’ version ‘1.0.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+...
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+  ‘youtubecaption_vignette.Rmd’ using ‘UTF-8’... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 2 NOTEs
 
 
 
