@@ -13,6 +13,11 @@ test_that("list_c() can enforce ptype", {
   )
 })
 
+test_that("list_c() strips outer names and preserves inner names", {
+  expect_equal(list_c(list(x = 1:2, y = 3:4)), 1:4)
+  expect_equal(list_c(list(c(a = 1), c(b = 2))), c(a = 1, b =2))
+})
+
 test_that("list_cbind() column-binds compatible data frames",{
   df1 <- data.frame(x = 1:2)
   df2 <- data.frame(y = 1:2)
@@ -37,6 +42,10 @@ test_that("list_rbind() row-binds compatible data.frames", {
   df3 <- data.frame(x = "a", stringsAsFactors = FALSE)
 
   expect_equal(list_rbind(list(df1, df2)), data.frame(x = 1:2, y = c(NA, 1)))
+
+  # and names don't make a difference
+  out <- list_rbind(list(a = df1, b = df2))
+  expect_equal(out, data.frame(x = c(1, 2), y = c(NA, 1)))
 
   expect_snapshot(error = TRUE, {
     list_rbind(list(df1, df3))
