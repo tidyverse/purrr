@@ -43,7 +43,8 @@
 #' l <- list(new = 1, y = zap(), z = 5)
 #' str(list_update(x, !!!l))
 list_update <- function(.x, ...) {
-  .x <- vctrs_list_compat(.x)
+  check_list(.x)
+
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, function(x, y) y, recurse = FALSE)
 }
@@ -51,7 +52,8 @@ list_update <- function(.x, ...) {
 #' @export
 #' @rdname list_update
 list_modify <- function(.x, ...) {
-  .x <- vctrs_list_compat(.x)
+  check_list(.x)
+
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, function(x, y) y)
 }
@@ -59,7 +61,8 @@ list_modify <- function(.x, ...) {
 #' @export
 #' @rdname list_update
 list_merge <- function(.x, ...) {
-  .x <- vctrs_list_compat(.x)
+  check_list(.x)
+
   y <- dots_list(..., .named = NULL, .homonyms = "error")
   list_recurse(.x, y, c)
 }
@@ -88,6 +91,16 @@ list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()
   }
 
   x
+}
+
+check_list <- function(x, call = caller_env(), arg = caller_arg(x)) {
+  if (!is.list(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a list, not {.obj_type_friendly {x}}.",
+      call = call,
+      arg = arg
+    )
+  }
 }
 
 #' Update a list with formulas

@@ -88,6 +88,14 @@ test_that("list_modify() validates inputs", {
   expect_snapshot(list_modify(list(x = 1), x = 2, x = 3), error = TRUE)
 })
 
+test_that("list_modify() preserves class & attributes", {
+  x <- structure(list(a = 1, b = 2), x = 10, class = "foo")
+  expect_equal(
+    list_modify(x, a = 10, b = 20),
+    structure(list(a = 10, b = 20), x = 10, class = "foo")
+  )
+})
+
 # list_merge --------------------------------------------------------------
 
 test_that("list_merge concatenates values from two lists", {
