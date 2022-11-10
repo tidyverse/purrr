@@ -40,7 +40,16 @@
 list_c <- function(x, ..., ptype = NULL) {
   vec_check_list(x)
   check_dots_empty()
-  list_unchop(x, ptype = ptype, error_call = current_env())
+
+  # For `list_c()`, we don't expose `list_unchop()`'s `name_spec` arg,
+  # and instead strip outer names to avoid collisions with inner names
+  x <- unname(x)
+
+  list_unchop(
+    x,
+    ptype = ptype,
+    error_call = current_env()
+  )
 }
 
 #' @export
