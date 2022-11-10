@@ -41,9 +41,8 @@ list_c <- function(x, ..., ptype = NULL) {
   vec_check_list(x)
   check_dots_empty()
 
-  # TODO: Ideally we'd set `name_spec = zap()` to drop names from both `args`
-  # and its elements for performance, but that doesn't work for non-vctrs types.
-  # https://github.com/r-lib/vctrs/issues/1106
+  # For `list_c()`, we don't expose `list_unchop()`'s `name_spec` arg,
+  # and instead strip outer names to avoid collisions with inner names
   x <- unname(x)
 
   list_unchop(
