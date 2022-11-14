@@ -4,21 +4,33 @@
 #include <R_ext/Parse.h>
 
 SEXP current_env() {
-  ParseStatus status;
-  SEXP code = PROTECT(Rf_mkString("as.call(list(sys.frame, -1))"));
-  SEXP parsed = PROTECT(R_ParseVector(code, -1, &status, R_NilValue));
-  SEXP body = PROTECT(Rf_eval(VECTOR_ELT(parsed, 0), R_BaseEnv));
+  static SEXP call = NULL;
 
-  SEXP fn = PROTECT(Rf_allocSExp(CLOSXP));
-  SET_FORMALS(fn, R_NilValue);
-  SET_BODY(fn, body);
-  SET_CLOENV(fn, R_EmptyEnv);
+  if (!call) {
+    // `sys.frame(sys.nframe())` doesn't work because `sys.nframe()`
+    // returns the number of the frame in which evaluation occurs. It
+    // doesn't return the number of frames on the stack. So we'd need
+    // to evaluate it in the last frame on the stack which is what we
+    // are looking for to begin with. We use instead this workaround:
+    // Call `sys.frame()` from a closure to push a new frame on the
+    // stack, and use negative indexing to get the previous frame.
+    ParseStatus status;
+    SEXP code = PROTECT(Rf_mkString("sys.frame(-1)"));
+    SEXP parsed = PROTECT(R_ParseVector(code, -1, &status, R_NilValue));
+    SEXP body = VECTOR_ELT(parsed, 0);
 
-  SEXP call = PROTECT(Rf_lang1(fn));
-  SEXP out = PROTECT(Rf_eval(call, R_EmptyEnv));
+    SEXP fn = PROTECT(Rf_allocSExp(CLOSXP));
+    SET_FORMALS(fn, R_NilValue);
+    SET_BODY(fn, body);
+    SET_CLOENV(fn, R_BaseEnv);
 
-  UNPROTECT(6);
-  return out;
+    call = Rf_lang1(fn);
+    R_PreserveObject(call);
+
+    UNPROTECT(3);
+  }
+
+  return Rf_eval(call, R_BaseEnv);
 }
 
 
