@@ -37,7 +37,7 @@ deeply and flexibly into data structures. It always succeeds, returning
 \code{.default} if the index you are trying to access does not exist or is \code{NULL}.
 
 \verb{pluck<-()} is the assignment equivalent, allowing you to modify an object
-deped within a nested data structure.
+deep within a nested data structure.
 
 \code{pluck_exists()} tells you whether or not an object exists using the
 same rules as pluck (i.e. a \code{NULL} element is equivalent to an absent

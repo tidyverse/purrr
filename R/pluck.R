@@ -6,7 +6,7 @@
 #' `.default` if the index you are trying to access does not exist or is `NULL`.
 #'
 #' `pluck<-()` is the assignment equivalent, allowing you to modify an object
-#' deped within a nested data structure.
+#' deep within a nested data structure.
 #'
 #' `pluck_exists()` tells you whether or not an object exists using the
 #' same rules as pluck (i.e. a `NULL` element is equivalent to an absent
