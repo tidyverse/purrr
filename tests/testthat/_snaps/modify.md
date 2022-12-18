@@ -21,6 +21,29 @@
       Error in `modify2()`:
       ! Can't recycle `out$y` (size 3) to size 2.
 
+# zap gives clear error
+
+    Code
+      modify_at(1, 1, ~ zap())
+    Condition
+      Error in `map_vec()`:
+      ! `out[[1]]` must be a vector, not a <rlang_zap> object.
+    Code
+      modify_at(list(1), 1, ~ zap())
+    Condition
+      Error in `modify_at()`:
+      ! Can't use `zap()` to change the size of the output.
+    Code
+      modify_at(data.frame(x = 1), 1, ~ zap())
+    Condition
+      Error in `vec_size()`:
+      ! `x` must be a vector, not a <rlang_zap> object.
+    Code
+      modify_at(lm(mpg ~ wt, data = mtcars), 1, ~ zap())
+    Condition
+      Error in `modify_at()`:
+      ! Can't use `zap()` to change the size of the output.
+
 # bad type has useful error
 
     Code
