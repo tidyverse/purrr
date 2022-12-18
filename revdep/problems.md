@@ -1,67 +1,3 @@
-# broom.helpers
-
-<details>
-
-* Version: 1.9.0
-* GitHub: https://github.com/larmarange/broom.helpers
-* Source code: https://github.com/cran/broom.helpers
-* Date/Publication: 2022-09-23 20:00:09 UTC
-* Number of recursive dependencies: 205
-
-Run `revdepcheck::cloud_details(, "broom.helpers")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-       15.             └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       16.               └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       17.                 └─value[[3L]](cond)
-      ── Error ('test-tidy_parameters.R:26'): tidy_parameters() works for basic models ──
-      Error in `identical(res1$conf.low, res2$conf.low)`: object 'res1' not found
-      Backtrace:
-          ▆
-       1. ├─testthat::expect_false(identical(res1$conf.low, res2$conf.low)) at test-tidy_parameters.R:26:2
-       2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
-       3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-       4. └─base::identical(res1$conf.low, res2$conf.low)
-      
-      [ FAIL 12 | WARN 0 | SKIP 51 | PASS 438 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘tidy.Rmd’ using rmarkdown
-    
-    Attaching package: 'gtsummary'
-    
-    The following object is masked from 'package:broom.helpers':
-    
-        all_continuous
-    
-    
-    ...
-    Error: processing vignette 'tidy.Rmd' failed with diagnostics:
-    `version` must be `NULL` or a vector of versions the same length as
-    `pkg`.
-    --- failed re-building ‘tidy.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘tidy.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # cattonum
 
 <details>
@@ -185,59 +121,20 @@ Run `revdepcheck::cloud_details(, "connectapi")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      ══ Results ═════════════════════════════════════════════════════════════════════
-      Duration: 0.7 s
+      ────────────────────────────────────────────────────────────────────────────────
       
+      ══ Results ═════════════════════════════════════════════════════════════════════
+      Duration: 1.2 s
+      
+    ...
       ── Skipped tests  ──────────────────────────────────────────────────────────────
       • Ahh! this fails presently. Are double -> POSIXct conversions allowed? (1)
-    ...
       • On CRAN (1)
       • failing currently (2)
       • not implemented yet (1)
       • not tested yet (1)
       
       [ FAIL 1 | WARN 0 | SKIP 6 | PASS 116 ]
-      
-      Don't worry, you'll get it.
-      Error: Test failures
-      Execution halted
-    ```
-
-# csvwr
-
-<details>
-
-* Version: 0.1.6
-* GitHub: https://github.com/Robsteranium/csvwr
-* Source code: https://github.com/cran/csvwr
-* Date/Publication: 2021-11-09 10:50:02 UTC
-* Number of recursive dependencies: 63
-
-Run `revdepcheck::cloud_details(, "csvwr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘csvw-tests-helpers.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        7. │         └─purrr:::pmap_("list", .l, .f, ..., .progress = .progress)
-        8. │           └─vctrs::vec_size_common(!!!.l, .arg = ".l", .call = ..error_call)
-        9. ├─purrr::map(...)
-       10. │ └─purrr:::map_("list", .x, .f, ..., .progress = .progress)
-       11. │   └─purrr:::vctrs_vec_compat(.x)
-       12. └─vctrs::stop_incompatible_size(...)
-       13.   └─vctrs:::stop_incompatible(...)
-       14.     └─vctrs:::stop_vctrs(...)
-       15.       └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-      ── Failure ('test-util.R:45'): vec_depth doesn't attempt to measure the depth of errors ──
-      `purrr::vec_depth(err)` did not throw the expected error.
-      
-      [ FAIL 4 | WARN 14 | SKIP 0 | PASS 86 ]
       Error: Test failures
       Execution halted
     ```
@@ -397,13 +294,13 @@ Run `revdepcheck::cloud_details(, "ffscrapr")` for more info
     
     --- re-building ‘espn_basics.Rmd’ using rmarkdown
     trying URL 'https://github.com/ffverse/ffscrapr-tests/archive/1.4.7.zip'
+    Content type 'application/zip' length 10326711 bytes (9.8 MB)
+    ==================================================
     downloaded 9.8 MB
     
-    
-    Attaching package: 'dplyr'
     ...
-    
-        intersect, setdiff, setequal, union
+    ==================================================
+    downloaded 9.8 MB
     
     --- finished re-building ‘sleeper_getendpoint.Rmd’
     
@@ -477,13 +374,13 @@ Run `revdepcheck::cloud_details(, "flexsurv")` for more info
     ```
     Error(s) in re-building vignettes:
     --- re-building ‘standsurv.Rmd’ using rmarkdown
-    Loading required package: survival
+    --- finished re-building ‘standsurv.Rmd’
     
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
+    --- re-building ‘flexsurv.Rnw’ using knitr
+    Error: processing vignette 'flexsurv.Rnw' failed with diagnostics:
+    Running 'texi2dvi' on 'flexsurv.tex' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `ae.sty' not found.
     
     ...
                         [T1]{fontenc}^^M
@@ -506,7 +403,7 @@ Run `revdepcheck::cloud_details(, "flexsurv")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/grizbayr
 * Date/Publication: 2022-08-15 18:30:02 UTC
-* Number of recursive dependencies: 59
+* Number of recursive dependencies: 60
 
 Run `revdepcheck::cloud_details(, "grizbayr")` for more info
 
@@ -533,45 +430,6 @@ Run `revdepcheck::cloud_details(, "grizbayr")` for more info
        7.       └─rlang::abort(...)
       
       [ FAIL 1 | WARN 16 | SKIP 0 | PASS 245 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# gtsummary
-
-<details>
-
-* Version: 1.6.2
-* GitHub: https://github.com/ddsjoberg/gtsummary
-* Source code: https://github.com/cran/gtsummary
-* Date/Publication: 2022-09-30 14:10:02 UTC
-* Number of recursive dependencies: 181
-
-Run `revdepcheck::cloud_details(, "gtsummary")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      `actual[[5]]` is NULL
-      `expected[[5]]` is absent
-      
-      `actual[[6]]` is NULL
-      `expected[[6]]` is absent
-      
-      `actual[[7]]` is NULL
-      `expected[[7]]` is absent
-      
-      `actual[[8]]` is NULL
-      `expected[[8]]` is absent
-      
-      [ FAIL 3 | WARN 20 | SKIP 74 | PASS 11 ]
       Error: Test failures
       Execution halted
     ```
@@ -615,92 +473,17 @@ Run `revdepcheck::cloud_details(, "gwasrapidd")` for more info
       Execution halted
     ```
 
-# healthcareai
+# jpstat
 
 <details>
 
-* Version: 2.5.1
-* GitHub: https://github.com/HealthCatalyst/healthcareai-r
-* Source code: https://github.com/cran/healthcareai
-* Date/Publication: 2022-09-05 14:50:02 UTC
-* Number of recursive dependencies: 129
+* Version: 0.3.0
+* GitHub: https://github.com/UchidaMizuki/jpstat
+* Source code: https://github.com/cran/jpstat
+* Date/Publication: 2022-11-21 21:50:09 UTC
+* Number of recursive dependencies: 69
 
-Run `revdepcheck::cloud_details(, "healthcareai")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking R code for possible problems ... NOTE
-    ```
-    setup_training: no visible binding for global variable ‘is_numeric’
-    Undefined global functions or variables:
-      is_numeric
-    ```
-
-## In both
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘healthcareai-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: evaluate
-    > ### Title: Get model performance metrics
-    > ### Aliases: evaluate evaluate.predicted_df evaluate.model_list
-    > 
-    > ### ** Examples
-    > 
-    > models <- machine_learn(pima_diabetes[1:40, ],
-    ...
-    +                        models = c("XGB", "RF"),
-    +                        tune = FALSE,
-    +                        n_folds = 3)
-    Training new data prep recipe...
-    
-    Variable(s) ignored in prep_data won't be used to tune models: patient_id
-    Error in setup_training(d, rlang::enquo(outcome), model_class, models,  : 
-      All predictors must be numeric, but the following variables are not numeric. Consider using prep_data to get data ready for model training: weight_class
-    Calls: machine_learn -> flash_models -> setup_training
-    Execution halted
-    ```
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat-1.R’
-      Running ‘testthat-2.R’
-      Running ‘testthat-3.R’
-      Running ‘testthat-4.R’
-      Running ‘testthat-5.R’
-    Running the tests in ‘tests/testthat-5.R’ failed.
-    Last 13 lines of output:
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 0 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-    ...
-          metric, positive_class, n_folds)`: All predictors must be numeric, but the following variables are not numeric. Consider using prep_data to get data ready for model training: weight_class
-      Backtrace:
-          ▆
-       1. └─healthcareai::machine_learn(...) at test-cran_only.R:4:2
-       2.   └─healthcareai::flash_models(...)
-       3.     └─healthcareai:::setup_training(...)
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 0 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# ipmr
-
-<details>
-
-* Version: 0.0.5
-* GitHub: https://github.com/levisc8/ipmr
-* Source code: https://github.com/cran/ipmr
-* Date/Publication: 2022-04-28 13:40:08 UTC
-* Number of recursive dependencies: 76
-
-Run `revdepcheck::cloud_details(, "ipmr")` for more info
+Run `revdepcheck::cloud_details(, "jpstat")` for more info
 
 </details>
 
@@ -708,40 +491,24 @@ Run `revdepcheck::cloud_details(, "ipmr")` for more info
 
 *   checking tests ... ERROR
     ```
-      Running ‘spelling.R’
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      [ FAIL 1 | WARN 110 | SKIP 1 | PASS 367 ]
+      Error in `purrr::chuck(httr::content(trade), "data")`: Can't find name `data` in vector.
+      Backtrace:
+          ▆
+       1. ├─dplyr::collect(...) at test-webland.R:15:2
+       2. ├─jpstat:::collect.webland_trade(...)
+       3. │ ├─dplyr::rename(...)
+       4. │ ├─dplyr::rename_with(...)
+       5. │ ├─dplyr::bind_rows(purrr::chuck(httr::content(trade), "data"))
+       6. │ │ └─rlang::list2(...)
+       7. │ └─purrr::chuck(httr::content(trade), "data")
+       8. └─rlang::abort("Can't find name `data` in vector.", call = `<env>`)
       
-      ══ Skipped tests ═══════════════════════════════════════════════════════════════
-      • On CRAN (1)
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure ('test-generics.R:1644'): warnings are produced correctly ───────────
-      grepl(...) is not TRUE
-      
-      `actual`:   FALSE
-      `expected`: TRUE 
-      
-      [ FAIL 1 | WARN 110 | SKIP 1 | PASS 367 ]
+      [ FAIL 1 | WARN 0 | SKIP 4 | PASS 3 ]
       Error: Test failures
       Execution halted
-    ```
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.1Mb
-      sub-directories of 1Mb or more:
-        doc    1.3Mb
-        libs   2.6Mb
-    ```
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘Rpadrino’
     ```
 
 # naive
@@ -778,85 +545,6 @@ Run `revdepcheck::cloud_details(, "naive")` for more info
        2.   └─base::data.frame(...)
       
       [ FAIL 3 | WARN 0 | SKIP 0 | PASS 0 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# openalexR
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/massimoaria/openalexR
-* Source code: https://github.com/cran/openalexR
-* Date/Publication: 2022-10-06 10:40:02 UTC
-* Number of recursive dependencies: 78
-
-Run `revdepcheck::cloud_details(, "openalexR")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘A_Brief_Introduction_to_openalexR.Rmd’ using rmarkdown
-    
-    Attaching package: 'dplyr'
-    
-    The following objects are masked from 'package:stats':
-    
-        filter, lag
-    
-    ...
-    Quitting from lines 260-269 (A_Brief_Introduction_to_openalexR.Rmd) 
-    Error: processing vignette 'A_Brief_Introduction_to_openalexR.Rmd' failed with diagnostics:
-    $ operator is invalid for atomic vectors
-    --- failed re-building ‘A_Brief_Introduction_to_openalexR.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘A_Brief_Introduction_to_openalexR.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# PHEindicatormethods
-
-<details>
-
-* Version: 1.4.1
-* GitHub: https://github.com/PublicHealthEngland/PHEindicatormethods
-* Source code: https://github.com/cran/PHEindicatormethods
-* Date/Publication: 2022-08-08 11:40:17 UTC
-* Number of recursive dependencies: 77
-
-Run `revdepcheck::cloud_details(, "PHEindicatormethods")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      Backtrace:
-          ▆
-       1. └─testthat::expect_match(wideci_warning[1], "some age bands have more deaths than population; outputs have been suppressed to NAs") at testLifeExpectancy.R:313:2
-       2.   └─testthat:::expect_match_(...)
-      ── Failure ('testLifeExpectancy.R:315'): LE - warnings are generated when invalid arguments are used ──
-      wideci_warning\[2\] does not match "some life expectancy values have a 95% confidence interval > 20 years; these values have been suppressed to NAs".
-      Actual value: "some age bands have more deaths than population; outputs have been suppressed to NAs"
-      Backtrace:
-          ▆
-       1. └─testthat::expect_match(wideci_warning[2], "some life expectancy values have a 95% confidence interval > 20 years; these values have been suppressed to NAs") at testLifeExpectancy.R:315:2
-       2.   └─testthat:::expect_match_(...)
-      
-      [ FAIL 2 | WARN 4 | SKIP 0 | PASS 451 ]
       Error: Test failures
       Execution halted
     ```
@@ -928,7 +616,7 @@ Run `revdepcheck::cloud_details(, "rATTAINS")` for more info
 * GitHub: https://github.com/fdavidcl/ruta
 * Source code: https://github.com/cran/ruta
 * Date/Publication: 2019-03-18 13:10:02 UTC
-* Number of recursive dependencies: 70
+* Number of recursive dependencies: 71
 
 Run `revdepcheck::cloud_details(, "ruta")` for more info
 
@@ -1104,72 +792,6 @@ Run `revdepcheck::cloud_details(, "scImmuneGraph")` for more info
       All declared Imports should be used.
     ```
 
-# scrutiny
-
-<details>
-
-* Version: 0.2.2
-* GitHub: https://github.com/lhdjung/scrutiny
-* Source code: https://github.com/cran/scrutiny
-* Date/Publication: 2022-08-22 09:40:02 UTC
-* Number of recursive dependencies: 122
-
-Run `revdepcheck::cloud_details(, "scrutiny")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘scrutiny-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: debit_map_seq
-    > ### Title: Using DEBIT with dispersed inputs
-    > ### Aliases: debit_map_seq
-    > 
-    > ### ** Examples
-    > 
-    > # `debit_map_seq()` can take any input
-    ...
-     21.   └─vctrs::vec_default_cast(...)
-     22.     ├─base::withRestarts(...)
-     23.     │ └─base (local) withOneRestart(expr, restarts[[1L]])
-     24.     │   └─base (local) doWithOneRestart(return(expr), restart)
-     25.     └─vctrs::stop_incompatible_cast(...)
-     26.       └─vctrs::stop_incompatible_type(...)
-     27.         └─vctrs:::stop_incompatible(...)
-     28.           └─vctrs:::stop_vctrs(...)
-     29.             └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘consistency-tests.Rmd’ using rmarkdown
-    --- finished re-building ‘consistency-tests.Rmd’
-    
-    --- re-building ‘debit.Rmd’ using rmarkdown
-    Quitting from lines 188-189 (debit.Rmd) 
-    Error: processing vignette 'debit.Rmd' failed with diagnostics:
-    Problem while computing `..1 = dplyr::across(...)`.
-    Caused by error in `across()`:
-    ! Problem while computing column `hits_n`.
-    ...
-    --- finished re-building ‘rounding.Rmd’
-    
-    --- re-building ‘wrangling.Rmd’ using rmarkdown
-    --- finished re-building ‘wrangling.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘debit.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
 # simpr
 
 <details>
@@ -1178,7 +800,7 @@ Run `revdepcheck::cloud_details(, "scrutiny")` for more info
 * GitHub: https://github.com/statisfactions/simpr
 * Source code: https://github.com/cran/simpr
 * Date/Publication: 2022-02-13 00:40:02 UTC
-* Number of recursive dependencies: 77
+* Number of recursive dependencies: 78
 
 Run `revdepcheck::cloud_details(, "simpr")` for more info
 
@@ -1356,47 +978,6 @@ Run `revdepcheck::cloud_details(, "tidypredict")` for more info
       ‘xgboost.Rmd’
     
     Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# utile.tools
-
-<details>
-
-* Version: 0.2.7
-* GitHub: https://github.com/efinite/utile.tools
-* Source code: https://github.com/cran/utile.tools
-* Date/Publication: 2022-02-20 21:40:02 UTC
-* Number of recursive dependencies: 23
-
-Run `revdepcheck::cloud_details(, "utile.tools")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘utile.tools-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: calc_duration
-    > ### Title: Calculate durations of time
-    > ### Aliases: calc_duration
-    > 
-    > ### ** Examples
-    > 
-    > library(lubridate)
-    ...
-     13.                 ├─base::withRestarts(...)
-     14.                 │ └─base (local) withOneRestart(expr, restarts[[1L]])
-     15.                 │   └─base (local) doWithOneRestart(return(expr), restart)
-     16.                 └─vctrs:::stop_lossy_cast(...)
-     17.                   └─vctrs::stop_incompatible_cast(...)
-     18.                     └─vctrs::stop_incompatible_type(...)
-     19.                       └─vctrs:::stop_incompatible(...)
-     20.                         └─vctrs:::stop_vctrs(...)
-     21.                           └─rlang::abort(message, class = c(class, "vctrs_error"), ..., call = vctrs_error_call(call))
     Execution halted
     ```
 

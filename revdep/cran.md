@@ -1,18 +1,14 @@
 ## revdepcheck results
 
-We checked 1415 reverse dependencies (1408 from CRAN + 7 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 1431 reverse dependencies (1424 from CRAN + 7 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 26 new problems
- * We failed to check 9 packages
+ * We saw 18 new problems
+ * We failed to check 8 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
-
-* broom.helpers
-  checking tests ... ERROR
-  checking re-building of vignette outputs ... WARNING
 
 * cattonum
   checking R code for possible problems ... NOTE
@@ -22,9 +18,6 @@ Issues with CRAN packages are summarised below.
   checking re-building of vignette outputs ... WARNING
 
 * connectapi
-  checking tests ... ERROR
-
-* csvwr
   checking tests ... ERROR
 
 * DataFakeR
@@ -44,25 +37,13 @@ Issues with CRAN packages are summarised below.
 * grizbayr
   checking tests ... ERROR
 
-* gtsummary
-  checking tests ... ERROR
-
 * gwasrapidd
   checking tests ... ERROR
 
-* healthcareai
-  checking R code for possible problems ... NOTE
-
-* ipmr
+* jpstat
   checking tests ... ERROR
 
 * naive
-  checking tests ... ERROR
-
-* openalexR
-  checking re-building of vignette outputs ... WARNING
-
-* PHEindicatormethods
   checking tests ... ERROR
 
 * rATTAINS
@@ -80,10 +61,6 @@ Issues with CRAN packages are summarised below.
 * scImmuneGraph
   checking examples ... ERROR
 
-* scrutiny
-  checking examples ... ERROR
-  checking re-building of vignette outputs ... WARNING
-
 * simpr
   checking tests ... ERROR
 
@@ -96,17 +73,13 @@ Issues with CRAN packages are summarised below.
   checking tests ... ERROR
   checking re-building of vignette outputs ... WARNING
 
-* utile.tools
-  checking examples ... ERROR
-
 ### Failed to check
 
-* echor          (NA)
-* elbird         (NA)
-* ggPMX          (NA)
-* immcp          (NA)
-* ImputeRobust   (NA)
-* pathwayTMB     (NA)
-* Platypus       (NA)
-* RVA            (NA)
-* youtubecaption (NA)
+* elbird       (NA)
+* ggPMX        (NA)
+* immcp        (NA)
+* ImputeRobust (NA)
+* numbat       (NA)
+* pathwayTMB   (NA)
+* Platypus     (NA)
+* RVA          (NA)

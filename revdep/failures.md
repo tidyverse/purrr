@@ -1,79 +1,3 @@
-# echor
-
-<details>
-
-* Version: 0.1.6
-* GitHub: https://github.com/mps9506/echor
-* Source code: https://github.com/cran/echor
-* Date/Publication: 2021-08-21 04:40:02 UTC
-* Number of recursive dependencies: 123
-
-Run `revdepcheck::cloud_details(, "echor")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-* using log directory ‘/tmp/workdir/echor/new/echor.Rcheck’
-* using R version 4.1.1 (2021-08-10)
-* using platform: x86_64-pc-linux-gnu (64-bit)
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘echor/DESCRIPTION’ ... OK
-* checking extension type ... Package
-* this is package ‘echor’ version ‘0.1.6’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-...
-* checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... OK
-  Running ‘testthat.R’
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes in ‘inst/doc’ ... OK
-* checking running R code from vignettes ... NONE
-  ‘introduction.Rmd’ using ‘UTF-8’... OK
-* checking re-building of vignette outputs ... OK
-* DONE
-Status: 1 NOTE
-
-
-
-
-
-```
-### CRAN
-
-```
-* using log directory ‘/tmp/workdir/echor/old/echor.Rcheck’
-* using R version 4.1.1 (2021-08-10)
-* using platform: x86_64-pc-linux-gnu (64-bit)
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘echor/DESCRIPTION’ ... OK
-* checking extension type ... Package
-* this is package ‘echor’ version ‘0.1.6’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-...
-* checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... OK
-  Running ‘testthat.R’
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes in ‘inst/doc’ ... OK
-* checking running R code from vignettes ... NONE
-  ‘introduction.Rmd’ using ‘UTF-8’... OK
-* checking re-building of vignette outputs ... OK
-* DONE
-Status: 1 NOTE
-
-
-
-
-
-```
 # elbird
 
 <details>
@@ -220,7 +144,7 @@ Status: 1 ERROR, 2 NOTEs
 * GitHub: https://github.com/YuanlongHu/immcp
 * Source code: https://github.com/cran/immcp
 * Date/Publication: 2022-05-12 05:50:02 UTC
-* Number of recursive dependencies: 195
+* Number of recursive dependencies: 194
 
 Run `revdepcheck::cloud_details(, "immcp")` for more info
 
@@ -286,7 +210,7 @@ Status: 1 ERROR
 * GitHub: NA
 * Source code: https://github.com/cran/ImputeRobust
 * Date/Publication: 2018-11-30 12:10:03 UTC
-* Number of recursive dependencies: 52
+* Number of recursive dependencies: 41
 
 Run `revdepcheck::cloud_details(, "ImputeRobust")` for more info
 
@@ -486,6 +410,72 @@ Run `revdepcheck::cloud_details(, "NA")` for more info
 
 
 ```
+# numbat
+
+<details>
+
+* Version: 1.1.0
+* GitHub: https://github.com/kharchenkolab/numbat
+* Source code: https://github.com/cran/numbat
+* Date/Publication: 2022-11-29 18:30:02 UTC
+* Number of recursive dependencies: 183
+
+Run `revdepcheck::cloud_details(, "numbat")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/numbat/new/numbat.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘numbat/DESCRIPTION’ ... OK
+* this is package ‘numbat’ version ‘1.1.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Packages required but not available: 'ggtree', 'scistreer'
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/numbat/old/numbat.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘numbat/DESCRIPTION’ ... OK
+* this is package ‘numbat’ version ‘1.1.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Packages required but not available: 'ggtree', 'scistreer'
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
 # NA
 
 <details>
@@ -597,7 +587,7 @@ Status: 1 ERROR
 * GitHub: NA
 * Source code: https://github.com/cran/Platypus
 * Date/Publication: 2022-08-15 07:20:20 UTC
-* Number of recursive dependencies: 354
+* Number of recursive dependencies: 356
 
 Run `revdepcheck::cloud_details(, "Platypus")` for more info
 
@@ -623,7 +613,7 @@ Run `revdepcheck::cloud_details(, "Platypus")` for more info
 Package required but not available: ‘ggtree’
 
 Packages suggested but not available for checking:
-  'harmony', 'Matrix.utils', 'monocle3', 'ProjecTILs', 'SeuratWrappers'
+  'Matrix.utils', 'monocle3', 'ProjecTILs', 'SeuratWrappers'
 
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
@@ -653,7 +643,7 @@ Status: 1 ERROR
 Package required but not available: ‘ggtree’
 
 Packages suggested but not available for checking:
-  'harmony', 'Matrix.utils', 'monocle3', 'ProjecTILs', 'SeuratWrappers'
+  'Matrix.utils', 'monocle3', 'ProjecTILs', 'SeuratWrappers'
 
 See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
@@ -795,82 +785,6 @@ Run `revdepcheck::cloud_details(, "NA")` for more info
 
 ```
 
-
-
-
-
-
-```
-# youtubecaption
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/jooyoungseo/youtubecaption
-* Source code: https://github.com/cran/youtubecaption
-* Date/Publication: 2020-05-15 05:50:02 UTC
-* Number of recursive dependencies: 57
-
-Run `revdepcheck::cloud_details(, "youtubecaption")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-* using log directory ‘/tmp/workdir/youtubecaption/new/youtubecaption.Rcheck’
-* using R version 4.1.1 (2021-08-10)
-* using platform: x86_64-pc-linux-gnu (64-bit)
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘youtubecaption/DESCRIPTION’ ... OK
-* this is package ‘youtubecaption’ version ‘1.0.0’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... NOTE
-...
-* checking installed files from ‘inst/doc’ ... OK
-* checking files in ‘vignettes’ ... OK
-* checking examples ... OK
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes in ‘inst/doc’ ... OK
-* checking running R code from vignettes ... NONE
-  ‘youtubecaption_vignette.Rmd’ using ‘UTF-8’... OK
-* checking re-building of vignette outputs ... OK
-* DONE
-Status: 2 NOTEs
-
-
-
-
-
-```
-### CRAN
-
-```
-* using log directory ‘/tmp/workdir/youtubecaption/old/youtubecaption.Rcheck’
-* using R version 4.1.1 (2021-08-10)
-* using platform: x86_64-pc-linux-gnu (64-bit)
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘youtubecaption/DESCRIPTION’ ... OK
-* this is package ‘youtubecaption’ version ‘1.0.0’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... NOTE
-...
-* checking installed files from ‘inst/doc’ ... OK
-* checking files in ‘vignettes’ ... OK
-* checking examples ... OK
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes in ‘inst/doc’ ... OK
-* checking running R code from vignettes ... NONE
-  ‘youtubecaption_vignette.Rmd’ using ‘UTF-8’... OK
-* checking re-building of vignette outputs ... OK
-* DONE
-Status: 2 NOTEs
 
 
 
