@@ -80,6 +80,10 @@ test_that("but data.frames are not", {
   x2 <- list(x = data.frame(y = 2))
   out <- list_modify(x1, !!!x2)
   expect_equal(out, x2)
+
+  # unless you really want it
+  out <- list_modify(x1, !!!x2, .is_node = is.list)
+  expect_equal(out, list(x = data.frame(x = 1, y = 2)))
 })
 
 test_that("list_modify() validates inputs", {

@@ -17,6 +17,7 @@
 #'   [Dynamic dots][rlang::dyn-dots] are supported. In particular, if your
 #'   replacement values are stored in a list, you can splice that in with
 #'   `!!!`.
+#' @inheritParams map_depth
 #' @export
 #' @examples
 #' x <- list(x = 1:10, y = 4, z = list(a = 1, b = 2))
@@ -42,32 +43,34 @@
 #' # a list of arguments:
 #' l <- list(new = 1, y = zap(), z = 5)
 #' str(list_update(x, !!!l))
-list_update <- function(.x, ...) {
+list_update <- function(.x, ..., .is_node = NULL) {
   check_list(.x)
-
   y <- dots_list(..., .named = NULL, .homonyms = "error")
-  list_recurse(.x, y, function(x, y) y, recurse = FALSE)
+
+  list_recurse(.x, y, function(x, y) y, recurse = FALSE, is_node = .is_node)
 }
 
 #' @export
 #' @rdname list_update
-list_modify <- function(.x, ...) {
+list_modify <- function(.x, ..., .is_node = NULL) {
   check_list(.x)
-
   y <- dots_list(..., .named = NULL, .homonyms = "error")
-  list_recurse(.x, y, function(x, y) y)
+
+  list_recurse(.x, y, function(x, y) y, is_node = .is_node)
 }
 
 #' @export
 #' @rdname list_update
-list_merge <- function(.x, ...) {
+list_merge <- function(.x, ..., .is_node = NULL) {
   check_list(.x)
-
   y <- dots_list(..., .named = NULL, .homonyms = "error")
-  list_recurse(.x, y, c)
+
+  list_recurse(.x, y, c, is_node = .is_node)
 }
 
-list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()) {
+list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env(), is_node = NULL) {
+  is_node <- as_is_node(is_node, error_call, ".is_node")
+
   if (!is_null(names(y)) && !is_named(y)) {
     cli::cli_abort(
       "`...` arguments must be either all named or all unnamed.",
@@ -83,7 +86,7 @@ list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env()
 
     if (is_zap(y_i)) {
       x[[i]] <- NULL
-    } else if (recurse && vec_is_list(x_i) && vec_is_list(y_i)) {
+    } else if (recurse && is_node(x_i) && is_node(y_i)) {
       list_slice2(x, i) <- list_recurse(x_i, y_i, base_f)
     } else {
       list_slice2(x, i) <- base_f(x_i, y_i)

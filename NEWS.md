@@ -180,7 +180,8 @@
   recursively (#822).
 
 * `list_modify()` no longer recurses into data frames (and other objects built 
-  on top of lists that are fundamentally non-list like) (#810).
+  on top of lists that are fundamentally non-list like) (#810). You can
+  revert to the previous behaviour by setting `.is_node = is.list`.
 
 ## Minor improvements and bug fixes
 

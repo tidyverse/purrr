@@ -6,11 +6,11 @@
 \alias{list_merge}
 \title{Modify a list}
 \usage{
-list_update(.x, ...)
+list_update(.x, ..., .is_node = NULL)
 
-list_modify(.x, ...)
+list_modify(.x, ..., .is_node = NULL)
 
-list_merge(.x, ...)
+list_merge(.x, ..., .is_node = NULL)
 }
 \arguments{
 \item{.x}{List to modify.}
@@ -24,6 +24,13 @@ are all unnamed, they are matched by position.
 \link[rlang:dyn-dots]{Dynamic dots} are supported. In particular, if your
 replacement values are stored in a list, you can splice that in with
 \verb{!!!}.}
+
+\item{.is_node}{A predicate function that determines whether an element is
+a node (by returning \code{TRUE}) or a leaf (by returning \code{FALSE}). The
+default value, \code{NULL}, treats simple lists as nodes and everything else
+(including richer objects like data frames and linear models) as leaves,
+using \code{\link[vctrs:vec_is_list]{vctrs::vec_is_list()}}. To recurse into all objects built on lists
+use \code{\link[=is.list]{is.list()}}.}
 }
 \description{
 \itemize{
