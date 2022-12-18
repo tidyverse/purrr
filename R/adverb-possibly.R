@@ -26,7 +26,7 @@ possibly <- function(.f, otherwise = NULL, quiet = TRUE) {
     tryCatch(.f(...),
       error = function(e) {
         if (!quiet)
-          message("Error: ", e$message)
+          message("Error: ", conditionMessage(e))
         otherwise
       }
     )
