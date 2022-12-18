@@ -133,10 +133,10 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE, error_call = caller_env()) {
+reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE, .purrr_error_call = caller_env()) {
   left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
-  out <- reduce_init(.x, .init, left = left, error_call = error_call)
+  out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
   idx <- reduce_index(.x, .init, left = left)
 
   if (.acc) {
@@ -257,8 +257,8 @@ accum_index <- function(out, left) {
   }
 }
 
-reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .error_call = caller_env()) {
-  out <- reduce_init(.x, .init, left = .left, error_call = .error_call)
+reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .purrr_error_call = caller_env()) {
+  out <- reduce_init(.x, .init, left = .left, error_call = .purrr_error_call)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
 
@@ -266,7 +266,7 @@ reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .er
     cli::cli_abort(
       "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
       arg = ".y",
-      call = .error_call)
+      call = .purrr_error_call)
   }
 
   .f <- as_mapper(.f, ...)
