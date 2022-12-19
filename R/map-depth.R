@@ -93,7 +93,7 @@ map_depth_rec <- function(.fmap,
                           ...,
                           .ragged,
                           .is_node,
-                          .error_call = caller_env()) {
+                          .purrr_error_call = caller_env()) {
   if (.depth == 0) {
     if (identical(.fmap, map)) {
       return(.f(.x, ...))
@@ -107,7 +107,7 @@ map_depth_rec <- function(.fmap,
     if (.ragged) {
       return(.fmap(.x, .f, ...))
     } else {
-      cli::cli_abort("List not deep enough", call = .error_call)
+      cli::cli_abort("List not deep enough", call = .purrr_error_call)
     }
   }
 
@@ -123,7 +123,7 @@ map_depth_rec <- function(.fmap,
         ...,
         .ragged = .ragged,
         .is_node = .is_node,
-        .error_call = .error_call
+        .purrr_error_call = .purrr_error_call
       )
     })
   }

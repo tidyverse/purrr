@@ -70,8 +70,8 @@ as_is_node <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) 
     as_predicate(
       is_node_f,
       .mapper = FALSE,
-      .error_call = error_call,
-      .error_arg = error_arg
+      .purrr_error_call = error_call,
+      .purrr_error_arg = error_arg
     )
   }
 }
