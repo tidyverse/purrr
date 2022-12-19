@@ -176,7 +176,7 @@
 
 ### `list_` functions`
 
-* New `list_update()` which is similar to `list_modify()` but doesn't work
+* New `list_assign()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
 
 * `list_modify()` no longer recurses into data frames (and other objects built 
