@@ -1,7 +1,7 @@
 #' Modify a list
 #'
 #' @description
-#' * `list_update()` modifies the elements of a list by name or position.
+#' * `list_assign()` modifies the elements of a list by name or position.
 #' * `list_modify()` modifies the elements of a list recursively.
 #' * `list_merge()` merges the elements of a list recursively.
 #'
@@ -24,17 +24,17 @@
 #' str(x)
 #'
 #' # Update values
-#' str(list_update(x, a = 1))
+#' str(list_assign(x, a = 1))
 #' # Replace values
-#' str(list_update(x, z = 5))
-#' str(list_update(x, z = NULL))
+#' str(list_assign(x, z = 5))
+#' str(list_assign(x, z = NULL))
 #'
-#' str(list_update(x, z = list(a = 1:5)))
+#' str(list_assign(x, z = list(a = 1:5)))
 #' # replace recursively, leaving the other elements of z alone
 #' str(list_modify(x, z = list(a = 1:5)))
 #'
 #' # Remove values
-#' str(list_update(x, z = zap()))
+#' str(list_assign(x, z = zap()))
 #'
 #' # Combine values with list_merge()
 #' str(list_merge(x, x = 11, z = list(a = 2:5, c = 3)))
@@ -42,8 +42,8 @@
 #' # All these functions support dynamic dots features. Use !!! to splice
 #' # a list of arguments:
 #' l <- list(new = 1, y = zap(), z = 5)
-#' str(list_update(x, !!!l))
-list_update <- function(.x, ..., .is_node = NULL) {
+#' str(list_assign(x, !!!l))
+list_assign <- function(.x, ..., .is_node = NULL) {
   check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
 
@@ -51,7 +51,7 @@ list_update <- function(.x, ..., .is_node = NULL) {
 }
 
 #' @export
-#' @rdname list_update
+#' @rdname list_assign
 list_modify <- function(.x, ..., .is_node = NULL) {
   check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
@@ -60,7 +60,7 @@ list_modify <- function(.x, ..., .is_node = NULL) {
 }
 
 #' @export
-#' @rdname list_update
+#' @rdname list_assign
 list_merge <- function(.x, ..., .is_node = NULL) {
   check_list(.x)
   y <- dots_list(..., .named = NULL, .homonyms = "error")
