@@ -44,13 +44,13 @@ where_at <- function(x,
   }
 }
 
-where_if <- function(.x, .p, ..., .error_call = caller_env()) {
+where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE, .error_call = NULL)
-    map_(.x, .p, ..., .type = "logical", ..error_call = .error_call)
+    .p <- as_predicate(.p, ..., .mapper = TRUE, .purrr_error_call = NULL)
+    map_(.x, .p, ..., .type = "logical", .purrr_error_call = .purrr_error_call)
   }
 }
 
@@ -58,11 +58,11 @@ as_predicate <- function(.fn,
                          ...,
                          .mapper,
                          .allow_na = FALSE,
-                         .error_call = caller_env(),
-                         .error_arg = caller_arg(.fn)) {
+                         .purrr_error_call = caller_env(),
+                         .purrr_error_arg = caller_arg(.fn)) {
 
-  force(.error_arg)
-  force(.error_call)
+  force(.purrr_error_call)
+  force(.purrr_error_arg)
 
   if (.mapper) {
     .fn <- as_mapper(.fn, ...)
@@ -77,9 +77,9 @@ as_predicate <- function(.fn,
         return(NA)
       }
       cli::cli_abort(
-        "{.fn { .error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
-        arg = .error_arg,
-        call = .error_call
+        "{.fn { .purrr_error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
+        arg = .purrr_error_arg,
+        call = .purrr_error_call
       )
     }
 

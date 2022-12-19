@@ -62,16 +62,14 @@ modify_tree <- function(x,
 
 as_is_node <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) {
   if (is.null(f)) {
-    function(x) {
-      vec_is_list(x)
-    }
+    vec_is_list
   } else {
     is_node_f <- rlang::as_function(f, call = error_call, arg = error_arg)
     as_predicate(
       is_node_f,
       .mapper = FALSE,
-      .error_call = error_call,
-      .error_arg = error_arg
+      .purrr_error_call = error_call,
+      .purrr_error_arg = error_arg
     )
   }
 }

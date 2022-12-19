@@ -59,14 +59,14 @@ map2_ <- function(.type,
                   .y,
                   .f,
                   ...,
-                  .purrr_user_env = caller_env(2),
                   .progress = FALSE,
-                  ..error_call = caller_env()) {
+                  .purrr_user_env = caller_env(2),
+                  .purrr_error_call = caller_env()) {
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
-  n <- vec_size_common(.x = .x, .y = .y, .call = ..error_call)
-  args <- vec_recycle_common(.x = .x, .y = .y, .size = n, .call = ..error_call)
+  n <- vec_size_common(.x = .x, .y = .y, .call = .purrr_error_call)
+  args <- vec_recycle_common(.x = .x, .y = .y, .size = n, .call = .purrr_error_call)
   .x <- args$.x
   .y <- args$.y
 
@@ -77,7 +77,7 @@ map2_ <- function(.type,
   i <- 0L
   with_indexed_errors(
     i = i,
-    error_call = ..error_call,
+    error_call = .purrr_error_call,
     .Call(map2_impl, environment(), .type, .progress, n, names, i)
   )
 }

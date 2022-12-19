@@ -103,14 +103,14 @@ pmap_ <- function(.type,
                   .l,
                   .f,
                   ...,
-                  .purrr_user_env = caller_env(2),
                   .progress = FALSE,
-                  ..error_call = caller_env()) {
-  .l <- vctrs_list_compat(.l, user_env = .purrr_user_env, error_call = ..error_call)
-  .l <- map(.l, vctrs_vec_compat, user_env = .purrr_user_env)
+                  .purrr_user_env = caller_env(2),
+                  .purrr_error_call = caller_env()) {
+  .l <- vctrs_list_compat(.l, error_call = .purrr_error_call)
+  .l <- map(.l, vctrs_vec_compat)
 
-  n <- vec_size_common(!!!.l, .arg = ".l", .call = ..error_call)
-  .l <- vec_recycle_common(!!!.l, .size = n, .arg = ".l", .call = ..error_call)
+  n <- vec_size_common(!!!.l, .arg = ".l", .call = .purrr_error_call)
+  .l <- vec_recycle_common(!!!.l, .size = n, .arg = ".l", .call = .purrr_error_call)
 
   if (length(.l) > 0L) {
     names <- vec_names(.l[[1L]])
@@ -126,7 +126,7 @@ pmap_ <- function(.type,
   i <- 0L
   with_indexed_errors(
     i = i,
-    error_call = ..error_call,
+    error_call = .purrr_error_call,
     .Call(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n)
   )
 }
