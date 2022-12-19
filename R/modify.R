@@ -171,15 +171,15 @@ imodify <- function(.x, .f, ...) {
 
 # helpers -----------------------------------------------------------------
 
-modify_where <- function(.x, .where, .f, ..., .error_call = caller_env()) {
+modify_where <- function(.x, .where, .f, ..., .purrr_error_call = caller_env()) {
   if (vec_is_list(.x)) {
     out <- vec_proxy(.x)
-    out[.where] <- no_zap(map(out[.where], .f, ...), .error_call)
+    out[.where] <- no_zap(map(out[.where], .f, ...), .purrr_error_call)
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
     out <- unclass(vec_proxy(.x))
-    new <- map(out[.where], .f, ...)
+    new <- no_zap(map(out[.where], .f, ...), .purrr_error_call)
     out[.where] <- vec_recycle_common(!!!new, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
@@ -187,12 +187,12 @@ modify_where <- function(.x, .where, .f, ..., .error_call = caller_env()) {
     .x[.where] <- map_vec(.x[.where], .f, ..., .ptype = .x)
     .x
   } else if (is.null(.x) || is.list(.x)) {
-    .x[.where] <- no_zap(map(.x[.where], .f, ...), .error_call)
+    .x[.where] <- no_zap(map(.x[.where], .f, ...), .purrr_error_call)
     .x
   } else {
     cli::cli_abort(
       "{.arg .x} must be a vector, list, or data frame, not {.obj_type_friendly {.x}}.",
-      call = .error_call
+      call = .purrr_error_call
     )
   }
 }

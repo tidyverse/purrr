@@ -36,8 +36,8 @@
     Code
       modify_at(data.frame(x = 1), 1, ~ zap())
     Condition
-      Error in `vec_size()`:
-      ! `x` must be a vector, not a <rlang_zap> object.
+      Error in `modify_at()`:
+      ! Can't use `zap()` to change the size of the output.
     Code
       modify_at(lm(mpg ~ wt, data = mtcars), 1, ~ zap())
     Condition
