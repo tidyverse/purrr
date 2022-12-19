@@ -24,6 +24,15 @@ test_that("modfiying data.frame preserves type and size", {
   })
 })
 
+test_that("zap gives clear error", {
+  expect_snapshot(error = TRUE, {
+    modify_at(1, 1, ~ zap())
+    modify_at(list(1), 1, ~ zap())
+    modify_at(data.frame(x = 1), 1, ~ zap())
+    modify_at(lm(mpg ~ wt, data = mtcars), 1, ~ zap())
+  })
+})
+
 test_that("data.frames are modified by column, not row", {
   df1 <- data.frame(x = 1:3, y = letters[1:3])
   df2 <- data.frame(x = 2:4, y = letters[1:3])
