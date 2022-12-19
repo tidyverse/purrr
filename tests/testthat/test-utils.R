@@ -36,7 +36,7 @@ test_that("validates its inputs", {
 
 test_that("tidyselect `at` is deprecated", {
   expect_snapshot({
-    . <- where_at(data.frame(x = 1), vars("x"))
+    . <- where_at(data.frame(x = 1), vars("x"), user_env = globalenv())
   })
 })
 
@@ -45,21 +45,21 @@ test_that("tidyselect `at` is deprecated", {
 
 test_that("arrays become vectors (#970)", {
   x <- matrix(1:4, nrow = 2)
-  expect_equal(vctrs_vec_compat(x), 1:4)
+  expect_equal(vctrs_vec_compat(x, globalenv()), 1:4)
 
   f <- factor(letters[1:4])
   dim(f) <- c(2, 2, 1)
-  expect_equal(vctrs_vec_compat(f), factor(letters[1:4]))
+  expect_equal(vctrs_vec_compat(f, globalenv()), factor(letters[1:4]))
 })
 
 test_that("pairlists, expressions, and calls are deprecated", {
-  expect_snapshot(x <- vctrs_vec_compat(expression(1, 2)))
+  expect_snapshot(x <- vctrs_vec_compat(expression(1, 2), globalenv()))
   expect_equal(x, list(1, 2))
 
-  expect_snapshot(x <- vctrs_vec_compat(pairlist(1, 2)))
+  expect_snapshot(x <- vctrs_vec_compat(pairlist(1, 2), globalenv()))
   expect_equal(x, list(1, 2))
 
-  expect_snapshot(x <- vctrs_vec_compat(quote(f(a, b = 1))))
+  expect_snapshot(x <- vctrs_vec_compat(quote(f(a, b = 1)), globalenv()))
   expect_equal(x, list(quote(f), quote(a),b = 1))
 })
 

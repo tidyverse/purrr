@@ -32,7 +32,7 @@
 # tidyselect `at` is deprecated
 
     Code
-      . <- where_at(data.frame(x = 1), vars("x"))
+      . <- where_at(data.frame(x = 1), vars("x"), user_env = globalenv())
     Condition
       Warning:
       Using `vars()` in .at was deprecated in purrr 1.0.0.
@@ -40,7 +40,7 @@
 # pairlists, expressions, and calls are deprecated
 
     Code
-      x <- vctrs_vec_compat(expression(1, 2))
+      x <- vctrs_vec_compat(expression(1, 2), globalenv())
     Condition
       Warning:
       Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
@@ -49,7 +49,7 @@
 ---
 
     Code
-      x <- vctrs_vec_compat(pairlist(1, 2))
+      x <- vctrs_vec_compat(pairlist(1, 2), globalenv())
     Condition
       Warning:
       Use of pairlists in map functions was deprecated in purrr 1.0.0.
@@ -58,7 +58,7 @@
 ---
 
     Code
-      x <- vctrs_vec_compat(quote(f(a, b = 1)))
+      x <- vctrs_vec_compat(quote(f(a, b = 1)), globalenv())
     Condition
       Warning:
       Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.

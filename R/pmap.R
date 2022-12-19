@@ -104,6 +104,7 @@ pmap_ <- function(.type,
                   .f,
                   ...,
                   .progress = FALSE,
+                  .purrr_user_env = caller_env(2),
                   .purrr_error_call = caller_env()) {
   .l <- vctrs_list_compat(.l, error_call = .purrr_error_call)
   .l <- map(.l, vctrs_vec_compat)

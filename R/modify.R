@@ -128,7 +128,7 @@ modify_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @inheritParams map_at
 #' @export
 modify_at <- function(.x, .at, .f, ...) {
-  where <- where_at(.x, .at)
+  where <- where_at(.x, .at, user_env = caller_env())
   modify_where(.x, where, .f, ...)
 }
 

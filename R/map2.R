@@ -60,9 +60,10 @@ map2_ <- function(.type,
                   .f,
                   ...,
                   .progress = FALSE,
+                  .purrr_user_env = caller_env(2),
                   .purrr_error_call = caller_env()) {
-  .x <- vctrs_vec_compat(.x)
-  .y <- vctrs_vec_compat(.y)
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
   n <- vec_size_common(.x = .x, .y = .y, .call = .purrr_error_call)
   args <- vec_recycle_common(.x = .x, .y = .y, .size = n, .call = .purrr_error_call)

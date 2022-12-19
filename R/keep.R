@@ -75,13 +75,13 @@ compact <- function(.x, .p = identity) {
 #' x %>% keep_at(~ nchar(.x) == 3)
 #' x %>% discard_at(~ nchar(.x) == 3)
 keep_at <- function(x, at) {
-  where <- where_at(x, at)
+  where <- where_at(x, at, user_env = caller_env())
   x[where]
 }
 
 #' @export
 #' @rdname keep_at
 discard_at <- function(x, at) {
-  where <- where_at(x, at)
+  where <- where_at(x, at, user_env = caller_env())
   x[!where]
 }

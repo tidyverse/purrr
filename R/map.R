@@ -156,8 +156,9 @@ map_ <- function(.type,
                  .f,
                  ...,
                  .progress = FALSE,
+                 .purrr_user_env = caller_env(2),
                  .purrr_error_call = caller_env()) {
-  .x <- vctrs_vec_compat(.x)
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
   n <- vec_size(.x)

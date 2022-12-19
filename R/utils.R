@@ -1,4 +1,8 @@
-where_at <- function(x, at, error_arg = caller_arg(at), error_call = caller_env()) {
+where_at <- function(x,
+                     at,
+                     user_env,
+                     error_arg = caller_arg(at),
+                     error_call = caller_env()) {
   if (is_formula(at)) {
     at <- rlang::as_function(at, arg = error_arg, call = error_call)
   }
@@ -7,7 +11,11 @@ where_at <- function(x, at, error_arg = caller_arg(at), error_call = caller_env(
   }
 
   if (is_quosures(at)) {
-    lifecycle::deprecate_soft("1.0.0", I("Using `vars()` in .at"))
+    lifecycle::deprecate_soft(
+      when = "1.0.0",
+      what = I("Using `vars()` in .at"),
+      user_env = user_env
+    )
     check_installed("tidyselect", "for using tidyselect in `map_at()`.")
 
     at <- tidyselect::vars_select(.vars = names2(x), !!!at)
@@ -92,8 +100,11 @@ paste_line <- function(...) {
   x
 }
 
-vctrs_list_compat <- function(x, error_call = caller_env(), error_arg = caller_arg(x)) {
-  out <- vctrs_vec_compat(x)
+vctrs_list_compat <- function(x,
+                              user_env,
+                              error_call = caller_env(),
+                              error_arg = caller_arg(x)) {
+  out <- vctrs_vec_compat(x, user_env)
   vec_check_list(out, call = error_call, arg = error_arg)
   out
 }
@@ -101,7 +112,7 @@ vctrs_list_compat <- function(x, error_call = caller_env(), error_arg = caller_a
 # When we want to use vctrs, but treat lists like purrr does
 # Treat data frames and S3 scalar lists like bare lists.
 # But ensure rcrd vctrs retain their class.
-vctrs_vec_compat <- function(x) {
+vctrs_vec_compat <- function(x, user_env) {
   if (inherits(x, "by")) {
     class(x) <- NULL
   }
@@ -109,18 +120,22 @@ vctrs_vec_compat <- function(x) {
   if (is.null(x)) {
     list()
   } else if (is.pairlist(x)) {
-    lifecycle::deprecate_soft("1.0.0",
-      I("Use of pairlists in map functions"),
-      details = "Please coerce explicitly with `as.list()`"
+    lifecycle::deprecate_soft(
+      when = "1.0.0",
+      what = I("Use of pairlists in map functions"),
+      details = "Please coerce explicitly with `as.list()`",
+      user_env = user_env
     )
     as.list(x)
   } else if (is.array(x) && length(dim(x)) > 1) {
     dim(x) <- NULL
     x
   } else if (is_call(x) || is.expression(x)) {
-    lifecycle::deprecate_soft("1.0.0",
-      I("Use of calls and pairlists in map functions"),
-      details = "Please coerce explicitly with `as.list()`"
+    lifecycle::deprecate_soft(
+      when = "1.0.0",
+      what = I("Use of calls and pairlists in map functions"),
+      details = "Please coerce explicitly with `as.list()`",
+      user_env = user_env
     )
     as.list(x)
   } else if (isS4(x)) {
