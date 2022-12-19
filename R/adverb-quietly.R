@@ -28,13 +28,13 @@ quietly <- function(.f) {
 capture_output <- function(code) {
   warnings <- character()
   wHandler <- function(w) {
-    warnings <<- c(warnings, w$message)
+    warnings <<- c(warnings, conditionMessage(w))
     invokeRestart("muffleWarning")
   }
 
   messages <- character()
   mHandler <- function(m) {
-    messages <<- c(messages, m$message)
+    messages <<- c(messages, conditionMessage(m))
     invokeRestart("muffleMessage")
   }
 
