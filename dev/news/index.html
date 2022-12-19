@@ -143,7 +143,8 @@
 </div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li><p><code><a href="../reference/modify.html">modify()</a></code> no longer works with calls or pairlists.</p></li>
+<ul><li><p><code>capture_output()</code> correctly uses <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> instead of directly interrogating the <code>message</code> field (<a href="https://github.com/tidyverse/purrr/issues/1010" class="external-link">#1010</a>).</p></li>
+<li><p><code><a href="../reference/modify.html">modify()</a></code> no longer works with calls or pairlists.</p></li>
 <li><p><code><a href="../reference/map_depth.html">modify_depth()</a></code> is no longer a generic. This makes it more consistent with <code><a href="../reference/map_depth.html">map_depth()</a></code>.</p></li>
 <li><p><code><a href="../reference/map_depth.html">map_depth()</a></code> and <code><a href="../reference/map_depth.html">modify_depth()</a></code> have a new <code>is_node</code> argument that allows you to control what counts as a level. The default uses <code>vec_is_list()</code> to avoid recursing into rich S3 objects like linear models or data.frames (<a href="https://github.com/tidyverse/purrr/issues/958" class="external-link">#958</a>, <a href="https://github.com/tidyverse/purrr/issues/920" class="external-link">#920</a>).</p></li>
 <li><p><code><a href="../reference/map_depth.html">map_depth()</a></code> and <code><a href="../reference/map_depth.html">modify_depth()</a></code> now correctly recurse at depth 1.</p></li>
