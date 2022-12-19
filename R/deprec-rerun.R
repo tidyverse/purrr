@@ -35,7 +35,7 @@
 #'   map(\(i) list(x = rnorm(5), y = rnorm(5))) |>
 #'   map_dbl(\(l) cor(l$x, l$y))
 rerun <- function(.n, ...) {
-  deprec_rerun(.n, ...)
+  deprec_rerun(.n, ..., .purrr_user_env = caller_env())
 
   dots <- quos(...)
 
@@ -55,7 +55,7 @@ rerun <- function(.n, ...) {
   out
 }
 
-deprec_rerun <- function(.n, ...) {
+deprec_rerun <- function(.n, ..., .purrr_user_env) {
   n <- .n
   old <- substitute(rerun(n, ...))
   if (dots_n(...) == 1) {
@@ -64,11 +64,17 @@ deprec_rerun <- function(.n, ...) {
     new <- substitute(map(1:n, ~ list(...)))
   }
 
-  lifecycle::deprecate_soft("1.0.0", "rerun()", "map()", details = c(
-    " " = "# Previously",
-    " " = expr_deparse(old),
-    "",
-    " " = "# Now",
-    " " = expr_deparse(new)
-  ))
+  lifecycle::deprecate_soft(
+    when = "1.0.0",
+    what = "rerun()",
+    with = "map()",
+    details = c(
+      " " = "# Previously",
+      " " = expr_deparse(old),
+      "",
+      " " = "# Now",
+      " " = expr_deparse(new)
+    ),
+    user_env = .purrr_user_env
+  )
 }

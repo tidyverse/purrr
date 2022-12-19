@@ -99,9 +99,15 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
   pmap_("character", .l, .f, ..., .progress = .progress)
 }
 
-pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
-  .l <- vctrs_list_compat(.l, error_call = ..error_call)
-  .l <- map(.l, vctrs_vec_compat)
+pmap_ <- function(.type,
+                  .l,
+                  .f,
+                  ...,
+                  .purrr_user_env = caller_env(2),
+                  .progress = FALSE,
+                  ..error_call = caller_env()) {
+  .l <- vctrs_list_compat(.l, user_env = .purrr_user_env, error_call = ..error_call)
+  .l <- map(.l, vctrs_vec_compat, user_env = .purrr_user_env)
 
   n <- vec_size_common(!!!.l, .arg = ".l", .call = ..error_call)
   .l <- vec_recycle_common(!!!.l, .size = n, .arg = ".l", .call = ..error_call)

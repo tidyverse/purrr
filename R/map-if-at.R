@@ -58,7 +58,7 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #'   elements.
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
-  where <- where_at(.x, .at)
+  where <- where_at(.x, .at, user_env = caller_env())
 
   out <- vector("list", length(.x))
   out[where]  <- map(.x[where], .f, ..., .progress = .progress)

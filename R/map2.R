@@ -54,9 +54,16 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
   map2_("character", .x, .y, .f, ..., .progress = .progress)
 }
 
-map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, ..error_call = caller_env()) {
-  .x <- vctrs_vec_compat(.x)
-  .y <- vctrs_vec_compat(.y)
+map2_ <- function(.type,
+                  .x,
+                  .y,
+                  .f,
+                  ...,
+                  .purrr_user_env = caller_env(2),
+                  .progress = FALSE,
+                  ..error_call = caller_env()) {
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
   n <- vec_size_common(.x = .x, .y = .y, .call = ..error_call)
   args <- vec_recycle_common(.x = .x, .y = .y, .size = n, .call = ..error_call)
