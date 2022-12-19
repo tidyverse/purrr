@@ -109,6 +109,9 @@
     <loc>https://purrr.tidyverse.org/dev/reference/lift.html</loc>
   </url>
   <url>
+    <loc>https://purrr.tidyverse.org/dev/reference/list_assign.html</loc>
+  </url>
+  <url>
     <loc>https://purrr.tidyverse.org/dev/reference/list_c.html</loc>
   </url>
   <url>
@@ -119,9 +122,6 @@
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/list_transpose.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/dev/reference/list_update.html</loc>
   </url>
   <url>
     <loc>https://purrr.tidyverse.org/dev/reference/lmap.html</loc>
