@@ -61,10 +61,15 @@ lmap_at <- function(.x, .at, .f, ...) {
   lmap_helper(.x, where, .f, ...)
 }
 
-lmap_helper <- function(.x, .ind, .f, ..., .else = NULL, .error_call = caller_env()) {
-  .f <- rlang::as_function(.f, call = .error_call)
+lmap_helper <- function(.x,
+                        .ind,
+                        .f,
+                        ...,
+                        .else = NULL,
+                        .purrr_error_call = caller_env()) {
+  .f <- rlang::as_function(.f, call = .purrr_error_call)
   if (!is.null(.else)) {
-    .else <- rlang::as_function(.else, call = .error_call)
+    .else <- rlang::as_function(.else, call = .purrr_error_call)
   }
 
   out <- vector("list", length(.x))
@@ -80,7 +85,7 @@ lmap_helper <- function(.x, .ind, .f, ..., .else = NULL, .error_call = caller_en
     if (!is.list(res)) {
       cli::cli_abort(
         "{.code .f(.x[[{i}]])} must return a list, not {.obj_type_friendly {res}}.",
-        call = .error_call
+        call = .purrr_error_call
       )
     }
     out[[i]] <- res
