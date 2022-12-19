@@ -83,11 +83,11 @@ list_modify() is inspired by utils::modifyList()."><meta property="og:image" con
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_update</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_update</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span>, .is_node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">list_modify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">list_modify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span>, .is_node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">list_merge</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">list_merge</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span>, .is_node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -104,6 +104,15 @@ are all unnamed, they are matched by position.</p>
 <p><a href="https://rlang.r-lib.org/reference/dyn-dots.html" class="external-link">Dynamic dots</a> are supported. In particular, if your
 replacement values are stored in a list, you can splice that in with
 <code>!!!</code>.</p></dd>
+
+
+<dt>.is_node</dt>
+<dd><p>A predicate function that determines whether an element is
+a node (by returning <code>TRUE</code>) or a leaf (by returning <code>FALSE</code>). The
+default value, <code>NULL</code>, treats simple lists as nodes and everything else
+(including richer objects like data frames and linear models) as leaves,
+using <code><a href="https://vctrs.r-lib.org/reference/vec_is_list.html" class="external-link">vctrs::vec_is_list()</a></code>. To recurse into all objects built on lists
+use <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.list()</a></code>.</p></dd>
 
 </dl></div>
 
