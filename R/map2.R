@@ -54,7 +54,13 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
   map2_("character", .x, .y, .f, ..., .progress = .progress)
 }
 
-map2_ <- function(.type, .x, .y, .f, ..., .progress = FALSE, .purrr_error_call = caller_env()) {
+map2_ <- function(.type,
+                  .x,
+                  .y,
+                  .f,
+                  ...,
+                  .progress = FALSE,
+                  .purrr_error_call = caller_env()) {
   .x <- vctrs_vec_compat(.x)
   .y <- vctrs_vec_compat(.y)
 

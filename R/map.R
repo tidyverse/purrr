@@ -151,7 +151,12 @@ map_chr <- function(.x, .f, ..., .progress = FALSE) {
   map_("character", .x, .f, ..., .progress = .progress)
 }
 
-map_ <- function(.type, .x, .f, ..., .progress = FALSE, .purrr_error_call = caller_env()) {
+map_ <- function(.type,
+                 .x,
+                 .f,
+                 ...,
+                 .progress = FALSE,
+                 .purrr_error_call = caller_env()) {
   .x <- vctrs_vec_compat(.x)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 

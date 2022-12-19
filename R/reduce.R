@@ -133,7 +133,13 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x, .f, ..., .init, .dir, .acc = FALSE, .purrr_error_call = caller_env()) {
+reduce_impl <- function(.x,
+                        .f,
+                        ...,
+                        .init,
+                        .dir,
+                        .acc = FALSE,
+                        .purrr_error_call = caller_env()) {
   left <- arg_match(.dir, c("forward", "backward")) == "forward"
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
@@ -257,7 +263,14 @@ accum_index <- function(out, left) {
   }
 }
 
-reduce2_impl <- function(.x, .y, .f, ..., .init, .left = TRUE, .acc = FALSE, .purrr_error_call = caller_env()) {
+reduce2_impl <- function(.x,
+                         .y,
+                         .f,
+                         ...,
+                         .init,
+                         .left = TRUE,
+                         .acc = FALSE,
+                         .purrr_error_call = caller_env()) {
   out <- reduce_init(.x, .init, left = .left, error_call = .purrr_error_call)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)

@@ -99,7 +99,12 @@ pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
   pmap_("character", .l, .f, ..., .progress = .progress)
 }
 
-pmap_ <- function(.type, .l, .f, ..., .progress = FALSE, .purrr_error_call = caller_env()) {
+pmap_ <- function(.type,
+                  .l,
+                  .f,
+                  ...,
+                  .progress = FALSE,
+                  .purrr_error_call = caller_env()) {
   .l <- vctrs_list_compat(.l, error_call = .purrr_error_call)
   .l <- map(.l, vctrs_vec_compat)
 
