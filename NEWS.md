@@ -184,6 +184,9 @@
 
 ## Minor improvements and bug fixes
 
+* `capture_output()` correctly uses `conditionMessage()` instead of directly
+  interrogating the `message` field (#1010).
+
 * `modify()` no longer works with calls or pairlists.
 
 * `modify_depth()` is no longer a generic. This makes it more consistent
