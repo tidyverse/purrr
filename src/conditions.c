@@ -3,7 +3,7 @@
 #include "utils.h"
 #include <R_ext/Parse.h>
 
-SEXP current_env() {
+SEXP current_env(void) {
   static SEXP call = NULL;
 
   if (!call) {
