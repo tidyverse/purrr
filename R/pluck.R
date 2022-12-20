@@ -115,14 +115,13 @@ pluck_exists <- function(.x, ...) {
   !is_zap(pluck_raw(.x, list2(...), .default = zap()))
 }
 
-pluck_raw <- function(.x, index, .default = NULL, .error_call = caller_env()) {
+pluck_raw <- function(.x, index, .default = NULL) {
   .Call(
     pluck_impl,
     x = .x,
     index = index,
     missing = .default,
-    strict = FALSE,
-    error_call = .error_call
+    strict = FALSE
   )
 }
 
@@ -155,8 +154,7 @@ chuck <- function(.x, ...) {
     x = .x,
     index = list2(...),
     missing = NULL,
-    strict = TRUE,
-    error_call = current_env()
+    strict = TRUE
   )
 }
 
