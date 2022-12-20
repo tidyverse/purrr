@@ -7,23 +7,13 @@ which elements of .x are transformed with .f.
 map_at() takes a vector of names or positions .at to specify
 which elements of .x are transformed with .f.
 
-
-
-map_depth() allows to apply .f to a specific
-depth level of a nested vector.
-
-"><title>Apply a function to each element of a vector conditionally — map_if • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Apply a function to each element of a vector conditionally — map_if"><meta property="og:description" content="The functions map_if() and map_at() take .x as input, apply
+"><title>Apply a function to each element of a vector conditionally — map_if • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.4/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.4/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Apply a function to each element of a vector conditionally — map_if"><meta property="og:description" content="The functions map_if() and map_at() take .x as input, apply
 the function .f to some of the elements of .x, and return a
 list of the same length as the input.
 map_if() takes a predicate function .p as input to determine
 which elements of .x are transformed with .f.
 map_at() takes a vector of names or positions .at to specify
 which elements of .x are transformed with .f.
-
-
-
-map_depth() allows to apply .f to a specific
-depth level of a nested vector.
 
 "><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -36,7 +26,7 @@ depth level of a nested vector.
     
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +40,7 @@ depth level of a nested vector.
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a>
     <a class="dropdown-item" href="../articles/other-langs.html">Functional programming in other languages</a>
   </div>
 </li>
@@ -80,7 +71,7 @@ depth level of a nested vector.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Apply a function to each element of a vector conditionally</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/purrr/blob/HEAD/R/map.R" class="external-link"><code>R/map.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/purrr/blob/HEAD/R/map-if-at.R" class="external-link"><code>R/map-if-at.R</code></a></small>
       <div class="d-none name"><code>map_if.Rd</code></div>
     </div>
 
@@ -91,23 +82,21 @@ list of the same length as the input.</p><ul><li><p><code>map_if()</code> takes 
 which elements of <code>.x</code> are transformed with <code>.f</code>.</p></li>
 <li><p><code>map_at()</code> takes a vector of names or positions <code>.at</code> to specify
 which elements of <code>.x</code> are transformed with <code>.f</code>.</p></li>
-</ul><ul><li><p><code>map_depth()</code> allows to apply <code>.f</code> to a specific
-depth level of a nested vector.</p></li>
 </ul></div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">map_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">map_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.x</dt>
 <dd><p>A list or atomic vector.</p></dd>
+
+
 <dt>.p</dt>
 <dd><p>A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as <code>.x</code>.
@@ -115,357 +104,102 @@ Alternatively, if the elements of <code>.x</code> are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where <code>.p</code> evaluates to
 <code>TRUE</code> will be modified.</p></dd>
+
+
 <dt>.f</dt>
-<dd><p>A function, formula, or vector (not necessarily atomic).</p>
-<p>If a <strong>function</strong>, it is used as is.</p>
-<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
-are three ways to refer to the arguments:</p><ul><li><p>For a single argument function, use <code>.</code></p></li>
-<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
-<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
-</ul><p>This syntax allows you to create very compact anonymous functions.</p>
-<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of <code>.default</code> will be returned.</p></dd>
+<dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>mean</code>.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x) x + 1</code> or <code>function(x) x + 1</code>.</p></li>
+<li><p>A formula, e.g. <code>~ .x + 1</code>. You must use <code>.x</code> to refer to the first
+argument. Only recommended if you require backward compatibility with
+older versions of R.</p></li>
+<li><p>A string, integer, or list, e.g. <code>"idx"</code>, <code>1</code>, or <code>list("idx", 1)</code> which
+are shorthand for <code>\(x) pluck(x, "idx")</code>, <code>\(x) pluck(x, 1)</code>, and
+<code>\(x) pluck(x, "idx", 1)</code> respectively. Optionally supply <code>.default</code> to
+set a default value if the indexed element is <code>NULL</code> or does not exist.</p></li>
+</ul></dd>
+
+
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>We now generally recommend against using <code>...</code> to pass additional
+(constant) arguments to <code>.f</code>. Instead use a shorthand anonymous function:</p>
+<p></p><div class="sourceCode R"><pre><code><span><span class="co"># Instead of</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co"># do:</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.</p></dd>
+
+
 <dt>.else</dt>
 <dd><p>A function applied to elements of <code>.x</code> for which <code>.p</code>
 returns <code>FALSE</code>.</p></dd>
+
+
 <dt>.at</dt>
-<dd><p>A character vector of names, positive numeric vector of
-positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and
-the <code>tidyselect</code> helpers to select elements.</p></dd>
-<dt>.depth</dt>
-<dd><p>Level of <code>.x</code> to map on. Use a negative value to
-count up from the lowest level of the list.</p><ul><li><p><code>map_depth(x, 0, fun)</code> is equivalent to <code>fun(x)</code>.</p></li>
-<li><p><code>map_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- map(x, fun)</code></p></li>
-<li><p><code>map_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- map(x, ~ map(., fun))</code></p></li>
-</ul></dd>
-<dt>.ragged</dt>
-<dd><p>If <code>TRUE</code>, will apply to leaves, even if they're not
-at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if there are
-no elements at depth <code>.depth</code>.</p></dd>
+<dd><p>A logical, integer, or character vector giving the elements
+to select. Alternatively, a function that takes a vector of names,
+and returns a logical, integer, or character vector of elements to select.</p>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>: if the tidyselect package is
+installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and tidyselect helpers to select
+elements.</p></dd>
+
+
+<dt>.progress</dt>
+<dd><p>Whether to show a progress bar. Use <code>TRUE</code> to a turn on
+a basic progress bar, use a string to give it a name, or see
+<a href="progress_bars.html">progress_bars</a> for more details.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other map variants: 
 <code><a href="imap.html">imap</a>()</code>,
-<code><a href="invoke.html">invoke</a>()</code>,
 <code><a href="lmap.html">lmap</a>()</code>,
 <code><a href="map2.html">map2</a>()</code>,
+<code><a href="map_depth.html">map_depth</a>()</code>,
 <code><a href="map.html">map</a>()</code>,
-<code><a href="modify.html">modify</a>()</code></p></div>
+<code><a href="modify.html">modify</a>()</code>,
+<code><a href="pmap.html">pmap</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Use a predicate function to decide whether to map a function:</span></span>
-<span class="r-in"><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8 6.7 6.7 6.3 6.5 6.2 5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3.1 3.2 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 3.2 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 3.4 3.1 2.3 3.0 2.5 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3.0 2.9 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2 3.3 3.0 2.5 3.0 3.4 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 0.3 0.3 0.3 0.2 0.4 0.2 0.5 0.2 0.2 0.4 0.2 0.2 0.2 0.2 0.4 0.1 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 0.2 0.2 0.2 0.1 0.2 0.2 0.3 0.3 0.2 0.6 0.4 0.3 0.2 0.2 0.2 0.2 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 1.5 1.5 1.3 1.5 1.3 1.6 1.0 1.3 1.4 1.0 1.5 1.0 1.4 1.3 1.4 1.5 1.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 1.5 1.1 1.8 1.3 1.5 1.2 1.3 1.4 1.4 1.7 1.5 1.0 1.1 1.0 1.2 1.6 1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 1.6 1.5 1.3 1.3 1.3 1.2 1.4 1.2 1.0 1.3 1.2 1.3 1.3 1.1 1.3 2.5 1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 2.1 1.8 2.2 2.1 1.7 1.8 1.8 2.5 2.0 1.9 2.1 2.0 2.4 2.3 1.8 2.2 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 1.5 2.3 2.0 2.0 1.8 2.1 1.8 1.8 1.8 2.1 1.6 1.9 2.0 2.2 1.5 1.4 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 2.4 1.8 1.8 2.1 2.4 2.3 1.9 2.3 2.5 2.3 1.9 2.0 2.3 1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Specify an alternative with the `.else` argument:</span></span>
-<span class="r-in"><span class="fu">map_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5 4 4 4 5 5 4 5 4 4 5 4 4 4 5 5 5 5 5 5 5 5 4 5 4 5 5 5 5 4 4 5 5 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4 5 5 4 4 5 5 4 4 5 5 4 5 4 5 5 7 6 6 5 6 5 6 4 6 5 5 5 6 6 5 6 5 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6 5 5 6 6 6 6 6 6 6 6 5 5 5 5 6 5 6 6 6 5 5 5 6 5 5 5 5 5 6 5 5 6 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7 6 6 7 4 7 6 7 6 6 6 5 5 6 6 7 7 6 6 5 7 6 6 7 6 6 6 7 7 7 6 6 6 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6 6 6 6 6 6 5 6 6 6 6 6 6 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3 3 3 3 3 3 3 3 2 3 3 3 3 3 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 3 3 3 2 2 2 3 2 2 2 2 3 2 2 2 3 3 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2 2 3 2 2 2 2 3 2 3 2 2 2 2 2 2 3 3 3 2 3 2 2 3 2 2 2 3 2 2 2 2 3 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3 2 3 3 2 2 2 3 3 2 3 2 2 3 3 3 2 2 3 2 2 2 3 3 2 3 2 3 2 3 2 2 2 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3 3 3 3 3 3 2 3 3 3 2 3 3 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 4 4 4 4 4 4 4 3 4 3 3 4 4 4 3 4 4 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4 3 4 4 4 4 4 4 4 5 4 3 3 3 3 5 4 4 4 4 4 4 4 4 4 3 4 4 4 4 3 4 6 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5 5 5 6 4 6 5 6 5 5 5 5 5 5 5 6 6 5 5 4 6 4 5 6 4 4 5 5 6 6 5 5 5 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5 5 4 5 5 5 5 5 5 5 5 5 5 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 2 1 2 2 1 1 1 2 2 1 2 2 2 2 1 2 2 1 2 2 2 1 2 1 1 1 2 1 1 2 2 1 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 2 1 1 2 2 2 1 2 2 2 1 2 2 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "setosa"     "setosa"     "setosa"     "setosa"     "setosa"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "versicolor" "versicolor" "versicolor" "versicolor" "versicolor"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [146] "virginica"  "virginica"  "virginica"  "virginica"  "virginica" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use numeric vector of positions select elements to change:</span></span>
-<span class="r-in"><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">is.numeric</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8 6.7 6.7 6.3 6.5 6.2 5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3.1 3.2 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 3.2 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 3.4 3.1 2.3 3.0 2.5 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3.0 2.9 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2 3.3 3.0 2.5 3.0 3.4 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use vector of names to specify which elements to change:</span></span>
-<span class="r-in"><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">map_at</span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">toupper</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 5.1 4.9 4.7 4.6 5.0 5.4 4.6 5.0 4.4 4.9 5.4 4.8 4.8 4.3 5.8 5.7 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 5.1 5.7 5.1 5.4 5.1 4.6 5.1 4.8 5.0 5.0 5.2 5.2 4.7 4.8 5.4 5.2 5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 4.9 5.0 5.5 4.9 4.4 5.1 5.0 4.5 4.4 5.0 5.1 4.8 5.1 4.6 5.3 5.0 7.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 6.4 6.9 5.5 6.5 5.7 6.3 4.9 6.6 5.2 5.0 5.9 6.0 6.1 5.6 6.7 5.6 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 6.2 5.6 5.9 6.1 6.3 6.1 6.4 6.6 6.8 6.7 6.0 5.7 5.5 5.5 5.8 6.0 5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 6.0 6.7 6.3 5.6 5.5 5.5 6.1 5.8 5.0 5.6 5.7 5.7 6.2 5.1 5.7 6.3 5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 7.1 6.3 6.5 7.6 4.9 7.3 6.7 7.2 6.5 6.4 6.8 5.7 5.8 6.4 6.5 7.7 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 6.0 6.9 5.6 7.7 6.3 6.7 7.2 6.2 6.1 6.4 7.2 7.4 7.9 6.4 6.3 6.1 7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 6.3 6.4 6.0 6.9 6.7 6.9 5.8 6.8 6.7 6.7 6.3 6.5 6.2 5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Sepal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 3.5 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 3.1 3.2 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 3.2 3.1 2.3 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 2.2 2.5 3.2 2.8 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 3.4 3.1 2.3 3.0 2.5 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 3.0 2.9 3.0 3.0 2.5 2.9 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 2.2 3.2 2.8 2.8 2.7 3.3 3.2 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2 3.3 3.0 2.5 3.0 3.4 3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 1.4 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 1.5 1.2 1.3 1.4 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 4.5 4.9 4.0 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 4.5 3.9 4.8 4.0 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 4.5 4.7 4.4 4.1 4.0 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 5.9 5.6 5.8 6.6 4.5 6.3 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 5.0 5.7 4.9 6.7 4.9 5.7 6.0 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9 5.7 5.2 5.0 5.2 5.4 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [18] 0.3 0.3 0.3 0.2 0.4 0.2 0.5 0.2 0.2 0.4 0.2 0.2 0.2 0.2 0.4 0.1 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [35] 0.2 0.2 0.2 0.1 0.2 0.2 0.3 0.3 0.2 0.6 0.4 0.3 0.2 0.2 0.2 0.2 1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [52] 1.5 1.5 1.3 1.5 1.3 1.6 1.0 1.3 1.4 1.0 1.5 1.0 1.4 1.3 1.4 1.5 1.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [69] 1.5 1.1 1.8 1.3 1.5 1.2 1.3 1.4 1.4 1.7 1.5 1.0 1.1 1.0 1.2 1.6 1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] 1.6 1.5 1.3 1.3 1.3 1.2 1.4 1.2 1.0 1.3 1.2 1.3 1.3 1.1 1.3 2.5 1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 2.1 1.8 2.2 2.1 1.7 1.8 1.8 2.5 2.0 1.9 2.1 2.0 2.4 2.3 1.8 2.2 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [120] 1.5 2.3 2.0 2.0 1.8 2.1 1.8 1.8 1.8 2.1 1.6 1.9 2.0 2.2 1.5 1.4 2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [137] 2.4 1.8 1.8 2.1 2.4 2.3 1.9 2.3 2.5 2.3 1.9 2.0 2.3 1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [6] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [11] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [16] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [21] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [26] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [41] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [46] "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"     "SETOSA"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [51] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [76] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [81] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [86] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [96] "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR" "VERSICOLOR"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [101] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [116] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [121] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [131] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [136] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [141] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [146] "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA"  "VIRGINICA" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use `map_depth()` to recursively traverse nested vectors and map</span></span>
-<span class="r-in"><span class="co"># a function at a certain depth:</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, bar <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>, b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>baz <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ a:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ foo: int [1:2] 1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ bar: int [1:2] 3 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b:List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ baz: int [1:2] 5 6</span>
-<span class="r-in"><span class="fu">map_depth</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $a$foo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1/2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $a$bar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3/4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $b$baz</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "5/6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Equivalent to:</span></span>
-<span class="r-in"><span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">map</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $a$foo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1/2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $a$bar</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3/4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $b$baz</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "5/6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use a predicate function to decide whether to map a function:</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr [1:150] "setosa" "setosa" "setosa" "setosa" ...</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Specify an alternative with the `.else` argument:</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: int [1:150] 5 4 4 4 5 5 4 5 4 4 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : int [1:150] 3 3 3 3 3 3 3 3 2 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: int [1:150] 1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : int [1:150] 0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr [1:150] "setosa" "setosa" "setosa" "setosa" ...</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use numeric vector of positions select elements to change:</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">is.numeric</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : logi TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : logi FALSE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use vector of names to specify which elements to change:</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu">map_at</span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">toupper</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr [1:150] "SETOSA" "SETOSA" "SETOSA" "SETOSA" ...</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -475,11 +209,11 @@ no elements at depth <code>.depth</code>.</p></dd>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
   </div></footer></body></html>

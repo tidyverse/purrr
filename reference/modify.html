@@ -9,11 +9,9 @@ modifies elements given by names or positions.
 modify2() modifies the elements of .x but also passes the
 elements of .y to .f, just like map2(). imodify() passes
 the names or the indices to .f like imap() does.
-modify_depth() only modifies elements at a given level of a
-nested data structure.
 modify_in() modifies a single element in a pluck() location.
 
-"><title>Modify elements selectively — modify • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Modify elements selectively — modify"><meta property="og:description" content="Unlike map() and its variants which always return a fixed object
+"><title>Modify elements selectively — modify • purrr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.4/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.4/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Modify elements selectively — modify"><meta property="og:description" content="Unlike map() and its variants which always return a fixed object
 type (list for map(), integer vector for map_int(), etc), the
 modify() family always returns the same type as the input object.
 modify() is a shortcut for x[[i]] &amp;lt;- f(x[[i]]); return(x).
@@ -23,8 +21,6 @@ modifies elements given by names or positions.
 modify2() modifies the elements of .x but also passes the
 elements of .y to .f, just like map2(). imodify() passes
 the names or the indices to .f like imap() does.
-modify_depth() only modifies elements at a given level of a
-nested data structure.
 modify_in() modifies a single element in a pluck() location.
 
 "><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -38,7 +34,7 @@ modify_in() modifies a single element in a pluck() location.
     
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +48,7 @@ modify_in() modifies a single element in a pluck() location.
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a>
     <a class="dropdown-item" href="../articles/other-langs.html">Functional programming in other languages</a>
   </div>
 </li>
@@ -96,57 +93,45 @@ modifies elements given by names or positions.</p></li>
 <li><p><code>modify2()</code> modifies the elements of <code>.x</code> but also passes the
 elements of <code>.y</code> to <code>.f</code>, just like <code><a href="map2.html">map2()</a></code>. <code>imodify()</code> passes
 the names or the indices to <code>.f</code> like <code><a href="imap.html">imap()</a></code> does.</p></li>
-<li><p><code>modify_depth()</code> only modifies elements at a given level of a
-nested data structure.</p></li>
 <li><p><code><a href="modify_in.html">modify_in()</a></code> modifies a single element in a <code><a href="pluck.html">pluck()</a></code> location.</p></li>
 </ul></div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">modify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for default</span>
-<span class="fu">modify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">modify_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co"># S3 method for default</span>
-<span class="fu">modify_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">modify_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for default</span>
-<span class="fu">modify_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">modify2</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">imodify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">modify_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="co"># S3 method for default</span>
-<span class="fu">modify_depth</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.depth</span>, <span class="va">.f</span>, <span class="va">...</span>, .ragged <span class="op">=</span> <span class="va">.depth</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">modify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">modify_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">modify_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">modify2</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">imodify</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.x</dt>
-<dd><p>A list or atomic vector.</p></dd>
+<dd><p>A vector.</p></dd>
+
+
 <dt>.f</dt>
-<dd><p>A function, formula, or vector (not necessarily atomic).</p>
-<p>If a <strong>function</strong>, it is used as is.</p>
-<p>If a <strong>formula</strong>, e.g. <code>~ .x + 2</code>, it is converted to a function. There
-are three ways to refer to the arguments:</p><ul><li><p>For a single argument function, use <code>.</code></p></li>
-<li><p>For a two argument function, use <code>.x</code> and <code>.y</code></p></li>
-<li><p>For more arguments, use <code>..1</code>, <code>..2</code>, <code>..3</code> etc</p></li>
-</ul><p>This syntax allows you to create very compact anonymous functions.</p>
-<p>If <strong>character vector</strong>, <strong>numeric vector</strong>, or <strong>list</strong>, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of <code>.default</code> will be returned.</p></dd>
+<dd><p>A function specified in the same way as the corresponding map
+function.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Additional arguments passed on to the mapped function.</p></dd>
+<dd><p>Additional arguments passed on to the mapped function.</p>
+<p>We now generally recommend against using <code>...</code> to pass additional
+(constant) arguments to <code>.f</code>. Instead use a shorthand anonymous function:</p>
+<p></p><div class="sourceCode R"><pre><code><span><span class="co"># Instead of</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co"># do:</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>This makes it easier to understand which arguments belong to which
+function and will tend to yield better error messages.</p></dd>
+
+
 <dt>.p</dt>
 <dd><p>A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as <code>.x</code>.
@@ -154,32 +139,33 @@ Alternatively, if the elements of <code>.x</code> are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where <code>.p</code> evaluates to
 <code>TRUE</code> will be modified.</p></dd>
+
+
 <dt>.else</dt>
 <dd><p>A function applied to elements of <code>.x</code> for which <code>.p</code>
 returns <code>FALSE</code>.</p></dd>
+
+
 <dt>.at</dt>
-<dd><p>A character vector of names, positive numeric vector of
-positions to include, or a negative numeric vector of positions to
-exlude. Only those elements corresponding to <code>.at</code> will be modified.
-If the <code>tidyselect</code> package is installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and
-the <code>tidyselect</code> helpers to select elements.</p></dd>
+<dd><p>A logical, integer, or character vector giving the elements
+to select. Alternatively, a function that takes a vector of names,
+and returns a logical, integer, or character vector of elements to select.</p>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>: if the tidyselect package is
+installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and tidyselect helpers to select
+elements.</p></dd>
+
+
 <dt>.y</dt>
-<dd><p>Vectors of the same length. A vector of length 1 will
-be recycled.</p></dd>
-<dt>.depth</dt>
-<dd><p>Level of <code>.x</code> to map on. Use a negative value to count up
-from the lowest level of the list.</p><ul><li><p><code>modify_depth(x, 0, fun)</code> is equivalent to <code>x[] &lt;- fun(x)</code>.</p></li>
-<li><p><code>modify_depth(x, 1, fun)</code> is equivalent to <code>x &lt;- modify(x, fun)</code></p></li>
-<li><p><code>modify_depth(x, 2, fun)</code> is equivalent to <code>x &lt;- modify(x, ~ modify(., fun))</code></p></li>
-</ul></dd>
-<dt>.ragged</dt>
-<dd><p>If <code>TRUE</code>, will apply to leaves, even if they're not
-at depth <code>.depth</code>. If <code>FALSE</code>, will throw an error if there are
-no elements at depth <code>.depth</code>.</p></dd>
+<dd><p>A vector, usually the same length as <code>.x</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object the same class as <code>.x</code></p>
+    
+
+<p>An object the same class as <code>.x</code></p>
+
+
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -198,10 +184,9 @@ must preserve the length of the input.</p>
 is not compatible for your class, you can override them with your
 own methods.</p>
 <p>If you implement your own <code>modify()</code> method, make sure it satisfies
-the following invariants:</p><div class="sourceCode"><pre><code>modify(x, identity) === x
-modify(x, compose(f, g)) === modify(x, g) %&gt;% modify(f)
-</code></pre></div>
-
+the following invariants:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, identity) <span class="sc">==</span><span class="er">=</span> x</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modify</span>(x, <span class="fu">compose</span>(f, g)) <span class="sc">==</span><span class="er">=</span> <span class="fu">modify</span>(x, g) <span class="sc">|&gt;</span> <span class="fu">modify</span>(f)</span></code></pre><p></p></div>
 <p>These invariants are known as the <a href="https://wiki.haskell.org/Functor#Functor_Laws" class="external-link">functor laws</a> in computer
 science.</p>
     </div>
@@ -209,28 +194,32 @@ science.</p>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other map variants: 
 <code><a href="imap.html">imap</a>()</code>,
-<code><a href="invoke.html">invoke</a>()</code>,
 <code><a href="lmap.html">lmap</a>()</code>,
 <code><a href="map2.html">map2</a>()</code>,
+<code><a href="map_depth.html">map_depth</a>()</code>,
 <code><a href="map_if.html">map_if</a>()</code>,
-<code><a href="map.html">map</a>()</code></p></div>
+<code><a href="map.html">map</a>()</code>,
+<code><a href="pmap.html">pmap</a>()</code></p>
+<p>Other modify variants: 
+<code><a href="map_depth.html">map_depth</a>()</code>,
+<code><a href="modify_tree.html">modify_tree</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Convert factors to characters</span></span>
-<span class="r-in"><span class="va">iris</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">modify_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Convert factors to characters</span></span></span>
+<span class="r-in"><span><span class="va">iris</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	150 obs. of  5 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ Species     : chr  "setosa" "setosa" "setosa" "setosa" ...</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Specify which columns to map with a numeric vector of positions:</span></span>
-<span class="r-in"><span class="va">mtcars</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Specify which columns to map with a numeric vector of positions:</span></span></span>
+<span class="r-in"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	32 obs. of  11 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ mpg : chr  "21" "21" "22.8" "21.4" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...</span>
@@ -243,9 +232,9 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Or with a vector of names:</span></span>
-<span class="r-in"><span class="va">mtcars</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or with a vector of names:</span></span></span>
+<span class="r-in"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu">modify_at</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span><span class="op">)</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	32 obs. of  11 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ cyl : chr  "6" "6" "4" "6" ...</span>
@@ -258,45 +247,46 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ am  : chr  "1" "1" "1" "0" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="rbernoulli.html">rbernoulli</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">modify_if</span><span class="op">(</span><span class="st">"x"</span>, <span class="op">~</span> <span class="fu"><a href="list_modify.html">update_list</a></span><span class="op">(</span><span class="va">.</span>, y <span class="op">=</span> <span class="op">~</span> <span class="va">y</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="transpose.html">transpose</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="as_vector.html">simplify_all</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="list_transpose.html">list_transpose</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">modify_if</span><span class="op">(</span><span class="st">"x"</span>, \<span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="va">x</span>, y <span class="op">=</span> <span class="va">l</span><span class="op">$</span><span class="va">y</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="list_transpose.html">list_transpose</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [34]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56]  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [100] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [100]  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]    1    2    3    4  500    6    7    8    9   10   11   12   13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [14]   14   15 1600   17   18   19 2000   21   22   23   24   25 2600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [27]   27 2800   29 3000   31   32 3300 3400   35   36   37 3800 3900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [40] 4000   41   42   43   44   45   46 4700 4800   49 5000   51 5200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [53]   53   54 5500 5600 5700 5800   59   60 6100 6200   63   64 6500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [66] 6600 6700   68 6900   70 7100   72 7300 7400 7500 7600 7700   78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [79]   79   80   81 8200 8300   84   85 8600   87 8800 8900   90   91</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [92]   92 9300 9400 9500   96 9700 9800   99  100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]     1   200   300     4     5     6     7   800     9  1000  1100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12]    12  1300  1400  1500    16  1700    18  1900    20  2100  2200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23]    23  2400  2500    26    27  2800    29  3000    31  3200    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34]    34    35  3600    37    38    39    40    41  4200    43    44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45]    45    46  4700    48    49  5000    51  5200    53  5400  5500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56]    56  5700  5800    59    60    61    62    63  6400  6500    66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]    67  6800    69    70  7100  7200  7300  7400  7500    76    77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78]    78    79  8000    81  8200    83  8400  8500  8600    87    88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  8900  9000    91    92  9300  9400    95    96  9700    98  9900</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [100] 10000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use modify2() to map over two vectors and preserve the type of</span></span>
-<span class="r-in"><span class="co"># the first one:</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1L</span>, bar <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">modify2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="op">~</span> <span class="kw">if</span> <span class="op">(</span><span class="va">.y</span><span class="op">)</span> <span class="va">.x</span> <span class="kw">else</span> <span class="fl">0L</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use modify2() to map over two vectors and preserve the type of</span></span></span>
+<span class="r-in"><span><span class="co"># the first one:</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1L</span>, bar <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">modify2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">cond</span><span class="op">)</span> <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="va">x</span> <span class="kw">else</span> <span class="fl">0L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> foo bar </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   0 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use a predicate function to decide whether to map a function:</span></span>
-<span class="r-in"><span class="fu">modify_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use a predicate function to decide whether to map a function:</span></span></span>
+<span class="r-in"><span><span class="fu">modify_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1            5.1         3.5          1.4         0.2     setosa</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2            4.9         3.0          1.4         0.2     setosa</span>
@@ -448,9 +438,9 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 148          6.5         3.0          5.2         2.0  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 149          6.2         3.4          5.4         2.3  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150          5.9         3.0          5.1         1.8  virginica</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Specify an alternative with the `.else` argument:</span></span>
-<span class="r-in"><span class="fu">modify_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Specify an alternative with the `.else` argument:</span></span></span>
+<span class="r-in"><span><span class="fu">modify_if</span><span class="op">(</span><span class="va">iris</span>, <span class="va">is.factor</span>, <span class="va">as.character</span>, .else <span class="op">=</span> <span class="va">as.integer</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1              5           3            1           0     setosa</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2              4           3            1           0     setosa</span>
@@ -602,156 +592,6 @@ science.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 148            6           3            5           2  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 149            6           3            5           2  virginica</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150            5           3            5           1  virginica</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Modify at specified depth ---------------------------</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  obj1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    prop1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, param2 <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
-<span class="r-in">    prop2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">6</span>, param2 <span class="op">=</span> <span class="fl">7</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  obj2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    prop1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">9</span><span class="op">:</span><span class="fl">10</span>, param2 <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span>,</span>
-<span class="r-in">    prop2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param1 <span class="op">=</span> <span class="fl">12</span><span class="op">:</span><span class="fl">14</span>, param2 <span class="op">=</span> <span class="fl">15</span><span class="op">:</span><span class="fl">17</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># In the above list, "obj" is level 1, "prop" is level 2 and "param"</span></span>
-<span class="r-in"><span class="co"># is level 3. To apply sum() on all params, we map it at depth 3:</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">sum</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param1: int 39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ param2: int 48</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Note that vectorised operations will yield the same result when</span></span>
-<span class="r-in"><span class="co"># applied at the list level as when applied at the atomic result.</span></span>
-<span class="r-in"><span class="co"># The former is more efficient because it takes advantage of</span></span>
-<span class="r-in"><span class="co"># vectorisation.</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">3</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 101 102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 103 104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 105 106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 107 108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 109 110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 111 112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 112 113 114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 115 116 117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">4</span>, <span class="va">`+`</span>, <span class="fl">100L</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 101 102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 103 104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 105 106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj1$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 107 108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 109 110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop1$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 111 112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 112 113 114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $obj2$prop2$param2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 115 116 117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># modify() lets us pluck the elements prop1/param2 in obj1 and obj2:</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prop1"</span>, <span class="st">"param2"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1: int [1:2] 3 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2: int [1:2] 11 12</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># But what if we want to pluck all param2 elements? Then we need to</span></span>
-<span class="r-in"><span class="co"># act at a lower level:</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="st">"param2"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1: int [1:2] 3 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2: int [1:2] 7 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1: int [1:2] 11 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2: int [1:3] 15 16 17</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># modify_depth() can be with other purrr functions to make them operate at</span></span>
-<span class="r-in"><span class="co"># a lower level. Here we ask pmap() to map paste() simultaneously over all</span></span>
-<span class="r-in"><span class="co"># elements of the objects at the second level. paste() is effectively</span></span>
-<span class="r-in"><span class="co"># mapped at level 3.</span></span>
-<span class="r-in"><span class="va">l1</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">modify_depth</span><span class="op">(</span><span class="fl">2</span>, <span class="op">~</span> <span class="fu"><a href="map2.html">pmap</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">paste</span>, sep <span class="op">=</span> <span class="st">" / "</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "1 / 3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "2 / 4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "5 / 7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "6 / 8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ obj2:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop1:List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "9 / 11"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "10 / 12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ prop2:List of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "12 / 15"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "13 / 16"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "14 / 17"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -761,11 +601,11 @@ science.</p>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
   </div></footer></body></html>
