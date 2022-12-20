@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9000.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,10 +60,13 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="purrr-development-version">purrr (development version)<a class="anchor" aria-label="anchor" href="#purrr-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.0" id="purrr-100">purrr 1.0.0<a class="anchor" aria-label="anchor" href="#purrr-100"></a></h2>
 <div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<h3 id="breaking-changes-1-0-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-0-0"></a></h3>
 <div class="section level4">
-<h4 id="core-purpose-refinements-development-version">Core purpose refinements<a class="anchor" aria-label="anchor" href="#core-purpose-refinements-development-version"></a></h4>
+<h4 id="core-purpose-refinements-1-0-0">Core purpose refinements<a class="anchor" aria-label="anchor" href="#core-purpose-refinements-1-0-0"></a></h4>
 <ul><li><p><code><a href="../reference/cross.html">cross()</a></code> and all its variants have been deprecated in favour of <code>tidyr::expand_grid()</code>. These functions were slow and buggy and we no longer think they are the right approach to solving this problem. See <a href="https://github.com/tidyverse/purrr/issues/768" class="external-link">#768</a> for more information.</p></li>
 <li><p><code><a href="../reference/update_list.html">update_list()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/858" class="external-link">#858</a>) and <code><a href="../reference/rerun.html">rerun()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/877" class="external-link">#877</a>), and the use of tidyselect with <code><a href="../reference/map_if.html">map_at()</a></code> and friends (<a href="https://github.com/tidyverse/purrr/issues/874" class="external-link">#874</a>) have been deprecated. These functions use some form of non-standard evaluation which we now believe is a poor fit for purrr.</p></li>
 <li><p>The <code>lift_*</code> family of functions has been deprecated. We no longer believe these to be a good fit for purrr because they rely on a style of function manipulation that is very uncommon in R code (<a href="https://github.com/tidyverse/purrr/issues/871" class="external-link">#871</a>).</p></li>
@@ -71,13 +74,13 @@
 <li><p><code><a href="../reference/splice.html">splice()</a></code> is deprecated because we no longer believe that automatic splicing makes for good UI. Instead use <code>list2()</code> + <code>!!!</code> or <code><a href="../reference/list_flatten.html">list_flatten()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/869" class="external-link">#869</a>).</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="mapping-development-version">Mapping<a class="anchor" aria-label="anchor" href="#mapping-development-version"></a></h4>
+<h4 id="mapping-1-0-0">Mapping<a class="anchor" aria-label="anchor" href="#mapping-1-0-0"></a></h4>
 <ul><li><p>Use of map functions with expressions, calls, and pairlists has been deprecated (<a href="https://github.com/tidyverse/purrr/issues/961" class="external-link">#961</a>).</p></li>
 <li><p>All map <code>_raw()</code> variants have been deprecated because they are of limited use and you can now use <code><a href="../reference/map.html">map_vec()</a></code> instead (<a href="https://github.com/tidyverse/purrr/issues/903" class="external-link">#903</a>).</p></li>
 <li><p>In <code><a href="../reference/map.html">map_chr()</a></code>, automatic conversion from logical, integer, and double to character is now deprecated. Use an explicit <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code> if needed (<a href="https://github.com/tidyverse/purrr/issues/904" class="external-link">#904</a>).</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="deprecation-next-steps-development-version">Deprecation next steps<a class="anchor" aria-label="anchor" href="#deprecation-next-steps-development-version"></a></h4>
+<h4 id="deprecation-next-steps-1-0-0">Deprecation next steps<a class="anchor" aria-label="anchor" href="#deprecation-next-steps-1-0-0"></a></h4>
 <ul><li><p><code>as_function()</code> and the <code>...f</code> argument to <code><a href="../reference/partial.html">partial()</a></code> are no longer supported. They have been defunct for quite some time.</p></li>
 <li><p>Soft deprecated functions: <code>%@%</code>, <code><a href="../reference/reduce_right.html">reduce_right()</a></code>, <code><a href="../reference/reduce_right.html">reduce2_right()</a></code>, <code><a href="../reference/reduce_right.html">accumulate_right()</a></code> are now fully deprecated. Similarly, the <code>.lazy</code>, <code>.env</code>, and <code>.first</code> arguments to <code><a href="../reference/partial.html">partial()</a></code>, and the <code>.right</code> argument to <code><a href="../reference/detect.html">detect()</a></code> and <code><a href="../reference/detect.html">detect_index()</a></code> are fully deprecated. Removing elements with <code>NULL</code> in <code><a href="../reference/list_assign.html">list_modify()</a></code> and <code><a href="../reference/list_assign.html">list_merge()</a></code> is now fully deprecated.</p></li>
 <li><p><code>is_numeric()</code> and <code>is_scalar_numeric()</code> have been removed. They have been deprecated since purrr 0.2.3 (Sep 2017).</p></li>
@@ -86,7 +89,7 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-0-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-0"></a></h3>
 <ul><li><p><code>*_at()</code> can now take a function (or formula) that’s passed the vector of element names and returns the elements to select.</p></li>
 <li><p>New <code><a href="../reference/map.html">map_vec()</a></code>, <code><a href="../reference/map2.html">map2_vec()</a></code>, and <code><a href="../reference/pmap.html">pmap_vec()</a></code> work on all types of vectors, extending <code><a href="../reference/map.html">map_lgl()</a></code>, <code><a href="../reference/map.html">map_int()</a></code>, and friends so that you can easily work with dates, factors, date-times and more (<a href="https://github.com/tidyverse/purrr/issues/435" class="external-link">#435</a>).</p></li>
 <li><p>New <code><a href="../reference/keep_at.html">keep_at()</a></code> and <code><a href="../reference/keep_at.html">discard_at()</a></code> that work like <code><a href="../reference/keep.html">keep()</a></code> and <code><a href="../reference/keep.html">discard()</a></code> but operation on element names rather than element contents (<a href="https://github.com/tidyverse/purrr/issues/817" class="external-link">#817</a>).</p></li>
@@ -97,7 +100,7 @@
 <li><p>When map functions fail, they now report the element they failed at (<a href="https://github.com/tidyverse/purrr/issues/945" class="external-link">#945</a>).</p></li>
 <li><p>New <code><a href="../reference/modify_tree.html">modify_tree()</a></code> for recursively modifying nested data structures (<a href="https://github.com/tidyverse/purrr/issues/720" class="external-link">#720</a>).</p></li>
 </ul><div class="section level4">
-<h4 id="flattening-and-simplification-development-version">Flattening and simplification<a class="anchor" aria-label="anchor" href="#flattening-and-simplification-development-version"></a></h4>
+<h4 id="flattening-and-simplification-1-0-0">Flattening and simplification<a class="anchor" aria-label="anchor" href="#flattening-and-simplification-1-0-0"></a></h4>
 <ul><li><p>New <code><a href="../reference/list_c.html">list_c()</a></code>, <code><a href="../reference/list_c.html">list_rbind()</a></code>, and <code><a href="../reference/list_c.html">list_cbind()</a></code> make it easy to <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>, or <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> all of the elements in a list.</p></li>
 <li><p>New <code><a href="../reference/list_simplify.html">list_simplify()</a></code> reduces a list of length-1 vectors to a simpler atomic or S3 vector (<a href="https://github.com/tidyverse/purrr/issues/900" class="external-link">#900</a>).</p></li>
 <li><p>New <code><a href="../reference/list_transpose.html">list_transpose()</a></code> which automatically simplifies if possible (<a href="https://github.com/tidyverse/purrr/issues/875" class="external-link">#875</a>).</p></li>
@@ -108,7 +111,7 @@
 <li><p><code><a href="../reference/transpose.html">transpose()</a></code> has been superseded in favour of <code><a href="../reference/list_transpose.html">list_transpose()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/875" class="external-link">#875</a>). It has built-in simplification.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="tidyverse-consistency-development-version">Tidyverse consistency<a class="anchor" aria-label="anchor" href="#tidyverse-consistency-development-version"></a></h4>
+<h4 id="tidyverse-consistency-1-0-0">Tidyverse consistency<a class="anchor" aria-label="anchor" href="#tidyverse-consistency-1-0-0"></a></h4>
 <ul><li>
 <p><code>_lgl()</code>, <code>_int()</code>, <code>_int()</code>, and <code>_dbl()</code> now use the same (strict) coercion methods as vctrs (<a href="https://github.com/tidyverse/purrr/issues/904" class="external-link">#904</a>). This means that:</p>
 <ul><li><p><code>map_chr(TRUE, identity)</code>, <code>map_chr(0L, identity)</code>, and <code>map_chr(1L, identity)</code> are deprecated because we now believe that converting a logical/integer/double to a character vector should require an explicit coercion.</p></li>
@@ -120,7 +123,7 @@
 <li><p><code><a href="../reference/modify.html">modify()</a></code>, <code><a href="../reference/modify.html">modify_if()</a></code>, and <code><a href="../reference/modify.html">modify_at()</a></code> have been reimplemented using vctrs principles. This shouldn’t have an user facing impact, but it does make the implementation much simpler.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="plucking-development-version">Plucking<a class="anchor" aria-label="anchor" href="#plucking-development-version"></a></h4>
+<h4 id="plucking-1-0-0">Plucking<a class="anchor" aria-label="anchor" href="#plucking-1-0-0"></a></h4>
 <ul><li><p><code><a href="../reference/pluck_depth.html">vec_depth()</a></code> is now <code><a href="../reference/pluck_depth.html">pluck_depth()</a></code> and works with more types of input (<a href="https://github.com/tidyverse/purrr/issues/818" class="external-link">#818</a>).</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> now requires indices to be length 1 (<a href="https://github.com/tidyverse/purrr/issues/813" class="external-link">#813</a>). It also now reports the correct type if you supply an unexpected index.</p></li>
 <li><p><code><a href="../reference/pluck.html">pluck()</a></code> now accepts negative integers, indexing from the right (<a href="https://github.com/tidyverse/purrr/issues/603" class="external-link">#603</a>).</p></li>
@@ -129,20 +132,20 @@
 <li><p><code>pluck&lt;-</code>/<code><a href="../reference/modify_in.html">assign_in()</a></code> can now modify non-existing locations (<a href="https://github.com/tidyverse/purrr/issues/704" class="external-link">#704</a>).</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="setting-with-null-development-version">Setting with NULL<a class="anchor" aria-label="anchor" href="#setting-with-null-development-version"></a></h4>
+<h4 id="setting-with-null-1-0-0">Setting with NULL<a class="anchor" aria-label="anchor" href="#setting-with-null-1-0-0"></a></h4>
 <ul><li><p><code>pluck&lt;-</code>/<code><a href="../reference/modify_in.html">assign_in()</a></code> now sets elements to <code>NULL</code> rather than removing them (<a href="https://github.com/tidyverse/purrr/issues/636" class="external-link">#636</a>). Now use the explicit <code><a href="https://rlang.r-lib.org/reference/zap.html" class="external-link">zap()</a></code> if you want to remove elements.</p></li>
 <li><p><code><a href="../reference/modify.html">modify()</a></code>, <code><a href="../reference/modify.html">modify2()</a></code>, and <code><a href="../reference/modify.html">modify_if()</a></code> now correctly handle <code>NULL</code>s in replacement values (<a href="https://github.com/tidyverse/purrr/issues/655" class="external-link">#655</a>, <a href="https://github.com/tidyverse/purrr/issues/746" class="external-link">#746</a>, <a href="https://github.com/tidyverse/purrr/issues/753" class="external-link">#753</a>).</p></li>
 <li><p><code><a href="../reference/list_assign.html">list_modify()</a></code>’s interface has been standardised. Modifying with <code>NULL</code> now always creates a <code>NULL</code> in the output (<a href="https://github.com/tidyverse/purrr/issues/810" class="external-link">#810</a>)</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="list_-functions-development-version">
-<code>list_</code> functions`<a class="anchor" aria-label="anchor" href="#list_-functions-development-version"></a></h4>
+<h4 id="list_-functions-1-0-0">
+<code>list_</code> functions`<a class="anchor" aria-label="anchor" href="#list_-functions-1-0-0"></a></h4>
 <ul><li><p>New <code><a href="../reference/list_assign.html">list_assign()</a></code> which is similar to <code><a href="../reference/list_assign.html">list_modify()</a></code> but doesn’t work recursively (<a href="https://github.com/tidyverse/purrr/issues/822" class="external-link">#822</a>).</p></li>
 <li><p><code><a href="../reference/list_assign.html">list_modify()</a></code> no longer recurses into data frames (and other objects built on top of lists that are fundamentally non-list like) (<a href="https://github.com/tidyverse/purrr/issues/810" class="external-link">#810</a>). You can revert to the previous behaviour by setting <code>.is_node = is.list</code>.</p></li>
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-1-0-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-1-0-0"></a></h3>
 <ul><li><p><code>capture_output()</code> correctly uses <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> instead of directly interrogating the <code>message</code> field (<a href="https://github.com/tidyverse/purrr/issues/1010" class="external-link">#1010</a>).</p></li>
 <li><p><code><a href="../reference/modify.html">modify()</a></code> no longer works with calls or pairlists.</p></li>
 <li><p><code><a href="../reference/map_depth.html">modify_depth()</a></code> is no longer a generic. This makes it more consistent with <code><a href="../reference/map_depth.html">map_depth()</a></code>.</p></li>
