@@ -1,7 +1,7 @@
 #' Lift the domain of a function
 #'
 #' @description
-#' `r lifecycle::badge("superseded")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' `lift_xy()` is a composition helper. It helps you compose
 #' functions by lifting their domain from a kind of input to another
