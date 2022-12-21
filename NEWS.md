@@ -1,5 +1,9 @@
 # purrr (development version)
 
+* Fixed an invalid C signature for `pluck()` (#1018).
+
+* Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).
+
 # purrr 1.0.0
 
 ## Breaking changes
