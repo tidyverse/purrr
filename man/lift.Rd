@@ -45,7 +45,7 @@ the type, one of: "logical", "integer", "double", "complex",
 A function.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{lift_xy()} is a composition helper. It helps you compose
 functions by lifting their domain from a kind of input to another
