@@ -1,5 +1,8 @@
 # purrr (development version)
 
+* Fixed an issue where progress bars weren't being closed when user interrupts
+  or errors were encountered during a `map()` call (#1024).
+
 * Fixed an invalid C signature for `pluck()` (#1018).
 
 * Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).
