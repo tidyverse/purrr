@@ -127,7 +127,7 @@ pmap_ <- function(.type,
   with_indexed_errors(
     i = i,
     error_call = .purrr_error_call,
-    .Call(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n)
+    call_with_cleanup(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n)
   )
 }
 

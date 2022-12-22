@@ -171,7 +171,7 @@ map_ <- function(.type,
   with_indexed_errors(
     i = i,
     error_call = .purrr_error_call,
-    .Call(map_impl, environment(), .type, .progress, n, names, i)
+    call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i)
   )
 }
 

@@ -2,6 +2,7 @@
 #include <R.h>
 #include <Rversion.h>
 #include <Rinternals.h>
+#include "cleancall.h"
 #include "coerce.h"
 #include "conditions.h"
 #include "utils.h"
