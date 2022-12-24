@@ -10,7 +10,7 @@
 #' * A named list of progress bar parameters, as described below.
 #'
 #' It's good practice to name your progress bars, to make it clear what
-#' calculation or process they belong to. We recommending keeping the names
+#' calculation or process they belong to. We recommend keeping the names
 #' under 20 characters, so the whole progress bar fits comfortably even on
 #' on narrower displays.
 #'
