@@ -1,1 +1,6 @@
 PKG_CFLAGS = $(C_VISIBILITY)
+
+all: ../man/macros/examples.Rd
+
+../man/macros/examples.Rd:
+	$(R_HOME)/bin$(R_ARCH)/Rscript --vanilla ../tools/examples.R

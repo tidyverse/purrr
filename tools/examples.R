@@ -1,5 +1,5 @@
 if (getRversion() < "4.1") {
-  dir.create("man/macros", showWarnings = FALSE, recursive = TRUE)
+  dir.create("../man/macros", showWarnings = FALSE, recursive = TRUE)
   cat(
     paste(
       "\\renewcommand{\\examples}{\\section{Examples}{",
@@ -10,6 +10,6 @@ if (getRversion() < "4.1") {
       "\\preformatted{#1}}}",
       collapse = ""
     ),
-    file = "man/macros/examples.Rd"
+    file = "../man/macros/examples.Rd"
   )
 }
