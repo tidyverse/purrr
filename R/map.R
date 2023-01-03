@@ -123,55 +123,57 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 map <- function(.x, .f, ..., .progress = FALSE) {
-  map_("list", .x, .f, ..., .progress = .progress)
+  .f <- as_mapper(.f, ...)
+  map_("list", .x, .f, environment(), .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("logical", .x, .f, ..., .progress = .progress)
+  .f <- as_mapper(.f, ...)
+  map_("logical", .x, .f, environment(), .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
-  map_("integer", .x, .f, ..., .progress = .progress)
+  .f <- as_mapper(.f, ...)
+  map_("integer", .x, .f, environment(), .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("double", .x, .f, ..., .progress = .progress)
+  .f <- as_mapper(.f, ...)
+  map_("double", .x, .f, environment(), .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
   local_deprecation_user_env()
-  map_("character", .x, .f, ..., .progress = .progress)
+  .f <- as_mapper(.f, ...)
+  map_("character", .x, .f, environment(), .progress = .progress)
 }
 
 map_ <- function(.type,
                  .x,
                  .f,
-                 ...,
+                 env,
                  .progress = FALSE,
-                 .purrr_user_env = caller_env(2),
-                 .purrr_error_call = caller_env()) {
-  .x <- vctrs_vec_compat(.x, .purrr_user_env)
-  vec_assert(.x, arg = ".x", call = .purrr_error_call)
+                 .user_env = caller_env(2),
+                 .error_call = caller_env()) {
+  .x <- vctrs_vec_compat(.x, .user_env)
+  vec_assert(.x, arg = ".x", call = .error_call)
 
   n <- vec_size(.x)
-
   names <- vec_names(.x)
 
-  .f <- as_mapper(.f, ...)
-
-  i <- 0L
+  env$i <- 0L
   with_indexed_errors(
-    i = i,
-    error_call = .purrr_error_call,
-    .Call(map_impl, environment(), .type, .progress, n, names, i)
+    i = env$i,
+    error_call = .error_call,
+    .Call(map_impl, env, .type, .progress, n, names, env$i)
   )
 }
 
