@@ -50,6 +50,9 @@
   character is now deprecated. Use an explicit `as.character()` if needed 
   (#904).
 
+* Errors from `.f` are now wrapped in an additional class that gives 
+  information about where the error occurred (#945).
+
 ### Deprecation next steps
 
 * `as_function()` and the `...f` argument to `partial()` are no longer 
