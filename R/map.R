@@ -65,6 +65,9 @@
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
 #'    use in a pipe. The return value of `.f()` is ignored.
+#'
+#' Any errors thrown by `.f` will be wrapped in an error with class
+#' `purrr_error_indexed`. See `vignette("programming")` for details.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
