@@ -94,12 +94,12 @@ tryCatch(
 )
 ```
 
-That's because, as described above, the error is wrapped inside the `purrr_indexed_error` class, so you need to do a bit more work:
+That's because, as described above, the error is wrapped inside the `purrr_error_indexed` class, so you need to do a bit more work:
 
 ```{r}
 tryCatch(
   map(c(1, 4, 2, 5, 3), f),
-  purrr_indexed_error = function(err) {
+  purrr_error_indexed = function(err) {
     if (rlang::cnd_inherits(err$parent, "my_error")) {
       print("Hello! I am now called :)")
     } else {
@@ -115,7 +115,7 @@ If you just want to get rid of purrr's wrapper, you can do this:
 #| error: true
 tryCatch(
   map(c(1, 4, 2, 5, 3), f),
-  purrr_indexed_error = function(err) {
+  purrr_error_indexed = function(err) {
     rlang::cnd_signal(err$parent)
   }
 )

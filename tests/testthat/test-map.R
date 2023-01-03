@@ -38,7 +38,7 @@ test_that("all inform about location of problem", {
   })
 
   cnd <- catch_cnd(map(1:3, ~ fail_at_3(.x, stop("Doesn't work"))))
-  expect_s3_class(cnd, "purrr_indexed_error")
+  expect_s3_class(cnd, "purrr_error_indexed")
   expect_equal(cnd$index, 3)
 })
 

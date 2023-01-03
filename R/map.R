@@ -205,7 +205,7 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
           index = i,
           parent = cnd,
           call = error_call,
-          class = "purrr_indexed_error"
+          class = "purrr_error_indexed"
         )
       }
     }
