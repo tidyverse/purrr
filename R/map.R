@@ -202,8 +202,10 @@ with_indexed_errors <- function(expr, i, error_call = caller_env()) {
       } else {
         cli::cli_abort(
           c(i = "In index: {i}."),
+          index = i,
           parent = cnd,
-          call = error_call
+          call = error_call,
+          class = "purrr_indexed_error"
         )
       }
     }

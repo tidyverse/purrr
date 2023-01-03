@@ -33,9 +33,13 @@ test_that("all inform about location of problem", {
 
   expect_snapshot(error = TRUE, {
     map_int(1:3, ~ fail_at_3(.x, 2:1))
-    map_int(1:3, ~ fail_at_3("x"))
-    map(1:3, ~ fail_at_3(stop("Doesn't work")))
+    map_int(1:3, ~ fail_at_3(.x, "x"))
+    map(1:3, ~ fail_at_3(.x, stop("Doesn't work")))
   })
+
+  cnd <- catch_cnd(map(1:3, ~ fail_at_3(.x, stop("Doesn't work"))))
+  expect_s3_class(cnd, "purrr_indexed_error")
+  expect_equal(cnd$index, 3)
 })
 
 test_that("0 length input gives 0 length output", {

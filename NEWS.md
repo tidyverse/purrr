@@ -4,6 +4,12 @@
 
 * Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).
 
+* As of purrr 1.0.0, the `map()` family of functions wraps all errors generated
+  by `.f` inside an wrapper error that tracks the iteration index. As of purrr 
+  1.0.1, this error now has a custom class (`purrr_indexed_error`) and `index`
+  field, and how to work with these errors is documented in 
+  `vignette("programming", package = "purrr")` (#1027).
+
 # purrr 1.0.0
 
 ## Breaking changes
