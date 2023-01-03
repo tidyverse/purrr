@@ -8,7 +8,7 @@ A named list of progress bar parameters, as described below.
 
 
 It's good practice to name your progress bars, to make it clear what
-calculation or process they belong to. We recommending keeping the names
+calculation or process they belong to. We recommend keeping the names
 under 20 characters, so the whole progress bar fits comfortably even on
 on narrower displays.
 Progress bar parameters
@@ -16,7 +16,7 @@ Progress bar parameters
 
 clear: whether to remove the progress bar from the screen after
 termination. Defaults to TRUE.
-format: format string. This overrides the detault format string of
+format: format string. This overrides the default format string of
 the progress bar type. It must be given for the custom type.
 Format strings may contain R expressions to evaluate in braces.
 They support cli pluralization, and
@@ -32,7 +32,7 @@ show_after: numeric scalar. Only show the progress bar after this
 number of seconds. It overrides the cli.progress_show_after
 global option.
 type: progress bar type. Currently supported types are:
-iterator: the detault, a for loop or a mapping function,
+iterator: the default, a for loop or a mapping function,
 tasks: a (typically small) number of tasks,
 download: download of one file,
 custom: custom type, format must not be NULL for this type.
@@ -60,7 +60,7 @@ A named list of progress bar parameters, as described below.
 
 
 It's good practice to name your progress bars, to make it clear what
-calculation or process they belong to. We recommending keeping the names
+calculation or process they belong to. We recommend keeping the names
 under 20 characters, so the whole progress bar fits comfortably even on
 on narrower displays.
 Progress bar parameters
@@ -68,7 +68,7 @@ Progress bar parameters
 
 clear: whether to remove the progress bar from the screen after
 termination. Defaults to TRUE.
-format: format string. This overrides the detault format string of
+format: format string. This overrides the default format string of
 the progress bar type. It must be given for the custom type.
 Format strings may contain R expressions to evaluate in braces.
 They support cli pluralization, and
@@ -84,7 +84,7 @@ show_after: numeric scalar. Only show the progress bar after this
 number of seconds. It overrides the cli.progress_show_after
 global option.
 type: progress bar type. Currently supported types are:
-iterator: the detault, a for loop or a mapping function,
+iterator: the default, a for loop or a mapping function,
 tasks: a (typically small) number of tasks,
 download: download of one file,
 custom: custom type, format must not be NULL for this type.
@@ -171,14 +171,14 @@ create a progress bar. <code>.progress</code> can be:</p><ul><li><p><code>FALSE<
 <li><p>A string: creates a basic progress bar with the given name.</p></li>
 <li><p>A named list of progress bar parameters, as described below.</p></li>
 </ul><p>It's good practice to name your progress bars, to make it clear what
-calculation or process they belong to. We recommending keeping the names
+calculation or process they belong to. We recommend keeping the names
 under 20 characters, so the whole progress bar fits comfortably even on
 on narrower displays.</p><div class="section">
 <h3 id="progress-bar-parameters">Progress bar parameters<a class="anchor" aria-label="anchor" href="#progress-bar-parameters"></a></h3>
 
 <ul><li><p><code>clear</code>: whether to remove the progress bar from the screen after
 termination. Defaults to <code>TRUE</code>.</p></li>
-<li><p><code>format</code>: format string. This overrides the detault format string of
+<li><p><code>format</code>: format string. This overrides the default format string of
 the progress bar type. It must be given for the <code>custom</code> type.
 Format strings may contain R expressions to evaluate in braces.
 They support cli <a href="https://cli.r-lib.org/reference/pluralization.html" class="external-link">pluralization</a>, and
@@ -193,7 +193,7 @@ is displayed at the beginning of the progress bar.</p></li>
 <li><p><code>show_after</code>: numeric scalar. Only show the progress bar after this
 number of seconds. It overrides the <code>cli.progress_show_after</code>
 global option.</p></li>
-<li><p><code>type</code>: progress bar type. Currently supported types are:</p><ul><li><p><code>iterator</code>: the detault, a for loop or a mapping function,</p></li>
+<li><p><code>type</code>: progress bar type. Currently supported types are:</p><ul><li><p><code>iterator</code>: the default, a for loop or a mapping function,</p></li>
 <li><p><code>tasks</code>: a (typically small) number of tasks,</p></li>
 <li><p><code>download</code>: download of one file,</p></li>
 <li><p><code>custom</code>: custom type, <code>format</code> must not be <code>NULL</code> for this type.
