@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 URL: https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends: 
-    R (>= 3.2.3)
+    R (>= 3.4.4)
 Imports:
     cli (>= 3.4.0),
     lifecycle (>= 1.0.3),
