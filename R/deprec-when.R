@@ -5,10 +5,10 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' This function was deprecated in purrr 1.0.0 because it's not related to the
-#' core purpose of purrr. You can pull your code our of a pipe and use regular
-#' `if` statements instead.
+#' core purpose of purrr. You can pull your code out of a pipe and use regular
+#' `if`/`else` statements instead.
 #'
-#' `when` is a flavour of pattern matching (or an if-else abstraction) in
+#' `when()` is a flavour of pattern matching (or an if-else abstraction) in
 #' which a value is matched against a sequence of condition-action sets. When a
 #' valid match/condition is found the action is executed and the result of the
 #' action is returned.
