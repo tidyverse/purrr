@@ -28,10 +28,10 @@ as opposed to the \code{ifelse} function.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 This function was deprecated in purrr 1.0.0 because it's not related to the
-core purpose of purrr. You can pull your code our of a pipe and use regular
-\code{if} statements instead.
+core purpose of purrr. You can pull your code out of a pipe and use regular
+\code{if}/\verb{else} statements instead.
 
-\code{when} is a flavour of pattern matching (or an if-else abstraction) in
+\code{when()} is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets. When a
 valid match/condition is found the action is executed and the result of the
 action is returned.
