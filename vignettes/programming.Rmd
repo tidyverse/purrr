@@ -55,16 +55,24 @@ This condition has a custom class[^1] telling us that it's specifically from a m
 class(cnd)
 ```
 
-It also contains the index:
+It also contains the location:
 
 ```{r}
-cnd$index
+cnd$location
 ```
 
 And the original error:
 
 ```{r}
 cnd$parent
+```
+
+If the input vector has names, the error will have a non-`NULL` name component:
+
+```{r}
+cnd <- rlang::catch_cnd(map(c(a = 1, b = 3, c = 2), f))
+cnd$location
+cnd$name
 ```
 
 This error chaining is really useful when doing interactive data analysis, but it adds some extra complexity when handling errors with `tryCatch()` or `withCallingHandlers()`.
