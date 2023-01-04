@@ -125,7 +125,7 @@ In order to handle the error thrown by \code{f()}, you'll need to use \code{rlan
 withCallingHandlers(
   map(c(1, 4, 2, 5, 3), f),
   purrr_error_indexed = function(err) \{
-    if (rlang::cnd_inherits(err$parent, "my_error")) \{
+    if (rlang::cnd_inherits(err, "my_error")) \{
       abort("Wrapped error", parent = err)
     \}
   \}
