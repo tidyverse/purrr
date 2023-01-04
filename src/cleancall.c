@@ -35,8 +35,11 @@ void cleancall_SetExternalPtrAddrFn(SEXP s, DL_FUNC p) {
 // Initialised at load time with the `.Call` primitive
 SEXP cleancall_fns_dot_call = NULL;
 
+static SEXP callbacks = NULL;
+
 void cleancall_init(void) {
   cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
+  callbacks = R_NilValue;
 }
 
 struct eval_args {
@@ -60,8 +63,6 @@ SEXP cleancall_call(SEXP args, SEXP env) {
   return out;
 }
 
-
-static SEXP callbacks = NULL;
 
 // Preallocate a callback
 static void push_callback(SEXP stack) {
@@ -124,8 +125,6 @@ SEXP r_with_cleanup_context(SEXP (*fn)(void* data), void* data) {
   SEXP new = PROTECT(Rf_cons(R_NilValue, R_NilValue));
   push_callback(new);
 
-  if (!callbacks) callbacks = R_NilValue;
-
   SEXP old = callbacks;
   callbacks = new;
 
@@ -138,13 +137,9 @@ SEXP r_with_cleanup_context(SEXP (*fn)(void* data), void* data) {
   return out;
 }
 
-int r_cleancall_is_active(void) {
-  return callbacks != NULL;
-}
-
 static void call_save_handler(void (*fn)(void *data), void* data,
                               int early) {
-  if (!callbacks) {
+  if (Rf_isNull(callbacks)) {
     fn(data);
     Rf_error("Internal error: Exit handler pushed outside "
              "of an exit context");
