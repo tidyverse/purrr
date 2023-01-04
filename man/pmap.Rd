@@ -82,7 +82,7 @@ use in a pipe. The return value of \code{.f()} is ignored.
 }
 
 Any errors thrown by \code{.f} will be wrapped in an error with class
-\code{purrr_error_indexed}. See \code{vignette("programming")} for details.
+\link{purrr_error_indexed}.
 }
 \description{
 These functions are variants of \code{\link[=map]{map()}} that iterate over multiple arguments

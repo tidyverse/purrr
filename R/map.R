@@ -67,7 +67,7 @@
 #'    use in a pipe. The return value of `.f()` is ignored.
 #'
 #' Any errors thrown by `.f` will be wrapped in an error with class
-#' `purrr_error_indexed`. See `vignette("programming")` for details.
+#' [purrr_error_indexed].
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
@@ -224,3 +224,14 @@ with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()
     }
   )
 }
+
+#' Indexed errors (`purrr_error_indexed`)
+#'
+#' @description
+#'
+#' ```{r, child = "man/rmd/indexed-error.Rmd"}
+#' ```
+#'
+#' @keywords internal
+#' @name purrr_error_indexed
+NULL

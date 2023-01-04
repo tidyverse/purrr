@@ -6,9 +6,9 @@
 
 * As of purrr 1.0.0, the `map()` family of functions wraps all errors generated
   by `.f` inside an wrapper error that tracks the iteration index. As of purrr 
-  1.0.1, this error now has a custom class (`purrr_error_indexed`) and `index`
-  field, and how to work with these errors is documented in 
-  `vignette("programming", package = "purrr")` (#1027).
+  1.0.1, this error now has a custom class (`purrr_error_indexed`), 
+  `location` and `name` fields, and is documented in `?purrr_error_indexed`
+  (#1027).
   
 * `map()` errors with named inputs also report the name of the element that
   errored.
