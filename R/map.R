@@ -170,6 +170,7 @@ map_ <- function(.type,
   i <- 0L
   with_indexed_errors(
     i = i,
+    names = names,
     error_call = .purrr_error_call,
     .Call(map_impl, environment(), .type, .progress, n, names, i)
   )
@@ -193,15 +194,24 @@ walk <- function(.x, .f, ..., .progress = FALSE) {
   invisible(.x)
 }
 
-with_indexed_errors <- function(expr, i, error_call = caller_env()) {
+with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()) {
   withCallingHandlers(
     expr,
     error = function(cnd) {
       if (i == 0L) {
         # Error happened before or after loop
       } else {
+        if (!is.null(names)) {
+          idx <- names[[i]]
+          if (is.na(idx) || idx == "") {
+            idx <- i
+          }
+        } else {
+          idx <- i
+        }
+
         cli::cli_abort(
-          c(i = "In index: {i}."),
+          c(i = "In index: {idx}."),
           parent = cnd,
           call = error_call
         )

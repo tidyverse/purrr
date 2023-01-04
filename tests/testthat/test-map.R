@@ -38,6 +38,18 @@ test_that("all inform about location of problem", {
   })
 })
 
+test_that("error location uses name if present", {
+  fail_at_3 <- function(x, bad) {
+    if (x == 3) bad else x
+  }
+
+  expect_snapshot(error = TRUE, {
+    map_int(c(a = 1, b = 2, c = 3), ~ fail_at_3(.x, stop("Error")))
+    map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")))
+  })
+
+})
+
 test_that("0 length input gives 0 length output", {
   expect_equal(map(list(), identity), list())
   expect_equal(map(NULL, identity), list())

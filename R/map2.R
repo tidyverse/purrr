@@ -77,6 +77,7 @@ map2_ <- function(.type,
   i <- 0L
   with_indexed_errors(
     i = i,
+    names = names,
     error_call = .purrr_error_call,
     .Call(map2_impl, environment(), .type, .progress, n, names, i)
   )

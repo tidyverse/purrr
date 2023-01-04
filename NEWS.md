@@ -1,5 +1,8 @@
 # purrr (development version)
 
+* If the input vector is named, then `map()` and friends use that name in the
+  error message.
+
 * Fixed an invalid C signature for `pluck()` (#1018).
 
 * Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).

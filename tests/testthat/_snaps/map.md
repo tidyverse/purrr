@@ -38,6 +38,23 @@
       Caused by error in `fail_at_3()`:
       ! Doesn't work
 
+# error location uses name if present
+
+    Code
+      map_int(c(a = 1, b = 2, c = 3), ~ fail_at_3(.x, stop("Error")))
+    Condition
+      Error in `map_int()`:
+      i In index: c.
+      Caused by error in `fail_at_3()`:
+      ! Error
+    Code
+      map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")))
+    Condition
+      Error in `map_int()`:
+      i In index: 3.
+      Caused by error in `fail_at_3()`:
+      ! Error
+
 # requires output be length 1 and have common type
 
     Code
