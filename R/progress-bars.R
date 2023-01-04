@@ -10,7 +10,7 @@
 #' * A named list of progress bar parameters, as described below.
 #'
 #' It's good practice to name your progress bars, to make it clear what
-#' calculation or process they belong to. We recommending keeping the names
+#' calculation or process they belong to. We recommend keeping the names
 #' under 20 characters, so the whole progress bar fits comfortably even on
 #' on narrower displays.
 #'
@@ -18,7 +18,7 @@
 #'
 #' * `clear`: whether to remove the progress bar from the screen after
 #'   termination. Defaults to `TRUE`.
-#' * `format`: format string. This overrides the detault format string of
+#' * `format`: format string. This overrides the default format string of
 #'   the progress bar type. It must be given for the `custom` type.
 #'   Format strings may contain R expressions to evaluate in braces.
 #'   They support cli [pluralization][cli::pluralization], and
@@ -34,7 +34,7 @@
 #'   number of seconds. It overrides the `cli.progress_show_after`
 #'   global option.
 #' * `type`: progress bar type. Currently supported types are:
-#'   * `iterator`: the detault, a for loop or a mapping function,
+#'   * `iterator`: the default, a for loop or a mapping function,
 #'   * `tasks`: a (typically small) number of tasks,
 #'   * `download`: download of one file,
 #'   * `custom`: custom type, `format` must not be `NULL` for this type.

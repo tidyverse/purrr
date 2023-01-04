@@ -14,14 +14,14 @@ create a progress bar. \code{.progress} can be:
 }
 
 It's good practice to name your progress bars, to make it clear what
-calculation or process they belong to. We recommending keeping the names
+calculation or process they belong to. We recommend keeping the names
 under 20 characters, so the whole progress bar fits comfortably even on
 on narrower displays.
 \subsection{Progress bar parameters}{
 \itemize{
 \item \code{clear}: whether to remove the progress bar from the screen after
 termination. Defaults to \code{TRUE}.
-\item \code{format}: format string. This overrides the detault format string of
+\item \code{format}: format string. This overrides the default format string of
 the progress bar type. It must be given for the \code{custom} type.
 Format strings may contain R expressions to evaluate in braces.
 They support cli \link[cli:pluralization]{pluralization}, and
@@ -38,7 +38,7 @@ number of seconds. It overrides the \code{cli.progress_show_after}
 global option.
 \item \code{type}: progress bar type. Currently supported types are:
 \itemize{
-\item \code{iterator}: the detault, a for loop or a mapping function,
+\item \code{iterator}: the default, a for loop or a mapping function,
 \item \code{tasks}: a (typically small) number of tasks,
 \item \code{download}: download of one file,
 \item \code{custom}: custom type, \code{format} must not be \code{NULL} for this type.
