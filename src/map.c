@@ -2,12 +2,20 @@
 #include <R.h>
 #include <Rversion.h>
 #include <Rinternals.h>
-#include "cleancall.h"
 #include "coerce.h"
 #include "conditions.h"
 #include "utils.h"
 
-#include "cli/progress.h"
+// Including <cli/progress.h> before "cleancall.h" because we want to register
+// exiting handlers ourselves, rather than letting cli register them for us.
+#include <cli/progress.h>
+#include "cleancall.h"
+
+static
+void cb_progress_done(SEXP bar) {
+  cli_progress_done(bar);
+  R_ReleaseObject(bar);
+}
 
 // call must involve i
 SEXP call_loop(SEXP env,
@@ -18,7 +26,9 @@ SEXP call_loop(SEXP env,
                SEXP names,
                int* p_i,
                int force) {
-  SEXP bar = PROTECT(cli_progress_bar(n, progress));
+  SEXP bar = cli_progress_bar(n, progress);
+  R_PreserveObject(bar);
+  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   Rf_setAttrib(out, R_NamesSymbol, names);
@@ -44,9 +54,8 @@ SEXP call_loop(SEXP env,
   }
 
   *p_i = 0;
-  cli_progress_done(bar);
 
-  UNPROTECT(2);
+  UNPROTECT(1);
   return out;
 }
 
