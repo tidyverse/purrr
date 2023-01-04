@@ -18,6 +18,8 @@ home:
 
 news:
   releases:
+  - text: "Version 1.0.0"
+    href: https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/
   - text: "Version 0.3.0"
     href: https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/
   - text: "Version 0.2.3"
