@@ -65,6 +65,9 @@
 #'
 #' * `walk()` returns the input `.x` (invisibly). This makes it easy to
 #'    use in a pipe. The return value of `.f()` is ignored.
+#'
+#' Any errors thrown by `.f` will be wrapped in an error with class
+#' [purrr_error_indexed].
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
@@ -170,6 +173,7 @@ map_ <- function(.type,
   i <- 0L
   with_indexed_errors(
     i = i,
+    names = names,
     error_call = .purrr_error_call,
     call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i)
   )
@@ -193,19 +197,41 @@ walk <- function(.x, .f, ..., .progress = FALSE) {
   invisible(.x)
 }
 
-with_indexed_errors <- function(expr, i, error_call = caller_env()) {
+with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()) {
   withCallingHandlers(
     expr,
     error = function(cnd) {
       if (i == 0L) {
         # Error happened before or after loop
       } else {
+        message <- c(i = "In index: {i}.")
+        if (!is.null(names) && !is.na(names[[i]]) && names[[i]] != "") {
+          name <- names[[i]]
+          message <- c(message, i = "With name: {name}.")
+        } else {
+          name <- NULL
+        }
+
         cli::cli_abort(
-          c(i = "In index: {i}."),
+          message,
+          location = i,
+          name = name,
           parent = cnd,
-          call = error_call
+          call = error_call,
+          class = "purrr_error_indexed"
         )
       }
     }
   )
 }
+
+#' Indexed errors (`purrr_error_indexed`)
+#'
+#' @description
+#'
+#' ```{r, child = "man/rmd/indexed-error.Rmd"}
+#' ```
+#'
+#' @keywords internal
+#' @name purrr_error_indexed
+NULL

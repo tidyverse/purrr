@@ -7,6 +7,15 @@
 
 * Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).
 
+* As of purrr 1.0.0, the `map()` family of functions wraps all errors generated
+  by `.f` inside an wrapper error that tracks the iteration index. As of purrr 
+  1.0.1, this error now has a custom class (`purrr_error_indexed`), 
+  `location` and `name` fields, and is documented in `?purrr_error_indexed`
+  (#1027).
+  
+* `map()` errors with named inputs also report the name of the element that
+  errored.
+
 # purrr 1.0.0
 
 ## Breaking changes
@@ -46,6 +55,9 @@
 * In `map_chr()`, automatic conversion from logical, integer, and double to
   character is now deprecated. Use an explicit `as.character()` if needed 
   (#904).
+
+* Errors from `.f` are now wrapped in an additional class that gives 
+  information about where the error occurred (#945).
 
 ### Deprecation next steps
 

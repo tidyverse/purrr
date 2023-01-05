@@ -76,6 +76,9 @@ vector of length 1.
 \item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
 use in a pipe. The return value of \code{.f()} is ignored.
 }
+
+Any errors thrown by \code{.f} will be wrapped in an error with class
+\link{purrr_error_indexed}.
 }
 \description{
 The map functions transform their input by applying a function to
