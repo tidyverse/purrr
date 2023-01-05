@@ -140,7 +140,9 @@ vector of length 1.</p></li>
 <code>.f</code> can return pretty much any type of vector, as long as its length 1.</p></li>
 <li><p><code><a href="map.html">walk()</a></code> returns the input <code>.x</code> (invisibly). This makes it easy to
 use in a pipe. The return value of <code>.f()</code> is ignored.</p></li>
-</ul></div>
+</ul><p>Any errors thrown by <code>.f</code> will be wrapped in an error with class
+<a href="purrr_error_indexed.html">purrr_error_indexed</a>.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other map variants: 
