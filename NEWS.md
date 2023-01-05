@@ -1,12 +1,5 @@
 # purrr (development version)
 
-* Fixed an issue where progress bars weren't being closed when user interrupts
-  or errors were encountered during a `map()` call (#1024).
-
-* Fixed an invalid C signature for `pluck()` (#1018).
-
-* Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).
-
 * As of purrr 1.0.0, the `map()` family of functions wraps all errors generated
   by `.f` inside an wrapper error that tracks the iteration index. As of purrr 
   1.0.1, this error now has a custom class (`purrr_error_indexed`), 
@@ -15,6 +8,13 @@
   
 * `map()` errors with named inputs also report the name of the element that
   errored.
+
+* Fixed an issue where progress bars weren't being closed when user interrupts
+  or errors were encountered during a `map()` call (#1024).
+
+* Fixed an invalid C signature for `pluck()` (#1018).
+
+* Set `Biarch: true` to build purrr on 32-bit Windows on R < 4.2.0 (#1017).
 
 # purrr 1.0.0
 
