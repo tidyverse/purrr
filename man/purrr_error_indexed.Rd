@@ -32,17 +32,10 @@ cnd$location
 cnd$name
 #> NULL
 
-cnd$parent
+print(cnd$parent, backtrace = FALSE)
 #> <error/rlang_error>
 #> Error in `.f()`:
 #> ! This is an error
-#> ---
-#> Backtrace:
-#>   1. rlang::catch_cnd(map(c(1, 4, 2), f))
-#>   8. purrr::map(c(1, 4, 2), f)
-#>   9. purrr:::map_("list", .x, .f, ..., .progress = .progress)
-#>        at purrr/R/map.R:129:2
-#>  12. purrr (local) .f(.x[[i]], ...)
 }\if{html}{\out{</div>}}
 
 If the input vector is named, \code{name} will be non-\code{NULL}:
