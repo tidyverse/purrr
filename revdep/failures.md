@@ -120,7 +120,7 @@ Status: 1 ERROR, 2 NOTEs
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
 ...
-  [ FAIL 1 | WARN 13 | SKIP 8 | PASS 327 ]
+  [ FAIL 1 | WARN 14 | SKIP 8 | PASS 327 ]
   Error: Test failures
   Execution halted
 * checking for unstated dependencies in vignettes ... OK
