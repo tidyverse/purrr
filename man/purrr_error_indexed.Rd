@@ -5,16 +5,15 @@
 \title{Indexed errors (\code{purrr_error_indexed})}
 \description{
 The \code{purrr_error_indexed} class is thrown by \code{\link[=map]{map()}}, \code{\link[=map2]{map2()}}, \code{\link[=pmap]{pmap()}}, and friends.
-It wraps errors thrown by applying \code{.f} to individual elements giving additional information about the location of the error.
+It wraps errors thrown during the processing on individual elements with information about the location of the error.
 }
 \section{Structure}{
-\code{purrr_error_indexed} has two fields:
+\code{purrr_error_indexed} has three important fields:
 \itemize{
 \item \code{location}: the location of the error as a single integer.
 \item \code{name}: the name of the location as a string. If the element was not named, \code{name} will be \code{NULL}
+\item \code{parent}: the original error thrown by \code{.f}.
 }
-
-\code{purrr_error_indexed} inherits from \code{rlang_error} which means that it also has a \code{parent} field which contains the original error thrown by \code{.f}.
 
 Let's see this in action by capturing the generated condition from a very simple example:
 
@@ -138,6 +137,10 @@ withCallingHandlers(
 #> ! This is an error
 }\if{html}{\out{</div>}}
 
+(The \code{tryCatch()} approach is suboptimal because we're no longer just handling errors, but also rethrowing them.
+The rethrown errors won't work correctly with (e.g.) \code{recover()} and \code{traceback()}, but we don't currently have a better approach.
+In the future we expect to \href{https://github.com/r-lib/rlang/issues/1534}{enhance \code{try_fetch()}} to make this easier to do 100\% correctly).
+
 Finally, if you just want to get rid of purrr's wrapper error, you can resignal the parent error:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{withCallingHandlers(
@@ -150,7 +153,8 @@ Finally, if you just want to get rid of purrr's wrapper error, you can resignal 
 #> ! This is an error
 }\if{html}{\out{</div>}}
 
-It's important to use \code{withCallingHandlers()} and not \code{tryCatch()} here so that \code{recover()} and other tools will continue to work.
+Because we are resignalling an error, it's important to use \code{withCallingHandlers()} and not \code{tryCatch()} in order to preserve the full backtrace context.
+That way \code{recover()}, \code{traceback()}, and related tools will continue to work correctly.
 }
 
 \keyword{internal}

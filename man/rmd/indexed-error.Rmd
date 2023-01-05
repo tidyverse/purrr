@@ -1,14 +1,13 @@
 The `purrr_error_indexed` class is thrown by [map()], [map2()], [pmap()], and friends.
-It wraps errors thrown by applying `.f` to individual elements giving additional information about the location of the error.
+It wraps errors thrown during the processing on individual elements with information about the location of the error.
 
 # Structure
 
-`purrr_error_indexed` has two fields:
+`purrr_error_indexed` has three important fields:
 
 -   `location`: the location of the error as a single integer.
 -   `name`: the name of the location as a string. If the element was not named, `name` will be `NULL`
-
-`purrr_error_indexed` inherits from `rlang_error` which means that it also has a `parent` field which contains the original error thrown by `.f`.
+-   `parent`: the original error thrown by `.f`.
 
 Let's see this in action by capturing the generated condition from a very simple example:
 
@@ -106,6 +105,10 @@ withCallingHandlers(
 )
 ```
 
+(The `tryCatch()` approach is suboptimal because we're no longer just handling errors, but also rethrowing them.
+The rethrown errors won't work correctly with (e.g.) `recover()` and `traceback()`, but we don't currently have a better approach.
+In the future we expect to [enhance `try_fetch()`](https://github.com/r-lib/rlang/issues/1534) to make this easier to do 100% correctly).
+
 Finally, if you just want to get rid of purrr's wrapper error, you can resignal the parent error:
 
 ```{r}
@@ -118,4 +121,5 @@ withCallingHandlers(
 )
 ```
 
-It's important to use `withCallingHandlers()` and not `tryCatch()` here so that `recover()` and other tools will continue to work.
+Because we are resignalling an error, it's important to use `withCallingHandlers()` and not `tryCatch()` in order to preserve the full backtrace context.
+That way `recover()`, `traceback()`, and related tools will continue to work correctly.
