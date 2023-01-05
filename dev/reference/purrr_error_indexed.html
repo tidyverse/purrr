@@ -90,17 +90,10 @@ It wraps errors thrown during the processing on individual elements with informa
 <span><span class="va">cnd</span><span class="op">$</span><span class="va">name</span></span>
 <span><span class="co">#&gt; NULL</span></span>
 <span></span>
-<span><span class="va">cnd</span><span class="op">$</span><span class="va">parent</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cnd</span><span class="op">$</span><span class="va">parent</span>, backtrace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;error/rlang_error&gt;</span></span>
 <span><span class="co">#&gt; Error in `.f()`:</span></span>
-<span><span class="co">#&gt; ! This is an error</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Backtrace:</span></span>
-<span><span class="co">#&gt;   1. rlang::catch_cnd(map(c(1, 4, 2), f))</span></span>
-<span><span class="co">#&gt;   8. purrr::map(c(1, 4, 2), f)</span></span>
-<span><span class="co">#&gt;   9. purrr:::map_("list", .x, .f, ..., .progress = .progress)</span></span>
-<span><span class="co">#&gt;        at purrr/R/map.R:129:2</span></span>
-<span><span class="co">#&gt;  12. purrr (local) .f(.x[[i]], ...)</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; ! This is an error</span></span></code></pre><p></p></div>
 <p>If the input vector is named, <code>name</code> will be non-<code>NULL</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">cnd</span> <span class="op">&lt;-</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/catch_cnd.html" class="external-link">catch_cnd</a></span><span class="op">(</span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">4</span>, c <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="va">f</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">cnd</span><span class="op">$</span><span class="va">name</span></span>
