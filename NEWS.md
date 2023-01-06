@@ -195,7 +195,7 @@
 * `list_modify()`'s interface has been standardised. Modifying with `NULL`
   now always creates a `NULL` in the output (#810)
 
-### `list_` functions`
+### `list_` functions
 
 * New `list_assign()` which is similar to `list_modify()` but doesn't work
   recursively (#822).
