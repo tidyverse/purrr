@@ -36,7 +36,7 @@ the input .x.
     
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,8 +58,10 @@ the input .x.
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-news">
     <h6 class="dropdown-header" data-toc-skip>Releases</h6>
+    <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/">Version 0.2.3</a>
+    <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="../news/index.html">Changelog</a>
   </div>
@@ -173,7 +175,9 @@ vector of length 1.</p></li>
 <code>.f</code> can return pretty much any type of vector, as long as its length 1.</p></li>
 <li><p><code>walk()</code> returns the input <code>.x</code> (invisibly). This makes it easy to
 use in a pipe. The return value of <code>.f()</code> is ignored.</p></li>
-</ul></div>
+</ul><p>Any errors thrown by <code>.f</code> will be wrapped in an error with class
+<a href="purrr_error_indexed.html">purrr_error_indexed</a>.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="map_if.html">map_if()</a></code> for applying a function to only those elements
