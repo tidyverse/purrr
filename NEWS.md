@@ -1,3 +1,5 @@
+# purrr (development version)
+
 # purrr 1.0.1
 
 * As of purrr 1.0.0, the `map()` family of functions wraps all errors generated
