@@ -6,7 +6,7 @@
       Error in `pmap_int()`:
       i In index: 1.
       Caused by error:
-      ! Can't coerce from a character vector to an integer vector.
+      ! Can't coerce from a string to an integer vector.
     Code
       pmap_int(list(1), ~ 1:2)
     Condition

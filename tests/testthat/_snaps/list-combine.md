@@ -58,12 +58,12 @@
       list_rbind(1)
     Condition
       Error in `list_rbind()`:
-      ! `x` must be a list, not a number.
+      ! `x` must be a list, not the number 1.
     Code
       list_cbind(1)
     Condition
       Error in `list_cbind()`:
-      ! `x` must be a list, not a number.
+      ! `x` must be a list, not the number 1.
 
 ---
 
