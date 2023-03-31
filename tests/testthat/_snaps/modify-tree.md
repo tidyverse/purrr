@@ -9,5 +9,5 @@
       modify_tree(list(), is_node = 1)
     Condition
       Error in `modify_tree()`:
-      ! Can't convert `is_node`, a number, to a function.
+      ! Can't convert `is_node`, a double vector, to a function.
 
