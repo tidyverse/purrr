@@ -35,7 +35,7 @@
 #' fn <- compose(!!!fns)
 #' fn("input")
 compose <- function(..., .dir = c("backward", "forward")) {
-  .dir <- arg_match(.dir, c("backward", "forward"))
+  .dir <- arg_match0(.dir, c("backward", "forward"))
 
   fns <- map(list2(...), rlang::as_closure, env = caller_env())
   if (!length(fns)) {
