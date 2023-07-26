@@ -57,7 +57,7 @@ and returns a logical, integer, or character vector of elements to select.
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 
-\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
 \link{progress_bars} for more details.}
 }
