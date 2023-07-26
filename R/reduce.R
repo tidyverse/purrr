@@ -140,7 +140,7 @@ reduce_impl <- function(.x,
                         .dir,
                         .acc = FALSE,
                         .purrr_error_call = caller_env()) {
-  left <- arg_match(.dir, c("forward", "backward")) == "forward"
+  left <- arg_match0(.dir, c("forward", "backward")) == "forward"
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
   idx <- reduce_index(.x, .init, left = left)
@@ -478,7 +478,7 @@ seq_len2 <- function(start, end) {
 #' }
 #' @export
 accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .simplify = NA, .ptype = NULL) {
-  .dir <- arg_match(.dir, c("forward", "backward"))
+  .dir <- arg_match0(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
 
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
