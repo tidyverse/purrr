@@ -58,7 +58,7 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
 
-\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to a turn on
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
 \link{progress_bars} for more details.}
 

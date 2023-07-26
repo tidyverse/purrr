@@ -46,7 +46,7 @@
 #'   This makes it easier to understand which arguments belong to which
 #'   function and will tend to yield better error messages.
 #'
-#' @param .progress Whether to show a progress bar. Use `TRUE` to a turn on
+#' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
 #' @returns
