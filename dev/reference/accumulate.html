@@ -55,7 +55,6 @@ accumulate2() sequentially applies a function to elements of two lists, .x and .
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/">Version 0.2.3</a>
-    <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="../news/index.html">Changelog</a>
   </div>
@@ -253,8 +252,8 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># By ignoring the input vector (nxt), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
 <span class="r-in"><span><span class="fu">accumulate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, \<span class="op">(</span><span class="va">acc</span>, <span class="va">nxt</span><span class="op">)</span> <span class="va">acc</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0000000 -1.1133265  0.6298158  1.4591522  1.5451374  2.1873033</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  1.7677905  1.6624592  1.8611306 -0.3415521 -0.1161526</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0000000 -0.7775254 -3.3950396 -2.1011633 -1.0840152 -2.4437420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] -4.7008713 -5.9785822 -6.4366996 -4.7328655 -4.9117403</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `accumulate2()` is a version of `accumulate()` that works with</span></span></span>
 <span class="r-in"><span><span class="co"># 3-argument functions and one additional vector:</span></span></span>

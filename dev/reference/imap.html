@@ -41,7 +41,6 @@ and the position of an element."><meta property="og:image" content="https://purr
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2017/08/purrr-0.2.3/">Version 0.2.3</a>
-    <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="../news/index.html">Changelog</a>
   </div>
@@ -138,11 +137,11 @@ function and will tend to yield better error messages.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="va">paste</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "7 1"  "2 2"  "10 3" "1 4"  "4 5"  "5 6"  "8 7"  "9 8"  "3 9"  "6 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "5 1"  "9 2"  "4 3"  "6 4"  "8 5"  "3 6"  "2 7"  "10 8" "7 9"  "1 10"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">idx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">": "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 1"  "2: 4"  "3: 10" "4: 2"  "5: 9"  "6: 3"  "7: 8"  "8: 5" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 6"  "10: 7"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 9"  "2: 3"  "3: 2"  "4: 4"  "5: 10" "6: 5"  "7: 1"  "8: 6" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 8"  "10: 7"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">idx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
