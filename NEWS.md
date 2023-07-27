@@ -1,5 +1,8 @@
 # purrr (development version)
 
+* Deprecation infrastructure in `map_chr()` now has much less overhead 
+  leading to improved performance (#1089).
+
 * purrr now requires R 3.5.0.
 
 # purrr 1.0.1
