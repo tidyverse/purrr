@@ -23,10 +23,18 @@ deprecate_to_char <- function(type) {
   )
 }
 
+
+# Can rewrite after https://github.com/r-lib/rlang/issues/1643
 local_deprecation_user_env <- function(user_env = caller_env(2), frame = caller_env()) {
-  local_bindings(
-    deprecation_user_env = user_env,
-    .env = the,
-    .frame = frame
-  )
+
+  old <- the$deprecation_user_env
+  the$deprecation_user_env <- user_env
+  defer(the$deprecation_user_env <- old, frame)
 }
+
+# Lightweight equivalent of withr::defer()
+defer <- function(expr, env = caller_env(), after = FALSE) {
+  thunk <- as.call(list(function() expr))
+  do.call(on.exit, list(thunk, TRUE, after), envir = env)
+}
+
