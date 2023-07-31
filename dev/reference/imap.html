@@ -137,11 +137,11 @@ function and will tend to yield better error messages.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, <span class="va">paste</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1 1"  "8 2"  "6 3"  "2 4"  "5 5"  "3 6"  "10 7" "4 8"  "7 9"  "9 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "6 1"  "4 2"  "10 3" "1 4"  "2 5"  "5 6"  "3 7"  "8 8"  "7 9"  "9 10"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">imap_chr</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">idx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">": "</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 2"  "2: 9"  "3: 6"  "4: 5"  "5: 1"  "6: 8"  "7: 10" "8: 4" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 7"  "10: 3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1: 7"  "2: 2"  "3: 8"  "4: 6"  "5: 5"  "6: 3"  "7: 1"  "8: 10"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "9: 4"  "10: 9"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">iwalk</span><span class="op">(</span><span class="va">mtcars</span>, \<span class="op">(</span><span class="va">x</span>, <span class="va">idx</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"\n"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg: 19.2</span>
