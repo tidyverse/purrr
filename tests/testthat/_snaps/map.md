@@ -29,7 +29,7 @@
       Error in `map_int()`:
       i In index: 3.
       Caused by error:
-      ! Can't coerce from a string to an integer vector.
+      ! Can't coerce from a string to an integer.
     Code
       map(1:3, ~ fail_at_3(.x, stop("Doesn't work")))
     Condition

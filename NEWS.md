@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* Fixed valgrind issue.
+
 * Deprecation infrastructure in `map_chr()` now has much less overhead 
   leading to improved performance (#1089).
 
