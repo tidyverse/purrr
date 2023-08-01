@@ -21,6 +21,9 @@ void cant_coerce(SEXP from, SEXP to, int i) {
     case LGLSXP:
       to_friendly = "a logical";
       break;
+    case RAWSXP:
+      to_friendly = "a raw vector";
+      break;
     default:
       to_friendly = Rf_type2char(TYPEOF(to));
   }
