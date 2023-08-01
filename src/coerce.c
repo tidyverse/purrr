@@ -6,11 +6,34 @@
 #include "conditions.h"
 
 void cant_coerce(SEXP from, SEXP to, int i) {
+
+  const char* to_friendly;
+  switch(TYPEOF(to)) {
+    case INTSXP:
+      to_friendly = "an integer";
+      break;
+    case REALSXP:
+      to_friendly = "a double";
+      break;
+    case STRSXP:
+      to_friendly = "a string";
+      break;
+    case LGLSXP:
+      to_friendly = "a logical";
+      break;
+    case RAWSXP:
+      to_friendly = "a raw vector";
+      break;
+    default:
+      to_friendly = Rf_type2char(TYPEOF(to));
+  }
+
+
   Rf_errorcall(
     R_NilValue,
     "Can't coerce from %s to %s.",
     rlang_obj_type_friendly_full(from, false, false),
-    rlang_obj_type_friendly_full(to, false, false)
+    to_friendly
   );
 }
 
