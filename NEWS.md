@@ -1,4 +1,4 @@
-# purrr (development version)
+# purrr 1.0.2
 
 * Fixed valgrind issue.
 
