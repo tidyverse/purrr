@@ -169,13 +169,46 @@ map_ <- function(.type,
   names <- vec_names(.x)
 
   .f <- as_mapper(.f, ...)
-
   i <- 0L
+  print(i)
+
+  the$last_map_index <- NULL
+  the$last_map_results <- NULL
+  the$last_map <- list(
+    env = current_env(),
+    call = expr(call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i, the))
+  )
+
   with_indexed_errors(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i)
+    call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i, the)
+  )
+}
+
+purrr_continue <- function(.f = NULL) {
+  # add 0 to force a copy
+  i <- the$last_map_index + 0L
+  last_map_index <- the$last_map_index
+  last_map_results <- the$last_map_results
+
+  env2 <- the$last_map$env
+  env2$.f <- .f %||% the$last_map$.f
+  env2$i <- i
+
+  new_map_results <- with_indexed_errors(
+    i = i,
+    names = env2$names,
+    error_call = env2$.purrr_error_call,
+    rlang::eval_bare(the$last_map$call, env = env2)
+  )
+
+  idx <- seq2(1, last_map_index)
+  vctrs::vec_assign(
+    new_map_results,
+    idx,
+    vctrs::vec_slice(last_map_results, idx)
   )
 }
 
