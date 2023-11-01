@@ -252,8 +252,8 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
 <span class="r-in"><span><span class="co"># By ignoring the input vector (nxt), you can turn output of one step into</span></span></span>
 <span class="r-in"><span><span class="co"># the input for the next. This code takes 10 steps of a random walk:</span></span></span>
 <span class="r-in"><span><span class="fu">accumulate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, \<span class="op">(</span><span class="va">acc</span>, <span class="va">nxt</span><span class="op">)</span> <span class="va">acc</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, .init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.000000 1.928421 1.148285 1.729282 2.400668 2.431910 3.939412</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 3.293159 3.488425 2.557862 3.334301</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.0000000  0.8471663  0.4625183 -0.1470911  1.8220394  1.4429692</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  1.9131470  1.5499842  1.5282812  2.1380249  2.8141524</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `accumulate2()` is a version of `accumulate()` that works with</span></span></span>
 <span class="r-in"><span><span class="co"># 3-argument functions and one additional vector:</span></span></span>
@@ -324,7 +324,7 @@ reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
