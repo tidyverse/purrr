@@ -19,7 +19,7 @@ vectors. If you’ve never heard of FP before, the best place to start is
 the family of `map()` functions which allow you to replace many for
 loops with code that is both more succinct and easier to read. The best
 place to learn about the `map()` functions is the [iteration
-chapter](https://r4ds.had.co.nz/iteration.html) in R for data science.
+chapter](https://r4ds.hadley.nz/iteration) in R for Data Science.
 
 ## Installation
 
