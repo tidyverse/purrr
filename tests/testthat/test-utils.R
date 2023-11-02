@@ -35,6 +35,7 @@ test_that("validates its inputs", {
 })
 
 test_that("tidyselect `at` is deprecated", {
+  skip_if_not_installed("tidyselect")
   expect_snapshot({
     . <- where_at(data.frame(x = 1), vars("x"), user_env = globalenv())
   })
@@ -98,6 +99,7 @@ test_that("can work with output of by", {
 })
 
 test_that("can work with lubridate periods", {
+  skip_if_not_installed("lubridate")
   days <- lubridate::days(1:2)
 
   expect_equal(map(days, identity), list(lubridate::days(1), lubridate::days(2)))
