@@ -25,12 +25,13 @@
 #'
 #' # Update values
 #' str(list_assign(x, a = 1))
+#'
 #' # Replace values
 #' str(list_assign(x, z = 5))
 #' str(list_assign(x, z = NULL))
-#'
 #' str(list_assign(x, z = list(a = 1:5)))
-#' # replace recursively, leaving the other elements of z alone
+#'
+#' # Replace recursively with list_modify(), leaving the other elements of z alone
 #' str(list_modify(x, z = list(a = 1:5)))
 #'
 #' # Remove values
