@@ -7,3 +7,5 @@ revdep/library
 TAGS
 .httr-oauth
 docs
+compile_commands.json
+.cache
