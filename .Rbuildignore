@@ -23,3 +23,5 @@
 ^\.github/workflows/pkgdown\.yaml$
 ^\.github/workflows/pr-commands\.yaml$
 ^CRAN-SUBMISSION$
+^compile_commands\.json$
+^\.cache$
