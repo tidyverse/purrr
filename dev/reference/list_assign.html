@@ -124,6 +124,7 @@ use <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.li
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ a: num 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ b: num 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ a: num 1</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Replace values</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_assign</span><span class="op">(</span><span class="va">x</span>, z <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
@@ -135,14 +136,14 @@ use <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.li
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ y: num 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ z: NULL</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_assign</span><span class="op">(</span><span class="va">x</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ y: num 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ z:List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ a: int [1:5] 1 2 3 4 5</span>
-<span class="r-in"><span><span class="co"># replace recursively, leaving the other elements of z alone</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Replace recursively with list_modify(), leaving the other elements of z alone</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_modify</span><span class="op">(</span><span class="va">x</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x: int [1:10] 1 2 3 4 5 6 7 8 9 10</span>
