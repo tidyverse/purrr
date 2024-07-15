@@ -134,10 +134,10 @@ modify_if(iris, is.factor, as.character, .else = as.integer)
 Other map variants: 
 \code{\link{imap}()},
 \code{\link{lmap}()},
+\code{\link{map}()},
 \code{\link{map2}()},
 \code{\link{map_depth}()},
 \code{\link{map_if}()},
-\code{\link{map}()},
 \code{\link{pmap}()}
 
 Other modify variants: 
