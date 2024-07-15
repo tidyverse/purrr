@@ -114,6 +114,7 @@ test_that("`.else` modifies false elements", {
 })
 
 test_that("modify_at() can use tidyselect", {
+  skip_if_not_installed("tidyselect")
   local_options(lifecycle_verbosity = "quiet")
 
   df <- data.frame(x = 1, y = 3)
