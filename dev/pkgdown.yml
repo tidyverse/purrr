@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   base: base.html
   other-langs: other-langs.html
-last_built: 2024-07-15T19:58Z
+last_built: 2024-07-15T20:02Z
 urls:
   reference: https://purrr.tidyverse.org/reference
   article: https://purrr.tidyverse.org/articles
