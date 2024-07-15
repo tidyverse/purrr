@@ -119,15 +119,15 @@ allows you to apply a function to every leaf or every node.
 Other map variants: 
 \code{\link{imap}()},
 \code{\link{lmap}()},
+\code{\link{map}()},
 \code{\link{map2}()},
 \code{\link{map_if}()},
-\code{\link{map}()},
 \code{\link{modify}()},
 \code{\link{pmap}()}
 
 Other modify variants: 
-\code{\link{modify_tree}()},
-\code{\link{modify}()}
+\code{\link{modify}()},
+\code{\link{modify_tree}()}
 }
 \concept{map variants}
 \concept{modify variants}

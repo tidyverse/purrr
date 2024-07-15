@@ -143,10 +143,10 @@ pmap_dbl(df, min)
 Other map variants: 
 \code{\link{imap}()},
 \code{\link{lmap}()},
+\code{\link{map}()},
 \code{\link{map2}()},
 \code{\link{map_depth}()},
 \code{\link{map_if}()},
-\code{\link{map}()},
 \code{\link{modify}()}
 }
 \concept{map variants}
