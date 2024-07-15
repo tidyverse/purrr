@@ -197,7 +197,7 @@ map(1:5, \(i) rnorm(100)) |>
   set_names(paste0("sim", 1:5)) |>
   map(\(l) accumulate(l, \(acc, nxt) .05 + acc + nxt)) |>
   map(\(x) tibble(value = x, step = 1:100)) |>
-  list_rbind(id = "simulation") |>
+  list_rbind(names_to = "simulation") |>
   ggplot(aes(x = step, y = value)) +
     geom_line(aes(color = simulation)) +
     ggtitle("Simulations of a random walk with drift")
