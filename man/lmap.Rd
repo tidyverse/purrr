@@ -92,10 +92,10 @@ x |> lmap_if(is.character, maybe_rep) |> str()
 \seealso{
 Other map variants: 
 \code{\link{imap}()},
+\code{\link{map}()},
 \code{\link{map2}()},
 \code{\link{map_depth}()},
 \code{\link{map_if}()},
-\code{\link{map}()},
 \code{\link{modify}()},
 \code{\link{pmap}()}
 }
