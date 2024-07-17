@@ -148,6 +148,6 @@ match_template <- function(x, template, error_arg = caller_arg(x), error_call = 
       rep_along(template, list(x))
     }
   } else {
-    abort("Invalid `template`", .internal = TRUE)
+    cli::cli_abort("Invalid `template`", .internal = TRUE)
   }
 }
