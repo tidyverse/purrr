@@ -79,7 +79,7 @@ map2_ <- function(.type,
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(map2_impl, environment(), .type, .progress, n, names, i)
+    call_with_cleanup(map2_impl, environment(), .type, .progress, n, names, i, the)
   )
 }
 
