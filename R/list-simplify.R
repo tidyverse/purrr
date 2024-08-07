@@ -7,9 +7,9 @@
 #' [list_flatten()].
 #'
 #' @param x A list.
-#' @param strict What should happen if simplification fails? If `TRUE`,
-#'   it will error. If `FALSE` and `ptype` is not supplied, it will return `x`
-#'   unchanged.
+#' @param strict What should happen if simplification fails? If `TRUE`
+#'   (the default) it will error. If `FALSE` and `ptype` is not supplied, 
+#'   it will return `x` unchanged.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
 #' @inheritParams rlang::args_dots_empty
