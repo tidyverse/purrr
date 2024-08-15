@@ -67,8 +67,8 @@
 # fail mixing named and unnamed vectors
 
     Code
-      list_transpose(list(x = list(a = 1, b = 2), y = list(3, 4)))
+      test_list_transpose()
     Condition
-      Error in `handlers[[1L]]()`:
+      Error in `list_transpose()`:
       ! Can't combine named and unnamed vectors.
 

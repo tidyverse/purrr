@@ -76,12 +76,14 @@ list_transpose <- function(x,
     template <- integer()
   } else if (is.null(template)) {
     indexes <- map(x, vec_index)
-    try_fetch(
+    call <- current_env()
+    withCallingHandlers(
       template <- reduce(indexes, vec_set_union),
       vctrs_error_ptype2 = function(e) {
         cli::cli_abort(
           "Can't combine named and unnamed vectors.",
-          arg = template
+          arg = template,
+          call = call
         )
       }
     )

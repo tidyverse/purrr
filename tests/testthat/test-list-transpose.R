@@ -132,8 +132,11 @@ test_that("validates inputs", {
 })
 
 test_that("fail mixing named and unnamed vectors", {
-  x <- list(list(a = 1, b = 2), list(a = 3, b = 4))
-  expect_snapshot(error = TRUE, {
+  test_list_transpose <- function() {
+    x <- list(list(a = 1, b = 2), list(a = 3, b = 4))
     list_transpose(list(x = list(a = 1, b = 2), y = list(3, 4)))
+  }
+  expect_snapshot(error = TRUE, {
+    test_list_transpose()
   })
 })
