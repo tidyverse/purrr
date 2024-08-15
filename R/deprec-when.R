@@ -36,7 +36,7 @@
 #'
 #' @keywords internal
 #' @examples
-#' 1:10 %>%
+#' 1:10 |>
 #'   when(
 #'     sum(.) <=  50 ~ sum(.),
 #'     sum(.) <= 100 ~ sum(.)/2,
