@@ -74,8 +74,12 @@ list_transpose <- function(x,
 
   if (length(x) == 0) {
     template <- integer()
-  } else {
-    template <- template %||% reduce(map(x, vec_index), vec_set_union)
+  } else if (is.null(template)) {
+    template <- reduce(
+      map(x, vec_index),
+      vec_set_union,
+      error_call = caller_env()
+    )
   }
 
   if (!is.character(template) && !is.numeric(template)) {
