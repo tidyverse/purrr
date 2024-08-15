@@ -41,6 +41,32 @@
 #'   map(\(mod) as.data.frame(t(as.matrix(coef(mod))))) |>
 #'   list_rbind()
 #'
+#' # map: combining vectors ---------------------------
+#' DF <- structure(
+#' list(
+#'   `Column A` = c(" 13", "  15 "),
+#'   `Column B` = c("  34",  " 67 ")
+#' ),
+#' class = c("data.frame"),
+#' row.names = c(NA, -2L)
+#' )
+#'
+#' # Was:
+#' # map_dfr() and map_dfc() actually both combine the list by column
+#' map_dfr(DF, trimws)
+#' map_dfc(DF, trimws)
+#'
+#' # Now:
+#' # to combine a list of vectors use as_tibble()
+#' map(DF, trimws) |> tibble::as_tibble()
+#'
+#' # list_rbind()/list_cbind() require list of data.frames or NULL to work and
+#' # will throw an error
+#' \dontrun{
+#'   map(DF, trimws) |> list_rbind()
+#'   map(DF, trimws) |> list_cbind()
+#' }
+#'
 #' # map2 ---------------------------------------------
 #'
 #' ex_fun <- function(arg1, arg2){
@@ -59,6 +85,11 @@
 #' map2_dfc(arg1, arg2, ex_fun)
 #' # now
 #' map2(arg1, arg2, ex_fun) |> list_cbind()
+#'
+
+
+
+
 map_dfr <- function(.x, .f, ..., .id = NULL) {
   # in 1.0.0
   lifecycle::signal_stage("superseded", "map_dfr()", I("`map()` + `list_rbind()`"))
