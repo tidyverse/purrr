@@ -1,0 +1,43 @@
+---
+title: "purrr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{purrr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(purrr)
+```
+
+[Big picture]
+
+The purrr package makes applying your functions to multiple elements of a list or data frame easy but you don't need a `for` loop. 
+
+
+### The purrr function families 
+
+- `map`  apply function mulitple times/ multplie outputs
+- `reduce` 1 output
+- `predicate`  TRUE/FALSE logical output
+
+### `map()`
+
+Detailled map example
+
+### `reduce`()`
+
+Detailled map example
+
+### `predicate`()`
+
+Detailled map example
+
+
+
