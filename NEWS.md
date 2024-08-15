@@ -1,5 +1,8 @@
 # purrr (development version)
 
+* `list_transpose()` inspects all elements to determine the correct
+  template if it's not provided by the user  (#1128, @krlmlr).
+
 # purrr 1.0.2
 
 * Fixed valgrind issue.
