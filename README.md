@@ -51,7 +51,7 @@ library(purrr)
 mtcars |> 
   split(mtcars$cyl) |>  # from base R
   map(\(df) lm(mpg ~ wt, data = df)) |> 
-  map(summary) %>%
+  map(summary) |>
   map_dbl("r.squared")
 #>         4         6         8 
 #> 0.5086326 0.4645102 0.4229655

@@ -13,7 +13,7 @@ test_that("can use character template", {
   # Default:
   expect_equal(
     list_transpose(x, default = NA),
-    list(a = c(1, NA), b = c(2, 3))
+    list(a = c(1, NA), b = c(2, 3), c = c(NA, 4))
   )
 
   # Change order
@@ -128,5 +128,15 @@ test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
     list_transpose(10)
     list_transpose(list(1), template = mean)
+  })
+})
+
+test_that("fail mixing named and unnamed vectors", {
+  test_list_transpose <- function() {
+    x <- list(list(a = 1, b = 2), list(a = 3, b = 4))
+    list_transpose(list(x = list(a = 1, b = 2), y = list(3, 4)))
+  }
+  expect_snapshot(error = TRUE, {
+    test_list_transpose()
   })
 })
