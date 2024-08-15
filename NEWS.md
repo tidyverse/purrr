@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* Added `imap_vec()` (#1084)
+
 # purrr 1.0.2
 
 * Fixed valgrind issue.
