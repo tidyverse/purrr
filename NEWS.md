@@ -744,7 +744,7 @@ accessor(x[[1]])$foo
 to the equivalent pluck:
 
 ```
-x %>% pluck(1, accessor, "foo")
+x |> pluck(1, accessor, "foo")
 ```
 
 
@@ -968,7 +968,7 @@ This is a compatibility release with dplyr 0.6.0.
 
 * `set_names()` is a snake-case alternative to `setNames()` with stricter
   equality checking, and more convenient defaults for pipes:
-  `x %>% set_names()` is equivalent to `setNames(x, x)` (#119).
+  `x |> set_names()` is equivalent to `setNames(x, x)` (#119).
 
 
 ## Row based functionals
@@ -980,7 +980,7 @@ functions.
 * `map()` now always returns a list. Data frame support has been moved
   to `map_df()` and `dmap()`. The latter supports sliced data frames
   as a shortcut for the combination of `by_slice()` and `dmap()`:
-  `x %>% by_slice(dmap, fun, .collate = "rows")`. The conditional
+  `x |> by_slice(dmap, fun, .collate = "rows")`. The conditional
   variants `dmap_at()` and `dmap_if()` also support sliced data frames
   and will recycle scalar results to the slice size.
 
