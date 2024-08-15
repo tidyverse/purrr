@@ -6,16 +6,17 @@
 \alias{list_rbind}
 \title{Combine list elements into a single data structure}
 \usage{
-list_c(x, ..., ptype = NULL)
+list_c(x, ..., ptype = NULL, keep_empty = FALSE)
 
 list_cbind(
   x,
   ...,
   name_repair = c("unique", "universal", "check_unique"),
-  size = NULL
+  size = NULL,
+  keep_empty = FALSE
 )
 
-list_rbind(x, ..., names_to = rlang::zap(), ptype = NULL)
+list_rbind(x, ..., names_to = rlang::zap(), ptype = NULL, keep_empty = FALSE)
 }
 \arguments{
 \item{x}{A list. For \code{list_rbind()} and \code{list_cbind()} the list must
@@ -25,6 +26,8 @@ only contain only data frames or \code{NULL}.}
 
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}
+
+\item{keep_empty}{An optional Logical to keep empty elements of a list as NA.}
 
 \item{name_repair}{One of \code{"unique"}, \code{"universal"}, or \code{"check_unique"}.
 See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of these options.}
@@ -53,11 +56,13 @@ list_c(x1)
 
 x2 <- list(
   a = data.frame(x = 1:2),
-  b = data.frame(y = "a")
+  b = data.frame(y = "a"),
+  c = data.frame(z = NULL)
 )
 list_rbind(x2)
 list_rbind(x2, names_to = "id")
+list_rbind(x2, names_to = "id", keep_empty = TRUE)
 list_rbind(unname(x2), names_to = "id")
-
 list_cbind(x2)
+
 }

@@ -22,6 +22,7 @@
 #'   same size (i.e. number of rows).
 #' @param name_repair One of `"unique"`, `"universal"`, or `"check_unique"`.
 #'   See [vctrs::vec_as_names()] for the meaning of these options.
+#' @param keep_empty An optional Logical to keep empty elements of a list as NA.
 #' @inheritParams rlang::args_dots_empty
 #' @export
 #' @examples
@@ -30,16 +31,20 @@
 #'
 #' x2 <- list(
 #'   a = data.frame(x = 1:2),
-#'   b = data.frame(y = "a")
+#'   b = data.frame(y = "a"),
+#'   c = data.frame(z = NULL)
 #' )
 #' list_rbind(x2)
 #' list_rbind(x2, names_to = "id")
+#' list_rbind(x2, names_to = "id", keep_empty = TRUE)
 #' list_rbind(unname(x2), names_to = "id")
-#'
 #' list_cbind(x2)
-list_c <- function(x, ..., ptype = NULL) {
+#'
+list_c <- function(x, ..., ptype = NULL, keep_empty = FALSE) {
   vec_check_list(x)
   check_dots_empty()
+
+  if(keep_empty) x <- convert_empty_element_to_NA(x)
 
   # For `list_c()`, we don't expose `list_unchop()`'s `name_spec` arg,
   # and instead strip outer names to avoid collisions with inner names
@@ -58,19 +63,22 @@ list_cbind <- function(
     x,
     ...,
     name_repair = c("unique", "universal", "check_unique"),
-    size = NULL
+    size = NULL,
+    keep_empty = FALSE
   ) {
   check_list_of_data_frames(x)
   check_dots_empty()
+  if(keep_empty) x <- convert_empty_element_to_NA(x)
 
   vec_cbind(!!!x, .name_repair = name_repair, .size = size, .error_call = current_env())
 }
 
 #' @export
 #' @rdname list_c
-list_rbind <- function(x, ..., names_to = rlang::zap(), ptype = NULL) {
+list_rbind <- function(x, ..., names_to = rlang::zap(), ptype = NULL, keep_empty = FALSE) {
   check_list_of_data_frames(x)
   check_dots_empty()
+  if(keep_empty) x <- convert_empty_element_to_NA(x)
 
   vec_rbind(!!!x, .names_to = names_to, .ptype = ptype, .error_call = current_env())
 }
@@ -94,4 +102,9 @@ check_list_of_data_frames <- function(x, error_call = caller_env()) {
     arg = "x",
     call = error_call
   )
+}
+
+## used to convert empty elements into NA for list_binding functions
+convert_empty_element_to_NA = function(x) {
+  map(x, \(x) if(vctrs::vec_is_empty(x)) NA else x)
 }
