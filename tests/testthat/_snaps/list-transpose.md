@@ -64,3 +64,11 @@
       Error in `list_transpose()`:
       ! `template` must be a character or numeric vector, not a function.
 
+# fail mixing named and unnamed vectors
+
+    Code
+      list_transpose(list(x = list(a = 1, b = 2), y = list(3, 4)))
+    Condition
+      Error in `fn()`:
+      ! Can't combine `x` <character> and `y` <integer>.
+
