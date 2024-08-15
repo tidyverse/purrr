@@ -281,9 +281,9 @@ The pipe is particularly compelling when working with longer transformations.
 For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
 
 ```{r, eval = modern_r}
-mtcars %>% 
-  split(mtcars$cyl) %>% 
-  map(\(df) lm(mpg ~ wt, data = df)) %>% 
-  map(coef) %>% 
+mtcars |>
+  split(mtcars$cyl) |> 
+  map(\(df) lm(mpg ~ wt, data = df))|> 
+  map(coef) |> 
   map_dbl(1)
 ```

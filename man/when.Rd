@@ -37,7 +37,7 @@ valid match/condition is found the action is executed and the result of the
 action is returned.
 }
 \examples{
-1:10 \%>\%
+1:10 |>
   when(
     sum(.) <=  50 ~ sum(.),
     sum(.) <= 100 ~ sum(.)/2,
