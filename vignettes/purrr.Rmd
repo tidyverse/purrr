@@ -27,17 +27,46 @@ The purrr package makes applying your functions to multiple elements of a list o
 - `reduce` 1 output
 - `predicate`  TRUE/FALSE logical output
 
-### `map()`
+### `map()` family
 
-Detailled map example
+Map is used to apply the same function multiple times. It can work on lists, data frames, and other things. The first argument, `.x` is the object, the second argument, `.f` is the function you want to apply. Here is a simple example of how map is used.
+
+```{r}
+x <- list(1,2,3)
+
+map(.x = x, .f = sqrt)
+
+```
+However, the example above isn't that useful because the data could have easily been a vector. The `map` functionality becomes more important when you consider a more complex object like a data frame and a function that doesn't work with a regular mutate. We can create a custom function, then apply that to a column in mtcars.
+
+```{r}
+
+
+```
+
+Often, it's easier to describe the function inside the map call, this is when you can create an anonymous function using `~`.
+
+In this more useful example, the base R function `split` is used to create a list of data frames. `map` is then used to fit a regression model with the `lm` function for each group. Note that the first time `~` appears, it's creating the anonymous function, then it is used within `lm` as part of the formula.
+
+```{r}
+
+by_cyl <- split(mtcars, mtcars$cyl)
+
+by_cyl |>
+  map(~ lm(mpg ~ wt, data = .x)) |>
+  map(coef) |>
+  map_dbl(2)
+
+```
+
+`map` takes only one argument and always outputs a list. If you want to use multiple arguments, variants such as `map2` and `pmap` will work. If you want to output something other than a list, there are suffixs such as `_chr` and `_dbl`.
+
 
 ### `reduce`()`
 
-Detailled map example
+Detailled reduce example
 
 ### `predicate`()`
 
-Detailled map example
-
-
+Example here
 
