@@ -130,3 +130,9 @@ test_that("validates inputs", {
     list_transpose(list(1), template = mean)
   })
 })
+
+test_that("works on data frames", {
+  expect_no_error(
+    list_transpose(mtcars)
+  )
+})
