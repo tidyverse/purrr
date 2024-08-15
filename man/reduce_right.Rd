@@ -13,8 +13,6 @@ reduce2_right(.x, .y, .f, ..., .init)
 accumulate_right(.x, .f, ..., .init)
 }
 \arguments{
-\item{.x}{A list or atomic vector.}
-
 \item{.f}{For \code{reduce()}, a 2-argument function. The function will be passed
 the accumulated value as the first argument and the "next" value as the
 second argument.
@@ -26,15 +24,15 @@ second argument, and the next value of \code{.y} as the third argument.
 The reduction terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}
 
-\item{...}{Additional arguments passed on to the mapped function.
+\item{...}{Additional arguments passed on to the reduce function.
 
 We now generally recommend against using \code{...} to pass additional
 (constant) arguments to \code{.f}. Instead use a shorthand anonymous function:
 
 \if{html}{\out{<div class="sourceCode R">}}\preformatted{# Instead of
-x |> map(f, 1, 2, collapse = ",")
+x |> reduce(f, 1, 2, collapse = ",")
 # do:
-x |> map(\\(x) f(x, 1, 2, collapse = ","))
+x |> reduce(\\(x) f(x, 1, 2, collapse = ","))
 }\if{html}{\out{</div>}}
 
 This makes it easier to understand which arguments belong to which
@@ -45,7 +43,7 @@ the accumulation, rather than using \code{.x[[1]]}. This is useful if
 you want to ensure that \code{reduce} returns a correct value when \code{.x}
 is empty. If missing, and \code{.x} is empty, will throw an error.}
 
-\item{.y}{For \code{reduce2()} and \code{accumulate2()}, an additional
+\item{.y}{For \code{reduce2()} an additional
 argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
 should be 1 element shorter than \code{.x}.}
 }
