@@ -22,7 +22,8 @@
 #'   same size (i.e. number of rows).
 #' @param name_repair One of `"unique"`, `"universal"`, or `"check_unique"`.
 #'   See [vctrs::vec_as_names()] for the meaning of these options.
-#' @param keep_empty An optional Logical to keep empty elements of a list as NA.
+#' @param keep_empty  An optional logical. If FALSE (the default), then the empty element is silently ignored;
+#'  if TRUE, then the empty element is kept as an NA`.
 #' @inheritParams rlang::args_dots_empty
 #' @export
 #' @examples
@@ -32,13 +33,14 @@
 #' x2 <- list(
 #'   a = data.frame(x = 1:2),
 #'   b = data.frame(y = "a"),
-#'   c = data.frame(z = NULL)
+#'   c = NULL)
 #' )
 #' list_rbind(x2)
 #' list_rbind(x2, names_to = "id")
 #' list_rbind(x2, names_to = "id", keep_empty = TRUE)
 #' list_rbind(unname(x2), names_to = "id")
 #' list_cbind(x2)
+#' list_cbind(x2, keep_empty = TRUE)
 #'
 list_c <- function(x, ..., ptype = NULL, keep_empty = FALSE) {
   vec_check_list(x)
@@ -106,5 +108,5 @@ check_list_of_data_frames <- function(x, error_call = caller_env()) {
 
 ## used to convert empty elements into NA for list_binding functions
 convert_empty_element_to_NA = function(x) {
-  map(x, \(x) if(vctrs::vec_is_empty(x)) NA else x)
+  map(x, function(x) if(vctrs::vec_is_empty(x)) NA else x)
 }
