@@ -141,3 +141,7 @@ test_that("fail mixing named and unnamed vectors", {
   })
 })
 
+test_that("works on data frames", {
+  expect_no_error(list_transpose(mtcars))
+})
+
