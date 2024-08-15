@@ -63,6 +63,10 @@
 #' ll |> list_transpose(template = nms, default = NA)
 transpose <- function(.l, .names = NULL) {
   # 1.0.0
-  lifecycle::signal_stage("superseded", "transpose()", "list_transpose()")
+  if (!isTRUE(the$transpose_signalled)) {
+    lifecycle::signal_stage("superseded", "transpose()", "list_transpose()")
+    the$transpose_signalled <- TRUE
+  }
   .Call(transpose_impl, .l, .names)
 }
+
