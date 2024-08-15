@@ -14,9 +14,9 @@
 #' @param x A list of vectors to transpose.
 #' @param template A "template" that describes the output list. Can either be
 #'   a character vector (where elements are extracted by name), or an integer
-#'   vector (where elements are extracted by position). Defaults to the names
-#'   of the first element of `x`, or if they're not present, the integer
-#'   indices.
+#'   vector (where elements are extracted by position). Defaults to the union
+#'   of the names of the elements of `x`, or if they're not present, the
+#'   union of the integer indices.
 #' @param simplify Should the result be [simplified][list_simplify]?
 #'   * `TRUE`: simplify or die trying.
 #'   * `NA`: simplify if possible.
@@ -75,7 +75,7 @@ list_transpose <- function(x,
   if (length(x) == 0) {
     template <- integer()
   } else {
-    template <- template %||% vec_index(x[[1]])
+    template <- template %||% reduce(map(x, vec_index), vec_set_union)
   }
 
   if (!is.character(template) && !is.numeric(template)) {
