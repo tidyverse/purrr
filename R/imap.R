@@ -60,7 +60,7 @@ imap_dbl <- function(.x, .f, ...) {
 #' @export
 imap_vec <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  map_vec(.x, vec_index(.x), .f, ...)
+  map2_vec(.x, vec_index(.x), .f, ...)
 }
 
 
