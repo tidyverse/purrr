@@ -68,7 +68,7 @@ the desired type of output.}
 }
 \value{
 The output length is determined by the length of the input.
-The output names are determined by the input names.
+The output names are determined by the names of the first element.
 The output type is determined by the suffix:
 \itemize{
 \item No suffix: a list; \code{.f()} can return anything.
