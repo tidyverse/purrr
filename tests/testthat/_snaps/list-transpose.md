@@ -69,6 +69,6 @@
     Code
       list_transpose(list(x = list(a = 1, b = 2), y = list(3, 4)))
     Condition
-      Error:
-      ! Can't combine `x` <character> and `y` <integer>.
+      Error in `handlers[[1L]]()`:
+      ! Can't combine named and unnamed vectors.
 
