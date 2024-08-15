@@ -2,12 +2,12 @@ test_that("can coerce to logical vectors",{
   expect_equal(coerce_lgl(c(TRUE, FALSE, NA)), c(TRUE, FALSE, NA))
 
   expect_equal(coerce_lgl(c(1L, 0L, NA)), c(TRUE, FALSE, NA))
-  expect_error(coerce_lgl(2L), "Can't coerce")
+  expect_snapshot(coerce_lgl(2L), error = TRUE)
 
   expect_equal(coerce_lgl(c(1, 0, NA)), c(TRUE, FALSE, NA))
-  expect_error(coerce_lgl(1.5), "Can't coerce")
+  expect_snapshot(coerce_lgl(1.5), error = TRUE)
 
-  expect_error(coerce_lgl("true"), "Can't coerce")
+  expect_snapshot(coerce_lgl("true"), error = TRUE)
 })
 
 test_that("can coerce to integer vectors", {
@@ -16,9 +16,9 @@ test_that("can coerce to integer vectors", {
   expect_identical(coerce_int(c(NA, 1L, 10L)), c(NA, 1L, 10L))
 
   expect_identical(coerce_int(c(NA, 1, 10)), c(NA, 1L, 10L))
-  expect_error(coerce_int(1.5), "Can't coerce")
+  expect_snapshot(coerce_int(1.5), error = TRUE)
 
-  expect_error(coerce_int("1"), "Can't coerce")
+  expect_snapshot(coerce_int("1"), error = TRUE)
 })
 
 test_that("can coerce to double vctrs", {
@@ -28,7 +28,7 @@ test_that("can coerce to double vctrs", {
 
   expect_identical(coerce_dbl(c(NA, 1.5)), c(NA, 1.5))
 
-  expect_error(coerce_dbl("1.5"), "Can't coerce")
+  expect_snapshot(coerce_dbl("1.5"), error = TRUE)
 })
 
 test_that("can coerce to character vectors", {
@@ -61,5 +61,5 @@ test_that("warns once per vector", {
 })
 
 test_that("can't coerce to expressions", {
-  expect_error(coerce(list(1), "expression"))
+  expect_snapshot(coerce(list(1), "expression"), error = TRUE)
 })

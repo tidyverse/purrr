@@ -255,7 +255,7 @@ test_that("pluck() dispatches on vector methods", {
     length.test_pluck = function(x) NA,
     {
       expect_null(pluck(x, 1, 1))
-      expect_error(chuck(x, 1, 1), "Length of S3 object must be a scalar integer")
+      expect_snapshot(chuck(x, 1, 1), error = TRUE)
     }
   )
 
@@ -266,7 +266,7 @@ test_that("pluck() dispatches on vector methods", {
     length.test_pluck = function(x) length(.subset2(x, 1)),
     {
       expect_null(pluck(x, 1, "b", 1))
-      expect_error(chuck(x, 1, "b", 1), "unnamed vector")
+      expect_snapshot(chuck(x, 1, "b", 1), error = TRUE)
     }
   )
 })
