@@ -115,7 +115,7 @@
 <span><span class="va">mtcars</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># from base R</span></span>
 <span>  <span class="fu"><a href="reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/map.html">map</a></span><span class="op">(</span><span class="va">summary</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/map.html">map</a></span><span class="op">(</span><span class="va">summary</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/map.html">map_dbl</a></span><span class="op">(</span><span class="st">"r.squared"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         4         6         8 </span></span>
 <span><span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></span></code></pre></div>
