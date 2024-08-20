@@ -508,7 +508,7 @@ accumulate_names <- function(nms, init, dir) {
 #' reduce(rev(1:3), f)
 #' ```
 #'
-#' `reduce2_right()` is soft-deprecated as of purrr 0.3.0 without
+#' `reduce2_right()` is deprecated as of purrr 0.3.0 without
 #' replacement. It is not clear what algorithmic properties should a
 #' right reduction have in this case. Please reach out if you know
 #' about a use case for a right reduction with a ternary function.
