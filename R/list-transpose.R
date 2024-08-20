@@ -69,7 +69,8 @@ list_transpose <- function(x,
                            simplify = NA,
                            ptype = NULL,
                            default = NULL) {
-  vec_check_list(x)
+
+  check_list(x)
   check_dots_empty()
 
   if (length(x) == 0) {

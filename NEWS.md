@@ -1,5 +1,6 @@
 # purrr (development version)
 
+* `list_transpose()` now works with data.frames (@KimLopezGuell, #1109).
 * Added `imap_vec()` (#1084)
 * `list_transpose()` inspects all elements to determine the correct
   template if it's not provided by the user  (#1128, @krlmlr).

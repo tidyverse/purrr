@@ -57,7 +57,7 @@
       list_transpose(10)
     Condition
       Error in `list_transpose()`:
-      ! `x` must be a list, not the number 10.
+      ! `x` must be a list, not a number.
     Code
       list_transpose(list(1), template = mean)
     Condition

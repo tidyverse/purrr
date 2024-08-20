@@ -4,6 +4,12 @@ test_that("can transpose homogenous list", {
   expect_equal(out, list(a = c(x = 1, y = 3), b = c(x = 2, y = 4)))
 })
 
+test_that("can transpose data frames", {
+  df <- data.frame(x = 1:2, y = 4:5)
+  out <- list_transpose(df)
+  expect_equal(out, list(c(x = 1, y = 4), c(x = 2, y = 5)))
+})
+
 test_that("transposing empty list returns empty list", {
   expect_equal(list_transpose(list()), list())
 })
