@@ -87,13 +87,13 @@ a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-li
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed on to the mapped function.</p>
+<dd><p>Additional arguments passed on to the reduce function.</p>
 <p>We now generally recommend against using <code>...</code> to pass additional
 (constant) arguments to <code>.f</code>. Instead use a shorthand anonymous function:</p>
 <p></p><div class="sourceCode R"><pre><code><span><span class="co"># Instead of</span></span>
-<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reduce.html">reduce</a></span><span class="op">(</span><span class="va">f</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
 <span><span class="co"># do:</span></span>
-<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reduce.html">reduce</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.</p></dd>
 
@@ -106,7 +106,7 @@ is empty. If missing, and <code>.x</code> is empty, will throw an error.</p></dd
 
 
 <dt id="arg--y">.y<a class="anchor" aria-label="anchor" href="#arg--y"></a></dt>
-<dd><p>For <code><a href="reduce.html">reduce2()</a></code> and <code><a href="accumulate.html">accumulate2()</a></code>, an additional
+<dd><p>For <code><a href="reduce.html">reduce2()</a></code> an additional
 argument that is passed to <code>.f</code>. If <code>init</code> is not set, <code>.y</code>
 should be 1 element shorter than <code>.x</code>.</p></dd>
 
