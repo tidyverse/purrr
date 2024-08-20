@@ -69,13 +69,8 @@ list_transpose <- function(x,
                            simplify = NA,
                            ptype = NULL,
                            default = NULL) {
-  if(!is.list(x)) {
-    cli::cli_abort(
-      "{.arg x} must be a list, not {.obj_type_friendly {x}}",
-      arg = x
-    )
-  }
 
+  check_list(x)
   check_dots_empty()
 
   if (length(x) == 0) {
