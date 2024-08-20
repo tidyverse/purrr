@@ -41,31 +41,24 @@
 #'   map(\(mod) as.data.frame(t(as.matrix(coef(mod))))) |>
 #'   list_rbind()
 #'
-#' # map: combining vectors ---------------------------
-#' DF <- structure(
-#' list(
-#'   `Column A` = c(" 13", "  15 "),
-#'   `Column B` = c("  34",  " 67 ")
-#' ),
-#' class = c("data.frame"),
-#' row.names = c(NA, -2L)
+#' # for certain pathological inputs `map_dfr()` and `map_dfc()` actually
+#' # both combine the list by column
+#' df <- data.frame(
+#'   x = c(" 13", "  15 "),
+#'   y = c("  34",  " 67 ")
 #' )
 #'
 #' # Was:
-#' # map_dfr() and map_dfc() actually both combine the list by column
-#' map_dfr(DF, trimws)
-#' map_dfc(DF, trimws)
+#' map_dfr(df, trimws)
+#' map_dfc(df, trimws)
 #'
-#' # Now:
-#' # to combine a list of vectors use as_tibble()
-#' map(DF, trimws) |> tibble::as_tibble()
+#' # If you want to apply a function to each column of a data frame
+#' # you might instead want to use modify:
+#' modify(df, trimws)
 #'
-#' # list_rbind()/list_cbind() require list of data.frames or NULL to work and
-#' # will throw an error
-#' \dontrun{
-#'   map(DF, trimws) |> list_rbind()
-#'   map(DF, trimws) |> list_cbind()
-#' }
+#' # list_rbind()/list_cbind() don't work here because they require
+#' # data frame inputs
+#' try(map(df, trimws) |> list_rbind())
 #'
 #' # map2 ---------------------------------------------
 #'
