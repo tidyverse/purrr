@@ -67,8 +67,8 @@ of the elements of the result. Otherwise, supply a "prototype" giving
 the desired type of output.}
 }
 \value{
-The output length is determined by the length of the input.
-The output names are determined by the names of the first element.
+The output length is determined by the maximum length of all elements of \code{.l}.
+The output names are determined by the names of the first element of \code{.l}.
 The output type is determined by the suffix:
 \itemize{
 \item No suffix: a list; \code{.f()} can return anything.
@@ -76,8 +76,8 @@ The output type is determined by the suffix:
 or character vector respectively; \code{.f()} must return a compatible atomic
 vector of length 1.
 \item \verb{_vec()} return an atomic or S3 vector, the same type that \code{.f} returns.
-\code{.f} can return pretty much any type of vector, as long as its length 1.
-\item \code{walk()} returns the input \code{.x} (invisibly). This makes it easy to
+\code{.f} can return pretty much any type of vector, as long as it is length 1.
+\item \code{pwalk()} returns the input \code{.l} (invisibly). This makes it easy to
 use in a pipe. The return value of \code{.f()} is ignored.
 }
 
