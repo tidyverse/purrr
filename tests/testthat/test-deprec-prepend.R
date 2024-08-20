@@ -33,17 +33,8 @@ test_that("prepend appends at the beginning for empty list by default", {
 test_that("prepend throws error if before param is neither NULL nor between 1 and length(x)", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_error(
-    prepend(list(), 1, before = 1),
-    "is.null(before) || (before > 0 && before <= n) is not TRUE"
-  )
+  expect_snapshot(prepend(list(), 1, before = 1), error = TRUE)
   x <- as.list(1:3)
-  expect_error(
-    x %>% prepend(4, before = 0),
-    "is.null(before) || (before > 0 && before <= n) is not TRUE"
-  )
-  expect_error(
-    x %>% prepend(4, before = 4),
-    "is.null(before) || (before > 0 && before <= n) is not TRUE"
-  )
+  expect_snapshot(x %>% prepend(4, before = 0), error = TRUE)
+  expect_snapshot(x %>% prepend(4, before = 4), error = TRUE)
 })

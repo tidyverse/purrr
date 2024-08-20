@@ -25,7 +25,7 @@ test_that("filtering requires a predicate function", {
 test_that("filtering fails when filter function doesn't return a logical", {
   local_options(lifecycle_verbosity = "quiet")
   filter <- function(x, y, z) x + y + z
-  expect_error(cross3(1:3, 1:3, 1:3, .filter = filter))
+  expect_snapshot(cross3(1:3, 1:3, 1:3, .filter = filter), error = TRUE)
 })
 
 test_that("works with empty input", {

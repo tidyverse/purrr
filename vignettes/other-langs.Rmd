@@ -23,7 +23,7 @@ purrr draws inspiration from many related tools:
 
 However, the goal of purrr is not to try and simulate a purer functional programming language in R; we don't want to implement a second-class version of Haskell in R. The goal is to give you similar expressiveness to an FP language, while allowing you to write code that looks and works like R:
 
-* Instead of point free (tacit) style, we use the pipe, `%>%`, to write code 
+* Instead of point free (tacit) style, we use the pipe, `|>`, to write code 
   that can be read from left to right.
 
 * Instead of currying, we use `...` to pass in extra arguments.

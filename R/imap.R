@@ -56,6 +56,13 @@ imap_dbl <- function(.x, .f, ...) {
   map2_dbl(.x, vec_index(.x), .f, ...)
 }
 
+#' @rdname imap
+#' @export
+imap_vec <- function(.x, .f, ...) {
+  .f <- as_mapper(.f, ...)
+  map2_vec(.x, vec_index(.x), .f, ...)
+}
+
 
 #' @export
 #' @rdname imap

@@ -69,5 +69,5 @@ test_that("default values work without a formula", {
 test_that("error when named arguments have no matching conditions", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_error(1:5 %>% when(a = sum(.) < 5 ~ 3))
+  expect_snapshot(1:5 %>% when(a = sum(.) < 5 ~ 3), error = TRUE)
 })
