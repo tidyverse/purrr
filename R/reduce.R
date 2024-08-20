@@ -7,6 +7,7 @@
 #' function that takes two values and returns a single value: reducing
 #' `f` over `1:3` computes the value `f(f(1, 2), 3)`.
 #'
+#' @inheritParams map
 #' @param ... Additional arguments passed on to the reduce function.
 #'
 #'   We now generally recommend against using `...` to pass additional
@@ -16,7 +17,7 @@
 #'   # Instead of
 #'   x |> reduce(f, 1, 2, collapse = ",")
 #'   # do:
-#'   x |> reduce(\(x) f(x, 1, 2, collapse = ","))
+#'   x |> reduce(\(x, y) f(x, y, 1, 2, collapse = ","))
 #'   ```
 #'
 #'   This makes it easier to understand which arguments belong to which

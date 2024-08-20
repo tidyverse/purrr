@@ -10,6 +10,8 @@ reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
 reduce2(.x, .y, .f, ..., .init)
 }
 \arguments{
+\item{.x}{A list or atomic vector.}
+
 \item{.f}{For \code{reduce()}, a 2-argument function. The function will be passed
 the accumulated value as the first argument and the "next" value as the
 second argument.
@@ -29,7 +31,7 @@ We now generally recommend against using \code{...} to pass additional
 \if{html}{\out{<div class="sourceCode R">}}\preformatted{# Instead of
 x |> reduce(f, 1, 2, collapse = ",")
 # do:
-x |> reduce(\\(x) f(x, 1, 2, collapse = ","))
+x |> reduce(\\(x, y) f(x, y, 1, 2, collapse = ","))
 }\if{html}{\out{</div>}}
 
 This makes it easier to understand which arguments belong to which
