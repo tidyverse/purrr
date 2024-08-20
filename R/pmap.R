@@ -23,7 +23,25 @@
 #'   * A formula, e.g. `~ ..1 + ..2 / ..3`. This syntax is not recommended as
 #'     you can only refer to arguments by position.
 #' @inheritParams map
-#' @inherit map return
+#' @returns
+#' The output length is determined by the maximum length of all elements of `.l`.
+#' The output names are determined by the names of the first element of `.l`.
+#' The output type is determined by the suffix:
+#'
+#' * No suffix: a list; `.f()` can return anything.
+#'
+#' * `_lgl()`, `_int()`, `_dbl()`, `_chr()` return a logical, integer, double,
+#'   or character vector respectively; `.f()` must return a compatible atomic
+#'   vector of length 1.
+#'
+#' * `_vec()` return an atomic or S3 vector, the same type that `.f` returns.
+#'   `.f` can return pretty much any type of vector, as long as it is length 1.
+#'
+#' * `pwalk()` returns the input `.l` (invisibly). This makes it easy to
+#'    use in a pipe. The return value of `.f()` is ignored.
+#'
+#' Any errors thrown by `.f` will be wrapped in an error with class
+#' [purrr_error_indexed].
 #' @family map variants
 #' @export
 #' @examples
