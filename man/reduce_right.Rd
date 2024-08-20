@@ -52,8 +52,25 @@ should be 1 element shorter than \code{.x}.}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-These functions were deprecated in purrr 0.3.0. Please use the
-\code{.dir} argument of \code{\link[=reduce]{reduce()}} instead, or reverse your vectors
-and use a left reduction.
+\code{reduce_right()} is soft-deprecated as of purrr 0.3.0. Please use
+the \code{.dir} argument of \code{reduce()} instead. Note that the algorithm
+has changed. Whereas \code{reduce_right()} computed \code{f(f(3, 2), 1)},
+\verb{reduce(.dir = \\"backward\\")} computes \code{f(1, f(2, 3))}. This is the
+standard way of reducing from the right.
+
+To update your code with the same reduction as \code{reduce_right()},
+simply reverse your vector and use a left reduction:
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{# Before:
+reduce_right(1:3, f)
+
+# After:
+reduce(rev(1:3), f)
+}\if{html}{\out{</div>}}
+
+\code{reduce2_right()} is soft-deprecated as of purrr 0.3.0 without
+replacement. It is not clear what algorithmic properties should a
+right reduction have in this case. Please reach out if you know
+about a use case for a right reduction with a ternary function.
 }
 \keyword{internal}
