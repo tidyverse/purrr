@@ -58,30 +58,6 @@
 #' the left produces a left-leaning nested list (or tree), while
 #' reducing `list()` from the right produces a right-leaning list.
 #'
-#' @section Life cycle:
-#'
-#' `reduce_right()` is soft-deprecated as of purrr 0.3.0. Please use
-#' the `.dir` argument of `reduce()` instead. Note that the algorithm
-#' has changed. Whereas `reduce_right()` computed `f(f(3, 2), 1)`,
-#' `reduce(.dir = \"backward\")` computes `f(1, f(2, 3))`. This is the
-#' standard way of reducing from the right.
-#'
-#' To update your code with the same reduction as `reduce_right()`,
-#' simply reverse your vector and use a left reduction:
-#'
-#' ```{r, eval = FALSE}
-#' # Before:
-#' reduce_right(1:3, f)
-#'
-#' # After:
-#' reduce(rev(1:3), f)
-#' ```
-#'
-#' `reduce2_right()` is soft-deprecated as of purrr 0.3.0 without
-#' replacement. It is not clear what algorithmic properties should a
-#' right reduction have in this case. Please reach out if you know
-#' about a use case for a right reduction with a ternary function.
-#'
 #' @seealso [accumulate()] for a version that returns all intermediate
 #'   values of the reduction.
 #' @examples
@@ -530,12 +506,29 @@ accumulate_names <- function(nms, init, dir) {
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' These functions were deprecated in purrr 0.3.0. Please use the
-#' `.dir` argument of [reduce()] instead, or reverse your vectors
-#' and use a left reduction.
+#' `reduce_right()` is soft-deprecated as of purrr 0.3.0. Please use
+#' the `.dir` argument of `reduce()` instead. Note that the algorithm
+#' has changed. Whereas `reduce_right()` computed `f(f(3, 2), 1)`,
+#' `reduce(.dir = \"backward\")` computes `f(1, f(2, 3))`. This is the
+#' standard way of reducing from the right.
+#'
+#' To update your code with the same reduction as `reduce_right()`,
+#' simply reverse your vector and use a left reduction:
+#'
+#' ```R
+#' # Before:
+#' reduce_right(1:3, f)
+#'
+#' # After:
+#' reduce(rev(1:3), f)
+#' ```
+#'
+#' `reduce2_right()` is deprecated as of purrr 0.3.0 without
+#' replacement. It is not clear what algorithmic properties should a
+#' right reduction have in this case. Please reach out if you know
+#' about a use case for a right reduction with a ternary function.
 #'
 #' @inheritParams reduce
-#'
 #' @keywords internal
 #' @export
 reduce_right <- function(.x, .f, ..., .init) {
