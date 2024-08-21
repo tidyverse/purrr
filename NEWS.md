@@ -1,6 +1,6 @@
 # purrr (development version)
 
-* Added a new keep_empty argument to list_c(), list_cbind() and list_rbind() which will keep empty elements as NA in the returned dataframe. (#1096)
+* Added a new keep_empty argument to `list_c()`, `list_cbind()`, and `list_rbind()` which will keep empty elements as `NA` in the returned data frame (@SokolovAnatoliy, #1096).
 
 # purrr 1.0.2
 
