@@ -1,3 +1,11 @@
+# can't transpose data frames
+
+    Code
+      list_transpose(df)
+    Condition
+      Error in `list_transpose()`:
+      ! `x` must be a list, not a <data.frame> object.
+
 # integer template requires exact length of list() simplify etc
 
     Code
@@ -57,7 +65,7 @@
       list_transpose(10)
     Condition
       Error in `list_transpose()`:
-      ! `x` must be a list, not a number.
+      ! `x` must be a list, not the number 10.
     Code
       list_transpose(list(1), template = mean)
     Condition
