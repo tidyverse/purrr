@@ -71,6 +71,23 @@ mtcars |>
   map(\(mod) as.data.frame(t(as.matrix(coef(mod))))) |>
   list_rbind()
 
+# for certain pathological inputs `map_dfr()` and `map_dfc()` actually
+# both combine the list by column
+df <- data.frame(
+  x = c(" 13", "  15 "),
+  y = c("  34",  " 67 ")
+)
+
+# Was:
+map_dfr(df, trimws)
+map_dfc(df, trimws)
+
+# But list_rbind()/list_cbind() fail because they require data frame inputs
+try(map(df, trimws) |> list_rbind())
+
+# Instead, use modify() to apply a function to each column of a data frame
+modify(df, trimws)
+
 # map2 ---------------------------------------------
 
 ex_fun <- function(arg1, arg2){
