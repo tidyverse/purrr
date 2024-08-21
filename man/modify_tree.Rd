@@ -24,7 +24,7 @@ modify_tree(
 a node (by returning \code{TRUE}) or a leaf (by returning \code{FALSE}). The
 default value, \code{NULL}, treats simple lists as nodes and everything else
 (including richer objects like data frames and linear models) as leaves,
-using \code{\link[vctrs:vec_is_list]{vctrs::vec_is_list()}}. To recurse into all objects built on lists
+using \code{\link[vctrs:obj_is_list]{vctrs::obj_is_list()}}. To recurse into all objects built on lists
 use \code{\link[=is.list]{is.list()}}.}
 
 \item{pre, post}{Functions applied to each node. \code{pre} is applied on the

@@ -38,7 +38,7 @@
 #'
 #' list_cbind(x2)
 list_c <- function(x, ..., ptype = NULL) {
-  vec_check_list(x)
+  obj_check_list(x)
   check_dots_empty()
 
   # For `list_c()`, we don't expose `list_unchop()`'s `name_spec` arg,
@@ -77,7 +77,7 @@ list_rbind <- function(x, ..., names_to = rlang::zap(), ptype = NULL) {
 
 
 check_list_of_data_frames <- function(x, error_call = caller_env()) {
-  vec_check_list(x, call = error_call)
+  obj_check_list(x, call = error_call)
 
   is_df_or_null <- map_lgl(x, function(x) is.data.frame(x) || is.null(x))
 

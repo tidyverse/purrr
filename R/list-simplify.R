@@ -8,7 +8,7 @@
 #'
 #' @param x A list.
 #' @param strict What should happen if simplification fails? If `TRUE`
-#'   (the default) it will error. If `FALSE` and `ptype` is not supplied, 
+#'   (the default) it will error. If `FALSE` and `ptype` is not supplied,
 #'   it will return `x` unchanged.
 #' @param ptype An optional prototype to ensure that the output type is always
 #'   the same.
@@ -66,7 +66,7 @@ simplify_impl <- function(x,
                           ptype = NULL,
                           error_arg = caller_arg(x),
                           error_call = caller_env()) {
-  vec_check_list(x, arg = error_arg, call = error_call)
+  obj_check_list(x, arg = error_arg, call = error_call)
 
   # Handle the cases where we definitely can't simplify
   if (strict) {

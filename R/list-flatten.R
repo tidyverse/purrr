@@ -46,7 +46,7 @@ list_flatten <- function(
     name_spec = "{outer}_{inner}",
     name_repair = c("minimal", "unique", "check_unique", "universal")
   ) {
-  vec_check_list(x)
+  obj_check_list(x)
   check_dots_empty()
   check_string(name_spec)
 
@@ -55,7 +55,7 @@ list_flatten <- function(
 
   # Unclass S3 lists to avoid their coercion methods. Wrap atoms in a
   # list of size 1 so the elements can be concatenated in a single list.
-  proxy <- map_if(proxy, vec_is_list, unclass, .else = list)
+  proxy <- map_if(proxy, obj_is_list, unclass, .else = list)
 
   out <- list_unchop(
     proxy,
