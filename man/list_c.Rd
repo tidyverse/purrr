@@ -27,7 +27,9 @@ only contain only data frames or \code{NULL}.}
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}
 
-\item{keep_empty}{An optional Logical to keep empty elements of a list as NA.}
+\item{keep_empty}{An optional logical. If \code{FALSE} (the default), then
+empty (\code{NULL}) elements are silently ignored; if \code{TRUE}, then empty
+elements are preserved by converting to \code{NA}.}
 
 \item{name_repair}{One of \code{"unique"}, \code{"universal"}, or \code{"check_unique"}.
 See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}} for the meaning of these options.}
@@ -57,12 +59,12 @@ list_c(x1)
 x2 <- list(
   a = data.frame(x = 1:2),
   b = data.frame(y = "a"),
-  c = data.frame(z = NULL)
+  c = NULL
 )
 list_rbind(x2)
 list_rbind(x2, names_to = "id")
 list_rbind(x2, names_to = "id", keep_empty = TRUE)
 list_rbind(unname(x2), names_to = "id")
 list_cbind(x2)
-
+list_cbind(x2, keep_empty = TRUE)
 }

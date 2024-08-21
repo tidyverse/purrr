@@ -74,9 +74,18 @@ test_that("NULLs are converted to NA when keep_empty = TRUE", {
   df1 <- data.frame(x = 1)
   df2 <- data.frame(y = 1)
 
-  expect_equal(list_c(list(1, NULL, 2), keep_empty = TRUE), c(1, NA, 2))
-  expect_equal(list_rbind(list(df1, NULL, df1), keep_empty = TRUE), data.frame(x = c(1, NA, 1)))
-  expect_equal(list_cbind(list(df1, z = NULL, df2), keep_empty = TRUE), data.frame(df1, z = NA, df2))
+  expect_equal(
+    list_c(list(1, NULL, 2), keep_empty = TRUE),
+    c(1, NA, 2)
+  )
+  expect_equal(
+    list_rbind(list(df1, NULL, df1), keep_empty = TRUE),
+    data.frame(x = c(1, NA, 1))
+  )
+  expect_equal(
+    list_cbind(list(df1, z = NULL, df2), keep_empty = TRUE),
+    data.frame(df1, z = NA, df2)
+  )
 })
 
 test_that("empty inputs return expected output", {
