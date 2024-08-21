@@ -277,3 +277,19 @@
       Error in `pluck_raw()`:
       ! Index 1 must have length 1, not 26.
 
+# pluck() dispatches on vector methods
+
+    Code
+      chuck(x, 1, 1)
+    Condition
+      Error in `chuck()`:
+      ! Length of S3 object must be a scalar integer.
+
+---
+
+    Code
+      chuck(x, 1, "b", 1)
+    Condition
+      Error in `chuck()`:
+      ! Index 2 is attempting to pluck from an unnamed vector using a string name.
+
