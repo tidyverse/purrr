@@ -130,28 +130,6 @@ the left produces a left-leaning nested list (or tree), while
 reducing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> from the right produces a right-leaning list.</p>
     </div>
     <div class="section level2">
-    <h2 id="life-cycle">Life cycle<a class="anchor" aria-label="anchor" href="#life-cycle"></a></h2>
-
-
-
-<p><code><a href="reduce_right.html">reduce_right()</a></code> is soft-deprecated as of purrr 0.3.0. Please use
-the <code>.dir</code> argument of <code>reduce()</code> instead. Note that the algorithm
-has changed. Whereas <code><a href="reduce_right.html">reduce_right()</a></code> computed <code>f(f(3, 2), 1)</code>,
-<code>reduce(.dir = \"backward\")</code> computes <code>f(1, f(2, 3))</code>. This is the
-standard way of reducing from the right.</p>
-<p>To update your code with the same reduction as <code><a href="reduce_right.html">reduce_right()</a></code>,
-simply reverse your vector and use a left reduction:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="co"># Before:</span></span>
-<span><span class="fu"><a href="../reference/reduce_right.html">reduce_right</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">f</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># After:</span></span>
-<span><span class="fu"><a href="../reference/reduce.html">reduce</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, <span class="va">f</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><code><a href="reduce_right.html">reduce2_right()</a></code> is soft-deprecated as of purrr 0.3.0 without
-replacement. It is not clear what algorithmic properties should a
-right reduction have in this case. Please reach out if you know
-about a use case for a right reduction with a ternary function.</p>
-    </div>
-    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="accumulate.html">accumulate()</a></code> for a version that returns all intermediate
 values of the reduction.</p></div>
