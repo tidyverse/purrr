@@ -141,6 +141,39 @@ variable will be created.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    28.40884 -2.780106</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    23.86803 -2.192438</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># for certain pathological inputs `map_dfr()` and `map_dfc()` actually</span></span></span>
+<span class="r-in"><span><span class="co"># both combine the list by column</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">" 13"</span>, <span class="st">"  15 "</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"  34"</span>,  <span class="st">" 67 "</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Was:</span></span></span>
+<span class="r-in"><span><span class="fu">map_dfr</span><span class="op">(</span><span class="va">df</span>, <span class="va">trimws</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x     y    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 13    34   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 15    67   </span>
+<span class="r-in"><span><span class="fu">map_dfc</span><span class="op">(</span><span class="va">df</span>, <span class="va">trimws</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x     y    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 13    34   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 15    67   </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># But list_rbind()/list_cbind() fail because they require data frame inputs</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">trimws</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in list_rbind(map(df, trimws)) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Each element of `x` must be either a data frame or `NULL`.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Elements 1 and 2 are not.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Instead, use modify() to apply a function to each column of a data frame</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="modify.html">modify</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">trimws</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    x  y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 13 34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 15 67</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># map2 ---------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ex_fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">arg1</span>, <span class="va">arg2</span><span class="op">)</span><span class="op">{</span></span></span>
