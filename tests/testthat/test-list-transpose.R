@@ -8,9 +8,7 @@ test_that("can't transpose data frames", {
   df <- data.frame(x = 1:2, y = 4:5)
 
   # i.e. be consistent with other `list_*()` functions from purrr/vctrs
-  expect_snapshot(error = TRUE, {
-    list_transpose(df)
-  })
+  expect_snapshot(error = TRUE, list_transpose(df))
 })
 
 test_that("transposing empty list returns empty list", {
