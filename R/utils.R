@@ -105,7 +105,7 @@ vctrs_list_compat <- function(x,
                               error_call = caller_env(),
                               error_arg = caller_arg(x)) {
   out <- vctrs_vec_compat(x, user_env)
-  vec_check_list(out, call = error_call, arg = error_arg)
+  obj_check_list(out, call = error_call, arg = error_arg)
   out
 }
 

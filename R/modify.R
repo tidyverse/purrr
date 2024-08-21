@@ -87,7 +87,7 @@
 modify <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  if (vec_is_list(.x)) {
+  if (obj_is_list(.x)) {
     out <- map(vec_proxy(.x), .f, ...)
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
@@ -137,7 +137,7 @@ modify_at <- function(.x, .at, .f, ...) {
 modify2 <- function(.x, .y, .f, ...) {
   .f <- as_mapper(.f, ...)
 
-  if (vec_is_list(.x)) {
+  if (obj_is_list(.x)) {
     out <- map2(vec_proxy(.x), .y, .f, ...)
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
@@ -172,7 +172,7 @@ imodify <- function(.x, .f, ...) {
 # helpers -----------------------------------------------------------------
 
 modify_where <- function(.x, .where, .f, ..., .purrr_error_call = caller_env()) {
-  if (vec_is_list(.x)) {
+  if (obj_is_list(.x)) {
     out <- vec_proxy(.x)
     out[.where] <- no_zap(map(out[.where], .f, ...), .purrr_error_call)
     vec_restore(out, .x)
