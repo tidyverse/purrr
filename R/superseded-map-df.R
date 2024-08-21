@@ -52,13 +52,11 @@
 #' map_dfr(df, trimws)
 #' map_dfc(df, trimws)
 #'
-#' # If you want to apply a function to each column of a data frame
-#' # you might instead want to use modify:
-#' modify(df, trimws)
-#'
-#' # list_rbind()/list_cbind() don't work here because they require
-#' # data frame inputs
+#' # But list_rbind()/list_cbind() fail because they require data frame inputs
 #' try(map(df, trimws) |> list_rbind())
+#'
+#' # Instead, use modify() to apply a function to each column of a data frame
+#' modify(df, trimws)
 #'
 #' # map2 ---------------------------------------------
 #'
@@ -78,11 +76,6 @@
 #' map2_dfc(arg1, arg2, ex_fun)
 #' # now
 #' map2(arg1, arg2, ex_fun) |> list_cbind()
-#'
-
-
-
-
 map_dfr <- function(.x, .f, ..., .id = NULL) {
   # in 1.0.0
   lifecycle::signal_stage("superseded", "map_dfr()", I("`map()` + `list_rbind()`"))

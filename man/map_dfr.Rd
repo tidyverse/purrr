@@ -82,13 +82,11 @@ df <- data.frame(
 map_dfr(df, trimws)
 map_dfc(df, trimws)
 
-# If you want to apply a function to each column of a data frame
-# you might instead want to use modify:
-modify(df, trimws)
-
-# list_rbind()/list_cbind() don't work here because they require
-# data frame inputs
+# But list_rbind()/list_cbind() fail because they require data frame inputs
 try(map(df, trimws) |> list_rbind())
+
+# Instead, use modify() to apply a function to each column of a data frame
+modify(df, trimws)
 
 # map2 ---------------------------------------------
 
@@ -108,6 +106,5 @@ map2(arg1, arg2, ex_fun) |> list_rbind()
 map2_dfc(arg1, arg2, ex_fun)
 # now
 map2(arg1, arg2, ex_fun) |> list_cbind()
-
 }
 \keyword{internal}
