@@ -20,9 +20,9 @@ list_transpose(
 
 \item{template}{A "template" that describes the output list. Can either be
 a character vector (where elements are extracted by name), or an integer
-vector (where elements are extracted by position). Defaults to the names
-of the first element of \code{x}, or if they're not present, the integer
-indices.}
+vector (where elements are extracted by position). Defaults to the union
+of the names of the elements of \code{x}, or if they're not present, the
+union of the integer indices.}
 
 \item{simplify}{Should the result be \link[=list_simplify]{simplified}?
 \itemize{

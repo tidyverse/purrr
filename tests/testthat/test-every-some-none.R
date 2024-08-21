@@ -17,8 +17,8 @@ test_that("none returns TRUE if all elements are FALSE", {
 })
 
 test_that("every() requires logical value", {
-  expect_error(every(list(1:3), identity), "must return a single")
-  expect_error(every(list(function() NULL), identity), "must return a single")
+  expect_snapshot(every(list(1:3), identity), error = TRUE)
+  expect_snapshot(every(list(function() NULL), identity), error = TRUE)
 })
 
 test_that("every() has the same behaviour as `&&` (#751)", {

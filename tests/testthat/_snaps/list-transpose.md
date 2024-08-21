@@ -57,10 +57,18 @@
       list_transpose(10)
     Condition
       Error in `list_transpose()`:
-      ! `x` must be a list, not the number 10.
+      ! `x` must be a list, not a number.
     Code
       list_transpose(list(1), template = mean)
     Condition
       Error in `list_transpose()`:
       ! `template` must be a character or numeric vector, not a function.
+
+# fail mixing named and unnamed vectors
+
+    Code
+      test_list_transpose()
+    Condition
+      Error in `list_transpose()`:
+      ! Can't combine named and unnamed vectors.
 

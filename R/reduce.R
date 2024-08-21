@@ -8,7 +8,22 @@
 #' `f` over `1:3` computes the value `f(f(1, 2), 3)`.
 #'
 #' @inheritParams map
-#' @param .y For `reduce2()` and `accumulate2()`, an additional
+#' @param ... Additional arguments passed on to the reduce function.
+#'
+#'   We now generally recommend against using `...` to pass additional
+#'   (constant) arguments to `.f`. Instead use a shorthand anonymous function:
+#'
+#'   ```R
+#'   # Instead of
+#'   x |> reduce(f, 1, 2, collapse = ",")
+#'   # do:
+#'   x |> reduce(\(x, y) f(x, y, 1, 2, collapse = ","))
+#'   ```
+#'
+#'   This makes it easier to understand which arguments belong to which
+#'   function and will tend to yield better error messages.
+#'
+#' @param .y For `reduce2()` an additional
 #'   argument that is passed to `.f`. If `init` is not set, `.y`
 #'   should be 1 element shorter than `.x`.
 #' @param .f For `reduce()`, a 2-argument function. The function will be passed

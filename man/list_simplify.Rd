@@ -11,9 +11,9 @@ list_simplify(x, ..., strict = TRUE, ptype = NULL)
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{strict}{What should happen if simplification fails? If \code{TRUE},
-it will error. If \code{FALSE} and \code{ptype} is not supplied, it will return \code{x}
-unchanged.}
+\item{strict}{What should happen if simplification fails? If \code{TRUE}
+(the default) it will error. If \code{FALSE} and \code{ptype} is not supplied,
+it will return \code{x} unchanged.}
 
 \item{ptype}{An optional prototype to ensure that the output type is always
 the same.}

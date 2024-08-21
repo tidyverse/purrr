@@ -14,7 +14,7 @@ test_that("map_depth modifies values at specified depth", {
 
 test_that("default doesn't recurse into data frames, but can customise", {
   x <- list(data.frame(x = 1), data.frame(y = 2))
-  expect_error(map_depth(x, 2, class), "not deep enough")
+  expect_snapshot(map_depth(x, 2, class), error = TRUE)
 
   x <- list(data.frame(x = 1), data.frame(y = 1))
   expect_equal(
@@ -73,7 +73,7 @@ test_that("vectorised operations on the recursive and atomic levels yield same r
   x <- list(list(list(1:3, 4:6)))
   exp <- list(list(list(11:13, 14:16)))
   expect_identical(modify_depth(x, 3, `+`, 10L), exp)
-  expect_error(modify_depth(x, 5, `+`, 10L), "not deep enough")
+  expect_snapshot(modify_depth(x, 5, `+`, 10L), error = TRUE)
 })
 
 test_that("modify_depth() treats NULLs correctly", {

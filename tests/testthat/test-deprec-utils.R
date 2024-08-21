@@ -26,10 +26,10 @@ test_that("rdunif works", {
 test_that("rdunif fails if a and b are not unit length numbers", {
   local_options(lifecycle_verbosity = "quiet")
 
-  expect_error(rdunif(1000, 1, "a"))
-  expect_error(rdunif(1000, 1, c(0.5, 0.2)))
-  expect_error(rdunif(1000, FALSE, 2))
-  expect_error(rdunif(1000, c(2, 3), 2))
+  expect_snapshot(rdunif(1000, 1, "a"), error = TRUE)
+  expect_snapshot(rdunif(1000, 1, c(0.5, 0.2)), error = TRUE)
+  expect_snapshot(rdunif(1000, FALSE, 2), error = TRUE)
+  expect_snapshot(rdunif(1000, c(2, 3), 2), error = TRUE)
 })
 
 
