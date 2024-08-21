@@ -69,8 +69,7 @@ list_transpose <- function(x,
                            simplify = NA,
                            ptype = NULL,
                            default = NULL) {
-
-  check_list(x)
+  obj_check_list(x)
   check_dots_empty()
 
   if (length(x) == 0) {
