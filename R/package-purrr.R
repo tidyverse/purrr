@@ -7,3 +7,6 @@
 "_PACKAGE"
 
 the <- new_environment()
+the$last_map_results <- NULL
+the$last_map_index <- NULL
+the$last_map <- NULL
