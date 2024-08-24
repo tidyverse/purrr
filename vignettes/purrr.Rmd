@@ -23,7 +23,7 @@ The purrr package makes applying your functions to multiple elements of a list o
 
 ### The purrr function families 
 
-- `map`  apply function mulitple times/ multplie outputs
+- `map`  apply function multiple times/ multiple outputs
 - `reduce` 1 output
 - `predicate`  TRUE/FALSE logical output
 
@@ -37,10 +37,12 @@ x <- list(1,2,3)
 map(.x = x, .f = sqrt)
 
 ```
+
 However, the example above isn't that useful because the data could have easily been a vector. The `map` functionality becomes more important when you consider a more complex object like a data frame and a function that doesn't work with a regular mutate. We can create a custom function, then apply that to a column in mtcars.
 
 ```{r}
 
+# Simple example here. But haven't found one to copy from the books.
 
 ```
 
@@ -52,21 +54,84 @@ In this more useful example, the base R function `split` is used to create a lis
 
 by_cyl <- split(mtcars, mtcars$cyl)
 
-by_cyl |>
-  map(~ lm(mpg ~ wt, data = .x)) |>
-  map(coef) |>
+by_cyl %>%
+  map(~ lm(mpg ~ wt, data = .x)) %>%
+  map(coef) %>%
   map_dbl(2)
 
 ```
 
-`map` takes only one argument and always outputs a list. If you want to use multiple arguments, variants such as `map2` and `pmap` will work. If you want to output something other than a list, there are suffixs such as `_chr` and `_dbl`.
+`map` takes only one argument and always outputs a list. If you want to use multiple arguments, variants such as `map2` and `pmap` will work. If you want to output something other than a list, there are suffixs such as `_chr` and `_dbl`. 
 
+`map_vec` is a special use case ...
+```{r}
+
+# map_vec example here
+
+```
+
+Special Note: Progress bar ... seriously, how do we emphasize this, it's going to change my life.
+
+When you start using `purrr` functions for large datasets or mapping complex functions, it can be challenging to know whether your code is running correctly because it takes a while to run. Use the `.progress` argument to make a progress bar in your mapping functions. To set one up, we recommend setting the name of the progress bar using a short string.
+```{r}
+
+# simple progress bar example.
+
+```
+
+Progress bars can have a lot more functionality, which you should read about here...
 
 ### `reduce`()`
 
-Detailled reduce example
+Reduce combines the elements of a vector, `.x`, into one number using the `.f` function. Like `map`, the simplest use case doesn't really demonstrate why it's valuable.
+```{r}
+
+reduce(1:4, `+`)
+
+reduce(1:4, union)
+
+```
+As we start looking at the more complex use cases, the `accumulate` variant can be helpful for understanding what is happening. `accumulate` works the same as `reduce`, but it includes the intermediate steps. If we call `accumlulate` on the examples above, it's easier to see how the numbers are being combined sequentially, 
+```{r}
+
+accumulate(1:4, `+`)
+
+accumulate(1:4, union)
+
+```
+
+Similar to map, we can think about how reduce can save us from having to use a `for` loop ....
+
+```{r}
+
+# Use map to generate sample data
+l <- map(1:4, ~ sample(1:10, 15, replace = T))
+
+# For loop to find values that occur in every element
+out <- l[[1]]
+for (i in seq(2, length(l))) {
+  out <- intersect(out, l[[i]])
+}
+out
+
+# Same functionality with reduce
+reduce(l, intersect)
+
+```
 
 ### `predicate`()`
 
-Example here
+Is this all we want to show? Is there another example that would be good?
+
+```{r}
+
+df <- data.frame(x = 1:3, y = c("a", "b", "c"))
+detect(df, is.factor)
+detect_index(df, is.factor)
+
+str(keep(df, is.factor))
+str(discard(df, is.factor))
+
+```
+
 
