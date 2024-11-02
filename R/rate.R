@@ -38,13 +38,7 @@ rate <- new_class(
         }
       }
     ),
-    state = new_property(class_environment, setter = function(self, value) {
-      if (!is.null(self@state)) {
-        stop("@state is read-only", call. = FALSE)
-      }
-      self@state <- env(i = 0L)
-      self
-    })
+    state = new_property(class_environment, default = env(i = 0L))
   )
 )
 
@@ -58,13 +52,14 @@ rate_delay <- new_class("rate_delay",
     pause = new_property(class_numeric, default = 1, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     })
-  ),
-  constructor = function(jitter = class_missing, max_times = class_missing,
-                         state = class_missing, pause = class_missing) {
-    new_object(rate(jitter = jitter, max_times = Inf, state = state),
-      pause = pause
-    )
-  }
+  )
+  # ,
+  # constructor = function(jitter = class_missing, max_times = class_missing,
+  #                        state = class_missing, pause = class_missing) {
+  #   new_object(rate(jitter = jitter, max_times = Inf, state = state),
+  #     pause = pause
+  #   )
+  # }
 )
 
 #' @rdname rate-helpers
