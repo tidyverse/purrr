@@ -67,7 +67,7 @@ rate_delay <- new_class("rate_delay",
     )
   ),
   constructor = function(pause = class_missing, jitter = class_missing, max_times = class_missing) {
-    max_times <- if (inherits(bleh, "S7_missing")) Inf else max_times # TODO: Change this
+    max_times <- if (inherits(max_times, "S7_missing")) Inf else max_times # TODO: Change this
     new_object(rate(jitter = jitter),
       pause = pause,
       max_times = max_times
