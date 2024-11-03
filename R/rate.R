@@ -37,9 +37,14 @@ rate <- new_class(
           "must be a numeric or `Inf`"
         }
       }
-    ),
-    state = new_property(class_environment, default = env(i = 0L))
-  )
+    ), state = new_property(class_environment)
+  ),
+  constructor = function(jitter = class_missing, max_times = class_missing) {
+    new_object(S7_object(),
+      jitter = jitter, max_times = max_times,
+      state = env(i = 0L)
+    )
+  }
 )
 
 #' @rdname rate-helpers
@@ -51,15 +56,24 @@ rate_delay <- new_class("rate_delay",
   properties = list(
     pause = new_property(class_numeric, default = 1, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
-    })
-  )
-  # ,
-  # constructor = function(jitter = class_missing, max_times = class_missing,
-  #                        state = class_missing, pause = class_missing) {
-  #   new_object(rate(jitter = jitter, max_times = Inf, state = state),
-  #     pause = pause
-  #   )
-  # }
+    }),
+    max_times = new_property(class_numeric,
+      default = Inf,
+      validator = function(value) {
+        if (!is_number(value, allow_infinite = TRUE)) {
+          "must be a numeric or `Inf`"
+        }
+      }
+    )
+  ),
+  constructor = function(pause = class_missing, jitter = class_missing, max_times = class_missing) {
+    max_times <- if (inherits(bleh, "S7_missing")) Inf else max_times # TODO: Change this
+    new_object(rate(jitter = jitter),
+      pause = pause,
+      max_times = max_times
+    )
+  }
+  # TODO: cleaner way of overriding default max_times from super
 )
 
 #' @rdname rate-helpers
@@ -84,7 +98,13 @@ rate_backoff <- new_class(
     pause_min = new_property(class_numeric, default = 1, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     })
-  )
+  ),
+  constructor = function(pause_base = class_missing, pause_cap = class_missing,
+                         pause_min = class_missing, max_times = class_missing, jitter = class_missing) {
+    new_object(rate(jitter = jitter, max_times = max_times),
+      pause_base = pause_base, pause_cap = pause_cap, pause_min = pause_min
+    )
+  }
 )
 
 #' @rdname rate-helpers
@@ -95,7 +115,7 @@ is_rate <- function(x) {
 }
 
 #' @export
-print.rate_delay <- function(x, ...) {
+method(print, rate_delay) <- function(x, ...) {
   cli::cli_text("<rate: delay>")
   cli::cli_bullets(c(
     " " = "Attempts: {rate_count(x)}/{x@max_times}",
@@ -104,10 +124,10 @@ print.rate_delay <- function(x, ...) {
 
   invisible(x)
 }
-#' @export
-print.rate_backoff <- function(x, ...) {
-  cli::cli_text("<rate: backoff>")
 
+#' @export
+method(print, rate_backoff) <- function(x, ...) {
+  cli::cli_text("<rate: backoff>")
   cli::cli_bullets(c(
     " " = "Attempts: {rate_count(x)}/{x@max_times}",
     " " = "{.field pause_base}: {x@pause_base}",

@@ -8,29 +8,27 @@
 \title{Create delaying rate settings}
 \usage{
 rate_delay(
+  pause = class_missing,
   jitter = class_missing,
-  max_times = class_missing,
-  state = class_missing,
-  pause = class_missing
+  max_times = class_missing
 )
 
 rate_backoff(
-  jitter = class_missing,
-  max_times = class_missing,
-  state = class_missing,
   pause_base = class_missing,
   pause_cap = class_missing,
-  pause_min = class_missing
+  pause_min = class_missing,
+  max_times = class_missing,
+  jitter = class_missing
 )
 
 is_rate(x)
 }
 \arguments{
+\item{pause}{Delay between attempts in seconds.}
+
 \item{jitter}{Whether to introduce a random jitter in the waiting time.}
 
 \item{max_times}{Maximum number of requests to attempt.}
-
-\item{pause}{Delay between attempts in seconds.}
 
 \item{pause_base, pause_cap}{\code{rate_backoff()} uses an exponential
 back-off so that each request waits \code{pause_base * 2^i} seconds,
