@@ -17,7 +17,8 @@
 #' @name rate-helpers
 NULL
 
-# TODO: this doesn't need to be exported, right?
+# TODO: Need to write documentation
+
 rate <- new_class(
   "rate",
   package = "purrr",
@@ -73,7 +74,7 @@ rate_delay <- new_class("rate_delay",
       max_times = max_times
     )
   }
-  # TODO: cleaner way of overriding default max_times from super
+  # TODO: cleaner way of overriding default max_times from super?
 )
 
 #' @rdname rate-helpers
@@ -114,8 +115,11 @@ is_rate <- function(x) {
   S7_inherits(x, rate)
 }
 
+
+base_print <- new_external_generic("base", "print", "x")
+
 #' @export
-method(print, rate_delay) <- function(x, ...) {
+method(base_print, rate_delay) <- function(x, ...) {
   cli::cli_text("<rate: delay>")
   cli::cli_bullets(c(
     " " = "Attempts: {rate_count(x)}/{x@max_times}",
@@ -126,7 +130,7 @@ method(print, rate_delay) <- function(x, ...) {
 }
 
 #' @export
-method(print, rate_backoff) <- function(x, ...) {
+method(base_print, rate_backoff) <- function(x, ...) {
   cli::cli_text("<rate: backoff>")
   cli::cli_bullets(c(
     " " = "Attempts: {rate_count(x)}/{x@max_times}",
