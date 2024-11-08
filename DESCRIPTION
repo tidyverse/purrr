@@ -20,7 +20,7 @@ Imports:
     magrittr (>= 1.5.0),
     rlang (>= 1.1.1),
     vctrs (>= 0.6.3),
-    S7 (>= 0.1.1)
+    S7 (>= 0.2.0)
 Suggests: 
     covr,
     dplyr (>= 0.7.8),

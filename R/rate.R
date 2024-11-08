@@ -17,14 +17,11 @@
 #' @name rate-helpers
 NULL
 
-# TODO: Need to write documentation
-
 rate <- new_class(
   "rate",
   package = "purrr",
   properties = list(
     jitter = new_property(class_logical,
-      default = TRUE,
       validator = function(value) {
         if (!is_bool(value)) {
           "must be a logical of length 1"
@@ -32,7 +29,6 @@ rate <- new_class(
       }
     ),
     max_times = new_property(class_numeric,
-      default = 3,
       validator = function(value) {
         if (!is_number(value, allow_infinite = TRUE)) {
           "must be a numeric or `Inf`"
@@ -40,13 +36,17 @@ rate <- new_class(
       }
     ), state = new_property(class_environment)
   ),
-  constructor = function(jitter = class_missing, max_times = class_missing) {
+  constructor = function(jitter = TRUE, max_times = 3, state = env(i = 0L)) {
+    force(jitter)
+    force(max_times)
+    force(state)
+
     new_object(S7_object(),
-      jitter = jitter, max_times = max_times,
-      state = env(i = 0L)
+      jitter = jitter, max_times = max_times, state = state
     )
   }
 )
+
 
 #' @rdname rate-helpers
 #' @param pause Delay between attempts in seconds.
@@ -55,7 +55,7 @@ rate_delay <- new_class("rate_delay",
   parent = rate,
   package = "purrr",
   properties = list(
-    pause = new_property(class_numeric, default = 1, validator = function(value) {
+    pause = new_property(class_numeric, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     }),
     max_times = new_property(class_numeric,
@@ -67,14 +67,15 @@ rate_delay <- new_class("rate_delay",
       }
     )
   ),
-  constructor = function(pause = class_missing, jitter = class_missing, max_times = class_missing) {
-    max_times <- if (inherits(max_times, "S7_missing")) Inf else max_times # TODO: Change this
-    new_object(rate(jitter = jitter),
-      pause = pause,
-      max_times = max_times
+  constructor = function(pause = 1, max_times = Inf, jitter = FALSE) {
+    force(pause)
+    force(jitter)
+    force(max_times)
+
+    new_object(rate(jitter = jitter, max_times = max_times),
+      pause = pause
     )
   }
-  # TODO: cleaner way of overriding default max_times from super?
 )
 
 #' @rdname rate-helpers
@@ -90,18 +91,23 @@ rate_backoff <- new_class(
   parent = rate,
   package = "purrr",
   properties = list(
-    pause_base = new_property(class_numeric, default = 1, validator = function(value) {
+    pause_base = new_property(class_numeric, validator = function(value) {
       check_number_decimal(value, min = 0) # TODO: maybe allow_infinite needs to be FALSE?
     }),
-    pause_cap = new_property(class_numeric, default = 60, validator = function(value) {
+    pause_cap = new_property(class_numeric, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     }),
-    pause_min = new_property(class_numeric, default = 1, validator = function(value) {
+    pause_min = new_property(class_numeric, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     })
   ),
-  constructor = function(pause_base = class_missing, pause_cap = class_missing,
-                         pause_min = class_missing, max_times = class_missing, jitter = class_missing) {
+  constructor = function(pause_base = 1, pause_cap = 60, pause_min = 1, max_times = 3, jitter = TRUE) {
+    force(pause_base)
+    force(pause_cap)
+    force(pause_min)
+    force(max_times)
+    force(jitter)
+
     new_object(rate(jitter = jitter, max_times = max_times),
       pause_base = pause_base, pause_cap = pause_cap, pause_min = pause_min
     )
