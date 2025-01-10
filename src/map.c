@@ -12,7 +12,8 @@
 #include "cleancall.h"
 
 static
-void cb_progress_done(SEXP bar) {
+void cb_progress_done(void* bar_ptr) {
+  SEXP bar = (SEXP)bar_ptr;  
   cli_progress_done(bar);
   R_ReleaseObject(bar);
 }
