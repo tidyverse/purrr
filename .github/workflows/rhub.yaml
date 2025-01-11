@@ -1,13 +1,13 @@
-# R-hub's genetic GitHub Actions workflow file. It's canonical location is at
-# https://github.com/r-hub/rhub2/blob/v1/inst/workflow/rhub.yaml
+# R-hub's generic GitHub Actions workflow file. It's canonical location is at
+# https://github.com/r-hub/actions/blob/v1/workflows/rhub.yaml
 # You can update this file to a newer version using the rhub2 package:
 #
-# rhub2::rhub_setup()
+# rhub::rhub_setup()
 #
 # It is unlikely that you need to modify this file manually.
 
 name: R-hub
-run-name: ${{ github.event.inputs.name || format('Manually run by {0}', github.triggering_actor) }} (${{ github.event.inputs.id }})
+run-name: "${{ github.event.inputs.id }}: ${{ github.event.inputs.name || format('Manually run by {0}', github.triggering_actor) }}"
 
 on:
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
 
     steps:
     # NO NEED TO CHECKOUT HERE
-    - uses: r-hub/rhub2/actions/rhub-setup@v1
+    - uses: r-hub/actions/setup@v1
       with:
         config: ${{ github.event.inputs.config }}
       id: rhub-setup
@@ -51,8 +51,16 @@ jobs:
       image: ${{ matrix.config.container }}
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: r-hub/rhub2/actions/rhub-check@v1
+      - uses: r-hub/actions/checkout@v1
+      - uses: r-hub/actions/platform-info@v1
+        with:
+          token: ${{ secrets.RHUB_TOKEN }}
+          job-config: ${{ matrix.config.job-config }}
+      - uses: r-hub/actions/setup-deps@v1
+        with:
+          token: ${{ secrets.RHUB_TOKEN }}
+          job-config: ${{ matrix.config.job-config }}
+      - uses: r-hub/actions/run-check@v1
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
@@ -68,12 +76,20 @@ jobs:
         config: ${{ fromJson(needs.setup.outputs.platforms) }}
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: r-hub/rhub2/actions/rhub-setup-r@v1
+      - uses: r-hub/actions/checkout@v1
+      - uses: r-hub/actions/setup-r@v1
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
-      - uses: r-hub/rhub2/actions/rhub-check@v1
+      - uses: r-hub/actions/platform-info@v1
+        with:
+          token: ${{ secrets.RHUB_TOKEN }}
+          job-config: ${{ matrix.config.job-config }}
+      - uses: r-hub/actions/setup-deps@v1
+        with:
+          job-config: ${{ matrix.config.job-config }}
+          token: ${{ secrets.RHUB_TOKEN }}
+      - uses: r-hub/actions/run-check@v1
         with:
           job-config: ${{ matrix.config.job-config }}
           token: ${{ secrets.RHUB_TOKEN }}
