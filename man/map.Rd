@@ -10,7 +10,7 @@
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
-map(.x, .f, ..., .progress = FALSE)
+map(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
 map_lgl(.x, .f, ..., .progress = FALSE)
 
@@ -20,7 +20,7 @@ map_dbl(.x, .f, ..., .progress = FALSE)
 
 map_chr(.x, .f, ..., .progress = FALSE)
 
-map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
+map_vec(.x, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE)
 
 walk(.x, .f, ..., .progress = FALSE)
 }
@@ -53,6 +53,10 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.parallel}{Whether to map in parallel. Use \code{TRUE} to parallelize using
+the \CRANpkg{mirai} package. Alternatively, supply a named list to provide
+helper functions for \code{.f}.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

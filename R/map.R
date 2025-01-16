@@ -46,6 +46,9 @@
 #'   This makes it easier to understand which arguments belong to which
 #'   function and will tend to yield better error messages.
 #'
+#' @param .parallel Whether to map in parallel. Use `TRUE` to parallelize using
+#'   the \CRANpkg{mirai} package. Alternatively, supply a named list to provide
+#'   helper functions for `.f`.
 #' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
@@ -125,8 +128,8 @@
 #'   map(\(df) lm(mpg ~ wt, data = df)) |>
 #'   map(summary) |>
 #'   map_dbl("r.squared")
-map <- function(.x, .f, ..., .progress = FALSE) {
-  map_("list", .x, .f, ..., .progress = .progress)
+map <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map_("list", .x, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 
 #' @rdname map
@@ -158,17 +161,27 @@ map_ <- function(.type,
                  .x,
                  .f,
                  ...,
+                 .parallel = FALSE,
                  .progress = FALSE,
                  .purrr_user_env = caller_env(2),
                  .purrr_error_call = caller_env()) {
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
-  n <- vec_size(.x)
-
-  names <- vec_names(.x)
-
   .f <- as_mapper(.f, ...)
+
+  if (isTRUE(.parallel) || is.list(.parallel)) {
+    env <- if (is.list(.parallel)) rlang::as_environment(.parallel) else emptyenv()
+    return(
+        mirai::collect_mirai(
+          mirai::mirai_map(.x, .f, env, .args = list(...)),
+          options = c(if (isTRUE(.progress)) ".progress", ".stop")
+        )
+    )
+  }
+
+  n <- vec_size(.x)
+  names <- vec_names(.x)
 
   i <- 0L
   with_indexed_errors(
@@ -185,8 +198,8 @@ map_ <- function(.type,
 #'   of the elements of the result. Otherwise, supply a "prototype" giving
 #'   the desired type of output.
 #' @export
-map_vec <- function(.x, .f, ..., .ptype = NULL, .progress = FALSE) {
-  out <- map(.x, .f, ..., .progress = .progress)
+map_vec <- function(.x, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE) {
+  out <- map(.x, .f, ..., .parallel = .parallel, .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
 
