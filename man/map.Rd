@@ -12,17 +12,17 @@
 \usage{
 map(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_lgl(.x, .f, ..., .progress = FALSE)
+map_lgl(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_int(.x, .f, ..., .progress = FALSE)
+map_int(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_dbl(.x, .f, ..., .progress = FALSE)
+map_dbl(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_chr(.x, .f, ..., .progress = FALSE)
+map_chr(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
 map_vec(.x, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE)
 
-walk(.x, .f, ..., .progress = FALSE)
+walk(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

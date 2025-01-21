@@ -134,27 +134,27 @@ map <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
 
 #' @rdname map
 #' @export
-map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("logical", .x, .f, ..., .progress = .progress)
+map_lgl <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map_("logical", .x, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_int <- function(.x, .f, ..., .progress = FALSE) {
-  map_("integer", .x, .f, ..., .progress = .progress)
+map_int <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map_("integer", .x, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("double", .x, .f, ..., .progress = .progress)
+map_dbl <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map_("double", .x, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_chr <- function(.x, .f, ..., .progress = FALSE) {
+map_chr <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
   local_deprecation_user_env()
-  map_("character", .x, .f, ..., .progress = .progress)
+  map_("character", .x, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 
 map_ <- function(.type,
@@ -172,12 +172,21 @@ map_ <- function(.type,
 
   if (isTRUE(.parallel) || is.list(.parallel)) {
     env <- if (is.list(.parallel)) rlang::as_environment(.parallel) else emptyenv()
-    return(
-        mirai::collect_mirai(
-          mirai::mirai_map(.x, .f, env, .args = list(...)),
-          options = c(if (isTRUE(.progress)) ".progress", ".stop")
+    m <- mirai::mirai_map(.x, .f, env, .args = list(...))
+    options <- c(if (isTRUE(.progress)) ".progress", ".stop")
+    if (.type == "list") {
+      out <- mirai::collect_mirai(m, options = options)
+    } else {
+      options <- c(".flat", options)
+      out <- mirai::collect_mirai(m, options = options)
+      if (typeof(out) != .type) {
+        cli::cli_abort(
+          "vector of type {typeof(out)} returned instead of {(.type)}.",
+          call = .purrr_error_call
         )
-    )
+      }
+    }
+    return(out)
   }
 
   n <- vec_size(.x)
@@ -205,8 +214,8 @@ map_vec <- function(.x, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = F
 
 #' @rdname map
 #' @export
-walk <- function(.x, .f, ..., .progress = FALSE) {
-  map(.x, .f, ..., .progress = .progress)
+walk <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map(.x, .f, ..., .parallel = .parallel, .progress = .progress)
   invisible(.x)
 }
 
