@@ -139,7 +139,7 @@ pmap_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (isTRUE(.parallel) || is.list(.parallel)) {
+  if (!isFALSE(.parallel)) {
     attributes(.l) <- list(
       names = names(.l),
       class = "data.frame",

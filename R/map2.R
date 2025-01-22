@@ -75,7 +75,7 @@ map2_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (isTRUE(.parallel) || is.list(.parallel)) {
+  if (!isFALSE(.parallel)) {
     attributes(args) <- list(
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
