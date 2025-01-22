@@ -1,8 +1,15 @@
 # purrr (development version)
 
+* purrr gains the capability for parallel and distributed map, powered by the
+  mirai package. The argument `.parallel` has been added to `map()`, `map2()`,
+  `pmap()` and variants to enable this. See `?parallelization` for more details
+  (@shikokuchuo, #1163).
+  
 * Added a test to assert that `list_transpose()` does not work on data frames
   (@KimLopezGuell, #1141, #1149).
-* Added `imap_vec()` (#1084)
+  
+* Added `imap_vec()` (#1084).
+
 * `list_transpose()` inspects all elements to determine the correct
   template if it's not provided by the user  (#1128, @krlmlr).
 
