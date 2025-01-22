@@ -80,9 +80,7 @@ map2_ <- function(.type,
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
     )
-    out <- map_mirai(args, .f, list(...), .parallel, .progress, .type, .purrr_error_call)
-    names(out) <- names
-    return(out)
+    return(mmap_(args, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
   }
 
   i <- 0L

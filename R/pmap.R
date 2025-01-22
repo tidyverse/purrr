@@ -145,7 +145,7 @@ pmap_ <- function(.type,
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
     )
-    return(map_mirai(.l, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
+    return(mmap_(.l, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
   }
 
   call_names <- names(.l)

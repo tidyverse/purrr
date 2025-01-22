@@ -171,9 +171,7 @@ map_ <- function(.type,
   .f <- as_mapper(.f, ...)
 
   if (isTRUE(.parallel) || is.list(.parallel)) {
-    return(
-      map_mirai(.x, .f, list(...), .parallel, .progress, .type, .purrr_error_call)
-    )
+    return(mmap_(.x, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
   }
 
   n <- vec_size(.x)
@@ -188,6 +186,27 @@ map_ <- function(.type,
   )
 }
 
+mmap_ <- function(.x, .f, .args, .parallel, .progress, .type, error_call) {
+
+  env <- if (is.list(.parallel)) as.environment(.parallel) else emptyenv()
+  m <- mirai::mirai_map(.x, .f, env, .args = .args)
+
+  options <- c(if (isTRUE(.progress)) ".progress", ".stop")
+  if (.type == "list") {
+    out <- mirai::collect_mirai(m, options = options)
+  } else {
+    options <- c(".flat", options)
+    out <- mirai::collect_mirai(m, options = options)
+    if (typeof(out) != .type) {
+      cli::cli_abort(
+        "vector of type {typeof(out)} returned instead of {(.type)}.",
+        call = error_call
+      )
+    }
+  }
+  out
+
+}
 
 #' @rdname map
 #' @param .ptype If `NULL`, the default, the output type is the common type
@@ -232,28 +251,6 @@ with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()
       }
     }
   )
-}
-
-map_mirai <- function(.x, .f, .args, .parallel, .progress, .type, error_call) {
-
-  env <- if (is.list(.parallel)) as.environment(.parallel) else emptyenv()
-  m <- mirai::mirai_map(.x, .f, env, .args = .args)
-
-  options <- c(if (isTRUE(.progress)) ".progress", ".stop")
-  if (.type == "list") {
-    out <- mirai::collect_mirai(m, options = options)
-  } else {
-    options <- c(".flat", options)
-    out <- mirai::collect_mirai(m, options = options)
-    if (typeof(out) != .type) {
-      cli::cli_abort(
-        "vector of type {typeof(out)} returned instead of {(.type)}.",
-        call = error_call
-      )
-    }
-  }
-  out
-
 }
 
 #' Indexed errors (`purrr_error_indexed`)
