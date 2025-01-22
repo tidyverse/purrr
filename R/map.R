@@ -46,9 +46,11 @@
 #'   This makes it easier to understand which arguments belong to which
 #'   function and will tend to yield better error messages.
 #'
-#' @param .parallel Whether to map in parallel. Use `TRUE` to parallelize using
-#'   the \CRANpkg{mirai} package. Alternatively, supply a named list to provide
-#'   helper functions for `.f`.
+#' @param .parallel `r lifecycle::badge("experimental")` Whether to map in
+#'   parallel. Use `TRUE` (or a named list if supplying additional objects) to
+#'   parallelize using the \CRANpkg{mirai} package. Set up how and where to
+#'   parallelize beforehand using [`daemons()`][mirai::daemons]. See
+#'   [parallelization] for more details.
 #' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.

@@ -1,0 +1,93 @@
+#' Parallelization in purrr
+#'
+#' @description
+#' purrr's map functions have a `.parallel` argument that you can use to
+#' parallelize a map using the \CRANpkg{mirai} package. This allows you to run
+#' computations in parallel using more cores on your machine, or distributed
+#' over the network.
+#'
+#' `.parallel` can be:
+#'
+#' * `FALSE`: the default, does not use parallelization.
+#' * `TRUE`: uses parallelization.
+#' * A named list: uses parallelization and supplies the objects provided to the
+#' parallel processes.
+#'
+#' ## Supplying objects to parallel processes
+#'
+#' In the majority of cases, such as when `.f` is a function from the base or a
+#' package namespace, it is possible to simply set `.parallel` to `TRUE`.
+#'
+#' If `.f` is a user-defined function, then ideally everything required by the
+#' function is passed in as arguments (a pure function). Any constant arguments
+#' in this case can be supplied through `...` in the usual way.
+#'
+#' However, if the function references an object that is not supplied as an
+#' argument or defined in the function itself (a free variable), then these
+#' should be supplied as a list to `.parallel` so that they are available to
+#' `.f` in the parallel processes. `purrr` requires these to be explicitly
+#' supplied, rather than try to determine them from analysing `.f`, as this
+#' provides for consistent and reliable behaviour that is hence easy to debug.
+#'
+#' Examples:
+#' \preformatted{
+#' # can just specify TRUE:
+#' map(1:3, stats::runif, .parallel = TRUE)
+#'
+#' # requires 'fun1' to be supplied in a list:
+#' fun1 <- function(x) \{x + x \%\% 2 \}
+#' fun2 <- function(x) \{ x + fun1(x) \}
+#' map(1:3, fun2, .parallel = list(fun1 = fun1))
+#' }
+#'
+#' ## Daemons settings
+#'
+#' How and where parallelization occurs is determined by
+#' [`daemons()`][mirai::daemons]. This is a function from the \pkg{mirai}
+#' package that sets up daemons, or persistent background processes, on your
+#' local machine or across the network.
+#'
+#' \pkg{purrr} requires these to be set up prior to performing any parallel map
+#' operations. If this is not done, you will see a warning from the \pkg{mirai}
+#' package that it is launching one local daemon - this ensures that the
+#' function proceeds, but as it uses just one daemon, is nearly never what you
+#' would actually want.
+#'
+#' `daemons()`arguments:
+#'
+#' * `n`: specify an integer number to launch daemons on your local machine,
+#'   e.g. `daemons(7)`. As a rule of thumb, you want to leave at least one core
+#'   for the main R process, so, for maximum efficiency, this should be at most
+#'   one less than the number of cores on your machine .
+#' * `dispatcher`: logical value whether to use dispatcher, a \pkg{mirai}
+#'   feature that ensures optimal scheduling and dispatch of tasks to daemons.
+#'   * `TRUE`: the default, enables dispatcher.
+#'   * `FALSE`: disables dispatcher. A lighter and more efficient option that
+#'   distributes tasks in a round robin fashion. This is suitable when all parts
+#'   of a map operation are expected to take roughly the same amount of time.
+#' * `url` and `remote`: used to set up and launch daemons for distributed
+#'   computing over the network. See [daemons][mirai::daemons] function
+#'   documentation for more details.
+#' * None: calling `daemons()` with no arguments returns a short summary of
+#'   the current connection status and tasks queued and completed.
+#'
+#' For more details, including on further arguments, see
+#' [daemons][mirai::daemons].
+#'
+#' Resetting daemons:
+#'
+#' `daemons(0)` resets and terminates any existing daemons.
+#'
+#' All daemons automatically terminate when there is no longer a connection to
+#' the main session e.g. when you end it. For this reason, it is not required to
+#' specifically terminate daemons in this instance, although it is still good
+#' practice to do so.
+#'
+#' ## Further documentation
+#'
+#' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}, so see the
+#' [mirai introduction and reference](https://shikokuchuo.net/mirai/articles/mirai.html)
+#' for more details.
+#'
+#' @name parallelization
+NULL
