@@ -130,6 +130,19 @@
 #'   map(\(df) lm(mpg ~ wt, data = df)) |>
 #'   map(summary) |>
 #'   map_dbl("r.squared")
+#'
+#' # To use parallelized map, set daemons (number of parallel processes) first:
+#' daemons(1, dispatcher = FALSE) # set to > 1 in real usage
+#' mtcars |> map_dbl(sum, .parallel = TRUE)
+#' daemons(0)
+#'
+#' # Or wrap a statement in with() to evaluate it with the specified daemons:
+#' with(daemons(1, dispatcher = FALSE), {
+#' 1:10 |>
+#'   map(rnorm, n = 10, .parallel = TRUE) |>
+#'   map_dbl(mean, .parallel = TRUE)
+#' })
+#'
 map <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
   map_("list", .x, .f, ..., .parallel = .parallel, .progress = .progress)
 }

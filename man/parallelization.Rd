@@ -91,6 +91,21 @@ specifically terminate daemons in this instance, although it is still good
 practice to do so.
 }
 
+\subsection{with() method}{
+
+A statement may be evaluated with daemons set up for the duration required.
+The \code{with()} method for daemons provides a convenient way of doing this. As
+an example:
+
+\preformatted{
+with(daemons(7), {
+  1:10 |>
+  map(rnorm, n = 10, .parallel = TRUE) |>
+  map_dbl(mean, .parallel = TRUE)
+})
+}
+}
+
 \subsection{Further documentation}{
 
 \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}, so see the
