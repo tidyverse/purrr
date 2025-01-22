@@ -115,3 +115,4 @@ reference:
   - array_tree
   - rate-helpers
   - progress_bars
+  - parallelization
