@@ -25,7 +25,7 @@ termination. Defaults to \code{TRUE}.
 the progress bar type. It must be given for the \code{custom} type.
 Format strings may contain R expressions to evaluate in braces.
 They support cli \link[cli:pluralization]{pluralization}, and
-\link[=inline-markup]{styling} and they can contain special
+\link[cli:inline-markup]{styling} and they can contain special
 \link[cli:progress-variables]{progress variables}.
 \item \code{format_done}: format string for successful termination. By default
 the same as \code{format}.
