@@ -4,10 +4,9 @@
 \alias{parallelization}
 \title{Parallelization in purrr}
 \description{
-purrr's map functions have a \code{.parallel} argument that you can use to
-parallelize a map using the \CRANpkg{mirai} package. This allows you to run
-computations in parallel using more cores on your machine, or distributed
-over the network.
+purrr's map functions have a \code{.parallel} argument to parallelize a map using
+the \CRANpkg{mirai} package. This allows you to run computations in parallel
+using more cores on your machine, or distributed over the network.
 
 \code{.parallel} can be:
 \itemize{
@@ -18,16 +17,16 @@ parallel processes.
 }
 \subsection{Supplying objects to parallel processes}{
 
-In the majority of cases, such as when \code{.f} is a function from the base or a
-package namespace, it is possible to simply set \code{.parallel} to \code{TRUE}.
+In the majority of cases, such as when \code{.f} is a base or package function,
+simply set \code{.parallel} to \code{TRUE}.
 
 If \code{.f} is a user-defined function, then ideally everything required by the
 function is passed in as arguments (a pure function). Any constant arguments
 in this case can be supplied through \code{...} in the usual way.
 
 However, if the function references an object that is not supplied as an
-argument or defined in the function itself (a free variable), then these
-should be supplied as a list to \code{.parallel} so that they are available to
+argument or defined in the function itself, i.e. a free variable, these
+should be supplied as a list to \code{.parallel}. This makes them available to
 \code{.f} in the parallel processes. \code{purrr} requires these to be explicitly
 supplied, rather than try to determine them from analysing \code{.f}, as this
 provides for consistent and reliable behaviour that is hence easy to debug.
@@ -48,8 +47,8 @@ map(1:3, fun2, .parallel = list(fun1 = fun1))
 
 How and where parallelization occurs is determined by
 \code{\link[mirai:daemons]{daemons()}}. This is a function from the \pkg{mirai}
-package that sets up daemons, or persistent background processes, on your
-local machine or across the network.
+package that sets up daemons (persistent background processes that receive
+parallel computations) on your local machine or across the network.
 
 \pkg{purrr} requires these to be set up prior to performing any parallel map
 operations. If this is not done, you will see a warning from the \pkg{mirai}
@@ -59,15 +58,15 @@ would actually want.
 
 \code{daemons()}arguments:
 \itemize{
-\item \code{n}: specify an integer number to launch daemons on your local machine,
-e.g. \code{daemons(7)}. As a rule of thumb, you want to leave at least one core
-for the main R process, so, for maximum efficiency, this should be at most
-one less than the number of cores on your machine.
+\item \code{n}: the number of daemons to launch on your local machine, e.g.
+\code{daemons(7)}. As a rule of thumb, for maximum efficiency this should be (at
+most) one less than the number of cores on your machine, leaving one core
+for the main R process.
 \item \code{url} and \code{remote}: used to set up and launch daemons for distributed
 computing over the network. See \link[mirai:daemons]{daemons} function
 documentation for more details.
-\item None: calling \code{daemons()} with no arguments returns a short summary of
-the current connection status and tasks queued and completed.
+\item None: calling \code{daemons()} with no arguments returns a summary of the
+current connection status and mirai tasks queued and completed.
 }
 
 For more details, including on further arguments, see
@@ -77,17 +76,18 @@ Resetting daemons:
 
 \code{daemons(0)} resets and terminates any existing daemons.
 
-All daemons automatically terminate when there is no longer a connection to
-the main session e.g. when you end it. For this reason, it is not required to
-specifically terminate daemons in this instance, although it is still good
-practice to do so.
+All daemons automatically terminate when you end your session and there is no
+longer a connection. For this reason, it is not required to specifically
+terminate daemons in this instance, although it is still good practice to do
+so.
 }
 
 \subsection{with() method}{
 
-A statement may be evaluated with daemons set up for the duration required.
-The \code{with()} method for daemons provides a convenient way of doing this. As
-an example:
+The \code{with()} method for daemons provides a convenient way of evaluating a
+statement with daemons set up for the duration of the statement.
+
+As an example, the below is evaluated in parallel using 7 daemons:
 
 \preformatted{
 with(daemons(7), {
