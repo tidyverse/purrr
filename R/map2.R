@@ -75,12 +75,12 @@ map2_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (!isFALSE(.parallel)) {
+  if (isTRUE(.parallel)) {
     attributes(args) <- list(
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
     )
-    return(mmap_(args, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
+    return(mmap_(args, .f, .progress, .type, .purrr_error_call, ...))
   }
 
   i <- 0L

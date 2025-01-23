@@ -58,10 +58,9 @@ installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 
 \item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
-parallel. Use \code{TRUE} (or a named list if supplying additional objects) to
-parallelize using the \CRANpkg{mirai} package. Set up how and where to
-parallelize beforehand using \code{\link[mirai:daemons]{daemons()}}. See
-\link{parallelization} for more details.}
+parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package. Set
+up how and where to parallelize in your session using
+\code{\link[mirai:daemons]{daemons()}}. See \link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

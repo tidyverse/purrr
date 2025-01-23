@@ -22,6 +22,7 @@ Imports:
     rlang (>= 1.1.1),
     vctrs (>= 0.6.3)
 Suggests: 
+    carrier,
     covr,
     dplyr (>= 0.7.8),
     httr,

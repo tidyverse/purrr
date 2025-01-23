@@ -139,13 +139,13 @@ pmap_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (!isFALSE(.parallel)) {
+  if (isTRUE(.parallel)) {
     attributes(.l) <- list(
       names = names(.l),
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
     )
-    return(mmap_(.l, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
+    return(mmap_(.l, .f, .progress, .type, .purrr_error_call, ...))
   }
 
   call_names <- names(.l)

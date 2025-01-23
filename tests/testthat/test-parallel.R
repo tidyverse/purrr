@@ -1,13 +1,6 @@
 daemons(1, dispatcher = FALSE) # ensures only 1 additional process on CRAN
 on.exit(daemons(0), add = TRUE)
 
-test_that("invalid .parallel arguments error", {
-  expect_snapshot(error = TRUE, {
-    map(list(x = 1, y = 2), identity, .parallel = "true")
-    map(list(x = 1, y = 2), identity, .parallel = NA)
-  })
-})
-
 # map -----------------------------------------------------------------------
 
 test_that("preserves names", {
@@ -23,33 +16,29 @@ test_that("works with matrices/arrays (#970)", {
 })
 
 test_that("all inform about location of problem", {
-  fail_at_3 <- function(x, bad) {
-    if (x == 3) bad else x
-  }
+  skip_if_not_installed("carrier")
 
   expect_snapshot(error = TRUE, {
-    map_int(1:3, ~ fail_at_3(.x, 2:1), .parallel = TRUE)
-    map_int(1:3, ~ fail_at_3(.x, "x"), .parallel = TRUE)
-    map(1:3, ~ fail_at_3(.x, stop("Doesn't work")), .parallel = TRUE)
+    map_int(1:3, carrier::crate(function(x, bad = 2:1) if (x == 3) bad else x), .parallel = TRUE)
+    map_int(1:3, carrier::crate(function(x, bad = "x") if (x == 3) bad else x), .parallel = TRUE)
+    map(1:3, carrier::crate(function(x, bad = stop("Doesn't work")) if (x == 3) bad else x), .parallel = TRUE)
   })
 
-  cnd <- catch_cnd(map(1:3, ~ fail_at_3(.x, stop("Doesn't work")), .parallel = TRUE))
+  cnd <- catch_cnd(map(1:3, carrier::crate(function(x, bad = stop("Doesn't work")) if (x == 3) bad else x), .parallel = TRUE))
   expect_s3_class(cnd, "purrr_error_indexed")
   expect_equal(cnd$location, 3)
   expect_equal(cnd$name, NULL)
 })
 
 test_that("error location uses name if present", {
-  fail_at_3 <- function(x, bad) {
-    if (x == 3) bad else x
-  }
+  skip_if_not_installed("carrier")
 
   expect_snapshot(error = TRUE, {
-    map_int(c(a = 1, b = 2, c = 3), ~ fail_at_3(.x, stop("Error")), .parallel = list(fail_at_3 = fail_at_3))
-    map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")), .parallel = list(fail_at_3 = fail_at_3))
+    map_int(c(a = 1, b = 2, c = 3), carrier::crate(function(x, bad = stop("Doesn't work")) if (x == 3) bad else x), .parallel = TRUE)
+    map_int(c(a = 1, b = 2, 3), carrier::crate(function(x, bad = stop("Doesn't work")) if (x == 3) bad else x), .parallel = TRUE)
   })
 
-  cnd <- catch_cnd(map(c(1, 2, c = 3), ~ fail_at_3(.x, stop("Doesn't work")), .parallel = list(fail_at_3 = fail_at_3)))
+  cnd <- catch_cnd(map(c(1, 2, c = 3), carrier::crate(function(x, bad = stop("Doesn't work")) if (x == 3) bad else x), .parallel = TRUE))
   expect_s3_class(cnd, "purrr_error_indexed")
   expect_equal(cnd$location, 3)
   expect_equal(cnd$name, "c")
@@ -94,10 +83,16 @@ test_that("map forces arguments in same way as base R", {
 })
 
 test_that("primitive dispatch correctly", {
+  skip_if_not_installed("carrier")
+
   method <- function(x) "dispatched!"
   x <- structure(list(), class = "test_class")
   expect_identical(
-    map(list(x, x), as.character, .parallel = list(as.character.test_class = method)),
+    map(
+      list(x, x),
+      carrier::crate(function(x) as.character(x), as.character.test_class = method),
+      .parallel = TRUE
+    ),
     list("dispatched!", "dispatched!")
   )
 })

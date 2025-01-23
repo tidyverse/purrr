@@ -7,44 +7,41 @@
 purrr's map functions have a \code{.parallel} argument to parallelize a map using
 the \CRANpkg{mirai} package. This allows you to run computations in parallel
 using more cores on your machine, or distributed over the network.
-
-\code{.parallel} can be:
-\itemize{
-\item \code{FALSE}: the default, does not use parallelization.
-\item \code{TRUE}: uses parallelization.
-\item A named list: uses parallelization and supplies the objects provided to the
-parallel processes.
 }
-\subsection{Supplying objects to parallel processes}{
+\section{Crating a function}{
+As the function \code{.f} needs to be serialized and sent outside of your current
+session to parallel processes, a little care needs to be taken to make sure
+that it is self-contained, so that it will work as expected.
 
-In the majority of cases, such as when \code{.f} is a base or package function,
-simply set \code{.parallel} to \code{TRUE}.
+A function will be self-contained if:
+\itemize{
+\item It is a function from base R or any installed package.
+\item If it is a user-defined function where everything not defined in the
+function itself is passed in as arguments (a pure function).
+}
 
-If \code{.f} is a user-defined function, then ideally everything required by the
-function is passed in as arguments (a pure function). Any constant arguments
-in this case can be supplied through \code{...} in the usual way.
+Otherwise, or if you are not sure, use \code{crate()} from the \CRANpkg{carrier}
+package to create self-contained functions before supplying to \code{.f}.
 
-However, if the function references an object that is not supplied as an
-argument or defined in the function itself, i.e. a free variable, these
-should be supplied as a list to \code{.parallel}. This makes them available to
-\code{.f} in the parallel processes. \code{purrr} requires these to be explicitly
-supplied, rather than try to determine them from analysing \code{.f}, as this
-provides for consistent and reliable behaviour that is hence easy to debug.
+It is necessary to \code{crate()} a user-defined function if it references any
+object that is not supplied as an argument or defined in the function itself,
+i.e. a free variable. Using \code{crate()} ensures that everything needed by the
+function is serialized along with it.
 
 Examples:
 \preformatted{
-# can just specify TRUE:
+# can just use a package function:
 map(1:3, stats::runif, .parallel = TRUE)
 
-# requires 'fun1' to be supplied in a list:
-fun1 <- function(x) \{x + x \%\% 2 \}
-fun2 <- function(x) \{ x + fun1(x) \}
-map(1:3, fun2, .parallel = list(fun1 = fun1))
-}
+# crate() a function to include the definition of 'fun':
+fun <- function(x) \{x + x \%\% 2 \}
+map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
 }
 
-\subsection{Daemons settings}{
+For further details, see the documentation for \code{carrier::crate()}.
+}
 
+\section{Daemons settings}{
 How and where parallelization occurs is determined by
 \code{\link[mirai:daemons]{daemons()}}. This is a function from the \pkg{mirai}
 package that sets up daemons (persistent background processes that receive
@@ -85,8 +82,7 @@ terminate daemons in this instance, although it is still good practice to do
 so.
 }
 
-\subsection{with() method}{
-
+\section{with() method}{
 The \code{with()} method for daemons provides a convenient way of evaluating a
 statement with daemons set up for the duration of the statement.
 
@@ -101,10 +97,12 @@ with(daemons(7), {
 }
 }
 
-\subsection{Further documentation}{
-
+\section{Further documentation}{
 \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}, so see the
 \href{https://shikokuchuo.net/mirai/articles/mirai.html}{mirai introduction and reference}
 for more details.
+
+For 'crating' a function, see the \CRANpkg{carrier} package
+\href{https://github.com/r-lib/carrier}{readme} for more details.
 }
-}
+

@@ -47,10 +47,9 @@
 #'   function and will tend to yield better error messages.
 #'
 #' @param .parallel `r lifecycle::badge("experimental")` Whether to map in
-#'   parallel. Use `TRUE` (or a named list if supplying additional objects) to
-#'   parallelize using the \CRANpkg{mirai} package. Set up how and where to
-#'   parallelize beforehand using [`daemons()`][mirai::daemons]. See
-#'   [parallelization] for more details.
+#'   parallel. Use `TRUE` to parallelize using the \CRANpkg{mirai} package. Set
+#'   up how and where to parallelize in your session using
+#'   [`daemons()`][mirai::daemons]. See [parallelization] for more details.
 #' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
@@ -188,8 +187,8 @@ map_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (!isFALSE(.parallel)) {
-    return(mmap_(.x, .f, list(...), .parallel, .progress, .type, .purrr_error_call))
+  if (isTRUE(.parallel)) {
+    return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
 
   n <- vec_size(.x)

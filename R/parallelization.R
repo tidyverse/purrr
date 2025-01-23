@@ -5,41 +5,40 @@
 #' the \CRANpkg{mirai} package. This allows you to run computations in parallel
 #' using more cores on your machine, or distributed over the network.
 #'
-#' `.parallel` can be:
+#' # Crating a function
 #'
-#' * `FALSE`: the default, does not use parallelization.
-#' * `TRUE`: uses parallelization.
-#' * A named list: uses parallelization and supplies the objects provided to the
-#' parallel processes.
+#' As the function `.f` needs to be serialized and sent outside of your current
+#' session to parallel processes, a little care needs to be taken to make sure
+#' that it is self-contained, so that it will work as expected.
 #'
-#' ## Supplying objects to parallel processes
+#' A function will be self-contained if:
 #'
-#' In the majority of cases, such as when `.f` is a base or package function,
-#' simply set `.parallel` to `TRUE`.
+#' * It is a function from base R or any installed package.
 #'
-#' If `.f` is a user-defined function, then ideally everything required by the
-#' function is passed in as arguments (a pure function). Any constant arguments
-#' in this case can be supplied through `...` in the usual way.
+#' * If it is a user-defined function where everything not defined in the
+#'   function itself is passed in as arguments (a pure function).
 #'
-#' However, if the function references an object that is not supplied as an
-#' argument or defined in the function itself, i.e. a free variable, these
-#' should be supplied as a list to `.parallel`. This makes them available to
-#' `.f` in the parallel processes. `purrr` requires these to be explicitly
-#' supplied, rather than try to determine them from analysing `.f`, as this
-#' provides for consistent and reliable behaviour that is hence easy to debug.
+#' Otherwise, or if you are not sure, use `crate()` from the \CRANpkg{carrier}
+#' package to create self-contained functions before supplying to `.f`.
+#'
+#' It is necessary to `crate()` a user-defined function if it references any
+#' object that is not supplied as an argument or defined in the function itself,
+#' i.e. a free variable. Using `crate()` ensures that everything needed by the
+#' function is serialized along with it.
 #'
 #' Examples:
 #' \preformatted{
-#' # can just specify TRUE:
+#' # can just use a package function:
 #' map(1:3, stats::runif, .parallel = TRUE)
 #'
-#' # requires 'fun1' to be supplied in a list:
-#' fun1 <- function(x) \{x + x \%\% 2 \}
-#' fun2 <- function(x) \{ x + fun1(x) \}
-#' map(1:3, fun2, .parallel = list(fun1 = fun1))
+#' # crate() a function to include the definition of 'fun':
+#' fun <- function(x) \{x + x \%\% 2 \}
+#' map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
 #' }
 #'
-#' ## Daemons settings
+#' For further details, see the documentation for `carrier::crate()`.
+#'
+#' # Daemons settings
 #'
 #' How and where parallelization occurs is determined by
 #' [`daemons()`][mirai::daemons]. This is a function from the \pkg{mirai}
@@ -79,7 +78,7 @@
 #' terminate daemons in this instance, although it is still good practice to do
 #' so.
 #'
-#' ## with() method
+#' # with() method
 #'
 #' The `with()` method for daemons provides a convenient way of evaluating a
 #' statement with daemons set up for the duration of the statement.
@@ -94,27 +93,21 @@
 #' })
 #' }
 #'
-#' ## Further documentation
+#' # Further documentation
 #'
 #' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}, so see the
 #' [mirai introduction and reference](https://shikokuchuo.net/mirai/articles/mirai.html)
 #' for more details.
 #'
+#' For 'crating' a function, see the \CRANpkg{carrier} package
+#' [readme](https://github.com/r-lib/carrier) for more details.
+#'
 #' @name parallelization
 NULL
 
-mmap_ <- function(.x, .f, .args, .parallel, .progress, .type, error_call) {
+mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  m <- if (isTRUE(.parallel)) {
-    mirai::mirai_map(.x, .f, .args = .args)
-  } else if (is.list(.parallel)) {
-    mirai::mirai_map(.x, .f, as.environment(.parallel), .args = .args)
-  } else {
-    cli::cli_abort(
-      "'.parallel' must be TRUE/FALSE or a list, not a {.obj_type_friendly {(.parallel)}}.",
-      call = error_call
-    )
-  }
+  m <- mirai::mirai_map(.x, .f, .args = list(...))
 
   options <- c(".stop", if (isTRUE(.progress)) ".progress")
   x <- withCallingHandlers(

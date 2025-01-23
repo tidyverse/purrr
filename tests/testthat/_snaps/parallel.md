@@ -1,55 +1,45 @@
-# invalid .parallel arguments error
-
-    Code
-      map(list(x = 1, y = 2), identity, .parallel = "true")
-    Condition
-      Error in `map()`:
-      ! '.parallel' must be TRUE/FALSE or a list, not a a string.
-    Code
-      map(list(x = 1, y = 2), identity, .parallel = NA)
-    Condition
-      Error in `map()`:
-      ! '.parallel' must be TRUE/FALSE or a list, not a `NA`.
-
 # all inform about location of problem
 
     Code
-      map_int(1:3, ~ fail_at_3(.x, 2:1), .parallel = TRUE)
+      map_int(1:3, carrier::crate(function(x, bad = 2:1) if (x == 3) bad else x),
+      .parallel = TRUE)
     Condition
       Error in `map_int()`:
       ! `x[[3]]` must have size 1, not size 2.
     Code
-      map_int(1:3, ~ fail_at_3(.x, "x"), .parallel = TRUE)
+      map_int(1:3, carrier::crate(function(x, bad = "x") if (x == 3) bad else x),
+      .parallel = TRUE)
     Condition
       Error in `map_int()`:
       ! Can't convert `<list>[[3]]` <character> to <integer>.
     Code
-      map(1:3, ~ fail_at_3(.x, stop("Doesn't work")), .parallel = TRUE)
+      map(1:3, carrier::crate(function(x, bad = stop("Doesn't work")) if (x ==
+      3) bad else x), .parallel = TRUE)
     Condition
       Error in `map()`:
       i In index: 3.
-      Caused by error in `fail_at_3()`:
+      Caused by error:
       ! Doesn't work
 
 # error location uses name if present
 
     Code
-      map_int(c(a = 1, b = 2, c = 3), ~ fail_at_3(.x, stop("Error")), .parallel = list(
-        fail_at_3 = fail_at_3))
+      map_int(c(a = 1, b = 2, c = 3), carrier::crate(function(x, bad = stop(
+        "Doesn't work")) if (x == 3) bad else x), .parallel = TRUE)
     Condition
       Error in `map_int()`:
       i In index: 3.
       i With name: c.
-      Caused by error in `fail_at_3()`:
-      ! Error
+      Caused by error:
+      ! Doesn't work
     Code
-      map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")), .parallel = list(
-        fail_at_3 = fail_at_3))
+      map_int(c(a = 1, b = 2, 3), carrier::crate(function(x, bad = stop(
+        "Doesn't work")) if (x == 3) bad else x), .parallel = TRUE)
     Condition
       Error in `map_int()`:
       i In index: 3.
-      Caused by error in `fail_at_3()`:
-      ! Error
+      Caused by error:
+      ! Doesn't work
 
 # requires output be length 1 and have common type
 
