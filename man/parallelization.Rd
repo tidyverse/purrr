@@ -51,10 +51,13 @@ package that sets up daemons (persistent background processes that receive
 parallel computations) on your local machine or across the network.
 
 \pkg{purrr} requires these to be set up prior to performing any parallel map
-operations. If this is not done, you will see a warning from the \pkg{mirai}
-package that it is launching one local daemon - this ensures that the
-function proceeds, but as it uses just one daemon, is nearly never what you
-would actually want.
+operations. It is usual to set daemons once per session. You can leave them
+running as they consume little in resources whilst waiting to receive tasks.
+
+If they are not set, you will see a warning from the \pkg{mirai} package that
+it is launching one local daemon - this ensures that the function proceeds,
+but offers no actual parallelization and is hence probably not what you would
+want.
 
 \code{daemons()}arguments:
 \itemize{
@@ -76,8 +79,8 @@ Resetting daemons:
 
 \code{daemons(0)} resets and terminates any existing daemons.
 
-All daemons automatically terminate when you end your session and there is no
-longer a connection. For this reason, it is not required to specifically
+All daemons automatically terminate when you end your session and the
+connection drops. For this reason, it is not required to specifically
 terminate daemons in this instance, although it is still good practice to do
 so.
 }
