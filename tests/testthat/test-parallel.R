@@ -1,6 +1,14 @@
 daemons(1, dispatcher = FALSE) # ensures only 1 additional process on CRAN
 on.exit(daemons(0), add = TRUE)
 
+# parallel interface --------------------------------------------------------
+
+test_that("Can't use `...` in a parallel map", {
+  expect_snapshot(error = TRUE, {
+    map(list(x = 1, y = 2), list, a = "wrong", .parallel = TRUE)
+  })
+})
+
 # map -----------------------------------------------------------------------
 
 test_that("preserves names", {
@@ -222,13 +230,14 @@ test_that(".f called with named arguments", {
   expect_equal(pmap(x, list, .parallel = TRUE), list(x))
 })
 
-test_that("... are passed after varying argumetns", {
-  out <- pmap(list(x = 1:2), list, n = 1:2, .parallel = TRUE)
-  expect_equal(out, list(
-    list(x = 1, n = 1:2),
-    list(x = 2, n = 1:2)
-  ))
-})
+# no longer tested as `...` are forbidden when `.parallel = TRUE`
+#test_that("... are passed after varying argumetns", {
+#  out <- pmap(list(x = 1:2), list, n = 1:2, .parallel = TRUE)
+#  expect_equal(out, list(
+#    list(x = 1, n = 1:2),
+#    list(x = 2, n = 1:2)
+#  ))
+#})
 
 test_that("variants return expected types", {
   l <- list(list(1, 2, 3))

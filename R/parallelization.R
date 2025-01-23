@@ -38,6 +38,24 @@
 #'
 #' For further details, see the documentation for `carrier::crate()`.
 #'
+#' # Use of `...`
+#'
+#' The use of `...` is not allowed when `.parallel = TRUE`.
+#'
+#' We also generally recommend against passing additional constant arguments in
+#' this way, even in the non-parallel case. Instead use a shorthand anonymous
+#' function:
+#'
+#' \preformatted{
+#' # Instead of
+#' x |> map(f, 1, 2, collapse = ",", .parallel = TRUE)
+#' do:
+#' x |> map(\(x) f(x, 1, 2, collapse = ","), .parallel = TRUE)
+#' }
+#'
+#' This makes it easier to understand which arguments belong to which function
+#' and will tend to yield better error messages.
+#'
 #' # Daemons settings
 #'
 #' How and where parallelization occurs is determined by
@@ -107,7 +125,11 @@ NULL
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  m <- mirai::mirai_map(.x, .f, .args = list(...))
+  if (...length()) {
+    cli::cli_abort("Don't use `...` with `.parallel = TRUE`", call = error_call)
+  }
+
+  m <- mirai::mirai_map(.x, .f)
 
   options <- c(".stop", if (isTRUE(.progress)) ".progress")
   x <- withCallingHandlers(

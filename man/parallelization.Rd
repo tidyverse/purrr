@@ -41,6 +41,24 @@ map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
 For further details, see the documentation for \code{carrier::crate()}.
 }
 
+\section{Use of \code{...}}{
+The use of \code{...} is not allowed when \code{.parallel = TRUE}.
+
+We also generally recommend against passing additional constant arguments in
+this way, even in the non-parallel case. Instead use a shorthand anonymous
+function:
+
+\preformatted{
+# Instead of
+x |> map(f, 1, 2, collapse = ",", .parallel = TRUE)
+do:
+x |> map(\(x) f(x, 1, 2, collapse = ","), .parallel = TRUE)
+}
+
+This makes it easier to understand which arguments belong to which function
+and will tend to yield better error messages.
+}
+
 \section{Daemons settings}{
 How and where parallelization occurs is determined by
 \code{\link[mirai:daemons]{daemons()}}. This is a function from the \pkg{mirai}

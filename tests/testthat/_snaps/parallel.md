@@ -1,3 +1,11 @@
+# Can't use `...` in a parallel map
+
+    Code
+      map(list(x = 1, y = 2), list, a = "wrong", .parallel = TRUE)
+    Condition
+      Error in `map()`:
+      ! Don't use `...` with `.parallel = TRUE`
+
 # all inform about location of problem
 
     Code
