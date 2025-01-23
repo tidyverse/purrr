@@ -229,6 +229,9 @@ mmap_ <- function(.x, .f, .args, .parallel, .progress, .type, error_call) {
         call = error_call,
         class = "purrr_error_indexed"
       )
+    },
+    interrupt = function(cnd) {
+      mirai::stop_mirai(m)
     }
   )
   if (.type != "list") {
