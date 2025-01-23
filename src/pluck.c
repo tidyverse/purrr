@@ -152,7 +152,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   }
 
   SEXP sym = Rf_installChar(index);
-  SEXP out = Rf_findVarInFrame3(x, sym, TRUE);
+  SEXP out = Rf_findVarInFrame(x, sym);
 
   if (check_unbound_value(out, index_i, strict)) {
     return R_NilValue;
