@@ -156,18 +156,21 @@ mtcars |>
   map(summary) |>
   map_dbl("r.squared")
 
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# run in interactive sessions only as spawns additional processes
+
 # To use parallelized map, set daemons (number of parallel processes) first:
-daemons(1, dispatcher = FALSE) # set to > 1 in real usage
+daemons(2)
 mtcars |> map_dbl(sum, .parallel = TRUE)
 daemons(0)
 
 # Or wrap a statement in with() to evaluate it with the specified daemons:
-with(daemons(1, dispatcher = FALSE), {
+with(daemons(2), {
 1:10 |>
   map(rnorm, n = 10, .parallel = TRUE) |>
   map_dbl(mean, .parallel = TRUE)
 })
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=map_if]{map_if()}} for applying a function to only those elements

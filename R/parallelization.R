@@ -58,13 +58,7 @@
 #' * `n`: specify an integer number to launch daemons on your local machine,
 #'   e.g. `daemons(7)`. As a rule of thumb, you want to leave at least one core
 #'   for the main R process, so, for maximum efficiency, this should be at most
-#'   one less than the number of cores on your machine .
-#' * `dispatcher`: logical value whether to use dispatcher, a \pkg{mirai}
-#'   feature that ensures optimal scheduling and dispatch of tasks to daemons.
-#'   * `TRUE`: the default, enables dispatcher.
-#'   * `FALSE`: disables dispatcher. A lighter and more efficient option that
-#'   distributes tasks in a round robin fashion. This is suitable when all parts
-#'   of a map operation are expected to take roughly the same amount of time.
+#'   one less than the number of cores on your machine.
 #' * `url` and `remote`: used to set up and launch daemons for distributed
 #'   computing over the network. See [daemons][mirai::daemons] function
 #'   documentation for more details.

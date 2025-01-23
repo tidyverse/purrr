@@ -62,15 +62,7 @@ would actually want.
 \item \code{n}: specify an integer number to launch daemons on your local machine,
 e.g. \code{daemons(7)}. As a rule of thumb, you want to leave at least one core
 for the main R process, so, for maximum efficiency, this should be at most
-one less than the number of cores on your machine .
-\item \code{dispatcher}: logical value whether to use dispatcher, a \pkg{mirai}
-feature that ensures optimal scheduling and dispatch of tasks to daemons.
-\itemize{
-\item \code{TRUE}: the default, enables dispatcher.
-\item \code{FALSE}: disables dispatcher. A lighter and more efficient option that
-distributes tasks in a round robin fashion. This is suitable when all parts
-of a map operation are expected to take roughly the same amount of time.
-}
+one less than the number of cores on your machine.
 \item \code{url} and \code{remote}: used to set up and launch daemons for distributed
 computing over the network. See \link[mirai:daemons]{daemons} function
 documentation for more details.
