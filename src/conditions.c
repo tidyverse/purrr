@@ -1,5 +1,6 @@
 #define R_NO_REMAP
 #include <Rinternals.h>
+#include "backports.h"
 #include "utils.h"
 #include <R_ext/Parse.h>
 
@@ -19,10 +20,7 @@ SEXP current_env(void) {
     SEXP parsed = PROTECT(R_ParseVector(code, -1, &status, R_NilValue));
     SEXP body = VECTOR_ELT(parsed, 0);
 
-    SEXP fn = PROTECT(Rf_allocSExp(CLOSXP));
-    SET_FORMALS(fn, R_NilValue);
-    SET_BODY(fn, body);
-    SET_CLOENV(fn, R_BaseEnv);
+    SEXP fn = PROTECT(R_mkClosure(R_NilValue, body, R_BaseEnv));
 
     call = Rf_lang1(fn);
     R_PreserveObject(call);

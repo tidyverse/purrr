@@ -165,7 +165,7 @@ SEXP pmap_impl(SEXP env,
   PROTECT_WITH_INDEX(call, &call_shelter);
 
   bool has_call_names = call_names != R_NilValue;
-  const SEXP* v_call_names = has_call_names ? STRING_PTR(call_names) : NULL;
+  const SEXP* v_call_names = has_call_names ? STRING_PTR_RO(call_names) : NULL;
   int call_n = INTEGER_ELT(ffi_call_n, 0);
 
   for (int j = call_n - 1; j >= 0; --j) {
