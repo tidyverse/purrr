@@ -221,11 +221,14 @@ mmap_ <- function(.x, .f, .args, .parallel, .progress, .type, error_call) {
   x <- withCallingHandlers(
     mirai::collect_mirai(m, options = options),
     error = function(cnd) {
+      location <- cnd$location
+      iname <- cnd$name
       cli::cli_abort(
-        "",
-        location = cnd$location,
-        name = cnd$name,
-        parent = cnd,
+        c(i = "In index: {location}.",
+          i = if (length(iname) && nzchar(iname)) "With name: {iname}."),
+        location = location,
+        name = iname,
+        parent = cnd$parent,
         call = error_call,
         class = "purrr_error_indexed"
       )

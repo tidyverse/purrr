@@ -18,7 +18,7 @@ Imports:
     cli (>= 3.6.1),
     lifecycle (>= 1.0.3),
     magrittr (>= 1.5.0),
-    mirai (>= 2.0.1.9004),
+    mirai (>= 2.0.1.9005),
     rlang (>= 1.1.1),
     vctrs (>= 0.6.3)
 Suggests: 

@@ -42,17 +42,17 @@
         fail_at_3 = fail_at_3))
     Condition
       Error in `map_int()`:
-      Caused by error in `fail_at_3()`:
       i In index: 3.
       i With name: c.
+      Caused by error in `fail_at_3()`:
       ! Error
     Code
       map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")), .parallel = list(
         fail_at_3 = fail_at_3))
     Condition
       Error in `map_int()`:
-      Caused by error in `fail_at_3()`:
       i In index: 3.
+      Caused by error in `fail_at_3()`:
       ! Error
 
 # requires output be length 1 and have common type
