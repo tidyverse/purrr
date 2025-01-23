@@ -14,21 +14,17 @@
 # all inform about location of problem
 
     Code
-      map_int(1:3, ~ fail_at_3(.x, 2:1))
+      map_int(1:3, ~ fail_at_3(.x, 2:1), .parallel = TRUE)
     Condition
       Error in `map_int()`:
-      i In index: 3.
-      Caused by error:
-      ! Result must be length 1, not 2.
+      ! `x[[3]]` must have size 1, not size 2.
     Code
-      map_int(1:3, ~ fail_at_3(.x, "x"))
+      map_int(1:3, ~ fail_at_3(.x, "x"), .parallel = TRUE)
     Condition
       Error in `map_int()`:
-      i In index: 3.
-      Caused by error:
-      ! Can't coerce from a string to an integer.
+      ! Can't convert `<list>[[3]]` <character> to <integer>.
     Code
-      map(1:3, ~ fail_at_3(.x, stop("Doesn't work")))
+      map(1:3, ~ fail_at_3(.x, stop("Doesn't work")), .parallel = TRUE)
     Condition
       Error in `map()`:
       i In index: 3.

@@ -28,9 +28,9 @@ test_that("all inform about location of problem", {
   }
 
   expect_snapshot(error = TRUE, {
-    map_int(1:3, ~ fail_at_3(.x, 2:1))
-    map_int(1:3, ~ fail_at_3(.x, "x"))
-    map(1:3, ~ fail_at_3(.x, stop("Doesn't work")))
+    map_int(1:3, ~ fail_at_3(.x, 2:1), .parallel = TRUE)
+    map_int(1:3, ~ fail_at_3(.x, "x"), .parallel = TRUE)
+    map(1:3, ~ fail_at_3(.x, stop("Doesn't work")), .parallel = TRUE)
   })
 
   cnd <- catch_cnd(map(1:3, ~ fail_at_3(.x, stop("Doesn't work")), .parallel = TRUE))
