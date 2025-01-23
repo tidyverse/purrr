@@ -204,46 +204,6 @@ map_ <- function(.type,
   )
 }
 
-mmap_ <- function(.x, .f, .args, .parallel, .progress, .type, error_call) {
-
-  m <- if (isTRUE(.parallel)) {
-    mirai::mirai_map(.x, .f, .args = .args)
-  } else if (is.list(.parallel)) {
-    mirai::mirai_map(.x, .f, as.environment(.parallel), .args = .args)
-  } else {
-    cli::cli_abort(
-      "'.parallel' must be TRUE/FALSE or a list, not a {.obj_type_friendly {(.parallel)}}.",
-      call = error_call
-    )
-  }
-
-  options <- c(".stop", if (isTRUE(.progress)) ".progress")
-  x <- withCallingHandlers(
-    mirai::collect_mirai(m, options = options),
-    error = function(cnd) {
-      location <- cnd$location
-      iname <- cnd$name
-      cli::cli_abort(
-        c(i = "In index: {location}.",
-          i = if (length(iname) && nzchar(iname)) "With name: {iname}."),
-        location = location,
-        name = iname,
-        parent = cnd$parent,
-        call = error_call,
-        class = "purrr_error_indexed"
-      )
-    },
-    interrupt = function(cnd) {
-      mirai::stop_mirai(m)
-    }
-  )
-  if (.type != "list") {
-    x <- simplify_impl(x, ptype = vector(mode = .type), error_call = error_call)
-  }
-  x
-
-}
-
 #' @rdname map
 #' @param .ptype If `NULL`, the default, the output type is the common type
 #'   of the elements of the result. Otherwise, supply a "prototype" giving
