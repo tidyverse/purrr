@@ -56,9 +56,10 @@ function and will tend to yield better error messages.}
 parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package. Set
 up parallelization in your session beforehand using
 \code{\link[mirai:daemons]{daemons()}}. We recommended you \link[carrier:crate]{crate}
-your function for sharing with parallel processes. Use of \code{...} is not
-permitted in this context, \link[carrier:crate]{crate} an anonymous function
-instead. See \link{parallelization} for more details.}
+your function for sharing with parallel processes. Non-package functions
+are auto-crated. Use of \code{...} is not permitted in this context,
+\link[carrier:crate]{crate} an anonymous function instead. See
+\link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

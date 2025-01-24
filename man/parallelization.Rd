@@ -76,7 +76,7 @@ mtcars |> map_dbl(crate(function(...) sum(...)), .parallel = TRUE)
 Crating ensures that everything needed by the function is serialized along
 with it, but not other objects which happen to be in the function's enclosing
 environment. This helps to prevent inadvertently shipping large data objects
-to daemons, and is hence recommnded practice, even when a function is
+to daemons, and is hence recommended practice, even when a function is
 otherwise self-contained.
 
 Examples:
@@ -88,8 +88,14 @@ map(1:3, stats::runif, .parallel = TRUE)
 fun <- function(x) \{x + x \%\% 2 \}
 map(1:3, crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
 }
+\subsection{Auto-crating}{
+
+If a non-package function is supplied, and is not already crated, it will be
+automatically crated. When this happens, a confirmation along with the crate
+size is printed to the console.
 
 For details on further options, see \link[carrier:crate]{crate}.
+}
 }
 
 \section{Further documentation}{
