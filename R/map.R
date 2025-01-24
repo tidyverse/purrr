@@ -141,7 +141,7 @@
 #' # Or wrap a statement in with() to evaluate it with the specified daemons:
 #' with(daemons(2), {
 #' 1:10 |>
-#'   map(rnorm, n = 10, .parallel = TRUE) |>
+#'   map(function(x) rnorm(10, mean = x), .parallel = TRUE) |>
 #'   map_dbl(mean, .parallel = TRUE)
 #' })
 #'
