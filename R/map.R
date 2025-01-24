@@ -134,19 +134,19 @@
 #'   map_dbl("r.squared")
 #'
 #' @examplesIf interactive()
-#' # run in interactive sessions only as spawns additional processes
+#' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map, set daemons (number of parallel processes) first:
 #' daemons(2)
-#' mtcars |> map_dbl(sum, .parallel = TRUE)
-#' daemons(0)
 #'
-#' # Or wrap a statement in with() to evaluate it with the specified daemons:
-#' with(daemons(2), {
+#' mtcars |> map_dbl(sum, .parallel = TRUE)
+#'
+#' # We recommend you crate() anonymous functions
 #' 1:10 |>
-#'   map(function(x) rnorm(10, mean = x), .parallel = TRUE) |>
+#'   map(crate(function(x) stats::rnorm(10, mean = x)), .parallel = TRUE) |>
 #'   map_dbl(mean, .parallel = TRUE)
-#' })
+#'
+#' daemons(0)
 #'
 map <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
   map_("list", .x, .f, ..., .parallel = .parallel, .progress = .progress)
