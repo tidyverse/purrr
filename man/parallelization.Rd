@@ -7,6 +7,14 @@
 purrr's map functions have a \code{.parallel} argument to parallelize a map using
 the \CRANpkg{mirai} package. This allows you to run computations in parallel
 using more cores on your machine, or distributed over the network.
+
+Parallelizing a map using 'n' processes does not automatically lead to it
+taking 1/n of the time. Additional overhead from setting up the parallel task
+and communicating with parallel processes eats into this benefit, and can
+outweigh it for very short tasks or those involving large amounts of data.
+The threshold at which parallelization becomes clearly beneficial will differ
+according to your individual setup and task, but a rough guide would be in
+the order of 100 microseconds to 1 millisecond for each map iteration.
 }
 \section{Daemons settings}{
 How and where parallelization occurs is determined by
