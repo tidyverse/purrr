@@ -8,57 +8,6 @@ purrr's map functions have a \code{.parallel} argument to parallelize a map usin
 the \CRANpkg{mirai} package. This allows you to run computations in parallel
 using more cores on your machine, or distributed over the network.
 }
-\section{Crating a function}{
-As the function \code{.f} needs to be serialized and sent outside of your current
-session to parallel processes, a little care needs to be taken to make sure
-that it is self-contained, so that it will work as expected.
-
-A function will be self-contained if:
-\itemize{
-\item It is a function from base R or any installed package.
-\item If it is a user-defined function where everything not defined in the
-function itself is passed in as arguments (a pure function).
-}
-
-Otherwise, or if you are not sure, use \code{crate()} from the \CRANpkg{carrier}
-package to create self-contained functions before supplying to \code{.f}.
-
-It is necessary to \code{crate()} a user-defined function if it references any
-object that is not supplied as an argument or defined in the function itself,
-i.e. a free variable. Using \code{crate()} ensures that everything needed by the
-function is serialized along with it.
-
-Examples:
-\preformatted{
-# can just use a package function:
-map(1:3, stats::runif, .parallel = TRUE)
-
-# crate() a function to include the definition of 'fun':
-fun <- function(x) \{x + x \%\% 2 \}
-map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
-}
-
-For further details, see the documentation for \code{carrier::crate()}.
-}
-
-\section{Use of \code{...}}{
-The use of \code{...} is not allowed when \code{.parallel = TRUE}.
-
-We also generally recommend against passing additional constant arguments in
-this way, even in the non-parallel case. Instead use a shorthand anonymous
-function:
-
-\preformatted{
-# Instead of
-x |> map(f, 1, 2, collapse = ",", .parallel = TRUE)
-do:
-x |> map(\(x) f(x, 1, 2, collapse = ","), .parallel = TRUE)
-}
-
-This makes it easier to understand which arguments belong to which function
-and will tend to yield better error messages.
-}
-
 \section{Daemons settings}{
 How and where parallelization occurs is determined by
 \code{\link[mirai:daemons]{daemons()}}. This is a function from the \pkg{mirai}
@@ -67,17 +16,17 @@ parallel computations) on your local machine or across the network.
 
 \pkg{purrr} requires these to be set up prior to performing any parallel map
 operations. It is usual to set daemons once per session. You can leave them
-running as they consume little in resources whilst waiting to receive tasks.
+running as they consume almost no resources whilst waiting to receive tasks.
+The following sets up 6 daemons on your local machine:
 
-If they are not set, you will see a warning from the \pkg{mirai} package that
-it is launching one local daemon - this ensures that the function proceeds,
-but offers no actual parallelization and is hence probably not what you would
-want.
+\preformatted{
+daemons(6)
+}
 
 \code{daemons()}arguments:
 \itemize{
 \item \code{n}: the number of daemons to launch on your local machine, e.g.
-\code{daemons(7)}. As a rule of thumb, for maximum efficiency this should be (at
+\code{daemons(6)}. As a rule of thumb, for maximum efficiency this should be (at
 most) one less than the number of cores on your machine, leaving one core
 for the main R process.
 \item \code{url} and \code{remote}: used to set up and launch daemons for distributed
@@ -92,35 +41,55 @@ For more details, including on further arguments, see
 
 Resetting daemons:
 
+Daemons persist for the duration of your session.
+
 \code{daemons(0)} resets and terminates any existing daemons.
 
-All daemons automatically terminate when you end your session and the
-connection drops. For this reason, it is not required to specifically
-terminate daemons in this instance, although it is still good practice to do
-so.
+All daemons automatically terminate when your session ends and the connection
+drops. Hence you do not need to explicitly terminate daemons in this instance,
+although it is still good practice to do so.
 }
 
-\section{with() method}{
-The \code{with()} method for daemons provides a convenient way of evaluating a
-statement with daemons set up for the duration of the statement.
+\section{Crating a function}{
+As the function \code{.f} needs to be serialized and shared with other processes,
+we recommend that you \link[carrier:crate]{crate()} your function for use in a
+parallel map.
 
-As an example, the below is evaluated in parallel using 7 daemons:
-
+The only exception is if \code{.f} is a function from a package or base R. Do not
+\link[carrier:crate]{crate} these functions - although you can
+\link[carrier:crate]{crate} an anonymous function that calls these functions.
 \preformatted{
-with(daemons(7), {
-  1:10 |>
-  map(rnorm, n = 10, .parallel = TRUE) |>
-  map_dbl(mean, .parallel = TRUE)
-})
+# either use a base R or package function directly:
+mtcars |> map_dbl(sum, .parallel = TRUE)
+# or crate() it as an anonymous function:
+mtcars |> map_dbl(crate(function(...) sum(...)), .parallel = TRUE)
 }
+
+Crating ensures that everything needed by the function is serialized along
+with it, but not other objects which happen to be in the function's enclosing
+environment. This helps to prevent inadvertently shipping large data objects
+to daemons, and is hence recommnded practice, even when a function is
+otherwise self-contained.
+
+Examples:
+\preformatted{
+# do not crate() a package function:
+map(1:3, stats::runif, .parallel = TRUE)
+
+# crate() a function, including the definition of 'fun':
+fun <- function(x) \{x + x \%\% 2 \}
+map(1:3, crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
+}
+
+For details on further options, see \link[carrier:crate]{crate}.
 }
 
 \section{Further documentation}{
-\pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}, so see the
+\pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}.See the
 \href{https://shikokuchuo.net/mirai/articles/mirai.html}{mirai introduction and reference}
 for more details.
 
-For 'crating' a function, see the \CRANpkg{carrier} package
-\href{https://github.com/r-lib/carrier}{readme} for more details.
+\link{crate} is re-exported from the \CRANpkg{carrier} package. See the
+\href{https://github.com/r-lib/carrier}{crate readme} for more details.
 }
 

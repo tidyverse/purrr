@@ -60,8 +60,11 @@ function and will tend to yield better error messages.}
 
 \item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
 parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package. Set
-up how and where to parallelize in your session using
-\code{\link[mirai:daemons]{daemons()}}. See \link{parallelization} for more details.}
+up parallelization in your session beforehand using
+\code{\link[mirai:daemons]{daemons()}}. We recommended you \link[carrier:crate]{crate}
+your function for sharing with parallel processes. Use of \code{...} is not
+permitted in this context, \link[carrier:crate]{crate} an anonymous function
+instead. See \link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

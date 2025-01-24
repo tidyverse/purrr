@@ -1,7 +1,12 @@
+test_that("Can't parallel map without first setting daemons", {
+  expect_snapshot(error = TRUE, {
+    map(list(x = 1, y = 2), list, .parallel = TRUE)
+  })
+})
+
+# set up daemons
 daemons(1, dispatcher = FALSE) # ensures only 1 additional process on CRAN
 on.exit(daemons(0), add = TRUE)
-
-# parallel interface --------------------------------------------------------
 
 test_that("Can't use `...` in a parallel map", {
   expect_snapshot(error = TRUE, {

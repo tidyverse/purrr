@@ -3,6 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{crate}
 \alias{daemons}
 \alias{set_names}
 \alias{exec}
@@ -43,6 +44,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{carrier}{\code{\link[carrier]{crate}}}
+
   \item{mirai}{\code{\link[mirai]{daemons}}}
 
   \item{rlang}{\code{\link[rlang:op-null-default]{\%||\%}}, \code{\link[rlang]{done}}, \code{\link[rlang]{exec}}, \code{\link[rlang:type-predicates]{is_atomic}}, \code{\link[rlang:bare-type-predicates]{is_bare_atomic}}, \code{\link[rlang:bare-type-predicates]{is_bare_character}}, \code{\link[rlang:bare-type-predicates]{is_bare_double}}, \code{\link[rlang:bare-type-predicates]{is_bare_integer}}, \code{\link[rlang:bare-type-predicates]{is_bare_list}}, \code{\link[rlang:bare-type-predicates]{is_bare_logical}}, \code{\link[rlang:bare-type-predicates]{is_bare_numeric}}, \code{\link[rlang:bare-type-predicates]{is_bare_vector}}, \code{\link[rlang:type-predicates]{is_character}}, \code{\link[rlang:type-predicates]{is_double}}, \code{\link[rlang]{is_empty}}, \code{\link[rlang]{is_formula}}, \code{\link[rlang]{is_function}}, \code{\link[rlang:type-predicates]{is_integer}}, \code{\link[rlang:type-predicates]{is_list}}, \code{\link[rlang:type-predicates]{is_logical}}, \code{\link[rlang:type-predicates]{is_null}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_atomic}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_character}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_double}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_integer}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_list}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_logical}}, \code{\link[rlang:scalar-type-predicates]{is_scalar_vector}}, \code{\link[rlang:type-predicates]{is_vector}}, \code{\link[rlang]{rep_along}}, \code{\link[rlang]{set_names}}, \code{\link[rlang]{zap}}}

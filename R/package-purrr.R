@@ -1,6 +1,7 @@
 #' @keywords internal
 #' @import rlang
 #' @import vctrs
+#' @importFrom carrier crate
 #' @importFrom cli cli_progress_bar
 #' @importFrom lifecycle deprecated
 #' @importFrom mirai daemons
@@ -8,6 +9,9 @@
 "_PACKAGE"
 
 the <- new_environment()
+
+#' @export
+carrier::crate
 
 #' @export
 mirai::daemons

@@ -1,10 +1,18 @@
+# Can't parallel map without first setting daemons
+
+    Code
+      map(list(x = 1, y = 2), list, .parallel = TRUE)
+    Condition
+      Error in `map()`:
+      ! No daemons set - use e.g. `daemons(6)` to set up 6 local daemons.
+
 # Can't use `...` in a parallel map
 
     Code
       map(list(x = 1, y = 2), list, a = "wrong", .parallel = TRUE)
     Condition
       Error in `map()`:
-      ! Don't use `...` with `.parallel = TRUE`
+      ! Don't use `...` with `.parallel = TRUE`.
 
 # all inform about location of problem
 

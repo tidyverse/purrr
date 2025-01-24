@@ -48,8 +48,11 @@
 #'
 #' @param .parallel `r lifecycle::badge("experimental")` Whether to map in
 #'   parallel. Use `TRUE` to parallelize using the \CRANpkg{mirai} package. Set
-#'   up how and where to parallelize in your session using
-#'   [`daemons()`][mirai::daemons]. See [parallelization] for more details.
+#'   up parallelization in your session beforehand using
+#'   [`daemons()`][mirai::daemons]. We recommended you [crate][carrier::crate]
+#'   your function for sharing with parallel processes. Use of `...` is not
+#'   permitted in this context, [crate][carrier::crate] an anonymous function
+#'   instead. See [parallelization] for more details.
 #' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
