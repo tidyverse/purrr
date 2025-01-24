@@ -206,6 +206,36 @@ map_ <- function(.type,
   )
 }
 
+mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
+
+  if (is.null(mirai::nextget("n"))) {
+    cli::cli_abort(
+      "No daemons set - use e.g. `daemons(6)` to set up 6 local daemons.",
+      call = error_call
+    )
+  }
+  if (...length()) {
+    cli::cli_abort(
+      "Don't use `...` with `.parallel = TRUE`.",
+      call = error_call
+    )
+  }
+
+  m <- mirai::mirai_map(.x, .f)
+
+  options <- c(".stop", if (isTRUE(.progress)) ".progress")
+  x <- with_parallel_indexed_errors(
+    mirai::collect_mirai(m, options = options),
+    interrupt_expr = mirai::stop_mirai(m),
+    error_call = error_call
+  )
+  if (.type != "list") {
+    x <- simplify_impl(x, ptype = vector(mode = .type), error_call = error_call)
+  }
+  x
+
+}
+
 #' @rdname map
 #' @param .ptype If `NULL`, the default, the output type is the common type
 #'   of the elements of the result. Otherwise, supply a "prototype" giving
@@ -247,6 +277,28 @@ with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()
           class = "purrr_error_indexed"
         )
       }
+    }
+  )
+}
+
+with_parallel_indexed_errors <- function(expr, interrupt_expr = NULL, error_call = caller_env()) {
+  withCallingHandlers(
+    expr,
+    error = function(cnd) {
+      location <- cnd$location
+      iname <- cnd$name
+      cli::cli_abort(
+        c(i = "In index: {location}.",
+          i = if (length(iname) && nzchar(iname)) "With name: {iname}."),
+        location = location,
+        name = iname,
+        parent = cnd$parent,
+        call = error_call,
+        class = "purrr_error_indexed"
+      )
+    },
+    interrupt = function(cnd) {
+      interrupt_expr
     }
   )
 }
