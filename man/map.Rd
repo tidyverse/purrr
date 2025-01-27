@@ -176,7 +176,7 @@ mtcars |> map_dbl(sum, .parallel = TRUE)
   map(function(x) stats::rnorm(10, mean = x), .parallel = TRUE) |>
   map_dbl(mean, .parallel = TRUE)
 
-daemons(0)
+mirai::daemons(0)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

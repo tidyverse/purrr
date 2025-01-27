@@ -61,44 +61,39 @@ although it is still good practice to do so.
 }
 
 \section{Crating a function}{
-As the function \code{.f} needs to be serialized and shared with other processes,
-we recommend that you \code{\link[carrier:crate]{carrier::crate()}} your function for use in a
-parallel map, so that it is self-contained.
-
-The only exception is if \code{.f} is a function from a package or base R, since
-these are already self-contained. Do not crate these functions - although you
-may crate an anonymous function that calls these functions.
-
-\preformatted{
-# either use a base R or package function directly:
-mtcars |> map_dbl(sum, .parallel = TRUE)
-# or crate() it as an anonymous function:
-mtcars |> map_dbl(carrier::crate(function(...) sum(...)), .parallel = TRUE)
-}
+\code{\link[carrier:crate]{carrier::crate()}} provides a systematic way of making the function \code{.f}
+self-sustained so that it can be readily shared with other processes.
 
 Crating ensures that everything needed by the function is serialized along
 with it, but not other objects which happen to be in the function's enclosing
 environment. This helps to prevent inadvertently shipping large data objects
-to daemons, and is hence recommended practice, even when a function is
-otherwise self-contained.
+to daemons, where they are not needed.
+
+Any non-package function supplied to \code{.f} will be automatically crated. When
+this happens, a confirmation along with the crate size is printed to the
+console. Package functions are not crated as these are already
+self-contained.
+
+If your function \code{.f()} contains free variables, for example it references
+other local functions in its body, then explicitly \code{\link[carrier:crate]{carrier::crate()}} your
+function supplying these variables to its \code{...} argument. This ensures that
+these objects are available to \code{.f()} when it is executed in a parallel
+process.
 
 Examples:
 \preformatted{
-# do not crate() a package function:
+# package functions are not auto-crated:
 map(1:3, stats::runif, .parallel = TRUE)
 
-# crate() a function, including the definition of 'fun':
+# other functions (incl. anonymous functions) are auto-crated:
+mtcars |> map_dbl(function(...) sum(...), .parallel = TRUE)
+
+# explicitly crate a function to include other objects required by it:
 fun <- function(x) \{x + x \%\% 2 \}
 map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
 }
-\subsection{Auto-crating}{
-
-If a non-package function is supplied, and is not already crated, it will be
-automatically crated. When this happens, a confirmation along with the crate
-size is printed to the console.
 
 For details on further options, see \link[carrier:crate]{carrier::crate}.
-}
 }
 
 \section{Further documentation}{

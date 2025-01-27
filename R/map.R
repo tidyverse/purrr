@@ -149,7 +149,7 @@
 #'   map(function(x) stats::rnorm(10, mean = x), .parallel = TRUE) |>
 #'   map_dbl(mean, .parallel = TRUE)
 #'
-#' daemons(0)
+#' mirai::daemons(0)
 #'
 map <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
   map_("list", .x, .f, ..., .parallel = .parallel, .progress = .progress)
