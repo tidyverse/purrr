@@ -1,3 +1,6 @@
+skip_if_not_installed("mirai")
+skip_if_not_installed("carrier")
+
 test_that("Can't parallel map without first setting daemons", {
   expect_snapshot(error = TRUE, {
     map(list(x = 1, y = 2), list, .parallel = TRUE)
