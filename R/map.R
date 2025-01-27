@@ -142,7 +142,7 @@
 #'
 #' mtcars |> map_dbl(sum, .parallel = TRUE)
 #'
-#' # We recommend you crate() anonymous functions
+#' # We recommend that you crate() anonymous functions
 #' 1:10 |>
 #'   map(crate(function(x) stats::rnorm(10, mean = x)), .parallel = TRUE) |>
 #'   map_dbl(mean, .parallel = TRUE)
@@ -225,7 +225,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   if (!carrier::is_crate(.f) && !isNamespace(topenv(environment(.f)))) {
     .f <- crate(rlang::set_env(.f))
     cli::cli_alert_success(
-      "Automatically crated `.f`: {format(as_bytes(unclass(lobstr::obj_size(.f))))}"
+      "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
     )
   }
 

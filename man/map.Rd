@@ -167,7 +167,7 @@ daemons(2)
 
 mtcars |> map_dbl(sum, .parallel = TRUE)
 
-# We recommend you crate() anonymous functions
+# We recommend that you crate() anonymous functions
 1:10 |>
   map(crate(function(x) stats::rnorm(10, mean = x)), .parallel = TRUE) |>
   map_dbl(mean, .parallel = TRUE)
