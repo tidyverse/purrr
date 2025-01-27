@@ -56,6 +56,11 @@
 #' drops. Hence you do not need to explicitly terminate daemons in this instance,
 #' although it is still good practice to do so.
 #'
+#' Note: it should always be for the user to set daemons. If you are using
+#' parallel map within a package, do not make any [mirai::daemons()] calls
+#' within the package. This helps prevent inadvertently spawning too many
+#' daemons if functions are used recursively within each other.
+#'
 #' # Crating a function
 #'
 #' [carrier::crate()] provides a systematic way of making the function `.f`
