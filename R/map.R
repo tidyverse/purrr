@@ -211,7 +211,7 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  ensure_parallel_dependencies(error_call)
+  rlang::check_installed(c("mirai", "carrier"), reason = "for parallel map.")
 
   if (is.null(mirai::nextget("n"))) {
     cli::cli_abort(
@@ -315,36 +315,6 @@ with_parallel_indexed_errors <- function(expr, interrupt_expr = NULL, error_call
       interrupt_expr
     }
   )
-}
-
-ensure_parallel_dependencies <- function(error_call = NULL) {
-
-  if (is.null(the$mirai_package)) {
-    if (!requireNamespace("mirai", quietly = TRUE)) {
-      if (!requireNamespace("carrier", quietly = TRUE)) {
-        cli::cli_abort(
-          "Install the mirai and carrier package for parallel map: {.run pak::pak('mirai')} {.run pak::pak('carrier')}.",
-          call = error_call
-        )
-      }
-      cli::cli_abort(
-        "Install the mirai package for parallel map: {.run pak::pak('mirai')}.",
-        call = error_call
-      )
-    }
-    the$mirai_package <- TRUE
-  }
-
-  if (is.null(the$carrier_package)) {
-    if (!requireNamespace("carrier", quietly = TRUE)) {
-      cli::cli_abort(
-        "Install the carrier packages for parallel map: {.run pak::pak('carrier')}.",
-        call = error_call
-      )
-    }
-    the$carrier_package <- TRUE
-  }
-
 }
 
 #' Indexed errors (`purrr_error_indexed`)
