@@ -60,7 +60,7 @@
 #' we recommend that you [crate()][carrier::crate] your function for use in a
 #' parallel map.
 #'
-#' The only exception is if `.f` is a function from a package or base R. Do not
+#' The only exception is if `.f` is a function from a package or base R, since these are already self-contained. Do not
 #' [crate][carrier::crate] these functions - although you can
 #' [crate][carrier::crate] an anonymous function that calls these functions.
 #' \preformatted{
