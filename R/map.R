@@ -137,7 +137,7 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 #'
-#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE)
+#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map, set daemons (number of parallel processes) first:
