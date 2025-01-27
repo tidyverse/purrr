@@ -1,10 +1,12 @@
 # purrr (development version)
 
-* Added a test to assert that `list_transpose()` does not work on data frames
-  (@KimLopezGuell, #1141, #1149).
-* Added `imap_vec()` (#1084)
-* `list_transpose()` inspects all elements to determine the correct
-  template if it's not provided by the user  (#1128, @krlmlr).
+* Varies fixed to bring purrr back into compliance with R CMD check (@shikokuchuo, @jayhesselberth).
+
+* Added missing `imap_vec()` (#1084)
+
+* `list_transpose()` now asserts that it does not work on data frames
+  (@KimLopezGuell, #1141, #1149), and inspects all elements to determine
+  the correct template if not provided by the user  (#1128, @krlmlr).
 
 # purrr 1.0.2
 
