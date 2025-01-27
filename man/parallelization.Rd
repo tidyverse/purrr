@@ -62,7 +62,7 @@ although it is still good practice to do so.
 
 \section{Crating a function}{
 \code{\link[carrier:crate]{carrier::crate()}} provides a systematic way of making the function \code{.f}
-self-sustained so that it can be readily shared with other processes.
+self-contained so that it can be readily shared with other processes.
 
 Crating ensures that everything needed by the function is serialized along
 with it, but not other objects which happen to be in the function's enclosing

@@ -211,9 +211,11 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
+  ensure_parallel_dependencies(error_call)
+
   if (is.null(mirai::nextget("n"))) {
     cli::cli_abort(
-      "No daemons set - use e.g. `mirai::daemons(6)` to set 6 local daemons.",
+      "No daemons set - use e.g. {.run mirai::daemons(6)} to set 6 local daemons.",
       call = error_call
     )
   }
@@ -224,7 +226,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
     )
   }
 
-  if (!carrier::is_crate(.f) && !isNamespace(topenv(environment(.f)))) {
+  if (!isNamespace(topenv(environment(.f))) && !carrier::is_crate(.f)) {
     .f <- carrier::crate(rlang::set_env(.f))
     cli::cli_inform(c(
       v = "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
@@ -313,6 +315,36 @@ with_parallel_indexed_errors <- function(expr, interrupt_expr = NULL, error_call
       interrupt_expr
     }
   )
+}
+
+ensure_parallel_dependencies <- function(error_call = NULL) {
+
+  if (is.null(the$mirai_package)) {
+    if (!requireNamespace("mirai", quietly = TRUE)) {
+      if (!requireNamespace("carrier", quietly = TRUE)) {
+        cli::cli_abort(
+          "Install the mirai and carrier package for parallel map: {.run pak::pak('mirai')} {.run pak::pak('carrier')}.",
+          call = error_call
+        )
+      }
+      cli::cli_abort(
+        "Install the mirai package for parallel map: {.run pak::pak('mirai')}.",
+        call = error_call
+      )
+    }
+    the$mirai_package <- TRUE
+  }
+
+  if (is.null(the$carrier_package)) {
+    if (!requireNamespace("carrier", quietly = TRUE)) {
+      cli::cli_abort(
+        "Install the carrier packages for parallel map: {.run pak::pak('carrier')}.",
+        call = error_call
+      )
+    }
+    the$carrier_package <- TRUE
+  }
+
 }
 
 #' Indexed errors (`purrr_error_indexed`)
