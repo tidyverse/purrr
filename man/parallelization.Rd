@@ -61,11 +61,12 @@ although it is still good practice to do so.
 \section{Crating a function}{
 As the function \code{.f} needs to be serialized and shared with other processes,
 we recommend that you \link[carrier:crate]{crate()} your function for use in a
-parallel map.
+parallel map, so that they are self-contained.
 
-The only exception is if \code{.f} is a function from a package or base R. Do not
-\link[carrier:crate]{crate} these functions - although you can
-\link[carrier:crate]{crate} an anonymous function that calls these functions.
+The only exception is if \code{.f} is a function from a package or base R, since
+these are already self-contained. Do not \link[carrier:crate]{crate} these
+functions - although you can \link[carrier:crate]{crate} an anonymous function
+that calls these functions.
 \preformatted{
 # either use a base R or package function directly:
 mtcars |> map_dbl(sum, .parallel = TRUE)

@@ -47,12 +47,14 @@
 #'   function and will tend to yield better error messages.
 #'
 #' @param .parallel `r lifecycle::badge("experimental")` Whether to map in
-#'   parallel. Use `TRUE` to parallelize using the \CRANpkg{mirai} package. 
+#'   parallel. Use `TRUE` to parallelize using the \CRANpkg{mirai} package.
 #'   * Set up parallelization in your session beforehand using [`daemons()`][mirai::daemons].
-#'   * We recommended you [crate][carrier::crate] your function for sharing with 
-#'      parallel processes. Non-package functions are auto-crated. 
-#    * Use of `...` is not permitted in this context, [crate][carrier::crate] an anonymous 
-#'     function instead. 
+#'   * Non-package functions are auto-crated for sharing with parallel processes.
+#'   You may [crate][carrier::crate] your function explicitly if you need to
+#'   supply additional objects along with your function.
+#'   * Use of `...` is not permitted in this context, [crate][carrier::crate] an
+#'   anonymous function instead.
+#'
 #'  See [parallelization] for more details.
 #' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see

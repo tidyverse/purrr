@@ -58,11 +58,12 @@
 #'
 #' As the function `.f` needs to be serialized and shared with other processes,
 #' we recommend that you [crate()][carrier::crate] your function for use in a
-#' parallel map.
+#' parallel map, so that they are self-contained.
 #'
-#' The only exception is if `.f` is a function from a package or base R, since these are already self-contained. Do not
-#' [crate][carrier::crate] these functions - although you can
-#' [crate][carrier::crate] an anonymous function that calls these functions.
+#' The only exception is if `.f` is a function from a package or base R, since
+#' these are already self-contained. Do not [crate][carrier::crate] these
+#' functions - although you can [crate][carrier::crate] an anonymous function
+#' that calls these functions.
 #' \preformatted{
 #' # either use a base R or package function directly:
 #' mtcars |> map_dbl(sum, .parallel = TRUE)
