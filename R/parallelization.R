@@ -16,7 +16,7 @@
 #' # Daemons settings
 #'
 #' How and where parallelization occurs is determined by
-#' [`daemons()`][mirai::daemons]. This is a function from the \pkg{mirai}
+#' [mirai::daemons()]. This is a function from the \pkg{mirai}
 #' package that sets up daemons (persistent background processes that receive
 #' parallel computations) on your local machine or across the network.
 #'
@@ -26,29 +26,31 @@
 #' The following sets up 6 daemons on your local machine:
 #'
 #' \preformatted{
-#' daemons(6)
+#' mirai::daemons(6)
 #' }
 #'
 #' `daemons()`arguments:
 #'
 #' * `n`: the number of daemons to launch on your local machine, e.g.
-#'   `daemons(6)`. As a rule of thumb, for maximum efficiency this should be (at
-#'   most) one less than the number of cores on your machine, leaving one core
-#'   for the main R process.
+#'   `mirai::daemons(6)`. As a rule of thumb, for maximum efficiency this should
+#'   be (at most) one less than the number of cores on your machine, leaving one
+#'   core for the main R process.
 #' * `url` and `remote`: used to set up and launch daemons for distributed
-#'   computing over the network. See [daemons][mirai::daemons] function
-#'   documentation for more details.
-#' * None: calling `daemons()` with no arguments returns a summary of the
-#'   current connection status and mirai tasks queued and completed.
+#'   computing over the network. See [mirai::daemons] function documentation for
+#'   more details.
+#' * None: calling `mirai::daemons()` with no arguments returns a summary of the
+#'   current connection status and mirai tasks.
 #'
-#' For more details, including on further arguments, see
-#' [daemons][mirai::daemons].
+#' For details on further options, see [mirai::daemons].
 #'
 #' Resetting daemons:
 #'
-#' Daemons persist for the duration of your session.
+#' Daemons persist for the duration of your session. To reset and terminate any
+#' existing daemons:
 #'
-#' `daemons(0)` resets and terminates any existing daemons.
+#' \preformatted{
+#' mirai::daemons(0)
+#' }
 #'
 #' All daemons automatically terminate when your session ends and the connection
 #' drops. Hence you do not need to explicitly terminate daemons in this instance,
@@ -57,18 +59,18 @@
 #' # Crating a function
 #'
 #' As the function `.f` needs to be serialized and shared with other processes,
-#' we recommend that you [crate()][carrier::crate] your function for use in a
-#' parallel map, so that they are self-contained.
+#' we recommend that you [carrier::crate()] your function for use in a
+#' parallel map, so that it is self-contained.
 #'
 #' The only exception is if `.f` is a function from a package or base R, since
-#' these are already self-contained. Do not [crate][carrier::crate] these
-#' functions - although you can [crate][carrier::crate] an anonymous function
-#' that calls these functions.
+#' these are already self-contained. Do not crate these functions - although you
+#' may crate an anonymous function that calls these functions.
+#'
 #' \preformatted{
 #' # either use a base R or package function directly:
 #' mtcars |> map_dbl(sum, .parallel = TRUE)
 #' # or crate() it as an anonymous function:
-#' mtcars |> map_dbl(crate(function(...) sum(...)), .parallel = TRUE)
+#' mtcars |> map_dbl(carrier::crate(function(...) sum(...)), .parallel = TRUE)
 #' }
 #'
 #' Crating ensures that everything needed by the function is serialized along
@@ -84,7 +86,7 @@
 #'
 #' # crate() a function, including the definition of 'fun':
 #' fun <- function(x) \{x + x \%\% 2 \}
-#' map(1:3, crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
+#' map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
 #' }
 #'
 #' ### Auto-crating
@@ -93,7 +95,7 @@
 #' automatically crated. When this happens, a confirmation along with the crate
 #' size is printed to the console.
 #'
-#' For details on further options, see [crate][carrier::crate].
+#' For details on further options, see [carrier::crate].
 #'
 #' # Further documentation
 #'
@@ -101,8 +103,8 @@
 #' [mirai introduction and reference](https://shikokuchuo.net/mirai/articles/mirai.html)
 #' for more details.
 #'
-#' [crate] is re-exported from the \CRANpkg{carrier} package. See the
-#' [crate readme](https://github.com/r-lib/carrier) for more details.
+#' Crating is provided by the \CRANpkg{carrier} package. See the
+#' [carrier readme](https://github.com/r-lib/carrier) for more details.
 #'
 #' @name parallelization
 NULL

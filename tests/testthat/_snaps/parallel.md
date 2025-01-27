@@ -4,7 +4,7 @@
       map(list(x = 1, y = 2), list, .parallel = TRUE)
     Condition
       Error in `map()`:
-      ! No daemons set - use e.g. `daemons(6)` to set up 6 local daemons.
+      ! No daemons set - use e.g. `mirai::daemons(6)` to set 6 local daemons.
 
 # Can't use `...` in a parallel map
 

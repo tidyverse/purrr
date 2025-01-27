@@ -57,11 +57,12 @@ function and will tend to yield better error messages.}
 \item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
 parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package.
 \itemize{
-\item Set up parallelization in your session beforehand using \code{\link[mirai:daemons]{daemons()}}.
-\item Non-package functions are auto-crated for sharing with parallel processes.
-You may \link[carrier:crate]{crate} your function explicitly if you need to
-supply additional objects along with your function.
-\item Use of \code{...} is not permitted in this context, \link[carrier:crate]{crate} an
+\item Set up parallelization in your session beforehand using
+\code{\link[mirai:daemons]{mirai::daemons()}}.
+\item Non-package functions are auto-crated for sharing with parallel
+processes. You may \code{\link[carrier:crate]{carrier::crate()}} your function explicitly if you need
+to supply additional objects along with your function.
+\item Use of \code{...} is not permitted in this context, \code{\link[carrier:crate]{carrier::crate()}} an
 anonymous function instead.
 }
 
@@ -163,17 +164,16 @@ mtcars |>
   map(summary) |>
   map_dbl("r.squared")
 
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive() && requireNamespace("mirai", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Run in interactive sessions only as spawns additional processes
 
 # To use parallelized map, set daemons (number of parallel processes) first:
-daemons(2)
+mirai::daemons(2)
 
 mtcars |> map_dbl(sum, .parallel = TRUE)
 
-# We recommend that you crate() anonymous functions
 1:10 |>
-  map(crate(function(x) stats::rnorm(10, mean = x)), .parallel = TRUE) |>
+  map(function(x) stats::rnorm(10, mean = x), .parallel = TRUE) |>
   map_dbl(mean, .parallel = TRUE)
 
 daemons(0)

@@ -5,8 +5,8 @@ test_that("Can't parallel map without first setting daemons", {
 })
 
 # set up daemons
-daemons(1, dispatcher = FALSE) # ensures only 1 additional process on CRAN
-on.exit(daemons(0), add = TRUE)
+mirai::daemons(1, dispatcher = FALSE) # ensures only 1 additional process on CRAN
+on.exit(mirai::daemons(0), add = TRUE)
 
 test_that("Can't use `...` in a parallel map", {
   expect_snapshot(error = TRUE, {
@@ -378,4 +378,4 @@ test_that("negative .at omits locations", {
 
 # ---------------------------------------------------------------------------
 
-daemons(0)
+mirai::daemons(0)

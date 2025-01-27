@@ -48,11 +48,12 @@
 #'
 #' @param .parallel `r lifecycle::badge("experimental")` Whether to map in
 #'   parallel. Use `TRUE` to parallelize using the \CRANpkg{mirai} package.
-#'   * Set up parallelization in your session beforehand using [`daemons()`][mirai::daemons].
-#'   * Non-package functions are auto-crated for sharing with parallel processes.
-#'   You may [crate][carrier::crate] your function explicitly if you need to
-#'   supply additional objects along with your function.
-#'   * Use of `...` is not permitted in this context, [crate][carrier::crate] an
+#'   * Set up parallelization in your session beforehand using
+#'   [mirai::daemons()].
+#'   * Non-package functions are auto-crated for sharing with parallel
+#'   processes. You may [carrier::crate()] your function explicitly if you need
+#'   to supply additional objects along with your function.
+#'   * Use of `...` is not permitted in this context, [carrier::crate()] an
 #'   anonymous function instead.
 #'
 #'  See [parallelization] for more details.
@@ -136,17 +137,16 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 #'
-#' @examplesIf interactive()
+#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE)
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map, set daemons (number of parallel processes) first:
-#' daemons(2)
+#' mirai::daemons(2)
 #'
 #' mtcars |> map_dbl(sum, .parallel = TRUE)
 #'
-#' # We recommend that you crate() anonymous functions
 #' 1:10 |>
-#'   map(crate(function(x) stats::rnorm(10, mean = x)), .parallel = TRUE) |>
+#'   map(function(x) stats::rnorm(10, mean = x), .parallel = TRUE) |>
 #'   map_dbl(mean, .parallel = TRUE)
 #'
 #' daemons(0)
@@ -213,7 +213,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
   if (is.null(mirai::nextget("n"))) {
     cli::cli_abort(
-      "No daemons set - use e.g. `daemons(6)` to set up 6 local daemons.",
+      "No daemons set - use e.g. `mirai::daemons(6)` to set 6 local daemons.",
       call = error_call
     )
   }
@@ -225,7 +225,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
 
   if (!carrier::is_crate(.f) && !isNamespace(topenv(environment(.f)))) {
-    .f <- crate(rlang::set_env(.f))
+    .f <- carrier::crate(rlang::set_env(.f))
     cli::cli_inform(c(
       v = "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
     ))
