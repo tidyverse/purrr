@@ -1,3 +1,5 @@
+# purrr 1.0.4
+
 # purrr 1.0.3
 
 * Varies fixed to bring purrr back into compliance with R CMD check (@shikokuchuo, @jayhesselberth).
