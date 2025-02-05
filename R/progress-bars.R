@@ -22,7 +22,7 @@
 #'   the progress bar type. It must be given for the `custom` type.
 #'   Format strings may contain R expressions to evaluate in braces.
 #'   They support cli [pluralization][cli::pluralization], and
-#'   [styling][inline-markup] and they can contain special
+#'   [styling][cli::inline-markup] and they can contain special
 #'   [progress variables][cli::progress-variables].
 #' * `format_done`: format string for successful termination. By default
 #'   the same as `format`.

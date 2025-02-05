@@ -1,103 +1,75 @@
-# ast2ast
+# meta
 
 <details>
 
-* Version: 0.2.1
-* GitHub: https://github.com/Konrad1991/ast2ast
-* Source code: https://github.com/cran/ast2ast
-* Date/Publication: 2022-10-19 07:25:07 UTC
-* Number of recursive dependencies: 76
+* Version: 8.0-2
+* GitHub: https://github.com/guido-s/meta
+* Source code: https://github.com/cran/meta
+* Date/Publication: 2025-01-21 19:20:02 UTC
+* Number of recursive dependencies: 96
 
-Run `revdepcheck::cloud_details(, "ast2ast")` for more info
+Run `revdepcheck::cloud_details(, "meta")` for more info
 
 </details>
 
 ## Newly broken
 
-*   checking tests ... ERROR
+*   checking installed package size ... NOTE
     ```
-      Running ‘tinytest.R’
-    Running the tests in ‘tests/tinytest.R’ failed.
-    Complete output:
-      > if ( requireNamespace("tinytest", quietly=TRUE) ){
-      + tinytest::test_package("ast2ast")
-      + }
-      
-      test_all.R....................    0 tests    
-      test_all.R....................    0 tests    
-      test_all.R....................    0 tests    
-      test_all.R....................    0 tests    Error: C stack usage  9962948 is too close to the limit
-      Execution halted
+      installed size is  5.6Mb
+      sub-directories of 1Mb or more:
+        R      3.5Mb
+        help   1.5Mb
     ```
 
-# openalexR
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Packages unavailable to check Rd xrefs: ‘metasens’, ‘robumeta’
+    ```
+
+# waywiser
 
 <details>
 
-* Version: 1.0.0
-* GitHub: https://github.com/massimoaria/openalexR
-* Source code: https://github.com/cran/openalexR
-* Date/Publication: 2022-10-06 10:40:02 UTC
-* Number of recursive dependencies: 78
+* Version: 0.6.0
+* GitHub: https://github.com/ropensci/waywiser
+* Source code: https://github.com/cran/waywiser
+* Date/Publication: 2024-06-27 19:10:03 UTC
+* Number of recursive dependencies: 172
 
-Run `revdepcheck::cloud_details(, "openalexR")` for more info
+Run `revdepcheck::cloud_details(, "waywiser")` for more info
 
 </details>
 
 ## Newly broken
 
-*   checking re-building of vignette outputs ... WARNING
+*   checking running R code from vignettes ... ERROR
     ```
-    Error(s) in re-building vignettes:
+    Errors in running code in vignettes:
+    when running code in ‘multi-scale-assessment.Rmd’
       ...
-    --- re-building ‘A_Brief_Introduction_to_openalexR.Rmd’ using rmarkdown
-    Quitting from lines 237-251 (A_Brief_Introduction_to_openalexR.Rmd) 
-    Error: processing vignette 'A_Brief_Introduction_to_openalexR.Rmd' failed with diagnostics:
-    $ operator is invalid for atomic vectors
-    --- failed re-building ‘A_Brief_Introduction_to_openalexR.Rmd’
+      |                                                                            
+      |=================                                                     |  25%
+      |                                                                            
+      |==================                                                    |  25%Warning in unzip(file_loc, exdir = tmp) :
+      error 1 in extracting from zip file
+    Cannot open layer tl_2022_us_county
     
-    SUMMARY: processing the following file failed:
-      ‘A_Brief_Introduction_to_openalexR.Rmd’
-    
-    Error: Vignette re-building failed.
+      When sourcing ‘multi-scale-assessment.R’:
+    Error: Opening layer failed.
     Execution halted
+    
+      ‘multi-scale-assessment.Rmd’ using ‘UTF-8’... failed
+      ‘residual-autocorrelation.Rmd’ using ‘UTF-8’... OK
+      ‘waywiser.Rmd’ using ‘UTF-8’... OK
     ```
 
-# rearrr
+## In both
 
-<details>
-
-* Version: 0.3.2
-* GitHub: https://github.com/ludvigolsen/rearrr
-* Source code: https://github.com/cran/rearrr
-* Date/Publication: 2022-11-24 09:40:02 UTC
-* Number of recursive dependencies: 74
-
-Run `revdepcheck::cloud_details(, "rearrr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
+*   checking data for non-ASCII characters ... NOTE
     ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      xpectr::strip(side_effects_16117[["error_class"]]) not equal to xpectr::strip(c(purrr_error, "error", "condition")).
-      Lengths differ: 4 is not 3
-      ── Failure ('test_swirl_3d.R:1554'): fuzz testing swirl_3d() ───────────────────
-      xpectr::strip(side_effects_19735[["error_class"]]) not equal to xpectr::strip(c(purrr_error, "error", "condition")).
-      Lengths differ: 4 is not 3
-      ── Failure ('test_swirl_3d.R:1584'): fuzz testing swirl_3d() ───────────────────
-      xpectr::strip(side_effects_19575[["error_class"]]) not equal to xpectr::strip(c(purrr_error, "error", "condition")).
-      Lengths differ: 4 is not 3
-      ── Failure ('test_swirl_3d.R:1988'): fuzz testing swirl_3d() ───────────────────
-      xpectr::strip(side_effects_10389[["error_class"]]) not equal to xpectr::strip(c(purrr_error, "error", "condition")).
-      Lengths differ: 4 is not 3
-      
-      [ FAIL 78 | WARN 0 | SKIP 0 | PASS 7265 ]
-      Error: Test failures
-      Execution halted
+      Note: found 1 marked UTF-8 string
     ```
 
