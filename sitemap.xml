@@ -1,237 +1,81 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://purrr.tidyverse.org/404.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/articles/base.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/articles/other-langs.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/index.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/accumulate.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/along.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/array-coercion.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/as_mapper.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/as_vector.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/at_depth.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/attr_getter.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/auto_browse.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/chuck.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/compose.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/cross.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/detect.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/every.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/faq-adverbs-export.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/flatten.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/get-attr.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/has_element.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/head_while.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/imap.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/insistently.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/invoke.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/keep.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/keep_at.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/lift.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/list_assign.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/list_c.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/list_flatten.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/list_simplify.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/list_transpose.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/lmap.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/map.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/map2.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/map_depth.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/map_dfr.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/map_if.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/map_raw.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/modify.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/modify_in.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/modify_tree.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/negate.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/partial.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/pluck.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/pluck_depth.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/pmap.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/possibly.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/prepend.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/progress_bars.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/purrr-package.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/purrr_error_indexed.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/quietly.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/rate-helpers.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/rate_sleep.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/rbernoulli.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/rdunif.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/reduce.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/reduce_right.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/rerun.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/safely.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/slowly.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/splice.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/transpose.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/update_list.html</loc>
-  </url>
-  <url>
-    <loc>https://purrr.tidyverse.org/reference/when.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://purrr.tidyverse.org/404.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/CONTRIBUTING.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/LICENSE-text.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/LICENSE.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/SUPPORT.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/articles/base.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/articles/index.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/articles/other-langs.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/authors.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/index.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/news/index.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/accumulate.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/along.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/array-coercion.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/as_mapper.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/as_vector.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/at_depth.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/attr_getter.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/auto_browse.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/chuck.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/compose.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/cross.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/detect.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/every.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/faq-adverbs-export.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/flatten.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/get-attr.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/has_element.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/head_while.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/imap.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/index.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/insistently.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/invoke.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/keep.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/keep_at.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/lift.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/list_assign.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/list_c.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/list_flatten.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/list_simplify.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/list_transpose.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/lmap.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/map.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/map2.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/map_depth.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/map_dfr.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/map_if.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/map_raw.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/modify.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/modify_in.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/modify_tree.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/negate.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/partial.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/pipe.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/pluck.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/pluck_depth.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/pmap.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/possibly.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/prepend.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/progress_bars.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/purrr-package.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/purrr_error_indexed.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/quietly.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/rate-helpers.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/rate_sleep.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/rbernoulli.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/rdunif.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/reduce.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/reduce_right.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/reexports.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/rerun.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/safely.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/slowly.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/splice.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/transpose.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/update_list.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/reference/when.html</loc></url>
 </urlset>
+
