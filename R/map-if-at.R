@@ -57,11 +57,11 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #'   installed, you can use `vars()` and tidyselect helpers to select
 #'   elements.
 #' @export
-map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
+map_at <- function(.x, .at, .f, ..., .parallel = FALSE, .progress = FALSE) {
   where <- where_at(.x, .at, user_env = caller_env())
 
   out <- vector("list", length(.x))
-  out[where]  <- map(.x[where], .f, ..., .progress = .progress)
+  out[where]  <- map(.x[where], .f, ..., .parallel = .parallel, .progress = .progress)
   out[!where] <- .x[!where]
 
   set_names(out, names(.x))

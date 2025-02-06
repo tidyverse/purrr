@@ -10,19 +10,19 @@
 \alias{walk}
 \title{Apply a function to each element of a vector}
 \usage{
-map(.x, .f, ..., .progress = FALSE)
+map(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_lgl(.x, .f, ..., .progress = FALSE)
+map_lgl(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_int(.x, .f, ..., .progress = FALSE)
+map_int(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_dbl(.x, .f, ..., .progress = FALSE)
+map_dbl(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_chr(.x, .f, ..., .progress = FALSE)
+map_chr(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map_vec(.x, .f, ..., .ptype = NULL, .progress = FALSE)
+map_vec(.x, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE)
 
-walk(.x, .f, ..., .progress = FALSE)
+walk(.x, .f, ..., .parallel = FALSE, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -53,6 +53,20 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
+parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package.
+\itemize{
+\item Set up parallelization in your session beforehand using
+\code{\link[mirai:daemons]{mirai::daemons()}}.
+\item Non-package functions are auto-crated for sharing with parallel
+processes. You may \code{\link[carrier:crate]{carrier::crate()}} your function explicitly if you need
+to supply additional objects along with your function.
+\item Use of \code{...} is not permitted in this context, \code{\link[carrier:crate]{carrier::crate()}} an
+anonymous function instead.
+}
+
+See \link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
@@ -149,6 +163,21 @@ mtcars |>
   map(\(df) lm(mpg ~ wt, data = df)) |>
   map(summary) |>
   map_dbl("r.squared")
+
+\dontshow{if (interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Run in interactive sessions only as spawns additional processes
+
+# To use parallelized map, set daemons (number of parallel processes) first:
+mirai::daemons(2)
+
+mtcars |> map_dbl(sum, .parallel = TRUE)
+
+1:10 |>
+  map(function(x) stats::rnorm(10, mean = x), .parallel = TRUE) |>
+  map_dbl(mean, .parallel = TRUE)
+
+mirai::daemons(0)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=map_if]{map_if()}} for applying a function to only those elements

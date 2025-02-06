@@ -1,5 +1,10 @@
 # purrr (development version)
 
+* purrr gains the capacity for parallel and distributed map, powered by the
+  mirai package. The argument `.parallel` has been added to `map()`, `map2()`,
+  `pmap()` and variants to enable this. See `?parallelization` for more details
+  (@shikokuchuo, #1163).
+
 # purrr 1.0.4
 
 # purrr 1.0.3

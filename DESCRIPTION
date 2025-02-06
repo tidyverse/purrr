@@ -21,12 +21,14 @@ Imports:
     magrittr (>= 1.5.0),
     rlang (>= 1.1.1),
     vctrs (>= 0.6.3)
-Suggests:
+Suggests: 
+    carrier (>= 0.1.1),
     covr,
     dplyr (>= 0.7.8),
     httr,
     knitr,
     lubridate,
+    mirai (>= 2.0.1.9005),
     rmarkdown,
     testthat (>= 3.0.0),
     tibble,
@@ -43,3 +45,4 @@ Config/testthat/parallel: TRUE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Remotes: shikokuchuo/mirai

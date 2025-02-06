@@ -10,19 +10,19 @@
 \alias{walk2}
 \title{Map over two inputs}
 \usage{
-map2(.x, .y, .f, ..., .progress = FALSE)
+map2(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map2_lgl(.x, .y, .f, ..., .progress = FALSE)
+map2_lgl(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map2_int(.x, .y, .f, ..., .progress = FALSE)
+map2_int(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map2_dbl(.x, .y, .f, ..., .progress = FALSE)
+map2_dbl(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map2_chr(.x, .y, .f, ..., .progress = FALSE)
+map2_chr(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE)
 
-map2_vec(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE)
+map2_vec(.x, .y, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE)
 
-walk2(.x, .y, .f, ..., .progress = FALSE)
+walk2(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE)
 }
 \arguments{
 \item{.x, .y}{A pair of vectors, usually the same length. If not, a vector
@@ -51,6 +51,20 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
+parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package.
+\itemize{
+\item Set up parallelization in your session beforehand using
+\code{\link[mirai:daemons]{mirai::daemons()}}.
+\item Non-package functions are auto-crated for sharing with parallel
+processes. You may \code{\link[carrier:crate]{carrier::crate()}} your function explicitly if you need
+to supply additional objects along with your function.
+\item Use of \code{...} is not permitted in this context, \code{\link[carrier:crate]{carrier::crate()}} an
+anonymous function instead.
+}
+
+See \link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

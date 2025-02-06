@@ -30,28 +30,28 @@
 #' by_cyl <- mtcars |> split(mtcars$cyl)
 #' mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 #' map2(mods, by_cyl, predict)
-map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("list", .x, .y, .f, ..., .progress = .progress)
+map2 <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map2_("list", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("logical", .x, .y, .f, ..., .progress = .progress)
+map2_lgl <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map2_("logical", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("integer", .x, .y, .f, ..., .progress = .progress)
+map2_int <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map2_("integer", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("double", .x, .y, .f, ..., .progress = .progress)
+map2_dbl <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map2_("double", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("character", .x, .y, .f, ..., .progress = .progress)
+map2_chr <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map2_("character", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
 }
 
 map2_ <- function(.type,
@@ -59,6 +59,7 @@ map2_ <- function(.type,
                   .y,
                   .f,
                   ...,
+                  .parallel = FALSE,
                   .progress = FALSE,
                   .purrr_user_env = caller_env(2),
                   .purrr_error_call = caller_env()) {
@@ -74,6 +75,14 @@ map2_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
+  if (isTRUE(.parallel)) {
+    attributes(args) <- list(
+      class = "data.frame",
+      row.names = if (is.null(names)) .set_row_names(n) else names
+    )
+    return(mmap_(args, .f, .progress, .type, .purrr_error_call, ...))
+  }
+
   i <- 0L
   with_indexed_errors(
     i = i,
@@ -85,14 +94,14 @@ map2_ <- function(.type,
 
 #' @rdname map2
 #' @export
-map2_vec <- function(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE) {
-  out <- map2(.x, .y, .f, ..., .progress = .progress)
+map2_vec <- function(.x, .y, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE) {
+  out <- map2(.x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
 
 #' @export
 #' @rdname map2
-walk2 <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2(.x, .y, .f, ..., .progress = .progress)
+walk2 <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
+  map2(.x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
   invisible(.x)
 }
