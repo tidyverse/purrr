@@ -74,7 +74,7 @@ which elements of <code>.x</code> are transformed with <code>.f</code>.</p></li>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map_if</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.p</span>, <span class="va">.f</span>, <span class="va">...</span>, .else <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">map_at</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.at</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -131,6 +131,18 @@ and returns a logical, integer, or character vector of elements to select.</p>
 <p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>: if the tidyselect package is
 installed, you can use <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code> and tidyselect helpers to select
 elements.</p></dd>
+
+
+<dt id="arg--parallel">.parallel<a class="anchor" aria-label="anchor" href="#arg--parallel"></a></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a> Whether to map in
+parallel. Use <code>TRUE</code> to parallelize using the <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> package.</p><ul><li><p>Set up parallelization in your session beforehand using
+<code><a href="https://shikokuchuo.net/mirai/reference/daemons.html" class="external-link">mirai::daemons()</a></code>.</p></li>
+<li><p>Non-package functions are auto-crated for sharing with parallel
+processes. You may <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> your function explicitly if you need
+to supply additional objects along with your function.</p></li>
+<li><p>Use of <code>...</code> is not permitted in this context, <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> an
+anonymous function instead.</p></li>
+</ul><p>See <a href="parallelization.html">parallelization</a> for more details.</p></dd>
 
 
 <dt id="arg--progress">.progress<a class="anchor" aria-label="anchor" href="#arg--progress"></a></dt>

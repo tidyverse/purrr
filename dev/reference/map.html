@@ -87,19 +87,19 @@ the input <code>.x</code>.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">map</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_lgl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">map_lgl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_int</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">map_int</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">map_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">map_chr</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">map_vec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .ptype <span class="op">=</span> <span class="cn">NULL</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">map_vec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .ptype <span class="op">=</span> <span class="cn">NULL</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">walk</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">walk</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .parallel <span class="op">=</span> <span class="cn">FALSE</span>, .progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -133,6 +133,18 @@ set a default value if the indexed element is <code>NULL</code> or does not exis
 <span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.</p></dd>
+
+
+<dt id="arg--parallel">.parallel<a class="anchor" aria-label="anchor" href="#arg--parallel"></a></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a> Whether to map in
+parallel. Use <code>TRUE</code> to parallelize using the <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a> package.</p><ul><li><p>Set up parallelization in your session beforehand using
+<code><a href="https://shikokuchuo.net/mirai/reference/daemons.html" class="external-link">mirai::daemons()</a></code>.</p></li>
+<li><p>Non-package functions are auto-crated for sharing with parallel
+processes. You may <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> your function explicitly if you need
+to supply additional objects along with your function.</p></li>
+<li><p>Use of <code>...</code> is not permitted in this context, <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> an
+anonymous function instead.</p></li>
+</ul><p>See <a href="parallelization.html">parallelization</a> for more details.</p></dd>
 
 
 <dt id="arg--progress">.progress<a class="anchor" aria-label="anchor" href="#arg--progress"></a></dt>
@@ -352,6 +364,21 @@ of <code>.x</code> that meet a specified condition.</p>
 <span class="r-in"><span>  <span class="fu">map_dbl</span><span class="op">(</span><span class="st">"r.squared"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         4         6         8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.5086326 0.4645102 0.4229655 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive() &amp;&amp; requireNamespace("mirai", quietly = TRUE) &amp;&amp; requireNamespace("carrier", quietly = TRUE)</span></span></span>
+<span class="r-in"><span><span class="co"># Run in interactive sessions only as spawns additional processes</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># To use parallelized map, set daemons (number of parallel processes) first:</span></span></span>
+<span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://shikokuchuo.net/mirai/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu">map_dbl</span><span class="op">(</span><span class="va">sum</span>, .parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">map</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="va">x</span><span class="op">)</span>, .parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">map_dbl</span><span class="op">(</span><span class="va">mean</span>, .parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">mirai</span><span class="fu">::</span><span class="fu"><a href="https://shikokuchuo.net/mirai/reference/daemons.html" class="external-link">daemons</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
