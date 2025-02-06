@@ -44,5 +44,10 @@ some <- function(.x, .p, ...) {
 #' @export
 #' @rdname every
 none <- function(.x, .p, ...) {
-  every(.x, negate(.p), ...)
+  .p <- as_mapper(.p, ...)
+
+  n <- vec_size(.x)
+  i <- 0L
+
+  .Call(none_impl, environment(), n, i)
 }

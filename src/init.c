@@ -15,6 +15,7 @@ extern SEXP pluck_impl(SEXP, SEXP, SEXP, SEXP);
 extern SEXP flatten_impl(SEXP);
 extern SEXP every_impl(SEXP, SEXP, SEXP);
 extern SEXP some_impl(SEXP, SEXP, SEXP);
+extern SEXP none_impl(SEXP, SEXP, SEXP);
 extern SEXP map_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP map2_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP pmap_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -28,6 +29,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"flatten_impl",          (DL_FUNC) &flatten_impl,   1},
   {"every_impl",            (DL_FUNC) &every_impl,     3},
   {"some_impl",             (DL_FUNC) &some_impl,      3},
+  {"none_impl",             (DL_FUNC) &none_impl,      3},
   {"map_impl",              (DL_FUNC) &map_impl,       6},
   {"map2_impl",             (DL_FUNC) &map2_impl,      6},
   {"pmap_impl",             (DL_FUNC) &pmap_impl,      8},

@@ -7,17 +7,22 @@
 #include "checks.h"
 
 static SEXP make_call();
-static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value);
+static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value, bool early_stop_if);
 
 SEXP every_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
 SEXP some_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
+SEXP none_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
 
 SEXP every_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
-  return test_predicate(env, ffi_n, ffi_i, true);
+  return test_predicate(env, ffi_n, ffi_i, true, false);
 }
 
 SEXP some_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
-  return test_predicate(env, ffi_n, ffi_i, false);
+  return test_predicate(env, ffi_n, ffi_i, false, true);
+}
+
+SEXP none_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
+  return test_predicate(env, ffi_n, ffi_i, true, true);
 }
 
 /**
@@ -27,9 +32,10 @@ SEXP some_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
  * @param ffi_n Length of .x
  * @param ffi_i Integer for iterating over elements of .x; should be equal to 0
  * @param initial_value Answer if length of .x is 0
+ * @param early_stop_if Value to stop iterating on
  * @return A single R logical value, one of TRUE/FALSE/NA
  */
-static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value) {
+static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value, bool early_stop_if) {
   int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
 
@@ -64,7 +70,7 @@ static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value)
     int res_value = LOGICAL(res)[0];
     UNPROTECT(1);  // res
 
-    if (res_value == !initial_value) {
+    if (res_value == early_stop_if) {
       *p_out = !initial_value;
       break;
     }
