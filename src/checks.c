@@ -2,7 +2,7 @@
 #include <stdbool.h>
 
 /**
- * @brief Check any SEXP object for being a single TRUE/FALSE value; logical NA is excluded
+ * Check any SEXP object for being a single TRUE/FALSE value; logical NA is excluded.
  *
  * @param value An R object (SEXP)
  * @return 1 if bool, 0 otherwise
@@ -12,7 +12,7 @@ bool is_bool(SEXP value) {
 }
 
 /**
- * @brief Check any SEXP object for being any kind of NA
+ * Check any SEXP object for being any kind of NA.
  *
  * @param value An R object (SEXP)
  * @return 1 if NA, 0 otherwise
