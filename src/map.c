@@ -26,15 +26,24 @@ SEXP call_loop(SEXP env,
                int n,
                SEXP names,
                int* p_i,
-               int force) {
+               int force,
+               SEXP the_env) {
   SEXP bar = cli_progress_bar(n, progress);
   R_PreserveObject(bar);
   r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
 
+  SEXP results_symbol = Rf_install("last_map_results");
+  SEXP index_symbol = Rf_install("last_map_index");
+  int start = *p_i;
+  SEXP index = PROTECT(Rf_ScalarInteger(start));
+  Rf_defineVar(index_symbol, index, the_env);
+
   SEXP out = PROTECT(Rf_allocVector(type, n));
+  Rf_defineVar(results_symbol, out, the_env);
   Rf_setAttrib(out, R_NamesSymbol, names);
 
-  for (int i = 0; i < n; ++i) {
+  for (int i = start; i < n; ++i) {
+    SET_INTEGER_ELT(index, 0, i);
     *p_i = i + 1;
 
     if (CLI_SHOULD_TICK) {
@@ -56,7 +65,7 @@ SEXP call_loop(SEXP env,
 
   *p_i = 0;
 
-  UNPROTECT(1);
+  UNPROTECT(2);
   return out;
 }
 
@@ -65,7 +74,8 @@ SEXP map_impl(SEXP env,
               SEXP progress,
               SEXP ffi_n,
               SEXP names,
-              SEXP i) {
+              SEXP i,
+              SEXP the_env) {
   static SEXP call = NULL;
   if (call == NULL) {
     SEXP x_sym = Rf_install(".x");
@@ -96,7 +106,8 @@ SEXP map_impl(SEXP env,
     n,
     names,
     p_i,
-    force
+    force,
+    the_env
   );
 }
 
@@ -105,7 +116,8 @@ SEXP map2_impl(SEXP env,
                SEXP progress,
                SEXP ffi_n,
                SEXP names,
-               SEXP i) {
+               SEXP i,
+               SEXP the_env) {
   static SEXP call = NULL;
   if (call == NULL) {
     SEXP x_sym = Rf_install(".x");
@@ -136,7 +148,8 @@ SEXP map2_impl(SEXP env,
     n,
     names,
     p_i,
-    force
+    force,
+    the_env
   );
 }
 
@@ -147,7 +160,8 @@ SEXP pmap_impl(SEXP env,
                SEXP names,
                SEXP i,
                SEXP call_names,
-               SEXP ffi_call_n) {
+               SEXP ffi_call_n,
+               SEXP the_env) {
   // Construct call like f(.l[[1]][[i]], .l[[2]][[i]], ...)
   //
   // Currently accessing S3 vectors in a list like .l[[c(1, i)]] will not
@@ -204,7 +218,8 @@ SEXP pmap_impl(SEXP env,
     n,
     names,
     p_i,
-    force
+    force,
+    the_env
   );
 
   UNPROTECT(1);
