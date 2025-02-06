@@ -9,11 +9,3 @@ TAGS
 docs
 compile_commands.json
 .cache
-
-tests/testthat/_snaps/
-
-CMakeLists.txt
-
-cmake-build-debug/
-
-.idea/
