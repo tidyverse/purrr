@@ -1,40 +1,11 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
-#include <stdbool.h>
 
 #include "conditions.h"
+#include "checks.h"
 
-static bool is_bool(SEXP value);
-static bool is_na(SEXP value);
 SEXP every_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
-
-static bool is_bool(SEXP value) {
-  return TYPEOF(value) == LGLSXP && Rf_length(value) == 1 && LOGICAL(value)[0] != NA_LOGICAL;
-}
-
-static bool is_na(SEXP value) {
-  // NULL is not NA
-  if (value == R_NilValue) return false;
-
-  switch (TYPEOF(value)) {
-  case LGLSXP:
-    return LENGTH(value) == 1 && (LOGICAL(value)[0] == NA_LOGICAL);
-  case INTSXP:
-    return LENGTH(value) == 1 && (INTEGER(value)[0] == NA_INTEGER);
-  case REALSXP:
-    return LENGTH(value) == 1 && ISNA(REAL(value)[0]);
-  case CPLXSXP:
-    if (LENGTH(value) != 1) return false;
-    Rcomplex c = COMPLEX(value)[0];
-    return ISNA(c.r) || ISNA(c.i);
-  case STRSXP:
-    return LENGTH(value) == 1 &&  (STRING_ELT(value, 0) == NA_STRING);
-  default:
-    // Other types cannot be NA
-    return false;
-  }
-}
 
 SEXP every_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
   int n = INTEGER_ELT(ffi_n, 0);
