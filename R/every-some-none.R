@@ -22,39 +22,32 @@
 #' # unsafe (e.g. in `if ()` conditions), make sure to use safe predicates:
 #' if (some(list(NA, FALSE), rlang::is_true)) "foo" else "bar"
 every <- function(.x, .p, ...) {
-  .p <- as_predicate(.p, ..., .mapper = TRUE, .allow_na = TRUE)
+  .p <- as_mapper(.p, ...)
 
-  val <- TRUE
-  for (i in seq_along(.x)) {
-    val <- val && .p(.x[[i]], ...)
+  n <- vec_size(.x)
+  i <- 0L
 
-    if (is_false(val)) {
-      return(FALSE)
-    }
-  }
-
-  val
+  .Call(every_impl, environment(), n, i)
 }
 
 #' @export
 #' @rdname every
 some <- function(.x, .p, ...) {
-  .p <- as_predicate(.p, ..., .mapper = TRUE, .allow_na = TRUE)
+  .p <- as_mapper(.p, ...)
 
-  val <- FALSE
-  for (i in seq_along(.x)) {
-    val <- val || .p(.x[[i]], ...)
+  n <- vec_size(.x)
+  i <- 0L
 
-    if (is_true(val)) {
-      return(TRUE)
-    }
-  }
-
-  val
+  .Call(some_impl, environment(), n, i)
 }
 
 #' @export
 #' @rdname every
 none <- function(.x, .p, ...) {
-  every(.x, negate(.p), ...)
+  .p <- as_mapper(.p, ...)
+
+  n <- vec_size(.x)
+  i <- 0L
+
+  .Call(none_impl, environment(), n, i)
 }
