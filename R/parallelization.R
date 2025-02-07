@@ -99,7 +99,7 @@
 #'
 #' # Further documentation
 #'
-#' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}.See the
+#' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
 #' [mirai introduction and reference](https://shikokuchuo.net/mirai/articles/mirai.html)
 #' for more details.
 #'
