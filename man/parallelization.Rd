@@ -102,7 +102,7 @@ For details on further options, see \link[carrier:crate]{carrier::crate}.
 }
 
 \section{Further documentation}{
-\pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}.See the
+\pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
 \href{https://shikokuchuo.net/mirai/articles/mirai.html}{mirai introduction and reference}
 for more details.
 
