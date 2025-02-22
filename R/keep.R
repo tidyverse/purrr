@@ -42,14 +42,16 @@
 #' list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) |>
 #'   compact()
 keep <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+  .allow_na <- ifelse(anyNA(.x), TRUE, FALSE)
+  where <- where_if(.x, .p, .allow_na = .allow_na, ...)
   .x[!is.na(where) & where]
 }
 
 #' @export
 #' @rdname keep
 discard <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+  .allow_na <- ifelse(anyNA(.x), TRUE, FALSE)
+  where <- where_if(.x, .p, .allow_na = .allow_na, ...)
   .x[is.na(where) | !where]
 }
 
