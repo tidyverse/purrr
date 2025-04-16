@@ -7,6 +7,7 @@
 list_flatten(
   x,
   ...,
+  is_node = NULL,
   name_spec = "{outer}_{inner}",
   name_repair = c("minimal", "unique", "check_unique", "universal")
 )
@@ -15,6 +16,13 @@ list_flatten(
 \item{x}{A list.}
 
 \item{...}{These dots are for future extensions and must be empty.}
+
+\item{is_node}{A predicate function that determines whether an element is
+a node (by returning \code{TRUE}) or a leaf (by returning \code{FALSE}). The
+default value, \code{NULL}, treats simple lists as nodes and everything else
+(including richer objects like data frames and linear models) as leaves,
+using \code{\link[vctrs:obj_is_list]{vctrs::obj_is_list()}}. To recurse into all objects built on lists
+use \code{\link[=is.list]{is.list()}}.}
 
 \item{name_spec}{If both inner and outer names are present, control
 how they are combined. Should be a glue specification that uses
@@ -58,4 +66,19 @@ x <- list(x = list(a = 1, b = 2), y = list(c = 1, d = 2))
 x |> list_flatten() |> names()
 x |> list_flatten(name_spec = "{outer}") |> names()
 x |> list_flatten(name_spec = "{inner}") |> names()
+
+# Set `is_node = is.list` to also flatten richer objects built on lists like
+# data frames and linear models
+x <- list(
+  a_string = "something",
+  a_list = list(1:3, "else"),
+  a_df = mtcars
+)
+
+x |> list_flatten()
+x |> list_flatten(is_node = is.list)
+
+# Note that other than nested rich objects, an "atomic" rich object retains
+# its class (but still loses attributes like rownames) when `is_node = is.list`
+list_flatten(mtcars, is_node = is.list)
 }

@@ -11,6 +11,7 @@
 #'   `"check_unique"`. See [vctrs::vec_as_names()] for the meaning of these
 #'   options.
 #' @inheritParams rlang::args_dots_empty
+#' @inheritParams modify_tree
 #' @return A list of the same type as `x`. The list might be shorter
 #'   if `x` contains empty lists, the same length if it contains lists
 #'   of length 1 or no sub-lists, or longer if it contains lists of
@@ -40,13 +41,30 @@
 #' x |> list_flatten() |> names()
 #' x |> list_flatten(name_spec = "{outer}") |> names()
 #' x |> list_flatten(name_spec = "{inner}") |> names()
+#'
+#' # Set `is_node = is.list` to also flatten richer objects built on lists like
+#' # data frames and linear models
+#' x <- list(
+#'   a_string = "something",
+#'   a_list = list(1:3, "else"),
+#'   a_df = mtcars
+#' )
+#'
+#' x |> list_flatten()
+#' x |> list_flatten(is_node = is.list)
+#'
+#' # Note that other than nested rich objects, an "atomic" rich object retains
+#' # its class (but still loses attributes like rownames) when `is_node = is.list`
+#' list_flatten(mtcars, is_node = is.list)
 list_flatten <- function(
     x,
     ...,
+    is_node = NULL,
     name_spec = "{outer}_{inner}",
     name_repair = c("minimal", "unique", "check_unique", "universal")
-  ) {
-  obj_check_list(x)
+) {
+  is_node <- as_is_node(is_node)
+  obj_check_node(x, is_node)
   check_dots_empty()
   check_string(name_spec)
 
@@ -55,7 +73,7 @@ list_flatten <- function(
 
   # Unclass S3 lists to avoid their coercion methods. Wrap atoms in a
   # list of size 1 so the elements can be concatenated in a single list.
-  proxy <- map_if(proxy, obj_is_list, unclass, .else = list)
+  proxy <- map_if(proxy, is_node, unclass, .else = list)
 
   out <- list_unchop(
     proxy,
@@ -68,4 +86,22 @@ list_flatten <- function(
 
   # Preserve input type
   vec_restore(out, x)
+}
+
+obj_check_node <- function(
+    x,
+    f,
+    error_call = caller_env(),
+    error_arg = caller_arg(x)
+) {
+  if (!f(x)) {
+    if (nzchar(error_arg)) {
+      error_arg <- cli::format_inline("{.arg {error_arg}}")
+    }
+    else {
+      error_arg <- "Input"
+    }
+    cli::cli_abort("{error_arg} must be a list, not {obj_type_friendly(x)}.",
+                   call = error_call)
+  }
 }
