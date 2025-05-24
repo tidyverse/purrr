@@ -211,10 +211,7 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  if (is.null(the$packages_installed)) {
-    rlang::check_installed(c("mirai", "carrier"), reason = "for parallel map.")
-    the$packages_installed <- TRUE
-  }
+  rlang::check_installed(c("mirai", "carrier"), reason = "for parallel map.")
 
   if (!mirai::daemons_set()) {
     cli::cli_abort(
