@@ -216,7 +216,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
     the$packages_installed <- TRUE
   }
 
-  if (is.null(mirai::nextget("n"))) {
+  if (!mirai::daemons_set()) {
     cli::cli_abort(
       "No daemons set - use e.g. {.run mirai::daemons(6)} to set 6 local daemons.",
       call = error_call
