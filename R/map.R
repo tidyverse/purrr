@@ -211,7 +211,7 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  rlang::check_installed(c("mirai", "carrier"), reason = "for parallel map.")
+  check_installed(c("mirai", "carrier"), reason = "for parallel map.")
 
   if (!mirai::daemons_set()) {
     cli::cli_abort(
@@ -227,7 +227,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
 
   if (!isNamespace(topenv(environment(.f))) && !carrier::is_crate(.f)) {
-    .f <- carrier::crate(rlang::set_env(.f))
+    .f <- carrier::crate(set_env(.f))
     cli::cli_inform(c(
       v = "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
     ))
