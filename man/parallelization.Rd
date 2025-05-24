@@ -17,10 +17,10 @@ according to your individual setup and task, but a rough guide would be in
 the order of 100 microseconds to 1 millisecond for each map iteration.
 }
 \section{Daemons settings}{
-How and where parallelization occurs is determined by
-\code{\link[mirai:daemons]{mirai::daemons()}}. This is a function from the \pkg{mirai}
-package that sets up daemons (persistent background processes that receive
-parallel computations) on your local machine or across the network.
+How and where parallelization occurs is determined by \code{\link[mirai:daemons]{mirai::daemons()}}.
+This is a function from the \pkg{mirai} package that sets up daemons
+(persistent background processes that receive parallel computations) on your
+local machine or across the network.
 
 \pkg{purrr} requires these to be set up prior to performing any parallel map
 operations. It is usual to set daemons once per session. You can leave them
@@ -103,8 +103,7 @@ For details on further options, see \link[carrier:crate]{carrier::crate}.
 
 \section{Further documentation}{
 \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
-\href{https://shikokuchuo.net/mirai/articles/mirai.html}{mirai introduction and reference}
-for more details.
+\href{https://mirai.r-lib.org/}{mirai website} for more details.
 
 Crating is provided by the \CRANpkg{carrier} package. See the
 \href{https://github.com/r-lib/carrier}{carrier readme} for more details.
