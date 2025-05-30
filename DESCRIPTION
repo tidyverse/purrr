@@ -28,7 +28,7 @@ Suggests:
     httr,
     knitr,
     lubridate,
-    mirai (>= 2.1.0),
+    mirai (>= 2.3.0),
     rmarkdown,
     testthat (>= 3.0.0),
     tibble,

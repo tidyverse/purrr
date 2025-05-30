@@ -212,11 +212,15 @@ map_ <- function(.type,
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
   if (is.null(the$packages_installed)) {
-    rlang::check_installed(c("mirai", "carrier"), reason = "for parallel map.")
+    check_installed(
+      c("mirai", "carrier"),
+      version = c("2.3.0", "0.1.1"),
+      reason = "for parallel map."
+    )
     the$packages_installed <- TRUE
   }
 
-  if (is.null(mirai::nextget("n"))) {
+  if (!mirai::daemons_set()) {
     cli::cli_abort(
       "No daemons set - use e.g. {.run mirai::daemons(6)} to set 6 local daemons.",
       call = error_call
@@ -230,7 +234,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
 
   if (!isNamespace(topenv(environment(.f))) && !carrier::is_crate(.f)) {
-    .f <- carrier::crate(rlang::set_env(.f))
+    .f <- carrier::crate(set_env(.f))
     cli::cli_inform(c(
       v = "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
     ))

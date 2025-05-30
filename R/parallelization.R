@@ -15,10 +15,10 @@
 #'
 #' # Daemons settings
 #'
-#' How and where parallelization occurs is determined by
-#' [mirai::daemons()]. This is a function from the \pkg{mirai}
-#' package that sets up daemons (persistent background processes that receive
-#' parallel computations) on your local machine or across the network.
+#' How and where parallelization occurs is determined by [mirai::daemons()].
+#' This is a function from the \pkg{mirai} package that sets up daemons
+#' (persistent background processes that receive parallel computations) on your
+#' local machine or across the network.
 #'
 #' \pkg{purrr} requires these to be set up prior to performing any parallel map
 #' operations. It is usual to set daemons once per session. You can leave them
@@ -100,8 +100,7 @@
 #' # Further documentation
 #'
 #' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
-#' [mirai introduction and reference](https://shikokuchuo.net/mirai/articles/mirai.html)
-#' for more details.
+#' [mirai website](https://mirai.r-lib.org/) for more details.
 #'
 #' Crating is provided by the \CRANpkg{carrier} package. See the
 #' [carrier readme](https://github.com/r-lib/carrier) for more details.
