@@ -79,10 +79,10 @@ the order of 100 microseconds to 1 millisecond for each map iteration.</p>
 
     <div class="section level2">
     <h2 id="daemons-settings">Daemons settings<a class="anchor" aria-label="anchor" href="#daemons-settings"></a></h2>
-    <p>How and where parallelization occurs is determined by
-<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code>. This is a function from the <span class="pkg">mirai</span>
-package that sets up daemons (persistent background processes that receive
-parallel computations) on your local machine or across the network.</p>
+    <p>How and where parallelization occurs is determined by <code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code>.
+This is a function from the <span class="pkg">mirai</span> package that sets up daemons
+(persistent background processes that receive parallel computations) on your
+local machine or across the network.</p>
 <p><span class="pkg">purrr</span> requires these to be set up prior to performing any parallel map
 operations. It is usual to set daemons once per session. You can leave them
 running as they consume almost no resources whilst waiting to receive tasks.
@@ -147,8 +147,7 @@ process.</p>
     <div class="section level2">
     <h2 id="further-documentation">Further documentation<a class="anchor" aria-label="anchor" href="#further-documentation"></a></h2>
     <p><span class="pkg">purrr</span>'s parallelization is powered by <a href="https://CRAN.R-project.org/package=mirai" class="external-link"><span class="pkg">mirai</span></a>. See the
-<a href="https://shikokuchuo.net/mirai/articles/mirai.html" class="external-link">mirai introduction and reference</a>
-for more details.</p>
+<a href="https://mirai.r-lib.org/" class="external-link">mirai website</a> for more details.</p>
 <p>Crating is provided by the <a href="https://CRAN.R-project.org/package=carrier" class="external-link"><span class="pkg">carrier</span></a> package. See the
 <a href="https://github.com/r-lib/carrier" class="external-link">carrier readme</a> for more details.</p>
     </div>
