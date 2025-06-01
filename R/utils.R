@@ -44,12 +44,12 @@ where_at <- function(x,
   }
 }
 
-where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
+where_if <- function(.x, .p, ..., .allow_na = FALSE, .purrr_error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE, .purrr_error_call = NULL)
+    .p <- as_predicate(.p, ..., .mapper = TRUE, .allow_na = .allow_na, .purrr_error_call = NULL)
     map_(.x, .p, ..., .type = "logical", .purrr_error_call = .purrr_error_call)
   }
 }
