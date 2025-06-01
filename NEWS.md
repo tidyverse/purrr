@@ -1,9 +1,20 @@
 # purrr (development version)
 
+## New features
+
 * purrr gains the capacity for parallel and distributed map, powered by the
   mirai package. The argument `.parallel` has been added to `map()`, `map2()`,
   `pmap()` and variants to enable this. See `?parallelization` for more details
   (@shikokuchuo, #1163).
+
+* `list_flatten()` gains an `is_node` parameter taking a predicate function
+  that determines whether an input element is a node (by returning `TRUE`) or a
+  leaf (by returning `FALSE`). The default value, `NULL`, treats simple lists
+  as nodes and everything else (including richer objects like data frames and
+  linear models) as leaves, using
+  [`vctrs::obj_is_list()`](https://vctrs.r-lib.org/reference/obj_is_list.html).
+  To recurse into all objects built on lists and flatten them, use
+  `list_flatten(x, is_node = is.list)`. (@salim-b, #1179)
 
 # purrr 1.0.4
 
