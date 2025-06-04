@@ -234,6 +234,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
 
   if (!isNamespace(topenv(environment(.f))) && !carrier::is_crate(.f)) {
+    anon <- FALSE
     sym <- body(.f)[[1L]]
     if (is.symbol(sym)) {
       fun <- get(sym)
@@ -242,16 +243,14 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
         if (is.symbol(sym))
           fun <- get(sym)
       }
-      if (is.function(fun) && !isNamespace(topenv(environment(fun)))) {
-        fcall <- quote(carrier::crate(set_env(.f), fun))
-        names(fcall)[3L] <- as.character(sym)
-        .f <- eval(fcall)
-      } else {
-        .f <- carrier::crate(set_env(.f))
-      }
-
+      anon <- is.function(fun) && !isNamespace(topenv(environment(fun)))
+    }
+    .f <- if (anon) {
+      fcall <- quote(carrier::crate(set_env(.f), fun))
+      names(fcall)[3L] <- as.character(sym)
+      eval(fcall)
     } else {
-      .f <- carrier::crate(set_env(.f))
+      carrier::crate(set_env(.f))
     }
 
     cli::cli_inform(c(
