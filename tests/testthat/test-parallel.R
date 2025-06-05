@@ -231,6 +231,22 @@ test_that("don't evaluate symbolic objects (#428)", {
   expect_true(TRUE) # so the test is not deemed empty and skipped
 })
 
+test_that("auto-crates anonymous functions (#1184)", {
+  data <- split(mtcars, mtcars$cyl)
+  slow_lm <- function(formula, data) {
+    lm(formula, data = data)
+  }
+  expect_named(
+    map(data, function(df) slow_lm(mpg ~ disp, data = df), .parallel = TRUE),
+    c("4", "6", "8")
+  )
+  slow_lm2 <- function(formula, data) lm(formula, data = data)
+  expect_named(
+    map(data, function(df) slow_lm2(mpg ~ disp, data = df), .parallel = TRUE),
+    c("4", "6", "8")
+  )
+})
+
 # pmap ----------------------------------------------------------------------
 
 test_that(".f called with named arguments", {

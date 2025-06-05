@@ -234,7 +234,24 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
 
   if (!isNamespace(topenv(environment(.f))) && !carrier::is_crate(.f)) {
-    .f <- carrier::crate(set_env(.f))
+    anon <- FALSE
+    sym <- body(.f)[[1L]]
+    if (is.symbol(sym)) {
+      fun <- get(sym)
+      if (identical(fun, `{`)) {
+        sym <- body(.f)[[2L]][[1L]]
+        if (is.symbol(sym))
+          fun <- get(sym)
+      }
+      anon <- is.function(fun) && !isNamespace(topenv(environment(fun)))
+    }
+    .f <- if (anon) {
+      args <- set_names(list(fun), as.character(sym))
+      carrier::crate(set_env(.f), !!!args)
+    } else {
+      carrier::crate(set_env(.f))
+    }
+
     cli::cli_inform(c(
       v = "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
     ))
