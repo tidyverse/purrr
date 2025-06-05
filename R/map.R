@@ -246,9 +246,8 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
       anon <- is.function(fun) && !isNamespace(topenv(environment(fun)))
     }
     .f <- if (anon) {
-      fcall <- quote(carrier::crate(set_env(.f), fun))
-      names(fcall)[3L] <- as.character(sym)
-      eval(fcall)
+      args <- set_names(list(fun), as.character(sym))
+      carrier::crate(set_env(.f), !!!args)
     } else {
       carrier::crate(set_env(.f))
     }
