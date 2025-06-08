@@ -1,5 +1,8 @@
 #' Parallelization in purrr
 #'
+#' @param .fn A fresh formula or function.
+#' @param ... Arguments to declare in the environment of `.fn`.
+#'
 #' @description
 #' purrr's map functions have a `.parallel` argument to parallelize a map using
 #' the \CRANpkg{mirai} package. This allows you to run computations in parallel
@@ -85,14 +88,14 @@
 #' Examples:
 #' \preformatted{
 #' # package functions are not auto-crated:
-#' map(1:3, stats::runif, .parallel = TRUE)
+#' map(1:3, parallelize(\(x) stats::runif(x))
 #'
 #' # other functions (incl. anonymous functions) are auto-crated:
-#' mtcars |> map_dbl(function(...) sum(...), .parallel = TRUE)
+#' mtcars |> map_dbl(parallelize(\(...) sum(...)))
 #'
 #' # explicitly crate a function to include other objects required by it:
-#' fun <- function(x) \{x + x \%\% 2 \}
-#' map(1:3, carrier::crate(function(x) x + fun(x), fun = fun), .parallel = TRUE)
+#' fun <- \(x) \{x + x \%\% 2 \}
+#' map(1:3, parallelize(\(x) x + fun(x), fun = fun))
 #' }
 #'
 #' For details on further options, see [carrier::crate].
@@ -105,5 +108,5 @@
 #' Crating is provided by the \CRANpkg{carrier} package. See the
 #' [carrier readme](https://github.com/r-lib/carrier) for more details.
 #'
-#' @name parallelization
-NULL
+#' @export
+parallelize <- carrier::crate

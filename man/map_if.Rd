@@ -7,7 +7,7 @@
 \usage{
 map_if(.x, .p, .f, ..., .else = NULL)
 
-map_at(.x, .at, .f, ..., .parallel = FALSE, .progress = FALSE)
+map_at(.x, .at, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -57,20 +57,6 @@ and returns a logical, integer, or character vector of elements to select.
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 
-\item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
-parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package.
-\itemize{
-\item Set up parallelization in your session beforehand using
-\code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Non-package functions are auto-crated for sharing with parallel
-processes. You may \code{\link[carrier:crate]{carrier::crate()}} your function explicitly if you need
-to supply additional objects along with your function.
-\item Use of \code{...} is not permitted in this context, \code{\link[carrier:crate]{carrier::crate()}} an
-anonymous function instead.
-}
-
-See \link{parallelization} for more details.}
-
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
 \link{progress_bars} for more details.}
@@ -86,6 +72,20 @@ which elements of \code{.x} are transformed with \code{.f}.
 which elements of \code{.x} are transformed with \code{.f}.
 }
 }
+\section{Parallelization}{
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+Purrr supports parallel operation using the \CRANpkg{mirai} package.
+\itemize{
+\item Set up parallelization in your session beforehand using
+\code{\link[mirai:daemons]{mirai::daemons()}}.
+\item Wrap your function using \code{\link[=parallelize]{parallelize()}}.
+\item Use of \code{...} is not permitted in this context.
+}
+
+See \link{parallelize} for more details.
+}
+
 \examples{
 # Use a predicate function to decide whether to map a function:
 iris |> map_if(is.factor, as.character) |> str()

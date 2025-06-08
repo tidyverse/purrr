@@ -18,6 +18,17 @@
 #' * `walk()` calls `.f` for its side-effect and returns
 #'   the input `.x`.
 #'
+#' @section Parallelization:
+#' `r lifecycle::badge("experimental")`
+#' Purrr supports parallel operation using the \CRANpkg{mirai} package.
+#'
+#'   * Set up parallelization in your session beforehand using
+#'   [mirai::daemons()].
+#'   * Wrap your function using [parallelize()].
+#'   * Use of `...` is not permitted in this context.
+#'
+#'  See [parallelize] for more details.
+#'
 #' @param .x A list or atomic vector.
 #' @param .f A function, specified in one of the following ways:
 #'
@@ -46,17 +57,6 @@
 #'   This makes it easier to understand which arguments belong to which
 #'   function and will tend to yield better error messages.
 #'
-#' @param .parallel `r lifecycle::badge("experimental")` Whether to map in
-#'   parallel. Use `TRUE` to parallelize using the \CRANpkg{mirai} package.
-#'   * Set up parallelization in your session beforehand using
-#'   [mirai::daemons()].
-#'   * Non-package functions are auto-crated for sharing with parallel
-#'   processes. You may [carrier::crate()] your function explicitly if you need
-#'   to supply additional objects along with your function.
-#'   * Use of `...` is not permitted in this context, [carrier::crate()] an
-#'   anonymous function instead.
-#'
-#'  See [parallelization] for more details.
 #' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
 #'   a basic progress bar, use a string to give it a name, or see
 #'   [progress_bars] for more details.
@@ -137,54 +137,53 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 #'
-#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)
+#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE)
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map, set daemons (number of parallel processes) first:
 #' mirai::daemons(2)
 #'
-#' mtcars |> map_dbl(sum, .parallel = TRUE)
+#' mtcars |> map_dbl(parallelize(\(x) sum(x)))
 #'
 #' 1:10 |>
-#'   map(function(x) stats::rnorm(10, mean = x), .parallel = TRUE) |>
-#'   map_dbl(mean, .parallel = TRUE)
+#'   map(parallelize(\(x) stats::rnorm(10, mean = x))) |>
+#'   map_dbl(parallelize(\(x) mean(x)))
 #'
 #' mirai::daemons(0)
 #'
-map <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map_("list", .x, .f, ..., .parallel = .parallel, .progress = .progress)
+map <- function(.x, .f, ..., .progress = FALSE) {
+  map_("list", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_lgl <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map_("logical", .x, .f, ..., .parallel = .parallel, .progress = .progress)
+map_lgl <- function(.x, .f, ..., .progress = FALSE) {
+  map_("logical", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_int <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map_("integer", .x, .f, ..., .parallel = .parallel, .progress = .progress)
+map_int <- function(.x, .f, ..., .progress = FALSE) {
+  map_("integer", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_dbl <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map_("double", .x, .f, ..., .parallel = .parallel, .progress = .progress)
+map_dbl <- function(.x, .f, ..., .progress = FALSE) {
+  map_("double", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
-map_chr <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
+map_chr <- function(.x, .f, ..., .progress = FALSE) {
   local_deprecation_user_env()
-  map_("character", .x, .f, ..., .parallel = .parallel, .progress = .progress)
+  map_("character", .x, .f, ..., .progress = .progress)
 }
 
 map_ <- function(.type,
                  .x,
                  .f,
                  ...,
-                 .parallel = FALSE,
                  .progress = FALSE,
                  .purrr_user_env = caller_env(2),
                  .purrr_error_call = caller_env()) {
@@ -193,7 +192,7 @@ map_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (isTRUE(.parallel)) {
+  if (is_crate(.f)) {
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
 
@@ -212,11 +211,7 @@ map_ <- function(.type,
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
   if (is.null(the$packages_installed)) {
-    check_installed(
-      c("mirai", "carrier"),
-      version = c("2.3.0", "0.1.1"),
-      reason = "for parallel map."
-    )
+    check_installed("mirai", version = "2.3.0", reason = "for parallel map.")
     the$packages_installed <- TRUE
   }
 
@@ -228,16 +223,9 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
   if (...length()) {
     cli::cli_abort(
-      "Don't use `...` with `.parallel = TRUE`.",
+      "Don't use `...` with parallelized functions.",
       call = error_call
     )
-  }
-
-  if (!isNamespace(topenv(environment(.f))) && !carrier::is_crate(.f)) {
-    .f <- carrier::crate(set_env(.f))
-    cli::cli_inform(c(
-      v = "Automatically crated `.f`: {format(lobstr::obj_size(.f))}"
-    ))
   }
 
   m <- mirai::mirai_map(.x, .f)
@@ -260,15 +248,15 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 #'   of the elements of the result. Otherwise, supply a "prototype" giving
 #'   the desired type of output.
 #' @export
-map_vec <- function(.x, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE) {
-  out <- map(.x, .f, ..., .parallel = .parallel, .progress = .progress)
+map_vec <- function(.x, .f, ..., .ptype = NULL, .progress = FALSE) {
+  out <- map(.x, .f, ..., .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
 
 #' @rdname map
 #' @export
-walk <- function(.x, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map(.x, .f, ..., .parallel = .parallel, .progress = .progress)
+walk <- function(.x, .f, ..., .progress = FALSE) {
+  map(.x, .f, ..., .progress = .progress)
   invisible(.x)
 }
 
