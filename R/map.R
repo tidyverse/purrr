@@ -20,11 +20,13 @@
 #'
 #' @section Parallelization:
 #' `r lifecycle::badge("experimental")`
-#' Purrr supports parallel operation using the \CRANpkg{mirai} package.
+#'
+#' Parallel operation is supported using the \CRANpkg{mirai} package.
 #'
 #'   * Set up parallelization in your session beforehand using
 #'   [mirai::daemons()].
-#'   * Wrap your function using [parallelize()].
+#'   * Wrap your function with [parallelize()] to declare that it should proceed
+#'   in parallel.
 #'   * Use of `...` is not permitted in this context.
 #'
 #'  See [parallelize] for more details.

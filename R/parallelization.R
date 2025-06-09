@@ -1,12 +1,62 @@
 #' Parallelization in purrr
 #'
-#' @param .fn A fresh formula or function.
-#' @param ... Arguments to declare in the environment of `.fn`.
+#' `r lifecycle::badge("experimental")`
+#' All map functions allow parallelized operation using \CRANpkg{mirai}. To take
+#' advantage of this, wrap a function that is passed to the `.f` argument of
+#' [map()] or any of its variants with [parallelize()]. This declares that the
+#' computation should be run in parallel utilizing multiple cores on your local
+#' machine, or distributed over the network.
 #'
-#' @description
-#' purrr's map functions have a `.parallel` argument to parallelize a map using
-#' the \CRANpkg{mirai} package. This allows you to run computations in parallel
-#' using more cores on your machine, or distributed over the network.
+#' @param .fn A fresh formula or function. "Fresh" here means that they should
+#'   be declared in the call to [parallelize()].
+#' @param ... Arguments to declare in the environment of the function.
+#'
+#' @section How to Use:
+#'
+#' Wrapping a function that is passed to the `.f` argument in [map()] or any of
+#' its variants with [parallelize()] declares that the map should be performed
+#' in parallel.
+#'
+#' Under the hood, [parallelize()] provides a systematic way of making a
+#' function self-contained so that it can be readily shared with other parallel
+#' processes. It ensures that everything needed by the function is serialized
+#' along with it, but not other objects which happen to be in the function's
+#' enclosing environment. This helps to prevent inadvertently shipping large
+#' data objects to daemons, when they are not needed.
+#'
+#' To create self-contained functions:
+#'
+#' * They should call package functions with an explicit :: namespace. This
+#'   includes packages in the default search path, with the exception of the
+#'   base package. For instance `var()` from the stats package must be called
+#'   with its namespace prefix: `stats::var(x)`.
+#'
+#' * They should declare any data they depend on. You can declare data by
+#'   supplying additional arguments to `...` or by unquoting objects with `!!`⁠.
+#'
+#' [parallelize()] is a simple alias for [carrier::crate()] and you may refer to
+#' that package for more details.
+#'
+#' Example usage:
+#' \preformatted{
+#' # The function needs to be freshly-defined, so instead of:
+#' mtcars |> map_dbl(parallelize(sum))
+#' # Use an anonymous function:
+#' mtcars |> map_dbl(parallelize(\(...) sum(...)))
+#'
+#' # Package functions need to be explicitly namespaced, so instead of:
+#' map(1:3, parallelize(\(x) runif(x)))
+#' # Use :: to namespace all packages, even those on the default search path:
+#' map(1:3, parallelize(\(x) stats::runif(x)))
+#'
+#' fun <- \(x) \{x + x \%\% 2 \}
+#' # Operating in parallel, locally-defined objects will not be found:
+#' map(1:3, parallelize(\(x) x + fun(x)))
+#' # Use the ... argument to supply those objects:
+#' map(1:3, parallelize(\(x) x + fun(x), fun = fun))
+#' }
+#'
+#' @section When to Use:
 #'
 #' Parallelizing a map using 'n' processes does not automatically lead to it
 #' taking 1/n of the time. Additional overhead from setting up the parallel task
@@ -16,7 +66,8 @@
 #' according to your individual setup and task, but a rough guide would be in
 #' the order of 100 microseconds to 1 millisecond for each map iteration.
 #'
-#' # Daemons settings
+#'
+#' @section Daemons Settings:
 #'
 #' How and where parallelization occurs is determined by [mirai::daemons()].
 #' This is a function from the \pkg{mirai} package that sets up daemons
@@ -32,7 +83,7 @@
 #' mirai::daemons(6)
 #' }
 #'
-#' `daemons()`arguments:
+#' Function arguments:
 #'
 #' * `n`: the number of daemons to launch on your local machine, e.g.
 #'   `mirai::daemons(6)`. As a rule of thumb, for maximum efficiency this should
@@ -41,10 +92,6 @@
 #' * `url` and `remote`: used to set up and launch daemons for distributed
 #'   computing over the network. See [mirai::daemons] function documentation for
 #'   more details.
-#' * None: calling `mirai::daemons()` with no arguments returns a summary of the
-#'   current connection status and mirai tasks.
-#'
-#' For details on further options, see [mirai::daemons].
 #'
 #' Resetting daemons:
 #'
@@ -55,58 +102,19 @@
 #' mirai::daemons(0)
 #' }
 #'
-#' All daemons automatically terminate when your session ends and the connection
-#' drops. Hence you do not need to explicitly terminate daemons in this instance,
-#' although it is still good practice to do so.
+#' All daemons automatically terminate when your session ends. You do not need
+#' to explicitly terminate daemons in this instance, although it is still good
+#' practice to do so.
 #'
 #' Note: it should always be for the user to set daemons. If you are using
 #' parallel map within a package, do not make any [mirai::daemons()] calls
 #' within the package. This helps prevent inadvertently spawning too many
 #' daemons if functions are used recursively within each other.
 #'
-#' # Crating a function
-#'
-#' [carrier::crate()] provides a systematic way of making the function `.f`
-#' self-contained so that it can be readily shared with other processes.
-#'
-#' Crating ensures that everything needed by the function is serialized along
-#' with it, but not other objects which happen to be in the function's enclosing
-#' environment. This helps to prevent inadvertently shipping large data objects
-#' to daemons, where they are not needed.
-#'
-#' Any non-package function supplied to `.f` will be automatically crated. When
-#' this happens, a confirmation along with the crate size is printed to the
-#' console. Package functions are not crated as these are already
-#' self-contained.
-#'
-#' If your function `.f()` contains free variables, for example it references
-#' other local functions in its body, then explicitly [carrier::crate()] your
-#' function supplying these variables to its `...` argument. This ensures that
-#' these objects are available to `.f()` when it is executed in a parallel
-#' process.
-#'
-#' Examples:
-#' \preformatted{
-#' # package functions are not auto-crated:
-#' map(1:3, parallelize(\(x) stats::runif(x))
-#'
-#' # other functions (incl. anonymous functions) are auto-crated:
-#' mtcars |> map_dbl(parallelize(\(...) sum(...)))
-#'
-#' # explicitly crate a function to include other objects required by it:
-#' fun <- \(x) \{x + x \%\% 2 \}
-#' map(1:3, parallelize(\(x) x + fun(x), fun = fun))
-#' }
-#'
-#' For details on further options, see [carrier::crate].
-#'
-#' # Further documentation
+#' @references
 #'
 #' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
 #' [mirai website](https://mirai.r-lib.org/) for more details.
-#'
-#' Crating is provided by the \CRANpkg{carrier} package. See the
-#' [carrier readme](https://github.com/r-lib/carrier) for more details.
 #'
 #' @export
 parallelize <- carrier::crate

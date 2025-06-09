@@ -93,11 +93,13 @@ they share the same notion of "parallel" as \code{\link[base:Extremes]{base::pma
 \section{Parallelization}{
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Purrr supports parallel operation using the \CRANpkg{mirai} package.
+
+Parallel operation is supported using the \CRANpkg{mirai} package.
 \itemize{
 \item Set up parallelization in your session beforehand using
 \code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Wrap your function using \code{\link[=parallelize]{parallelize()}}.
+\item Wrap your function with \code{\link[=parallelize]{parallelize()}} to declare that it should proceed
+in parallel.
 \item Use of \code{...} is not permitted in this context.
 }
 
