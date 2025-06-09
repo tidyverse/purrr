@@ -3,21 +3,21 @@
 #' `r lifecycle::badge("experimental")`
 #' All map functions allow parallelized operation using \CRANpkg{mirai}. To take
 #' advantage of this, wrap a function that is passed to the `.f` argument of
-#' [map()] or any of its variants with [parallelize()]. This declares that the
+#' [map()] or any of its variants with [in_parallel()]. This declares that the
 #' computation should proceed in parallel utilizing multiple cores on your local
 #' machine, or distributed over the network.
 #'
 #' @param .fn A fresh formula or function. "Fresh" here means that they should
-#'   be declared in the call to [parallelize()].
+#'   be declared in the call to [in_parallel()].
 #' @param ... Arguments to declare in the environment of the function.
 #'
 #' @section How to Use:
 #'
 #' Wrapping a function that is passed to the `.f` argument in [map()] or any of
-#' its variants with [parallelize()] declares that the map should be performed
+#' its variants with [in_parallel()] declares that the map should be performed
 #' in parallel.
 #'
-#' Under the hood, [parallelize()] provides a systematic way of making a
+#' Under the hood, [in_parallel()] provides a systematic way of making a
 #' function self-contained so that it can be readily shared with other parallel
 #' processes. It ensures that everything needed by the function is serialized
 #' along with it, but not other objects which happen to be in the function's
@@ -34,26 +34,26 @@
 #' * They should declare any data they depend on. You can declare data by
 #'   supplying additional arguments to `...` or by unquoting objects with `!!`⁠.
 #'
-#' [parallelize()] is a simple alias for [carrier::crate()] and you may refer to
+#' [in_parallel()] is a simple alias for [carrier::crate()] and you may refer to
 #' that package for more details.
 #'
 #' Example usage:
 #' \preformatted{
 #' # The function needs to be freshly-defined, so instead of:
-#' mtcars |> map_dbl(parallelize(sum))
+#' mtcars |> map_dbl(in_parallel(sum))
 #' # Use an anonymous function:
-#' mtcars |> map_dbl(parallelize(\(...) sum(...)))
+#' mtcars |> map_dbl(in_parallel(\(...) sum(...)))
 #'
 #' # Package functions need to be explicitly namespaced, so instead of:
-#' map(1:3, parallelize(\(x) runif(x)))
+#' map(1:3, in_parallel(\(x) runif(x)))
 #' # Use :: to namespace all packages, even those on the default search path:
-#' map(1:3, parallelize(\(x) stats::runif(x)))
+#' map(1:3, in_parallel(\(x) stats::runif(x)))
 #'
 #' fun <- \(x) \{x + x \%\% 2 \}
 #' # Operating in parallel, locally-defined objects will not be found:
-#' map(1:3, parallelize(\(x) x + fun(x)))
+#' map(1:3, in_parallel(\(x) x + fun(x)))
 #' # Use the ... argument to supply those objects:
-#' map(1:3, parallelize(\(x) x + fun(x), fun = fun))
+#' map(1:3, in_parallel(\(x) x + fun(x), fun = fun))
 #' }
 #'
 #' @section When to Use:
@@ -90,8 +90,8 @@
 #'   be (at most) one less than the number of cores on your machine, leaving one
 #'   core for the main R process.
 #' * `url` and `remote`: used to set up and launch daemons for distributed
-#'   computing over the network. See [mirai::daemons] function documentation for
-#'   more details.
+#'   computing over the network. See [mirai::daemons()] documentation for more
+#'   details.
 #'
 #' Resetting daemons:
 #'
@@ -117,4 +117,4 @@
 #' [mirai website](https://mirai.r-lib.org/) for more details.
 #'
 #' @export
-parallelize <- carrier::crate
+in_parallel <- carrier::crate

@@ -42,10 +42,10 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Wrap a function with \code{\link[=parallelize]{parallelize()}} to declare that it should proceed
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should proceed
 in parallel.
 \itemize{
-\item Use of \code{...} is not permitted in this context. See \code{\link[=parallelize]{parallelize()}} for
+\item Use of \code{...} is not permitted in this context. See \code{\link[=in_parallel]{in_parallel()}} for
 more details.
 }}
 
@@ -166,14 +166,14 @@ mtcars |>
 # 1. Set daemons (number of parallel processes) first:
 mirai::daemons(2)
 
-# 2. Wrap .f with parallelize():
-mtcars |> map_dbl(parallelize(\(x) sum(x)))
+# 2. Wrap .f with in_parallel():
+mtcars |> map_dbl(in_parallel(\(x) sum(x)))
 
 1:10 |>
-  map(parallelize(\(x) stats::rnorm(10, mean = x))) |>
-  map_dbl(parallelize(\(x) mean(x)))
+  map(in_parallel(\(x) stats::rnorm(10, mean = x))) |>
+  map_dbl(in_parallel(\(x) mean(x)))
 
-# A locally-defined function should be passed via ... of parallelize():
+# A locally-defined function should be passed via ... of in_parallel():
 slow_lm <- \(formula, data) {
   Sys.sleep(0.5)
   lm(formula, data)
@@ -181,7 +181,7 @@ slow_lm <- \(formula, data) {
 
 mtcars |>
   split(mtcars$cyl) |>
-  map(parallelize(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
+  map(in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
 
 # Tear down daemons when no longer in use:
 mirai::daemons(0)
