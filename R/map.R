@@ -142,15 +142,28 @@
 #' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE)
 #' # Run in interactive sessions only as spawns additional processes
 #'
-#' # To use parallelized map, set daemons (number of parallel processes) first:
+#' # To use parallelized map:
+#' # 1. Set daemons (number of parallel processes) first:
 #' mirai::daemons(2)
 #'
+#' # 2. Wrap .f with parallelize():
 #' mtcars |> map_dbl(parallelize(\(x) sum(x)))
 #'
 #' 1:10 |>
 #'   map(parallelize(\(x) stats::rnorm(10, mean = x))) |>
 #'   map_dbl(parallelize(\(x) mean(x)))
 #'
+#' # A locally-defined function should be passed via ... of parallelize():
+#' slow_lm <- \(formula, data) {
+#'   Sys.sleep(0.5)
+#'   lm(formula, data)
+#' }
+#'
+#' mtcars |>
+#'   split(mtcars$cyl) |>
+#'   map(parallelize(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
+#'
+#' # Tear down daemons when no longer in use:
 #' mirai::daemons(0)
 #'
 map <- function(.x, .f, ..., .progress = FALSE) {
