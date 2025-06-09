@@ -225,7 +225,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   }
   if (...length()) {
     cli::cli_abort(
-      "Don't use `...` with parallelized functions.",
+      "Can't use `...` with parallelized functions.",
       call = error_call
     )
   }
