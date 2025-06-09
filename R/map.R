@@ -18,19 +18,6 @@
 #' * `walk()` calls `.f` for its side-effect and returns
 #'   the input `.x`.
 #'
-#' @section Parallelization:
-#' `r lifecycle::badge("experimental")`
-#'
-#' Parallel operation is supported using the \CRANpkg{mirai} package.
-#'
-#'   * Set up parallelization in your session beforehand using
-#'   [mirai::daemons()].
-#'   * Wrap your function with [parallelize()] to declare that it should proceed
-#'   in parallel.
-#'   * Use of `...` is not permitted in this context.
-#'
-#'  See [parallelize] for more details.
-#'
 #' @param .x A list or atomic vector.
 #' @param .f A function, specified in one of the following ways:
 #'
@@ -43,6 +30,13 @@
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
 #'     set a default value if the indexed element is `NULL` or does not exist.
+#'
+#'   `r lifecycle::badge("experimental")`
+#'
+#'   Wrap a function with [parallelize()] to declare that it should proceed
+#'   in parallel.
+#'   * Use of `...` is not permitted in this context. See [parallelize()] for
+#'     more details.
 #'
 #' @param ... Additional arguments passed on to the mapped function.
 #'

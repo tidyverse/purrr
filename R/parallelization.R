@@ -4,7 +4,7 @@
 #' All map functions allow parallelized operation using \CRANpkg{mirai}. To take
 #' advantage of this, wrap a function that is passed to the `.f` argument of
 #' [map()] or any of its variants with [parallelize()]. This declares that the
-#' computation should be run in parallel utilizing multiple cores on your local
+#' computation should proceed in parallel utilizing multiple cores on your local
 #' machine, or distributed over the network.
 #'
 #' @param .fn A fresh formula or function. "Fresh" here means that they should
@@ -22,11 +22,11 @@
 #' processes. It ensures that everything needed by the function is serialized
 #' along with it, but not other objects which happen to be in the function's
 #' enclosing environment. This helps to prevent inadvertently shipping large
-#' data objects to daemons, when they are not needed.
+#' data objects when they may not be needed.
 #'
 #' To create self-contained functions:
 #'
-#' * They should call package functions with an explicit :: namespace. This
+#' * They should call package functions with an explicit `::` namespace. This
 #'   includes packages in the default search path, with the exception of the
 #'   base package. For instance `var()` from the stats package must be called
 #'   with its namespace prefix: `stats::var(x)`.
@@ -74,10 +74,10 @@
 #' (persistent background processes that receive parallel computations) on your
 #' local machine or across the network.
 #'
-#' \pkg{purrr} requires these to be set up prior to performing any parallel map
-#' operations. It is usual to set daemons once per session. You can leave them
-#' running as they consume almost no resources whilst waiting to receive tasks.
-#' The following sets up 6 daemons on your local machine:
+#' Daemons must be set up prior to performing any parallel map operation. It is
+#' usual to set daemons once per session. You can leave them running on your
+#' local machine as they consume almost no resources whilst waiting to receive
+#' tasks. The following sets up 6 daemons on your local machine:
 #'
 #' \preformatted{
 #' mirai::daemons(6)
@@ -95,7 +95,7 @@
 #'
 #' Resetting daemons:
 #'
-#' Daemons persist for the duration of your session. To reset and terminate any
+#' Daemons persist for the duration of your session. To reset and tear down any
 #' existing daemons:
 #'
 #' \preformatted{

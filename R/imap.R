@@ -16,7 +16,6 @@
 #' @inheritParams map
 #' @return A vector the same length as `.x`.
 #' @export
-#' @inheritSection map Parallelization
 #' @family map variants
 #' @examples
 #' imap_chr(sample(10), paste)

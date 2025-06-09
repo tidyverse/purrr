@@ -20,7 +20,6 @@
 #'   `TRUE` will be modified.
 #' @param .else A function applied to elements of `.x` for which `.p`
 #' returns `FALSE`.
-#' @inheritSection map Parallelization
 #' @family map variants
 #' @export
 #' @examples

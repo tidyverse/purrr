@@ -38,6 +38,15 @@ older versions of R.
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
 set a default value if the indexed element is \code{NULL} or does not exist.
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Wrap a function with \code{\link[=parallelize]{parallelize()}} to declare that it should proceed
+in parallel.
+\itemize{
+\item Use of \code{...} is not permitted in this context. See \code{\link[=parallelize]{parallelize()}} for
+more details.
 }}
 
 \item{...}{Additional arguments passed on to the mapped function.
@@ -96,22 +105,6 @@ most types of simple vectors like Date, POSIXct, factors, etc.
 the input \code{.x}.
 }
 }
-\section{Parallelization}{
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
-Parallel operation is supported using the \CRANpkg{mirai} package.
-\itemize{
-\item Set up parallelization in your session beforehand using
-\code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Wrap your function with \code{\link[=parallelize]{parallelize()}} to declare that it should proceed
-in parallel.
-\item Use of \code{...} is not permitted in this context.
-}
-
-See \link{parallelize} for more details.
-}
-
 \examples{
 # Compute normal distributions from an atomic vector
 1:10 |>

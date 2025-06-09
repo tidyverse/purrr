@@ -17,7 +17,7 @@ be declared in the call to \code{\link[=parallelize]{parallelize()}}.}
 All map functions allow parallelized operation using \CRANpkg{mirai}. To take
 advantage of this, wrap a function that is passed to the \code{.f} argument of
 \code{\link[=map]{map()}} or any of its variants with \code{\link[=parallelize]{parallelize()}}. This declares that the
-computation should be run in parallel utilizing multiple cores on your local
+computation should proceed in parallel utilizing multiple cores on your local
 machine, or distributed over the network.
 }
 \section{How to Use}{
@@ -32,11 +32,11 @@ function self-contained so that it can be readily shared with other parallel
 processes. It ensures that everything needed by the function is serialized
 along with it, but not other objects which happen to be in the function's
 enclosing environment. This helps to prevent inadvertently shipping large
-data objects to daemons, when they are not needed.
+data objects when they may not be needed.
 
 To create self-contained functions:
 \itemize{
-\item They should call package functions with an explicit :: namespace. This
+\item They should call package functions with an explicit \code{::} namespace. This
 includes packages in the default search path, with the exception of the
 base package. For instance \code{var()} from the stats package must be called
 with its namespace prefix: \code{stats::var(x)}.
@@ -87,10 +87,10 @@ This is a function from the \pkg{mirai} package that sets up daemons
 (persistent background processes that receive parallel computations) on your
 local machine or across the network.
 
-\pkg{purrr} requires these to be set up prior to performing any parallel map
-operations. It is usual to set daemons once per session. You can leave them
-running as they consume almost no resources whilst waiting to receive tasks.
-The following sets up 6 daemons on your local machine:
+Daemons must be set up prior to performing any parallel map operation. It is
+usual to set daemons once per session. You can leave them running on your
+local machine as they consume almost no resources whilst waiting to receive
+tasks. The following sets up 6 daemons on your local machine:
 
 \preformatted{
 mirai::daemons(6)
@@ -109,7 +109,7 @@ more details.
 
 Resetting daemons:
 
-Daemons persist for the duration of your session. To reset and terminate any
+Daemons persist for the duration of your session. To reset and tear down any
 existing daemons:
 
 \preformatted{

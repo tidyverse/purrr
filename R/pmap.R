@@ -42,7 +42,6 @@
 #'
 #' Any errors thrown by `.f` will be wrapped in an error with class
 #' [purrr_error_indexed].
-#' @inheritSection map Parallelization
 #' @family map variants
 #' @export
 #' @examples

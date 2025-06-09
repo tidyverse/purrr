@@ -16,7 +16,6 @@
 #'     of R.
 #' @inheritParams map
 #' @inherit map return
-#' @inheritSection map Parallelization
 #' @family map variants
 #' @export
 #' @examples

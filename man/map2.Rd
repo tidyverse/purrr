@@ -82,22 +82,6 @@ Any errors thrown by \code{.f} will be wrapped in an error with class
 These functions are variants of \code{\link[=map]{map()}} that iterate over two arguments at
 a time.
 }
-\section{Parallelization}{
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
-Parallel operation is supported using the \CRANpkg{mirai} package.
-\itemize{
-\item Set up parallelization in your session beforehand using
-\code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Wrap your function with \code{\link[=parallelize]{parallelize()}} to declare that it should proceed
-in parallel.
-\item Use of \code{...} is not permitted in this context.
-}
-
-See \link{parallelize} for more details.
-}
-
 \examples{
 x <- list(1, 1, 1)
 y <- list(10, 20, 30)

@@ -90,22 +90,6 @@ simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing, i.e.
 they share the same notion of "parallel" as \code{\link[base:Extremes]{base::pmax()}} and \code{\link[base:Extremes]{base::pmin()}}.
 }
-\section{Parallelization}{
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
-Parallel operation is supported using the \CRANpkg{mirai} package.
-\itemize{
-\item Set up parallelization in your session beforehand using
-\code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Wrap your function with \code{\link[=parallelize]{parallelize()}} to declare that it should proceed
-in parallel.
-\item Use of \code{...} is not permitted in this context.
-}
-
-See \link{parallelize} for more details.
-}
-
 \examples{
 x <- list(1, 1, 1)
 y <- list(10, 20, 30)
