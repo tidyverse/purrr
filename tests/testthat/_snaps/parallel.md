@@ -12,7 +12,7 @@
       map(list(x = 1, y = 2), parallelize(function(x) list(x)), a = "wrong")
     Condition
       Error in `map()`:
-      ! Don't use `...` with parallelized functions.
+      ! Can't use `...` with parallelized functions.
 
 # all inform about location of problem
 
