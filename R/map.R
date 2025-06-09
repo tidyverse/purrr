@@ -192,11 +192,11 @@ map_ <- function(.type,
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
-  .f <- as_mapper(.f, ...)
-
   if (is_crate(.f)) {
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
+
+  .f <- as_mapper(.f, ...)
 
   n <- vec_size(.x)
   names <- vec_names(.x)
