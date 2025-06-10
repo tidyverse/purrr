@@ -7,8 +7,8 @@
 #' computation should proceed in parallel utilizing multiple cores on your local
 #' machine, or distributed over the network.
 #'
-#' @param .fn A fresh formula or function. "Fresh" here means that they should
-#'   be declared in the call to [in_parallel()].
+#' @param .f A fresh formula or function. "Fresh" here means that they should be
+#'   declared in the call to [in_parallel()].
 #' @param ... Arguments to declare in the environment of the function.
 #'
 #' @section How to Use:
@@ -17,8 +17,8 @@
 #' its variants with [in_parallel()] declares that the map should be performed
 #' in parallel.
 #'
-#' Under the hood, [in_parallel()] provides a systematic way of making a
-#' function self-contained so that it can be readily shared with other parallel
+#' Under the hood, [in_parallel()] provides a systematic way of making `.f`
+#' self-contained so that it can be readily shared with other parallel
 #' processes. It ensures that everything needed by the function is serialized
 #' along with it, but not other objects which happen to be in the function's
 #' enclosing environment. This helps to prevent inadvertently shipping large
@@ -32,17 +32,17 @@
 #'   with its namespace prefix: `stats::var(x)`.
 #'
 #' * They should declare any data they depend on. You can declare data by
-#'   supplying additional arguments to `...` or by unquoting objects with `!!`⁠.
+#'   supplying additional named arguments to `...`⁠.
 #'
-#' [in_parallel()] is a simple alias for [carrier::crate()] and you may refer to
-#' that package for more details.
+#' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
+#' to that package for more details.
 #'
 #' Example usage:
 #' \preformatted{
 #' # The function needs to be freshly-defined, so instead of:
 #' mtcars |> map_dbl(in_parallel(sum))
 #' # Use an anonymous function:
-#' mtcars |> map_dbl(in_parallel(\(...) sum(...)))
+#' mtcars |> map_dbl(in_parallel(\(x) sum(x)))
 #'
 #' # Package functions need to be explicitly namespaced, so instead of:
 #' map(1:3, in_parallel(\(x) runif(x)))
@@ -117,4 +117,18 @@
 #' [mirai website](https://mirai.r-lib.org/) for more details.
 #'
 #' @export
-in_parallel <- carrier::crate
+in_parallel <- function(.f, ...) {
+  if (is.null(the$packages_installed)) {
+    check_installed(
+      c("carrier", "mirai"),
+      version = c("0.1.1", "2.3.0"),
+      reason = "for parallel map."
+    )
+    the$packages_installed <- TRUE
+  }
+  inject(carrier::crate(!!substitute(.f), !!!list(...)))
+}
+
+is_crate <- function(x) {
+  inherits(x, "crate")
+}

@@ -219,11 +219,6 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  if (is.null(the$packages_installed)) {
-    check_installed("mirai", version = "2.3.0", reason = "for parallel map.")
-    the$packages_installed <- TRUE
-  }
-
   if (!mirai::daemons_set()) {
     cli::cli_abort(
       "No daemons set - use e.g. {.run mirai::daemons(6)} to set 6 local daemons.",

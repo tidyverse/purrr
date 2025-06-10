@@ -4,11 +4,11 @@
 \alias{in_parallel}
 \title{Parallelization in purrr}
 \usage{
-in_parallel(.fn, ...)
+in_parallel(.f, ...)
 }
 \arguments{
-\item{.fn}{A fresh formula or function. "Fresh" here means that they should
-be declared in the call to \code{\link[=in_parallel]{in_parallel()}}.}
+\item{.f}{A fresh formula or function. "Fresh" here means that they should be
+declared in the call to \code{\link[=in_parallel]{in_parallel()}}.}
 
 \item{...}{Arguments to declare in the environment of the function.}
 }
@@ -27,8 +27,8 @@ Wrapping a function that is passed to the \code{.f} argument in \code{\link[=map
 its variants with \code{\link[=in_parallel]{in_parallel()}} declares that the map should be performed
 in parallel.
 
-Under the hood, \code{\link[=in_parallel]{in_parallel()}} provides a systematic way of making a
-function self-contained so that it can be readily shared with other parallel
+Under the hood, \code{\link[=in_parallel]{in_parallel()}} provides a systematic way of making \code{.f}
+self-contained so that it can be readily shared with other parallel
 processes. It ensures that everything needed by the function is serialized
 along with it, but not other objects which happen to be in the function's
 enclosing environment. This helps to prevent inadvertently shipping large
@@ -41,18 +41,18 @@ includes packages in the default search path, with the exception of the
 base package. For instance \code{var()} from the stats package must be called
 with its namespace prefix: \code{stats::var(x)}.
 \item They should declare any data they depend on. You can declare data by
-supplying additional arguments to \code{...} or by unquoting objects with \verb{!!}⁠.
+supplying additional named arguments to \code{...}⁠.
 }
 
-\code{\link[=in_parallel]{in_parallel()}} is a simple alias for \code{\link[carrier:crate]{carrier::crate()}} and you may refer to
-that package for more details.
+\code{\link[=in_parallel]{in_parallel()}} is a simple wrapper of \code{\link[carrier:crate]{carrier::crate()}} and you may refer
+to that package for more details.
 
 Example usage:
 \preformatted{
 # The function needs to be freshly-defined, so instead of:
 mtcars |> map_dbl(in_parallel(sum))
 # Use an anonymous function:
-mtcars |> map_dbl(in_parallel(\(...) sum(...)))
+mtcars |> map_dbl(in_parallel(\(x) sum(x)))
 
 # Package functions need to be explicitly namespaced, so instead of:
 map(1:3, in_parallel(\(x) runif(x)))

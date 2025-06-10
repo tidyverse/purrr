@@ -16,13 +16,13 @@ BugReports: https://github.com/tidyverse/purrr/issues
 Depends:
     R (>= 4.0)
 Imports:
-    carrier (>= 0.1.1),
     cli (>= 3.6.1),
     lifecycle (>= 1.0.3),
     magrittr (>= 1.5.0),
     rlang (>= 1.1.1),
     vctrs (>= 0.6.3)
 Suggests: 
+    carrier (>= 0.1.1),
     covr,
     dplyr (>= 0.7.8),
     httr,
