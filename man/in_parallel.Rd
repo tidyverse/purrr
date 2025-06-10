@@ -14,6 +14,7 @@ declared in the call to \code{\link[=in_parallel]{in_parallel()}}.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 All map functions allow parallelized operation using \CRANpkg{mirai}. To take
 advantage of this, wrap a function that is passed to the \code{.f} argument of
 \code{\link[=map]{map()}} or any of its variants with \code{\link[=in_parallel]{in_parallel()}}. This declares that the
@@ -48,23 +49,23 @@ supplying additional named arguments to \code{...}⁠.
 to that package for more details.
 
 Example usage:
-\preformatted{
-# The function needs to be freshly-defined, so instead of:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# The function needs to be freshly-defined, so instead of:
 mtcars |> map_dbl(in_parallel(sum))
 # Use an anonymous function:
-mtcars |> map_dbl(in_parallel(\(x) sum(x)))
+mtcars |> map_dbl(in_parallel(\\(x) sum(x)))
 
 # Package functions need to be explicitly namespaced, so instead of:
-map(1:3, in_parallel(\(x) runif(x)))
+map(1:3, in_parallel(\\(x) runif(x)))
 # Use :: to namespace all packages, even those on the default search path:
-map(1:3, in_parallel(\(x) stats::runif(x)))
+map(1:3, in_parallel(\\(x) stats::runif(x)))
 
-fun <- \(x) \{x + x \%\% 2 \}
+fun <- function(x) \{ x + x \%\% 2 \}
 # Operating in parallel, locally-defined objects will not be found:
-map(1:3, in_parallel(\(x) x + fun(x)))
+map(1:3, in_parallel(\\(x) x + fun(x)))
 # Use the ... argument to supply those objects:
-map(1:3, in_parallel(\(x) x + fun(x), fun = fun))
-}
+map(1:3, in_parallel(\\(x) x + fun(x), fun = fun))
+}\if{html}{\out{</div>}}
 }
 
 \section{When to Use}{
@@ -81,13 +82,13 @@ the order of 100 microseconds to 1 millisecond for each map iteration.
 If your function allows the user to supply a function to \code{\link[=map]{map()}} or its
 variants, and you want to ensure that it never runs in parallel, simply wrap
 that argument in \code{\link[=unclass]{unclass()}}. For example:
-\preformatted{
-map_mtcars <- function(.f) {
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{map_mtcars <- function(.f) \{
   map(mtcars, unclass(.f))
-}
+\}
 # not run in parallel:
-map_mtcars(in_parallel(\(x) sum(x)))
-}
+map_mtcars(in_parallel(\\(x) sum(x)))
+}\if{html}{\out{</div>}}
 }
 
 \section{Daemons Settings}{
@@ -103,9 +104,8 @@ usual to set daemons once per session. You can leave them running on your
 local machine as they consume almost no resources whilst waiting to receive
 tasks. The following sets up 6 daemons on your local machine:
 
-\preformatted{
-mirai::daemons(6)
-}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{mirai::daemons(6)
+}\if{html}{\out{</div>}}
 
 Function arguments:
 \itemize{
@@ -123,9 +123,8 @@ Resetting daemons:
 Daemons persist for the duration of your session. To reset and tear down any
 existing daemons:
 
-\preformatted{
-mirai::daemons(0)
-}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{mirai::daemons(6)
+}\if{html}{\out{</div>}}
 
 All daemons automatically terminate when your session ends. You do not need
 to explicitly terminate daemons in this instance, although it is still good

@@ -40,7 +40,7 @@
 #' to that package for more details.
 #'
 #' Example usage:
-#' \preformatted{
+#' ```r
 #' # The function needs to be freshly-defined, so instead of:
 #' mtcars |> map_dbl(in_parallel(sum))
 #' # Use an anonymous function:
@@ -51,12 +51,12 @@
 #' # Use :: to namespace all packages, even those on the default search path:
 #' map(1:3, in_parallel(\(x) stats::runif(x)))
 #'
-#' fun <- function(x) \{x + x \%\% 2 \}
+#' fun <- function(x) { x + x %% 2 }
 #' # Operating in parallel, locally-defined objects will not be found:
 #' map(1:3, in_parallel(\(x) x + fun(x)))
 #' # Use the ... argument to supply those objects:
 #' map(1:3, in_parallel(\(x) x + fun(x), fun = fun))
-#' }
+#' ```
 #'
 #' @section When to Use:
 #'
@@ -71,13 +71,13 @@
 #' If your function allows the user to supply a function to [map()] or its
 #' variants, and you want to ensure that it never runs in parallel, simply wrap
 #' that argument in [unclass()]. For example:
-#' \preformatted{
+#' ```r
 #' map_mtcars <- function(.f) {
 #'   map(mtcars, unclass(.f))
 #' }
 #' # not run in parallel:
 #' map_mtcars(in_parallel(\(x) sum(x)))
-#' }
+#' ```
 #'
 #' @section Daemons Settings:
 #'
@@ -91,9 +91,9 @@
 #' local machine as they consume almost no resources whilst waiting to receive
 #' tasks. The following sets up 6 daemons on your local machine:
 #'
-#' \preformatted{
+#' ```r
 #' mirai::daemons(6)
-#' }
+#' ```
 #'
 #' Function arguments:
 #'
@@ -110,9 +110,9 @@
 #' Daemons persist for the duration of your session. To reset and tear down any
 #' existing daemons:
 #'
-#' \preformatted{
-#' mirai::daemons(0)
-#' }
+#' ```r
+#' mirai::daemons(6)
+#' ```
 #'
 #' All daemons automatically terminate when your session ends. You do not need
 #' to explicitly terminate daemons in this instance, although it is still good
