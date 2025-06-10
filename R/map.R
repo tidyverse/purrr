@@ -34,9 +34,8 @@
 #'   `r lifecycle::badge("experimental")`
 #'
 #'   Wrap a function with [in_parallel()] to declare that it should proceed
-#'   in parallel.
-#'   * Use of `...` is not permitted in this context. See [in_parallel()] for
-#'     more details.
+#'   in parallel. See [in_parallel()] for more details.
+#'   * Use of `...` is not permitted in this context.
 #'
 #' @param ... Additional arguments passed on to the mapped function.
 #'
@@ -143,12 +142,14 @@
 #' # 2. Wrap .f with in_parallel():
 #' mtcars |> map_dbl(in_parallel(\(x) sum(x)))
 #'
+#' # Note that functions from packages should be fully qualified with `pkg::`
 #' 1:10 |>
 #'   map(in_parallel(\(x) stats::rnorm(10, mean = x))) |>
 #'   map_dbl(in_parallel(\(x) mean(x)))
 #'
-#' # A locally-defined function should be passed via ... of in_parallel():
-#' slow_lm <- \(formula, data) {
+#' # A locally-defined function (or any required variables)
+#' # should be passed via ... of in_parallel():
+#' slow_lm <- function(formula, data) {
 #'   Sys.sleep(0.5)
 #'   lm(formula, data)
 #' }

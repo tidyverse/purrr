@@ -1,6 +1,8 @@
 #' Parallelization in purrr
 #'
+#' @description
 #' `r lifecycle::badge("experimental")`
+#'
 #' All map functions allow parallelized operation using \CRANpkg{mirai}. To take
 #' advantage of this, wrap a function that is passed to the `.f` argument of
 #' [map()] or any of its variants with [in_parallel()]. This declares that the
@@ -49,7 +51,7 @@
 #' # Use :: to namespace all packages, even those on the default search path:
 #' map(1:3, in_parallel(\(x) stats::runif(x)))
 #'
-#' fun <- \(x) \{x + x \%\% 2 \}
+#' fun <- function(x) \{x + x \%\% 2 \}
 #' # Operating in parallel, locally-defined objects will not be found:
 #' map(1:3, in_parallel(\(x) x + fun(x)))
 #' # Use the ... argument to supply those objects:
