@@ -77,6 +77,17 @@ outweigh it for very short tasks or those involving large amounts of data.
 The threshold at which parallelization becomes clearly beneficial will differ
 according to your individual setup and task, but a rough guide would be in
 the order of 100 microseconds to 1 millisecond for each map iteration.
+
+If your function allows the user to supply a function to \code{\link[=map]{map()}} or its
+variants, and you want to ensure that it never runs in parallel, simply wrap
+that argument in \code{\link[=unclass]{unclass()}}. For example:
+\preformatted{
+map_mtcars <- function(.f) {
+  map(mtcars, unclass(.f))
+}
+# not run in parallel:
+map_mtcars(in_parallel(\(x) sum(x)))
+}
 }
 
 \section{Daemons Settings}{
