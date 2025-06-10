@@ -126,6 +126,35 @@ within the package. This helps prevent inadvertently spawning too many
 daemons if functions are used recursively within each other.
 }
 
+\examples{
+\dontshow{if (interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+# Run in interactive sessions only as spawns additional processes
+
+# To use parallelized map:
+# 1. Set daemons (number of parallel processes) first:
+mirai::daemons(2)
+
+# 2. Wrap .f with in_parallel():
+mtcars |> map_dbl(in_parallel(\(x) sum(x)))
+
+1:10 |>
+  map(in_parallel(\(x) stats::rnorm(10, mean = x))) |>
+  map_dbl(in_parallel(\(x) mean(x)))
+
+# A locally-defined function should be passed via ... of in_parallel():
+slow_lm <- \(formula, data) {
+  Sys.sleep(0.5)
+  lm(formula, data)
+}
+
+mtcars |>
+  split(mtcars$cyl) |>
+  map(in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
+
+# Tear down daemons when no longer in use:
+mirai::daemons(0)
+\dontshow{\}) # examplesIf}
+}
 \references{
 \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
 \href{https://mirai.r-lib.org/}{mirai website} for more details.

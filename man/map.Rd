@@ -159,7 +159,7 @@ mtcars |>
   map(summary) |>
   map_dbl("r.squared")
 
-\dontshow{if (interactive() && requireNamespace("mirai", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 # Run in interactive sessions only as spawns additional processes
 
 # To use parallelized map:
