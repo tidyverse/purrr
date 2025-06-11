@@ -10,32 +10,29 @@ in_parallel(.f, ...)
 \item{.f}{A fresh formula or function. "Fresh" here means that they should be
 declared in the call to \code{\link[=in_parallel]{in_parallel()}}.}
 
-\item{...}{Arguments to declare in the environment of the function.}
+\item{...}{Named arguments to declare in the environment of the function.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-All map functions allow parallelized operation using \CRANpkg{mirai}. To take
-advantage of this, wrap a function that is passed to the \code{.f} argument of
-\code{\link[=map]{map()}} or any of its variants with \code{\link[=in_parallel]{in_parallel()}}. This declares that the
-computation should proceed in parallel utilizing multiple cores on your local
-machine, or distributed over the network.
+All map functions allow parallelized operation using \CRANpkg{mirai}.
+
+Wrap functions passed to the \code{.f} argument of \code{\link[=map]{map()}} and its variants with
+\code{\link[=in_parallel]{in_parallel()}}.
+
+\code{\link[=in_parallel]{in_parallel()}} is a \pkg{purrr} adverb that plays two roles:
+\itemize{
+\item It is a signal to purrr verbs like \code{\link[=map]{map()}} to go ahead and perform
+computations in parallel.
+\item It helps you create self-contained functions that are isolated from your
+workspace. This is important because the function is packaged up
+(serialized) to be sent across to parallel processes. Isolation is
+critical for performance because it prevents sending very large objects
+without the intention.
 }
-\section{How to Use}{
+}
+\section{Creating Self-contained Functions}{
 
-
-Wrapping a function that is passed to the \code{.f} argument in \code{\link[=map]{map()}} or any of
-its variants with \code{\link[=in_parallel]{in_parallel()}} declares that the map should be performed
-in parallel.
-
-Under the hood, \code{\link[=in_parallel]{in_parallel()}} provides a systematic way of making \code{.f}
-self-contained so that it can be readily shared with other parallel
-processes. It ensures that everything needed by the function is serialized
-along with it, but not other objects which happen to be in the function's
-enclosing environment. This helps to prevent inadvertently shipping large
-data objects when they may not be needed.
-
-To create self-contained functions:
 \itemize{
 \item They should call package functions with an explicit \code{::} namespace. This
 includes packages in the default search path, with the exception of the
@@ -78,17 +75,6 @@ outweigh it for very short tasks or those involving large amounts of data.
 The threshold at which parallelization becomes clearly beneficial will differ
 according to your individual setup and task, but a rough guide would be in
 the order of 100 microseconds to 1 millisecond for each map iteration.
-
-If your function allows the user to supply a function to \code{\link[=map]{map()}} or its
-variants, and you want to ensure that it never runs in parallel, simply wrap
-that argument in \code{\link[=unclass]{unclass()}}. For example:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{map_mtcars <- function(.f) \{
-  map(mtcars, unclass(.f))
-\}
-# not run in parallel:
-map_mtcars(in_parallel(\\(x) sum(x)))
-}\if{html}{\out{</div>}}
 }
 
 \section{Daemons Settings}{
@@ -123,7 +109,7 @@ Resetting daemons:
 Daemons persist for the duration of your session. To reset and tear down any
 existing daemons:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{mirai::daemons(6)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{mirai::daemons(0)
 }\if{html}{\out{</div>}}
 
 All daemons automatically terminate when your session ends. You do not need

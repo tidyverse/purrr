@@ -3,30 +3,25 @@
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' All map functions allow parallelized operation using \CRANpkg{mirai}. To take
-#' advantage of this, wrap a function that is passed to the `.f` argument of
-#' [map()] or any of its variants with [in_parallel()]. This declares that the
-#' computation should proceed in parallel utilizing multiple cores on your local
-#' machine, or distributed over the network.
+#' All map functions allow parallelized operation using \CRANpkg{mirai}.
+#'
+#' Wrap functions passed to the `.f` argument of [map()] and its variants with
+#' [in_parallel()].
+#'
+#' [in_parallel()] is a \pkg{purrr} adverb that plays two roles:
+#'  * It is a signal to purrr verbs like [map()] to go ahead and perform
+#'    computations in parallel.
+#'  * It helps you create self-contained functions that are isolated from your
+#'    workspace. This is important because the function is packaged up
+#'    (serialized) to be sent across to parallel processes. Isolation is
+#'    critical for performance because it prevents sending very large objects
+#'    without the intention.
 #'
 #' @param .f A fresh formula or function. "Fresh" here means that they should be
 #'   declared in the call to [in_parallel()].
-#' @param ... Arguments to declare in the environment of the function.
+#' @param ... Named arguments to declare in the environment of the function.
 #'
-#' @section How to Use:
-#'
-#' Wrapping a function that is passed to the `.f` argument in [map()] or any of
-#' its variants with [in_parallel()] declares that the map should be performed
-#' in parallel.
-#'
-#' Under the hood, [in_parallel()] provides a systematic way of making `.f`
-#' self-contained so that it can be readily shared with other parallel
-#' processes. It ensures that everything needed by the function is serialized
-#' along with it, but not other objects which happen to be in the function's
-#' enclosing environment. This helps to prevent inadvertently shipping large
-#' data objects when they may not be needed.
-#'
-#' To create self-contained functions:
+#' @section Creating Self-contained Functions:
 #'
 #' * They should call package functions with an explicit `::` namespace. This
 #'   includes packages in the default search path, with the exception of the
@@ -100,7 +95,7 @@
 #' existing daemons:
 #'
 #' ```r
-#' mirai::daemons(6)
+#' mirai::daemons(0)
 #' ```
 #'
 #' All daemons automatically terminate when your session ends. You do not need
