@@ -220,6 +220,7 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
+  check_parallel_pkgs()
   if (!mirai::daemons_set()) {
     cli::cli_abort(
       "No daemons set - use e.g. {.run mirai::daemons(6)} to set 6 local daemons.",

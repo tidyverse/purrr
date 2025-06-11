@@ -157,17 +157,21 @@
 #' mirai::daemons(0)
 #'
 in_parallel <- function(.f, ...) {
-  if (is.null(the$packages_installed)) {
-    check_installed(
-      c("carrier", "mirai"),
-      version = c("0.1.1", "2.3.0"),
-      reason = "for parallel map."
-    )
-    the$packages_installed <- TRUE
-  }
+  check_parallel_pkgs()
   inject(carrier::crate(!!substitute(.f), !!!list(...)))
 }
 
 is_crate <- function(x) {
   inherits(x, "crate")
+}
+
+check_parallel_pkgs <- function() {
+  if (is.null(the$parallel_pkgs_checked)) {
+    check_installed(
+      c("carrier", "mirai"),
+      version = c("0.1.1", "2.3.0"),
+      reason = "for parallel map."
+    )
+    the$parallel_pkgs_checked <- TRUE
+  }
 }
