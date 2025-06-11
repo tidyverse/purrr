@@ -53,7 +53,7 @@
 #' map(1:3, in_parallel(\(x) x + fun(x), fun = fun))
 #' ```
 #'
-#' @section When to Use:
+#' @section When to use:
 #'
 #' Parallelizing a map using 'n' processes does not automatically lead to it
 #' taking 1/n of the time. Additional overhead from setting up the parallel task
@@ -63,7 +63,7 @@
 #' according to your individual setup and task, but a rough guide would be in
 #' the order of 100 microseconds to 1 millisecond for each map iteration.
 #'
-#' @section Daemons Settings:
+#' @section Daemons settings:
 #'
 #' How and where parallelization occurs is determined by [mirai::daemons()].
 #' This is a function from the \pkg{mirai} package that sets up daemons

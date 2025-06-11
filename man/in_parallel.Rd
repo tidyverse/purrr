@@ -31,7 +31,7 @@ critical for performance because it prevents sending very large objects
 without the intention.
 }
 }
-\section{Creating Self-contained Functions}{
+\section{Creating self-contained functions}{
 
 \itemize{
 \item They should call package functions with an explicit \code{::} namespace. This
@@ -65,7 +65,7 @@ map(1:3, in_parallel(\\(x) x + fun(x), fun = fun))
 }\if{html}{\out{</div>}}
 }
 
-\section{When to Use}{
+\section{When to use}{
 
 
 Parallelizing a map using 'n' processes does not automatically lead to it
@@ -77,7 +77,7 @@ according to your individual setup and task, but a rough guide would be in
 the order of 100 microseconds to 1 millisecond for each map iteration.
 }
 
-\section{Daemons Settings}{
+\section{Daemons settings}{
 
 
 How and where parallelization occurs is determined by \code{\link[mirai:daemons]{mirai::daemons()}}.
