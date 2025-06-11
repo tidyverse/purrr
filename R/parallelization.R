@@ -21,7 +21,7 @@
 #'   declared in the call to [in_parallel()].
 #' @param ... Named arguments to declare in the environment of the function.
 #'
-#' @section Creating Self-contained Functions:
+#' @section Creating self-contained functions:
 #'
 #' * They should call package functions with an explicit `::` namespace. This
 #'   includes packages in the default search path, with the exception of the

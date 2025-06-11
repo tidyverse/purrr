@@ -35,7 +35,7 @@
 #'
 #'   Wrap a function with [in_parallel()] to declare that it should proceed
 #'   in parallel. See [in_parallel()] for more details.
-#'   * Use of `...` is not permitted in this context.
+#'   Use of `...` is not permitted in this context.
 #'
 #' @param ... Additional arguments passed on to the mapped function.
 #'
