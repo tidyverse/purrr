@@ -68,17 +68,6 @@
 #' according to your individual setup and task, but a rough guide would be in
 #' the order of 100 microseconds to 1 millisecond for each map iteration.
 #'
-#' If your function allows the user to supply a function to [map()] or its
-#' variants, and you want to ensure that it never runs in parallel, simply wrap
-#' that argument in [unclass()]. For example:
-#' ```r
-#' map_mtcars <- function(.f) {
-#'   map(mtcars, unclass(.f))
-#' }
-#' # not run in parallel:
-#' map_mtcars(in_parallel(\(x) sum(x)))
-#' ```
-#'
 #' @section Daemons Settings:
 #'
 #' How and where parallelization occurs is determined by [mirai::daemons()].
