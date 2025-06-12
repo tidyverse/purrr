@@ -118,6 +118,7 @@
 #' \pkg{purrr}'s parallelization is powered by \CRANpkg{mirai}. See the
 #' [mirai website](https://mirai.r-lib.org/) for more details.
 #'
+#' @aliases parallelization
 #' @export
 #' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)
 #' # Run in interactive sessions only as spawns additional processes

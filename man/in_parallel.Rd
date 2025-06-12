@@ -2,6 +2,7 @@
 % Please edit documentation in R/parallelization.R
 \name{in_parallel}
 \alias{in_parallel}
+\alias{parallelization}
 \title{Parallelization in purrr}
 \usage{
 in_parallel(.f, ...)
