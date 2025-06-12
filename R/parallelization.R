@@ -21,15 +21,21 @@
 #'   declared in the call to [in_parallel()].
 #' @param ... Named arguments to declare in the environment of the function.
 #'
+#' @return A 'crate' (classed function).
+#'
 #' @section Creating self-contained functions:
 #'
-#' * They should call package functions with an explicit `::` namespace. This
-#'   includes packages in the default search path, with the exception of the
-#'   base package. For instance `var()` from the stats package must be called
-#'   with its namespace prefix: `stats::var(x)`.
+#' * They should call package functions with an explicit `::` namespace. For
+#'   instance `ggplot()` from the ggplot2 package must be called with its
+#'   namespace prefix: `ggplot2::ggplot()`. An alternative is to use `library()`
+#'   within the function to attach a package to the search path, which allows
+#'   subsequent use of package functions without the explicit namespace.
 #'
 #' * They should declare any data they depend on. You can declare data by
-#'   supplying additional named arguments to `...`⁠.
+#'   supplying additional named arguments to `...`. When supplying an anonymous
+#'   function to a locally-defined function of the form `\(x) fun(x)`, the
+#'   function `fun` itself must be supplied to `...`. The entire call would then
+#'   be of the form: `in_parallel(\(x) fun(x), fun = fun)`.
 #'
 #' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
 #' to that package for more details.
@@ -137,12 +143,23 @@
 #'   split(mtcars$cyl) |>
 #'   map(in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
 #'
+#' # Example of a 'crate' returned by in_parallel(). The object print method
+#' # shows the size of the crate and any objects contained within:
+#' crate <- in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm)
+#' crate
+#'
+#' # Use mirai::mirai() to test that a crate contains everything that's needed
+#' # by running it in a daemon and collecting its return value:
+#' mirai::mirai(crate(mtcars), crate = crate) |> mirai::collect_mirai()
+#'
 #' # Tear down daemons when no longer in use:
 #' mirai::daemons(0)
 #'
 in_parallel <- function(.f, ...) {
   check_parallel_pkgs()
-  inject(carrier::crate(!!substitute(.f), !!!list(...)))
+  inject(
+    carrier::crate(!!substitute(.f), !!!list(...), .parent_env = globalenv())
+  )
 }
 
 is_crate <- function(x) {
@@ -153,7 +170,7 @@ check_parallel_pkgs <- function() {
   if (is.null(the$parallel_pkgs_checked)) {
     check_installed(
       c("carrier", "mirai"),
-      version = c("0.1.1", "2.3.0"),
+      version = c("0.1.1.9000", "2.3.0"),
       reason = "for parallel map."
     )
     the$parallel_pkgs_checked <- TRUE

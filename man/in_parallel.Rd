@@ -12,6 +12,9 @@ declared in the call to \code{\link[=in_parallel]{in_parallel()}}.}
 
 \item{...}{Named arguments to declare in the environment of the function.}
 }
+\value{
+A 'crate' (classed function).
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
@@ -34,12 +37,16 @@ without the intention.
 \section{Creating self-contained functions}{
 
 \itemize{
-\item They should call package functions with an explicit \code{::} namespace. This
-includes packages in the default search path, with the exception of the
-base package. For instance \code{var()} from the stats package must be called
-with its namespace prefix: \code{stats::var(x)}.
+\item They should call package functions with an explicit \code{::} namespace. For
+instance \code{ggplot()} from the ggplot2 package must be called with its
+namespace prefix: \code{ggplot2::ggplot()}. An alternative is to use \code{library()}
+within the function to attach a package to the search path, which allows
+subsequent use of package functions without the explicit namespace.
 \item They should declare any data they depend on. You can declare data by
-supplying additional named arguments to \code{...}⁠.
+supplying additional named arguments to \code{...}. When supplying an anonymous
+function to a locally-defined function of the form \verb{\\(x) fun(x)}, the
+function \code{fun} itself must be supplied to \code{...}. The entire call would then
+be of the form: \verb{in_parallel(\\(x) fun(x), fun = fun)}.
 }
 
 \code{\link[=in_parallel]{in_parallel()}} is a simple wrapper of \code{\link[carrier:crate]{carrier::crate()}} and you may refer
@@ -146,6 +153,15 @@ slow_lm <- \(formula, data) {
 mtcars |>
   split(mtcars$cyl) |>
   map(in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
+
+# Example of a 'crate' returned by in_parallel(). The object print method
+# shows the size of the crate and any objects contained within:
+crate <- in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm)
+crate
+
+# Use mirai::mirai() to test that a crate contains everything that's needed
+# by running it in a daemon and collecting its return value:
+mirai::mirai(crate(mtcars), crate = crate) |> mirai::collect_mirai()
 
 # Tear down daemons when no longer in use:
 mirai::daemons(0)
