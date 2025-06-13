@@ -16,6 +16,11 @@ test_that("Can't use `...` in a parallel map", {
   })
 })
 
+test_that("Crated function environment is attached to search path", {
+  # Use of `median()` without the `stats::` namespace
+  expect_equal(map_dbl(1:2, in_parallel(\(x) median(c(1, 1, x)))), c(1, 1))
+})
+
 # map -----------------------------------------------------------------------
 
 test_that("preserves names", {
