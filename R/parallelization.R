@@ -141,7 +141,13 @@
 in_parallel <- function(.f, ...) {
   check_parallel_pkgs()
   inject(
-    carrier::crate(!!substitute(.f), !!!list(...), .parent_env = globalenv())
+    carrier::crate(
+      !!substitute(.f),
+      !!!list(...),
+      .parent_env = globalenv(),
+      .error_arg = ".f",
+      .error_call = environment()
+    )
   )
 }
 
