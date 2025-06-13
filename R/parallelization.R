@@ -14,8 +14,8 @@
 #'  * It helps you create self-contained functions that are isolated from your
 #'    workspace. This is important because the function is packaged up
 #'    (serialized) to be sent across to parallel processes. Isolation is
-#'    critical for performance because it prevents sending very large objects
-#'    without the intention.
+#'    critical for performance because it prevents accidentally sending very large
+#'    objects between processes.
 #'
 #' @param .f A fresh formula or function. "Fresh" here means that they should be
 #'   declared in the call to [in_parallel()].
