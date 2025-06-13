@@ -31,7 +31,13 @@ older versions of R.
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
 set a default value if the indexed element is \code{NULL} or does not exist.
-}}
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should proceed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to the mapped function.
 

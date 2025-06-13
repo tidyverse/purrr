@@ -2,6 +2,17 @@
 #'
 #' @inheritParams keep
 #' @inheritParams map
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function, e.g. `mean`.
+#'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
+#'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
+#'     argument. Only recommended if you require backward compatibility with
+#'     older versions of R.
+#'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
+#'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
+#'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
+#'     set a default value if the indexed element is `NULL` or does not exist.
 #' @param .dir If `"forward"`, the default, starts at the beginning of
 #'   the vector and move towards the end; if `"backward"`, starts at
 #'   the end of the vector and moves towards the beginning.

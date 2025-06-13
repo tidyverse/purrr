@@ -92,36 +92,35 @@
 #' pmin(df$x, df$y)
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
-pmap <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("list", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("list", .l, .f, ..., .progress = .progress)
 }
 
 #' @export
 #' @rdname pmap
-pmap_lgl <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("logical", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("logical", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_int <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("integer", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_int <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("integer", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_dbl <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("double", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("double", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_chr <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("character", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("character", .l, .f, ..., .progress = .progress)
 }
 
 pmap_ <- function(.type,
                   .l,
                   .f,
                   ...,
-                  .parallel = FALSE,
                   .progress = FALSE,
                   .purrr_user_env = caller_env(2),
                   .purrr_error_call = caller_env()) {
@@ -139,7 +138,7 @@ pmap_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (isTRUE(.parallel)) {
+  if (is_crate(.f)) {
     attributes(.l) <- list(
       names = names(.l),
       class = "data.frame",
@@ -163,16 +162,16 @@ pmap_ <- function(.type,
 
 #' @export
 #' @rdname pmap
-pmap_vec <- function(.l, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE) {
+pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = FALSE) {
   .f <- as_mapper(.f, ...)
 
-  out <- pmap(.l, .f, ..., .parallel = .parallel, .progress = .progress)
+  out <- pmap(.l, .f, ..., .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
 
 #' @export
 #' @rdname pmap
-pwalk <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap(.l, .f, ..., .parallel = .parallel, .progress = .progress)
+pwalk <- function(.l, .f, ..., .progress = FALSE) {
+  pmap(.l, .f, ..., .progress = .progress)
   invisible(.l)
 }

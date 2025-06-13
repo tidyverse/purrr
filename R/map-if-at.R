@@ -20,8 +20,8 @@
 #'   `TRUE` will be modified.
 #' @param .else A function applied to elements of `.x` for which `.p`
 #' returns `FALSE`.
-#' @export
 #' @family map variants
+#' @export
 #' @examples
 #' # Use a predicate function to decide whether to map a function:
 #' iris |> map_if(is.factor, as.character) |> str()
@@ -57,11 +57,11 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #'   installed, you can use `vars()` and tidyselect helpers to select
 #'   elements.
 #' @export
-map_at <- function(.x, .at, .f, ..., .parallel = FALSE, .progress = FALSE) {
+map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
   where <- where_at(.x, .at, user_env = caller_env())
 
   out <- vector("list", length(.x))
-  out[where]  <- map(.x[where], .f, ..., .parallel = .parallel, .progress = .progress)
+  out[where]  <- map(.x[where], .f, ..., .progress = .progress)
   out[!where] <- .x[!where]
 
   set_names(out, names(.x))
