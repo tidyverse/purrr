@@ -164,12 +164,13 @@ mtcars |>
 mirai::daemons(2)
 
 # 2. Wrap .f with in_parallel():
-mtcars |> map_dbl(in_parallel(\(x) sum(x)))
+mtcars |> map_dbl(in_parallel(\(x) mean(x)))
 
 # Note that functions from packages should be fully qualified with `pkg::`
+# or call `library(pkg)` within the function
 1:10 |>
-  map(in_parallel(\(x) stats::rnorm(10, mean = x))) |>
-  map_dbl(in_parallel(\(x) mean(x)))
+  map(in_parallel(\(x) vctrs::vec_init(integer(), x))) |>
+  map_int(in_parallel(\(x) { library(vctrs); vec_size(x) }))
 
 # A locally-defined function (or any required variables)
 # should be passed via ... of in_parallel():
