@@ -36,7 +36,13 @@ of length 1 will be recycled to the length of the other.}
 element of \code{x} and \code{.y} to refer to the current element of \code{y}. Only
 recommended if you require backward compatibility with older versions
 of R.
-}}
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to the mapped function.
 

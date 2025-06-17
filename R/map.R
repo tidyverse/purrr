@@ -33,7 +33,7 @@
 #'
 #'   `r lifecycle::badge("experimental")`
 #'
-#'   Wrap a function with [in_parallel()] to declare that it should proceed
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
 #'   Use of `...` is not permitted in this context.
 #'
@@ -132,7 +132,7 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 #'
-#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)
+#' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map:
@@ -201,7 +201,7 @@ map_ <- function(.type,
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
-  if (is_crate(.f)) {
+  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
 
@@ -221,13 +221,6 @@ map_ <- function(.type,
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
-  check_parallel_pkgs()
-  if (!mirai::daemons_set()) {
-    cli::cli_abort(
-      "No daemons set - use e.g. {.run mirai::daemons(6)} to set 6 local daemons.",
-      call = error_call
-    )
-  }
   if (...length()) {
     cli::cli_abort(
       "Can't use `...` with parallelized functions.",

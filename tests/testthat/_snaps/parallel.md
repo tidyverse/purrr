@@ -1,11 +1,3 @@
-# Can't parallel map without first setting daemons
-
-    Code
-      map(list(x = 1, y = 2), in_parallel(function(x) list(x)))
-    Condition
-      Error in `map()`:
-      ! No daemons set - use e.g. `mirai::daemons(6)` to set 6 local daemons.
-
 # Can't use `...` in a parallel map
 
     Code

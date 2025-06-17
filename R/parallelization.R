@@ -14,8 +14,12 @@
 #'  * It helps you create self-contained functions that are isolated from your
 #'    workspace. This is important because the function is packaged up
 #'    (serialized) to be sent across to parallel processes. Isolation is
-#'    critical for performance because it prevents accidentally sending very large
-#'    objects between processes.
+#'    critical for performance because it prevents accidentally sending very
+#'    large objects between processes.
+#'
+#' For maps to actually be performed in parallel, the user must also set
+#' [mirai::daemons()], otherwise they fall back to sequential processing - see
+#' the section 'Daemons settings' below.
 #'
 #' @param .f A fresh formula or function. "Fresh" here means that they should be
 #'   declared in the call to [in_parallel()].
@@ -76,10 +80,12 @@
 #' (persistent background processes that receive parallel computations) on your
 #' local machine or across the network.
 #'
-#' Daemons must be set up prior to performing any parallel map operation. It is
-#' usual to set daemons once per session. You can leave them running on your
-#' local machine as they consume almost no resources whilst waiting to receive
-#' tasks. The following sets up 6 daemons on your local machine:
+#' Daemons must be set prior to performing any parallel map operation, otherwise
+#' [in_parallel()] will fall back to sequential processing.
+#'
+#' It is usual to set daemons once per session. You can leave them running on
+#' your local machine as they consume almost no resources whilst waiting to
+#' receive tasks. The following sets up 6 daemons locally:
 #'
 #' ```r
 #' mirai::daemons(6)
@@ -110,8 +116,10 @@
 #'
 #' Note: it should always be for the user to set daemons. If you are using
 #' parallel map within a package, do not make any [mirai::daemons()] calls
-#' within the package. This helps prevent inadvertently spawning too many
-#' daemons if functions are used recursively within each other.
+#' within the package, as it should always be up to the user how they wish to
+#' set up parallel processing e.g. using local or remote daemons. This also
+#' helps prevent inadvertently spawning too many daemons if functions are used
+#' recursively within each other.
 #'
 #' @references
 #'
@@ -121,7 +129,7 @@
 #' @seealso [map()] for usage examples.
 #' @aliases parallelization
 #' @export
-#' @examplesIf interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)
+#' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' slow_lm <- function(formula, data) {
@@ -139,7 +147,7 @@
 #' mirai::mirai(crate(mtcars), crate = crate) |> mirai::collect_mirai()
 #'
 in_parallel <- function(.f, ...) {
-  check_parallel_pkgs()
+  parallel_pkgs_installed()
   inject(
     carrier::crate(
       !!substitute(.f),
@@ -155,13 +163,13 @@ is_crate <- function(x) {
   inherits(x, "crate")
 }
 
-check_parallel_pkgs <- function() {
-  if (is.null(the$parallel_pkgs_checked)) {
+parallel_pkgs_installed <- function() {
+  is.logical(the$parallel_pkgs_installed) || {
     check_installed(
       c("carrier", "mirai"),
       version = c("0.1.1.9000", "2.3.0"),
       reason = "for parallel map."
     )
-    the$parallel_pkgs_checked <- TRUE
+    the$parallel_pkgs_installed <- TRUE
   }
 }
