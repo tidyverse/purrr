@@ -36,8 +36,9 @@ large objects between processes.
 }
 
 For maps to actually be performed in parallel, the user must also set
-\code{\link[mirai:daemons]{mirai::daemons()}}, otherwise they fall back to sequential processing - see
-the section 'Daemons settings' below.
+\code{\link[mirai:daemons]{mirai::daemons()}}, otherwise they fall back to sequential processing.
+\code{\link[mirai:require_daemons]{mirai::require_daemons()}} may be used to enforce the use of parallel
+processing. See the section 'Daemons settings' below.
 }
 \section{Creating self-contained functions}{
 
@@ -98,7 +99,9 @@ This is a function from the \pkg{mirai} package that sets up daemons
 local machine or across the network.
 
 Daemons must be set prior to performing any parallel map operation, otherwise
-\code{\link[=in_parallel]{in_parallel()}} will fall back to sequential processing.
+\code{\link[=in_parallel]{in_parallel()}} will fall back to sequential processing. To ensure that maps
+are always performed in parallel, put \code{\link[mirai:require_daemons]{mirai::require_daemons()}} before the
+map.
 
 It is usual to set daemons once per session. You can leave them running on
 your local machine as they consume almost no resources whilst waiting to

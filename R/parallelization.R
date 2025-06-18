@@ -18,8 +18,9 @@
 #'    large objects between processes.
 #'
 #' For maps to actually be performed in parallel, the user must also set
-#' [mirai::daemons()], otherwise they fall back to sequential processing - see
-#' the section 'Daemons settings' below.
+#' [mirai::daemons()], otherwise they fall back to sequential processing.
+#' [mirai::require_daemons()] may be used to enforce the use of parallel
+#' processing. See the section 'Daemons settings' below.
 #'
 #' @param .f A fresh formula or function. "Fresh" here means that they should be
 #'   declared in the call to [in_parallel()].
@@ -81,7 +82,9 @@
 #' local machine or across the network.
 #'
 #' Daemons must be set prior to performing any parallel map operation, otherwise
-#' [in_parallel()] will fall back to sequential processing.
+#' [in_parallel()] will fall back to sequential processing. To ensure that maps
+#' are always performed in parallel, put [mirai::require_daemons()] before the
+#' map.
 #'
 #' It is usual to set daemons once per session. You can leave them running on
 #' your local machine as they consume almost no resources whilst waiting to
