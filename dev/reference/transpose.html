@@ -113,32 +113,32 @@ matrix. You can get back the original input by transposing it twice.</p>
 <span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">transpose</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x:List of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.0418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.363</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.163</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.557</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.0568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.915</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ y:List of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.405 0.864 0.134 0.942 0.627</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.509 0.392 0.625 0.731 0.166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.924 0.772 0.161 0.15 0.654</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.6985 0.0753 0.7632 0.4615 0.4756</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.989 0.546 0.185 0.952 0.732</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.8332 0.3745 0.8264 0.1672 0.0548</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.583 0.944 0.869 0.426 0.257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.1378 0.4203 0.2382 0.7582 0.0865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.308 0.677 0.925 0.265 0.304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.49922 0.26627 0.96272 0.00298 0.84882</span>
 <span class="r-in"><span><span class="co"># now</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="list_transpose.html">list_transpose</a></span><span class="op">(</span>simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ x:List of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.0418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.363</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.163</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.557</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.0568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num 0.915</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ y:List of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.405 0.864 0.134 0.942 0.627</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.509 0.392 0.625 0.731 0.166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.924 0.772 0.161 0.15 0.654</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.6985 0.0753 0.7632 0.4615 0.4756</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.989 0.546 0.185 0.952 0.732</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.8332 0.3745 0.8264 0.1672 0.0548</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.583 0.944 0.869 0.426 0.257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.1378 0.4203 0.2382 0.7582 0.0865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.308 0.677 0.925 0.265 0.304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : num [1:5] 0.49922 0.26627 0.96272 0.00298 0.84882</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># transpose() is useful in conjunction with safely() &amp; quietly()</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span></span>

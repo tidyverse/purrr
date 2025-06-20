@@ -164,15 +164,15 @@ as <code>.f</code> the name of a function rather than its value, or as
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># was</span></span></span>
 <span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3277343 0.6021007 0.6043941 0.1246334 0.2946009 0.5776099</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.6309793 0.5120159 0.5050239 0.5340354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.6043941 0.1246334 0.2946009 0.5776099 0.6309793 0.5120159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.5050239 0.5340354 0.5572494 0.8679195</span>
 <span class="r-in"><span><span class="fu">invoke</span><span class="op">(</span><span class="va">runif</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.55724944 0.86791949 0.82970869 0.11144915 0.70368836 0.89748826</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.27973255 0.22820188 0.01532989 0.12898156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.82970869 0.11144915 0.70368836 0.89748826 0.27973255 0.22820188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.01532989 0.12898156 0.09338193 0.23688501</span>
 <span class="r-in"><span><span class="co"># now</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec</a></span><span class="op">(</span><span class="va">runif</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.09338193 0.23688501 0.79114741 0.59973157 0.91014771 0.56042455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.75570477 0.37917189 0.37328098 0.17029064</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.7911474 0.5997316 0.9101477 0.5604246 0.7557048 0.3791719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.3732810 0.1702906 0.4533073 0.2584140</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># was</span></span></span>
 <span class="r-in"><span><span class="va">args</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"01a"</span>, <span class="st">"01b"</span><span class="op">)</span></span></span>
@@ -188,35 +188,35 @@ as <code>.f</code> the name of a function rather than its value, or as
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`invoke_map()` was deprecated in purrr 1.0.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use map() + exec() instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4533073 0.2584140 0.3362660 0.8895830 0.2019463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3362660 0.8895830 0.2019463 0.5791860 0.2076320</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.1998116 -0.5784837 -0.9423007 -0.2037282 -1.6664748</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.5784837 -0.9423007 -0.2037282 -1.6664748 -0.4844551</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">funs</span> <span class="op">|&gt;</span> <span class="fu">invoke_map</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3140315 0.8006411 0.2293247 0.2129984 0.8771009 0.9932220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.8442470 0.9104365 0.4712697 0.2244184</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.2293247 0.2129984 0.8771009 0.9932220 0.8442470 0.9104365</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.4712697 0.2244184 0.1278147 0.2796835</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.1367823  0.9006247  0.8517704  0.7277152  0.7365021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.9006247  0.8517704  0.7277152  0.7365021 -0.3521296</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># now</span></span></span>
 <span class="r-in"><span><span class="va">funs</span> <span class="op">|&gt;</span> <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">exec</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.36237053 0.09255692 0.75975526 0.76081995 0.90326085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7597553 0.7608199 0.9032608 0.9662828 0.5152566</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  1.8287677  0.1243494 -0.9757388  0.6779977  0.3971048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.1243494 -0.9757388  0.6779977  0.3971048 -2.3838210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">funs</span> <span class="op">|&gt;</span> <span class="fu"><a href="map2.html">map2</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">f</span>, <span class="va">args</span><span class="op">)</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec</a></span><span class="op">(</span><span class="va">f</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.008566967 0.955329554 0.838616148 0.213424938 0.494713556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] 0.636244256 0.921091393 0.011744041 0.267402917 0.435572102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.83861615 0.21342494 0.49471356 0.63624426 0.92109139 0.01174404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.26740292 0.43557210 0.82946709 0.87094404</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.9520615 -0.6711297 -0.5065428  0.4676356  0.4736696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.6711297 -0.5065428  0.4676356  0.4736696  0.5590722</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># or use pmap + a tibble</span></span></span>
@@ -226,18 +226,18 @@ as <code>.f</code> the name of a function rather than its value, or as
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="pmap.html">pmap</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">fun</span>, <span class="va">args</span><span class="op">)</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/exec.html" class="external-link">exec</a></span><span class="op">(</span><span class="va">fun</span>, <span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">args</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.71194376 0.60529819 0.34055921 0.04117032 0.40175251 0.07905965</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.31255265 0.32507594 0.07836646 0.15021977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.34055921 0.04117032 0.40175251 0.07905965 0.31255265 0.32507594</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] 0.07836646 0.15021977 0.15242507 0.91342360</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.02608792  0.53089117  0.42769412 -0.09272151  0.92373577</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.53089117  0.42769412 -0.09272151  0.92373577 -0.84181930</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># was</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">invoke_map</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.973252</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.982409</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1125127</span>
@@ -245,10 +245,10 @@ as <code>.f</code> the name of a function rather than its value, or as
 <span class="r-in"><span><span class="co"># now</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">mean</span>, m2 <span class="op">=</span> <span class="va">median</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html" class="external-link">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.9982683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.9786158</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $m2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1558065</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1509643</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

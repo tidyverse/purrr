@@ -102,19 +102,19 @@ level list will be dropped. In this case, <code>rerun(n, x)</code> behaves like
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Now</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   map(1:5, ~ rnorm(5))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 1.881 -0.125 -0.759 -0.509 -0.156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.1326 -0.9741 -1.2509 -0.0463 1.1374</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 1.264 -0.549 0.682 -0.93 -0.975</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.0271 0.4467 -0.3291 0.113 1.0512</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.327 0.787 0.442 -1.019 -0.159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.442 -1.019 -0.159 -1.638 2.839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.962 0.508 0.26 -0.773 -1.806</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.1784 -0.5258 0.4002 -0.1226 -0.0713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 2.096 1.322 1.201 -0.782 -0.441</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.246 0.3658 -0.0341 0.2962 -0.2211</span>
 <span class="r-in"><span><span class="co"># new</span></span></span>
 <span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span> <span class="op">|&gt;</span> <span class="fu"><a href="map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -1.638 2.839 0.962 0.508 0.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.773 -1.806 0.178 -0.526 0.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.1226 -0.0713 2.0957 1.3221 1.2006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.7819 -0.4415 -0.246 0.3658 -0.0341</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.2962 -0.2211 0.1877 -0.4381 -0.0887</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] 0.1877 -0.4381 -0.0887 0.6343 0.8655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.4306 0.013 0.0512 0.5386 0.5197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -2.423 -0.806 -0.485 -0.653 -0.294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.27699 0.13647 1.06721 0.00183 0.14009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ : num [1:5] -0.521 2.366 -1.696 0.683 1.362</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># old</span></span></span>
 <span class="r-in"><span><span class="fl">5</span> <span class="op">|&gt;</span></span></span>
@@ -127,12 +127,12 @@ level list will be dropped. In this case, <code>rerun(n, x)</code> behaves like
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   # Now</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   map(1:5, ~ list(x = rnorm(5), y = rnorm(5)))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.9497046 -0.3541633  0.8256722 -0.9416334 -0.5836642</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.7025860 -0.7953249 -0.1909003  0.2530562 -0.1335784</span>
 <span class="r-in"><span><span class="co"># new</span></span></span>
 <span class="r-in"><span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map_dbl</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">l</span><span class="op">$</span><span class="va">x</span>, <span class="va">l</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.90817642  0.01256163  0.65647896 -0.52973208  0.53135577</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.1823376 -0.5566398  0.7327008 -0.3245149  0.5244111</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

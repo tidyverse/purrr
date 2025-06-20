@@ -172,11 +172,11 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;partialised&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = rpois(1, 5), ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ce69e0e798&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55a99f6bdce0&gt;</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.52365044 0.83706173 0.03350404 0.04332844 0.79210294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9465589 0.8754108 0.2600589 0.6572984</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.06879545 0.86444107 0.07708986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.318848 0.623061</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># You can unquote an argument to fix it to a particular value.</span></span></span>
 <span class="r-in"><span><span class="co"># Unquoted arguments are evaluated only once when the function is created:</span></span></span>
@@ -184,12 +184,12 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
 <span class="r-in"><span><span class="va">f</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;partialised&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (...) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = 4L, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ce69e0e798&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = 5L, ...)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55a99f6bdce0&gt;</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9736226 0.5709573 0.7544066 0.2424543</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7082934 0.8900290 0.1043065 0.6304117 0.8415589</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.6271579 0.1684146 0.4447896 0.1646752</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3642624 0.6229228 0.4607475 0.1634123 0.5138669</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># By default, partialised arguments are passed before new ones:</span></span></span>

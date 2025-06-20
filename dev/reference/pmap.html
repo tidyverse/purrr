@@ -95,7 +95,10 @@ to be called once for each row.</p></dd>
 <code>function(x, y, z) x + y / z</code></p></li>
 <li><p>A formula, e.g. <code>~ ..1 + ..2 / ..3</code>. This syntax is not recommended as
 you can only refer to arguments by position.</p></li>
-</ul></dd>
+</ul><p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
+<p>Wrap a function with <code><a href="in_parallel.html">in_parallel()</a></code> to declare that it should be performed
+in parallel. See <code><a href="in_parallel.html">in_parallel()</a></code> for more details.
+Use of <code>...</code> is not permitted in this context.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
