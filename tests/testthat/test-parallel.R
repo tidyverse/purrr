@@ -1,9 +1,10 @@
 skip_if_not_installed("mirai")
 
-test_that("Can't parallel map without first setting daemons", {
-  expect_snapshot(error = TRUE, {
-    map(list(x = 1, y = 2), in_parallel(\(x) list(x)))
-  })
+test_that("Parallel map falls back to sequential with no daemons set", {
+  expect_identical(
+    map(list(x = 1, y = 2), in_parallel(\(x) list(x))),
+    map(list(x = 1, y = 2), \(x) list(x))
+  )
 })
 
 # set up daemons

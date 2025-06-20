@@ -14,6 +14,12 @@
 #'     element of `x` and `.y` to refer to the current element of `y`. Only
 #'     recommended if you require backward compatibility with older versions
 #'     of R.
+#'
+#'   `r lifecycle::badge("experimental")`
+#'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants
@@ -74,7 +80,7 @@ map2_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (is_crate(.f)) {
+  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
     attributes(args) <- list(
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names

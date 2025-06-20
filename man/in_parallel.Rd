@@ -31,9 +31,14 @@ computations in parallel.
 \item It helps you create self-contained functions that are isolated from your
 workspace. This is important because the function is packaged up
 (serialized) to be sent across to parallel processes. Isolation is
-critical for performance because it prevents sending very large objects
-without the intention.
+critical for performance because it prevents accidentally sending very
+large objects between processes.
 }
+
+For maps to actually be performed in parallel, the user must also set
+\code{\link[mirai:daemons]{mirai::daemons()}}, otherwise they fall back to sequential processing.
+\code{\link[mirai:require_daemons]{mirai::require_daemons()}} may be used to enforce the use of parallel
+processing. See the section 'Daemons settings' below.
 }
 \section{Creating self-contained functions}{
 
@@ -93,10 +98,14 @@ This is a function from the \pkg{mirai} package that sets up daemons
 (persistent background processes that receive parallel computations) on your
 local machine or across the network.
 
-Daemons must be set up prior to performing any parallel map operation. It is
-usual to set daemons once per session. You can leave them running on your
-local machine as they consume almost no resources whilst waiting to receive
-tasks. The following sets up 6 daemons on your local machine:
+Daemons must be set prior to performing any parallel map operation, otherwise
+\code{\link[=in_parallel]{in_parallel()}} will fall back to sequential processing. To ensure that maps
+are always performed in parallel, put \code{\link[mirai:require_daemons]{mirai::require_daemons()}} before the
+map.
+
+It is usual to set daemons once per session. You can leave them running on
+your local machine as they consume almost no resources whilst waiting to
+receive tasks. The following sets up 6 daemons locally:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{mirai::daemons(6)
 }\if{html}{\out{</div>}}
@@ -126,12 +135,14 @@ practice to do so.
 
 Note: it should always be for the user to set daemons. If you are using
 parallel map within a package, do not make any \code{\link[mirai:daemons]{mirai::daemons()}} calls
-within the package. This helps prevent inadvertently spawning too many
-daemons if functions are used recursively within each other.
+within the package, as it should always be up to the user how they wish to
+set up parallel processing e.g. using local or remote daemons. This also
+helps prevent inadvertently spawning too many daemons if functions are used
+recursively within each other.
 }
 
 \examples{
-\dontshow{if (interactive() && requireNamespace("mirai", quietly = TRUE) && requireNamespace("carrier", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")) withAutoprint(\{ # examplesIf}
 # Run in interactive sessions only as spawns additional processes
 
 slow_lm <- function(formula, data) {
