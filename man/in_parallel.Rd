@@ -66,9 +66,9 @@ mtcars |> map_dbl(in_parallel(sum))
 mtcars |> map_dbl(in_parallel(\\(x) sum(x)))
 
 # Package functions need to be explicitly namespaced, so instead of:
-map(1:3, in_parallel(\\(x) runif(x)))
-# Use :: to namespace all packages, even those on the default search path:
-map(1:3, in_parallel(\\(x) stats::runif(x)))
+map(1:3, in_parallel(\\(x) vec_init(integer(), x)))
+# Use :: to namespace all package functions:
+map(1:3, in_parallel(\\(x) vctrs::vec_init(integer(), x)))
 
 fun <- function(x) \{ x + x \%\% 2 \}
 # Operating in parallel, locally-defined objects will not be found:
