@@ -112,7 +112,7 @@
 #' list(x = x, y = x) |>
 #'   cross(.filter = `==`)
 cross <- function(.l, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross()",
     "tidyr::expand_grid()",
@@ -167,7 +167,7 @@ cross <- function(.l, .filter = NULL) {
 #' @export
 #' @rdname cross
 cross2 <- function(.x, .y, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross2()",
     "tidyr::expand_grid()",
@@ -179,7 +179,7 @@ cross2 <- function(.x, .y, .filter = NULL) {
 #' @export
 #' @rdname cross
 cross3 <- function(.x, .y, .z, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross3()",
     "tidyr::expand_grid()",
@@ -191,7 +191,7 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @rdname cross
 #' @export
 cross_df <- function(.l, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross_df()",
     "tidyr::expand_grid()",
