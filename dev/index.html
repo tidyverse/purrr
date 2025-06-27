@@ -124,6 +124,11 @@
 <li><p>All purrr functions are type-stable. They always return the advertised output type (<code><a href="reference/map.html">map()</a></code> returns lists; <code><a href="reference/map.html">map_dbl()</a></code> returns double vectors), or they throw an error.</p></li>
 <li><p>All <code><a href="reference/map.html">map()</a></code> functions accept functions (named, anonymous, and lambda), character vector (used to extract components by name), or numeric vectors (used to extract by position).</p></li>
 </ul>
+<p>There are two less obvious advantages:</p>
+<ul>
+<li><p>All <code><a href="reference/map.html">map()</a></code> functions have <code>.progress</code> argument so that you can easily track the progress of long running jobs.</p></li>
+<li><p>All <code><a href="reference/map.html">map()</a></code> functions work with <code><a href="reference/in_parallel.html">in_parallel()</a></code> to easily spread computation across multiple cores on your computer, or multiple machines over the network.</p></li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
