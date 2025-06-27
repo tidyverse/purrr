@@ -78,4 +78,4 @@ There are two less obvious advantages:
 
 - All `map()` functions work with `in_parallel()` to easily spread
   computation across multiple cores on your computer, or multiple
-  machines in a cluster.
+  machines over the network.

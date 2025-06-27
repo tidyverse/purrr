@@ -74,4 +74,4 @@ There are two less obvious advantages:
   the progress of long running jobs.
 
 * All `map()` functions work with `in_parallel()` to easily spread computation 
-  across multiple cores on your computer, or multiple machines in a cluster.
+  across multiple cores on your computer, or multiple machines over the network.
