@@ -1,6 +1,6 @@
 test_that("when is deprecated", {
   expect_snapshot({
-    . <- when(1:5 < 3 ~ 1, ~ 0)
+    . <- when(1:5 < 3 ~ 1, ~0)
   })
 })
 
@@ -10,9 +10,9 @@ test_that("when chooses the correct action", {
   x <-
     1:5 %>%
     when(
-      sum(.) <=  50 ~ sum(.),
+      sum(.) <= 50 ~ sum(.),
       sum(.) <= 100 ~ sum(.) / 2,
-      ~ 0
+      ~0
     )
 
   expect_equal(x, 15)
@@ -20,9 +20,9 @@ test_that("when chooses the correct action", {
   y <-
     1:10 %>%
     when(
-      sum(.) <=  50 ~ sum(.),
+      sum(.) <= 50 ~ sum(.),
       sum(.) <= 100 ~ sum(.) / 2,
-      ~ 0
+      ~0
     )
 
   expect_equal(y, sum(1:10) / 2)
@@ -30,9 +30,9 @@ test_that("when chooses the correct action", {
   z <-
     1:100 %>%
     when(
-      sum(.) <=  50 ~ sum(.),
+      sum(.) <= 50 ~ sum(.),
       sum(.) <= 100 ~ sum(.) / 2,
-      ~ 0
+      ~0
     )
 
   expect_equal(z, 0)
@@ -44,9 +44,9 @@ test_that("named arguments work with when", {
   x <-
     1:10 %>%
     when(
-      sum(.) <=     x ~ sum(.) * x,
+      sum(.) <= x ~ sum(.) * x,
       sum(.) <= 2 * x ~ sum(.) * x / 2,
-      ~ 0,
+      ~0,
       x = 60
     )
 

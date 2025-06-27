@@ -34,7 +34,9 @@ test_that("lift_lv is from list(...) to c(...)", {
   options(lifecycle_verbosity = "quiet")
 
   glue <- function(l) {
-    if (!is.list(l)) stop("not a list")
+    if (!is.list(l)) {
+      stop("not a list")
+    }
     l %>% do.call(paste, .)
   }
   expect_identical(lift_lv(glue)(letters), paste(letters, collapse = " "))
@@ -50,5 +52,4 @@ test_that("lift functions are deprecated", {
     . <- lift_ld(function() {})
     . <- lift_lv(function() {})
   })
-
 })

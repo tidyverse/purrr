@@ -56,24 +56,25 @@
 when <- function(., ...) {
   lifecycle::deprecate_soft("1.0.0", "when()", I("`if`"))
 
-  dots   <- list(...)
-  names  <- names(dots)
-  named  <- if (is.null(names)) rep(FALSE, length(dots)) else names != ""
+  dots <- list(...)
+  names <- names(dots)
+  named <- if (is.null(names)) rep(FALSE, length(dots)) else names != ""
 
-  if (sum(!named) == 0)
+  if (sum(!named) == 0) {
     cli::cli_abort("At least one matching condition is needed.")
+  }
 
   is_formula <-
-    vapply(dots,
-           function(dot) identical(class(dot), "formula"),
-           logical(1L))
+    vapply(dots, function(dot) identical(class(dot), "formula"), logical(1L))
 
   env <- new.env(parent = parent.frame())
   env[["."]] <- .
 
-  if (sum(named) > 0)
-    for (i in which(named))
+  if (sum(named) > 0) {
+    for (i in which(named)) {
       env[[names[i]]] <- dots[[i]]
+    }
+  }
 
   result <- NULL
   for (i in which(!named)) {

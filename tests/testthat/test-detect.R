@@ -30,10 +30,9 @@ test_that("`detect()` requires a predicate function", {
 # Lifecycle ---------------------------------------------------------------
 
 test_that("`.right` argument is retired", {
-
   expect_snapshot({
-    . <- detect(1:2, ~ TRUE, .right = TRUE)
-    . <- detect_index(1:2, ~ TRUE, .right = TRUE)
+    . <- detect(1:2, ~TRUE, .right = TRUE)
+    . <- detect_index(1:2, ~TRUE, .right = TRUE)
   })
 })
 

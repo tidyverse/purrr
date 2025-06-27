@@ -191,13 +191,15 @@ map_chr <- function(.x, .f, ..., .progress = FALSE) {
   map_("character", .x, .f, ..., .progress = .progress)
 }
 
-map_ <- function(.type,
-                 .x,
-                 .f,
-                 ...,
-                 .progress = FALSE,
-                 .purrr_user_env = caller_env(2),
-                 .purrr_error_call = caller_env()) {
+map_ <- function(
+  .type,
+  .x,
+  .f,
+  ...,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
@@ -220,7 +222,6 @@ map_ <- function(.type,
 }
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
-
   if (...length()) {
     cli::cli_abort(
       "Can't use `...` with parallelized functions.",
@@ -240,7 +241,6 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
     x <- simplify_impl(x, ptype = vector(mode = .type), error_call = error_call)
   }
   x
-
 }
 
 #' @rdname map
@@ -260,7 +260,12 @@ walk <- function(.x, .f, ..., .progress = FALSE) {
   invisible(.x)
 }
 
-with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()) {
+with_indexed_errors <- function(
+  expr,
+  i,
+  names = NULL,
+  error_call = caller_env()
+) {
   withCallingHandlers(
     expr,
     error = function(cnd) {
@@ -288,7 +293,11 @@ with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()
   )
 }
 
-with_parallel_indexed_errors <- function(expr, interrupt_expr = NULL, error_call = caller_env()) {
+with_parallel_indexed_errors <- function(
+  expr,
+  interrupt_expr = NULL,
+  error_call = caller_env()
+) {
   withCallingHandlers(
     expr,
     error = function(cnd) {

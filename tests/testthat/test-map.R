@@ -102,16 +102,19 @@ test_that("walk is used for side-effects", {
 })
 
 test_that("primitive dispatch correctly", {
-  local_bindings(.env = global_env(),
-    as.character.test_class = function(x) "dispatched!"
-  )
+  local_bindings(.env = global_env(), as.character.test_class = function(x) {
+    "dispatched!"
+  })
   x <- structure(list(), class = "test_class")
-  expect_identical(map(list(x, x), as.character), list("dispatched!", "dispatched!"))
+  expect_identical(
+    map(list(x, x), as.character),
+    list("dispatched!", "dispatched!")
+  )
 })
 
 test_that("map() with empty input copies names", {
   named_list <- named(list())
-  expect_identical(    map(named_list, identity), named(list()))
+  expect_identical(map(named_list, identity), named(list()))
   expect_identical(map_lgl(named_list, identity), named(lgl()))
   expect_identical(map_int(named_list, identity), named(int()))
   expect_identical(map_dbl(named_list, identity), named(dbl()))

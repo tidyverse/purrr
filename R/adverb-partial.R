@@ -88,15 +88,18 @@
 #' # `... = ` argument:
 #' my_list <- partial(list, 1, ... = , 2)
 #' my_list("foo")
-partial <- function(.f,
-                    ...,
-                    .env = deprecated(),
-                    .lazy = deprecated(),
-                    .first = deprecated()) {
+partial <- function(
+  .f,
+  ...,
+  .env = deprecated(),
+  .lazy = deprecated(),
+  .first = deprecated()
+) {
   args <- enquos(...)
 
   fn_expr <- enexpr(.f)
-  .fn <- switch(typeof(.f),
+  .fn <- switch(
+    typeof(.f),
     builtin = ,
     special = as_closure(.f),
     closure = .f,
@@ -112,7 +115,10 @@ partial <- function(.f,
   if (lifecycle::is_present(.lazy)) {
     lifecycle::deprecate_warn("0.3.0", "partial(.lazy)", always = TRUE)
     if (!.lazy) {
-      args <- map(args, ~ new_quosure(eval_tidy(.x , env = caller_env()), empty_env()))
+      args <- map(
+        args,
+        ~ new_quosure(eval_tidy(.x, env = caller_env()), empty_env())
+      )
     }
   }
   if (lifecycle::is_present(.first)) {
@@ -185,7 +191,6 @@ utils::globalVariables("!<-")
 
 # helpers -----------------------------------------------------------------
 
-
 quo_invert <- function(call) {
   call <- duplicate(call, shallow = TRUE)
 
@@ -254,4 +259,3 @@ quo_is_same_env <- function(x, env) {
   quo_env <- quo_get_env(x)
   is_reference(quo_env, env) || is_reference(quo_env, empty_env())
 }
-
