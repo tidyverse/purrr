@@ -18,7 +18,7 @@
 # rate_delay() delays
 
     Code
-      rate_sleep(rate)
+      rate_sleep(rd)
     Condition
       Error in `rate_sleep()`:
       ! Request failed after 3 attempts.
@@ -26,7 +26,7 @@
 ---
 
     Code
-      rate_sleep(rate)
+      rate_sleep(rd)
     Condition
       Error in `rate_sleep()`:
       ! This `rate` object has already be run more than `max_times` allows.
@@ -35,7 +35,7 @@
 # rate_backoff() backs off
 
     Code
-      rate_sleep(rate)
+      rate_sleep(rb)
     Condition
       Error in `rate_sleep()`:
       ! Request failed after 3 attempts.
@@ -43,7 +43,7 @@
 ---
 
     Code
-      rate_sleep(rate)
+      rate_sleep(rb)
     Condition
       Error in `rate_sleep()`:
       ! This `rate` object has already be run more than `max_times` allows.
@@ -52,7 +52,7 @@
 # rate_sleep() checks that rate is still valid
 
     Code
-      rate_sleep(rate)
+      rate_sleep(rd)
     Condition
       Error in `rate_sleep()`:
       ! Request failed after 0 attempts.
@@ -60,7 +60,7 @@
 ---
 
     Code
-      rate_sleep(rate)
+      rate_sleep(rd)
     Condition
       Error in `rate_sleep()`:
       ! This `rate` object has already be run more than `max_times` allows.
