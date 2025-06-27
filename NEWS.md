@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `map_chr()` no longer coereces from logical, integer, or double to strings.
+
 * purrr gains the capacity for parallel and distributed map, powered by the
   mirai package. Newly-added `in_parallel()` wraps a function provided to
   `map()` and all its variants to enable this. See `?in_parallel` for more
