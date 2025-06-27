@@ -68,7 +68,7 @@ NULL
 #' fun <- function(x) exec("sum", !!!x)
 #' exec(sum, 3, NA, 4, na.rm = TRUE)
 lift <- function(..f, ..., .unnamed = FALSE) {
-  lifecycle::deprecate_soft("1.0.0", "lift()")
+  lifecycle::deprecate_warn("1.0.0", "lift()")
 
   force(..f)
   defaults <- list(...)
@@ -87,7 +87,7 @@ lift_dl <- lift
 #' @rdname lift
 #' @export
 lift_dv <- function(..f, ..., .unnamed = FALSE) {
-  lifecycle::deprecate_soft("1.0.0", "lift_dv()")
+  lifecycle::deprecate_warn("1.0.0", "lift_dv()")
 
   force(..f)
   defaults <- list(...)
@@ -121,7 +121,7 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #' # now
 #' pmap_dbl(mtcars, \(...) mean(c(...)))
 lift_vl <- function(..f, ..., .type) {
-  lifecycle::deprecate_soft("1.0.0", "lift_vl()")
+  lifecycle::deprecate_warn("1.0.0", "lift_vl()")
 
   force(..f)
   defaults <- list(...)
@@ -136,7 +136,7 @@ lift_vl <- function(..f, ..., .type) {
 #' @rdname lift
 #' @export
 lift_vd <- function(..f, ..., .type) {
-  lifecycle::deprecate_soft("1.0.0", "lift_vd()")
+  lifecycle::deprecate_warn("1.0.0", "lift_vd()")
 
   force(..f)
   defaults <- list(...)
@@ -173,7 +173,7 @@ lift_vd <- function(..f, ..., .type) {
 #' mtcars |> pmap_lgl(\(...) any(c(...) > 200))
 #'
 lift_ld <- function(..f, ...) {
-  lifecycle::deprecate_soft("1.0.0", "lift_ld()")
+  lifecycle::deprecate_warn("1.0.0", "lift_ld()")
 
   force(..f)
   defaults <- list(...)
@@ -185,7 +185,7 @@ lift_ld <- function(..f, ...) {
 #' @rdname lift
 #' @export
 lift_lv <- function(..f, ...) {
-  lifecycle::deprecate_soft("1.0.0", "lift_lv()")
+  lifecycle::deprecate_warn("1.0.0", "lift_lv()")
 
   force(..f)
   defaults <- list(...)
