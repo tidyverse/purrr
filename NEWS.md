@@ -1,5 +1,9 @@
 # purrr (development version)
 
+* All functions and arguments deprecated in purrr 0.3.0 have now been removed.
+  This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`,
+  `cross_n()`, `reduce2_right()`, and `reduce_right()`.
+
 * purrr gains the capacity for parallel and distributed map, powered by the
   mirai package. Newly-added `in_parallel()` wraps a function provided to
   `map()` and all its variants to enable this. See `?in_parallel` for more

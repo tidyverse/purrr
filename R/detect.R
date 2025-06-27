@@ -16,7 +16,6 @@
 #' @param .dir If `"forward"`, the default, starts at the beginning of
 #'   the vector and move towards the end; if `"backward"`, starts at
 #'   the end of the vector and moves towards the beginning.
-#' @param .right `r lifecycle::badge("deprecated")` Please use `.dir` instead.
 #' @param .default The value returned when nothing is detected.
 #' @return `detect` the value of the first item that matches the
 #'  predicate; `detect_index` the position of the matching item.
@@ -52,11 +51,11 @@
 #'
 #' # If you need to find all positions, use map_lgl():
 #' which(map_lgl(x, "foo"))
-detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, .default = NULL) {
+detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .default = NULL) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
   .dir <- arg_match0(.dir, c("forward", "backward"))
 
-  for (i in index(.x, .dir, .right, "detect")) {
+  for (i in index(.x, .dir, "detect")) {
     if (.f(.x[[i]], ...)) {
       return(.x[[i]])
     }
@@ -67,11 +66,11 @@ detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL, 
 
 #' @export
 #' @rdname detect
-detect_index <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL) {
+detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
   .dir <- arg_match0(.dir, c("forward", "backward"))
 
-  for (i in index(.x, .dir, .right, "detect_index")) {
+  for (i in index(.x, .dir, "detect_index")) {
     if (.f(.x[[i]], ...)) {
       return(i)
     }
@@ -83,16 +82,6 @@ detect_index <- function(.x, .f, ..., .dir = c("forward", "backward"), .right = 
 
 
 index <- function(x, dir, right = NULL, fn) {
-  if (!is_null(right)) {
-    lifecycle::deprecate_warn(
-      when = "0.3.0",
-      what = paste0(fn, "(.right)"),
-      with = paste0(fn, "(.dir)"),
-      always = TRUE
-    )
-    dir <- if (right) "backward" else "forward"
-  }
-
   idx <- seq_along(x)
   if (dir == "backward") {
     idx <- rev(idx)
