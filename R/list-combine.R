@@ -55,15 +55,20 @@ list_c <- function(x, ..., ptype = NULL) {
 #' @export
 #' @rdname list_c
 list_cbind <- function(
-    x,
-    ...,
-    name_repair = c("unique", "universal", "check_unique"),
-    size = NULL
-  ) {
+  x,
+  ...,
+  name_repair = c("unique", "universal", "check_unique"),
+  size = NULL
+) {
   check_list_of_data_frames(x)
   check_dots_empty()
 
-  vec_cbind(!!!x, .name_repair = name_repair, .size = size, .error_call = current_env())
+  vec_cbind(
+    !!!x,
+    .name_repair = name_repair,
+    .size = size,
+    .error_call = current_env()
+  )
 }
 
 #' @export
@@ -72,7 +77,12 @@ list_rbind <- function(x, ..., names_to = rlang::zap(), ptype = NULL) {
   check_list_of_data_frames(x)
   check_dots_empty()
 
-  vec_rbind(!!!x, .names_to = names_to, .ptype = ptype, .error_call = current_env())
+  vec_rbind(
+    !!!x,
+    .names_to = names_to,
+    .ptype = ptype,
+    .error_call = current_env()
+  )
 }
 
 

@@ -1,4 +1,3 @@
-
 # assign_in() ----------------------------------------------------------
 
 test_that("assign_in() doesn't assign in the caller environment", {
@@ -77,6 +76,9 @@ test_that("modify_in() modifies in pluck location", {
 
 test_that("modify_in() doesn't require existing", {
   x <- list(list(x = 1, y = 2))
-  expect_equal(modify_in(x, 2, ~ 10), list(list(x = 1, y = 2), 10))
-  expect_equal(modify_in(x, list(1, "z"), ~ 10), list(list(x = 1, y = 2, z = 10)))
+  expect_equal(modify_in(x, 2, ~10), list(list(x = 1, y = 2), 10))
+  expect_equal(
+    modify_in(x, list(1, "z"), ~10),
+    list(list(x = 1, y = 2, z = 10))
+  )
 })

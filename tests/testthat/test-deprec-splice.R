@@ -1,7 +1,7 @@
 test_that("predicate controls which elements get spliced", {
   x <- list(1, 2, list(3, 4))
 
-  expect_equal(splice_if(x, ~ FALSE), x)
+  expect_equal(splice_if(x, ~FALSE), x)
   expect_equal(splice_if(x, is.list), list(1, 2, 3, 4))
 })
 
@@ -20,5 +20,4 @@ test_that("splice is deprecated", {
   expect_snapshot({
     . <- splice()
   })
-
 })
