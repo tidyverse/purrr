@@ -5,16 +5,9 @@
 \alias{detect_index}
 \title{Find the value or position of the first match}
 \usage{
-detect(
-  .x,
-  .f,
-  ...,
-  .dir = c("forward", "backward"),
-  .right = NULL,
-  .default = NULL
-)
+detect(.x, .f, ..., .dir = c("forward", "backward"), .default = NULL)
 
-detect_index(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL)
+detect_index(.x, .f, ..., .dir = c("forward", "backward"))
 }
 \arguments{
 \item{.x}{A list or vector.}
@@ -37,8 +30,6 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 \item{.dir}{If \code{"forward"}, the default, starts at the beginning of
 the vector and move towards the end; if \code{"backward"}, starts at
 the end of the vector and moves towards the beginning.}
-
-\item{.right}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{.dir} instead.}
 
 \item{.default}{The value returned when nothing is detected.}
 }

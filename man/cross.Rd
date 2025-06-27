@@ -5,8 +5,6 @@
 \alias{cross2}
 \alias{cross3}
 \alias{cross_df}
-\alias{cross_n}
-\alias{cross_d}
 \title{Produce all combinations of list elements}
 \usage{
 cross(.l, .filter = NULL)

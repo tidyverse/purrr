@@ -140,38 +140,6 @@ test_that("partial() preserves visibility when arguments are from the same envir
   expect_identical(withVisible(fn()), list(value = 1, visible = FALSE))
 })
 
-
-# Life cycle --------------------------------------------------------------
-
-test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
-  expect_snapshot({
-    . <- partial(list, "foo", .lazy = TRUE)
-    . <- partial(list, "foo", .env = env())
-    . <- partial(list, "foo", .first = TRUE)
-  })
-})
-
-test_that("`.lazy` still works", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  counter <- env(n = 0)
-  eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
-  walk(1:10, ~eager())
-  expect_identical(counter$n, 1)
-})
-
-test_that("`.first` still works", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
-  exp <- expr(runif(..., n = rpois(1, 5)))
-  expect_identical(out, exp)
-
-  # partial() also works without partialised arguments
-  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr(runif(...)))
-  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
-})
-
 test_that("checks inputs", {
   expect_snapshot(partial(1), error = TRUE)
 })
