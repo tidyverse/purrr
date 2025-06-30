@@ -427,7 +427,7 @@ test_that("don't evaluate symbolic objects (#428)", {
 # imap ----------------------------------------------------------------------
 
 test_that("atomic vector imap works", {
-  x <- 1:3 %>% set_names()
+  x <- 1:3 |> set_names()
   expect_true(all(imap_lgl(x, in_parallel(\(x, y) x == y))))
   expect_length(imap_chr(x, in_parallel(\(...) paste(...))), 3)
   expect_equal(imap_int(x, in_parallel(~ .x + as.integer(.y))), x * 2)

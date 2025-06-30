@@ -11,9 +11,8 @@
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
 #'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the current
-#'     element of `x` and `.y` to refer to the current element of `y`. Only
-#'     recommended if you require backward compatibility with older versions
-#'     of R.
+#'     element of `x` and `.y` to refer to the current element of `y`.
+#'     No longer recommended.
 #'
 #'   `r lifecycle::badge("experimental")`
 #'

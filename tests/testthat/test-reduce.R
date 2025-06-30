@@ -137,7 +137,7 @@ test_that("accumulate() forces arguments (#643)", {
 })
 
 test_that("accumulate() uses vctrs to simplify results", {
-  out <- list("foo", factor("bar")) %>% accumulate(~.y)
+  out <- list("foo", factor("bar")) |> accumulate(~.y)
   expect_identical(out, c("foo", "bar"))
 })
 

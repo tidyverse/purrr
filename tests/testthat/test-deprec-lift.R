@@ -2,12 +2,12 @@ test_that("lift_dl and lift_ld are inverses of each other", {
   options(lifecycle_verbosity = "quiet")
 
   expect_identical(
-    sum %>%
-      lift_dl(.unnamed = TRUE) %>%
+    sum |>
+      lift_dl(.unnamed = TRUE) |>
       do.call(list(3, NA, 4, na.rm = TRUE)),
-    sum %>%
-      lift_dl() %>%
-      lift_ld() %>%
+    sum |>
+      lift_dl() |>
+      lift_ld() |>
       exec(3, NA, 4, na.rm = TRUE)
   )
 })
@@ -37,7 +37,7 @@ test_that("lift_lv is from list(...) to c(...)", {
     if (!is.list(l)) {
       stop("not a list")
     }
-    l %>% do.call(paste, .)
+    do.call(paste, l)
   }
   expect_identical(lift_lv(glue)(letters), paste(letters, collapse = " "))
 })
