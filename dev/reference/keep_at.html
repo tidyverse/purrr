@@ -89,10 +89,10 @@ elements.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       10       15        5 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Can also use a function</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">keep_at</span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">keep_at</span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat dog </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  10  15 </span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">discard_at</span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">discard_at</span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        a        b elephant        e </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        1        2        5       10 </span>
 </code></pre></div>

@@ -98,8 +98,7 @@ inner lists. Only those elements where <code>.p</code> evaluates to
 <dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>mean</code>.</p></li>
 <li><p>An anonymous function, e.g. <code>\(x) x + 1</code> or <code>function(x) x + 1</code>.</p></li>
 <li><p>A formula, e.g. <code>~ .x + 1</code>. You must use <code>.x</code> to refer to the first
-argument. Only recommended if you require backward compatibility with
-older versions of R.</p></li>
+argument. No longer recommended.</p></li>
 <li><p>A string, integer, or list, e.g. <code>"idx"</code>, <code>1</code>, or <code>list("idx", 1)</code> which
 are shorthand for <code>\(x) pluck(x, "idx")</code>, <code>\(x) pluck(x, 1)</code>, and
 <code>\(x) pluck(x, "idx", 1)</code> respectively. Optionally supply <code>.default</code> to

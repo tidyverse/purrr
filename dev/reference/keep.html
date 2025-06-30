@@ -77,8 +77,7 @@ compact() discards elements where .p evaluates to an empty vector."><meta proper
 or <code>FALSE</code>) specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>is.character</code>.</p></li>
 <li><p>An anonymous function, e.g. <code>\(x) all(x &lt; 0)</code> or <code>function(x) all(x &lt; 0)</code>.</p></li>
 <li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. You must use <code>.x</code> to refer to the first
-argument). Only recommended if you require backward compatibility with
-older versions of R.</p></li>
+argument). No longer recommended.</p></li>
 </ul></dd>
 
 
