@@ -20,18 +20,8 @@ as_mapper(.f, ...)
 
 If a \strong{function}, it is used as is.
 
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function. There
-are three ways to refer to the arguments:
-\itemize{
-\item For a single argument function, use \code{.}
-\item For a two argument function, use \code{.x} and \code{.y}
-\item For more arguments, use \code{..1}, \code{..2}, \code{..3} etc
-}
-
-This syntax allows you to create very compact anonymous
-functions. Note that formula functions conceptually take dots
-(that's why you can use \code{..1} etc). They silently ignore
-additional arguments that are not used in the formula expression.
+If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function.
+No longer recommended.
 
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
 converted to an extractor function. Character vectors index by

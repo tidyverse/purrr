@@ -33,9 +33,8 @@ of length 1 will be recycled to the length of the other.}
 \item A named function.
 \item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
 \item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the current
-element of \code{x} and \code{.y} to refer to the current element of \code{y}. Only
-recommended if you require backward compatibility with older versions
-of R.
+element of \code{x} and \code{.y} to refer to the current element of \code{y}.
+No longer recommended.
 }
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

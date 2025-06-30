@@ -29,8 +29,8 @@ x |> keep_at(letters)
 x |> discard_at(letters)
 
 # Can also use a function
-x |> keep_at(~ nchar(.x) == 3)
-x |> discard_at(~ nchar(.x) == 3)
+x |> keep_at(\(x) nchar(x) == 3)
+x |> discard_at(\(x) nchar(x) == 3)
 }
 \seealso{
 \code{\link[=keep]{keep()}}/\code{\link[=discard]{discard()}} to keep/discard elements by value.

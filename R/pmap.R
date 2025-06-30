@@ -20,8 +20,7 @@
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
 #'     `function(x, y, z) x + y / z`
-#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. This syntax is not recommended as
-#'     you can only refer to arguments by position.
+#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. No longer recommended.
 #'
 #'   `r lifecycle::badge("experimental")`
 #'
