@@ -202,7 +202,7 @@ map_ <- function(
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
-  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
+  if (running_in_parallel(.f)) {
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
 

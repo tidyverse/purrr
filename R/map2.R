@@ -86,7 +86,7 @@ map2_ <- function(
 
   .f <- as_mapper(.f, ...)
 
-  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
+  if (running_in_parallel(.f)) {
     attributes(args) <- list(
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
