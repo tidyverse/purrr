@@ -162,8 +162,8 @@ in_parallel <- function(.f, ...) {
   )
 }
 
-is_crate <- function(x) {
-  inherits(x, "crate")
+running_in_parallel <- function(x) {
+  inherits(x, "crate") && parallel_pkgs_installed() && mirai::daemons_set()
 }
 
 parallel_pkgs_installed <- function() {

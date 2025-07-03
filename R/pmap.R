@@ -150,7 +150,7 @@ pmap_ <- function(
 
   .f <- as_mapper(.f, ...)
 
-  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
+  if (running_in_parallel(.f)) {
     attributes(.l) <- list(
       names = names(.l),
       class = "data.frame",
