@@ -1,10 +1,12 @@
 skip_if_not_installed("mirai")
 
-test_that("Parallel map falls back to sequential with no daemons set", {
+test_that("All parallel map variants fall back to sequential with no daemons set", {
   expect_identical(
     map(list(x = 1, y = 2), in_parallel(\(x) list(x))),
     map(list(x = 1, y = 2), \(x) list(x))
   )
+  expect_equal(map2(1, 2, in_parallel(\(x, y) x)), list(1))
+  expect_identical(pmap(list(), in_parallel(~ 1)), list())
 })
 
 # set up daemons

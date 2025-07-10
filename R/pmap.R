@@ -150,7 +150,7 @@ pmap_ <- function(
 
   .f <- as_mapper(.f, ...)
 
-  if (is_crate(.f)) {
+  if (running_in_parallel(.f)) {
     attributes(.l) <- list(
       names = names(.l),
       class = "data.frame",
