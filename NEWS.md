@@ -1,3 +1,5 @@
+# purrr (development version)
+
 # purrr 1.1.0
 
 * purrr now requires R >= 4.1, so we can rely on the base pipe and lambda
