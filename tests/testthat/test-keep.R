@@ -15,6 +15,11 @@ test_that("keep() and discard() require predicate functions", {
   })
 })
 
+test_that("keep() and discard() can run with NA in .x", {
+  expect_equal(keep(c(1, 2, NA, 3), ~ .x != 2), c(1, 3))
+  expect_equal(discard(c(1, 2, NA, 3), ~ .x != 2), c(2, NA))
+})
+
 # keep_at / discard_at ----------------------------------------------------
 
 test_that("can keep_at/discard_at with character vector", {
