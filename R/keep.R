@@ -25,7 +25,7 @@
 #'   map(sample, 5) |>
 #'   keep(function(x) mean(x) > 6)
 #'
-#' # Or use a formula
+#' # Or use shorthand form
 #' rep(10, 10) |>
 #'   map(sample, 5) |>
 #'   keep(\(x) mean(x) > 6)
