@@ -1,43 +1,50 @@
 ## revdepcheck results
 
-We checked 2081 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 2090 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 9 new problems
- * We failed to check 15 packages
+ * We saw 11 new problems
+ * We failed to check 16 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
 
-* admiral
-  checking installed package size ... NOTE
+* autothresholdr
+  checking re-building of vignette outputs ... ERROR
 
-* CohortCharacteristics
+* casino
   checking re-building of vignette outputs ... ERROR
 
 * CPAT
   checking tests ... ERROR
 
-* MeasurementDiagnostics
-  checking re-building of vignette outputs ... ERROR
+* egor
+  checking examples ... ERROR
+  checking tests ... ERROR
 
-* omock
+* immunarch
   checking examples ... ERROR
 
-* OmopSketch
+* LTFGRS
   checking tests ... ERROR
-  checking re-building of vignette outputs ... ERROR
 
-* PatientProfiles
-  checking re-building of vignette outputs ... ERROR
+* PopED
+  checking installed package size ... NOTE
 
 * quincunx
   checking examples ... ERROR
   checking tests ... ERROR
 
-* wbids
+* rbmi
+  checking tests ... ERROR
+
+* SCORPIUS
+  checking whether package ‘SCORPIUS’ can be installed ... WARNING
+
+* tfrmt
   checking examples ... ERROR
+  checking tests ... ERROR
 
 ### Failed to check
 
@@ -46,6 +53,7 @@ Issues with CRAN packages are summarised below.
 * dsTidyverse      (NA)
 * kerastuneR       (NA)
 * metajam          (NA)
+* multinma         (NA)
 * nesRdata         (NA)
 * ontologics       (NA)
 * rdflib           (NA)
