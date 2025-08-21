@@ -1,3 +1,92 @@
+# admiral
+
+<details>
+
+* Version: 1.3.1
+* GitHub: https://github.com/pharmaverse/admiral
+* Source code: https://github.com/cran/admiral
+* Date/Publication: 2025-07-29 14:40:02 UTC
+* Number of recursive dependencies: 80
+
+Run `revdepcheck::cloud_details(, "admiral")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.2Mb
+      sub-directories of 1Mb or more:
+        doc    2.3Mb
+        help   1.8Mb
+    ```
+
+## In both
+
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 24 marked UTF-8 strings
+    ```
+
+# CohortCharacteristics
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/darwin-eu/CohortCharacteristics
+* Source code: https://github.com/cran/CohortCharacteristics
+* Date/Publication: 2025-05-20 22:30:11 UTC
+* Number of recursive dependencies: 189
+
+Run `revdepcheck::cloud_details(, "CohortCharacteristics")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘summarise_characteristics.Rmd’ using rmarkdown
+    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
+    Content type 'application/zip' length 6754786 bytes (6.4 MB)
+    ============
+    downloaded 1.7 MB
+    
+    
+    Quitting from summarise_characteristics.Rmd:11-19 [unnamed-chunk-1]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    
+    Error: processing vignette 'summarise_characteristics.Rmd' failed with diagnostics:
+    download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
+    --- failed re-building ‘summarise_characteristics.Rmd’
+    
+    --- re-building ‘summarise_cohort_overlap.Rmd’ using rmarkdown
+    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
+    Content type 'application/zip' length 6754786 bytes (6.4 MB)
+    ==================================================
+    downloaded 6.4 MB
+    ```
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.1Mb
+      sub-directories of 1Mb or more:
+        doc    4.0Mb
+        help   1.8Mb
+    ```
+
+*   checking DESCRIPTION meta-information ... NOTE
+    ```
+    Packages listed in more than one of Depends, Imports, Suggests, Enhances:
+      ‘reactable’ ‘DT’
+    A package should be listed in only one of these fields.
+    ```
+
 # CPAT
 
 <details>
@@ -108,29 +197,210 @@ ERROR: lazy loading failed for package ‘kerastuneR’
 
 
 ```
-# PopED
+# MeasurementDiagnostics
 
 <details>
 
-* Version: 0.7.0
-* GitHub: https://github.com/andrewhooker/PopED
-* Source code: https://github.com/cran/PopED
-* Date/Publication: 2024-10-07 19:30:02 UTC
-* Number of recursive dependencies: 139
+* Version: 0.1.0
+* GitHub: NA
+* Source code: https://github.com/cran/MeasurementDiagnostics
+* Date/Publication: 2025-07-29 11:50:02 UTC
+* Number of recursive dependencies: 127
 
-Run `revdepcheck::cloud_details(, "PopED")` for more info
+Run `revdepcheck::cloud_details(, "MeasurementDiagnostics")` for more info
 
 </details>
 
 ## Newly broken
 
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘summariseMeasurementUse.Rmd’ using rmarkdown
+    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
+    Content type 'application/zip' length 6754786 bytes (6.4 MB)
+    ===============
+    downloaded 2.0 MB
+    
+    
+    Quitting from summariseMeasurementUse.Rmd:10-18 [unnamed-chunk-1]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ...
+    
+    Error: processing vignette 'summariseMeasurementUse.Rmd' failed with diagnostics:
+    download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
+    --- failed re-building ‘summariseMeasurementUse.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘summariseMeasurementUse.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+# omock
+
+<details>
+
+* Version: 0.4.0
+* GitHub: https://github.com/ohdsi/omock
+* Source code: https://github.com/cran/omock
+* Date/Publication: 2025-06-12 16:10:02 UTC
+* Number of recursive dependencies: 85
+
+Run `revdepcheck::cloud_details(, "omock")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘omock-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: mockCdmFromDataset
+    > ### Title: Create a 'local' cdm_reference from a dataset.
+    > ### Aliases: mockCdmFromDataset
+    > 
+    > ### ** Examples
+    > 
+    > library(omock)
+    ...
+    downloaded 56 KB
+    
+    Warning in utils::download.file(url = url, destfile = datasetFile) :
+      downloaded length 57344 != reported length 6754786
+    Warning in utils::download.file(url = url, destfile = datasetFile) :
+      URL 'https://example-data.ohdsi.dev/GiBleed.zip': Timeout of 60 seconds was reached
+    Error in utils::download.file(url = url, destfile = datasetFile) : 
+      download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
+    Calls: downloadMockDataset -> <Anonymous>
+    Execution halted
+    ```
+
+## In both
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+      > # * https://testthat.r-lib.org/articles/special-files.html
+    ...
+      i Actually got a <simpleError> with text:
+        object 'cdm' not found
+      ── Failure ('test-mockDatasets.R:35:3'): mock datasets cdm creation ────────────
+      Expected `cdm <- mockCdmFromDataset(datasetName = dbName)` to run without any errors.
+      i Actually got a <rlang_error> with text:
+        At least person and observation_period should be provided in tables
+      
+      [ FAIL 6 | WARN 12 | SKIP 0 | PASS 108 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+# OmopSketch
+
+<details>
+
+* Version: 0.5.1
+* GitHub: https://github.com/OHDSI/OmopSketch
+* Source code: https://github.com/cran/OmopSketch
+* Date/Publication: 2025-06-19 19:50:06 UTC
+* Number of recursive dependencies: 175
+
+Run `revdepcheck::cloud_details(, "OmopSketch")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+      > # * https://testthat.r-lib.org/articles/special-files.html
+    ...
+        9.         │   └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+       10.         │     └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+       11.         │       └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+       12.         └─testthat:::parallel_event_loop_chunky(queue, reporters, ".")
+       13.           └─queue$poll(Inf)
+       14.             └─base::lapply(...)
+       15.               └─testthat (local) FUN(X[[i]], ...)
+       16.                 └─private$handle_error(msg, i)
+       17.                   └─rlang::abort(...)
+      Execution halted
+    ```
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘database_characteristics.Rmd’ using rmarkdown
+    --- finished re-building ‘database_characteristics.Rmd’
+    
+    --- re-building ‘missing_data.Rmd’ using rmarkdown
+    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
+    Content type 'application/zip' length 6754786 bytes (6.4 MB)
+    ===============
+    downloaded 2.0 MB
+    
+    ...
+     3.     ├─withr::with_options(...)
+     4.     │ └─base::force(code)
+     5.     └─utils::download.file(...)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    Error: processing vignette 'missing_data.Rmd' failed with diagnostics:
+    download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
+    --- failed re-building ‘missing_data.Rmd’
+    
+    --- re-building ‘summarise_clinical_tables_records.Rmd’ using rmarkdown
+    ```
+
+## In both
+
 *   checking installed package size ... NOTE
     ```
-      installed size is  5.5Mb
+      installed size is 18.1Mb
       sub-directories of 1Mb or more:
-        R      1.5Mb
-        doc    1.4Mb
-        test   1.1Mb
+        doc  17.1Mb
+    ```
+
+# PatientProfiles
+
+<details>
+
+* Version: 1.4.2
+* GitHub: https://github.com/darwin-eu/PatientProfiles
+* Source code: https://github.com/cran/PatientProfiles
+* Date/Publication: 2025-07-09 13:20:05 UTC
+* Number of recursive dependencies: 138
+
+Run `revdepcheck::cloud_details(, "PatientProfiles")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking re-building of vignette outputs ... ERROR
+    ```
+    Error(s) in re-building vignettes:
+    --- re-building ‘cohort-intersect.Rmd’ using rmarkdown
     ```
 
 # quincunx
@@ -341,3 +611,78 @@ ERROR: lazy loading failed for package ‘tidyjson’
 
 
 ```
+# wbids
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/teal-insights/r-wbids
+* Source code: https://github.com/cran/wbids
+* Date/Publication: 2025-02-08 22:50:02 UTC
+* Number of recursive dependencies: 70
+
+Run `revdepcheck::cloud_details(, "wbids")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘wbids-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: ids_bulk_files
+    > ### Title: Retrieve Available Bulk Download Files for International Debt
+    > ###   Statistics
+    > ### Aliases: ids_bulk_files
+    > 
+    > ### ** Examples
+    > 
+    ...
+    + ## End(Don't show)
+    + ids_bulk_files()
+    + ## Don't show: 
+    + }) # examplesIf
+    > ids_bulk_files()
+    Warning in readBin(3L, raw(0), 32768L) :
+      URL 'https://datacatalogapi.worldbank.org/ddhxext/DatasetDownload?dataset_unique_id=0038015&version_id=': Timeout of 60 seconds was reached
+    Error in readBin(3L, raw(0), 32768L) : cannot read from connection
+    Calls: <Anonymous> ... parse_and_simplify -> parseJSON -> parse_con -> readBin
+    Execution halted
+    ```
+
+## Newly fixed
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > # This file is part of the standard setup for testthat.
+      > # It is recommended that you do not modify it.
+      > #
+      > # Where should you do additional test configuration?
+      > # Learn more about the roles of various files in:
+      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+      > # * https://testthat.r-lib.org/articles/special-files.html
+    ...
+       1. ├─wbids:::read_bulk_info() at test-read_bulk_info.R:2:3
+       2. │ └─jsonlite::fromJSON(...)
+       3. │   └─jsonlite:::parse_and_simplify(...)
+       4. │     └─jsonlite:::parseJSON(txt, bigint_as_char)
+       5. │       └─jsonlite:::parse_con(txt, bigint_as_char)
+       6. └─base::readBin(`<url>`, `<raw>`, 32768L)
+      
+      [ FAIL 1 | WARN 1 | SKIP 7 | PASS 146 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+## In both
+
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 78 marked UTF-8 strings
+    ```
+
