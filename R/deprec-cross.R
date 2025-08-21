@@ -198,8 +198,8 @@ cross_df <- function(.l, .filter = NULL) {
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
   check_installed("tibble")
-  cross(.l, .filter = .filter) %>%
-    transpose() %>%
-    simplify_all() %>%
+  cross(.l, .filter = .filter) |>
+    transpose() |>
+    simplify_all() |>
     tibble::as_tibble()
 }

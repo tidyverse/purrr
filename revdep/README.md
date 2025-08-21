@@ -23,4 +23,3 @@
 |[CPAT](problems.md#cpat)|0.1.0   |__+1__ |        |1      |
 |[PopED](problems.md#poped)|0.7.0   |       |        |__+1__ |
 |[quincunx](problems.md#quincunx)|0.1.10  |__+2__ |        |       |
-

@@ -11,9 +11,8 @@
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
 #'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the current
-#'     element of `x` and `.y` to refer to the current element of `y`. Only
-#'     recommended if you require backward compatibility with older versions
-#'     of R.
+#'     element of `x` and `.y` to refer to the current element of `y`.
+#'     No longer recommended.
 #'
 #'   `r lifecycle::badge("experimental")`
 #'
@@ -60,19 +59,26 @@ map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
   map2_("character", .x, .y, .f, ..., .progress = .progress)
 }
 
-map2_ <- function(.type,
-                  .x,
-                  .y,
-                  .f,
-                  ...,
-                  .progress = FALSE,
-                  .purrr_user_env = caller_env(2),
-                  .purrr_error_call = caller_env()) {
+map2_ <- function(
+  .type,
+  .x,
+  .y,
+  .f,
+  ...,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
   n <- vec_size_common(.x = .x, .y = .y, .call = .purrr_error_call)
-  args <- vec_recycle_common(.x = .x, .y = .y, .size = n, .call = .purrr_error_call)
+  args <- vec_recycle_common(
+    .x = .x,
+    .y = .y,
+    .size = n,
+    .call = .purrr_error_call
+  )
   .x <- args$.x
   .y <- args$.y
 
@@ -80,7 +86,7 @@ map2_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
+  if (running_in_parallel(.f)) {
     attributes(args) <- list(
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names

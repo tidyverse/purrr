@@ -83,7 +83,8 @@ partial <- function(.f, ...) {
   args <- enquos(...)
 
   fn_expr <- enexpr(.f)
-  .fn <- switch(typeof(.f),
+  .fn <- switch(
+    typeof(.f),
     builtin = ,
     special = as_closure(.f),
     closure = .f,
@@ -153,7 +154,6 @@ utils::globalVariables("!<-")
 
 
 # helpers -----------------------------------------------------------------
-
 
 quo_invert <- function(call) {
   call <- duplicate(call, shallow = TRUE)

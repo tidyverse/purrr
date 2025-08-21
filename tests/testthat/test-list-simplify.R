@@ -15,7 +15,10 @@ test_that("ptype is enforced", {
   expect_equal(list_simplify(list(1, 2), ptype = double()), c(1, 2))
   expect_snapshot(list_simplify(list(1, 2), ptype = character()), error = TRUE)
   # even if `strict = FALSE`
-  expect_snapshot(list_simplify(list(1, 2), ptype = character(), strict = FALSE), error = TRUE)
+  expect_snapshot(
+    list_simplify(list(1, 2), ptype = character(), strict = FALSE),
+    error = TRUE
+  )
 })
 
 test_that("strict simplification will error", {
@@ -43,5 +46,8 @@ test_that("list_simplify() validates inputs", {
 
 test_that("list_simplify_internal() validates inputs", {
   expect_snapshot(list_simplify_internal(list(), simplify = 1), error = TRUE)
-  expect_snapshot(list_simplify_internal(list(), simplify = FALSE, ptype = integer()), error = TRUE)
+  expect_snapshot(
+    list_simplify_internal(list(), simplify = FALSE, ptype = integer()),
+    error = TRUE
+  )
 })

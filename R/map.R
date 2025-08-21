@@ -24,8 +24,7 @@
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
 #'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
-#'     argument. Only recommended if you require backward compatibility with
-#'     older versions of R.
+#'     argument. No longer recommended.
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
@@ -191,17 +190,19 @@ map_chr <- function(.x, .f, ..., .progress = FALSE) {
   map_("character", .x, .f, ..., .progress = .progress)
 }
 
-map_ <- function(.type,
-                 .x,
-                 .f,
-                 ...,
-                 .progress = FALSE,
-                 .purrr_user_env = caller_env(2),
-                 .purrr_error_call = caller_env()) {
+map_ <- function(
+  .type,
+  .x,
+  .f,
+  ...,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
-  if (is_crate(.f) && parallel_pkgs_installed() && mirai::daemons_set()) {
+  if (running_in_parallel(.f)) {
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
 
@@ -220,7 +221,6 @@ map_ <- function(.type,
 }
 
 mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
-
   if (...length()) {
     cli::cli_abort(
       "Can't use `...` with parallelized functions.",
@@ -240,7 +240,6 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
     x <- simplify_impl(x, ptype = vector(mode = .type), error_call = error_call)
   }
   x
-
 }
 
 #' @rdname map
@@ -260,7 +259,12 @@ walk <- function(.x, .f, ..., .progress = FALSE) {
   invisible(.x)
 }
 
-with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()) {
+with_indexed_errors <- function(
+  expr,
+  i,
+  names = NULL,
+  error_call = caller_env()
+) {
   withCallingHandlers(
     expr,
     error = function(cnd) {
@@ -288,7 +292,11 @@ with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()
   )
 }
 
-with_parallel_indexed_errors <- function(expr, interrupt_expr = NULL, error_call = caller_env()) {
+with_parallel_indexed_errors <- function(
+  expr,
+  interrupt_expr = NULL,
+  error_call = caller_env()
+) {
   withCallingHandlers(
     expr,
     error = function(cnd) {

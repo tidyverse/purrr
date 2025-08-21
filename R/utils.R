@@ -1,8 +1,10 @@
-where_at <- function(x,
-                     at,
-                     user_env,
-                     error_arg = caller_arg(at),
-                     error_call = caller_env()) {
+where_at <- function(
+  x,
+  at,
+  user_env,
+  error_arg = caller_arg(at),
+  error_call = caller_env()
+) {
   if (is_formula(at)) {
     at <- rlang::as_function(at, arg = error_arg, call = error_call)
   }
@@ -54,13 +56,14 @@ where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
   }
 }
 
-as_predicate <- function(.fn,
-                         ...,
-                         .mapper,
-                         .allow_na = FALSE,
-                         .purrr_error_call = caller_env(),
-                         .purrr_error_arg = caller_arg(.fn)) {
-
+as_predicate <- function(
+  .fn,
+  ...,
+  .mapper,
+  .allow_na = FALSE,
+  .purrr_error_call = caller_env(),
+  .purrr_error_arg = caller_arg(.fn)
+) {
   force(.purrr_error_call)
   force(.purrr_error_arg)
 
@@ -100,10 +103,12 @@ paste_line <- function(...) {
   x
 }
 
-vctrs_list_compat <- function(x,
-                              user_env,
-                              error_call = caller_env(),
-                              error_arg = caller_arg(x)) {
+vctrs_list_compat <- function(
+  x,
+  user_env,
+  error_call = caller_env(),
+  error_arg = caller_arg(x)
+) {
   out <- vctrs_vec_compat(x, user_env)
   obj_check_list(out, call = error_call, arg = error_arg)
   out

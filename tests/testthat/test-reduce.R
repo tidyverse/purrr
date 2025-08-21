@@ -15,7 +15,10 @@ test_that("length 1 argument reduced with init", {
 
 test_that("direction of reduce determines how generated trees lean", {
   expect_identical(reduce(1:4, list), list(list(list(1L, 2L), 3L), 4L))
-  expect_identical(reduce(1:4, list, .dir = "backward"), list(1L, list(2L, list(3L, 4L))))
+  expect_identical(
+    reduce(1:4, list, .dir = "backward"),
+    list(1L, list(2L, list(3L, 4L)))
+  )
 })
 
 test_that("can shortcircuit reduction with done()", {
@@ -41,24 +44,45 @@ test_that("accumulate passes arguments to function", {
   tt <- c("a", "b", "c")
 
   expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
-  expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward"), c("a.b.c", "b.c", "c"))
+  expect_equal(
+    accumulate(tt, paste, sep = ".", .dir = "backward"),
+    c("a.b.c", "b.c", "c")
+  )
 
-  expect_equal(accumulate(tt, paste, sep = ".", .init = "z"), c("z", "z.a", "z.a.b", "z.a.b.c"))
-  expect_equal(accumulate(tt, paste, sep = ".", .dir = "backward", .init = "z"), c("a.b.c.z", "b.c.z", "c.z", "z"))
+  expect_equal(
+    accumulate(tt, paste, sep = ".", .init = "z"),
+    c("z", "z.a", "z.a.b", "z.a.b.c")
+  )
+  expect_equal(
+    accumulate(tt, paste, sep = ".", .dir = "backward", .init = "z"),
+    c("a.b.c.z", "b.c.z", "c.z", "z")
+  )
 })
 
 test_that("accumulate keeps input names", {
   input <- set_names(1:26, letters)
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
-  expect_identical(accumulate(input, sum, .dir = "backward"), set_names(rev(cumsum(rev(1:26))), rev(letters)))
+  expect_identical(
+    accumulate(input, sum, .dir = "backward"),
+    set_names(rev(cumsum(rev(1:26))), rev(letters))
+  )
 })
 
 test_that("accumulate keeps input names when init is supplied", {
   expect_identical(accumulate(1:2, c, .init = 0L), list(0L, 0:1, 0:2))
-  expect_identical(accumulate(0:1, c, .init = 2L, .dir = "backward"), list(0:2, 1:2, 2L))
+  expect_identical(
+    accumulate(0:1, c, .init = 2L, .dir = "backward"),
+    list(0:2, 1:2, 2L)
+  )
 
-  expect_identical(accumulate(c(a = 1L, b = 2L), c, .init = 0L), list(.init = 0L, a = 0:1, b = 0:2))
-  expect_identical(accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"), list(b = 0:2, a = 1:2, .init = 2L))
+  expect_identical(
+    accumulate(c(a = 1L, b = 2L), c, .init = 0L),
+    list(.init = 0L, a = 0:1, b = 0:2)
+  )
+  expect_identical(
+    accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"),
+    list(b = 0:2, a = 1:2, .init = 2L)
+  )
 })
 
 test_that("can terminate accumulate() early", {
@@ -76,7 +100,10 @@ test_that("can terminate accumulate() early", {
   expect_equal(accumulate(tt, paste2, .dir = "backward"), c("b.c", "c"))
 
   expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a", "z.a.b"))
-  expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("b.c.z", "c.z", "z"))
+  expect_equal(
+    accumulate(tt, paste2, .dir = "backward", .init = "z"),
+    c("b.c.z", "c.z", "z")
+  )
 })
 
 test_that("can terminate accumulate() early with an empty box", {
@@ -94,7 +121,10 @@ test_that("can terminate accumulate() early with an empty box", {
   expect_equal(accumulate(tt, paste2, .dir = "backward"), "c")
 
   expect_equal(accumulate(tt, paste2, .init = "z"), c("z", "z.a"))
-  expect_equal(accumulate(tt, paste2, .dir = "backward", .init = "z"), c("c.z", "z"))
+  expect_equal(
+    accumulate(tt, paste2, .dir = "backward", .init = "z"),
+    c("c.z", "z")
+  )
 
   # Init value is always included, even if done at first iteration
   expect_equal(accumulate(c("b", "c"), paste2), "b")
@@ -107,17 +137,17 @@ test_that("accumulate() forces arguments (#643)", {
 })
 
 test_that("accumulate() uses vctrs to simplify results", {
-  out <- list("foo", factor("bar")) %>% accumulate(~ .y)
+  out <- list("foo", factor("bar")) |> accumulate(~.y)
   expect_identical(out, c("foo", "bar"))
 })
 
 test_that("accumulate() does not fail when input can't be simplified", {
-  expect_identical(accumulate(list(1L, 2:3), ~ .y), list(1L, 2:3))
-  expect_identical(accumulate(list(1, "a"), ~ .y), list(1, "a"))
+  expect_identical(accumulate(list(1L, 2:3), ~.y), list(1L, 2:3))
+  expect_identical(accumulate(list(1, "a"), ~.y), list(1, "a"))
 })
 
 test_that("accumulate() does fail when simpification is required", {
-  expect_snapshot(accumulate(list(1, "a"), ~ .y, .simplify = TRUE), error = TRUE)
+  expect_snapshot(accumulate(list(1, "a"), ~.y, .simplify = TRUE), error = TRUE)
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -162,7 +192,10 @@ test_that("basic accumulate2() works", {
 
   x <- c("a", "b", "c")
   expect_equal(accumulate2(x, c("-", "."), paste2), c("a", "a-b", "a-b.c"))
-  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), c("x", "x.a", "x.a-b", "x.a-b.c"))
+  expect_equal(
+    accumulate2(x, c(".", "-", "."), paste2, .init = "x"),
+    c("x", "x.a", "x.a-b", "x.a-b.c")
+  )
 })
 
 test_that("can terminate accumulate2() early", {
@@ -177,7 +210,10 @@ test_that("can terminate accumulate2() early", {
 
   x <- c("a", "b", "c")
   expect_equal(accumulate2(x, c("-", "."), paste2), c("a", "a-b"))
-  expect_equal(accumulate2(x, c(".", "-", "."), paste2, .init = "x"), c("x", "x.a", "x.a-b"))
+  expect_equal(
+    accumulate2(x, c(".", "-", "."), paste2, .init = "x"),
+    c("x", "x.a", "x.a-b")
+  )
 })
 
 test_that("accumulate2() forces arguments (#643)", {

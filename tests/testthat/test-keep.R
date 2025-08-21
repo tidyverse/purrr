@@ -10,8 +10,8 @@ test_that("can keep/discard with predicate", {
 
 test_that("keep() and discard() require predicate functions", {
   expect_snapshot(error = TRUE, {
-    keep(1:3, ~ NA)
-    discard(1:3, ~ NA)
+    keep(1:3, ~NA)
+    discard(1:3, ~NA)
   })
 })
 

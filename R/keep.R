@@ -16,8 +16,7 @@
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
 #'   * A formula, e.g. `~ all(.x < 0)`. You must use `.x` to refer to the first
-#'     argument). Only recommended if you require backward compatibility with
-#'     older versions of R.
+#'     argument). No longer recommended.
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
 #' @export
@@ -72,8 +71,8 @@ compact <- function(.x, .p = identity) {
 #' x |> discard_at(letters)
 #'
 #' # Can also use a function
-#' x |> keep_at(~ nchar(.x) == 3)
-#' x |> discard_at(~ nchar(.x) == 3)
+#' x |> keep_at(\(x) nchar(x) == 3)
+#' x |> discard_at(\(x) nchar(x) == 3)
 keep_at <- function(x, at) {
   where <- where_at(x, at, user_env = caller_env())
   x[where]

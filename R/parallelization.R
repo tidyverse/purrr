@@ -162,17 +162,18 @@ in_parallel <- function(.f, ...) {
   )
 }
 
-is_crate <- function(x) {
-  inherits(x, "crate")
+running_in_parallel <- function(x) {
+  inherits(x, "crate") && parallel_pkgs_installed() && mirai::daemons_set()
 }
 
 parallel_pkgs_installed <- function() {
-  is.logical(the$parallel_pkgs_installed) || {
-    check_installed(
-      c("carrier", "mirai"),
-      version = c("0.2.0", "2.4.0"),
-      reason = "for parallel map."
-    )
-    the$parallel_pkgs_installed <- TRUE
-  }
+  is.logical(the$parallel_pkgs_installed) ||
+    {
+      check_installed(
+        c("carrier", "mirai"),
+        version = c("0.2.0", "2.4.0"),
+        reason = "for parallel map."
+      )
+      the$parallel_pkgs_installed <- TRUE
+    }
 }
