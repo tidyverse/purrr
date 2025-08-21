@@ -113,7 +113,7 @@ convenient, and the evaluation of the predicate function <code>.p</code> is stri
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9 8 5 2 7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Or use a formula</span></span></span>
+<span class="r-in"><span><span class="co"># Or use shorthand form</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="map.html">map</a></span><span class="op">(</span><span class="va">sample</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">keep</span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">6</span><span class="op">)</span></span></span>
