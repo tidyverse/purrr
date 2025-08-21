@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`, `cross_n()`, `reduce2_right()`, and `reduce_right()`.
+
 # purrr 1.1.0
 
 * purrr now requires R >= 4.1, so we can rely on the base pipe and lambda

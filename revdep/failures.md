@@ -1,3 +1,79 @@
+# apa
+
+<details>
+
+* Version: 0.3.4
+* GitHub: https://github.com/dgromer/apa
+* Source code: https://github.com/cran/apa
+* Date/Publication: 2023-10-06 15:00:02 UTC
+* Number of recursive dependencies: 115
+
+Run `revdepcheck::cloud_details(, "apa")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/apa/new/apa.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘apa/DESCRIPTION’ ... OK
+...
+* this is package ‘apa’ version ‘0.3.4’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/apa/old/apa.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘apa/DESCRIPTION’ ... OK
+...
+* this is package ‘apa’ version ‘0.3.4’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
 # arealDB
 
 <details>
@@ -72,7 +148,7 @@ ERROR: lazy loading failed for package ‘arealDB’
 * GitHub: NA
 * Source code: https://github.com/cran/dsTidyverse
 * Date/Publication: 2025-02-27 09:40:06 UTC
-* Number of recursive dependencies: 46
+* Number of recursive dependencies: 134
 
 Run `revdepcheck::cloud_details(, "dsTidyverse")` for more info
 
@@ -140,79 +216,63 @@ Status: 1 NOTE
 
 
 ```
-# metabolic
+# kerastuneR
 
 <details>
 
-* Version: 0.1.2
-* GitHub: https://github.com/fmmattioni/metabolic
-* Source code: https://github.com/cran/metabolic
-* Date/Publication: 2023-10-10 07:40:02 UTC
-* Number of recursive dependencies: 136
+* Version: 0.1.0.7
+* GitHub: https://github.com/EagerAI/kerastuneR
+* Source code: https://github.com/cran/kerastuneR
+* Date/Publication: 2024-04-13 13:20:02 UTC
+* Number of recursive dependencies: 109
 
-Run `revdepcheck::cloud_details(, "metabolic")` for more info
+Run `revdepcheck::cloud_details(, "kerastuneR")` for more info
 
 </details>
 
-## Error before installation
+## Newly broken
+
+*   checking whether package ‘kerastuneR’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/kerastuneR/new/kerastuneR.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
 
 ### Devel
 
 ```
-* using log directory ‘/tmp/workdir/metabolic/new/metabolic.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘metabolic/DESCRIPTION’ ... OK
-...
-* checking data for non-ASCII characters ... NOTE
-  Note: found 37 marked UTF-8 strings
-* checking LazyData ... OK
-* checking data for ASCII and uncompressed saves ... OK
-* checking examples ... OK
-* checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... OK
-  Running ‘spelling.R’
-* DONE
-Status: 2 NOTEs
-
-
-
+* installing *source* package ‘kerastuneR’ ...
+** package ‘kerastuneR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘kerastuneR’
+* removing ‘/tmp/workdir/kerastuneR/new/kerastuneR.Rcheck/kerastuneR’
 
 
 ```
 ### CRAN
 
 ```
-* using log directory ‘/tmp/workdir/metabolic/old/metabolic.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘metabolic/DESCRIPTION’ ... OK
-...
-* checking data for non-ASCII characters ... NOTE
-  Note: found 37 marked UTF-8 strings
-* checking LazyData ... OK
-* checking data for ASCII and uncompressed saves ... OK
-* checking examples ... OK
-* checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... OK
-  Running ‘spelling.R’
-* DONE
-Status: 2 NOTEs
-
-
-
+* installing *source* package ‘kerastuneR’ ...
+** package ‘kerastuneR’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (kerastuneR)
 
 
 ```
@@ -468,17 +528,17 @@ ERROR: lazy loading failed for package ‘rdflib’
 
 
 ```
-# rgeomstats
+# sprtt
 
 <details>
 
-* Version: 0.0.1
-* GitHub: https://github.com/LMJL-Alea/rgeomstats
-* Source code: https://github.com/cran/rgeomstats
-* Date/Publication: 2022-11-04 10:10:02 UTC
-* Number of recursive dependencies: 36
+* Version: 0.2.0
+* GitHub: https://github.com/MeikeSteinhilber/sprtt
+* Source code: https://github.com/cran/sprtt
+* Date/Publication: 2023-07-06 13:50:02 UTC
+* Number of recursive dependencies: 146
 
-Run `revdepcheck::cloud_details(, "rgeomstats")` for more info
+Run `revdepcheck::cloud_details(, "sprtt")` for more info
 
 </details>
 
@@ -487,7 +547,27 @@ Run `revdepcheck::cloud_details(, "rgeomstats")` for more info
 ### Devel
 
 ```
+* using log directory ‘/tmp/workdir/sprtt/new/sprtt.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘sprtt/DESCRIPTION’ ... OK
+...
+* this is package ‘sprtt’ version ‘0.2.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
 
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
 
 
 
@@ -497,7 +577,7 @@ Run `revdepcheck::cloud_details(, "rgeomstats")` for more info
 ### CRAN
 
 ```
-* using log directory ‘/tmp/workdir/rgeomstats/old/rgeomstats.Rcheck’
+* using log directory ‘/tmp/workdir/sprtt/old/sprtt.Rcheck’
 * using R version 4.4.0 (2024-04-24)
 * using platform: x86_64-pc-linux-gnu
 * R was compiled by
@@ -506,21 +586,391 @@ Run `revdepcheck::cloud_details(, "rgeomstats")` for more info
 * running under: Ubuntu 24.04.2 LTS
 * using session charset: UTF-8
 * using option ‘--no-manual’
-* checking for file ‘rgeomstats/DESCRIPTION’ ... OK
+* checking for file ‘sprtt/DESCRIPTION’ ... OK
 ...
-   588 | if (reticulate::py_module_available("geomstats")) {
-       |                                                   ^
-* checking Rd metadata ... OK
-* checking Rd cross-references ... OK
-* checking for missing documentation entries ... OK
-* checking for code/documentation mismatches ... OK
-* checking Rd \usage sections ... OK
+* this is package ‘sprtt’ version ‘0.2.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+# stoRy
+
+<details>
+
+* Version: 0.2.2
+* GitHub: https://github.com/theme-ontology/stoRy
+* Source code: https://github.com/cran/stoRy
+* Date/Publication: 2023-06-13 23:10:02 UTC
+* Number of recursive dependencies: 76
+
+Run `revdepcheck::cloud_details(, "stoRy")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘stoRy’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘stoRy’ ...
+** package ‘stoRy’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+Warning: namespace ‘stoRy’ is not available and has been replaced
+by .GlobalEnv when processing object ‘background_collection’
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘stoRy’
+* removing ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/stoRy’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘stoRy’ ...
+** package ‘stoRy’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (stoRy)
+
+
+```
+# Surrogate
+
+<details>
+
+* Version: 3.4.1
+* GitHub: https://github.com/florianstijven/Surrogate-development
+* Source code: https://github.com/cran/Surrogate
+* Date/Publication: 2025-04-29 04:40:02 UTC
+* Number of recursive dependencies: 192
+
+Run `revdepcheck::cloud_details(, "Surrogate")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/Surrogate/new/Surrogate.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘Surrogate/DESCRIPTION’ ... OK
+...
+* this is package ‘Surrogate’ version ‘3.4.1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/Surrogate/old/Surrogate.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘Surrogate/DESCRIPTION’ ... OK
+...
+* this is package ‘Surrogate’ version ‘3.4.1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+# tidybins
+
+<details>
+
+* Version: 0.1.1
+* GitHub: https://github.com/Harrison4192/tidybins
+* Source code: https://github.com/cran/tidybins
+* Date/Publication: 2024-06-12 04:50:02 UTC
+* Number of recursive dependencies: 222
+
+Run `revdepcheck::cloud_details(, "tidybins")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/tidybins/new/tidybins.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘tidybins/DESCRIPTION’ ... OK
+...
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
-* checking examples ...
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 3 NOTEs
 
 
 
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/tidybins/old/tidybins.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘tidybins/DESCRIPTION’ ... OK
+...
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 3 NOTEs
+
+
+
+
+
+```
+# tidycomm
+
+<details>
+
+* Version: 0.4.1
+* GitHub: https://github.com/joon-e/tidycomm
+* Source code: https://github.com/cran/tidycomm
+* Date/Publication: 2024-02-22 12:20:02 UTC
+* Number of recursive dependencies: 141
+
+Run `revdepcheck::cloud_details(, "tidycomm")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/tidycomm/new/tidycomm.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘tidycomm/DESCRIPTION’ ... OK
+...
+* this is package ‘tidycomm’ version ‘0.4.1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/tidycomm/old/tidycomm.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘tidycomm/DESCRIPTION’ ... OK
+...
+* this is package ‘tidycomm’ version ‘0.4.1’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Package required but not available: ‘MBESS’
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+# tidyjson
+
+<details>
+
+* Version: 0.3.2
+* GitHub: https://github.com/colearendt/tidyjson
+* Source code: https://github.com/cran/tidyjson
+* Date/Publication: 2023-01-07 00:20:02 UTC
+* Number of recursive dependencies: 93
+
+Run `revdepcheck::cloud_details(, "tidyjson")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘tidyjson’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/00install.out’ for details.
+    ```
+
+## Newly fixed
+
+*   checking Rd files ... NOTE
+    ```
+    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
+        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
+           |                    ^
+    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
+        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
+           |                                           ^
+    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
+        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
+           |                                                          ^
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘tidyjson’ ...
+** package ‘tidyjson’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error: object ‘at_depth’ is not exported by 'namespace:purrr'
+Execution halted
+ERROR: lazy loading failed for package ‘tidyjson’
+* removing ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/tidyjson’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘tidyjson’ ...
+** package ‘tidyjson’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (tidyjson)
 
 
 ```

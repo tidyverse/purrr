@@ -31,15 +31,6 @@
 #'   These dots support quasiquotation. If you unquote a value, it is
 #'   evaluated only once at function creation time.  Otherwise, it is
 #'   evaluated each time the function is called.
-#' @param .env `r lifecycle::badge("deprecated")` The environments are
-#'   now captured via quosures.
-#' @param .first `r lifecycle::badge("deprecated")` Please pass an
-#'   empty argument `... = ` to specify the position of future
-#'   arguments.
-#' @param .lazy `r lifecycle::badge("deprecated")` Please unquote the
-#'   arguments that should be evaluated once at function creation time
-#'   with `!!`.
-#'
 #' @inheritSection safely Adverbs
 #' @inherit safely return
 #' @family adverbs
@@ -88,13 +79,7 @@
 #' # `... = ` argument:
 #' my_list <- partial(list, 1, ... = , 2)
 #' my_list("foo")
-partial <- function(
-  .f,
-  ...,
-  .env = deprecated(),
-  .lazy = deprecated(),
-  .first = deprecated()
-) {
+partial <- function(.f, ...) {
   args <- enquos(...)
 
   fn_expr <- enexpr(.f)
@@ -109,22 +94,6 @@ partial <- function(
     )
   )
 
-  if (lifecycle::is_present(.env)) {
-    lifecycle::deprecate_warn("0.3.0", "partial(.env)", always = TRUE)
-  }
-  if (lifecycle::is_present(.lazy)) {
-    lifecycle::deprecate_warn("0.3.0", "partial(.lazy)", always = TRUE)
-    if (!.lazy) {
-      args <- map(
-        args,
-        ~ new_quosure(eval_tidy(.x, env = caller_env()), empty_env())
-      )
-    }
-  }
-  if (lifecycle::is_present(.first)) {
-    lifecycle::deprecate_warn("0.3.0", "partial(.first)", always = TRUE)
-  }
-
   env <- caller_env()
   heterogeneous_envs <- !every(args, quo_is_same_env, env)
 
@@ -135,15 +104,10 @@ partial <- function(
   # Reuse function symbol if possible
   fn_sym <- if (is_symbol(fn_expr)) fn_expr else quote(.fn)
 
-  if (is_false(.first)) {
-    # For compatibility
-    call <- call_modify(call2(fn_sym), ... = , !!!args)
-  } else {
-    # Pass on `...` from parent function. It should be last, this way if
-    # `args` also contain a `...` argument, the position in `args`
-    # prevails.
-    call <- call_modify(call2(fn_sym), !!!args, ... = )
-  }
+  # Pass on `...` from parent function. It should be last, this way if
+  # `args` also contain a `...` argument, the position in `args`
+  # prevails.
+  call <- call_modify(call2(fn_sym), !!!args, ... = )
 
   if (heterogeneous_envs) {
     # Forward caller environment where S3 methods might be defined.
