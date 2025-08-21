@@ -1,16 +1,16 @@
 # purrr (development version)
 
-* All functions that were soft-deprecated in purrr 1.0.0 are now fully 
-  deprecated. They will be removed in a future release. This includes:
-  `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`,
-  `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
-
+* All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
 * `map_chr()` no longer coereces from logical, integer, or double to strings.
+* All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`, `cross_n()`, `reduce2_right()`, and `reduce_right()`.
 
-* purrr gains the capacity for parallel and distributed map, powered by the
-  mirai package. Newly-added `in_parallel()` wraps a function provided to
-  `map()` and all its variants to enable this. See `?in_parallel` for more
-  details (@shikokuchuo, #1163, #1185).
+# purrr 1.1.0
+
+* purrr now requires R >= 4.1, so we can rely on the base pipe and lambda
+  syntax (#1177).
+
+* purrr gains `in_parallel()` to support parallel and distributed maps, powered 
+  by {mirai}. See `?in_parallel` for more details (@shikokuchuo, #1163, #1185).
 
 # purrr 1.0.4
 

@@ -11,8 +11,8 @@
 #'   * An anonymous function, e.g. `\(x, idx) x + idx` or
 #'     `function(x, idx) x + idx`.
 #'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the
-#'     current element and `.y` to refer to the current index. Only recommended
-#'     if you require backward compatibility with older versions of R.
+#'     current element and `.y` to refer to the current index.
+#'     No longer recommended.
 #'
 #'   `r lifecycle::badge("experimental")`
 #'

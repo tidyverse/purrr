@@ -1,22 +1,3 @@
-#' Infix attribute accessor
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' This function was deprecated in purrr 0.3.0. Instead, lease use the `%@%`
-#' operator exported in rlang. It has an interface more consistent with `@`:
-#' uses NSE, supports S4 fields, and has an assignment variant.
-#'
-#' @param x Object
-#' @param name Attribute name
-#' @export
-#' @name get-attr
-#' @keywords internal
-`%@%` <- function(x, name) {
-  lifecycle::deprecate_warn("0.3.0", I("%@%"), I("rlang::%@%"), always = TRUE)
-  attr(x, name, exact = TRUE)
-}
-
 #' Generate random sample from a Bernoulli distribution
 #'
 #' @description

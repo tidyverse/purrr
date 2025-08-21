@@ -1,4 +1,4 @@
-test_that("can coerce to logical vectors",{
+test_that("can coerce to logical vectors", {
   expect_equal(coerce_lgl(c(TRUE, FALSE, NA)), c(TRUE, FALSE, NA))
 
   expect_equal(coerce_lgl(c(1L, 0L, NA)), c(TRUE, FALSE, NA))

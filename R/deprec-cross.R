@@ -198,24 +198,8 @@ cross_df <- function(.l, .filter = NULL) {
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
   check_installed("tibble")
-  cross(.l, .filter = .filter) %>%
-    transpose() %>%
-    simplify_all() %>%
+  cross(.l, .filter = .filter) |>
+    transpose() |>
+    simplify_all() |>
     tibble::as_tibble()
-}
-
-#' @export
-#' @usage NULL
-#' @rdname cross
-cross_n <- function(...) {
-  lifecycle::deprecate_stop("0.2.3", "purrr::cross_n()")
-  cross(...)
-}
-
-#' @export
-#' @usage NULL
-#' @rdname cross
-cross_d <- function(...) {
-  lifecycle::deprecate_stop("0.2.3", "purrr::cross_d()")
-  cross_df(...)
 }

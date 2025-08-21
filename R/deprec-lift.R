@@ -125,7 +125,9 @@ lift_vl <- function(..f, ..., .type) {
 
   force(..f)
   defaults <- list(...)
-  if (missing(.type)) .type <- NULL
+  if (missing(.type)) {
+    .type <- NULL
+  }
 
   function(.x = list(), ...) {
     x <- as_vector_(.x, .type)
@@ -140,7 +142,9 @@ lift_vd <- function(..f, ..., .type) {
 
   force(..f)
   defaults <- list(...)
-  if (missing(.type)) .type <- NULL
+  if (missing(.type)) {
+    .type <- NULL
+  }
 
   function(...) {
     x <- as_vector_(list(...), .type)

@@ -33,12 +33,13 @@ list_simplify <- function(x, ..., strict = TRUE, ptype = NULL) {
 }
 
 # Wrapper used by purrr functions that do automatic simplification
-list_simplify_internal <- function(x,
-                                   simplify = NA,
-                                   ptype = NULL,
-                                   error_arg = caller_arg(x),
-                                   error_call = caller_env()) {
-
+list_simplify_internal <- function(
+  x,
+  simplify = NA,
+  ptype = NULL,
+  error_arg = caller_arg(x),
+  error_call = caller_env()
+) {
   check_bool(simplify, allow_na = TRUE, call = error_call)
   if (!is.null(ptype) && isFALSE(simplify)) {
     cli::cli_abort(
@@ -61,11 +62,13 @@ list_simplify_internal <- function(x,
   )
 }
 
-simplify_impl <- function(x,
-                          strict = TRUE,
-                          ptype = NULL,
-                          error_arg = caller_arg(x),
-                          error_call = caller_env()) {
+simplify_impl <- function(
+  x,
+  strict = TRUE,
+  ptype = NULL,
+  error_arg = caller_arg(x),
+  error_call = caller_env()
+) {
   obj_check_list(x, arg = error_arg, call = error_call)
 
   # Handle the cases where we definitely can't simplify
@@ -84,7 +87,12 @@ simplify_impl <- function(x,
   x <- vec_set_names(x, NULL)
 
   out <- tryCatch(
-    list_unchop(x, ptype = ptype, error_arg = error_arg, error_call = error_call),
+    list_unchop(
+      x,
+      ptype = ptype,
+      error_arg = error_arg,
+      error_call = error_call
+    ),
     vctrs_error_incompatible_type = function(err) {
       if (strict || !is.null(ptype)) {
         cnd_signal(err)

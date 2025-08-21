@@ -75,4 +75,3 @@ test_that("rate_sleep() checks that rate is still valid", {
   expect_snapshot(rate_sleep(rate), error = TRUE)
   expect_snapshot(rate_sleep(rate), error = TRUE)
 })
-

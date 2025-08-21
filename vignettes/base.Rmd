@@ -257,25 +257,14 @@ What if we want just the side effect, such as a plot or a file output, but not t
 
 ### Pipes
 
-You can join multiple steps together either using the magrittr pipe:
+You can join multiple steps together with the pipe:
 
 ```{r}
 set.seed(2020)
-means %>%
-  map(rnorm, n = 5, sd = 1) %>%
+means |>
+  map(rnorm, n = 5, sd = 1) |>
   map_dbl(median)
 ```
-
-Or the base pipe R:
-
-```{r, eval = modern_r}
-set.seed(2020)
-means |> 
-  lapply(rnorm, n = 5, sd = 1) |> 
-  sapply(median)
-```
-
-(And of course you can mix and match the piping style with either base R or purrr.)
 
 The pipe is particularly compelling when working with longer transformations.
 For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).

@@ -153,7 +153,11 @@ invoke_map_raw <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_dfr <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "invoke_df()", I("map() + exec() + list_rbind()"))
+  lifecycle::deprecate_warn(
+    "1.0.0",
+    "invoke_df()",
+    I("map() + exec() + list_rbind()")
+  )
 
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
@@ -162,7 +166,11 @@ invoke_map_dfr <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @rdname invoke
 #' @export
 invoke_map_dfc <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "invoke_dfc()", I("map() + exec() + list_cbind()"))
+  lifecycle::deprecate_soft(
+    "1.0.0",
+    "invoke_dfc()",
+    I("map() + exec() + list_cbind()")
+  )
 
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)
@@ -172,7 +180,11 @@ invoke_map_dfc <- function(.f, .x = list(NULL), ..., .env = NULL) {
 #' @export
 #' @usage NULL
 invoke_map_df <- function(.f, .x = list(NULL), ..., .env = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "invoke_df()", I("map() + exec() + list_rbind()"))
+  lifecycle::deprecate_soft(
+    "1.0.0",
+    "invoke_df()",
+    I("map() + exec() + list_rbind()")
+  )
 
   .env <- .env %||% parent.frame()
   .f <- as_invoke_function(.f)

@@ -10,8 +10,10 @@ coerce_dbl <- function(x) coerce(x, "double")
 coerce_chr <- function(x) coerce(x, "character")
 
 # Can rewrite after https://github.com/r-lib/rlang/issues/1643
-local_deprecation_user_env <- function(user_env = caller_env(2), frame = caller_env()) {
-
+local_deprecation_user_env <- function(
+  user_env = caller_env(2),
+  frame = caller_env()
+) {
   old <- the$deprecation_user_env
   the$deprecation_user_env <- user_env
   defer(the$deprecation_user_env <- old, frame)

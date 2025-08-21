@@ -1,6 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 1.0.4.9000
+Version: 1.1.0.9000
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4757-117X")),
@@ -14,7 +14,7 @@ License: MIT + file LICENSE
 URL: https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
 Depends:
-    R (>= 4.0)
+    R (>= 4.1)
 Imports:
     cli (>= 3.6.1),
     lifecycle (>= 1.0.3),

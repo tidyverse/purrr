@@ -38,12 +38,12 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
 
   out <- vector("list", length(.x))
-  out[where]  <- map(.x[where], .f, ...)
+  out[where] <- map(.x[where], .f, ...)
 
   if (is_null(.else)) {
     out[!where] <- .x[!where]
   } else {
-    out[!where]  <- map(.x[!where], .else, ...)
+    out[!where] <- map(.x[!where], .else, ...)
   }
 
   set_names(out, names(.x))
@@ -61,7 +61,7 @@ map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
   where <- where_at(.x, .at, user_env = caller_env())
 
   out <- vector("list", length(.x))
-  out[where]  <- map(.x[where], .f, ..., .progress = .progress)
+  out[where] <- map(.x[where], .f, ..., .progress = .progress)
   out[!where] <- .x[!where]
 
   set_names(out, names(.x))

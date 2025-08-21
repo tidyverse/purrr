@@ -101,15 +101,6 @@ application.
 
 \code{accumulate2()} sequentially applies a function to elements of two lists, \code{.x} and \code{.y}.
 }
-\section{Life cycle}{
-
-
-\code{accumulate_right()} is soft-deprecated in favour of the \code{.dir}
-argument as of rlang 0.3.0. Note that the algorithm has
-slightly changed: the accumulated value is passed to the right
-rather than the left, which is consistent with a right reduction.
-}
-
 \section{Direction}{
 
 
