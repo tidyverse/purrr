@@ -15,7 +15,6 @@
 <url><loc>https://purrr.tidyverse.org/dev/reference/array-coercion.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/as_mapper.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/as_vector.html</loc></url>
-<url><loc>https://purrr.tidyverse.org/dev/reference/at_depth.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/attr_getter.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/auto_browse.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/chuck.html</loc></url>
@@ -25,7 +24,6 @@
 <url><loc>https://purrr.tidyverse.org/dev/reference/every.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/faq-adverbs-export.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/flatten.html</loc></url>
-<url><loc>https://purrr.tidyverse.org/dev/reference/get-attr.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/has_element.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/head_while.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/imap.html</loc></url>
@@ -68,7 +66,6 @@
 <url><loc>https://purrr.tidyverse.org/dev/reference/rbernoulli.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/rdunif.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/reduce.html</loc></url>
-<url><loc>https://purrr.tidyverse.org/dev/reference/reduce_right.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/reexports.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/rerun.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/dev/reference/safely.html</loc></url>
