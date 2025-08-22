@@ -54,7 +54,7 @@
 #' }
 #' @export
 when <- function(., ...) {
-  lifecycle::deprecate_soft("1.0.0", "when()", I("`if`"))
+  lifecycle::deprecate_warn("1.0.0", "when()", I("`if`"))
 
   dots <- list(...)
   names <- names(dots)

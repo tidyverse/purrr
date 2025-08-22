@@ -135,7 +135,7 @@ check_list <- function(x, call = caller_env(), arg = caller_arg(x)) {
 #' @export
 #' @keywords internal
 update_list <- function(.x, ...) {
-  lifecycle::deprecate_soft("1.0.0", "update_list()")
+  lifecycle::deprecate_warn("1.0.0", "update_list()")
 
   dots <- dots_list(...)
 

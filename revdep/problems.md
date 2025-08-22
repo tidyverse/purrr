@@ -1,45 +1,14 @@
-# admiral
+# autothresholdr
 
 <details>
 
-* Version: 1.3.1
-* GitHub: https://github.com/pharmaverse/admiral
-* Source code: https://github.com/cran/admiral
-* Date/Publication: 2025-07-29 14:40:02 UTC
-* Number of recursive dependencies: 80
+* Version: 1.4.2
+* GitHub: https://github.com/rorynolan/autothresholdr
+* Source code: https://github.com/cran/autothresholdr
+* Date/Publication: 2023-12-13 06:00:02 UTC
+* Number of recursive dependencies: 99
 
-Run `revdepcheck::cloud_details(, "admiral")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.2Mb
-      sub-directories of 1Mb or more:
-        doc    2.3Mb
-        help   1.8Mb
-    ```
-
-## In both
-
-*   checking data for non-ASCII characters ... NOTE
-    ```
-      Note: found 24 marked UTF-8 strings
-    ```
-
-# CohortCharacteristics
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/darwin-eu/CohortCharacteristics
-* Source code: https://github.com/cran/CohortCharacteristics
-* Date/Publication: 2025-05-20 22:30:11 UTC
-* Number of recursive dependencies: 189
-
-Run `revdepcheck::cloud_details(, "CohortCharacteristics")` for more info
+Run `revdepcheck::cloud_details(, "autothresholdr")` for more info
 
 </details>
 
@@ -48,43 +17,72 @@ Run `revdepcheck::cloud_details(, "CohortCharacteristics")` for more info
 *   checking re-building of vignette outputs ... ERROR
     ```
     Error(s) in re-building vignettes:
-    --- re-building ‘summarise_characteristics.Rmd’ using rmarkdown
-    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
-    Content type 'application/zip' length 6754786 bytes (6.4 MB)
-    ============
-    downloaded 1.7 MB
-    
-    
-    Quitting from summarise_characteristics.Rmd:11-19 [unnamed-chunk-1]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ...
-    
-    Error: processing vignette 'summarise_characteristics.Rmd' failed with diagnostics:
-    download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
-    --- failed re-building ‘summarise_characteristics.Rmd’
-    
-    --- re-building ‘summarise_cohort_overlap.Rmd’ using rmarkdown
-    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
-    Content type 'application/zip' length 6754786 bytes (6.4 MB)
-    ==================================================
-    downloaded 6.4 MB
+    --- re-building ‘finding-thresholds.Rmd’ using rmarkdown
     ```
 
 ## In both
 
 *   checking installed package size ... NOTE
     ```
-      installed size is  6.1Mb
+      installed size is  5.0Mb
       sub-directories of 1Mb or more:
-        doc    4.0Mb
-        help   1.8Mb
+        doc    1.8Mb
+        libs   2.5Mb
     ```
 
-*   checking DESCRIPTION meta-information ... NOTE
+# casino
+
+<details>
+
+* Version: 0.1.0
+* GitHub: https://github.com/anthonypileggi/casino
+* Source code: https://github.com/cran/casino
+* Date/Publication: 2019-01-17 17:40:03 UTC
+* Number of recursive dependencies: 57
+
+Run `revdepcheck::cloud_details(, "casino")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking re-building of vignette outputs ... ERROR
     ```
-    Packages listed in more than one of Depends, Imports, Suggests, Enhances:
-      ‘reactable’ ‘DT’
-    A package should be listed in only one of these fields.
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘persistent_player_profiles.Rmd’ using rmarkdown
+    
+    Quitting from persistent_player_profiles.Rmd:23-34 [unnamed-chunk-1]
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    NULL
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    Error: processing vignette 'persistent_player_profiles.Rmd' failed with diagnostics:
+    ...
+    ℹ In index: 1.
+    Caused by error:
+    ! Can't coerce from a number to a string.
+    --- failed re-building ‘persistent_player_profiles.Rmd’
+    
+    SUMMARY: processing the following file failed:
+      ‘persistent_player_profiles.Rmd’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘R6’ ‘crayon’ ‘dplyr’ ‘tidyr’
+      All declared Imports should be used.
+    ```
+
+*   checking LazyData ... NOTE
+    ```
+      'LazyData' is specified without a 'data' directory
     ```
 
 # CPAT
@@ -135,6 +133,123 @@ Run `revdepcheck::cloud_details(, "CPAT")` for more info
     Namespaces in Imports field not imported from:
       ‘Rdpack’ ‘grDevices’
       All declared Imports should be used.
+    ```
+
+# egor
+
+<details>
+
+* Version: 1.24.2
+* GitHub: https://github.com/tilltnet/egor
+* Source code: https://github.com/cran/egor
+* Date/Publication: 2024-02-02 05:30:02 UTC
+* Number of recursive dependencies: 88
+
+Run `revdepcheck::cloud_details(, "egor")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘egor-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: twofiles_to_egor
+    > ### Title: Import ego-centered network data from two file format
+    > ### Aliases: twofiles_to_egor
+    > ### Keywords: import
+    > 
+    > ### ** Examples
+    > 
+    ...
+      5. │     └─purrr::map_chr(x, function(x) is.double(x))
+      6. │       └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
+      7. │         ├─purrr:::with_indexed_errors(...)
+      8. │         │ └─base::withCallingHandlers(...)
+      9. │         └─purrr:::call_with_cleanup(...)
+     10. └─base::.handleSimpleError(...)
+     11.   └─purrr (local) h(simpleError(msg, call))
+     12.     └─cli::cli_abort(...)
+     13.       └─rlang::abort(...)
+    Execution halted
+    ```
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(egor)
+      Loading required package: dplyr
+      
+      Attaching package: 'dplyr'
+      
+      The following object is masked from 'package:testthat':
+    ...
+       13. │         │ └─base::withCallingHandlers(...)
+       14. │         └─purrr:::call_with_cleanup(...)
+       15. └─base::.handleSimpleError(...)
+       16.   └─purrr (local) h(simpleError(msg, call))
+       17.     └─cli::cli_abort(...)
+       18.       └─rlang::abort(...)
+      
+      [ FAIL 4 | WARN 6 | SKIP 15 | PASS 205 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+# immunarch
+
+<details>
+
+* Version: 0.9.1
+* GitHub: https://github.com/immunomind/immunarch
+* Source code: https://github.com/cran/immunarch
+* Date/Publication: 2024-03-18 19:10:06 UTC
+* Number of recursive dependencies: 200
+
+Run `revdepcheck::cloud_details(, "immunarch")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘immunarch-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: seqCluster
+    > ### Title: Function for assigning clusters based on sequences similarity
+    > ### Aliases: seqCluster
+    > 
+    > ### ** Examples
+    > 
+    > 
+    ...
+     27. ├─purrr::map_chr(.y, ~ifelse(all(.x == .x[1]), yes = .x[1], no = glue("range_{min(.x)}:{max(.x)}")))
+     28. │ └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
+     29. │   ├─purrr:::with_indexed_errors(...)
+     30. │   │ └─base::withCallingHandlers(...)
+     31. │   └─purrr:::call_with_cleanup(...)
+     32. └─base::.handleSimpleError(...)
+     33.   └─purrr (local) h(simpleError(msg, call))
+     34.     └─cli::cli_abort(...)
+     35.       └─rlang::abort(...)
+    Execution halted
+    ```
+
+## In both
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  9.7Mb
+      sub-directories of 1Mb or more:
+        data   5.5Mb
+        doc    1.6Mb
     ```
 
 # kerastuneR
@@ -197,89 +312,21 @@ ERROR: lazy loading failed for package ‘kerastuneR’
 
 
 ```
-# MeasurementDiagnostics
+# LTFGRS
 
 <details>
 
-* Version: 0.1.0
-* GitHub: NA
-* Source code: https://github.com/cran/MeasurementDiagnostics
-* Date/Publication: 2025-07-29 11:50:02 UTC
-* Number of recursive dependencies: 127
+* Version: 1.0.0
+* GitHub: https://github.com/EmilMiP/LTFGRS
+* Source code: https://github.com/cran/LTFGRS
+* Date/Publication: 2025-07-07 08:30:05 UTC
+* Number of recursive dependencies: 75
 
-Run `revdepcheck::cloud_details(, "MeasurementDiagnostics")` for more info
+Run `revdepcheck::cloud_details(, "LTFGRS")` for more info
 
 </details>
 
 ## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘summariseMeasurementUse.Rmd’ using rmarkdown
-    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
-    Content type 'application/zip' length 6754786 bytes (6.4 MB)
-    ===============
-    downloaded 2.0 MB
-    
-    
-    Quitting from summariseMeasurementUse.Rmd:10-18 [unnamed-chunk-1]
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ...
-    
-    Error: processing vignette 'summariseMeasurementUse.Rmd' failed with diagnostics:
-    download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
-    --- failed re-building ‘summariseMeasurementUse.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘summariseMeasurementUse.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# omock
-
-<details>
-
-* Version: 0.4.0
-* GitHub: https://github.com/ohdsi/omock
-* Source code: https://github.com/cran/omock
-* Date/Publication: 2025-06-12 16:10:02 UTC
-* Number of recursive dependencies: 85
-
-Run `revdepcheck::cloud_details(, "omock")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘omock-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: mockCdmFromDataset
-    > ### Title: Create a 'local' cdm_reference from a dataset.
-    > ### Aliases: mockCdmFromDataset
-    > 
-    > ### ** Examples
-    > 
-    > library(omock)
-    ...
-    downloaded 56 KB
-    
-    Warning in utils::download.file(url = url, destfile = datasetFile) :
-      downloaded length 57344 != reported length 6754786
-    Warning in utils::download.file(url = url, destfile = datasetFile) :
-      URL 'https://example-data.ohdsi.dev/GiBleed.zip': Timeout of 60 seconds was reached
-    Error in utils::download.file(url = url, destfile = datasetFile) : 
-      download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
-    Calls: downloadMockDataset -> <Anonymous>
-    Execution halted
-    ```
-
-## In both
 
 *   checking tests ... ERROR
     ```
@@ -294,113 +341,41 @@ Run `revdepcheck::cloud_details(, "omock")` for more info
       > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
       > # * https://testthat.r-lib.org/articles/special-files.html
     ...
-      i Actually got a <simpleError> with text:
-        object 'cdm' not found
-      ── Failure ('test-mockDatasets.R:35:3'): mock datasets cdm creation ────────────
-      Expected `cdm <- mockCdmFromDataset(datasetName = dbName)` to run without any errors.
-      i Actually got a <rlang_error> with text:
-        At least person and observation_period should be provided in tables
+      actual vs expected
+                            [,1]       [,2]
+      - actual[1, ]   0.30179338 0.01965999
+      + expected[1, ] 0.29925194 0.01748031
+      - actual[2, ]   0.01965999 0.14791812
+      + expected[2, ] 0.01748031 0.14918673
       
-      [ FAIL 6 | WARN 12 | SKIP 0 | PASS 108 ]
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 131 ]
       Error: Test failures
       Execution halted
     ```
 
-# OmopSketch
+# PopED
 
 <details>
 
-* Version: 0.5.1
-* GitHub: https://github.com/OHDSI/OmopSketch
-* Source code: https://github.com/cran/OmopSketch
-* Date/Publication: 2025-06-19 19:50:06 UTC
-* Number of recursive dependencies: 175
+* Version: 0.7.0
+* GitHub: https://github.com/andrewhooker/PopED
+* Source code: https://github.com/cran/PopED
+* Date/Publication: 2024-10-07 19:30:02 UTC
+* Number of recursive dependencies: 139
 
-Run `revdepcheck::cloud_details(, "OmopSketch")` for more info
+Run `revdepcheck::cloud_details(, "PopED")` for more info
 
 </details>
 
 ## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
-      > # * https://testthat.r-lib.org/articles/special-files.html
-    ...
-        9.         │   └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       10.         │     └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       11.         │       └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-       12.         └─testthat:::parallel_event_loop_chunky(queue, reporters, ".")
-       13.           └─queue$poll(Inf)
-       14.             └─base::lapply(...)
-       15.               └─testthat (local) FUN(X[[i]], ...)
-       16.                 └─private$handle_error(msg, i)
-       17.                   └─rlang::abort(...)
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘database_characteristics.Rmd’ using rmarkdown
-    --- finished re-building ‘database_characteristics.Rmd’
-    
-    --- re-building ‘missing_data.Rmd’ using rmarkdown
-    trying URL 'https://example-data.ohdsi.dev/GiBleed.zip'
-    Content type 'application/zip' length 6754786 bytes (6.4 MB)
-    ===============
-    downloaded 2.0 MB
-    
-    ...
-     3.     ├─withr::with_options(...)
-     4.     │ └─base::force(code)
-     5.     └─utils::download.file(...)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
-    Error: processing vignette 'missing_data.Rmd' failed with diagnostics:
-    download from 'https://example-data.ohdsi.dev/GiBleed.zip' failed
-    --- failed re-building ‘missing_data.Rmd’
-    
-    --- re-building ‘summarise_clinical_tables_records.Rmd’ using rmarkdown
-    ```
-
-## In both
 
 *   checking installed package size ... NOTE
     ```
-      installed size is 18.1Mb
+      installed size is  5.5Mb
       sub-directories of 1Mb or more:
-        doc  17.1Mb
-    ```
-
-# PatientProfiles
-
-<details>
-
-* Version: 1.4.2
-* GitHub: https://github.com/darwin-eu/PatientProfiles
-* Source code: https://github.com/cran/PatientProfiles
-* Date/Publication: 2025-07-09 13:20:05 UTC
-* Number of recursive dependencies: 138
-
-Run `revdepcheck::cloud_details(, "PatientProfiles")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘cohort-intersect.Rmd’ using rmarkdown
+        R      1.5Mb
+        doc    1.4Mb
+        test   1.1Mb
     ```
 
 # quincunx
@@ -469,6 +444,85 @@ Run `revdepcheck::cloud_details(, "quincunx")` for more info
       Execution halted
     ```
 
+# rbmi
+
+<details>
+
+* Version: 1.4.1
+* GitHub: https://github.com/insightsengineering/rbmi
+* Source code: https://github.com/cran/rbmi
+* Date/Publication: 2025-03-03 20:10:02 UTC
+* Number of recursive dependencies: 101
+
+Run `revdepcheck::cloud_details(, "rbmi")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(rbmi)
+      > 
+      > if (Sys.getenv("NOT_CRAN") != "true") {
+      +     Sys.setenv(RBMI_ENABLE_CACHE = "false")
+      +     options(rbmi.enable_cache = FALSE)
+      + }
+    ...
+       [6] 1.7771      - 0.8439        [6]             
+       [7] -0.4643     - -1.3740       [7]             
+       [8] -0.1738     - -1.7117       [8]             
+       [9] -0.4040     - -0.1313       [9]             
+      [10] 1.4148      - 1.2642        [10]            
+       ... ...           ...           and 190 more ...
+      
+      [ FAIL 1 | WARN 0 | SKIP 15 | PASS 1278 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+# SCORPIUS
+
+<details>
+
+* Version: 1.0.9
+* GitHub: https://github.com/rcannood/SCORPIUS
+* Source code: https://github.com/cran/SCORPIUS
+* Date/Publication: 2023-08-07 17:30:05 UTC
+* Number of recursive dependencies: 198
+
+Run `revdepcheck::cloud_details(, "SCORPIUS")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘SCORPIUS’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: `invoke()` was deprecated in purrr 1.0.0.
+    See ‘/tmp/workdir/SCORPIUS/new/SCORPIUS.Rcheck/00install.out’ for details.
+    ```
+
+## In both
+
+*   checking Rd files ... NOTE
+    ```
+    checkRd: (-1) reduce_dimensionality.Rd:19: Lost braces
+        19 | \item{ndim}{the maximum dimension of the space which the data are to be represented in; must be in {1, 2, \ldots, n-1}.}
+           |                                                                                                    ^
+    checkRd: (-1) ti_scorpius.Rd:18: Lost braces; missing escapes or markup?
+        18 | \item{distance_method}{A character string indicating which correlationcoefficient (or covariance) is to be computed. One of "pearson", "spearman" (default), or "cosine". Domain: {spearman, pearson, cosine}. Default: spearman. Format: character.}
+           |                                                                                                                                                                                   ^
+    checkRd: (-1) ti_scorpius.Rd:30: Lost braces; missing escapes or markup?
+        30 | \item{smoother}{\code{principal_curve} parameter; choice of smoother. Domain: {smooth_spline, lowess, periodic_lowess}. Default: smooth_spline. Format: character.}
+           |                                                                               ^
+    ```
+
 # stoRy
 
 <details>
@@ -532,6 +586,72 @@ ERROR: lazy loading failed for package ‘stoRy’
 
 
 ```
+# tfrmt
+
+<details>
+
+* Version: 0.1.3
+* GitHub: https://github.com/GSK-Biostatistics/tfrmt
+* Source code: https://github.com/cran/tfrmt
+* Date/Publication: 2024-10-15 21:30:02 UTC
+* Number of recursive dependencies: 93
+
+Run `revdepcheck::cloud_details(, "tfrmt")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘tfrmt-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: display_val_frmts
+    > ### Title: Display formatted values
+    > ### Aliases: display_val_frmts
+    > 
+    > ### ** Examples
+    > 
+    >  tf_spec <- tfrmt(
+    ...
+     24. ├─purrr::map_chr(., f_lhs)
+     25. │ └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
+     26. │   ├─purrr:::with_indexed_errors(...)
+     27. │   │ └─base::withCallingHandlers(...)
+     28. │   └─purrr:::call_with_cleanup(...)
+     29. └─base::.handleSimpleError(...)
+     30.   └─purrr (local) h(simpleError(msg, call))
+     31.     └─cli::cli_abort(...)
+     32.       └─rlang::abort(...)
+    Execution halted
+    ```
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(tfrmt)
+      > 
+      > test_check("tfrmt")
+      The following rows of the given dataset have no format applied to them 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
+      The following rows of the given dataset have no format applied to them 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+      [ FAIL 9 | WARN 0 | SKIP 10 | PASS 520 ]
+    ...
+       54. │   └─rlang::abort(...)
+       55. │     └─rlang:::signal_abort(cnd, .file)
+       56. │       └─base::signalCondition(cnd)
+       57. └─purrr (local) `<fn>`(`<prrr_rr_>`)
+       58.   └─cli::cli_abort(...)
+       59.     └─rlang::abort(...)
+      
+      [ FAIL 9 | WARN 0 | SKIP 10 | PASS 520 ]
+      Error: Test failures
+      Execution halted
+    ```
+
 # tidyjson
 
 <details>
@@ -611,78 +731,3 @@ ERROR: lazy loading failed for package ‘tidyjson’
 
 
 ```
-# wbids
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/teal-insights/r-wbids
-* Source code: https://github.com/cran/wbids
-* Date/Publication: 2025-02-08 22:50:02 UTC
-* Number of recursive dependencies: 70
-
-Run `revdepcheck::cloud_details(, "wbids")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘wbids-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: ids_bulk_files
-    > ### Title: Retrieve Available Bulk Download Files for International Debt
-    > ###   Statistics
-    > ### Aliases: ids_bulk_files
-    > 
-    > ### ** Examples
-    > 
-    ...
-    + ## End(Don't show)
-    + ids_bulk_files()
-    + ## Don't show: 
-    + }) # examplesIf
-    > ids_bulk_files()
-    Warning in readBin(3L, raw(0), 32768L) :
-      URL 'https://datacatalogapi.worldbank.org/ddhxext/DatasetDownload?dataset_unique_id=0038015&version_id=': Timeout of 60 seconds was reached
-    Error in readBin(3L, raw(0), 32768L) : cannot read from connection
-    Calls: <Anonymous> ... parse_and_simplify -> parseJSON -> parse_con -> readBin
-    Execution halted
-    ```
-
-## Newly fixed
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
-      > # * https://testthat.r-lib.org/articles/special-files.html
-    ...
-       1. ├─wbids:::read_bulk_info() at test-read_bulk_info.R:2:3
-       2. │ └─jsonlite::fromJSON(...)
-       3. │   └─jsonlite:::parse_and_simplify(...)
-       4. │     └─jsonlite:::parseJSON(txt, bigint_as_char)
-       5. │       └─jsonlite:::parse_con(txt, bigint_as_char)
-       6. └─base::readBin(`<url>`, `<raw>`, 32768L)
-      
-      [ FAIL 1 | WARN 1 | SKIP 7 | PASS 146 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-## In both
-
-*   checking data for non-ASCII characters ... NOTE
-    ```
-      Note: found 78 marked UTF-8 strings
-    ```
-

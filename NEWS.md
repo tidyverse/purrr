@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
+* `map_chr()` no longer coereces from logical, integer, or double to strings.
 * All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`, `cross_n()`, `reduce2_right()`, and `reduce_right()`.
 
 # purrr 1.1.0

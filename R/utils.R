@@ -13,7 +13,7 @@ where_at <- function(
   }
 
   if (is_quosures(at)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "1.0.0",
       what = I("Using `vars()` in .at"),
       user_env = user_env
