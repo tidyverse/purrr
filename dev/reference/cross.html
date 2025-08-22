@@ -14,6 +14,13 @@ data &amp;lt;- list(
 
 # With deprecated `cross()`
 data |&amp;gt; cross() |&amp;gt; map_chr(\(...) paste0(..., collapse = ""))
+#&amp;gt; Warning: `cross()` was deprecated in purrr 1.0.0.
+#&amp;gt; i Please use `tidyr::expand_grid()` instead.
+#&amp;gt; i See &amp;lt;https://github.com/tidyverse/purrr/issues/768&amp;gt;.
+#&amp;gt; i The deprecated feature was likely used in the purrr package.
+#&amp;gt;   Please report the issue at &amp;lt;https://github.com/tidyverse/purrr/issues&amp;gt;.
+#&amp;gt; This warning is displayed once every 8 hours.
+#&amp;gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 #&amp;gt; [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."
 #&amp;gt; [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."
 
@@ -36,6 +43,13 @@ data &amp;lt;- list(
 
 # With deprecated `cross()`
 data |&amp;gt; cross() |&amp;gt; map_chr(\(...) paste0(..., collapse = ""))
+#&amp;gt; Warning: `cross()` was deprecated in purrr 1.0.0.
+#&amp;gt; i Please use `tidyr::expand_grid()` instead.
+#&amp;gt; i See &amp;lt;https://github.com/tidyverse/purrr/issues/768&amp;gt;.
+#&amp;gt; i The deprecated feature was likely used in the purrr package.
+#&amp;gt;   Please report the issue at &amp;lt;https://github.com/tidyverse/purrr/issues&amp;gt;.
+#&amp;gt; This warning is displayed once every 8 hours.
+#&amp;gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 #&amp;gt; [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."
 #&amp;gt; [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."
 
@@ -106,6 +120,13 @@ instead.</p>
 <span></span>
 <span><span class="co"># With deprecated `cross()`</span></span>
 <span><span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map_chr</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">...</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `cross()` was deprecated in purrr 1.0.0.</span></span>
+<span><span class="co">#&gt; i Please use `tidyr::expand_grid()` instead.</span></span>
+<span><span class="co">#&gt; i See &lt;https://github.com/tidyverse/purrr/issues/768&gt;.</span></span>
+<span><span class="co">#&gt; i The deprecated feature was likely used in the purrr package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/tidyverse/purrr/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
 <span><span class="co">#&gt; [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."</span></span>
 <span><span class="co">#&gt; [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."</span></span>
 <span></span>
