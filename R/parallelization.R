@@ -57,11 +57,13 @@
 #' # Use :: to namespace all package functions:
 #' map(1:3, in_parallel(\(x) vctrs::vec_init(integer(), x)))
 #'
-#' fun <- function(x) { x + x %% 2 }
-#' # Operating in parallel, locally-defined objects will not be found:
+#' fun <- function(x) { x + helper_fun(x) }
+#' helper_fun <- function(x) { x %% 2 }
+#' # Operating in parallel, locally-defined objects will not be found. These
+#' # include objects required by your functions:
 #' map(1:3, in_parallel(\(x) x + fun(x)))
-#' # Use the ... argument to supply those objects:
-#' map(1:3, in_parallel(\(x) x + fun(x), fun = fun))
+#' # Use the ... argument to supply these objects:
+#' map(1:3, in_parallel(\(x) x + fun(x), fun = fun, helper_fun = helper_fun))
 #' ```
 #'
 #' @section When to use:
@@ -135,14 +137,22 @@
 #' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
 #' # Run in interactive sessions only as spawns additional processes
 #'
+#' delay <- function(secs = 0.5) {
+#'   Sys.sleep(secs)
+#' }
+#'
 #' slow_lm <- function(formula, data) {
-#'   Sys.sleep(0.5)
+#'   delay()
 #'   lm(formula, data)
 #' }
 #'
 #' # Example of a 'crate' returned by in_parallel(). The object print method
 #' # shows the size of the crate and any objects contained within:
-#' crate <- in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm)
+#' crate <- in_parallel(
+#'   \(df) slow_lm(mpg ~ disp, data = df),
+#'   slow_lm = slow_lm,
+#'   delay = delay
+#' )
 #' crate
 #'
 #' # Use mirai::mirai() to test that a crate is self-contained
@@ -171,7 +181,7 @@ parallel_pkgs_installed <- function() {
     {
       check_installed(
         c("carrier", "mirai"),
-        version = c("0.2.0", "2.4.0"),
+        version = c("0.2.0.9000", "2.4.0"),
         reason = "for parallel map."
       )
       the$parallel_pkgs_installed <- TRUE
