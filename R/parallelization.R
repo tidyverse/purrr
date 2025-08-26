@@ -36,11 +36,16 @@
 #'   within the function to attach a package to the search path, which allows
 #'   subsequent use of package functions without the explicit namespace.
 #'
-#' * They should declare any data they depend on. You can declare data by
-#'   supplying additional named arguments to `...`. When supplying an anonymous
-#'   function to a locally-defined function of the form `\(x) fun(x)`, the
-#'   function `fun` itself must be supplied to `...`. The entire call would then
-#'   be of the form: `in_parallel(\(x) fun(x), fun = fun)`.
+#' * They should declare any data they depend on. Declare data by supplying
+#'   named arguments to `...`. When `.f` is an anonymous function to a
+#'   locally-defined function of the form `\(x) fun(x)`, `fun` itself must be
+#'   supplied to `...` in the manner of: `in_parallel(\(x) fun(x), fun = fun)`.
+#'
+#' * Additional arguments that are functions (closures) must themselves be
+#'   self-contained. All objects required by them must be supplied as further
+#'   additional arguments, if not already supplied. This applies only for
+#'   functions directly supplied to `...`, and containers such as lists are not
+#'   recursively walked to find functions.
 #'
 #' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
 #' to that package for more details.

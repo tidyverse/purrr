@@ -48,11 +48,15 @@ instance \code{ggplot()} from the ggplot2 package must be called with its
 namespace prefix: \code{ggplot2::ggplot()}. An alternative is to use \code{library()}
 within the function to attach a package to the search path, which allows
 subsequent use of package functions without the explicit namespace.
-\item They should declare any data they depend on. You can declare data by
-supplying additional named arguments to \code{...}. When supplying an anonymous
-function to a locally-defined function of the form \verb{\\(x) fun(x)}, the
-function \code{fun} itself must be supplied to \code{...}. The entire call would then
-be of the form: \verb{in_parallel(\\(x) fun(x), fun = fun)}.
+\item They should declare any data they depend on. Declare data by supplying
+named arguments to \code{...}. When \code{.f} is an anonymous function to a
+locally-defined function of the form \verb{\\(x) fun(x)}, \code{fun} itself must be
+supplied to \code{...} in the manner of: \verb{in_parallel(\\(x) fun(x), fun = fun)}.
+\item Additional arguments that are functions (closures) must themselves be
+self-contained. All objects required by them must be supplied as further
+additional arguments, if not already supplied. This applies only for
+functions directly supplied to \code{...}, and containers such as lists are not
+recursively walked to find functions.
 }
 
 \code{\link[=in_parallel]{in_parallel()}} is a simple wrapper of \code{\link[carrier:crate]{carrier::crate()}} and you may refer
