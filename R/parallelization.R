@@ -36,11 +36,17 @@
 #'   within the function to attach a package to the search path, which allows
 #'   subsequent use of package functions without the explicit namespace.
 #'
-#' * They should declare any data they depend on. You can declare data by
-#'   supplying additional named arguments to `...`. When supplying an anonymous
-#'   function to a locally-defined function of the form `\(x) fun(x)`, the
-#'   function `fun` itself must be supplied to `...`. The entire call would then
-#'   be of the form: `in_parallel(\(x) fun(x), fun = fun)`.
+#' * They should declare any data they depend on. Declare data by supplying
+#'   named arguments to `...`. When `.f` is an anonymous function to a
+#'   locally-defined function of the form `\(x) fun(x)`, `fun` itself must be
+#'   supplied to `...` in the manner of: `in_parallel(\(x) fun(x), fun = fun)`.
+#'
+#' * Additional arguments that are functions (closures) must themselves be
+#'   self-contained. All objects required by them must be supplied as further
+#'   additional arguments, if not already supplied. This applies only for
+#'   functions directly supplied to `...`, and containers such as lists are not
+#'   recursively walked to find functions. This means you're at risk of unexpectedly
+#'   including large objects with your parallel function if you supply complex lists.
 #'
 #' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
 #' to that package for more details.
@@ -57,11 +63,13 @@
 #' # Use :: to namespace all package functions:
 #' map(1:3, in_parallel(\(x) vctrs::vec_init(integer(), x)))
 #'
-#' fun <- function(x) { x + x %% 2 }
-#' # Operating in parallel, locally-defined objects will not be found:
+#' fun <- function(x) { x + helper_fun(x) }
+#' helper_fun <- function(x) { x %% 2 }
+#' # Operating in parallel, locally-defined objects will not be found. These
+#' # include objects required by your functions:
 #' map(1:3, in_parallel(\(x) x + fun(x)))
-#' # Use the ... argument to supply those objects:
-#' map(1:3, in_parallel(\(x) x + fun(x), fun = fun))
+#' # Use the ... argument to supply these objects:
+#' map(1:3, in_parallel(\(x) x + fun(x), fun = fun, helper_fun = helper_fun))
 #' ```
 #'
 #' @section When to use:
@@ -135,14 +143,22 @@
 #' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
 #' # Run in interactive sessions only as spawns additional processes
 #'
+#' delay <- function(secs = 0.5) {
+#'   Sys.sleep(secs)
+#' }
+#'
 #' slow_lm <- function(formula, data) {
-#'   Sys.sleep(0.5)
+#'   delay()
 #'   lm(formula, data)
 #' }
 #'
 #' # Example of a 'crate' returned by in_parallel(). The object print method
 #' # shows the size of the crate and any objects contained within:
-#' crate <- in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm)
+#' crate <- in_parallel(
+#'   \(df) slow_lm(mpg ~ disp, data = df),
+#'   slow_lm = slow_lm,
+#'   delay = delay
+#' )
 #' crate
 #'
 #' # Use mirai::mirai() to test that a crate is self-contained
@@ -171,7 +187,7 @@ parallel_pkgs_installed <- function() {
     {
       check_installed(
         c("carrier", "mirai"),
-        version = c("0.2.0", "2.4.0"),
+        version = c("0.2.0.9000", "2.4.0"),
         reason = "for parallel map."
       )
       the$parallel_pkgs_installed <- TRUE
