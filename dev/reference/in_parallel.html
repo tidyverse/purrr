@@ -129,11 +129,15 @@ instance <code>ggplot()</code> from the ggplot2 package must be called with its
 namespace prefix: <code>ggplot2::ggplot()</code>. An alternative is to use <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>
 within the function to attach a package to the search path, which allows
 subsequent use of package functions without the explicit namespace.</p></li>
-<li><p>They should declare any data they depend on. You can declare data by
-supplying additional named arguments to <code>...</code>. When supplying an anonymous
-function to a locally-defined function of the form <code>\(x) fun(x)</code>, the
-function <code>fun</code> itself must be supplied to <code>...</code>. The entire call would then
-be of the form: <code>in_parallel(\(x) fun(x), fun = fun)</code>.</p></li>
+<li><p>They should declare any data they depend on. Declare data by supplying
+named arguments to <code>...</code>. When <code>.f</code> is an anonymous function to a
+locally-defined function of the form <code>\(x) fun(x)</code>, <code>fun</code> itself must be
+supplied to <code>...</code> in the manner of: <code>in_parallel(\(x) fun(x), fun = fun)</code>.</p></li>
+<li><p>Additional arguments that are functions (closures) must themselves be
+self-contained. All objects required by them must be supplied as further
+additional arguments, if not already supplied. This applies only for
+functions directly supplied to <code>...</code>, and containers such as lists are not
+recursively walked to find functions.</p></li>
 </ul><p><code>in_parallel()</code> is a simple wrapper of <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> and you may refer
 to that package for more details.</p>
 <p>Example usage:</p>
@@ -147,11 +151,13 @@ to that package for more details.</p>
 <span><span class="co"># Use :: to namespace all package functions:</span></span>
 <span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">vctrs</span><span class="fu">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/vec_init.html" class="external-link">vec_init</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">}</span></span>
-<span><span class="co"># Operating in parallel, locally-defined objects will not be found:</span></span>
+<span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span> <span class="op">+</span> <span class="fu">helper_fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">helper_fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">}</span></span>
+<span><span class="co"># Operating in parallel, locally-defined objects will not be found. These</span></span>
+<span><span class="co"># include objects required by your functions:</span></span>
 <span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># Use the ... argument to supply those objects:</span></span>
-<span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, fun <span class="op">=</span> <span class="va">fun</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="co"># Use the ... argument to supply these objects:</span></span>
+<span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, fun <span class="op">=</span> <span class="va">fun</span>, helper_fun <span class="op">=</span> <span class="va">helper_fun</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="when-to-use">When to use<a class="anchor" aria-label="anchor" href="#when-to-use"></a></h2>
@@ -219,14 +225,22 @@ recursively within each other.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive() &amp;&amp; rlang::is_installed("mirai") &amp;&amp; rlang::is_installed("carrier")</span></span></span>
 <span class="r-in"><span><span class="co"># Run in interactive sessions only as spawns additional processes</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">delay</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">secs</span> <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="va">secs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">slow_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">delay</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example of a 'crate' returned by in_parallel(). The object print method</span></span></span>
 <span class="r-in"><span><span class="co"># shows the size of the crate and any objects contained within:</span></span></span>
-<span class="r-in"><span><span class="va">crate</span> <span class="op">&lt;-</span> <span class="fu">in_parallel</span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">slow_lm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>, slow_lm <span class="op">=</span> <span class="va">slow_lm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">crate</span> <span class="op">&lt;-</span> <span class="fu">in_parallel</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">slow_lm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  slow_lm <span class="op">=</span> <span class="va">slow_lm</span>,</span></span>
+<span class="r-in"><span>  delay <span class="op">=</span> <span class="va">delay</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">crate</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use mirai::mirai() to test that a crate is self-contained</span></span></span>
