@@ -45,7 +45,8 @@
 #'   self-contained. All objects required by them must be supplied as further
 #'   additional arguments, if not already supplied. This applies only for
 #'   functions directly supplied to `...`, and containers such as lists are not
-#'   recursively walked to find functions.
+#'   recursively walked to find functions. This means you're at risk of unexpectedly
+#'   including large objects with your parallel function if you supply complex lists.
 #'
 #' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
 #' to that package for more details.
