@@ -47,4 +47,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Remotes:
     r-lib/carrier,
-    r-lib/mirai@purrr
+    r-lib/mirai
