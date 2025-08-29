@@ -28,7 +28,7 @@ Suggests:
     httr,
     knitr,
     lubridate,
-    mirai (>= 2.4.0),
+    mirai (>= 2.4.1.9002),
     rmarkdown,
     testthat (>= 3.0.0),
     tibble,
@@ -45,4 +45,6 @@ Config/testthat/parallel: TRUE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Remotes: r-lib/carrier
+Remotes:
+    r-lib/carrier,
+    r-lib/mirai

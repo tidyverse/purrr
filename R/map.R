@@ -229,7 +229,18 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
   m <- mirai::mirai_map(.x, .f)
 
-  options <- c(".stop", if (isTRUE(.progress)) ".progress")
+  options <- if (isFALSE(.progress)) {
+    ".stop"
+  } else if (is.logical(.progress)) {
+    c(".stop", ".progress")
+  } else if (is.character(.progress) || is.list(.progress)) {
+    list(.stop = TRUE, .progress = .progress)
+  } else {
+    cli::cli_abort(
+      "Unknown cli progress bar configuation, see manual.",
+      call = error_call
+    )
+  }
   x <- with_parallel_indexed_errors(
     mirai::collect_mirai(m, options = options),
     interrupt_expr = mirai::stop_mirai(m),
