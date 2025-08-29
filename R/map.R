@@ -229,7 +229,13 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
   m <- mirai::mirai_map(.x, .f)
 
-  options <- c(".stop", if (isTRUE(.progress)) ".progress")
+  options <- if (is.null(.progress)) {
+    ".stop"
+  } else if (isTRUE(.progress)) {
+    c(".stop", ".progress")
+  } else {
+    list(.progress)
+  }
   x <- with_parallel_indexed_errors(
     mirai::collect_mirai(m, options = options),
     interrupt_expr = mirai::stop_mirai(m),
