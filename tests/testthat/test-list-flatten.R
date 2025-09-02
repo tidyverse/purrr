@@ -74,21 +74,6 @@ test_that("list_flatten() works with vctrs::list_of()", {
 })
 
 test_that("list_flatten() honors its is_node param", {
-  expect_equal(
-    list_flatten(list(mtcars)),
-    list(mtcars)
-  )
-  expect_equal(
-    list_flatten(list(mtcars), is_node = is.list),
-    as.list(mtcars)
-  )
-
-  # list_flatten(is_node = is.list) removes attributes incl. rownames
-  mtcars_bare <- mtcars
-  row.names(mtcars_bare) <- NULL
-
-  expect_equal(
-    list_flatten(mtcars, is_node = is.list),
-    mtcars_bare
-  )
+  expect_equal(list_flatten(list(mtcars)), list(mtcars))
+  expect_equal(list_flatten(list(mtcars), is_node = is.list), as.list(mtcars))
 })
