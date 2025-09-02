@@ -69,16 +69,14 @@ x |> list_flatten(name_spec = "{inner}") |> names()
 
 # Set `is_node = is.list` to also flatten richer objects built on lists like
 # data frames and linear models
+df <- data.frame(x = 1:3, y = 4:6)
 x <- list(
   a_string = "something",
   a_list = list(1:3, "else"),
-  a_df = mtcars
+  a_df = df
 )
-
-x |> list_flatten()
 x |> list_flatten(is_node = is.list)
 
-# Note that other than nested rich objects, an "atomic" rich object retains
-# its class (but still loses attributes like rownames) when `is_node = is.list`
-list_flatten(mtcars, is_node = is.list)
+# Note that objects that are already "flat" retain their classes
+list_flatten(df, is_node = is.list)
 }
