@@ -90,7 +90,7 @@ Since a common use case for map functions is list extracting components, purrr p
 
 ### Predicates
 
-criterion, e.g. `is.character()`.
+Here `p`, a predicate, denotes a function that returns `TRUE` or `FALSE` indicating whether an object fulfills a criterion, e.g. `is.character()`.
 
 | Description                                        | base R                           | purrr                 |
 |-----------------------------|--------------------|-----------------------|
