@@ -62,7 +62,10 @@ list_flatten <- function(
   name_repair = c("minimal", "unique", "check_unique", "universal")
 ) {
   is_node <- as_is_node(is_node)
-  obj_check_node(x, is_node)
+  if (!is_node(x)) {
+    cli::cli_abort("{.arg x} must be a node.")
+  }
+
   check_dots_empty()
   check_string(name_spec)
 
@@ -84,23 +87,4 @@ list_flatten <- function(
 
   # Preserve input type
   vec_restore(out, x)
-}
-
-obj_check_node <- function(
-  x,
-  f,
-  error_call = caller_env(),
-  error_arg = caller_arg(x)
-) {
-  if (!f(x)) {
-    if (nzchar(error_arg)) {
-      error_arg <- cli::format_inline("{.arg {error_arg}}")
-    } else {
-      error_arg <- "Input"
-    }
-    cli::cli_abort(
-      "{error_arg} must be a list, not {obj_type_friendly(x)}.",
-      call = error_call
-    )
-  }
 }
