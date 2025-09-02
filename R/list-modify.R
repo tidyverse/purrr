@@ -69,8 +69,19 @@ list_merge <- function(.x, ..., .is_node = NULL) {
   list_recurse(.x, y, c, is_node = .is_node)
 }
 
-list_recurse <- function(x, y, base_f, recurse = TRUE, error_call = caller_env(), is_node = NULL) {
-  is_node <- as_is_node(is_node, error_call = error_call, error_arg = ".is_node")
+list_recurse <- function(
+  x,
+  y,
+  base_f,
+  recurse = TRUE,
+  error_call = caller_env(),
+  is_node = NULL
+) {
+  is_node <- as_is_node(
+    is_node,
+    error_call = error_call,
+    error_arg = ".is_node"
+  )
 
   if (!is_null(names(y)) && !is_named(y)) {
     cli::cli_abort(
@@ -124,7 +135,7 @@ check_list <- function(x, call = caller_env(), arg = caller_arg(x)) {
 #' @export
 #' @keywords internal
 update_list <- function(.x, ...) {
-  lifecycle::deprecate_soft("1.0.0", "update_list()")
+  lifecycle::deprecate_warn("1.0.0", "update_list()")
 
   dots <- dots_list(...)
 

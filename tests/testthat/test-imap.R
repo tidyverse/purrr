@@ -1,4 +1,4 @@
-x <- 1:3 %>% set_names()
+x <- 1:3 |> set_names()
 
 test_that("imap is special case of map2", {
   expect_identical(imap(x, paste), map2(x, names(x), paste))

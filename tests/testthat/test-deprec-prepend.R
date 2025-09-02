@@ -14,9 +14,10 @@ test_that("prepend is clearer version of merging with c()", {
   )
   expect_identical(
     x %>% prepend(4, before = 3),
-    x %>% {
-      c(.[1:2], 4, .[3])
-    }
+    x %>%
+      {
+        c(.[1:2], 4, .[3])
+      }
   )
 })
 

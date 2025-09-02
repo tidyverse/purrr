@@ -50,8 +50,9 @@ capture_error <- function(code, otherwise = NULL, quiet = TRUE) {
   tryCatch(
     list(result = code, error = NULL),
     error = function(e) {
-      if (!quiet)
+      if (!quiet) {
         message("Error: ", conditionMessage(e))
+      }
 
       list(result = otherwise, error = e)
     }

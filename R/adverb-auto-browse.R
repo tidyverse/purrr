@@ -56,13 +56,15 @@ browse_in_frame <- function(frame) {
   # In the meantime, check that ESSR is attached
   if (is_attached("ESSR")) {
     # Workaround ESS issue
-    with_env(frame, on.exit({
-      browser()
-      NULL
-    }))
+    with_env(
+      frame,
+      on.exit({
+        browser()
+        NULL
+      })
+    )
     return_from(frame)
   } else {
     eval_bare(quote(browser()), env = frame)
   }
 }
-

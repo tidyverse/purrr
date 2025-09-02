@@ -61,12 +61,14 @@ lmap_at <- function(.x, .at, .f, ...) {
   lmap_helper(.x, where, .f, ...)
 }
 
-lmap_helper <- function(.x,
-                        .ind,
-                        .f,
-                        ...,
-                        .else = NULL,
-                        .purrr_error_call = caller_env()) {
+lmap_helper <- function(
+  .x,
+  .ind,
+  .f,
+  ...,
+  .else = NULL,
+  .purrr_error_call = caller_env()
+) {
   .f <- rlang::as_function(.f, call = .purrr_error_call)
   if (!is.null(.else)) {
     .else <- rlang::as_function(.else, call = .purrr_error_call)

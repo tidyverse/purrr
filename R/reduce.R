@@ -124,13 +124,15 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(.x,
-                        .f,
-                        ...,
-                        .init,
-                        .dir,
-                        .acc = FALSE,
-                        .purrr_error_call = caller_env()) {
+reduce_impl <- function(
+  .x,
+  .f,
+  ...,
+  .init,
+  .dir,
+  .acc = FALSE,
+  .purrr_error_call = caller_env()
+) {
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
@@ -254,14 +256,16 @@ accum_index <- function(out, left) {
   }
 }
 
-reduce2_impl <- function(.x,
-                         .y,
-                         .f,
-                         ...,
-                         .init,
-                         .left = TRUE,
-                         .acc = FALSE,
-                         .purrr_error_call = caller_env()) {
+reduce2_impl <- function(
+  .x,
+  .y,
+  .f,
+  ...,
+  .init,
+  .left = TRUE,
+  .acc = FALSE,
+  .purrr_error_call = caller_env()
+) {
   out <- reduce_init(.x, .init, left = .left, error_call = .purrr_error_call)
   x_idx <- reduce_index(.x, .init, left = .left)
   y_idx <- reduce_index(.y, NULL, left = .left)
@@ -270,7 +274,8 @@ reduce2_impl <- function(.x,
     cli::cli_abort(
       "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
       arg = ".y",
-      call = .purrr_error_call)
+      call = .purrr_error_call
+    )
   }
 
   .f <- as_mapper(.f, ...)
@@ -381,13 +386,6 @@ seq_len2 <- function(start, end) {
 #'
 #' @inheritSection reduce Direction
 #'
-#' @section Life cycle:
-#'
-#' `accumulate_right()` is soft-deprecated in favour of the `.dir`
-#' argument as of rlang 0.3.0. Note that the algorithm has
-#' slightly changed: the accumulated value is passed to the right
-#' rather than the left, which is consistent with a right reduction.
-#'
 #' @seealso [reduce()] when you only need the final reduced value.
 #' @examples
 #' # With an associative operation, the final value is always the
@@ -468,7 +466,15 @@ seq_len2 <- function(start, end) {
 #'     ggtitle("Simulations of a random walk with drift")
 #' }
 #' @export
-accumulate <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .simplify = NA, .ptype = NULL) {
+accumulate <- function(
+  .x,
+  .f,
+  ...,
+  .init,
+  .dir = c("forward", "backward"),
+  .simplify = NA,
+  .ptype = NULL
+) {
   .dir <- arg_match0(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
 
@@ -499,76 +505,4 @@ accumulate_names <- function(nms, init, dir) {
   }
 
   nms
-}
-
-#' Reduce from the right (retired)
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `reduce_right()` is soft-deprecated as of purrr 0.3.0. Please use
-#' the `.dir` argument of `reduce()` instead. Note that the algorithm
-#' has changed. Whereas `reduce_right()` computed `f(f(3, 2), 1)`,
-#' `reduce(.dir = \"backward\")` computes `f(1, f(2, 3))`. This is the
-#' standard way of reducing from the right.
-#'
-#' To update your code with the same reduction as `reduce_right()`,
-#' simply reverse your vector and use a left reduction:
-#'
-#' ```R
-#' # Before:
-#' reduce_right(1:3, f)
-#'
-#' # After:
-#' reduce(rev(1:3), f)
-#' ```
-#'
-#' `reduce2_right()` is deprecated as of purrr 0.3.0 without
-#' replacement. It is not clear what algorithmic properties should a
-#' right reduction have in this case. Please reach out if you know
-#' about a use case for a right reduction with a ternary function.
-#'
-#' @inheritParams reduce
-#' @keywords internal
-#' @export
-reduce_right <- function(.x, .f, ..., .init) {
-  lifecycle::deprecate_warn(
-    when = "0.3.0",
-    what = "reduce_right()",
-    with = "reduce(.dir)",
-    always = TRUE
-  )
-
-  .x <- rev(.x) # Compatibility
-  reduce_impl(.x, .f, ..., .dir = "forward", .init = .init)
-}
-#' @rdname reduce_right
-#' @export
-reduce2_right <- function(.x, .y, .f, ..., .init) {
-  lifecycle::deprecate_warn(
-    when = "0.3.0",
-    what = "reduce2_right()",
-    with = I("reverse your vectors and use `reduce2()`"),
-    always = TRUE
-  )
-
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = FALSE)
-}
-
-#' @rdname reduce_right
-#' @export
-accumulate_right <- function(.x, .f, ..., .init) {
-  lifecycle::deprecate_warn(
-    when = "0.3.0",
-    what = "accumulate_right()",
-    with = "accumulate(.dir)",
-    always = TRUE
-  )
-
-  # Note the order of arguments is switched
-  f <- function(y, x) {
-    .f(x, y, ...)
-  }
-
-  accumulate(.x, f, .init = .init, .dir = "backward")
 }

@@ -2,23 +2,19 @@ test_that("list_c() concatenates vctrs of compatible types", {
   expect_identical(list_c(list(1L, 2:3)), c(1L, 2L, 3L))
   expect_identical(list_c(list(1, 2:3)), c(1, 2, 3))
 
-  expect_snapshot(error = TRUE,
-    list_c(list("a", 1))
-  )
+  expect_snapshot(error = TRUE, list_c(list("a", 1)))
 })
 
 test_that("list_c() can enforce ptype", {
-  expect_snapshot(error = TRUE,
-    list_c(list("a"), ptype = integer())
-  )
+  expect_snapshot(error = TRUE, list_c(list("a"), ptype = integer()))
 })
 
 test_that("list_c() strips outer names and preserves inner names (#997)", {
   expect_equal(list_c(list(x = 1:2, y = 3:4)), 1:4)
-  expect_equal(list_c(list(c(a = 1), c(b = 2))), c(a = 1, b =2))
+  expect_equal(list_c(list(c(a = 1), c(b = 2))), c(a = 1, b = 2))
 })
 
-test_that("list_cbind() column-binds compatible data frames",{
+test_that("list_cbind() column-binds compatible data frames", {
   df1 <- data.frame(x = 1:2)
   df2 <- data.frame(y = 1:2)
   df3 <- data.frame(z = 1:3)

@@ -237,7 +237,8 @@ test_that("pluck() dispatches on vector methods", {
   inner <- list(a = "foo", b = list("bar"))
   x <- list(new_test_pluck(inner))
 
-  with_bindings(.env = global_env(),
+  with_bindings(
+    .env = global_env(),
     `[[.test_pluck` = function(x, i) .subset2(x, 1)[[i]],
     names.test_pluck = function(x) names(.subset2(x, 1)),
     length.test_pluck = function(x) length(.subset2(x, 1)),
@@ -250,7 +251,8 @@ test_that("pluck() dispatches on vector methods", {
   )
 
   # With faulty length() method
-  with_bindings(.env = global_env(),
+  with_bindings(
+    .env = global_env(),
     `[[.test_pluck` = function(x, i) .subset2(x, 1)[[i]],
     length.test_pluck = function(x) NA,
     {
@@ -260,7 +262,8 @@ test_that("pluck() dispatches on vector methods", {
   )
 
   # With faulty names() method
-  with_bindings(.env = global_env(),
+  with_bindings(
+    .env = global_env(),
     `[[.test_pluck` = function(x, i) .subset2(x, 1)[[i]],
     names.test_pluck = function(x) NA,
     length.test_pluck = function(x) length(.subset2(x, 1)),

@@ -25,9 +25,12 @@ test_that("negative .at omits locations", {
 })
 
 test_that("map_if requires predicate functions", {
-  expect_snapshot(map_if(1:3, ~ NA, ~ "foo"), error = TRUE)
+  expect_snapshot(map_if(1:3, ~NA, ~"foo"), error = TRUE)
 })
 
 test_that("`.else` maps false elements", {
-  expect_identical(map_if(-1:1, ~ .x > 0, paste, .else = ~ "bar", "suffix"), list("bar", "bar", "1 suffix"))
+  expect_identical(
+    map_if(-1:1, ~ .x > 0, paste, .else = ~"bar", "suffix"),
+    list("bar", "bar", "1 suffix")
+  )
 })

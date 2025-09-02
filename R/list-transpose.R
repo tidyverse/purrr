@@ -63,12 +63,14 @@
 #'
 #' # And specify a default if you want to simplify
 #' ll |> list_transpose(template = c("x", "y", "z"), default = NA)
-list_transpose <- function(x,
-                           ...,
-                           template = NULL,
-                           simplify = NA,
-                           ptype = NULL,
-                           default = NULL) {
+list_transpose <- function(
+  x,
+  ...,
+  template = NULL,
+  simplify = NA,
+  ptype = NULL,
+  default = NULL
+) {
   obj_check_list(x)
   check_dots_empty()
 
@@ -108,7 +110,8 @@ list_transpose <- function(x,
   for (i in seq_along(template)) {
     idx <- template[[i]]
     res <- map(x, idx, .default = default[[i]])
-    res <- list_simplify_internal(res,
+    res <- list_simplify_internal(
+      res,
       simplify = simplify[[i]] %||% NA,
       ptype = ptype[[i]],
       error_arg = result_index(idx)
@@ -127,7 +130,12 @@ result_index <- function(idx) {
   }
 }
 
-match_template <- function(x, template, error_arg = caller_arg(x), error_call = caller_env()) {
+match_template <- function(
+  x,
+  template,
+  error_arg = caller_arg(x),
+  error_call = caller_env()
+) {
   if (is.character(template)) {
     if (is_bare_list(x) && is_named(x)) {
       extra_names <- setdiff(names(x), template)

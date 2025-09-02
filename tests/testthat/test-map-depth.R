@@ -91,4 +91,3 @@ test_that("modify_depth() treats NULLs correctly", {
 test_that("validates depth", {
   expect_snapshot(check_depth(mean), error = TRUE)
 })
-

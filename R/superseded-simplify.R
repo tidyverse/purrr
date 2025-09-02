@@ -52,7 +52,11 @@ as_vector_ <- function(.x, .type = NULL) {
 #' @rdname as_vector
 simplify <- function(.x, .type = NULL) {
   # 1.0.0
-  lifecycle::signal_stage("superseded", "simplify()", I("`list_simplify(strict = FALSE)`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "simplify()",
+    I("`list_simplify(strict = FALSE)`")
+  )
 
   if (can_simplify(.x, .type)) {
     unlist(.x)
@@ -65,7 +69,11 @@ simplify <- function(.x, .type = NULL) {
 #' @rdname as_vector
 simplify_all <- function(.x, .type = NULL) {
   # 1.0.0
-  lifecycle::signal_stage("superseded", "simplify_all()", I("`map(xs, \\(x) list_simplify(strict = FALSE))`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "simplify_all()",
+    I("`map(xs, \\(x) list_simplify(strict = FALSE))`")
+  )
 
   map(.x, simplify)
 }
@@ -76,11 +84,15 @@ simplify_all <- function(.x, .type = NULL) {
 # simplify_list(list(1, 2, 3))
 can_simplify <- function(x, type = NULL) {
   is_atomic <- vapply(x, is.atomic, logical(1))
-  if (!all(is_atomic)) return(FALSE)
+  if (!all(is_atomic)) {
+    return(FALSE)
+  }
 
   mode <- unique(vapply(x, typeof, character(1)))
-  if (length(mode) > 1 &&
-        !all(c("double", "integer") %in% mode)) {
+  if (
+    length(mode) > 1 &&
+      !all(c("double", "integer") %in% mode)
+  ) {
     return(FALSE)
   }
 
@@ -115,7 +127,14 @@ can_coerce <- function(x, type) {
 
 # is a mold? As opposed to a string
 is_mold <- function(type) {
-  modes <- c("numeric", "logical", "integer", "double", "complex",
-    "character", "raw")
+  modes <- c(
+    "numeric",
+    "logical",
+    "integer",
+    "double",
+    "complex",
+    "character",
+    "raw"
+  )
   length(type) > 1 || (!type %in% modes)
 }

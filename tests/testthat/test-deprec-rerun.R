@@ -3,7 +3,6 @@ test_that("is deprecated", {
     . <- rerun(5, rnorm(1))
     . <- rerun(5, rnorm(1), rnorm(2))
   })
-
 })
 
 test_that("single unnamed arg doesn't get extra list", {

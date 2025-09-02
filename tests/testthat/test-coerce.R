@@ -1,4 +1,4 @@
-test_that("can coerce to logical vectors",{
+test_that("can coerce to logical vectors", {
   expect_equal(coerce_lgl(c(TRUE, FALSE, NA)), c(TRUE, FALSE, NA))
 
   expect_equal(coerce_lgl(c(1L, 0L, NA)), c(TRUE, FALSE, NA))
@@ -31,33 +31,16 @@ test_that("can coerce to double vctrs", {
   expect_snapshot(coerce_dbl("1.5"), error = TRUE)
 })
 
-test_that("can coerce to character vectors", {
+test_that("can't coerce to character vectors", {
   expect_equal(coerce_chr(NA), NA_character_)
 
-  expect_snapshot({
+  expect_snapshot(error = TRUE, {
     expect_equal(coerce_chr(TRUE), "TRUE")
     expect_equal(coerce_chr(1L), "1")
     expect_equal(coerce_chr(1.5), "1.500000")
   })
 
   expect_equal(coerce_chr("x"), "x")
-})
-
-test_that("error captures correct env", {
-  indirect <- function() {
-    purrr::map_chr(1:4, identity)
-  }
-  environment(indirect) <- ns_env("rlang")
-
-  expect_snapshot({
-    map_chr(1:4, identity)
-    indirect()
-  })
-
-})
-
-test_that("warns once per vector", {
-  expect_warning(expect_warning(coerce_chr(1:5)), NA)
 })
 
 test_that("can't coerce to expressions", {

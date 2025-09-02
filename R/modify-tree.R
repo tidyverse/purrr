@@ -34,12 +34,14 @@
 #'    }
 #' }
 #' x |> modify_tree(post = sort_named) |> str()
-modify_tree <- function(x,
-                        ...,
-                        leaf = identity,
-                        is_node = NULL,
-                        pre = identity,
-                        post = identity) {
+modify_tree <- function(
+  x,
+  ...,
+  leaf = identity,
+  is_node = NULL,
+  pre = identity,
+  post = identity
+) {
   check_dots_empty()
   leaf <- rlang::as_function(leaf)
   is_node <- as_is_node(is_node)
@@ -60,7 +62,11 @@ modify_tree <- function(x,
   worker(x)
 }
 
-as_is_node <- function(f, error_call = caller_env(), error_arg = caller_arg(f)) {
+as_is_node <- function(
+  f,
+  error_call = caller_env(),
+  error_arg = caller_arg(f)
+) {
   if (is.null(f)) {
     obj_is_list
   } else {

@@ -171,7 +171,13 @@ imodify <- function(.x, .f, ...) {
 
 # helpers -----------------------------------------------------------------
 
-modify_where <- function(.x, .where, .f, ..., .purrr_error_call = caller_env()) {
+modify_where <- function(
+  .x,
+  .where,
+  .f,
+  ...,
+  .purrr_error_call = caller_env()
+) {
   if (obj_is_list(.x)) {
     out <- vec_proxy(.x)
     out[.where] <- no_zap(map(out[.where], .f, ...), .purrr_error_call)

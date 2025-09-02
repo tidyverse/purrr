@@ -78,7 +78,11 @@
 #' map2(arg1, arg2, ex_fun) |> list_cbind()
 map_dfr <- function(.x, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "map_dfr()", I("`map()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "map_dfr()",
+    I("`map()` + `list_rbind()`")
+  )
   check_installed("dplyr", "for `map_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -91,7 +95,11 @@ map_dfr <- function(.x, .f, ..., .id = NULL) {
 #' @export
 map_df <- function(.x, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "map_df()", I("`map()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "map_df()",
+    I("`map()` + `list_rbind()`")
+  )
   check_installed("dplyr", "for `map_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -103,7 +111,11 @@ map_df <- function(.x, .f, ..., .id = NULL) {
 #' @export
 map_dfc <- function(.x, .f, ...) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "map_dfc()", I("`map()` + `list_cbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "map_dfc()",
+    I("`map()` + `list_cbind()`")
+  )
   check_installed("dplyr", "for `map_dfc()`.")
 
   .f <- as_mapper(.f, ...)
@@ -115,7 +127,11 @@ map_dfc <- function(.x, .f, ...) {
 #' @export
 imap_dfr <- function(.x, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "imap_dfr()", I("`imap()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "imap_dfr()",
+    I("`imap()` + `list_rbind()`")
+  )
 
   .f <- as_mapper(.f, ...)
   res <- map2(.x, vec_index(.x), .f, ...)
@@ -126,7 +142,11 @@ imap_dfr <- function(.x, .f, ..., .id = NULL) {
 #' @export
 imap_dfc <- function(.x, .f, ...) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "imap_dfc()", I("`imap()` + `list_cbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "imap_dfc()",
+    I("`imap()` + `list_cbind()`")
+  )
 
   .f <- as_mapper(.f, ...)
   res <- map2(.x, vec_index(.x), .f, ...)
@@ -137,7 +157,11 @@ imap_dfc <- function(.x, .f, ...) {
 #' @export
 map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "map2_dfr()", I("`map2()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "map2_dfr()",
+    I("`map2()` + `list_rbind()`")
+  )
   check_installed("dplyr", "for `map2_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -149,7 +173,11 @@ map2_dfr <- function(.x, .y, .f, ..., .id = NULL) {
 #' @export
 map2_dfc <- function(.x, .y, .f, ...) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "map2_dfc()", I("`map2()` + `list_cbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "map2_dfc()",
+    I("`map2()` + `list_cbind()`")
+  )
   check_installed("dplyr", "for `map2_dfc()`.")
 
   .f <- as_mapper(.f, ...)
@@ -162,7 +190,11 @@ map2_dfc <- function(.x, .y, .f, ...) {
 #' @usage NULL
 map2_df <- function(.x, .y, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "map2_df()", I("`map2()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "map2_df()",
+    I("`map2()` + `list_rbind()`")
+  )
   check_installed("dplyr", "for `map2_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -174,7 +206,11 @@ map2_df <- function(.x, .y, .f, ..., .id = NULL) {
 #' @export
 pmap_dfr <- function(.l, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "pmap_dfr()", I("`pmap()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "pmap_dfr()",
+    I("`pmap()` + `list_rbind()`")
+  )
   check_installed("dplyr", "for `pmap_dfr()`.")
 
   .f <- as_mapper(.f, ...)
@@ -186,7 +222,11 @@ pmap_dfr <- function(.l, .f, ..., .id = NULL) {
 #' @export
 pmap_dfc <- function(.l, .f, ...) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "pmap_dfc()", I("`pmap()` + `list_cbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "pmap_dfc()",
+    I("`pmap()` + `list_cbind()`")
+  )
   check_installed("dplyr", "for `pmap_dfc()`.")
 
   .f <- as_mapper(.f, ...)
@@ -199,7 +239,11 @@ pmap_dfc <- function(.l, .f, ...) {
 #' @usage NULL
 pmap_df <- function(.l, .f, ..., .id = NULL) {
   # in 1.0.0
-  lifecycle::signal_stage("superseded", "pmap_df()", I("`pmap()` + `list_rbind()`"))
+  lifecycle::signal_stage(
+    "superseded",
+    "pmap_df()",
+    I("`pmap()` + `list_rbind()`")
+  )
   check_installed("dplyr", "for `pmap_dfr()`.")
 
   .f <- as_mapper(.f, ...)

@@ -10,7 +10,7 @@
 # error when named arguments have no matching conditions
 
     Code
-      1:5 %>% when(a = sum(.) < 5 ~ 3)
+      when(1:5, a = sum(.) < 5 ~ 3)
     Condition
       Error in `when()`:
       ! At least one matching condition is needed.

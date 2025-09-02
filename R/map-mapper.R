@@ -9,17 +9,8 @@
 #'
 #'   If a __function__, it is used as is.
 #'
-#'   If a __formula__, e.g. `~ .x + 2`, it is converted to a function. There
-#'   are three ways to refer to the arguments:
-#'
-#'   * For a single argument function, use `.`
-#'   * For a two argument function, use `.x` and `.y`
-#'   * For more arguments, use `..1`, `..2`, `..3` etc
-#'
-#'   This syntax allows you to create very compact anonymous
-#'   functions. Note that formula functions conceptually take dots
-#'   (that's why you can use `..1` etc). They silently ignore
-#'   additional arguments that are not used in the formula expression.
+#'   If a __formula__, e.g. `~ .x + 2`, it is converted to a function.
+#'   No longer recommended.
 #'
 #'   If __character vector__, __numeric vector__, or __list__, it is
 #'   converted to an extractor function. Character vectors index by

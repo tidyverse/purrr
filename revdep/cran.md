@@ -1,65 +1,66 @@
 ## revdepcheck results
 
-We checked 1943 reverse dependencies (1937 from CRAN + 6 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 2090 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 2 new problems
- * We failed to check 45 packages
+ * We saw 11 new problems
+ * We failed to check 16 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
 
-* meta
+* autothresholdr
+  checking re-building of vignette outputs ... ERROR
+
+* casino
+  checking re-building of vignette outputs ... ERROR
+
+* CPAT
+  checking tests ... ERROR
+
+* egor
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* immunarch
+  checking examples ... ERROR
+
+* LTFGRS
+  checking tests ... ERROR
+
+* PopED
   checking installed package size ... NOTE
 
-* waywiser
-  checking running R code from vignettes ... ERROR
+* quincunx
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* rbmi
+  checking tests ... ERROR
+
+* SCORPIUS
+  checking whether package ‘SCORPIUS’ can be installed ... WARNING
+
+* tfrmt
+  checking examples ... ERROR
+  checking tests ... ERROR
 
 ### Failed to check
 
-* AovBay           (NA)
+* apa              (NA)
 * arealDB          (NA)
-* autoReg          (NA)
-* bayesCT          (NA)
-* bspcov           (NA)
-* censored         (NA)
-* CGPfunctions     (NA)
-* CSCNet           (NA)
-* dartR.base       (NA)
-* dartR.popgen     (NA)
-* deeptrafo        (NA)
-* DR.SC            (NA)
-* epizootic        (NA)
-* GseaVis          (NA)
-* hettx            (NA)
-* immcp            (NA)
-* invivoPKfit      (NA)
-* jsmodule         (NA)
-* lnmixsurv        (NA)
-* lsirm12pl        (NA)
+* dsTidyverse      (NA)
+* kerastuneR       (NA)
 * metajam          (NA)
-* miWQS            (NA)
 * multinma         (NA)
 * nesRdata         (NA)
-* obliqueRSF       (NA)
 * ontologics       (NA)
-* OVtool           (NA)
-* pammtools        (NA)
-* pathwayTMB       (NA)
-* pencal           (NA)
-* quid             (NA)
 * rdflib           (NA)
-* robber           (NA)
-* RVA              (NA)
-* scCustomize      (NA)
-* scpi             (NA)
-* SCpubr           (NA)
-* SEERaBomb        (NA)
-* SimplyAgree      (NA)
-* ssdGSA           (NA)
-* SSHAARP          (NA)
-* stabiliser       (NA)
-* tidyseurat       (NA)
+* sprtt            (NA)
+* stoRy            (NA)
+* Surrogate        (NA)
+* tidybins         (NA)
+* tidycomm         (NA)
+* tidyjson         (NA)
 * TriDimRegression (NA)
-* WRTDStidal       (NA)

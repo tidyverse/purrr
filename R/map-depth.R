@@ -68,32 +68,64 @@
 #' # elements of the objects at the second level. paste() is effectively
 #' # mapped at level 3.
 #' l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
-map_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_node = NULL) {
+map_depth <- function(
+  .x,
+  .depth,
+  .f,
+  ...,
+  .ragged = .depth < 0,
+  .is_node = NULL
+) {
   force(.ragged)
   .depth <- check_depth(.depth, pluck_depth(.x, .is_node))
   .f <- as_mapper(.f, ...)
   .is_node <- as_is_node(.is_node)
-  map_depth_rec(map, .x, .depth, .f, ..., .ragged = .ragged, .is_node = .is_node)
+  map_depth_rec(
+    map,
+    .x,
+    .depth,
+    .f,
+    ...,
+    .ragged = .ragged,
+    .is_node = .is_node
+  )
 }
 
 #' @rdname map_depth
 #' @export
-modify_depth <- function(.x, .depth, .f, ..., .ragged = .depth < 0, .is_node = NULL) {
+modify_depth <- function(
+  .x,
+  .depth,
+  .f,
+  ...,
+  .ragged = .depth < 0,
+  .is_node = NULL
+) {
   force(.ragged)
   .depth <- check_depth(.depth, pluck_depth(.x, .is_node))
   .f <- as_mapper(.f, ...)
   .is_node <- as_is_node(.is_node)
-  map_depth_rec(modify, .x, .depth, .f, ..., .ragged = .ragged, .is_node = .is_node)
+  map_depth_rec(
+    modify,
+    .x,
+    .depth,
+    .f,
+    ...,
+    .ragged = .ragged,
+    .is_node = .is_node
+  )
 }
 
-map_depth_rec <- function(.fmap,
-                          .x,
-                          .depth,
-                          .f,
-                          ...,
-                          .ragged,
-                          .is_node,
-                          .purrr_error_call = caller_env()) {
+map_depth_rec <- function(
+  .fmap,
+  .x,
+  .depth,
+  .f,
+  ...,
+  .ragged,
+  .is_node,
+  .purrr_error_call = caller_env()
+) {
   if (.depth == 0) {
     if (identical(.fmap, map)) {
       return(.f(.x, ...))
@@ -144,4 +176,3 @@ check_depth <- function(depth, max_depth, error_call = caller_env()) {
   }
   depth
 }
-

@@ -20,9 +20,7 @@ NULL
 #' @rdname rate-helpers
 #' @param pause Delay between attempts in seconds.
 #' @export
-rate_delay <- function(pause = 1,
-                       max_times = Inf) {
-
+rate_delay <- function(pause = 1, max_times = Inf) {
   check_number_decimal(pause, allow_infinite = TRUE, min = 0)
 
   new_rate(
@@ -41,12 +39,13 @@ rate_delay <- function(pause = 1,
 #'   only necessary if you need pauses less than one second (which may
 #'   not be kind to the server, use with caution!).
 #' @export
-rate_backoff <- function(pause_base = 1,
-                         pause_cap = 60,
-                         pause_min = 1,
-                         max_times = 3,
-                         jitter = TRUE) {
-
+rate_backoff <- function(
+  pause_base = 1,
+  pause_cap = 60,
+  pause_min = 1,
+  max_times = 3,
+  jitter = TRUE
+) {
   check_number_decimal(pause_base, min = 0)
   check_number_decimal(pause_cap, allow_infinite = TRUE, min = 0)
   check_number_decimal(pause_min, allow_infinite = TRUE, min = 0)
@@ -236,4 +235,3 @@ check_rate <- function(rate, error_call = caller_env()) {
     )
   }
 }
-

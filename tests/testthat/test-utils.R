@@ -61,7 +61,7 @@ test_that("pairlists, expressions, and calls are deprecated", {
   expect_equal(x, list(1, 2))
 
   expect_snapshot(x <- vctrs_vec_compat(quote(f(a, b = 1)), globalenv()))
-  expect_equal(x, list(quote(f), quote(a),b = 1))
+  expect_equal(x, list(quote(f), quote(a), b = 1))
 })
 
 test_that("can work with S4 vector objects", {
@@ -94,7 +94,12 @@ test_that("can work with output of by", {
   x <- by(df, list(c("a", "b"), c("a", "b")), function(df) df$x)
   expect_equal(map_dbl(x, identity), c(1, NA, NA, 2))
 
-  x <- by(df, list(c("a", "b"), c("a", "b")), function(df) df$x, simplify = FALSE)
+  x <- by(
+    df,
+    list(c("a", "b"), c("a", "b")),
+    function(df) df$x,
+    simplify = FALSE
+  )
   expect_equal(map(x, identity), list(1, NULL, NULL, 2))
 })
 
@@ -102,11 +107,18 @@ test_that("can work with lubridate periods", {
   skip_if_not_installed("lubridate")
   days <- lubridate::days(1:2)
 
-  expect_equal(map(days, identity), list(lubridate::days(1), lubridate::days(2)))
+  expect_equal(
+    map(days, identity),
+    list(lubridate::days(1), lubridate::days(2))
+  )
 })
 
 test_that("can't work with regular S4 objects", {
-  foo <- methods::setClass("foo", slots = list(a = "integer"), where = global_env())
+  foo <- methods::setClass(
+    "foo",
+    slots = list(a = "integer"),
+    where = global_env()
+  )
   on.exit(methods::removeClass("foo", where = global_env()), add = TRUE)
 
   expect_snapshot(map(foo(), identity), error = TRUE)

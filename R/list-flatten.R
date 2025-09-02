@@ -41,11 +41,11 @@
 #' x |> list_flatten(name_spec = "{outer}") |> names()
 #' x |> list_flatten(name_spec = "{inner}") |> names()
 list_flatten <- function(
-    x,
-    ...,
-    name_spec = "{outer}_{inner}",
-    name_repair = c("minimal", "unique", "check_unique", "universal")
-  ) {
+  x,
+  ...,
+  name_spec = "{outer}_{inner}",
+  name_repair = c("minimal", "unique", "check_unique", "universal")
+) {
   obj_check_list(x)
   check_dots_empty()
   check_string(name_spec)

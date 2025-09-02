@@ -52,8 +52,8 @@ test_that("`.else` preserves false elements", {
 
 test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
-    lmap(list(1), ~ 1)
+    lmap(list(1), ~1)
     lmap(list(1), environment())
-    lmap(list(1), ~ 1, .else = environment())
+    lmap(list(1), ~1, .else = environment())
   })
 })

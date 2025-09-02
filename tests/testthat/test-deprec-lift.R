@@ -2,12 +2,12 @@ test_that("lift_dl and lift_ld are inverses of each other", {
   options(lifecycle_verbosity = "quiet")
 
   expect_identical(
-    sum %>%
-      lift_dl(.unnamed = TRUE) %>%
+    sum |>
+      lift_dl(.unnamed = TRUE) |>
       do.call(list(3, NA, 4, na.rm = TRUE)),
-    sum %>%
-      lift_dl() %>%
-      lift_ld() %>%
+    sum |>
+      lift_dl() |>
+      lift_ld() |>
       exec(3, NA, 4, na.rm = TRUE)
   )
 })
@@ -34,8 +34,10 @@ test_that("lift_lv is from list(...) to c(...)", {
   options(lifecycle_verbosity = "quiet")
 
   glue <- function(l) {
-    if (!is.list(l)) stop("not a list")
-    l %>% do.call(paste, .)
+    if (!is.list(l)) {
+      stop("not a list")
+    }
+    do.call(paste, l)
   }
   expect_identical(lift_lv(glue)(letters), paste(letters, collapse = " "))
 })
@@ -50,5 +52,4 @@ test_that("lift functions are deprecated", {
     . <- lift_ld(function() {})
     . <- lift_lv(function() {})
   })
-
 })

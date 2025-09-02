@@ -59,12 +59,12 @@ deprec_rerun <- function(.n, ..., .purrr_user_env) {
   n <- .n
   old <- substitute(rerun(n, ...))
   if (dots_n(...) == 1) {
-    new <- substitute(map(1:n, ~ ...))
+    new <- substitute(map(1:n, ~...))
   } else {
     new <- substitute(map(1:n, ~ list(...)))
   }
 
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     when = "1.0.0",
     what = "rerun()",
     with = "map()",
