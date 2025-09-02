@@ -46,7 +46,7 @@ pak::pak("tidyverse/purrr")
 
 The following example uses purrr to solve a fairly realistic problem: split a data frame into pieces, fit a model to each piece, compute the summary, then extract the R^2^.
 
-```{r, eval = getRversion() >= "4.1"}
+```{r}
 library(purrr)
 
 mtcars |> 

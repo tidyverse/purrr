@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 options(tibble.print_min = 6, tibble.print_max = 6)
-
-modern_r <- getRversion() >= "4.1.0"
 ```
 
 # Introduction
@@ -172,7 +170,7 @@ sds <- 1:4
 
     In R 4.1 and up, you could use the shorter anonymous function form:
 
-    ```{r, eval = modern_r}
+    ```{r}
     samples <- Map(\(...) rnorm(..., n = 5), mean = means, sd = sds)
     ```
 
@@ -269,7 +267,7 @@ means |>
 The pipe is particularly compelling when working with longer transformations.
 For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
 
-```{r, eval = modern_r}
+```{r}
 mtcars |>
   split(mtcars$cyl) |> 
   map(\(df) lm(mpg ~ wt, data = df))|> 
