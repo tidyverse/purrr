@@ -179,7 +179,7 @@ function</p>
 <td>
 <code><a href="../reference/map.html">map_lgl()</a></code> (logical), <code><a href="../reference/map.html">map_int()</a></code> (integer),
 <code><a href="../reference/map.html">map_dbl()</a></code> (double), <code><a href="../reference/map.html">map_chr()</a></code> (character),
-<code><a href="../reference/map_raw.html">map_raw()</a></code> (raw)</td>
+<code><a href="../reference/map.html">map_vec()</a></code> (other vectors)</td>
 </tr>
 <tr class="odd">
 <td>Atomic vector of desired type</td>
@@ -190,7 +190,7 @@ to check type</td>
 <td>
 <code><a href="../reference/map2.html">map2_lgl()</a></code> (logical), <code><a href="../reference/map2.html">map2_int()</a></code>
 (integer), <code><a href="../reference/map2.html">map2_dbl()</a></code> (double), <code><a href="../reference/map2.html">map2_chr()</a></code>
-(character), <code><a href="../reference/map_raw.html">map2_raw()</a></code> (raw)</td>
+(character), <code><a href="../reference/map2.html">map2_vec()</a></code> (other vectors)</td>
 </tr>
 <tr class="even">
 <td>Atomic vector of desired type</td>
@@ -201,19 +201,19 @@ to check type</td>
 <td>
 <code><a href="../reference/pmap.html">pmap_lgl()</a></code> (logical), <code><a href="../reference/pmap.html">pmap_int()</a></code>
 (integer), <code><a href="../reference/pmap.html">pmap_dbl()</a></code> (double), <code><a href="../reference/pmap.html">pmap_chr()</a></code>
-(character), <code><a href="../reference/map_raw.html">pmap_raw()</a></code> (raw)</td>
+(character), <code><a href="../reference/pmap.html">pmap_vec()</a></code> (other vectors)</td>
 </tr>
 <tr class="odd">
-<td>Side effect only</td>
-<td>1 vector</td>
-<td>loops</td>
-<td><code><a href="../reference/map.html">walk()</a></code></td>
-</tr>
-<tr class="even">
 <td>Side effect only</td>
 <td>2 vectors</td>
 <td>loops</td>
 <td><code><a href="../reference/map2.html">walk2()</a></code></td>
+</tr>
+<tr class="even">
+<td>Side effect only</td>
+<td>1 vector</td>
+<td>loops</td>
+<td><code><a href="../reference/map.html">walk()</a></code></td>
 </tr>
 <tr class="odd">
 <td>Side effect only</td>
@@ -227,7 +227,9 @@ to check type</td>
 <td>
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map_dfr()</a></code></td>
+<td>
+<code><a href="../reference/map.html">map()</a></code> then <code><a href="../reference/list_c.html">list_rbind()</a></code>
+</td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>rbind</code> outputs)</td>
@@ -236,7 +238,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map2_dfr()</a></code></td>
+<td>
+<code><a href="../reference/map2.html">map2()</a></code> then <code><a href="../reference/list_c.html">list_rbind()</a></code>
+</td>
 </tr>
 <tr class="even">
 <td>Data frame (<code>rbind</code> outputs)</td>
@@ -245,7 +249,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">pmap_dfr()</a></code></td>
+<td>
+<code><a href="../reference/pmap.html">pmap()</a></code> then <code><a href="../reference/list_c.html">list_rbind()</a></code>
+</td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -253,7 +259,9 @@ to check type</td>
 <td>
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map_dfc()</a></code></td>
+<td>
+<code><a href="../reference/map.html">map()</a></code> then <code><a href="../reference/list_c.html">list_cbind()</a></code>
+</td>
 </tr>
 <tr class="even">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -262,7 +270,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map2_dfc()</a></code></td>
+<td>
+<code><a href="../reference/map2.html">map2()</a></code> then <code><a href="../reference/list_c.html">list_cbind()</a></code>
+</td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -271,7 +281,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">pmap_dfc()</a></code></td>
+<td>
+<code><a href="../reference/pmap.html">pmap()</a></code> then <code><a href="../reference/list_c.html">list_cbind()</a></code>
+</td>
 </tr>
 <tr class="even">
 <td>Any</td>
@@ -282,7 +294,7 @@ to check type</td>
 </td>
 <td>
 <code><a href="../reference/imap.html">imap()</a></code>, <code>imap_*()</code> (<code>lgl</code>,
-<code>dbl</code>, <code>dfr</code>, and etc. just like for
+<code>dbl</code>, <code>chr</code>, and etc. just like for
 <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code>, and <code><a href="../reference/pmap.html">pmap()</a></code>)</td>
 </tr>
 <tr class="odd">
