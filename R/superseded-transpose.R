@@ -69,4 +69,3 @@ transpose <- function(.l, .names = NULL) {
   }
   .Call(transpose_impl, .l, .names)
 }
-

@@ -14,7 +14,7 @@ test_that("compose supports formulas", {
   round_mean <- compose(~ .x * 100, ~ round(.x, 2), ~ mean(.x, na.rm = TRUE))
 
   expect_s3_class(round_mean, "purrr_function_compose")
-  expect_identical(round_mean(1:100), round( mean(1:100, na.rm = TRUE), 2) * 100 )
+  expect_identical(round_mean(1:100), round(mean(1:100, na.rm = TRUE), 2) * 100)
 })
 
 test_that("compose() supports character vectors", {
@@ -93,7 +93,10 @@ test_that("compose() works with non-local exits", {
   fn <- function(x) return(x)
   expect_identical(compose(fn)("foo"), "foo")
   expect_identical(compose(fn, fn)("foo"), "foo")
-  expect_identical(compose(~ return(paste(.x, "foo")), ~ return("bar"))(), "bar foo")
+  expect_identical(
+    compose(~ return(paste(.x, "foo")), ~ return("bar"))(),
+    "bar foo"
+  )
 })
 
 test_that("compose() preserves lexical environment", {
@@ -126,7 +129,10 @@ test_that("compose() can take dots from multiple environments", {
 
   # By expression (base)
   fn <- compose(function(...) substitute(...()))
-  expect_identical(f(`_quux`), as.pairlist(exprs(`_baz`, `_bar`, `_foo`, `_quux`)))
+  expect_identical(
+    f(`_quux`),
+    as.pairlist(exprs(`_baz`, `_bar`, `_foo`, `_quux`))
+  )
 
   # By expression (rlang)
   fn <- compose(function(...) enquos(...))
@@ -136,5 +142,8 @@ test_that("compose() can take dots from multiple environments", {
   expect_true(is_reference(quo_get_env(quos[[4]]), frame))
   expect_false(is_reference(quo_get_env(quos[[3]]), frame))
 
-  expect_identical(unname(map_chr(quos, as_name)), c("_baz", "_bar", "_foo", "_quux"))
+  expect_identical(
+    unname(map_chr(quos, as_name)),
+    c("_baz", "_bar", "_foo", "_quux")
+  )
 })

@@ -1,3 +1,0 @@
-#! /usr/bin/env sh
-
-rm -f man/macros/examples.Rd

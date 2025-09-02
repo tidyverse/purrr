@@ -26,7 +26,7 @@
 #' x |> prepend(list("a", "b"), before = 3)
 #' prepend(list(), x)
 prepend <- function(x, values, before = NULL) {
-  lifecycle::deprecate_soft("1.0.0", "prepend()", I("append(after = 0)"))
+  lifecycle::deprecate_warn("1.0.0", "prepend()", I("append(after = 0)"))
 
   n <- length(x)
   stopifnot(is.null(before) || (before > 0 && before <= n))

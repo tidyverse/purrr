@@ -57,11 +57,11 @@
 #' # its class (but still loses attributes like rownames) when `is_node = is.list`
 #' list_flatten(mtcars, is_node = is.list)
 list_flatten <- function(
-    x,
-    ...,
-    is_node = NULL,
-    name_spec = "{outer}_{inner}",
-    name_repair = c("minimal", "unique", "check_unique", "universal")
+  x,
+  ...,
+  is_node = NULL,
+  name_spec = "{outer}_{inner}",
+  name_repair = c("minimal", "unique", "check_unique", "universal")
 ) {
   is_node <- as_is_node(is_node)
   obj_check_node(x, is_node)
@@ -89,19 +89,20 @@ list_flatten <- function(
 }
 
 obj_check_node <- function(
-    x,
-    f,
-    error_call = caller_env(),
-    error_arg = caller_arg(x)
+  x,
+  f,
+  error_call = caller_env(),
+  error_arg = caller_arg(x)
 ) {
   if (!f(x)) {
     if (nzchar(error_arg)) {
       error_arg <- cli::format_inline("{.arg {error_arg}}")
-    }
-    else {
+    } else {
       error_arg <- "Input"
     }
-    cli::cli_abort("{error_arg} must be a list, not {obj_type_friendly(x)}.",
-                   call = error_call)
+    cli::cli_abort(
+      "{error_arg} must be a list, not {obj_type_friendly(x)}.",
+      call = error_call
+    )
   }
 }

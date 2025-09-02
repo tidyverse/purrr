@@ -62,10 +62,13 @@ test_that("can override default names", {
   )
   tx <- transpose(x, c("x", "y"))
 
-  expect_equal(tx, list(
-    x = list(1, 1),
-    y = list(NULL, 2)
-  ))
+  expect_equal(
+    tx,
+    list(
+      x = list(1, 1),
+      y = list(NULL, 2)
+    )
+  )
 })
 
 test_that("if present, names are used", {
@@ -107,4 +110,3 @@ test_that("warning if too long", {
   expect_warning(tx <- transpose(x), "must be length 1, not 2")
   expect_equal(tx, list(list(1, 1)))
 })
-

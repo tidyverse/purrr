@@ -23,12 +23,11 @@ possibly <- function(.f, otherwise = NULL, quiet = TRUE) {
   check_bool(quiet)
 
   function(...) {
-    tryCatch(.f(...),
-      error = function(e) {
-        if (!quiet)
-          message("Error: ", conditionMessage(e))
-        otherwise
+    tryCatch(.f(...), error = function(e) {
+      if (!quiet) {
+        message("Error: ", conditionMessage(e))
       }
-    )
+      otherwise
+    })
   }
 }

@@ -20,8 +20,13 @@
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
 #'     `function(x, y, z) x + y / z`
-#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. This syntax is not recommended as
-#'     you can only refer to arguments by position.
+#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. No longer recommended.
+#'
+#'   `r lifecycle::badge("experimental")`
+#'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
 #' @inheritParams map
 #' @returns
 #' The output length is determined by the maximum length of all elements of `.l`.
@@ -92,44 +97,50 @@
 #' pmin(df$x, df$y)
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
-pmap <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("list", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("list", .l, .f, ..., .progress = .progress)
 }
 
 #' @export
 #' @rdname pmap
-pmap_lgl <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("logical", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("logical", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_int <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("integer", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_int <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("integer", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_dbl <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("double", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("double", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
-pmap_chr <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap_("character", .l, .f, ..., .parallel = .parallel, .progress = .progress)
+pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
+  pmap_("character", .l, .f, ..., .progress = .progress)
 }
 
-pmap_ <- function(.type,
-                  .l,
-                  .f,
-                  ...,
-                  .parallel = FALSE,
-                  .progress = FALSE,
-                  .purrr_user_env = caller_env(2),
-                  .purrr_error_call = caller_env()) {
+pmap_ <- function(
+  .type,
+  .l,
+  .f,
+  ...,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
   .l <- vctrs_list_compat(.l, error_call = .purrr_error_call)
   .l <- map(.l, vctrs_vec_compat)
 
   n <- vec_size_common(!!!.l, .arg = ".l", .call = .purrr_error_call)
-  .l <- vec_recycle_common(!!!.l, .size = n, .arg = ".l", .call = .purrr_error_call)
+  .l <- vec_recycle_common(
+    !!!.l,
+    .size = n,
+    .arg = ".l",
+    .call = .purrr_error_call
+  )
 
   if (length(.l) > 0L) {
     names <- vec_names(.l[[1L]])
@@ -139,7 +150,7 @@ pmap_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (isTRUE(.parallel)) {
+  if (running_in_parallel(.f)) {
     attributes(.l) <- list(
       names = names(.l),
       class = "data.frame",
@@ -156,23 +167,33 @@ pmap_ <- function(.type,
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n)
+    call_with_cleanup(
+      pmap_impl,
+      environment(),
+      .type,
+      .progress,
+      n,
+      names,
+      i,
+      call_names,
+      call_n
+    )
   )
 }
 
 
 #' @export
 #' @rdname pmap
-pmap_vec <- function(.l, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE) {
+pmap_vec <- function(.l, .f, ..., .ptype = NULL, .progress = FALSE) {
   .f <- as_mapper(.f, ...)
 
-  out <- pmap(.l, .f, ..., .parallel = .parallel, .progress = .progress)
+  out <- pmap(.l, .f, ..., .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
 
 #' @export
 #' @rdname pmap
-pwalk <- function(.l, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  pmap(.l, .f, ..., .parallel = .parallel, .progress = .progress)
+pwalk <- function(.l, .f, ..., .progress = FALSE) {
+  pmap(.l, .f, ..., .progress = .progress)
   invisible(.l)
 }

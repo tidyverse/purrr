@@ -7,7 +7,7 @@
 \usage{
 map_if(.x, .p, .f, ..., .else = NULL)
 
-map_at(.x, .at, .f, ..., .parallel = FALSE, .progress = FALSE)
+map_at(.x, .at, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -24,13 +24,18 @@ inner lists. Only those elements where \code{.p} evaluates to
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
 \item A formula, e.g. \code{~ .x + 1}. You must use \code{.x} to refer to the first
-argument. Only recommended if you require backward compatibility with
-older versions of R.
+argument. No longer recommended.
 \item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
 set a default value if the indexed element is \code{NULL} or does not exist.
-}}
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to the mapped function.
 
@@ -56,20 +61,6 @@ and returns a logical, integer, or character vector of elements to select.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
 installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
-
-\item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
-parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package.
-\itemize{
-\item Set up parallelization in your session beforehand using
-\code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Non-package functions are auto-crated for sharing with parallel
-processes. You may \code{\link[carrier:crate]{carrier::crate()}} your function explicitly if you need
-to supply additional objects along with your function.
-\item Use of \code{...} is not permitted in this context, \code{\link[carrier:crate]{carrier::crate()}} an
-anonymous function instead.
-}
-
-See \link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

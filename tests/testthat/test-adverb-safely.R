@@ -6,7 +6,8 @@ test_that("safely has NULL error when successful", {
 test_that("safely has NULL result on failure", {
   out <- safely(log10)("a")
   expect_equal(out$result, NULL)
-  expect_equal(out$error$message,
-    "non-numeric argument to mathematical function")
+  expect_equal(
+    out$error$message,
+    "non-numeric argument to mathematical function"
+  )
 })
-

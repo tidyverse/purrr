@@ -11,9 +11,14 @@
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
 #'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the current
-#'     element of `x` and `.y` to refer to the current element of `y`. Only
-#'     recommended if you require backward compatibility with older versions
-#'     of R.
+#'     element of `x` and `.y` to refer to the current element of `y`.
+#'     No longer recommended.
+#'
+#'   `r lifecycle::badge("experimental")`
+#'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
 #' @inheritParams map
 #' @inherit map return
 #' @family map variants
@@ -30,44 +35,50 @@
 #' by_cyl <- mtcars |> split(mtcars$cyl)
 #' mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 #' map2(mods, by_cyl, predict)
-map2 <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map2_("list", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2_("list", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_lgl <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map2_("logical", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2_("logical", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_int <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map2_("integer", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2_("integer", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_dbl <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map2_("double", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2_("double", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
-map2_chr <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map2_("character", .x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2_("character", .x, .y, .f, ..., .progress = .progress)
 }
 
-map2_ <- function(.type,
-                  .x,
-                  .y,
-                  .f,
-                  ...,
-                  .parallel = FALSE,
-                  .progress = FALSE,
-                  .purrr_user_env = caller_env(2),
-                  .purrr_error_call = caller_env()) {
+map2_ <- function(
+  .type,
+  .x,
+  .y,
+  .f,
+  ...,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
   n <- vec_size_common(.x = .x, .y = .y, .call = .purrr_error_call)
-  args <- vec_recycle_common(.x = .x, .y = .y, .size = n, .call = .purrr_error_call)
+  args <- vec_recycle_common(
+    .x = .x,
+    .y = .y,
+    .size = n,
+    .call = .purrr_error_call
+  )
   .x <- args$.x
   .y <- args$.y
 
@@ -75,7 +86,7 @@ map2_ <- function(.type,
 
   .f <- as_mapper(.f, ...)
 
-  if (isTRUE(.parallel)) {
+  if (running_in_parallel(.f)) {
     attributes(args) <- list(
       class = "data.frame",
       row.names = if (is.null(names)) .set_row_names(n) else names
@@ -94,14 +105,14 @@ map2_ <- function(.type,
 
 #' @rdname map2
 #' @export
-map2_vec <- function(.x, .y, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE) {
-  out <- map2(.x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+map2_vec <- function(.x, .y, .f, ..., .ptype = NULL, .progress = FALSE) {
+  out <- map2(.x, .y, .f, ..., .progress = .progress)
   simplify_impl(out, ptype = .ptype)
 }
 
 #' @export
 #' @rdname map2
-walk2 <- function(.x, .y, .f, ..., .parallel = FALSE, .progress = FALSE) {
-  map2(.x, .y, .f, ..., .parallel = .parallel, .progress = .progress)
+walk2 <- function(.x, .y, .f, ..., .progress = FALSE) {
+  map2(.x, .y, .f, ..., .progress = .progress)
   invisible(.x)
 }

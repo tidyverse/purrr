@@ -112,7 +112,7 @@
 #' list(x = x, y = x) |>
 #'   cross(.filter = `==`)
 cross <- function(.l, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross()",
     "tidyr::expand_grid()",
@@ -167,7 +167,7 @@ cross <- function(.l, .filter = NULL) {
 #' @export
 #' @rdname cross
 cross2 <- function(.x, .y, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross2()",
     "tidyr::expand_grid()",
@@ -179,7 +179,7 @@ cross2 <- function(.x, .y, .filter = NULL) {
 #' @export
 #' @rdname cross
 cross3 <- function(.x, .y, .z, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross3()",
     "tidyr::expand_grid()",
@@ -191,31 +191,15 @@ cross3 <- function(.x, .y, .z, .filter = NULL) {
 #' @rdname cross
 #' @export
 cross_df <- function(.l, .filter = NULL) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     "1.0.0",
     "purrr::cross_df()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
   check_installed("tibble")
-  cross(.l, .filter = .filter) %>%
-    transpose() %>%
-    simplify_all() %>%
+  cross(.l, .filter = .filter) |>
+    transpose() |>
+    simplify_all() |>
     tibble::as_tibble()
-}
-
-#' @export
-#' @usage NULL
-#' @rdname cross
-cross_n <- function(...) {
-  lifecycle::deprecate_stop("0.2.3", "purrr::cross_n()")
-  cross(...)
-}
-
-#' @export
-#' @usage NULL
-#' @rdname cross
-cross_d <- function(...) {
-  lifecycle::deprecate_stop("0.2.3", "purrr::cross_d()")
-  cross_df(...)
 }

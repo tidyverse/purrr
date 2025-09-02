@@ -10,19 +10,19 @@
 \alias{pwalk}
 \title{Map over multiple input simultaneously (in "parallel")}
 \usage{
-pmap(.l, .f, ..., .parallel = FALSE, .progress = FALSE)
+pmap(.l, .f, ..., .progress = FALSE)
 
-pmap_lgl(.l, .f, ..., .parallel = FALSE, .progress = FALSE)
+pmap_lgl(.l, .f, ..., .progress = FALSE)
 
-pmap_int(.l, .f, ..., .parallel = FALSE, .progress = FALSE)
+pmap_int(.l, .f, ..., .progress = FALSE)
 
-pmap_dbl(.l, .f, ..., .parallel = FALSE, .progress = FALSE)
+pmap_dbl(.l, .f, ..., .progress = FALSE)
 
-pmap_chr(.l, .f, ..., .parallel = FALSE, .progress = FALSE)
+pmap_chr(.l, .f, ..., .progress = FALSE)
 
-pmap_vec(.l, .f, ..., .ptype = NULL, .parallel = FALSE, .progress = FALSE)
+pmap_vec(.l, .f, ..., .ptype = NULL, .progress = FALSE)
 
-pwalk(.l, .f, ..., .parallel = FALSE, .progress = FALSE)
+pwalk(.l, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.l}{A list of vectors. The length of \code{.l} determines the number of
@@ -40,9 +40,14 @@ to be called once for each row.}
 \item A named function.
 \item An anonymous function, e.g. \verb{\\(x, y, z) x + y / z} or
 \code{function(x, y, z) x + y / z}
-\item A formula, e.g. \code{~ ..1 + ..2 / ..3}. This syntax is not recommended as
-you can only refer to arguments by position.
-}}
+\item A formula, e.g. \code{~ ..1 + ..2 / ..3}. No longer recommended.
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to the mapped function.
 
@@ -57,20 +62,6 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
-
-\item{.parallel}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Whether to map in
-parallel. Use \code{TRUE} to parallelize using the \CRANpkg{mirai} package.
-\itemize{
-\item Set up parallelization in your session beforehand using
-\code{\link[mirai:daemons]{mirai::daemons()}}.
-\item Non-package functions are auto-crated for sharing with parallel
-processes. You may \code{\link[carrier:crate]{carrier::crate()}} your function explicitly if you need
-to supply additional objects along with your function.
-\item Use of \code{...} is not permitted in this context, \code{\link[carrier:crate]{carrier::crate()}} an
-anonymous function instead.
-}
-
-See \link{parallelization} for more details.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see

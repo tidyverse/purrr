@@ -1,20 +1,24 @@
 # purrr (development version)
 
-## New features
+* `list_flatten()` gains an `is_node` parameter taking a predicate function that determines whether an input element is a node or a leaf (@salim-b, #1179).
 
-* purrr gains the capacity for parallel and distributed map, powered by the
-  mirai package. The argument `.parallel` has been added to `map()`, `map2()`,
-  `pmap()` and variants to enable this. See `?parallelization` for more details
-  (@shikokuchuo, #1163).
+* `in_parallel()` now accepts objects, including helper functions, supplied to `...` for all locally-defined functions (#1208).
 
-* `list_flatten()` gains an `is_node` parameter taking a predicate function
-  that determines whether an input element is a node (by returning `TRUE`) or a
-  leaf (by returning `FALSE`). The default value, `NULL`, treats simple lists
-  as nodes and everything else (including richer objects like data frames and
-  linear models) as leaves, using
-  [`vctrs::obj_is_list()`](https://vctrs.r-lib.org/reference/obj_is_list.html).
-  To recurse into all objects built on lists and flatten them, use
-  `list_flatten(x, is_node = is.list)`. (@salim-b, #1179)
+* `in_parallel()` now works in conjunction with string and list values supplied to the `.progress` argument of map functions (#1203).
+
+* All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
+
+* `map_chr()` no longer coereces from logical, integer, or double to strings.
+
+* All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`, `cross_n()`, `reduce2_right()`, and `reduce_right()`.
+
+# purrr 1.1.0
+
+* purrr now requires R >= 4.1, so we can rely on the base pipe and lambda
+  syntax (#1177).
+
+* purrr gains `in_parallel()` to support parallel and distributed maps, powered 
+  by {mirai}. See `?in_parallel` for more details (@shikokuchuo, #1163, #1185).
 
 # purrr 1.0.4
 
