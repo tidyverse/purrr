@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `list_flatten()` gains an `is_node` parameter taking a predicate function that determines whether an input element is a node or a leaf (@salim-b, #1179).
+
 * `in_parallel()` now accepts objects, including helper functions, supplied to `...` for all locally-defined functions (#1208).
 
 * `in_parallel()` now works in conjunction with string and list values supplied to the `.progress` argument of map functions (#1203).

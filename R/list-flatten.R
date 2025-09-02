@@ -11,6 +11,7 @@
 #'   `"check_unique"`. See [vctrs::vec_as_names()] for the meaning of these
 #'   options.
 #' @inheritParams rlang::args_dots_empty
+#' @inheritParams modify_tree
 #' @return A list of the same type as `x`. The list might be shorter
 #'   if `x` contains empty lists, the same length if it contains lists
 #'   of length 1 or no sub-lists, or longer if it contains lists of
@@ -40,13 +41,31 @@
 #' x |> list_flatten() |> names()
 #' x |> list_flatten(name_spec = "{outer}") |> names()
 #' x |> list_flatten(name_spec = "{inner}") |> names()
+#'
+#' # Set `is_node = is.list` to also flatten richer objects built on lists like
+#' # data frames and linear models
+#' df <- data.frame(x = 1:3, y = 4:6)
+#' x <- list(
+#'   a_string = "something",
+#'   a_list = list(1:3, "else"),
+#'   a_df = df
+#' )
+#' x |> list_flatten(is_node = is.list)
+#'
+#' # Note that objects that are already "flat" retain their classes
+#' list_flatten(df, is_node = is.list)
 list_flatten <- function(
   x,
   ...,
+  is_node = NULL,
   name_spec = "{outer}_{inner}",
   name_repair = c("minimal", "unique", "check_unique", "universal")
 ) {
-  obj_check_list(x)
+  is_node <- as_is_node(is_node)
+  if (!is_node(x)) {
+    cli::cli_abort("{.arg x} must be a node.")
+  }
+
   check_dots_empty()
   check_string(name_spec)
 
@@ -55,7 +74,7 @@ list_flatten <- function(
 
   # Unclass S3 lists to avoid their coercion methods. Wrap atoms in a
   # list of size 1 so the elements can be concatenated in a single list.
-  proxy <- map_if(proxy, obj_is_list, unclass, .else = list)
+  proxy <- map_if(proxy, is_node, unclass, .else = list)
 
   out <- list_unchop(
     proxy,

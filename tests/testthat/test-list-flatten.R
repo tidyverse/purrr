@@ -72,3 +72,8 @@ test_that("list_flatten() works with vctrs::list_of()", {
     list_of(1, 2, 3)
   )
 })
+
+test_that("list_flatten() honors its is_node param", {
+  expect_equal(list_flatten(list(mtcars)), list(mtcars))
+  expect_equal(list_flatten(list(mtcars), is_node = is.list), as.list(mtcars))
+})
