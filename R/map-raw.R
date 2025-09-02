@@ -4,7 +4,7 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' These functions were deprecated in purrr 1.0.0 because they are of limited
-#' use and you can now use `map_vec()` instead. They are variants of [map()],
+#' use and you can now use [map_vec()] instead. They are variants of [map()],
 #' [map2()], [imap()], [pmap()], and [flatten()] that return raw vectors.
 #'
 #' @keywords internal
