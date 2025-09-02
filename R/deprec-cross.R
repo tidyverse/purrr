@@ -11,7 +11,7 @@
 #' Here is an example of equivalent usages for `cross()` and
 #' `expand_grid()`:
 #'
-#' ```{r}
+#' ```R
 #' data <- list(
 #'   id = c("John", "Jane"),
 #'   sep = c("! ", "... "),
