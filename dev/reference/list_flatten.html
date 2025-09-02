@@ -58,6 +58,7 @@ i.e. it inlines elements that are lists leaving non-lists alone.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_flatten</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  is_node <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name_spec <span class="op">=</span> <span class="st">"{outer}_{inner}"</span>,</span>
 <span>  name_repair <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"minimal"</span>, <span class="st">"unique"</span>, <span class="st">"check_unique"</span>, <span class="st">"universal"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -73,6 +74,15 @@ i.e. it inlines elements that are lists leaving non-lists alone.</p>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>These dots are for future extensions and must be empty.</p></dd>
+
+
+<dt id="arg-is-node">is_node<a class="anchor" aria-label="anchor" href="#arg-is-node"></a></dt>
+<dd><p>A predicate function that determines whether an element is
+a node (by returning <code>TRUE</code>) or a leaf (by returning <code>FALSE</code>). The
+default value, <code>NULL</code>, treats simple lists as nodes and everything else
+(including richer objects like data frames and linear models) as leaves,
+using <code><a href="https://vctrs.r-lib.org/reference/obj_is_list.html" class="external-link">vctrs::obj_is_list()</a></code>. To recurse into all objects built on lists
+use <code><a href="https://rdrr.io/r/base/list.html" class="external-link">is.list()</a></code>.</p></dd>
 
 
 <dt id="arg-name-spec">name_spec<a class="anchor" aria-label="anchor" href="#arg-name-spec"></a></dt>
@@ -148,6 +158,38 @@ length &gt; 1.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "x" "x" "y" "y"</span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">list_flatten</span><span class="op">(</span>name_spec <span class="op">=</span> <span class="st">"{inner}"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a" "b" "c" "d"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Set `is_node = is.list` to also flatten richer objects built on lists like</span></span></span>
+<span class="r-in"><span><span class="co"># data frames and linear models</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  a_string <span class="op">=</span> <span class="st">"something"</span>,</span></span>
+<span class="r-in"><span>  a_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="st">"else"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  a_df <span class="op">=</span> <span class="va">df</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">list_flatten</span><span class="op">(</span>is_node <span class="op">=</span> <span class="va">is.list</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $a_string</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "something"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $a_list_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $a_list_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "else"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $a_df_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $a_df_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4 5 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that objects that are already "flat" retain their classes</span></span></span>
+<span class="r-in"><span><span class="fu">list_flatten</span><span class="op">(</span><span class="va">df</span>, is_node <span class="op">=</span> <span class="va">is.list</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3 6</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
