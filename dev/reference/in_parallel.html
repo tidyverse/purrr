@@ -137,7 +137,8 @@ supplied to <code>...</code> in the manner of: <code>in_parallel(\(x) fun(x), fu
 self-contained. All objects required by them must be supplied as further
 additional arguments, if not already supplied. This applies only for
 functions directly supplied to <code>...</code>, and containers such as lists are not
-recursively walked to find functions.</p></li>
+recursively walked to find functions. This means you're at risk of unexpectedly
+including large objects with your parallel function if you supply complex lists.</p></li>
 </ul><p><code>in_parallel()</code> is a simple wrapper of <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> and you may refer
 to that package for more details.</p>
 <p>Example usage:</p>
