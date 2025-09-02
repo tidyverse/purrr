@@ -56,7 +56,8 @@ supplied to \code{...} in the manner of: \verb{in_parallel(\\(x) fun(x), fun = f
 self-contained. All objects required by them must be supplied as further
 additional arguments, if not already supplied. This applies only for
 functions directly supplied to \code{...}, and containers such as lists are not
-recursively walked to find functions.
+recursively walked to find functions. This means you're at risk of unexpectedly
+including large objects with your parallel function if you supply complex lists.
 }
 
 \code{\link[=in_parallel]{in_parallel()}} is a simple wrapper of \code{\link[carrier:crate]{carrier::crate()}} and you may refer
@@ -148,7 +149,7 @@ recursively within each other.
 }
 
 \examples{
-\dontshow{if (interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Run in interactive sessions only as spawns additional processes
 
 delay <- function(secs = 0.5) {

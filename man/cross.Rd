@@ -43,7 +43,7 @@ instead.
 Here is an example of equivalent usages for \code{cross()} and
 \code{expand_grid()}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- list(
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{data <- list(
   id = c("John", "Jane"),
   sep = c("! ", "... "),
   greeting = c("Hello.", "Bonjour.")
@@ -51,20 +51,9 @@ Here is an example of equivalent usages for \code{cross()} and
 
 # With deprecated `cross()`
 data |> cross() |> map_chr(\\(...) paste0(..., collapse = ""))
-#> Warning: `cross()` was deprecated in purrr 1.0.0.
-#> i Please use `tidyr::expand_grid()` instead.
-#> i See <https://github.com/tidyverse/purrr/issues/768>.
-#> i The deprecated feature was likely used in the purrr package.
-#>   Please report the issue at <https://github.com/tidyverse/purrr/issues>.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
-#> [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."  
-#> [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."
 
 # With `expand_grid()`
 tidyr::expand_grid(!!!data) |> pmap_chr(paste)
-#> [1] "John! Hello."     "John! Bonjour."   "John... Hello."   "John... Bonjour."
-#> [5] "Jane! Hello."     "Jane! Bonjour."   "Jane... Hello."   "Jane... Bonjour."
 }\if{html}{\out{</div>}}
 }
 \details{
