@@ -187,7 +187,7 @@ parallel_pkgs_installed <- function() {
     {
       check_installed(
         c("carrier", "mirai"),
-        version = c("0.2.0.9000", "2.5.0"),
+        version = c("0.3.0", "2.5.0"),
         reason = "for parallel map."
       )
       the$parallel_pkgs_installed <- TRUE

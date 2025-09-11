@@ -22,7 +22,7 @@ Imports:
     rlang (>= 1.1.1),
     vctrs (>= 0.6.3)
 Suggests: 
-    carrier (>= 0.2.0.9000),
+    carrier (>= 0.3.0),
     covr,
     dplyr (>= 0.7.8),
     httr,
@@ -45,5 +45,3 @@ Config/testthat/parallel: TRUE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Remotes:
-    r-lib/carrier
