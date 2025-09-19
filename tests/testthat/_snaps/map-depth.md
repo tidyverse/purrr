@@ -4,11 +4,11 @@
       map_depth(x1, 6, length)
     Condition
       Error in `.fmap()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `.fmap()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `.fmap()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `map_depth()`:
       ! List not deep enough
 
@@ -26,7 +26,7 @@
       map_depth(x, 2, class)
     Condition
       Error in `.fmap()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `map_depth()`:
       ! List not deep enough
 
@@ -36,11 +36,11 @@
       modify_depth(x1, 5, length)
     Condition
       Error in `map()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `map()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `map()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `modify_depth()`:
       ! List not deep enough
 
@@ -58,11 +58,11 @@
       modify_depth(x, 5, `+`, 10L)
     Condition
       Error in `map()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `map()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `map()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error in `modify_depth()`:
       ! List not deep enough
 

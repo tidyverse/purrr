@@ -20,21 +20,21 @@
       map_int(1:3, ~ fail_at_3(.x, 2:1))
     Condition
       Error in `map_int()`:
-      i In .x[[3]]
+      i In index: 3.
       Caused by error:
       ! Result must be length 1, not 2.
     Code
       map_int(1:3, ~ fail_at_3(.x, "x"))
     Condition
       Error in `map_int()`:
-      i In .x[[3]]
+      i In index: 3.
       Caused by error:
       ! Can't coerce from a string to an integer.
     Code
       map(1:3, ~ fail_at_3(.x, stop("Doesn't work")))
     Condition
       Error in `map()`:
-      i In .x[[3]]
+      i In index: 3.
       Caused by error in `fail_at_3()`:
       ! Doesn't work
 
@@ -44,14 +44,15 @@
       map_int(c(a = 1, b = 2, c = 3), ~ fail_at_3(.x, stop("Error")))
     Condition
       Error in `map_int()`:
-      ! In .x[[3]] / .x$c
+      i In index: 3.
+      i With name: c.
       Caused by error in `fail_at_3()`:
       ! Error
     Code
       map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")))
     Condition
       Error in `map_int()`:
-      i In .x[[3]]
+      i In index: 3.
       Caused by error in `fail_at_3()`:
       ! Error
 

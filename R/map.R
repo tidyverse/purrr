@@ -281,10 +281,10 @@ with_indexed_errors <- function(
       if (i == 0L) {
         # Error happened before or after loop
       } else {
-        message <- c(i = "In .x[[{i}]]")
+        message <- c(i = "In index: {i}.")
         if (!is.null(names) && !is.na(names[[i]]) && names[[i]] != "") {
           name <- names[[i]]
-          message <- paste(message, "/ .x${name}", sep = " ")
+          message <- c(message, i = "With name: {name}.")
         } else {
           name <- NULL
         }

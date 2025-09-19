@@ -86,7 +86,7 @@
       modify_if(list(1, 2), ~NA, ~"foo")
     Condition
       Error in `modify_if()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error:
       ! `.p()` must return a single `TRUE` or `FALSE`, not `NA`.
 

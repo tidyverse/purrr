@@ -4,14 +4,14 @@
       map2_int(1, 1, ~"x")
     Condition
       Error in `map2_int()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error:
       ! Can't coerce from a string to an integer.
     Code
       map2_int(1, 1, ~ 1:2)
     Condition
       Error in `map2_int()`:
-      i In .x[[1]]
+      i In index: 1.
       Caused by error:
       ! Result must be length 1, not 2.
     Code
