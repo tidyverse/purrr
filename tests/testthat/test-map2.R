@@ -73,4 +73,3 @@ test_that("don't evaluate symbolic objects (#428)", {
   map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
   walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
 })
-
