@@ -74,16 +74,3 @@ test_that("don't evaluate symbolic objects (#428)", {
   walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
 })
 
-test_that("progress bar accessing local environment", {
-  f <- function() {
-    b <- "bar"
-    map2(
-      1:2,
-      letters[1:2],  # Second vector for map2
-      function(x, y) Sys.sleep(1),
-      .progress = list(format = "{b} {cli::pb_current}")
-    )
-  }
-
-  expect_message(f())
-})

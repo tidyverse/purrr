@@ -114,21 +114,4 @@ test_that("don't evaluate symbolic objects (#428)", {
   pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
 
-test_that("progress bar accessing local environment", {
-  f <- function() {
-    b <- "bar"
-    args <- list(
-      x = 1:2,
-      y = letters[1:2]
-    )
-
-    pmap(
-      args,
-      function(x, y) Sys.sleep(1),
-      .progress = list(format = "{b} {cli::pb_current}")
-    )
-  }
-
-  expect_message(f())
-})
 

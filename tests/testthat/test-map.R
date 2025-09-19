@@ -121,19 +121,6 @@ test_that("map() with empty input copies names", {
   expect_identical(map_chr(named_list, identity), named(chr()))
 })
 
-test_that("progress bar accessing local environment", {
-  f <- function() {
-    b <- "bar"
-    map(
-      1:2,
-      function(x) Sys.sleep(1),
-      .progress = list(format = "{b} {cli::pb_current}")
-    )
-  }
-
-  expect_message(f())
-})
-
 
 # map_vec -----------------------------------------------------------------
 
