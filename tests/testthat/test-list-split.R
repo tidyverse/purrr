@@ -66,12 +66,13 @@ test_that("chunk size accepts numeric that converts to integer", {
   expect_equal(list_split(1:4, n = 2.0), list_split(1:4, n = 2L))
 })
 
-test_that("data frames split by rows", {
+test_that("data frames require is_node = is.list", {
   df <- data.frame(x = 1:2, y = 3:4)
-  result <- list_split(df, n = 1)
-  expect_length(result, 2) # Each row becomes a chunk
-  expect_equal(nrow(result[[1]]), 1)
-  expect_equal(nrow(result[[2]]), 1)
-  expect_equal(result[[1]]$x, 1)
-  expect_equal(result[[2]]$x, 2)
+  expect_error(list_split(df, n = 1), "must be a list, vector")
+
+  # with is_node = is.list, data frames split by rows
+  result <- list_split(df, n = 1, is_node = is.list)
+  expect_length(result, 2) # 2 rows = 2 chunks
+  expect_equal(result[[1]], data.frame(x = 1L, y = 3L))
+  expect_equal(result[[2]], data.frame(x = 2L, y = 4L))
 })

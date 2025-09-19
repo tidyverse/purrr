@@ -4,14 +4,15 @@
 #' a conceptual inverse to [list_flatten()]. You can split by chunk size
 #' or by providing a grouping vector.
 #'
-#' @param x A list or vector.
+#' @param x A list or vector. To split data frames, use `is_node = is.list`.
 #' @param n An integer specifying the size of each chunk. If the length
 #'   of `x` is not evenly divisible by `n`, the last chunk will be smaller.
 #' @param groups A vector the same length as `x` that defines how to
 #'   group elements. Elements with the same group value will be placed
 #'   in the same chunk.
 #' @param is_node A predicate function that determines whether an object
-#'   is a "node" (by default, a list). See [modify_tree()] for more details.
+#'   is a "node" (by default, a list). Set to `is.list` to enable
+#'   splitting of data frames by rows. See [modify_tree()] for more details.
 #' @inheritParams rlang::args_dots_empty
 #' @return A list where each element contains a chunk of the original input.
 #' @export
@@ -25,9 +26,13 @@
 #' # Split a list
 #' x <- list(a = 1, b = 2, c = 3, d = 4)
 #' list_split(x, n = 2)
+#'
+#' # Split data frames by rows
+#' df <- data.frame(x = 1:4, y = 5:8)
+#' list_split(df, n = 2, is_node = is.list)
 list_split <- function(x, ..., n = NULL, groups = NULL, is_node = NULL) {
   is_node <- as_is_node(is_node)
-  if (!is_node(x) && !is.atomic(x) && !is.data.frame(x)) {
+  if (!is_node(x) && !is.atomic(x)) {
     cli::cli_abort(
       "{.arg x} must be a list, vector, or other node-like object."
     )
@@ -46,7 +51,9 @@ list_split <- function(x, ..., n = NULL, groups = NULL, is_node = NULL) {
 
   # validate inputs
   if (!is.null(n)) {
-    if (!is.numeric(n) || length(n) != 1 || is.na(n) || n <= 0 || n != floor(n)) {
+    if (
+      !is.numeric(n) || length(n) != 1 || is.na(n) || n <= 0 || n != floor(n)
+    ) {
       cli::cli_abort("{.arg n} must be a positive integer.")
     }
     n <- as.integer(n)

@@ -7,7 +7,7 @@
 list_split(x, ..., n = NULL, groups = NULL, is_node = NULL)
 }
 \arguments{
-\item{x}{A list or vector.}
+\item{x}{A list or vector. To split data frames, use \code{is_node = is.list}.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
@@ -19,7 +19,8 @@ group elements. Elements with the same group value will be placed
 in the same chunk.}
 
 \item{is_node}{A predicate function that determines whether an object
-is a "node" (by default, a list). See \code{\link[=modify_tree]{modify_tree()}} for more details.}
+is a "node" (by default, a list). Set to \code{is.list} to enable
+splitting of data frames by rows. See \code{\link[=modify_tree]{modify_tree()}} for more details.}
 }
 \value{
 A list where each element contains a chunk of the original input.
@@ -39,4 +40,8 @@ list_split(letters[1:6], groups = c(1, 1, 2, 2, 3, 3))
 # Split a list
 x <- list(a = 1, b = 2, c = 3, d = 4)
 list_split(x, n = 2)
+
+# Split data frames by rows
+df <- data.frame(x = 1:4, y = 5:8)
+list_split(df, n = 2, is_node = is.list)
 }
