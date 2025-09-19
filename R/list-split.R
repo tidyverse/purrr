@@ -27,7 +27,7 @@
 #' list_split(x, n = 2)
 list_split <- function(x, ..., n = NULL, groups = NULL, is_node = NULL) {
   is_node <- as_is_node(is_node)
-  if (!is_node(x) && !is.atomic(x)) {
+  if (!is_node(x) && !is.atomic(x) && !is.data.frame(x)) {
     cli::cli_abort(
       "{.arg x} must be a list, vector, or other node-like object."
     )
@@ -65,7 +65,14 @@ list_split <- function(x, ..., n = NULL, groups = NULL, is_node = NULL) {
   indices <- generate_split_indices(x, n, groups)
 
   # use vec_chop for splitting
-  vec_chop(x, indices = indices)
+  result <- vec_chop(x, indices = indices)
+
+  # preserve names from groups if they exist
+  if (!is.null(groups) && !is.null(names(indices))) {
+    names(result) <- names(indices)
+  }
+
+  result
 }
 
 generate_split_indices <- function(x, n = NULL, groups = NULL) {
