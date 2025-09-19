@@ -65,8 +65,8 @@ This example illustrates some of the advantages of purrr functions over the equi
   throw an error.
   
 * All `map()` functions accept functions (named, anonymous, and lambda), 
-  character vector (used to extract components by name), or numeric vectors 
-  (used to extract by position).
+   character vectors (used to extract components by name), or numeric vectors 
+  (used to extract by position). Note the use of the shorthand notation for anonymous functions (e.g. `\(x) x + 1` which is equivalent to `function(x) x + 1`) introduced in R 4.1. Formula notation for anonymous functions (e.g. `~ .x + 1`) may also be used, but this is only recommended if you require backward compatibility with older versions of R.
 
 There are two less obvious advantages:
 

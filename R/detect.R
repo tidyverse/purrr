@@ -6,8 +6,8 @@
 #'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
-#'     argument. No longer recommended.
+#'   A formula, e.g. `~ .x + 1`. Only recommended if you require backward
+#'     compatibility with older versions of R.
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
@@ -50,7 +50,13 @@
 #'
 #' # If you need to find all positions, use map_lgl():
 #' which(map_lgl(x, "foo"))
-detect <- function(.x, .f, ..., .dir = c("forward", "backward"), .default = NULL) {
+detect <- function(
+  .x,
+  .f,
+  ...,
+  .dir = c("forward", "backward"),
+  .default = NULL
+) {
   .f <- as_predicate(.f, ..., .mapper = TRUE)
   .dir <- arg_match0(.dir, c("forward", "backward"))
 
