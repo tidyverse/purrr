@@ -91,6 +91,7 @@ reference:
   - list_flatten
   - list_modify
   - list_simplify
+  - list_split
   - list_transpose
   - reduce
 
