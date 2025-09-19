@@ -69,15 +69,9 @@ map2_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  if (!isFALSE(.progress)){
-    if (isTRUE(.progress)){
-      .progress <- list(caller = .purrr_user_env)
-    } else if (is.character(.progress)){
-      .progress <- list(caller = .purrr_user_env, name = .progress)
-    } else if (is.list(.progress)){
-      if (is.null(.progress$caller)){
-        .progress <- append(.progress, list(caller = .purrr_user_env))
-      }
+  if (is.list(.progress)){
+    if (is.null(.progress$caller)){
+      .progress <- append(.progress, list(caller = .purrr_user_env))
     }
   }
 
