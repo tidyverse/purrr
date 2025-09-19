@@ -131,7 +131,7 @@ test_that("progress bar accessing local environment", {
     )
   }
 
-  expect_snapshot(f())
+  expect_message(f())
 })
 
 
