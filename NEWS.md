@@ -1036,10 +1036,15 @@ functions.
 * `update_list()` can now modify an element called `x` (#98).
 
 * `map*()` now use custom C code, rather than relying on `lapply()`, `mapply()`
-  etc. The performance characteristcs are very similar, but it allows us greater
+  etc. The performance characteristics are very similar, but it allows us greater
   control over the output (#118).
 
 * `map_lgl()` now has second argument `.f`, not `.p` (#134).
+
+* Formatted strings for the progress bar could only access the global 
+  environment. `map()`, `map2()`, and `pmap()` have been updated to add 
+  `caller = .purrr_user_env` to `.progress` by default, allowing formatted 
+  strings to access to the current/parent environment (#1078).
 
 
 ## Deprecated functions

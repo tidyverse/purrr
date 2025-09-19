@@ -56,6 +56,20 @@
       Caused by error in `fail_at_3()`:
       ! Error
 
+# progress bar accessing local environment
+
+    Code
+      f()
+    Message
+      bar 1
+    Output
+      [[1]]
+      NULL
+      
+      [[2]]
+      NULL
+      
+
 # requires output be length 1 and have common type
 
     Code

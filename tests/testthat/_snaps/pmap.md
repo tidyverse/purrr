@@ -46,3 +46,17 @@
       Error in `pmap()`:
       ! Can't recycle `.l[[1]]` (size 2) to match `.l[[2]]` (size 0).
 
+# progress bar accessing local environment
+
+    Code
+      f()
+    Message
+      bar 1
+    Output
+      [[1]]
+      NULL
+      
+      [[2]]
+      NULL
+      
+

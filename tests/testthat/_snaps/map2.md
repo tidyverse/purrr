@@ -46,3 +46,17 @@
       Error in `map2()`:
       ! Can't recycle `.x` (size 2) to match `.y` (size 0).
 
+# progress bar accessing local environment
+
+    Code
+      f()
+    Message
+      bar 1
+    Output
+      [[1]]
+      NULL
+      
+      [[2]]
+      NULL
+      
+
