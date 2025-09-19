@@ -1,0 +1,514 @@
+---
+title: "Getting started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+purrr is a toolkit that helps you write cleaner, more maintainable R code by introducing functional programming concepts. But what is functional programming? At its core, it's an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product.
+
+Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This might sound abstract, but we'll see how it makes your code clearer and less prone to errors.
+
+## Installation and Setup
+
+```{r setup}
+# Install purrr if you haven't already
+# install.packages("purrr")
+
+# Load the package
+library(purrr)
+```
+
+## Understanding Lists in R
+
+Before diving into purrr, let's understand lists, as they're fundamental to how purrr works:
+
+```{r}
+# A list can contain different types of data
+my_list <- list(
+  data_frame = data.frame(x = 1:3, y = 4:6),
+  model = lm(mpg ~ wt, mtcars),
+  custom_function = function(x) x^2
+)
+
+# Access list elements
+my_list$data_frame  # Using $
+my_list[[1]]       # Using [[]] to get the first element
+my_list[1]         # Using [] returns a list with one element
+```
+
+## Basic Map Functions: A Better Way to Loop
+
+### map(): The Foundation
+
+Instead of writing loops, map() provides a cleaner way to apply functions to each element of a list:
+
+```{r}
+# Process multiple texts with complex operations
+documents <- list(
+  "The quick brown fox",
+  "jumps over the lazy dog",
+  "and then takes a nap"
+)
+
+# Complex text processing
+processed_docs <- map(.x = documents, .f = function(doc) {
+  # Remove punctuation
+  clean <- gsub("[[:punct:]]", "", doc)
+  # Convert to lowercase
+  clean <- tolower(clean)
+  # Get unique words
+  words <- unique(strsplit(clean, "\\s+")[[1]])
+  # Create frequency table
+  table(strsplit(clean, "\\s+")[[1]])
+})
+
+# Process multiple data frames with custom operations
+data_frames <- list(
+  df1 = data.frame(x = c(1, 2, NA), y = c("a", NA, "c")),
+  df2 = data.frame(x = c(4, NA, 6), y = c(NA, "e", "f"))
+)
+
+summaries <- map(.x = data_frames, .f = function(df) {
+  # Calculate custom summary statistics
+  numeric_cols <- sapply(df, is.numeric)
+  list(
+    missing_by_col = sapply(df, function(col) sum(is.na(col))),
+    complete_cases = sum(complete.cases(df)),
+    numeric_summary = if(any(numeric_cols)) {
+      sapply(df[numeric_cols], function(col) {
+        c(mean = mean(col, na.rm = TRUE),
+          sd = sd(col, na.rm = TRUE))
+      })
+    }
+  )
+})
+```
+
+### The Progress Bar
+
+map() has options for enabling the progress bar:
+
+```{r}
+# Rerun the previous example with the progress bar enabled
+summaries <- map(.x = data_frames, .f = function(df) {
+  # Calculate custom summary statistics
+  numeric_cols <- sapply(df, is.numeric)
+  list(
+    missing_by_col = sapply(df, function(col) sum(is.na(col))),
+    complete_cases = sum(complete.cases(df)),
+    numeric_summary = if(any(numeric_cols)) {
+      sapply(df[numeric_cols], function(col) {
+        c(mean = mean(col, na.rm = TRUE),
+          sd = sd(col, na.rm = TRUE))
+      })
+    }
+  )
+}, .progress = TRUE)
+
+```
+
+### Type-specific Map Functions
+
+Here are examples where type-specific mapping is useful for non-vectorized operations:
+
+```{r}
+# Calculate complexity metrics for each document
+complexity_scores <- map(.x = documents, .f = function(doc) {
+  words <- strsplit(doc, "\\s+")[[1]]
+  unique_ratio <- length(unique(words)) / length(words)
+  avg_word_length <- mean(nchar(words))
+  unique_ratio * avg_word_length
+})
+
+# Generate quality reports for data frames
+quality_reports <- map(.x = data_frames, .f = function(df) {
+  issues <- character(0)
+  
+  # Check for missing values
+  if(any(is.na(df))) {
+    issues <- c(issues, 
+      sprintf("Missing values: %d", sum(is.na(df))))
+  }
+  
+  # Check for duplicates
+  if(any(duplicated(df))) {
+    issues <- c(issues,
+      sprintf("Duplicate rows: %d", sum(duplicated(df))))
+  }
+  
+  # Combine all issues
+  if(length(issues) > 0) {
+    paste("Issues found:", paste(issues, collapse = "; "))
+  } else {
+    "No issues found"
+  }
+})
+```
+
+## Function Composition with the Base Pipe
+
+Here's how to chain operations that can't be vectorized:
+
+```{r}
+# Process multiple datasets with different steps
+models <- list(
+  lm(mpg ~ wt, mtcars),
+  lm(mpg ~ wt + cyl, mtcars),
+  lm(mpg ~ ., mtcars)
+)
+
+model_analysis <- models |>
+  map(.f = function(model) {
+    # Extract model diagnostics
+    residuals <- residuals(model)
+    fitted <- fitted(model)
+    
+    list(
+      residuals = residuals,
+      fitted = fitted,
+      stats = summary(model)
+    )
+  }) |>
+  map(.f = function(analysis) {
+    # Perform residual diagnostics
+    with(analysis, {
+      list(
+        normality = shapiro.test(residuals)$p.value,
+        r_squared = stats$r.squared
+      )
+    })
+  }) |>
+  map(.f = function(diagnostics) {
+    # Create formatted summary
+    sprintf(
+      "Normality p=%.3f, R²=%.3f",
+      diagnostics$normality,
+      diagnostics$r_squared
+    )
+  })
+```
+
+## Working with Multiple Inputs
+
+### map2(): Parallel Processing
+
+Here are examples where you need to process pairs of inputs with non-vectorized operations:
+
+```{r}
+# Compare pairs of models
+model_pairs <- map2(.x = models[-1], .y = models[-length(models)], .f = function(current, previous) {
+  # Compare model fits
+  anova_result <- anova(previous, current)
+  
+  # Extract comparison metrics
+  list(
+    df_diff = diff(anova_result$Df),
+    deviance_diff = diff(anova_result$Deviance),
+    p_value = anova_result$`Pr(>F)`[2]
+  )
+})
+
+# Process pairs of data frames with custom comparisons
+df_comparisons <- map2(.x = data_frames[-1], .y = data_frames[-length(data_frames)], 
+  .f = function(current, previous) {
+    # Compare structure and content
+    list(
+      added_cols = setdiff(names(current), names(previous)),
+      removed_cols = setdiff(names(previous), names(current)),
+      common_cols = intersect(names(current), names(previous))
+    )
+  }
+)
+```
+
+### pmap(): Multiple Inputs
+
+For operations requiring multiple parameters that can't be vectorized:
+
+```{r}
+# Configure and run multiple analyses
+analysis_configs <- list(
+  data = list(mtcars, PlantGrowth, InsectSprays),
+  dependent = list("mpg", "weight", "count"),
+  predictors = list(
+    c("wt", "cyl"),
+    c("group"),
+    c("spray")
+  ),
+  test_type = list("lm", "aov", "glm")
+)
+
+analysis_results <- pmap(.l = analysis_configs, .f = function(data, dependent, predictors, test_type) {
+  # Construct formula
+  formula_str <- paste(dependent, "~", paste(predictors, collapse = " + "))
+  formula <- as.formula(formula_str)
+  
+  # Fit model based on test type
+  model <- switch(test_type,
+    "lm" = lm(formula, data = data),
+    "aov" = aov(formula, data = data),
+    "glm" = glm(formula, data = data)
+  )
+  
+  # Return analysis results
+  list(
+    model_type = test_type,
+    formula = formula_str,
+    summary = summary(model),
+    diagnostics = list(
+      residuals = residuals(model),
+      fitted = fitted(model)
+    )
+  )
+})
+```
+
+## Error Handling
+
+When processing real data, things often go wrong. purrr helps you handle errors gracefully:
+
+```{r}
+# A complex analysis function that might fail
+analyze_dataset <- function(df) {
+  if (!all(c("x", "y") %in% names(df))) {
+    stop("Missing required columns x and y")
+  }
+  
+  if (!all(sapply(df[c("x", "y")], is.numeric))) {
+    stop("x and y must be numeric")
+  }
+  
+  # Perform analysis
+  model <- lm(y ~ x, data = df)
+  residuals <- residuals(model)
+  
+  list(
+    coefficients = coef(model),
+    r_squared = summary(model)$r.squared,
+    normality = shapiro.test(residuals)$p.value
+  )
+}
+
+# List of datasets to analyze
+datasets <- list(
+  data.frame(x = 1:5, y = 1:5),                    # Valid
+  data.frame(x = "a", y = 1:5),                    # Invalid types
+  data.frame(z = 1:5),                             # Missing columns
+  data.frame(x = c(1, 1, 1), y = c(2, 2, 2))      # Perfect correlation
+)
+
+# Using safely()
+safe_analysis <- safely(analyze_dataset)
+results <- map(.x = datasets, .f = safe_analysis)
+# Each element contains $result and $error
+
+# Using possibly()
+safe_analysis2 <- possibly(analyze_dataset, otherwise = list(
+  coefficients = NA,
+  r_squared = NA,
+  normality = NA
+))
+results2 <- map(.x = datasets, .f = safe_analysis2)
+
+# Using quietly()
+# quiet_analysis <- quietly(analyze_dataset)
+# results3 <- map(.x = datasets, .f = quiet_analysis)
+# Each element contains $result, $output, $warnings, and $messages
+```
+
+## Practical Examples
+
+### Example 1: Advanced Data Frame Operations
+
+```{r}
+# Process multiple data frames with complex operations
+data_frames <- list(
+  sales = data.frame(
+    date = as.Date("2024-01-01") + 0:9,
+    amount = runif(10, 100, 1000),
+    category = sample(c("A", "B", "C"), 10, replace = TRUE)
+  ),
+  inventory = data.frame(
+    date = as.Date("2024-01-01") + 0:9,
+    item = sample(letters[1:5], 10, replace = TRUE),
+    quantity = rpois(10, 20)
+  )
+)
+
+processed_data <- data_frames |>
+  map(.f = function(df) {
+    # Add custom datetime features
+    df$year <- format(df$date, "%Y")
+    df$month <- format(df$date, "%m")
+    df$day <- format(df$date, "%d")
+    df$weekday <- format(df$date, "%A")
+    
+    # Calculate statistics if numeric columns exist
+    numeric_cols <- sapply(df, is.numeric)
+    if (any(numeric_cols)) {
+      numeric_data <- df[numeric_cols]
+      df$mean <- apply(numeric_data, 
+                       MARGIN = 2,
+                       FUN = mean)
+    }
+    
+    df
+  }) |>
+  map(.f = function(df) {
+    # Calculate summary statistics by group if categorical columns exist
+    categorical_cols <- sapply(df, is.factor) | sapply(df, is.character)
+    if (any(categorical_cols)) {
+      group_col <- names(df)[categorical_cols][1]
+      numeric_cols <- sapply(df, is.numeric)
+      
+      summaries <- aggregate(df[numeric_cols], 
+                           by = list(group = df[[group_col]]), 
+                           FUN = function(x) {
+                             c(mean = mean(x, na.rm = TRUE),
+                               sd = sd(x, na.rm = TRUE))
+                           })
+    }
+    
+    list(
+      processed_data = df,
+      group_summaries = if (exists("summaries")) summaries else NULL
+    )
+  })
+```
+
+### Example 2: Model Evaluation Pipeline
+
+```{r}
+# Create and evaluate multiple models
+model_specs <- list(
+  list(formula = mpg ~ wt,           name = "simple"),
+  list(formula = mpg ~ wt + cyl,     name = "medium"),
+  list(formula = mpg ~ .,            name = "complex")
+)
+
+model_results <- model_specs |>
+  map(.f = function(spec) {
+    # Fit model
+    model <- lm(spec$formula, data = mtcars)
+    
+    # Perform cross-validation
+    cv_results <- lapply(1:5, \(fold) {
+      # Create train/test split
+      test_idx <- seq_len(nrow(mtcars)) %% 5 == (fold - 1)
+      train <- mtcars[!test_idx, ]
+      test <- mtcars[test_idx, ]
+      
+      # Fit on train, predict on test
+      fold_model <- lm(spec$formula, data = train)
+      predictions <- predict(fold_model, newdata = test)
+      
+      # Calculate fold metrics
+      mse <- mean((test$mpg - predictions)^2)
+      mae <- mean(abs(test$mpg - predictions))
+      
+      list(mse = mse, mae = mae)
+    })
+    
+    # Combine results
+    list(
+      name = spec$name,
+      formula = deparse(spec$formula),
+      model = model,
+      cv_metrics = list(
+        mse = mean(sapply(cv_results, function(x) x$mse)),
+        mae = mean(sapply(cv_results, function(x) x$mae))
+      ),
+      diagnostics = list(
+        r_squared = summary(model)$r.squared,
+        aic = AIC(model),
+        residual_normality = shapiro.test(residuals(model))$p.value
+      )
+    )
+  })
+```
+
+## Best Practices
+
+1. Use map functions when:
+
+- Processing complex objects (like models or data frames)
+- Performing operations that can't be vectorized
+- Handling errors and edge cases
+- Working with nested data structures
+
+2. Avoid map functions when:
+
+- Working with simple arithmetic operations
+- Using functions that are already vectorized
+- Processing single values or simple vectors
+
+3. Error Handling:
+
+- Use safely() when you need to know what went wrong
+- Use possibly() when you just want a default value on error
+- Use quietly() when you need to capture messages and warnings
+
+4. Code Organization:
+
+- Break complex operations into smaller functions
+- Use meaningful names for intermediate steps
+- Comment your code to explain the "why", not just the "what"
+
+## Common Mistakes to Avoid
+
+1. Using map for vectorized operations:
+
+```{r}
+# Don't do this
+map(.x = 1:10, function(x) x * 2)  # Use regular vectorization instead: 1:10 * 2
+
+# Do this
+data_frames <- list(
+  sales = data.frame(
+    date = as.Date("2024-01-01") + 0:9,
+    y = runif(10, 100, 1000),
+    x = sample(c("A", "B", "C"), 10, replace = TRUE)
+  ),
+  inventory = data.frame(
+    date = as.Date("2024-01-01") + 0:9,
+    x = sample(letters[1:5], 10, replace = TRUE),
+    y = rpois(10, 20)
+  )
+)
+
+map(.x = data_frames, .f = function(df) {
+  # Complex non-vectorized operations
+  model <- lm(y ~ x, data = df)
+  summary(model)$r.squared
+})
+```
+
+2. Neglecting error handling:
+
+```{r}
+# Don't do this
+# map(.x = datasets, .f = analyze_dataset)  # Might fail on invalid data
+
+# Do this
+map(.x = datasets, .f = safely(analyze_dataset))  # Handles errors gracefully
+```
+
+3. Making functions too complex:
+
+```{r}
+# Don't do this
+# map(data)
+```
+
