@@ -23,6 +23,16 @@ elements.}
 \description{
 Keep/discard elements based on their name/position
 }
+\details{
+\itemize{
+\item You can think of \code{keep_at()} as the equivalent of \code{dplyr::select()} for data frames
+in that keep_at will retrieve the values out of a list and return those values
+in it's original list form instead of a vector like \code{pluck()} or \code{chuck()} would.
+\item \code{discard_at()} is similar to using negating operators with \code{dplyr::select()}
+for dropping columns in data frames, in that discard_at will drop the list
+elements passed through to it.
+}
+}
 \examples{
 x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)
 x |> keep_at(letters)
@@ -33,5 +43,8 @@ x |> keep_at(\(x) nchar(x) == 3)
 x |> discard_at(\(x) nchar(x) == 3)
 }
 \seealso{
-\code{\link[=keep]{keep()}}/\code{\link[=discard]{discard()}} to keep/discard elements by value.
+\code{\link[=keep]{keep()}}/\code{\link[=discard]{discard()}} to keep/discard elements by value. \code{\link[=pluck]{pluck()}}/\code{\link[=chuck]{chuck()}}
+is similar to \code{keep_at()} as it will also retrieve values from a list, but will
+return the value from the list in a vector instead of retaining the structure of
+the list element itself.
 }

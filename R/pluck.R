@@ -39,9 +39,15 @@
 #' * These accessors never partial-match. This is unlike `$` which
 #'   will select the `disp` object if you write `mtcars$di`.
 #'
+#' * You can think of pluck or chuck as the equivalent of `dplyr::pull()` for data frames
+#'   in that pluck and chuck will retrieve the values out of a list and return those values
+#'   in a vector.
+#'
 #' @seealso [attr_getter()] for creating attribute getters suitable
 #'   for use with `pluck()` and `chuck()`. [modify_in()] for
-#'   applying a function to a pluck location.
+#'   applying a function to a pluck location. `keep_at()` is similar to `pluck()`
+#'   as it will also retrieve values from a list, but will retain the structure
+#'   of the list instead of converting it into a vector.
 #' @export
 #' @examples
 #' # Let's create a list of data structures:
