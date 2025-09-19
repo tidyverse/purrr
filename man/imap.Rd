@@ -32,9 +32,8 @@ iwalk(.x, .f, ...)
 \item A named function, e.g. \code{paste}.
 \item An anonymous function, e.g. \verb{\\(x, idx) x + idx} or
 \code{function(x, idx) x + idx}.
-\item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the
-current element and \code{.y} to refer to the current index.
-No longer recommended.
+\item A formula, e.g. \code{~ .x + .y}. Use \code{.x} to refer to the current element and \code{.y} to refer to the current index.
+Only recommended if you require backward compatibility with R <= 4.1.
 }
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

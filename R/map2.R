@@ -12,7 +12,7 @@
 #'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
 #'   * A formula, e.g. `~ .x + .y`. Use `.x` to refer to the current
 #'     element of `x` and `.y` to refer to the current element of `y`.
-#'     Only recommended if you require backward compatibility with older versions of R.
+#'     Only recommended if you require backward compatibility with R <= 4.1.
 #'
 #'   `r lifecycle::badge("experimental")`
 #'
