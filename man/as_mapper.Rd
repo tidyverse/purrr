@@ -21,7 +21,7 @@ as_mapper(.f, ...)
 If a \strong{function}, it is used as is.
 
 If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function.
-No longer recommended.
+Only recommended if you require backward compatibility with R <= 4.1.
 
 If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
 converted to an extractor function. Character vectors index by
