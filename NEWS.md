@@ -1,6 +1,6 @@
 # purrr (development version)
 
-* Optimized `as_mapper.default()` by removing a check and handling of primitive function types. (#1088)
+* `as_mapper.default()` optimized by removing special named argument handling for primitive functions (@mtcarsalot, #1088).
 
 * `list_flatten()` gains an `is_node` parameter taking a predicate function that determines whether an input element is a node or a leaf (@salim-b, #1179).
 

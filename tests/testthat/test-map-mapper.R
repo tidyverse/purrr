@@ -51,7 +51,7 @@ test_that("can supply length > 1 vectors", {
 # primitive functions --------------------------------------------------
 
 test_that("primitive functions are wrapped", {
-  expect_identical(as_mapper(`-`)(.y = 10, .x = 5), 5)
+  expect_identical(as_mapper(`-`)(.y = 10, .x = 5), 5) # positional matching, not by name
   expect_identical(as_mapper(`c`)(1, 3, 5), c(1, 3, 5))
 })
 
