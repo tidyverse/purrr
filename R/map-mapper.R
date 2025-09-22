@@ -43,7 +43,7 @@ as_mapper <- function(.f, ...) {
 
 #' @export
 as_mapper.default <- function(.f, ...) {
-    rlang::as_function(.f)
+  rlang::as_function(.f)
 }
 
 #' @export
