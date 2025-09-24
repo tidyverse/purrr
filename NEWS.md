@@ -1040,10 +1040,11 @@ functions.
 * `update_list()` can now modify an element called `x` (#98).
 
 * `map*()` now use custom C code, rather than relying on `lapply()`, `mapply()`
-  etc. The performance characteristics are very similar, but it allows us greater
+  etc. The performance characteristcs are very similar, but it allows us greater
   control over the output (#118).
 
 * `map_lgl()` now has second argument `.f`, not `.p` (#134).
+
 
 ## Deprecated functions
 
