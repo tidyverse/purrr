@@ -69,6 +69,12 @@ map2_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
+
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
