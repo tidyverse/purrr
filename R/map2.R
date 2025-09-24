@@ -69,17 +69,11 @@ map2_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  if (!isFALSE(.progress)){
-    if (isTRUE(.progress)){
-      .progress <- list(caller = .purrr_user_env)
-    } else if (is.character(.progress)){
-      .progress <- list(caller = .purrr_user_env, name = .progress)
-    } else if (is.list(.progress)){
-      if (is.null(.progress$caller)){
-        .progress <- append(.progress, list(caller = .purrr_user_env))
-      }
-    }
-  }
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
 
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)

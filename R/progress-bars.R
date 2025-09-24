@@ -49,3 +49,27 @@
 #'
 #' @name progress_bars
 NULL
+
+as_progress <- function(
+  progress,
+  user_env = caller_env(2),
+  caller_env = caller_env()
+) {
+  if (isFALSE(progress)) {
+    FALSE
+  } else if (isTRUE(progress)) {
+    list(caller = user_env)
+  } else if (is.character(progress)) {
+    list(caller = user_env, name = progress)
+  } else if (is.list(progress)) {
+    progress$caller <- progress$caller %||% user_env
+    progress
+  } else {
+    stop_input_type(
+      progress,
+      c("TRUE", "FALSE", "a string", "a named list"),
+      arg = ".progress",
+      call = caller_env
+    )
+  }
+}
