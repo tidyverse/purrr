@@ -32,8 +32,7 @@
 #' 3:10 |> detect_index(is_even, .dir = "backward")
 #'
 #'
-#' # Since `.f` is passed to as_mapper(), you can supply a
-#' # formula or a pluck object:
+#' # Since `.f` is passed to as_mapper(), you can supply a pluck object:
 #' x <- list(
 #'   list(1, foo = FALSE),
 #'   list(2, foo = TRUE),
