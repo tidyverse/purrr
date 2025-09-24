@@ -106,35 +106,35 @@ value is absent (does not exist) or empty (has length 0).
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x + 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bf51085e28&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55942ef7ac98&gt;</span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list(1), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bf5102bf30&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55942ef22eb8&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list("a", "b", "c"), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bf50fdfaf8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55942eed4578&gt;</span>
 <span class="r-in"><span><span class="co"># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list(1, "a", 2), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bf50f01fa8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55942edf8830&gt;</span>
 <span class="r-in"><span><span class="co"># Equivalent to function(x) x[[1]][["a"]][[2]]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="attr_getter.html">attr_getter</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list(1, function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(x, attr, exact = TRUE)), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bf50e86d98&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55942ed76078&gt;</span>
 <span class="r-in"><span><span class="co"># Equivalent to function(x) attr(x[[1]], "a")</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, .default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list("a", "b", "c"), .default = NA)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bf50e2cc00&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55942ed211e8&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

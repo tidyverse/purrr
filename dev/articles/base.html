@@ -532,9 +532,9 @@ number of <code><a href="https://rdrr.io/r/base/mapply.html" class="external-lin
 <span><span class="co">#&gt;  $ : num [1:5] 3.44 3.88 1.54 5.52 2.23</span></span>
 <span><span class="co">#&gt;  $ : num [1:5] 0.441 5.728 6.589 1.885 2.63</span></span>
 <span><span class="co">#&gt;  $ : num [1:5] 11.2 10.82 -8.16 -5.16 4.23</span></span></code></pre></div>
-<p>Alternatively, we could use <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> which doesn’t simply,
-but also doesn’t take any constant arguments, so we need to use an
-anonymous function:</p>
+<p>Alternatively, we could use <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> which doesn’t
+simplify, but also doesn’t take any constant arguments, so we need to
+use an anonymous function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">...</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span><span class="op">)</span></span></code></pre></div>
 <p>In R 4.1 and up, you could use the shorter anonymous function
