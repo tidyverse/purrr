@@ -63,8 +63,14 @@ compact <- function(.x, .p = identity) {
 
 #' Keep/discard elements based on their name/position
 #'
-#' @inheritParams map_at
+#' @description
+#' `keep_at()` and `discard_at()` are similar to `[` or `dplyr::select()`: they
+#' return the same type of data structure as the input, but only containing
+#' the requested elements. (If you're looking for a function similar to
+#' `[[` see [pluck()]/[chuck()]).
+#'
 #' @seealso [keep()]/[discard()] to keep/discard elements by value.
+#' @inheritParams map_at
 #' @export
 #' @examples
 #' x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)

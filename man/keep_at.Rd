@@ -21,7 +21,10 @@ installed, you can use \code{vars()} and tidyselect helpers to select
 elements.}
 }
 \description{
-Keep/discard elements based on their name/position
+\code{keep_at()} and \code{discard_at()} are similar to \code{[} or \code{dplyr::select()}: they
+return the same type of data structure as the input, but only containing
+the requested elements. (If you're looking for a function similar to
+\code{[[} see \code{\link[=pluck]{pluck()}}/\code{\link[=chuck]{chuck()}}).
 }
 \examples{
 x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)
