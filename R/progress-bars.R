@@ -55,12 +55,8 @@ as_progress <- function(
   user_env = caller_env(2),
   caller_env = caller_env()
 ) {
-  if (isFALSE(progress)) {
-    FALSE
-  } else if (isTRUE(progress)) {
-    list(caller = user_env)
-  } else if (is.character(progress)) {
-    list(caller = user_env, name = progress)
+  if (isFALSE(progress) || isTRUE(progress) || is_string(progress)) {
+    progress
   } else if (is.list(progress)) {
     progress$caller <- progress$caller %||% user_env
     progress
