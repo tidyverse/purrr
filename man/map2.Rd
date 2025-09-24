@@ -32,7 +32,7 @@ of length 1 will be recycled to the length of the other.}
 \itemize{
 \item A named function.
 \item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
-\item A formula, e.g. \code{~ .x + .y}. You must use \code{.x} to refer to the current
+\item A formula, e.g. \code{~ .x + .y}. Use \code{.x} to refer to the current
 element of \code{x} and \code{.y} to refer to the current element of \code{y}.
 No longer recommended.
 }

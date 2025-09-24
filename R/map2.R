@@ -10,7 +10,7 @@
 #'
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
-#'   * A formula, e.g. `~ .x + .y`. You must use `.x` to refer to the current
+#'   * A formula, e.g. `~ .x + .y`. Use `.x` to refer to the current
 #'     element of `x` and `.y` to refer to the current element of `y`.
 #'     No longer recommended.
 #'
@@ -69,6 +69,12 @@ map2_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
+
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
 

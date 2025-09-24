@@ -2,6 +2,10 @@
 
 * new "getting started" vignette (#915, @ogolovkina).
 
+* Formatted strings for the progress bar could only access the global environment. `map()`, `map2()`, and `pmap()` have been updated to add  `caller = .purrr_user_env` to `.progress` by default, allowing formatted strings to access to the current/parent environment (@jcolt45, #1078).
+
+* `as_mapper.default()` optimized by removing special named argument handling for primitive functions (@mtcarsalot, #1088).
+
 * `list_flatten()` gains an `is_node` parameter taking a predicate function that determines whether an input element is a node or a leaf (@salim-b, #1179).
 
 * `in_parallel()` now accepts objects, including helper functions, supplied to `...` for all locally-defined functions (#1208).

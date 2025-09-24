@@ -162,7 +162,7 @@ sds <- 1:4
     str(samples)
     ```
 
-    Alternatively, we could use `Map()` which doesn't simply, but also doesn't take any constant arguments, so we need to use an anonymous function:
+    Alternatively, we could use `Map()` which doesn't simplify, but also doesn't take any constant arguments, so we need to use an anonymous function:
 
     ```{r}
     samples <- Map(function(...) rnorm(..., n = 5), mean = means, sd = sds)
