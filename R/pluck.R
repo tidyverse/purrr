@@ -2,8 +2,10 @@
 #'
 #' @description
 #' `pluck()` implements a generalised form of `[[` that allow you to index
-#' deeply and flexibly into data structures. It always succeeds, returning
+#' deeply and flexibly into data structures. (If you're looking for an
+#' equivalent of `[`, see [keep_at()].) `pluck()` always succeeds, returning
 #' `.default` if the index you are trying to access does not exist or is `NULL`.
+#' (If you're looking for a variant that errors, try [chuck()].)
 #'
 #' `pluck<-()` is the assignment equivalent, allowing you to modify an object
 #' deep within a nested data structure.
@@ -39,14 +41,11 @@
 #' * These accessors never partial-match. This is unlike `$` which
 #'   will select the `disp` object if you write `mtcars$di`.
 #'
-#' * You can think of pluck or chuck as the equivalent of `dplyr::pull()` for data frames
-#'   in that pluck and chuck will retrieve the values out of a list and return those values
-#'   in a vector.
-#'
-#' @seealso [attr_getter()] for creating attribute getters suitable
-#'   for use with `pluck()` and `chuck()`. [modify_in()] for
-#'   applying a function to a pluck location. `keep_at()` is similar to `pluck()`
-#'   as it will also retrieve values from a list, but will retain the structure
+#' @seealso
+#' * [attr_getter()] for creating attribute getters suitable for use
+#'   with `pluck()` and `chuck()`.
+#' * [modify_in()] for applying a function to a plucked location.
+#' * [keep_at()] is similar to `pluck()`, but retain the structure
 #'   of the list instead of converting it into a vector.
 #' @export
 #' @examples

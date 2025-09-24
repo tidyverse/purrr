@@ -62,20 +62,14 @@ compact <- function(.x, .p = identity) {
 
 #' Keep/discard elements based on their name/position
 #'
+#' @description
+#' `keep_at()` and `discard_at()` are similar to `[` or `dplyr::select()`: they
+#' return the same type of data structure as the input, but only containing
+#' the requested elements. (If you're looking for a function similar to
+#' `[[` see [pluck()]/[chuck()]).
+#'
+#' @seealso [keep()]/[discard()] to keep/discard elements by value.
 #' @inheritParams map_at
-#' @details
-#' * You can think of `keep_at()` as the equivalent of `dplyr::select()` for data frames
-#'   in that keep_at will retrieve the values out of a list and return those values
-#'   in it's original list form instead of a vector like `pluck()` or `chuck()` would.
-#'
-#' * `discard_at()` is similar to using negating operators with `dplyr::select()`
-#'   for dropping columns in data frames, in that discard_at will drop the list
-#'   elements passed through to it.
-#'
-#' @seealso [keep()]/[discard()] to keep/discard elements by value. [pluck()]/[chuck()]
-#'   is similar to `keep_at()` as it will also retrieve values from a list, but will
-#'   return the value from the list in a vector instead of retaining the structure of
-#'   the list element itself.
 #' @export
 #' @examples
 #' x <- c(a = 1, b = 2, cat = 10, dog = 15, elephant = 5, e = 10)

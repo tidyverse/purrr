@@ -33,8 +33,10 @@ Use \code{zap()} to instead remove the element.}
 }
 \description{
 \code{pluck()} implements a generalised form of \code{[[} that allow you to index
-deeply and flexibly into data structures. It always succeeds, returning
+deeply and flexibly into data structures. (If you're looking for an
+equivalent of \code{[}, see \code{\link[=keep_at]{keep_at()}}.) \code{pluck()} always succeeds, returning
 \code{.default} if the index you are trying to access does not exist or is \code{NULL}.
+(If you're looking for a variant that errors, try \code{\link[=chuck]{chuck()}}.)
 
 \verb{pluck<-()} is the assignment equivalent, allowing you to modify an object
 deep within a nested data structure.
@@ -55,9 +57,6 @@ because it reads linearly and is free of syntactic
 cruft. Compare: \code{accessor(x[[1]])$foo} to \code{pluck(x, 1, accessor, "foo")}.
 \item These accessors never partial-match. This is unlike \code{$} which
 will select the \code{disp} object if you write \code{mtcars$di}.
-\item You can think of pluck or chuck as the equivalent of \code{dplyr::pull()} for data frames
-in that pluck and chuck will retrieve the values out of a list and return those values
-in a vector.
 }
 }
 \examples{
@@ -114,9 +113,11 @@ idx <- list(1, my_element)
 pluck(x, !!!idx)
 }
 \seealso{
-\code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable
-for use with \code{pluck()} and \code{chuck()}. \code{\link[=modify_in]{modify_in()}} for
-applying a function to a pluck location. \code{keep_at()} is similar to \code{pluck()}
-as it will also retrieve values from a list, but will retain the structure
+\itemize{
+\item \code{\link[=attr_getter]{attr_getter()}} for creating attribute getters suitable for use
+with \code{pluck()} and \code{chuck()}.
+\item \code{\link[=modify_in]{modify_in()}} for applying a function to a plucked location.
+\item \code{\link[=keep_at]{keep_at()}} is similar to \code{pluck()}, but retain the structure
 of the list instead of converting it into a vector.
+}
 }
