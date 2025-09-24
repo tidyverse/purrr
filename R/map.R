@@ -23,7 +23,7 @@
 #'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
+#'   * A formula, e.g. `~ .x + 1`. Use `.x` to refer to the first
 #'     argument. No longer recommended.
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
