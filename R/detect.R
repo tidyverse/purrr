@@ -6,8 +6,7 @@
 #'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   A formula, e.g. `~ .x + 1`. Only recommended if you require backward
-#'     compatibility with R <= 4.1.
+#'   * A formula, e.g. `~ .x + 1`. No longer recommended.
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
@@ -34,7 +33,7 @@
 #'
 #'
 #' # Since `.f` is passed to as_mapper(), you can supply a
-#' # lambda-formula or a pluck object:
+#' # formula or a pluck object:
 #' x <- list(
 #'   list(1, foo = FALSE),
 #'   list(2, foo = TRUE),

@@ -15,8 +15,8 @@
 #'
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
-#'   * A formula, e.g. `~ all(.x < 0)`. Only recommended if you require backward
-#'     compatibility with R <= 4.1.
+#'   * A formula, e.g. `~ all(.x < 0)`. No longer recommended.
+#'
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
 #' @export

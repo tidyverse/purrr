@@ -20,7 +20,7 @@
 #'   * A named function.
 #'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
 #'     `function(x, y, z) x + y / z`
-#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. Only recommended if you require backward compatibility with R <= 4.1.
+#'   * A formula, e.g. `~ ..1 + ..2 / ..3`. No longer recommended.
 #'
 #'   `r lifecycle::badge("experimental")`
 #'

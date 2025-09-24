@@ -10,7 +10,7 @@
 #'   If a __function__, it is used as is.
 #'
 #'   If a __formula__, e.g. `~ .x + 2`, it is converted to a function.
-#'   Only recommended if you require backward compatibility with R <= 4.1.
+#'   No longer recommended.
 #'
 #'   If __character vector__, __numeric vector__, or __list__, it is
 #'   converted to an extractor function. Character vectors index by
