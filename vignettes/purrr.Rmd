@@ -1,8 +1,8 @@
 ---
-title: "Getting started"
+title: "Get started with purrr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{getting-started}
+  %\VignetteIndexEntry{Get started with purrr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,499 +16,202 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-purrr is a toolkit that helps you write cleaner, more maintainable R code by introducing functional programming concepts. But what is functional programming? At its core, it's an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product.
+purrr helps you write cleaner, more maintainable R code through functional programming concepts. But what is functional programming? At its core, it's an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product. 
+Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This is rather abstract, but we believe that helps to makes your code clearer and less prone to errors.
 
-Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This might sound abstract, but we'll see how it makes your code clearer and less prone to errors.
+This vignette discusses two of the most important parts of purrr: map functions and predicate functions.
 
-## Installation and Setup
-
-```{r setup}
-# Install purrr if you haven't already
-# install.packages("purrr")
-
-# Load the package
+```{r}
 library(purrr)
 ```
 
-## Understanding Lists in R
+## Map: A better way to loop
 
-Before diving into purrr, let's understand lists, as they're fundamental to how purrr works:
+`map()` provides a more compact way apply functions to each element of a vector:
 
 ```{r}
-# A list can contain different types of data
-my_list <- list(
-  data_frame = data.frame(x = 1:3, y = 4:6),
-  model = lm(mpg ~ wt, mtcars),
-  custom_function = function(x) x^2
-)
+x <- 1:3
 
-# Access list elements
-my_list$data_frame  # Using $
-my_list[[1]]       # Using [[]] to get the first element
-my_list[1]         # Using [] returns a list with one element
+triple <- function(x) x * 3
+str(map(x, triple))
 ```
 
-## Basic Map Functions: A Better Way to Loop
-
-### map(): The Foundation
-
-Instead of writing loops, map() provides a cleaner way to apply functions to each element of a list:
+Or written with the pipe:
 
 ```{r}
-# Process multiple texts with complex operations
-documents <- list(
-  "The quick brown fox",
-  "jumps over the lazy dog",
-  "and then takes a nap"
-)
-
-# Complex text processing
-processed_docs <- map(.x = documents, .f = function(doc) {
-  # Remove punctuation
-  clean <- gsub("[[:punct:]]", "", doc)
-  # Convert to lowercase
-  clean <- tolower(clean)
-  # Get unique words
-  words <- unique(strsplit(clean, "\\s+")[[1]])
-  # Create frequency table
-  table(strsplit(clean, "\\s+")[[1]])
-})
-
-# Process multiple data frames with custom operations
-data_frames <- list(
-  df1 = data.frame(x = c(1, 2, NA), y = c("a", NA, "c")),
-  df2 = data.frame(x = c(4, NA, 6), y = c(NA, "e", "f"))
-)
-
-summaries <- map(.x = data_frames, .f = function(df) {
-  # Calculate custom summary statistics
-  numeric_cols <- sapply(df, is.numeric)
-  list(
-    missing_by_col = sapply(df, function(col) sum(is.na(col))),
-    complete_cases = sum(complete.cases(df)),
-    numeric_summary = if(any(numeric_cols)) {
-      sapply(df[numeric_cols], function(col) {
-        c(mean = mean(col, na.rm = TRUE),
-          sd = sd(col, na.rm = TRUE))
-      })
-    }
-  )
-})
+x |> 
+  map(triple) |> 
+  str()
 ```
 
-### The Progress Bar
-
-map() has options for enabling the progress bar:
+This is equivalent to a for loop:
 
 ```{r}
-# Rerun the previous example with the progress bar enabled
-summaries <- map(.x = data_frames, .f = function(df) {
-  # Calculate custom summary statistics
-  numeric_cols <- sapply(df, is.numeric)
-  list(
-    missing_by_col = sapply(df, function(col) sum(is.na(col))),
-    complete_cases = sum(complete.cases(df)),
-    numeric_summary = if(any(numeric_cols)) {
-      sapply(df[numeric_cols], function(col) {
-        c(mean = mean(col, na.rm = TRUE),
-          sd = sd(col, na.rm = TRUE))
-      })
-    }
-  )
-}, .progress = TRUE)
-
-```
-
-### Type-specific Map Functions
-
-Here are examples where type-specific mapping is useful for non-vectorized operations:
-
-```{r}
-# Calculate complexity metrics for each document
-complexity_scores <- map(.x = documents, .f = function(doc) {
-  words <- strsplit(doc, "\\s+")[[1]]
-  unique_ratio <- length(unique(words)) / length(words)
-  avg_word_length <- mean(nchar(words))
-  unique_ratio * avg_word_length
-})
-
-# Generate quality reports for data frames
-quality_reports <- map(.x = data_frames, .f = function(df) {
-  issues <- character(0)
-  
-  # Check for missing values
-  if(any(is.na(df))) {
-    issues <- c(issues, 
-      sprintf("Missing values: %d", sum(is.na(df))))
-  }
-  
-  # Check for duplicates
-  if(any(duplicated(df))) {
-    issues <- c(issues,
-      sprintf("Duplicate rows: %d", sum(duplicated(df))))
-  }
-  
-  # Combine all issues
-  if(length(issues) > 0) {
-    paste("Issues found:", paste(issues, collapse = "; "))
-  } else {
-    "No issues found"
-  }
-})
-```
-
-## Function Composition with the Base Pipe
-
-Here's how to chain operations that can't be vectorized:
-
-```{r}
-# Process multiple datasets with different steps
-models <- list(
-  lm(mpg ~ wt, mtcars),
-  lm(mpg ~ wt + cyl, mtcars),
-  lm(mpg ~ ., mtcars)
-)
-
-model_analysis <- models |>
-  map(.f = function(model) {
-    # Extract model diagnostics
-    residuals <- residuals(model)
-    fitted <- fitted(model)
-    
-    list(
-      residuals = residuals,
-      fitted = fitted,
-      stats = summary(model)
-    )
-  }) |>
-  map(.f = function(analysis) {
-    # Perform residual diagnostics
-    with(analysis, {
-      list(
-        normality = shapiro.test(residuals)$p.value,
-        r_squared = stats$r.squared
-      )
-    })
-  }) |>
-  map(.f = function(diagnostics) {
-    # Create formatted summary
-    sprintf(
-      "Normality p=%.3f, R²=%.3f",
-      diagnostics$normality,
-      diagnostics$r_squared
-    )
-  })
-```
-
-## Working with Multiple Inputs
-
-### map2(): Parallel Processing
-
-Here are examples where you need to process pairs of inputs with non-vectorized operations:
-
-```{r}
-# Compare pairs of models
-model_pairs <- map2(.x = models[-1], .y = models[-length(models)], .f = function(current, previous) {
-  # Compare model fits
-  anova_result <- anova(previous, current)
-  
-  # Extract comparison metrics
-  list(
-    df_diff = diff(anova_result$Df),
-    deviance_diff = diff(anova_result$Deviance),
-    p_value = anova_result$`Pr(>F)`[2]
-  )
-})
-
-# Process pairs of data frames with custom comparisons
-df_comparisons <- map2(.x = data_frames[-1], .y = data_frames[-length(data_frames)], 
-  .f = function(current, previous) {
-    # Compare structure and content
-    list(
-      added_cols = setdiff(names(current), names(previous)),
-      removed_cols = setdiff(names(previous), names(current)),
-      common_cols = intersect(names(current), names(previous))
-    )
-  }
-)
-```
-
-### pmap(): Multiple Inputs
-
-For operations requiring multiple parameters that can't be vectorized:
-
-```{r}
-# Configure and run multiple analyses
-analysis_configs <- list(
-  data = list(mtcars, PlantGrowth, InsectSprays),
-  dependent = list("mpg", "weight", "count"),
-  predictors = list(
-    c("wt", "cyl"),
-    c("group"),
-    c("spray")
-  ),
-  test_type = list("lm", "aov", "glm")
-)
-
-analysis_results <- pmap(.l = analysis_configs, .f = function(data, dependent, predictors, test_type) {
-  # Construct formula
-  formula_str <- paste(dependent, "~", paste(predictors, collapse = " + "))
-  formula <- as.formula(formula_str)
-  
-  # Fit model based on test type
-  model <- switch(test_type,
-    "lm" = lm(formula, data = data),
-    "aov" = aov(formula, data = data),
-    "glm" = glm(formula, data = data)
-  )
-  
-  # Return analysis results
-  list(
-    model_type = test_type,
-    formula = formula_str,
-    summary = summary(model),
-    diagnostics = list(
-      residuals = residuals(model),
-      fitted = fitted(model)
-    )
-  )
-})
-```
-
-## Error Handling
-
-When processing real data, things often go wrong. purrr helps you handle errors gracefully:
-
-```{r}
-# A complex analysis function that might fail
-analyze_dataset <- function(df) {
-  if (!all(c("x", "y") %in% names(df))) {
-    stop("Missing required columns x and y")
-  }
-  
-  if (!all(sapply(df[c("x", "y")], is.numeric))) {
-    stop("x and y must be numeric")
-  }
-  
-  # Perform analysis
-  model <- lm(y ~ x, data = df)
-  residuals <- residuals(model)
-  
-  list(
-    coefficients = coef(model),
-    r_squared = summary(model)$r.squared,
-    normality = shapiro.test(residuals)$p.value
-  )
+out <- vector("list", 3)
+for (i in seq_along(x)) {
+  out[[i]] <- triple(x[[i]])
 }
+str(out)
+```
 
-# List of datasets to analyze
-datasets <- list(
-  data.frame(x = 1:5, y = 1:5),                    # Valid
-  data.frame(x = "a", y = 1:5),                    # Invalid types
-  data.frame(z = 1:5),                             # Missing columns
-  data.frame(x = c(1, 1, 1), y = c(2, 2, 2))      # Perfect correlation
+(You might wonder why this function is called `map()`. What does it have to do with depicting physical features of land or sea 🗺? In fact, the meaning comes from mathematics where map refers to “an operation that associates each element of a given set with one or more elements of a second set”. This makes sense here because `map()` defines a mapping from one vector to another. And "map" also has the nice property of being short, which is useful for such a fundamental building block.)
+
+There are some benefits to `map()` in isolation: once you get used to the syntax, it's a very compact way to express the idea of iterating over a vector, returning one output element for each input element. But there are a number of other reasons to use `map()`, which we'll explore in the following sections:
+
+* Progress bars
+* Parallel computing
+* Output variants
+* Input variants
+
+### Progress bars
+
+For long-running jobs, it's really useful to get a progress bar, which gives you an estimate of how long you have to wait. These are easy to enable in purrr: just set `.progress = TRUE`. It's hard to illustrate progress bars in a vignette, but you can try it out interactively with this example:
+
+```{r}
+#| eval: false
+out <- map(1:100, \(i) Sys.sleep(0.5), .progress = TRUE)
+```
+
+Learn more about progress bars in `?progress_bars`
+
+### Parallel computing
+
+By default, `map()` runs only in your current R session. But you can easily opt-in to spreading your task across multiple R sessions, and hence multiple cores with `in_parallel()`. purrr's parallelism is powered by mirai, so to begin, you need to start up a number of background R sessions, called daemons:
+
+```{r}
+mirai::daemons(6)
+```
+
+(You only need to do this once per session)
+
+Now you can easily convert your `map()` call to run in parallel:
+
+```{r}
+out <- map(1:5, in_parallel(\(i) Sys.sleep(0.5)))
+```
+
+It's important to realise that this parallelism works by spreading computation across clean R sessions. That means that code like this will not work, because the worked daemons won't have a copy of `delay`:
+
+```{r}
+#| error: true
+delay <- 0.5
+out <- map(1:5, in_parallel(\(i) Sys.sleep(delay)))
+```
+
+You can resolve this by ensuring that your functions are self-contained, or pass any additional data in `in_parallel()`:
+
+```{r}
+out <- map(1:5, in_parallel(\(i) Sys.sleep(delay), delay = delay))
+```
+
+Learn more about parallel computing in `?in_parallel`.
+
+### Output variants
+
+purrr functions are type-stable, which means it's easy to predict what type of output they return, e.g. `map()` always returns a list. But what if you want a different type of output? That's where the output variants come to play:
+
+* There are four variants for the four most important types of atomic vector:
+  * `map_lgl()` returns a logical vector.
+  * `map_int()` returns an integer vector.
+  * `map_dbl()` returns a numeric (double) vector.
+  * `map_chr()` returns a character vector.
+
+* For all other types of vector (like dates, date-times, factors, etc) there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo".
+
+* `modify()` returns output with the same type as the input. For example, if the input is a data frame, the output will also be a data frame.
+
+* `walk()` returns the input (invisibly); it's useful when you calling a function purely for its side-effects, for example generating plots or saving files.
+
+It's often natural to string together multiple map variants using the pipe. For example, the following code splits `mtcars` into one data frame for each value of `cyl`, fits a linear model to each subset, computes the model summary, and then extracts the R-squared:
+
+```{r}
+mtcars |> 
+  split(mtcars$cyl) |> # from base R
+  map(\(df) lm(mpg ~ wt, data = df)) |> 
+  map(summary) |>
+  map_dbl(\(x) x$r.squared)
+```
+
+### Input variants
+
+`map()` and friends all iterate over a single list, `.x`. This means it only varies `.x` when calling `.f`, and all other arguments are passed along unchanged, thus making it poorly suited for some problems. For example, how would you find a weighted mean when you have a list of observations and a list of weights? Imagine we have the following data:
+
+```{r}
+xs <- map(1:8, ~ runif(10))
+xs[[1]][[1]] <- NA
+ws <- map(1:8, ~ rpois(10, 5) + 1)
+```
+
+We could use `map_dbl()` to compute unweighted means:
+
+```{r}
+map_dbl(xs, mean)
+```
+
+But there's no way to compute a weighted mean because we need to call `weighted.mean(xs[[1]], ws[[1]])`, `weighted.mean(xs[[2]], ws[[2]])` etc. That's the job of `map2()`:
+
+```{r}
+map2_dbl(xs, ws, weighted.mean)
+```
+
+Note that the arguments that vary for each call come before the function, arguments that are constant come after the function: 
+
+```{r}
+map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)
+```
+
+But we generally recommend using an anonymous function instead:
+
+```{r}
+#| eval: false
+map2_dbl(xs, ws, \(x, w) weighted.mean(x, w, na.rm = TRUE))
+```
+
+There are two important variants of `map2()`: `pmap()` which can take any number of varying arguments (passed as a list), and `imap()` which iterates over the values and indices of a single vector. Learn more in their documentation.
+
+### Combinatorial explosion
+
+What makes purrr particularly special is all of the above features (progress bars, parallel computing, output variants and input variants) can be combined any way that you choose. The combination of inputs (prefixs) and outputs (suffixes) forms a matrix, and you can use `.progress` or `in_parallel()` with any of them:
+
+| Output type | Single input (.x) | Two inputs (.x, .y) | Multiple inputs (...) |
+|-------------|-------------------|---------------------|----------------------|
+| **List** | `map(.x, .f)` | `map2(.x, .y, .f)` | `pmap(.l, .f)` |
+| **Logical** | `map_lgl(.x, .f)` | `map2_lgl(.x, .y, .f)` | `pmap_lgl(.l, .f)` |
+| **Integer** | `map_int(.x, .f)` | `map2_int(.x, .y, .f)` | `pmap_int(.l, .f)` |
+| **Double** | `map_dbl(.x, .f)` | `map2_dbl(.x, .y, .f)` | `pmap_dbl(.l, .f)` |
+| **Character** | `map_chr(.x, .f)` | `map2_chr(.x, .y, .f)` | `pmap_chr(.l, .f)` |
+| **Input** | `walk(.x, .f)` | `walk2(.x, .y, .f)` | `pwalk(.l, .f)` |
+
+## Filtering and finding with predicates
+
+purrr provides a number of functions that work with predicate functions. Predicate functions take a vector and return either `TRUE` or `FALSE`, including functions like `is.character()` and `\(x) any(is.na(x))`. You typically use them to filter or find, and purrr comes with a bunch of helpers to make them easier to use:
+
+* `detect(.x, .p)` returns the value of the first element in `.x` where `.p` is `TRUE`.
+* `detect_index(.x, .p)` returns the position of the first element in `.x` where `.p` is `TRUE`.
+* `keep(.x, .p)` returns all elements from `.x` where `.p` evaluates to `TRUE`
+* `discard(.x, .p)` returns all elements from `.x` where `.p` evaluates to `FALSE`
+* `every(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for every element in `.x`
+* `some(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for at least one element in `.x`  
+* `none(.x, .p)` returns `TRUE` if `.p` returns `FALSE` for all elements in `.x`
+* `head_while(.x, .p)` returns elements from the beginning of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`
+* `tail_while(.x, .p)` returns elements from the end of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`
+
+You'll typically use these functions with lists, since you can usually rely on vectorisation for simpler vectors.
+
+```{r}
+x <- list(
+  a = letters[1:10],
+  b = 1:10,
+  c = runif(15)
 )
 
-# Using safely()
-safe_analysis <- safely(analyze_dataset)
-results <- map(.x = datasets, .f = safe_analysis)
-# Each element contains $result and $error
+x |> detect(is.character)
+x |> detect_index(is.numeric)
 
-# Using possibly()
-safe_analysis2 <- possibly(analyze_dataset, otherwise = list(
-  coefficients = NA,
-  r_squared = NA,
-  normality = NA
-))
-results2 <- map(.x = datasets, .f = safe_analysis2)
+x |> keep(is.numeric) |> str()
+x |> discard(is.numeric) |> str()
 
-# Using quietly()
-# quiet_analysis <- quietly(analyze_dataset)
-# results3 <- map(.x = datasets, .f = quiet_analysis)
-# Each element contains $result, $output, $warnings, and $messages
+x |> every(\(x) length(x) > 10)
+x |> some(\(x) length(x) > 10)
+x |> none(\(x) length(x) == 0)
 ```
-
-## Practical Examples
-
-### Example 1: Advanced Data Frame Operations
-
-```{r}
-# Process multiple data frames with complex operations
-data_frames <- list(
-  sales = data.frame(
-    date = as.Date("2024-01-01") + 0:9,
-    amount = runif(10, 100, 1000),
-    category = sample(c("A", "B", "C"), 10, replace = TRUE)
-  ),
-  inventory = data.frame(
-    date = as.Date("2024-01-01") + 0:9,
-    item = sample(letters[1:5], 10, replace = TRUE),
-    quantity = rpois(10, 20)
-  )
-)
-
-processed_data <- data_frames |>
-  map(.f = function(df) {
-    # Add custom datetime features
-    df$year <- format(df$date, "%Y")
-    df$month <- format(df$date, "%m")
-    df$day <- format(df$date, "%d")
-    df$weekday <- format(df$date, "%A")
-    
-    # Calculate statistics if numeric columns exist
-    numeric_cols <- sapply(df, is.numeric)
-    if (any(numeric_cols)) {
-      numeric_data <- df[numeric_cols]
-      df$mean <- apply(numeric_data, 
-                       MARGIN = 2,
-                       FUN = mean)
-    }
-    
-    df
-  }) |>
-  map(.f = function(df) {
-    # Calculate summary statistics by group if categorical columns exist
-    categorical_cols <- sapply(df, is.factor) | sapply(df, is.character)
-    if (any(categorical_cols)) {
-      group_col <- names(df)[categorical_cols][1]
-      numeric_cols <- sapply(df, is.numeric)
-      
-      summaries <- aggregate(df[numeric_cols], 
-                           by = list(group = df[[group_col]]), 
-                           FUN = function(x) {
-                             c(mean = mean(x, na.rm = TRUE),
-                               sd = sd(x, na.rm = TRUE))
-                           })
-    }
-    
-    list(
-      processed_data = df,
-      group_summaries = if (exists("summaries")) summaries else NULL
-    )
-  })
-```
-
-### Example 2: Model Evaluation Pipeline
-
-```{r}
-# Create and evaluate multiple models
-model_specs <- list(
-  list(formula = mpg ~ wt,           name = "simple"),
-  list(formula = mpg ~ wt + cyl,     name = "medium"),
-  list(formula = mpg ~ .,            name = "complex")
-)
-
-model_results <- model_specs |>
-  map(.f = function(spec) {
-    # Fit model
-    model <- lm(spec$formula, data = mtcars)
-    
-    # Perform cross-validation
-    cv_results <- lapply(1:5, \(fold) {
-      # Create train/test split
-      test_idx <- seq_len(nrow(mtcars)) %% 5 == (fold - 1)
-      train <- mtcars[!test_idx, ]
-      test <- mtcars[test_idx, ]
-      
-      # Fit on train, predict on test
-      fold_model <- lm(spec$formula, data = train)
-      predictions <- predict(fold_model, newdata = test)
-      
-      # Calculate fold metrics
-      mse <- mean((test$mpg - predictions)^2)
-      mae <- mean(abs(test$mpg - predictions))
-      
-      list(mse = mse, mae = mae)
-    })
-    
-    # Combine results
-    list(
-      name = spec$name,
-      formula = deparse(spec$formula),
-      model = model,
-      cv_metrics = list(
-        mse = mean(sapply(cv_results, function(x) x$mse)),
-        mae = mean(sapply(cv_results, function(x) x$mae))
-      ),
-      diagnostics = list(
-        r_squared = summary(model)$r.squared,
-        aic = AIC(model),
-        residual_normality = shapiro.test(residuals(model))$p.value
-      )
-    )
-  })
-```
-
-## Best Practices
-
-1. Use map functions when:
-
-- Processing complex objects (like models or data frames)
-- Performing operations that can't be vectorized
-- Handling errors and edge cases
-- Working with nested data structures
-
-2. Avoid map functions when:
-
-- Working with simple arithmetic operations
-- Using functions that are already vectorized
-- Processing single values or simple vectors
-
-3. Error Handling:
-
-- Use safely() when you need to know what went wrong
-- Use possibly() when you just want a default value on error
-- Use quietly() when you need to capture messages and warnings
-
-4. Code Organization:
-
-- Break complex operations into smaller functions
-- Use meaningful names for intermediate steps
-- Comment your code to explain the "why", not just the "what"
-
-## Common Mistakes to Avoid
-
-1. Using map for vectorized operations:
-
-```{r}
-# Don't do this
-map(.x = 1:10, function(x) x * 2)  # Use regular vectorization instead: 1:10 * 2
-
-# Do this
-data_frames <- list(
-  sales = data.frame(
-    date = as.Date("2024-01-01") + 0:9,
-    y = runif(10, 100, 1000),
-    x = sample(c("A", "B", "C"), 10, replace = TRUE)
-  ),
-  inventory = data.frame(
-    date = as.Date("2024-01-01") + 0:9,
-    x = sample(letters[1:5], 10, replace = TRUE),
-    y = rpois(10, 20)
-  )
-)
-
-map(.x = data_frames, .f = function(df) {
-  # Complex non-vectorized operations
-  model <- lm(y ~ x, data = df)
-  summary(model)$r.squared
-})
-```
-
-2. Neglecting error handling:
-
-```{r}
-# Don't do this
-# map(.x = datasets, .f = analyze_dataset)  # Might fail on invalid data
-
-# Do this
-map(.x = datasets, .f = safely(analyze_dataset))  # Handles errors gracefully
-```
-
-3. Making functions too complex:
-
-```{r}
-# Don't do this
-# map(data)
-```
-
