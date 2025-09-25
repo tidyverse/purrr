@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# purrr <img src="man/figures/logo.png" align="right" />
+# purrr <a href="https://purrr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" alt="purrr website" /></a>
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/purrr)](https://cran.r-project.org/package=purrr)
