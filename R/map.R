@@ -23,13 +23,18 @@
 #'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   * A formula, e.g. `~ .x + 1`. You must use `.x` to refer to the first
-#'     argument. Only recommended if you require backward compatibility with
-#'     older versions of R.
+#'   * A formula, e.g. `~ .x + 1`. Use `.x` to refer to the first
+#'     argument. No longer recommended.
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
 #'     set a default value if the indexed element is `NULL` or does not exist.
+#'
+#'   `r lifecycle::badge("experimental")`
+#'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
 #'
 #' @param ... Additional arguments passed on to the mapped function.
 #'
@@ -125,6 +130,37 @@
 #'   map(\(df) lm(mpg ~ wt, data = df)) |>
 #'   map(summary) |>
 #'   map_dbl("r.squared")
+#'
+#' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
+#' # Run in interactive sessions only as spawns additional processes
+#'
+#' # To use parallelized map:
+#' # 1. Set daemons (number of parallel processes) first:
+#' mirai::daemons(2)
+#'
+#' # 2. Wrap .f with in_parallel():
+#' mtcars |> map_dbl(in_parallel(\(x) mean(x)))
+#'
+#' # Note that functions from packages should be fully qualified with `pkg::`
+#' # or call `library(pkg)` within the function
+#' 1:10 |>
+#'   map(in_parallel(\(x) vctrs::vec_init(integer(), x))) |>
+#'   map_int(in_parallel(\(x) { library(vctrs); vec_size(x) }))
+#'
+#' # A locally-defined function (or any required variables)
+#' # should be passed via ... of in_parallel():
+#' slow_lm <- function(formula, data) {
+#'   Sys.sleep(0.5)
+#'   lm(formula, data)
+#' }
+#'
+#' mtcars |>
+#'   split(mtcars$cyl) |>
+#'   map(in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
+#'
+#' # Tear down daemons when no longer in use:
+#' mirai::daemons(0)
+#'
 map <- function(.x, .f, ..., .progress = FALSE) {
   map_("list", .x, .f, ..., .progress = .progress)
 }
@@ -150,25 +186,35 @@ map_dbl <- function(.x, .f, ..., .progress = FALSE) {
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
-  local_deprecation_user_env()
   map_("character", .x, .f, ..., .progress = .progress)
 }
 
-map_ <- function(.type,
-                 .x,
-                 .f,
-                 ...,
-                 .progress = FALSE,
-                 .purrr_user_env = caller_env(2),
-                 .purrr_error_call = caller_env()) {
+map_ <- function(
+  .type,
+  .x,
+  .f,
+  ...,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
+
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
 
-  n <- vec_size(.x)
-
-  names <- vec_names(.x)
+  if (running_in_parallel(.f)) {
+    return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
+  }
 
   .f <- as_mapper(.f, ...)
+
+  n <- vec_size(.x)
+  names <- vec_names(.x)
 
   i <- 0L
   with_indexed_errors(
@@ -179,6 +225,38 @@ map_ <- function(.type,
   )
 }
 
+mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
+  if (...length()) {
+    cli::cli_abort(
+      "Can't use `...` with parallelized functions.",
+      call = error_call
+    )
+  }
+
+  m <- mirai::mirai_map(.x, .f)
+
+  options <- if (isFALSE(.progress)) {
+    ".stop"
+  } else if (is.logical(.progress)) {
+    c(".stop", ".progress")
+  } else if (is.character(.progress) || is.list(.progress)) {
+    list(.stop = TRUE, .progress = .progress)
+  } else {
+    cli::cli_abort(
+      "Unknown cli progress bar configuation, see manual.",
+      call = error_call
+    )
+  }
+  x <- with_parallel_indexed_errors(
+    mirai::collect_mirai(m, options = options),
+    interrupt_expr = mirai::stop_mirai(m),
+    error_call = error_call
+  )
+  if (.type != "list") {
+    x <- simplify_impl(x, ptype = vector(mode = .type), error_call = error_call)
+  }
+  x
+}
 
 #' @rdname map
 #' @param .ptype If `NULL`, the default, the output type is the common type
@@ -197,7 +275,12 @@ walk <- function(.x, .f, ..., .progress = FALSE) {
   invisible(.x)
 }
 
-with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()) {
+with_indexed_errors <- function(
+  expr,
+  i,
+  names = NULL,
+  error_call = caller_env()
+) {
   withCallingHandlers(
     expr,
     error = function(cnd) {
@@ -221,6 +304,34 @@ with_indexed_errors <- function(expr, i, names = NULL, error_call = caller_env()
           class = "purrr_error_indexed"
         )
       }
+    }
+  )
+}
+
+with_parallel_indexed_errors <- function(
+  expr,
+  interrupt_expr = NULL,
+  error_call = caller_env()
+) {
+  withCallingHandlers(
+    expr,
+    error = function(cnd) {
+      location <- cnd$location
+      iname <- cnd$name
+      cli::cli_abort(
+        c(
+          i = "In index: {location}.",
+          i = if (length(iname) && nzchar(iname)) "With name: {iname}."
+        ),
+        location = location,
+        name = iname,
+        parent = cnd$parent,
+        call = error_call,
+        class = "purrr_error_indexed"
+      )
+    },
+    interrupt = function(cnd) {
+      interrupt_expr
     }
   )
 }

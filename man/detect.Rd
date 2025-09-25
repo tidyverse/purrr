@@ -5,16 +5,9 @@
 \alias{detect_index}
 \title{Find the value or position of the first match}
 \usage{
-detect(
-  .x,
-  .f,
-  ...,
-  .dir = c("forward", "backward"),
-  .right = NULL,
-  .default = NULL
-)
+detect(.x, .f, ..., .dir = c("forward", "backward"), .default = NULL)
 
-detect_index(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL)
+detect_index(.x, .f, ..., .dir = c("forward", "backward"))
 }
 \arguments{
 \item{.x}{A list or vector.}
@@ -23,9 +16,8 @@ detect_index(.x, .f, ..., .dir = c("forward", "backward"), .right = NULL)
 \itemize{
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
-\item A formula, e.g. \code{~ .x + 1}. You must use \code{.x} to refer to the first
-argument. Only recommended if you require backward compatibility with
-older versions of R.
+\item A formula, e.g. \code{~ .x + 1}. Use \code{.x} to refer to the first argument. No
+longer recommended.
 \item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
@@ -37,8 +29,6 @@ set a default value if the indexed element is \code{NULL} or does not exist.
 \item{.dir}{If \code{"forward"}, the default, starts at the beginning of
 the vector and move towards the end; if \code{"backward"}, starts at
 the end of the vector and moves towards the beginning.}
-
-\item{.right}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Please use \code{.dir} instead.}
 
 \item{.default}{The value returned when nothing is detected.}
 }
@@ -61,8 +51,7 @@ is_even <- function(x) x \%\% 2 == 0
 3:10 |> detect_index(is_even, .dir = "backward")
 
 
-# Since `.f` is passed to as_mapper(), you can supply a
-# lambda-formula or a pluck object:
+# Since `.f` is passed to as_mapper(), you can supply a pluck object:
 x <- list(
   list(1, foo = FALSE),
   list(2, foo = TRUE),

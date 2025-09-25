@@ -20,9 +20,8 @@ or \code{FALSE}) specified in one of the following ways:
 \itemize{
 \item A named function, e.g. \code{is.character}.
 \item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
-\item A formula, e.g. \code{~ all(.x < 0)}. You must use \code{.x} to refer to the first
-argument). Only recommended if you require backward compatibility with
-older versions of R.
+\item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
+No longer recommended.
 }}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
@@ -43,7 +42,7 @@ rep(10, 10) |>
   map(sample, 5) |>
   keep(function(x) mean(x) > 6)
 
-# Or use a formula
+# Or use shorthand form
 rep(10, 10) |>
   map(sample, 5) |>
   keep(\(x) mean(x) > 6)

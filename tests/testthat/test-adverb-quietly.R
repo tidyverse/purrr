@@ -10,10 +10,13 @@ test_that("quietly captures output", {
   expect_warning(quietly(f)(), NA)
 
   out <- quietly(f)()
-  expect_equal(out, list(
-    result = 4,
-    output = "1",
-    warnings = "3",
-    messages = "2"
-  ))
+  expect_equal(
+    out,
+    list(
+      result = 4,
+      output = "1",
+      warnings = "3",
+      messages = "2"
+    )
+  )
 })

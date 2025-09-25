@@ -6,13 +6,22 @@ test_that("dots are correctly placed in the signature", {
 
 test_that("no lazy evaluation means arguments aren't repeatedly evaluated", {
   counter <- env(n = 0)
-  lazy <- partial(list, n = { counter$n <- counter$n + 1; NULL })
-  walk(1:10, ~lazy())
+  lazy <- partial(list, n = {
+    counter$n <- counter$n + 1
+    NULL
+  })
+  walk(1:10, ~ lazy())
   expect_identical(counter$n, 10)
 
   counter <- env(n = 0)
-  qq <- partial(list, n = !!{ counter$n <- counter$n + 1; NULL })
-  walk(1:10, ~qq())
+  qq <- partial(
+    list,
+    n = !!{
+      counter$n <- counter$n + 1
+      NULL
+    }
+  )
+  walk(1:10, ~ qq())
   expect_identical(counter$n, 1)
 })
 
@@ -121,7 +130,10 @@ test_that("substitute() works for both partialised and non-partialised arguments
 test_that("partial() still supports quosures and multiple environments", {
   arg <- local({
     n <- 0
-    quo({ n <<- n + 1; n})
+    quo({
+      n <<- n + 1
+      n
+    })
   })
 
   x <- "foo"
@@ -140,44 +152,11 @@ test_that("partial() preserves visibility when arguments are from the same envir
   expect_identical(withVisible(fn()), list(value = 1, visible = FALSE))
 })
 
-
-# Life cycle --------------------------------------------------------------
-
-test_that("`.lazy`, `.env`, and `.first` are soft-deprecated", {
-  expect_snapshot({
-    . <- partial(list, "foo", .lazy = TRUE)
-    . <- partial(list, "foo", .env = env())
-    . <- partial(list, "foo", .first = TRUE)
-  })
-})
-
-test_that("`.lazy` still works", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  counter <- env(n = 0)
-  eager <- partial(list, n = { counter$n <- counter$n + 1; NULL }, .lazy = FALSE)
-  walk(1:10, ~eager())
-  expect_identical(counter$n, 1)
-})
-
-test_that("`.first` still works", {
-  local_options(lifecycle_verbosity = "quiet")
-
-  out <- partialised_body(partial(runif, n = rpois(1, 5), .first = FALSE))
-  exp <- expr(runif(..., n = rpois(1, 5)))
-  expect_identical(out, exp)
-
-  # partial() also works without partialised arguments
-  expect_identical(partialised_body(partial(runif, .first = TRUE)), expr(runif(...)))
-  expect_identical(partialised_body(partial(runif, .first = FALSE)), expr(runif(...)))
-})
-
 test_that("checks inputs", {
   expect_snapshot(partial(1), error = TRUE)
 })
 
 # helpers -----------------------------------------------------------------
-
 
 test_that("quo_invert() inverts quosured arguments", {
   call <- expr(list(!!quo(foo), !!quo(bar)))
@@ -193,7 +172,10 @@ test_that("quo_invert() inverts quosured arguments", {
 test_that("quo_invert() detects local quosures", {
   foo <- local(quo(foo))
   call <- expr(list(!!foo, !!quo(bar)))
-  expect_identical(quo_invert(call), new_quosure(expr(list(foo, !!quo(bar))), quo_get_env(foo)))
+  expect_identical(
+    quo_invert(call),
+    new_quosure(expr(list(foo, !!quo(bar))), quo_get_env(foo))
+  )
 
   bar <- local(quo(bar))
   call <- expr(list(!!quo(foo), !!bar))
@@ -207,7 +189,10 @@ test_that("quo_invert() supports quosures in function position", {
   fn <- local(quo(list))
   env <- quo_get_env(fn)
   call <- expr((!!fn)(!!quo(foo), !!new_quosure(quote(bar), env)))
-  expect_identical(quo_invert(call), new_quosure(expr(list(!!quo(foo), bar)), env))
+  expect_identical(
+    quo_invert(call),
+    new_quosure(expr(list(!!quo(foo), bar)), env)
+  )
 })
 
 test_that("quo_invert() supports quosures", {
@@ -217,7 +202,10 @@ test_that("quo_invert() supports quosures", {
 
   foo <- quo(foo)
   call <- local(quo(list(!!foo, !!bar)))
-  expect_identical(quo_invert(call), new_quosure(expr(list(!!foo, !!bar)), quo_get_env(call)))
+  expect_identical(
+    quo_invert(call),
+    new_quosure(expr(list(!!foo, !!bar)), quo_get_env(call))
+  )
 })
 
 test_that("quo_invert() unwraps constants", {
@@ -226,5 +214,8 @@ test_that("quo_invert() unwraps constants", {
 
   foo <- local(quo(foo))
   call <- expr(foo(!!foo, !!quo(NULL)))
-  expect_identical(quo_invert(call), new_quosure(quote(foo(foo, NULL)), quo_get_env(foo)))
+  expect_identical(
+    quo_invert(call),
+    new_quosure(quote(foo(foo, NULL)), quo_get_env(foo))
+  )
 })

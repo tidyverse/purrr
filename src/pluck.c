@@ -111,7 +111,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
     return R_NilValue;
   }
 
-  if (OBJECT(x)) {
+  if (Rf_isObject(x)) {
     // We check `offset` pass the original index to support unordered
     // vector classes
     SEXP extract_call = PROTECT(Rf_lang3(Rf_install("[["), x, index_i));
@@ -152,7 +152,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   }
 
   SEXP sym = Rf_installChar(index);
-  SEXP out = Rf_findVarInFrame3(x, sym, TRUE);
+  SEXP out = Rf_findVarInFrame(x, sym);
 
   if (check_unbound_value(out, index_i, strict)) {
     return R_NilValue;
@@ -220,7 +220,7 @@ SEXP pluck_impl(SEXP x, SEXP index, SEXP missing, SEXP strict_arg) {
       continue;
     }
     // Assume all S3 objects implement the vector interface
-    if (OBJECT(x) && TYPEOF(x) != S4SXP) {
+    if (Rf_isObject(x) && TYPEOF(x) != S4SXP) {
       x = extract_vector(x, index_i, i, strict);
       REPROTECT(x, idx);
       continue;
@@ -392,7 +392,7 @@ static int check_obj_length(SEXP n, bool strict) {
 
 
 int obj_length(SEXP x, bool strict) {
-  if (!OBJECT(x)) {
+  if (!Rf_isObject(x)) {
     return Rf_length(x);
   }
 
@@ -409,7 +409,7 @@ int obj_length(SEXP x, bool strict) {
 }
 
 SEXP obj_names(SEXP x, bool strict) {
-  if (!OBJECT(x)) {
+  if (!Rf_isObject(x)) {
     return Rf_getAttrib(x, R_NamesSymbol);
   }
 

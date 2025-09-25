@@ -1,31 +1,66 @@
 ## revdepcheck results
 
-We checked 1437 reverse dependencies (1430 from CRAN + 7 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 2090 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 3 new problems
- * We failed to check 8 packages
+ * We saw 11 new problems
+ * We failed to check 16 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
 
-* ast2ast
+* autothresholdr
+  checking re-building of vignette outputs ... ERROR
+
+* casino
+  checking re-building of vignette outputs ... ERROR
+
+* CPAT
   checking tests ... ERROR
 
-* openalexR
-  checking re-building of vignette outputs ... WARNING
+* egor
+  checking examples ... ERROR
+  checking tests ... ERROR
 
-* rearrr
+* immunarch
+  checking examples ... ERROR
+
+* LTFGRS
+  checking tests ... ERROR
+
+* PopED
+  checking installed package size ... NOTE
+
+* quincunx
+  checking examples ... ERROR
+  checking tests ... ERROR
+
+* rbmi
+  checking tests ... ERROR
+
+* SCORPIUS
+  checking whether package ‘SCORPIUS’ can be installed ... WARNING
+
+* tfrmt
+  checking examples ... ERROR
   checking tests ... ERROR
 
 ### Failed to check
 
-* elbird       (NA)
-* ggPMX        (NA)
-* immcp        (NA)
-* ImputeRobust (NA)
-* numbat       (NA)
-* pathwayTMB   (NA)
-* Platypus     (NA)
-* RVA          (NA)
+* apa              (NA)
+* arealDB          (NA)
+* dsTidyverse      (NA)
+* kerastuneR       (NA)
+* metajam          (NA)
+* multinma         (NA)
+* nesRdata         (NA)
+* ontologics       (NA)
+* rdflib           (NA)
+* sprtt            (NA)
+* stoRy            (NA)
+* Surrogate        (NA)
+* tidybins         (NA)
+* tidycomm         (NA)
+* tidyjson         (NA)
+* TriDimRegression (NA)

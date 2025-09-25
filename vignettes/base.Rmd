@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
   fig.align = "center"
 )
 options(tibble.print_min = 6, tibble.print_max = 6)
-
-modern_r <- getRversion() >= "4.1.0"
 ```
 
 # Introduction
@@ -55,27 +53,27 @@ See function documentation for the details.
 
 Here `x` denotes a vector and `f` denotes a function
 
-| Output                        | Input                                 | Base R                                                                      | purrr                                                                                                               |
+| Output                        | Input                                 | Base R                                                                      | purrr                                                                                                                         |
 |------------------|------------------|------------------|-------------------|
-| List                          | 1 vector                              | `lapply()`                                                                  | `map()`                                                                                                             |
-| List                          | 2 vectors                             | `mapply()`, `Map()`                                                         | `map2()`                                                                                                            |
-| List                          | \>2 vectors                           | `mapply()`, `Map()`                                                         | `pmap()`                                                                                                            |
-| Atomic vector of desired type | 1 vector                              | `vapply()`                                                                  | `map_lgl()` (logical), `map_int()` (integer), `map_dbl()` (double), `map_chr()` (character), `map_raw()` (raw)      |
-| Atomic vector of desired type | 2 vectors                             | `mapply()`, `Map()`, then `is.*()` to check type                            | `map2_lgl()` (logical), `map2_int()` (integer), `map2_dbl()` (double), `map2_chr()` (character), `map2_raw()` (raw) |
-| Atomic vector of desired type | \>2 vectors                           | `mapply()`, `Map()`, then `is.*()` to check type                            | `pmap_lgl()` (logical), `pmap_int()` (integer), `pmap_dbl()` (double), `pmap_chr()` (character), `pmap_raw()` (raw) |
-| Side effect only              | 1 vector                              | loops                                                                       | `walk()`                                                                                                            |
-| Side effect only              | 2 vectors                             | loops                                                                       | `walk2()`                                                                                                           |
-| Side effect only              | \>2 vectors                           | loops                                                                       | `pwalk()`                                                                                                           |
-| Data frame (`rbind` outputs)  | 1 vector                              | `lapply()` then `rbind()`                                                   | `map_dfr()`                                                                                                         |
-| Data frame (`rbind` outputs)  | 2 vectors                             | `mapply()`/`Map()` then `rbind()`                                           | `map2_dfr()`                                                                                                        |
-| Data frame (`rbind` outputs)  | \>2 vectors                           | `mapply()`/`Map()` then `rbind()`                                           | `pmap_dfr()`                                                                                                        |
-| Data frame (`cbind` outputs)  | 1 vector                              | `lapply()` then `cbind()`                                                   | `map_dfc()`                                                                                                         |
-| Data frame (`cbind` outputs)  | 2 vectors                             | `mapply()`/`Map()` then `cbind()`                                           | `map2_dfc()`                                                                                                        |
-| Data frame (`cbind` outputs)  | \>2 vectors                           | `mapply()`/`Map()` then `cbind()`                                           | `pmap_dfc()`                                                                                                        |
-| Any                           | Vector and its names                  | `l/s/vapply(X, function(x) f(x, names(x)))` or `mapply/Map(f, x, names(x))` | `imap()`, `imap_*()` (`lgl`, `dbl`, `dfr`, and etc. just like for `map()`, `map2()`, and `pmap()`)                  |
-| Any                           | Selected elements of the vector       | `l/s/vapply(X[index], FUN, ...)`                                            | `map_if()`, `map_at()`                                                                                              |
-| List                          | Recursively apply to list within list | `rapply()`                                                                  | `map_depth()`                                                                                                       |
-| List                          | List only                             | `lapply()`                                                                  | `lmap()`, `lmap_at()`, `lmap_if()`                                                                                  |
+| List                          | 1 vector                              | `lapply()`                                                                  | `map()`                                                                                                                       |
+| List                          | 2 vectors                             | `mapply()`, `Map()`                                                         | `map2()`                                                                                                                      |
+| List                          | \>2 vectors                           | `mapply()`, `Map()`                                                         | `pmap()`                                                                                                                      |
+| Atomic vector of desired type | 1 vector                              | `vapply()`                                                                  | `map_lgl()` (logical), `map_int()` (integer), `map_dbl()` (double), `map_chr()` (character), `map_vec()` (other vectors)      |
+| Atomic vector of desired type | 2 vectors                             | `mapply()`, `Map()`, then `is.*()` to check type                            | `map2_lgl()` (logical), `map2_int()` (integer), `map2_dbl()` (double), `map2_chr()` (character), `map2_vec()` (other vectors) |
+| Atomic vector of desired type | \>2 vectors                           | `mapply()`, `Map()`, then `is.*()` to check type                            | `pmap_lgl()` (logical), `pmap_int()` (integer), `pmap_dbl()` (double), `pmap_chr()` (character), `pmap_vec()` (other vectors) |
+| Side effect only              | 2 vectors                             | loops                                                                       | `walk2()`                                                                                                                     |
+| Side effect only              | 1 vector                              | loops                                                                       | `walk()`                                                                                                                      |
+| Side effect only              | \>2 vectors                           | loops                                                                       | `pwalk()`                                                                                                                     |
+| Data frame (`rbind` outputs)  | 1 vector                              | `lapply()` then `rbind()`                                                   | `map()` then `list_rbind()`                                                                                                   |
+| Data frame (`rbind` outputs)  | 2 vectors                             | `mapply()`/`Map()` then `rbind()`                                           | `map2()` then `list_rbind()`                                                                                                  |
+| Data frame (`rbind` outputs)  | \>2 vectors                           | `mapply()`/`Map()` then `rbind()`                                           | `pmap()` then `list_rbind()`                                                                                                  |
+| Data frame (`cbind` outputs)  | 1 vector                              | `lapply()` then `cbind()`                                                   | `map()` then `list_cbind()`                                                                                                   |
+| Data frame (`cbind` outputs)  | 2 vectors                             | `mapply()`/`Map()` then `cbind()`                                           | `map2()` then `list_cbind()`                                                                                                  |
+| Data frame (`cbind` outputs)  | \>2 vectors                           | `mapply()`/`Map()` then `cbind()`                                           | `pmap()` then `list_cbind()`                                                                                                  |
+| Any                           | Vector and its names                  | `l/s/vapply(X, function(x) f(x, names(x)))` or `mapply/Map(f, x, names(x))` | `imap()`, `imap_*()` (`lgl`, `dbl`, `chr`, and etc. just like for `map()`, `map2()`, and `pmap()`)                            |
+| Any                           | Selected elements of the vector       | `l/s/vapply(X[index], FUN, ...)`                                            | `map_if()`, `map_at()`                                                                                                        |
+| List                          | Recursively apply to list within list | `rapply()`                                                                  | `map_depth()`                                                                                                                 |
+| List                          | List only                             | `lapply()`                                                                  | `lmap()`, `lmap_at()`, `lmap_if()`                                                                                            |
 
 ### Extractor shorthands
 
@@ -164,7 +162,7 @@ sds <- 1:4
     str(samples)
     ```
 
-    Alternatively, we could use `Map()` which doesn't simply, but also doesn't take any constant arguments, so we need to use an anonymous function:
+    Alternatively, we could use `Map()` which doesn't simplify, but also doesn't take any constant arguments, so we need to use an anonymous function:
 
     ```{r}
     samples <- Map(function(...) rnorm(..., n = 5), mean = means, sd = sds)
@@ -172,7 +170,7 @@ sds <- 1:4
 
     In R 4.1 and up, you could use the shorter anonymous function form:
 
-    ```{r, eval = modern_r}
+    ```{r}
     samples <- Map(\(...) rnorm(..., n = 5), mean = means, sd = sds)
     ```
 
@@ -257,30 +255,19 @@ What if we want just the side effect, such as a plot or a file output, but not t
 
 ### Pipes
 
-You can join multiple steps together either using the magrittr pipe:
+You can join multiple steps together with the pipe:
 
 ```{r}
 set.seed(2020)
-means %>%
-  map(rnorm, n = 5, sd = 1) %>%
+means |>
+  map(rnorm, n = 5, sd = 1) |>
   map_dbl(median)
 ```
-
-Or the base pipe R:
-
-```{r, eval = modern_r}
-set.seed(2020)
-means |> 
-  lapply(rnorm, n = 5, sd = 1) |> 
-  sapply(median)
-```
-
-(And of course you can mix and match the piping style with either base R or purrr.)
 
 The pipe is particularly compelling when working with longer transformations.
 For example, the following code splits `mtcars` up by `cyl`, fits a linear model, extracts the coefficients, and extracts the first one (the intercept).
 
-```{r, eval = modern_r}
+```{r}
 mtcars |>
   split(mtcars$cyl) |> 
   map(\(df) lm(mpg ~ wt, data = df))|> 

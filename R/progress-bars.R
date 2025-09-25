@@ -22,7 +22,7 @@
 #'   the progress bar type. It must be given for the `custom` type.
 #'   Format strings may contain R expressions to evaluate in braces.
 #'   They support cli [pluralization][cli::pluralization], and
-#'   [styling][inline-markup] and they can contain special
+#'   [styling][cli::inline-markup] and they can contain special
 #'   [progress variables][cli::progress-variables].
 #' * `format_done`: format string for successful termination. By default
 #'   the same as `format`.
@@ -49,3 +49,23 @@
 #'
 #' @name progress_bars
 NULL
+
+as_progress <- function(
+  progress,
+  user_env = caller_env(2),
+  caller_env = caller_env()
+) {
+  if (isFALSE(progress) || isTRUE(progress) || is_string(progress)) {
+    progress
+  } else if (is.list(progress)) {
+    progress$caller <- progress$caller %||% user_env
+    progress
+  } else {
+    stop_input_type(
+      progress,
+      c("TRUE", "FALSE", "a string", "a named list"),
+      arg = ".progress",
+      call = caller_env
+    )
+  }
+}

@@ -21,28 +21,28 @@ rate <- new_class(
   "rate",
   package = "purrr",
   properties = list(
-    jitter = new_property(class_logical,
-      validator = function(value) {
-        if (!is_bool(value)) {
-          "must be a logical of length 1"
-        }
+    jitter = new_property(class_logical, validator = function(value) {
+      if (!is_bool(value)) {
+        "must be a logical of length 1"
       }
-    ),
-    max_times = new_property(class_numeric,
-      validator = function(value) {
-        if (!is_number(value, allow_infinite = TRUE)) {
-          "must be a numeric or `Inf`"
-        }
+    }),
+    max_times = new_property(class_numeric, validator = function(value) {
+      if (!is_number(value, allow_infinite = TRUE)) {
+        "must be a numeric or `Inf`"
       }
-    ), state = new_property(class_environment)
+    }),
+    state = new_property(class_environment)
   ),
   constructor = function(jitter = TRUE, max_times = 3, state = env(i = 0L)) {
     force(jitter)
     force(max_times)
     force(state)
 
-    new_object(S7_object(),
-      jitter = jitter, max_times = max_times, state = state
+    new_object(
+      S7_object(),
+      jitter = jitter,
+      max_times = max_times,
+      state = state
     )
   }
 )
@@ -51,14 +51,16 @@ rate <- new_class(
 #' @rdname rate-helpers
 #' @param pause Delay between attempts in seconds.
 #' @export
-rate_delay <- new_class("rate_delay",
+rate_delay <- new_class(
+  "rate_delay",
   parent = rate,
   package = "purrr",
   properties = list(
     pause = new_property(class_numeric, validator = function(value) {
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     }),
-    max_times = new_property(class_numeric,
+    max_times = new_property(
+      class_numeric,
       default = Inf,
       validator = function(value) {
         if (!is_number(value, allow_infinite = TRUE)) {
@@ -72,9 +74,7 @@ rate_delay <- new_class("rate_delay",
     force(jitter)
     force(max_times)
 
-    new_object(rate(jitter = jitter, max_times = max_times),
-      pause = pause
-    )
+    new_object(rate(jitter = jitter, max_times = max_times), pause = pause)
   }
 )
 
@@ -101,15 +101,24 @@ rate_backoff <- new_class(
       check_number_decimal(value, allow_infinite = TRUE, min = 0)
     })
   ),
-  constructor = function(pause_base = 1, pause_cap = 60, pause_min = 1, max_times = 3, jitter = TRUE) {
+  constructor = function(
+    pause_base = 1,
+    pause_cap = 60,
+    pause_min = 1,
+    max_times = 3,
+    jitter = TRUE
+  ) {
     force(pause_base)
     force(pause_cap)
     force(pause_min)
     force(max_times)
     force(jitter)
 
-    new_object(rate(jitter = jitter, max_times = max_times),
-      pause_base = pause_base, pause_cap = pause_cap, pause_min = pause_min
+    new_object(
+      rate(jitter = jitter, max_times = max_times),
+      pause_base = pause_base,
+      pause_cap = pause_cap,
+      pause_min = pause_min
     )
   }
 )
@@ -163,27 +172,31 @@ method(base_print, rate_backoff) <- function(x, ...) {
 #' @seealso [rate_backoff()], [insistently()]
 #' @keywords internal
 #' @export
-rate_sleep <- new_generic("rate_sleep", "rate", function(rate, ..., quiet = TRUE) {
-  stopifnot(is_rate(rate))
+rate_sleep <- new_generic(
+  "rate_sleep",
+  "rate",
+  function(rate, ..., quiet = TRUE) {
+    stopifnot(is_rate(rate))
 
-  i <- rate_count(rate)
+    i <- rate_count(rate)
 
-  if (i > rate@max_times) {
-    stop_rate_expired(rate)
+    if (i > rate@max_times) {
+      stop_rate_expired(rate)
+    }
+    if (i == rate@max_times) {
+      stop_rate_excess(rate)
+    }
+
+    if (i == 0L) {
+      rate_bump_count(rate)
+      signal_rate_init(rate)
+      return(invisible())
+    }
+
+    on.exit(rate_bump_count(rate))
+    S7_dispatch()
   }
-  if (i == rate@max_times) {
-    stop_rate_excess(rate)
-  }
-
-  if (i == 0L) {
-    rate_bump_count(rate)
-    signal_rate_init(rate)
-    return(invisible())
-  }
-
-  on.exit(rate_bump_count(rate))
-  S7_dispatch()
-})
+)
 
 #' @export
 method(rate_sleep, rate_backoff) <- function(rate, quiet = TRUE) {

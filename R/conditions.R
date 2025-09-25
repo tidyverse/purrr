@@ -27,12 +27,14 @@
 #' @noRd
 NULL
 
-stop_bad_type <- function(x,
-                          expected,
-                          ...,
-                          what = NULL,
-                          arg = NULL,
-                          call = caller_env()) {
+stop_bad_type <- function(
+  x,
+  expected,
+  ...,
+  what = NULL,
+  arg = NULL,
+  call = caller_env()
+) {
   what <- what %||% what_bad_object(arg)
   cli::cli_abort(
     "{what} must be {expected}, not {.obj_type_friendly {x}}.",
@@ -41,13 +43,15 @@ stop_bad_type <- function(x,
   )
 }
 
-stop_bad_element_type <- function(x,
-                                  index,
-                                  expected,
-                                  ...,
-                                  what = NULL,
-                                  arg = NULL,
-                                  call = caller_env()) {
+stop_bad_element_type <- function(
+  x,
+  index,
+  expected,
+  ...,
+  what = NULL,
+  arg = NULL,
+  call = caller_env()
+) {
   what <- what_bad_element(what, arg, index)
   cli::cli_abort(
     "{what} must be {expected}, not {.obj_type_friendly {x}}.",
@@ -56,14 +60,16 @@ stop_bad_element_type <- function(x,
   )
 }
 
-stop_bad_element_length <- function(x,
-                                    index,
-                                    expected_length,
-                                    ...,
-                                    what = NULL,
-                                    arg = NULL,
-                                    recycle = FALSE,
-                                    call = caller_env()) {
+stop_bad_element_length <- function(
+  x,
+  index,
+  expected_length,
+  ...,
+  what = NULL,
+  arg = NULL,
+  recycle = FALSE,
+  call = caller_env()
+) {
   what <- what_bad_element(what, arg, index)
 
   if (recycle) {

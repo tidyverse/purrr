@@ -70,3 +70,12 @@ the equivalents in base R:
 - All `map()` functions accept functions (named, anonymous, and lambda),
   character vector (used to extract components by name), or numeric
   vectors (used to extract by position).
+
+There are two less obvious advantages:
+
+- All `map()` functions have `.progress` argument so that you can easily
+  track the progress of long running jobs.
+
+- All `map()` functions work with `in_parallel()` to easily spread
+  computation across multiple cores on your computer, or multiple
+  machines over the network.

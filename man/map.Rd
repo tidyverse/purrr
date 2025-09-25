@@ -31,14 +31,19 @@ walk(.x, .f, ..., .progress = FALSE)
 \itemize{
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
-\item A formula, e.g. \code{~ .x + 1}. You must use \code{.x} to refer to the first
-argument. Only recommended if you require backward compatibility with
-older versions of R.
+\item A formula, e.g. \code{~ .x + 1}. Use \code{.x} to refer to the first
+argument. No longer recommended.
 \item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
 set a default value if the indexed element is \code{NULL} or does not exist.
-}}
+}
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to the mapped function.
 
@@ -149,6 +154,37 @@ mtcars |>
   map(\(df) lm(mpg ~ wt, data = df)) |>
   map(summary) |>
   map_dbl("r.squared")
+
+\dontshow{if (interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")) withAutoprint(\{ # examplesIf}
+# Run in interactive sessions only as spawns additional processes
+
+# To use parallelized map:
+# 1. Set daemons (number of parallel processes) first:
+mirai::daemons(2)
+
+# 2. Wrap .f with in_parallel():
+mtcars |> map_dbl(in_parallel(\(x) mean(x)))
+
+# Note that functions from packages should be fully qualified with `pkg::`
+# or call `library(pkg)` within the function
+1:10 |>
+  map(in_parallel(\(x) vctrs::vec_init(integer(), x))) |>
+  map_int(in_parallel(\(x) { library(vctrs); vec_size(x) }))
+
+# A locally-defined function (or any required variables)
+# should be passed via ... of in_parallel():
+slow_lm <- function(formula, data) {
+  Sys.sleep(0.5)
+  lm(formula, data)
+}
+
+mtcars |>
+  split(mtcars$cyl) |>
+  map(in_parallel(\(df) slow_lm(mpg ~ disp, data = df), slow_lm = slow_lm))
+
+# Tear down daemons when no longer in use:
+mirai::daemons(0)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=map_if]{map_if()}} for applying a function to only those elements
