@@ -130,11 +130,7 @@ is_rate <- function(x) {
   S7_inherits(x, rate)
 }
 
-
-base_print <- new_external_generic("base", "print", "x")
-
-#' @export
-method(base_print, rate_delay) <- function(x, ...) {
+method(print, rate_delay) <- function(x, ...) {
   cli::cli_text("<rate: delay>")
   cli::cli_bullets(c(
     " " = "Attempts: {rate_count(x)}/{x@max_times}",
@@ -144,8 +140,7 @@ method(base_print, rate_delay) <- function(x, ...) {
   invisible(x)
 }
 
-#' @export
-method(base_print, rate_backoff) <- function(x, ...) {
+method(print, rate_backoff) <- function(x, ...) {
   cli::cli_text("<rate: backoff>")
   cli::cli_bullets(c(
     " " = "Attempts: {rate_count(x)}/{x@max_times}",
@@ -198,7 +193,6 @@ rate_sleep <- new_generic(
   }
 )
 
-#' @export
 method(rate_sleep, rate_backoff) <- function(rate, quiet = TRUE) {
   i <- rate_count(rate)
 
@@ -210,7 +204,7 @@ method(rate_sleep, rate_backoff) <- function(rate, quiet = TRUE) {
   length <- max(rate@pause_min, pause_max)
   rate_sleep_impl(rate, length, quiet)
 }
-#' @export
+
 method(rate_sleep, rate_delay) <- function(rate, quiet = TRUE) {
   rate_sleep_impl(rate, rate@pause, quiet)
 }
