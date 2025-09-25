@@ -11,6 +11,11 @@ test_that("only uses outer names", {
   expect_named(out, c("a", "", "c"))
 })
 
+test_that("empty lists simplify to NULL", {
+  expect_equal(list_simplify(list()), NULL)
+  expect_equal(list_simplify(set_names(list())), NULL)
+})
+
 test_that("ptype is enforced", {
   expect_equal(list_simplify(list(1, 2), ptype = double()), c(1, 2))
   expect_snapshot(list_simplify(list(1, 2), ptype = character()), error = TRUE)
