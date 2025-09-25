@@ -6,7 +6,7 @@
 * GitHub: https://github.com/rorynolan/autothresholdr
 * Source code: https://github.com/cran/autothresholdr
 * Date/Publication: 2023-12-13 06:00:02 UTC
-* Number of recursive dependencies: 99
+* Number of recursive dependencies: 95
 
 Run `revdepcheck::cloud_details(, "autothresholdr")` for more info
 
@@ -38,7 +38,7 @@ Run `revdepcheck::cloud_details(, "autothresholdr")` for more info
 * GitHub: https://github.com/anthonypileggi/casino
 * Source code: https://github.com/cran/casino
 * Date/Publication: 2019-01-17 17:40:03 UTC
-* Number of recursive dependencies: 57
+* Number of recursive dependencies: 53
 
 Run `revdepcheck::cloud_details(, "casino")` for more info
 
@@ -93,7 +93,7 @@ Run `revdepcheck::cloud_details(, "casino")` for more info
 * GitHub: NA
 * Source code: https://github.com/cran/CPAT
 * Date/Publication: 2018-12-25 22:40:08 UTC
-* Number of recursive dependencies: 63
+* Number of recursive dependencies: 60
 
 Run `revdepcheck::cloud_details(, "CPAT")` for more info
 
@@ -209,7 +209,7 @@ Run `revdepcheck::cloud_details(, "egor")` for more info
 * GitHub: https://github.com/immunomind/immunarch
 * Source code: https://github.com/cran/immunarch
 * Date/Publication: 2024-03-18 19:10:06 UTC
-* Number of recursive dependencies: 200
+* Number of recursive dependencies: 201
 
 Run `revdepcheck::cloud_details(, "immunarch")` for more info
 
@@ -260,7 +260,7 @@ Run `revdepcheck::cloud_details(, "immunarch")` for more info
 * GitHub: https://github.com/EagerAI/kerastuneR
 * Source code: https://github.com/cran/kerastuneR
 * Date/Publication: 2024-04-13 13:20:02 UTC
-* Number of recursive dependencies: 109
+* Number of recursive dependencies: 107
 
 Run `revdepcheck::cloud_details(, "kerastuneR")` for more info
 
@@ -312,70 +312,45 @@ ERROR: lazy loading failed for package ‘kerastuneR’
 
 
 ```
-# LTFGRS
+# moranajp
 
 <details>
 
-* Version: 1.0.0
-* GitHub: https://github.com/EmilMiP/LTFGRS
-* Source code: https://github.com/cran/LTFGRS
-* Date/Publication: 2025-07-07 08:30:05 UTC
-* Number of recursive dependencies: 75
+* Version: 0.9.7
+* GitHub: https://github.com/matutosi/moranajp
+* Source code: https://github.com/cran/moranajp
+* Date/Publication: 2024-08-01 08:40:02 UTC
+* Number of recursive dependencies: 126
 
-Run `revdepcheck::cloud_details(, "LTFGRS")` for more info
+Run `revdepcheck::cloud_details(, "moranajp")` for more info
 
 </details>
 
 ## Newly broken
 
-*   checking tests ... ERROR
+*   checking examples ... ERROR
     ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
-      > # * https://testthat.r-lib.org/articles/special-files.html
+    Running examples in ‘moranajp-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: out_cols_chamame
+    > ### Title: Morphological analysis for Japanese text by web chamame
+    > ### Aliases: out_cols_chamame web_chamame html_radio_set is_radio
+    > 
+    > ### ** Examples
+    > 
+    > text <-
     ...
-      actual vs expected
-                            [,1]       [,2]
-      - actual[1, ]   0.30179338 0.01965999
-      + expected[1, ] 0.29925194 0.01748031
-      - actual[2, ]   0.01965999 0.14791812
-      + expected[2, ] 0.01748031 0.14918673
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 131 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# PopED
-
-<details>
-
-* Version: 0.7.0
-* GitHub: https://github.com/andrewhooker/PopED
-* Source code: https://github.com/cran/PopED
-* Date/Publication: 2024-10-07 19:30:02 UTC
-* Number of recursive dependencies: 139
-
-Run `revdepcheck::cloud_details(, "PopED")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.5Mb
-      sub-directories of 1Mb or more:
-        R      1.5Mb
-        doc    1.4Mb
-        test   1.1Mb
+      8. │     └─purrr::map_chr(fields, `$`, "type")
+      9. │       └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
+     10. │         ├─purrr:::with_indexed_errors(...)
+     11. │         │ └─base::withCallingHandlers(...)
+     12. │         └─purrr:::call_with_cleanup(...)
+     13. └─base::.handleSimpleError(...)
+     14.   └─purrr (local) h(simpleError(msg, call))
+     15.     └─cli::cli_abort(...)
+     16.       └─rlang::abort(...)
+    Execution halted
     ```
 
 # quincunx
@@ -386,7 +361,7 @@ Run `revdepcheck::cloud_details(, "PopED")` for more info
 * GitHub: https://github.com/ramiromagno/quincunx
 * Source code: https://github.com/cran/quincunx
 * Date/Publication: 2025-05-31 17:10:02 UTC
-* Number of recursive dependencies: 89
+* Number of recursive dependencies: 85
 
 Run `revdepcheck::cloud_details(, "quincunx")` for more info
 
@@ -440,47 +415,6 @@ Run `revdepcheck::cloud_details(, "quincunx")` for more info
        8.     └─base::importIntoEnv(impenv, impnames, ns, impvars)
       
       [ FAIL 5 | WARN 0 | SKIP 0 | PASS 12 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# rbmi
-
-<details>
-
-* Version: 1.4.1
-* GitHub: https://github.com/insightsengineering/rbmi
-* Source code: https://github.com/cran/rbmi
-* Date/Publication: 2025-03-03 20:10:02 UTC
-* Number of recursive dependencies: 101
-
-Run `revdepcheck::cloud_details(, "rbmi")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(rbmi)
-      > 
-      > if (Sys.getenv("NOT_CRAN") != "true") {
-      +     Sys.setenv(RBMI_ENABLE_CACHE = "false")
-      +     options(rbmi.enable_cache = FALSE)
-      + }
-    ...
-       [6] 1.7771      - 0.8439        [6]             
-       [7] -0.4643     - -1.3740       [7]             
-       [8] -0.1738     - -1.7117       [8]             
-       [9] -0.4040     - -0.1313       [9]             
-      [10] 1.4148      - 1.2642        [10]            
-       ... ...           ...           and 190 more ...
-      
-      [ FAIL 1 | WARN 0 | SKIP 15 | PASS 1278 ]
       Error: Test failures
       Execution halted
     ```
@@ -590,10 +524,10 @@ ERROR: lazy loading failed for package ‘stoRy’
 
 <details>
 
-* Version: 0.1.3
+* Version: 0.2.0
 * GitHub: https://github.com/GSK-Biostatistics/tfrmt
 * Source code: https://github.com/cran/tfrmt
-* Date/Publication: 2024-10-15 21:30:02 UTC
+* Date/Publication: 2025-09-06 05:10:20 UTC
 * Number of recursive dependencies: 93
 
 Run `revdepcheck::cloud_details(, "tfrmt")` for more info
@@ -627,6 +561,8 @@ Run `revdepcheck::cloud_details(, "tfrmt")` for more info
     Execution halted
     ```
 
+## In both
+
 *   checking tests ... ERROR
     ```
       Running ‘testthat.R’
@@ -638,16 +574,16 @@ Run `revdepcheck::cloud_details(, "tfrmt")` for more info
       > test_check("tfrmt")
       The following rows of the given dataset have no format applied to them 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
       The following rows of the given dataset have no format applied to them 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-      [ FAIL 9 | WARN 0 | SKIP 10 | PASS 520 ]
+      [ FAIL 13 | WARN 2 | SKIP 32 | PASS 572 ]
     ...
-       54. │   └─rlang::abort(...)
-       55. │     └─rlang:::signal_abort(cnd, .file)
-       56. │       └─base::signalCondition(cnd)
-       57. └─purrr (local) `<fn>`(`<prrr_rr_>`)
-       58.   └─cli::cli_abort(...)
-       59.     └─rlang::abort(...)
+       18. ├─gt::sub_missing(...)
+       19. │ └─gt:::stop_if_not_gt_tbl(data = data)
+       20. │   └─gt:::is_gt_tbl(data = data)
+       21. └─gt::gt(., rowname_col = as_label(tfrmt$label))
+       22.   └─cli::cli_abort(...)
+       23.     └─rlang::abort(...)
       
-      [ FAIL 9 | WARN 0 | SKIP 10 | PASS 520 ]
+      [ FAIL 13 | WARN 2 | SKIP 32 | PASS 572 ]
       Error: Test failures
       Execution halted
     ```
@@ -660,7 +596,7 @@ Run `revdepcheck::cloud_details(, "tfrmt")` for more info
 * GitHub: https://github.com/colearendt/tidyjson
 * Source code: https://github.com/cran/tidyjson
 * Date/Publication: 2023-01-07 00:20:02 UTC
-* Number of recursive dependencies: 93
+* Number of recursive dependencies: 91
 
 Run `revdepcheck::cloud_details(, "tidyjson")` for more info
 
