@@ -1,6 +1,14 @@
 # purrr (development version)
 
-* Formatted strings for the progress bar could only access the global environment. `map()`, `map2()`, and `pmap()` have been updated to add  `caller = .purrr_user_env` to `.progress` by default, allowing formatted strings to access to the current/parent environment (@jcolt45, #1078).
+## Breaking changes
+
+* All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`, `cross_n()`, `reduce2_right()`, and `reduce_right()`.
+
+* All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
+
+* `map_chr()` no longer coereces from logical, integer, or double to strings.
+
+## Minor improvements and bug fixes
 
 * `as_mapper.default()` optimized by removing special named argument handling for primitive functions (@mtcarsalot, #1088).
 
@@ -10,11 +18,7 @@
 
 * `in_parallel()` now works in conjunction with string and list values supplied to the `.progress` argument of map functions (#1203).
 
-* All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
-
-* `map_chr()` no longer coereces from logical, integer, or double to strings.
-
-* All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes `%@%`, `accumulate_right()`, `at_depth()`, `cross_d()`, `cross_n()`, `reduce2_right()`, and `reduce_right()`.
+* `map()`, `map2()`, and `pmap()` now automatically set the correct environment so that `format` strings to access to local variables (@jcolt45, #1078).
 
 # purrr 1.1.0
 
