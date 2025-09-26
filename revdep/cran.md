@@ -1,9 +1,9 @@
 ## revdepcheck results
 
-We checked 2090 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 2125 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 11 new problems
- * We failed to check 16 packages
+ * We saw 9 new problems
+ * We failed to check 24 packages
 
 Issues with CRAN packages are summarised below.
 
@@ -26,17 +26,11 @@ Issues with CRAN packages are summarised below.
 * immunarch
   checking examples ... ERROR
 
-* LTFGRS
-  checking tests ... ERROR
-
-* PopED
-  checking installed package size ... NOTE
+* moranajp
+  checking examples ... ERROR
 
 * quincunx
   checking examples ... ERROR
-  checking tests ... ERROR
-
-* rbmi
   checking tests ... ERROR
 
 * SCORPIUS
@@ -44,20 +38,27 @@ Issues with CRAN packages are summarised below.
 
 * tfrmt
   checking examples ... ERROR
-  checking tests ... ERROR
 
 ### Failed to check
 
 * apa              (NA)
 * arealDB          (NA)
+* ClusterGVis      (NA)
 * dsTidyverse      (NA)
+* ggmosaic         (NA)
+* immcp            (NA)
 * kerastuneR       (NA)
+* lcsm             (NA)
 * metajam          (NA)
 * multinma         (NA)
 * nesRdata         (NA)
+* numbat           (NA)
 * ontologics       (NA)
 * rdflib           (NA)
+* RVA              (NA)
+* SCpubr           (NA)
 * sprtt            (NA)
+* ssdGSA           (NA)
 * stoRy            (NA)
 * Surrogate        (NA)
 * tidybins         (NA)
