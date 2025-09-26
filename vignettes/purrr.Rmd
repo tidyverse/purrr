@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-purrr helps you write cleaner, more maintainable R code through functional programming concepts. But what is functional programming? At its core, it's an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product. Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This notion is rather abstract, but we believe mastering functional programming helps to makes your code clearer and less prone to errors. You'll hopefully get some sense of that by the end of this vignette!
+purrr helps you write cleaner, more maintainable R code through functional programming concepts. But what is functional programming? At its core, it's an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product. Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This notion is rather abstract, but we believe mastering functional programming makes your code clearer and less prone to errors. You'll hopefully get some sense of that by the end of this vignette!
 
 This vignette discusses two of the most important parts of purrr: map functions and predicate functions.
 
@@ -26,7 +26,7 @@ library(purrr)
 
 ## Map: A better way to loop
 
-`map()`[^1] provides a more compact way apply functions to each element of a vector, returning a list:
+`map()`[^1] provides a more compact way to apply functions to each element of a vector, returning a list:
 
 [^1]: You might wonder why this function is called `map()`. What does it have to do with depicting physical features of land or sea 🗺? In fact, the meaning comes from mathematics where map refers to "an operation that associates each element of a given set with one or more elements of a second set". This makes sense here because `map()` defines a mapping from one vector to another. And "map" also has the nice property of being short, which is useful for such a fundamental building block.
 
@@ -56,7 +56,7 @@ for (i in seq_along(x)) {
 str(out)
 ```
 
-Even on its own, there are some benefits to `map()`: once you get used to the syntax, it's a very compact way to express the idea of transforming a vector, returning one output element for each input element. But there are a number of other reasons to use `map()`, which we'll explore in the following sections:
+Even on its own, there are some benefits to `map()`: once you get used to the syntax, it's a very compact way to express the idea of transforming a vector, returning one output element for each input element. But there are several other reasons to use `map()`, which we'll explore in the following sections:
 
 * Progress bars
 * Parallel computing
@@ -65,18 +65,18 @@ Even on its own, there are some benefits to `map()`: once you get used to the sy
 
 ### Progress bars
 
-For long-running jobs, like web scraping, model fitting, or data processing, it's really useful to get a progress bar that helps you estimate how long you'll need to wait. Progress bars are easy to enable in purrr: just set `.progress = TRUE`. It's hard to illustrate progress bars in a vignette, but you can try it out interactively with this example:
+For long-running jobs, like web scraping, model fitting, or data processing, it's really useful to get a progress bar that helps you estimate how long you'll need to wait. Progress bars are easy to enable in purrr: just set `.progress = TRUE`. It's hard to illustrate progress bars in a vignette, but you can try this example interactively:
 
 ```{r}
 #| eval: false
 out <- map(1:100, \(i) Sys.sleep(0.5), .progress = TRUE)
 ```
 
-Learn more about progress bars in `?progress_bars`
+Learn more about progress bars in `?progress_bars`.
 
 ### Parallel computing
 
-By default, `map()` runs only in your current R session. But you can easily opt-in to spreading your task across multiple R sessions, and hence multiple cores with `in_parallel()`. This can give big performance improvements if your tasks is primarily bound by compute performance.
+By default, `map()` runs only in your current R session. But you can easily opt in to spreading your task across multiple R sessions, and hence multiple cores with `in_parallel()`. This can give big performance improvements if your task is primarily bound by compute performance.
 
 purrr's parallelism is powered by mirai, so to begin, you need to start up a number of background R sessions, called __daemons__:
 
@@ -84,7 +84,7 @@ purrr's parallelism is powered by mirai, so to begin, you need to start up a num
 mirai::daemons(6)
 ```
 
-(You only need to do this once per session)
+(You only need to do this once per session.)
 
 Now you can easily convert your `map()` call to run in parallel:
 
@@ -92,7 +92,7 @@ Now you can easily convert your `map()` call to run in parallel:
 out <- map(1:5, in_parallel(\(i) Sys.sleep(0.5)))
 ```
 
-It's important to realise that this parallelism works by spreading computation across clean R sessions. That means that code like this will not work, because the worker daemons won't have a copy of `my_lm()`:
+It's important to realize that this parallelism works by spreading computation across clean R sessions. That means that code like this will not work, because the worker daemons won't have a copy of `my_lm()`:
 
 ```{r}
 #| error: true
@@ -104,7 +104,7 @@ by_cyl <- split(mtcars, mtcars$cyl)
 out <- map(by_cyl, in_parallel(\(df) my_lm(mpg ~ disp, data = df)))
 ```
 
-You can resolve this by pass additional data along to `in_parallel()`:
+You can resolve this by passing additional data along to `in_parallel()`:
 
 ```{r}
 out <- map(by_cyl, in_parallel(\(df) my_lm(mpg ~ disp, data = df), my_lm = my_lm))
@@ -114,7 +114,7 @@ Learn more about parallel computing in `?in_parallel`.
 
 ### Output variants
 
-purrr functions are type-stable, which means it's easy to predict what type of output they return, e.g. `map()` always returns a list. But what if you want a different type of output? That's where the output variants come to play:
+purrr functions are type-stable, which means it's easy to predict what type of output they return, e.g., `map()` always returns a list. But what if you want a different type of output? That's where the output variants come into play:
 
 * There are four variants for the four most important types of atomic vector:
   * `map_lgl()` returns a logical vector.
@@ -122,11 +122,11 @@ purrr functions are type-stable, which means it's easy to predict what type of o
   * `map_dbl()` returns a numeric (double) vector.
   * `map_chr()` returns a character vector.
 
-* For all other types of vector (like dates, date-times, factors, etc) there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo".
+* For all other types of vector (like dates, date-times, factors, etc.), there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns a length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo".
 
 * `modify()` returns output with the same type as the input. For example, if the input is a data frame, the output will also be a data frame.
 
-* `walk()` returns the input (invisibly); it's useful when you calling a function purely for its side-effects, for example generating plots or saving files.
+* `walk()` returns the input (invisibly); it's useful when you're calling a function purely for its side effects, for example, generating plots or saving files.
 
 purrr, like many tidyverse functions, is designed to help you solve complex problems by stringing together simple pieces. This is particularly natural to do with the pipe. For example, the following code splits `mtcars` into one data frame for each value of `cyl`, fits a linear model to each subset, computes the model summary, and then extracts the R-squared:
 
@@ -154,13 +154,13 @@ We could use `map_dbl()` to compute unweighted means:
 map_dbl(xs, mean)
 ```
 
-But there's no way to use `map()` to compute a weighted mean because we need to call `weighted.mean(xs[[1]], ws[[1]])`, `weighted.mean(xs[[2]], ws[[2]])` etc. That's the job of `map2()`:
+But there's no way to use `map()` to compute a weighted mean because we need to call `weighted.mean(xs[[1]], ws[[1]])`, `weighted.mean(xs[[2]], ws[[2]])`, etc. That's the job of `map2()`:
 
 ```{r}
 map2_dbl(xs, ws, weighted.mean)
 ```
 
-Note that the arguments that vary for each call come before the function, arguments that are constant come after the function:
+Note that the arguments that vary for each call come before the function and arguments that are constant come after the function:
 
 ```{r}
 map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)
@@ -177,7 +177,7 @@ There are two important variants of `map2()`: `pmap()` which can take any number
 
 ### Combinatorial explosion
 
-What makes purrr particularly special is all of the above features (progress bars, parallel computing, output variants and input variants) can be combined any way that you choose. The combination of inputs (prefixs) and outputs (suffixes) forms a matrix, and you can use `.progress` or `in_parallel()` with any of them:
+What makes purrr particularly special is that all of the above features (progress bars, parallel computing, output variants, and input variants) can be combined any way that you choose. The combination of inputs (prefixes) and outputs (suffixes) forms a matrix, and you can use `.progress` or `in_parallel()` with any of them:
 
 | Output type | Single input (`.x`) | Two inputs (`.x`, `.y`) | Multiple inputs (`.l`) |
 |-------------|-------------------|---------------------|----------------------|
@@ -192,21 +192,21 @@ What makes purrr particularly special is all of the above features (progress bar
 ## Filtering and finding with predicates
 
 <!-- FIXME: Consider providing a more concrete motivating example at the start - perhaps finding the first numeric column in a data frame -->
-purrr provides a number of functions that work with predicate functions. Predicate functions take a vector and return either `TRUE` or `FALSE`, with examples including `is.character()` and `\(x) any(is.na(x))`. You typically use them to filter or find, for example, you could use them to locate the first elements of a list that's a character vector, or only keep the columns in a data frame that have missing values.
+purrr provides a number of functions that work with predicate functions. Predicate functions take a vector and return either `TRUE` or `FALSE`, with examples including `is.character()` and `\(x) any(is.na(x))`. You typically use them to filter or find; for example, you could use them to locate the first element of a list that's a character vector, or only keep the columns in a data frame that have missing values.
 
 purrr comes with a bunch of helpers to make predicate functions easier to use:
 
 * `detect(.x, .p)` returns the value of the first element in `.x` where `.p` is `TRUE`.
 * `detect_index(.x, .p)` returns the position of the first element in `.x` where `.p` is `TRUE`.
-* `keep(.x, .p)` returns all elements from `.x` where `.p` evaluates to `TRUE`
-* `discard(.x, .p)` returns all elements from `.x` where `.p` evaluates to `FALSE`
-* `every(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for every element in `.x`
-* `some(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for at least one element in `.x`
-* `none(.x, .p)` returns `TRUE` if `.p` returns `FALSE` for all elements in `.x`
-* `head_while(.x, .p)` returns elements from the beginning of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`
-* `tail_while(.x, .p)` returns elements from the end of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`
+* `keep(.x, .p)` returns all elements from `.x` where `.p` evaluates to `TRUE`.
+* `discard(.x, .p)` returns all elements from `.x` where `.p` evaluates to `FALSE`.
+* `every(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for every element in `.x`.
+* `some(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for at least one element in `.x`.
+* `none(.x, .p)` returns `TRUE` if `.p` returns `FALSE` for all elements in `.x`.
+* `head_while(.x, .p)` returns elements from the beginning of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`.
+* `tail_while(.x, .p)` returns elements from the end of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`.
 
-You'll typically use these functions with lists, since you can usually rely on vectorisation for simpler vectors.
+You'll typically use these functions with lists, since you can usually rely on vectorization for simpler vectors.
 
 ```{r}
 x <- list(
