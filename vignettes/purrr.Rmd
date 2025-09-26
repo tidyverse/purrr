@@ -33,7 +33,8 @@ library(purrr)
 x <- 1:3
 
 triple <- function(x) x * 3
-str(map(x, triple))
+out <- map(x, triple)
+str(out)
 ```
 
 Or written with the pipe:
@@ -90,18 +91,34 @@ Now you can easily convert your `map()` call to run in parallel:
 out <- map(1:5, in_parallel(\(i) Sys.sleep(0.5)))
 ```
 
-It's important to realise that this parallelism works by spreading computation across clean R sessions. That means that code like this will not work, because the worked daemons won't have a copy of `delay`:
+It's important to realise that this parallelism works by spreading computation across clean R sessions. That means that code like this will not work, because the worked daemons won't have a copy of `my_lm()`:
 
 ```{r}
 #| error: true
-delay <- 0.5
-out <- map(1:5, in_parallel(\(i) Sys.sleep(delay)))
+my_lm <- function(formula, data) {
+  Sys.sleep(0.5)
+  lm(formula, data)
+}
+by_cyl <- split(mtcars, mtcars$cyl)
+out <- map(by_cyl, in_parallel(\(df) my_lm(mpg ~ disp, data = df)))
 ```
 
 You can resolve this by ensuring that your functions are self-contained, or pass any additional data in `in_parallel()`:
 
 ```{r}
-out <- map(1:5, in_parallel(\(i) Sys.sleep(delay), delay = delay))
+out <- map(by_cyl, in_parallel(\(df) my_lm(mpg ~ disp, data = df), my_lm = my_lm))
+```
+
+For more complicated situations, you might want to save the object returned by `in_parallel()` as it's own object:
+
+```{r}
+self_contained_lm <- in_parallel(
+  \(df) my_lm(mpg ~ disp, data = df), 
+  my_lm = my_lm
+)
+self_contained_lm(mtcars)
+
+out <- map(by_cyl, self_contained_lm)
 ```
 
 Learn more about parallel computing in `?in_parallel`.
@@ -184,7 +201,7 @@ What makes purrr particularly special is all of the above features (progress bar
 
 ## Filtering and finding with predicates
 
-purrr provides a number of functions that work with predicate functions. Predicate functions take a vector and return either `TRUE` or `FALSE`, including functions like `is.character()` and `\(x) any(is.na(x))`. You typically use them to filter or find, and purrr comes with a bunch of helpers to make them easier to use:
+purrr provides a number of functions that work with predicate functions. Predicate functions take a vector and return either `TRUE` or `FALSE`, with examples including `is.character()` and `\(x) any(is.na(x))`. You typically use them to filter or find, and purrr comes with a bunch of helpers to make them easier to use:
 
 * `detect(.x, .p)` returns the value of the first element in `.x` where `.p` is `TRUE`.
 * `detect_index(.x, .p)` returns the position of the first element in `.x` where `.p` is `TRUE`.
