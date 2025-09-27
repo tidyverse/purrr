@@ -81,7 +81,7 @@ By default, `map()` runs only in your current R session. But you can easily opt 
 purrr's parallelism is powered by mirai, so to begin, you need to start up a number of background R sessions, called __daemons__:
 
 ```{r}
-# mirai::daemons(2)
+mirai::daemons(2)
 ```
 
 (You only need to do this once per session.)
@@ -96,7 +96,6 @@ It's important to realize that this parallelism works by spreading computation a
 
 ```{r}
 #| error: true
-mirai::daemons(2)
 my_lm <- function(formula, data) {
   Sys.sleep(0.5)
   lm(formula, data)
