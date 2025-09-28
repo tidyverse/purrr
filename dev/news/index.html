@@ -15,7 +15,8 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/purrr.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a></li>
@@ -55,7 +56,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li><p><code>as_mapper.default()</code> optimized by removing special named argument handling for primitive functions (<a href="https://github.com/mtcarsalot" class="external-link">@mtcarsalot</a>, <a href="https://github.com/tidyverse/purrr/issues/1088" class="external-link">#1088</a>).</p></li>
+<ul><li><p>New “getting started” vignette, <code><a href="../articles/purrr.html">vignette("purrr")</a></code> (<a href="https://github.com/tidyverse/purrr/issues/915" class="external-link">#915</a>, <a href="https://github.com/ogolovkina" class="external-link">@ogolovkina</a>).</p></li>
+<li><p><code>as_mapper.default()</code> optimized by removing special named argument handling for primitive functions (<a href="https://github.com/mtcarsalot" class="external-link">@mtcarsalot</a>, <a href="https://github.com/tidyverse/purrr/issues/1088" class="external-link">#1088</a>).</p></li>
 <li><p><code><a href="../reference/list_flatten.html">list_flatten()</a></code> gains an <code>is_node</code> parameter taking a predicate function that determines whether an input element is a node or a leaf (<a href="https://github.com/salim-b" class="external-link">@salim-b</a>, <a href="https://github.com/tidyverse/purrr/issues/1179" class="external-link">#1179</a>).</p></li>
 <li><p><code><a href="../reference/in_parallel.html">in_parallel()</a></code> now accepts objects, including helper functions, supplied to <code>...</code> for all locally-defined functions (<a href="https://github.com/tidyverse/purrr/issues/1208" class="external-link">#1208</a>).</p></li>
 <li><p><code><a href="../reference/in_parallel.html">in_parallel()</a></code> now works in conjunction with string and list values supplied to the <code>.progress</code> argument of map functions (<a href="https://github.com/tidyverse/purrr/issues/1203" class="external-link">#1203</a>).</p></li>
