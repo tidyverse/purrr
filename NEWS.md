@@ -10,6 +10,8 @@
 
 ## Minor improvements and bug fixes
 
+* New "getting started" vignette, `vignette("purrr")` (#915, @ogolovkina).
+
 * `as_mapper.default()` optimized by removing special named argument handling for primitive functions (@mtcarsalot, #1088).
 
 * `list_flatten()` gains an `is_node` parameter taking a predicate function that determines whether an input element is a node or a leaf (@salim-b, #1179).
