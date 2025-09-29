@@ -22,32 +22,48 @@
 #' # unsafe (e.g. in `if ()` conditions), make sure to use safe predicates:
 #' if (some(list(NA, FALSE), rlang::is_true)) "foo" else "bar"
 every <- function(.x, .p, ...) {
-  .p <- as_mapper(.p, ...)
-
-  n <- vec_size(.x)
-  i <- 0L
-
-  .Call(every_impl, environment(), n, i)
+  satisfies_predicate(.x, .p, ..., .purrr_predicate = "every")
 }
 
 #' @export
 #' @rdname every
 some <- function(.x, .p, ...) {
-  .p <- as_mapper(.p, ...)
-
-  n <- vec_size(.x)
-  i <- 0L
-
-  .Call(some_impl, environment(), n, i)
+  satisfies_predicate(.x, .p, ..., .purrr_predicate = "some")
 }
 
 #' @export
 #' @rdname every
 none <- function(.x, .p, ...) {
+  satisfies_predicate(.x, .p, ..., .purrr_predicate = "none")
+}
+
+satisfies_predicate <- function(
+  .x,
+  .p,
+  ...,
+  .purrr_predicate,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
+  # Not using `as_predicate()` as R level predicate result checks are too slow.
+  # Checks are done at the C level instead (#1169). Also, `NA` propagates
+  # through these functions, which `as_predicate()` doesn't allow.
   .p <- as_mapper(.p, ...)
 
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
   n <- vec_size(.x)
+
   i <- 0L
 
-  .Call(none_impl, environment(), n, i)
+  # We refer to `.p`, `.x`, `i`, `...`, and `.purrr_error_call` all from C level
+  switch(
+    .purrr_predicate,
+    every = .Call(every_impl, environment(), n, i),
+    some = .Call(some_impl, environment(), n, i),
+    none = .Call(none_impl, environment(), n, i),
+    abort("Unreachable", .internal = TRUE)
+  )
 }

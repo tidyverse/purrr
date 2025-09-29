@@ -54,6 +54,8 @@ test_that("arrays become vectors (#970)", {
 })
 
 test_that("pairlists, expressions, and calls are deprecated", {
+  local_options(lifecycle_verbosity = "warning")
+
   expect_snapshot(x <- vctrs_vec_compat(expression(1, 2), globalenv()))
   expect_equal(x, list(1, 2))
 

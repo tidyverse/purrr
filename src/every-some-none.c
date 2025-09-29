@@ -4,91 +4,38 @@
 #include <stdbool.h>
 
 #include "conditions.h"
-#include "checks.h"
 
-static SEXP make_call();
-static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value, bool early_stop_if);
-
-SEXP every_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
-SEXP some_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
-SEXP none_impl(SEXP env, SEXP ffi_n, SEXP ffi_i);
-
-SEXP every_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
-  return test_predicate(env, ffi_n, ffi_i, true, false);
-}
-
-SEXP some_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
-  return test_predicate(env, ffi_n, ffi_i, false, true);
-}
-
-SEXP none_impl(SEXP env, SEXP ffi_n, SEXP ffi_i) {
-  return test_predicate(env, ffi_n, ffi_i, true, true);
+/**
+ * Is `x` a scalar logical?
+ *
+ * Notably we bypass the class and any attributes, i.e. `structure(TRUE, foo =
+ * "bar", class = "my-class")` does count for these purrr functions for
+ * historical reasons. We also ignore any R level `length()` method, but that
+ * would be incredibly rare to see here.
+ */
+static inline
+bool is_scalar_logicalish(SEXP x) {
+  return TYPEOF(x) == LGLSXP && Rf_xlength(x) == 1;
 }
 
 /**
- * Perform the test of an R predicate .p over a set of values .x.
+ * C loop for `every()`, `some()`, and `none()`
  *
- * @param env An R environment created inside the parent R function
- * @param ffi_n Length of .x
- * @param ffi_i Integer for iterating over elements of .x; should be equal to 0
- * @param initial_value Answer if length of .x is 0
- * @param early_stop_if Value to stop iterating on
- * @return A single R logical value, one of TRUE/FALSE/NA
+ * Uses `vctrs_vec_compat()` at the R level so that we can use `vec_size()` to
+ * compute `n`, while also using `[[` to extract elements, which is consistent
+ * with `map()`.
  */
-static SEXP test_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, bool initial_value, bool early_stop_if) {
-  int n = INTEGER_ELT(ffi_n, 0);
+static
+SEXP satisfies_predicate(
+  SEXP env,
+  SEXP ffi_n,
+  SEXP ffi_i,
+  int initial,
+  int early_stop
+) {
+  const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
 
-  SEXP call = make_call();
-
-  SEXP out = PROTECT(Rf_allocVector(LGLSXP, 1));
-  int* p_out = LOGICAL(out);
-  *p_out = initial_value;
-
-  for (int i = 0; i < n; i++) {
-    *p_i = i + 1;
-
-    if (i % 1024 == 0) {
-      R_CheckUserInterrupt();
-    }
-
-    SEXP res = PROTECT(R_forceAndCall(call, 1, env));
-
-    if (is_na(res)) {
-      *p_out = NA_LOGICAL;
-      UNPROTECT(1);  // res
-      continue;
-    }
-
-    if (!is_bool(res)) {
-      r_abort(
-        "`.p()` must return a single `TRUE` or `FALSE`, not %s.",
-        rlang_obj_type_friendly_full(res, true, false)
-      );
-    }
-
-    int res_value = LOGICAL(res)[0];
-    UNPROTECT(1);  // res
-
-    if (res_value == early_stop_if) {
-      *p_out = !initial_value;
-      break;
-    }
-  }
-
-  *p_i = 0;
-
-  UNPROTECT(1);  // out
-  return out;
-}
-
-/**
- * Create an R call of the form .p(.x[[i]], ...). Since the returned call is always the same,
- * the return value is optimized to persist across calls.
- *
- * @return An R call that reads .p(.x[[i]], ...)
- */
-static SEXP make_call() {
   static SEXP call = NULL;
   if (call == NULL) {
     SEXP x_sym = Rf_install(".x");
@@ -101,7 +48,63 @@ static SEXP make_call() {
     call = Rf_lang3(p_sym, x_i_sym, R_DotsSymbol);
     R_PreserveObject(call);
 
-    UNPROTECT(1);  // x_i_sym
+    UNPROTECT(1);
   }
-  return call;
+
+  // Number of arguments within `call` to force.
+  // Same as `map()`.
+  const int force = 1;
+
+  int out = initial;
+
+  for (int i = 0; i < n; ++i) {
+    *p_i = i + 1;
+
+    if (i % 1024 == 0) {
+      R_CheckUserInterrupt();
+    }
+
+    SEXP ffi_elt = PROTECT(R_forceAndCall(call, force, env));
+
+    if (!is_scalar_logicalish(ffi_elt)) {
+      // We don't pass `.purrr_error_call` through `.Call()` so we can avoid
+      // evaluating it when it isn't needed, so we have to retrieve it when
+      // required.
+      SEXP error_call = PROTECT(Rf_eval(Rf_install(".purrr_error_call"), env));
+
+      r_abort_call(
+        error_call,
+        "`.p()` must return a single `TRUE`, `FALSE`, or `NA`, not %s.",
+        rlang_obj_type_friendly_full(ffi_elt, true, false)
+      );
+    }
+
+    const int elt = LOGICAL_ELT(ffi_elt, 0);
+    UNPROTECT(1);
+
+    if (elt == early_stop) {
+      // Early exit
+      out = !initial;
+      break;
+    }
+
+    if (elt == NA_LOGICAL) {
+      // Propagate `NA`, but keep going
+      out = NA_LOGICAL;
+    }
+  }
+
+  *p_i = 0;
+
+  return Rf_ScalarLogical(out);
+}
+
+SEXP every_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i) {
+  return satisfies_predicate(ffi_env, ffi_n, ffi_i, 1, 0);
+}
+SEXP some_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i) {
+  return satisfies_predicate(ffi_env, ffi_n, ffi_i, 0, 1);
+}
+SEXP none_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i) {
+  return satisfies_predicate(ffi_env, ffi_n, ffi_i, 1, 1);
 }

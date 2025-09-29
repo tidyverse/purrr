@@ -60,7 +60,6 @@ as_predicate <- function(
   .fn,
   ...,
   .mapper,
-  .allow_na = FALSE,
   .purrr_error_call = caller_env(),
   .purrr_error_arg = caller_arg(.fn)
 ) {
@@ -75,10 +74,6 @@ as_predicate <- function(
     out <- .fn(...)
 
     if (!is_bool(out)) {
-      if (is_na(out) && .allow_na) {
-        # Always return a logical NA
-        return(NA)
-      }
       cli::cli_abort(
         "{.fn { .purrr_error_arg }} must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {out}}.",
         arg = .purrr_error_arg,
@@ -115,8 +110,9 @@ vctrs_list_compat <- function(
 }
 
 # When we want to use vctrs, but treat lists like purrr does
-# Treat data frames and S3 scalar lists like bare lists.
-# But ensure rcrd vctrs retain their class.
+#
+# Treats data frames and S3 scalar lists like bare lists.
+# But ensures rcrd vctrs retain their class.
 vctrs_vec_compat <- function(x, user_env) {
   if (inherits(x, "by")) {
     class(x) <- NULL
@@ -127,7 +123,7 @@ vctrs_vec_compat <- function(x, user_env) {
   } else if (is.pairlist(x)) {
     lifecycle::deprecate_soft(
       when = "1.0.0",
-      what = I("Use of pairlists in map functions"),
+      what = I("Use of pairlists in purrr functions"),
       details = "Please coerce explicitly with `as.list()`",
       user_env = user_env
     )
@@ -138,7 +134,7 @@ vctrs_vec_compat <- function(x, user_env) {
   } else if (is_call(x) || is.expression(x)) {
     lifecycle::deprecate_soft(
       when = "1.0.0",
-      what = I("Use of calls and pairlists in map functions"),
+      what = I("Use of calls and expressions in purrr functions"),
       details = "Please coerce explicitly with `as.list()`",
       user_env = user_env
     )
