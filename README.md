@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# purrr <img src="man/figures/logo.png" align="right" />
+# purrr <a href="https://purrr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" alt="purrr website" /></a>
 
 <!-- badges: start -->
 
