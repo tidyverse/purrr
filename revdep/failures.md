@@ -292,6 +292,41 @@ Status: 1 NOTE
 
 
 ```
+# eye
+
+<details>
+
+* Version: NA
+* GitHub: NA
+* Source code: https://github.com/cran/eye
+* Number of recursive dependencies: 58
+
+Run `revdepcheck::cloud_details(, "eye")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+
+
+
+
+
+
+```
 # ggmosaic
 
 <details>
@@ -353,6 +388,174 @@ Error: unable to load R code in package ‘ggmosaic’
 Execution halted
 ERROR: lazy loading failed for package ‘ggmosaic’
 * removing ‘/tmp/workdir/ggmosaic/old/ggmosaic.Rcheck/ggmosaic’
+
+
+```
+# heplots
+
+<details>
+
+* Version: 1.7.8
+* GitHub: https://github.com/friendly/heplots
+* Source code: https://github.com/cran/heplots
+* Date/Publication: 2025-08-18 23:50:36 UTC
+* Number of recursive dependencies: 144
+
+Run `revdepcheck::cloud_details(, "heplots")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/heplots/old/heplots.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘heplots/DESCRIPTION’ ... OK
+...
+* checking data for ASCII and uncompressed saves ... OK
+* checking sizes of PDF files under ‘inst/doc’ ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: OK
+
+
+
+
+
+```
+# hmde
+
+<details>
+
+* Version: 1.2.1
+* GitHub: https://github.com/traitecoevo/hmde
+* Source code: https://github.com/cran/hmde
+* Date/Publication: 2025-07-04 19:20:06 UTC
+* Number of recursive dependencies: 107
+
+Run `revdepcheck::cloud_details(, "hmde")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/hmde/old/hmde.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘hmde/DESCRIPTION’ ... OK
+...
+  `plot` has type 'object', not 'list'.
+  
+  [ FAIL 4 | WARN 0 | SKIP 0 | PASS 85 ]
+  Error: Test failures
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 1 ERROR, 2 NOTEs
+
+
+
+
+
+```
+# httk
+
+<details>
+
+* Version: 2.7.3
+* GitHub: https://github.com/USEPA/CompTox-ExpoCast-httk
+* Source code: https://github.com/cran/httk
+* Date/Publication: 2025-09-12 15:00:02 UTC
+* Number of recursive dependencies: 173
+
+Run `revdepcheck::cloud_details(, "httk")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/httk/old/httk.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘httk/DESCRIPTION’ ... OK
+...
+  Running ‘solve_gas_test.R’
+  Comparing ‘solve_gas_test.Rout’ to ‘solve_gas_test.Rout.save’ ... OK
+  Running ‘testthat.R’
+  Running ‘unit_test.R’
+  Comparing ‘unit_test.Rout’ to ‘unit_test.Rout.save’ ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 2 NOTEs
+
+
+
 
 
 ```
@@ -426,6 +629,286 @@ See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
 * DONE
 Status: 1 ERROR
+
+
+
+
+
+```
+# imt
+
+<details>
+
+* Version: 1.0.0
+* GitHub: https://github.com/google/imt
+* Source code: https://github.com/cran/imt
+* Date/Publication: 2024-09-02 21:40:10 UTC
+* Number of recursive dependencies: 131
+
+Run `revdepcheck::cloud_details(, "imt")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/imt/old/imt.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘imt/DESCRIPTION’ ... OK
+...
+GNU make is a SystemRequirements.
+* checking for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS) ... OK
+* checking use of PKG_*FLAGS in Makefiles ... OK
+* checking compiled code ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* DONE
+Status: 2 NOTEs
+
+
+
+
+
+```
+# intervalpsych
+
+<details>
+
+* Version: 0.1.0
+* GitHub: https://github.com/matthiaskloft/intervalpsych
+* Source code: https://github.com/cran/intervalpsych
+* Date/Publication: 2025-07-08 09:20:02 UTC
+* Number of recursive dependencies: 64
+
+Run `revdepcheck::cloud_details(, "intervalpsych")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/intervalpsych/old/intervalpsych.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘intervalpsych/DESCRIPTION’ ... OK
+...
+GNU make is a SystemRequirements.
+* checking for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS) ... OK
+* checking use of PKG_*FLAGS in Makefiles ... OK
+* checking compiled code ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* DONE
+Status: 2 NOTEs
+
+
+
+
+
+```
+# irtQ
+
+<details>
+
+* Version: 1.0.0
+* GitHub: NA
+* Source code: https://github.com/cran/irtQ
+* Date/Publication: 2025-07-17 04:00:02 UTC
+* Number of recursive dependencies: 88
+
+Run `revdepcheck::cloud_details(, "irtQ")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/irtQ/old/irtQ.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘irtQ/DESCRIPTION’ ... OK
+...
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking examples ... OK
+* DONE
+Status: 1 NOTE
+
+
+
+
+
+```
+# isotracer
+
+<details>
+
+* Version: 1.1.8
+* GitHub: NA
+* Source code: https://github.com/cran/isotracer
+* Date/Publication: 2025-03-07 18:50:02 UTC
+* Number of recursive dependencies: 122
+
+Run `revdepcheck::cloud_details(, "isotracer")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/isotracer/old/isotracer.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘isotracer/DESCRIPTION’ ... OK
+...
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 3 NOTEs
+
+
+
+
+
+```
+# jpcity
+
+<details>
+
+* Version: 0.3.0
+* GitHub: https://github.com/UchidaMizuki/jpcity
+* Source code: https://github.com/cran/jpcity
+* Date/Publication: 2024-10-04 14:30:02 UTC
+* Number of recursive dependencies: 38
+
+Run `revdepcheck::cloud_details(, "jpcity")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/jpcity/old/jpcity.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘jpcity/DESCRIPTION’ ... OK
+...
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking R/sysdata.rda ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* DONE
+Status: OK
 
 
 
@@ -974,6 +1457,118 @@ ERROR: lazy loading failed for package ‘rdflib’
 
 
 ```
+# rmweather
+
+<details>
+
+* Version: 0.2.63
+* GitHub: https://github.com/skgrange/rmweather
+* Source code: https://github.com/cran/rmweather
+* Date/Publication: 2025-08-22 17:10:02 UTC
+* Number of recursive dependencies: 84
+
+Run `revdepcheck::cloud_details(, "rmweather")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/rmweather/old/rmweather.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘rmweather/DESCRIPTION’ ... OK
+...
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘testthat.R’
+* DONE
+Status: OK
+
+
+
+
+
+```
+# rstanemax
+
+<details>
+
+* Version: 0.1.9
+* GitHub: https://github.com/yoshidk6/rstanemax
+* Source code: https://github.com/cran/rstanemax
+* Date/Publication: 2025-02-17 07:30:01 UTC
+* Number of recursive dependencies: 93
+
+Run `revdepcheck::cloud_details(, "rstanemax")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/rstanemax/old/rstanemax.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘rstanemax/DESCRIPTION’ ... OK
+...
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘spelling.R’
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: 2 NOTEs
+
+
+
+
+
+```
 # RVA
 
 <details>
@@ -1044,6 +1639,118 @@ See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
 manual.
 * DONE
 Status: 1 ERROR
+
+
+
+
+
+```
+# sampler
+
+<details>
+
+* Version: 0.2.4
+* GitHub: https://github.com/mbaldassaro/sampler
+* Source code: https://github.com/cran/sampler
+* Date/Publication: 2019-09-15 15:40:02 UTC
+* Number of recursive dependencies: 23
+
+Run `revdepcheck::cloud_details(, "sampler")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/sampler/old/sampler.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘sampler/DESCRIPTION’ ... OK
+...
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking examples ... OK
+* DONE
+Status: OK
+
+
+
+
+
+```
+# sbm
+
+<details>
+
+* Version: 0.4.7
+* GitHub: https://github.com/GrossSBM/sbm
+* Source code: https://github.com/cran/sbm
+* Date/Publication: 2024-09-16 18:40:09 UTC
+* Number of recursive dependencies: 102
+
+Run `revdepcheck::cloud_details(, "sbm")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/sbm/old/sbm.Rcheck’
+* using R version 4.4.0 (2024-04-24)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.2 LTS
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘sbm/DESCRIPTION’ ... OK
+...
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘spelling.R’
+  Running ‘testthat.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* DONE
+Status: OK
 
 
 
@@ -1126,221 +1833,6 @@ Status: 1 NOTE
 
 
 ```
-# sprtt
-
-<details>
-
-* Version: 0.2.0
-* GitHub: https://github.com/MeikeSteinhilber/sprtt
-* Source code: https://github.com/cran/sprtt
-* Date/Publication: 2023-07-06 13:50:02 UTC
-* Number of recursive dependencies: 146
-
-Run `revdepcheck::cloud_details(, "sprtt")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-* using log directory ‘/tmp/workdir/sprtt/new/sprtt.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘sprtt/DESCRIPTION’ ... OK
-...
-* this is package ‘sprtt’ version ‘0.2.0’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Package required but not available: ‘MBESS’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
-
-
-
-
-
-```
-### CRAN
-
-```
-* using log directory ‘/tmp/workdir/sprtt/old/sprtt.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘sprtt/DESCRIPTION’ ... OK
-...
-* this is package ‘sprtt’ version ‘0.2.0’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Package required but not available: ‘MBESS’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
-
-
-
-
-
-```
-# ssdGSA
-
-<details>
-
-* Version: 0.1.1
-* GitHub: NA
-* Source code: https://github.com/cran/ssdGSA
-* Date/Publication: 2024-07-26 23:10:02 UTC
-* Number of recursive dependencies: 170
-
-Run `revdepcheck::cloud_details(, "ssdGSA")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-* using log directory ‘/tmp/workdir/ssdGSA/new/ssdGSA.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘ssdGSA/DESCRIPTION’ ... OK
-...
-* this is package ‘ssdGSA’ version ‘0.1.1’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Package required but not available: ‘clusterProfiler’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
-
-
-
-
-
-```
-### CRAN
-
-```
-* using log directory ‘/tmp/workdir/ssdGSA/old/ssdGSA.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘ssdGSA/DESCRIPTION’ ... OK
-...
-* this is package ‘ssdGSA’ version ‘0.1.1’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Package required but not available: ‘clusterProfiler’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
-
-
-
-
-
-```
-# stoRy
-
-<details>
-
-* Version: 0.2.2
-* GitHub: https://github.com/theme-ontology/stoRy
-* Source code: https://github.com/cran/stoRy
-* Date/Publication: 2023-06-13 23:10:02 UTC
-* Number of recursive dependencies: 76
-
-Run `revdepcheck::cloud_details(, "stoRy")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking whether package ‘stoRy’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘stoRy’ ...
-** package ‘stoRy’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-Warning: namespace ‘stoRy’ is not available and has been replaced
-by .GlobalEnv when processing object ‘background_collection’
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘at_depth’ is not exported by 'namespace:purrr'
-Execution halted
-ERROR: lazy loading failed for package ‘stoRy’
-* removing ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/stoRy’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘stoRy’ ...
-** package ‘stoRy’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-*** copying figures
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (stoRy)
-
-
-```
 # Surrogate
 
 <details>
@@ -1414,237 +1906,6 @@ Status: 1 ERROR
 
 
 
-
-
-```
-# tidybins
-
-<details>
-
-* Version: 0.1.1
-* GitHub: https://github.com/Harrison4192/tidybins
-* Source code: https://github.com/cran/tidybins
-* Date/Publication: 2024-06-12 04:50:02 UTC
-* Number of recursive dependencies: 222
-
-Run `revdepcheck::cloud_details(, "tidybins")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-* using log directory ‘/tmp/workdir/tidybins/new/tidybins.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘tidybins/DESCRIPTION’ ... OK
-...
- 23. └─base::.handleSimpleError(...)
- 24.   └─purrr (local) h(simpleError(msg, call))
- 25.     └─cli::cli_abort(...)
- 26.       └─rlang::abort(...)
-Execution halted
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes ... OK
-* checking re-building of vignette outputs ... OK
-* DONE
-Status: 1 ERROR, 3 NOTEs
-
-
-
-
-
-```
-### CRAN
-
-```
-* using log directory ‘/tmp/workdir/tidybins/old/tidybins.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘tidybins/DESCRIPTION’ ... OK
-...
-* checking Rd contents ... OK
-* checking for unstated dependencies in examples ... OK
-* checking installed files from ‘inst/doc’ ... OK
-* checking files in ‘vignettes’ ... OK
-* checking examples ... OK
-* checking for unstated dependencies in vignettes ... OK
-* checking package vignettes ... OK
-* checking re-building of vignette outputs ... OK
-* DONE
-Status: 3 NOTEs
-
-
-
-
-
-```
-# tidycomm
-
-<details>
-
-* Version: 0.4.2
-* GitHub: https://github.com/tidycomm/tidycomm
-* Source code: https://github.com/cran/tidycomm
-* Date/Publication: 2025-08-27 12:00:02 UTC
-* Number of recursive dependencies: 141
-
-Run `revdepcheck::cloud_details(, "tidycomm")` for more info
-
-</details>
-
-## Error before installation
-
-### Devel
-
-```
-* using log directory ‘/tmp/workdir/tidycomm/new/tidycomm.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘tidycomm/DESCRIPTION’ ... OK
-...
-* this is package ‘tidycomm’ version ‘0.4.2’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Package required but not available: ‘MBESS’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
-
-
-
-
-
-```
-### CRAN
-
-```
-* using log directory ‘/tmp/workdir/tidycomm/old/tidycomm.Rcheck’
-* using R version 4.4.0 (2024-04-24)
-* using platform: x86_64-pc-linux-gnu
-* R was compiled by
-    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
-* running under: Ubuntu 24.04.2 LTS
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘tidycomm/DESCRIPTION’ ... OK
-...
-* this is package ‘tidycomm’ version ‘0.4.2’
-* package encoding: UTF-8
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Package required but not available: ‘MBESS’
-
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
-
-
-
-
-
-```
-# tidyjson
-
-<details>
-
-* Version: 0.3.2
-* GitHub: https://github.com/colearendt/tidyjson
-* Source code: https://github.com/cran/tidyjson
-* Date/Publication: 2023-01-07 00:20:02 UTC
-* Number of recursive dependencies: 91
-
-Run `revdepcheck::cloud_details(, "tidyjson")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking whether package ‘tidyjson’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/00install.out’ for details.
-    ```
-
-## Newly fixed
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
-        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
-           |                    ^
-    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
-        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
-           |                                           ^
-    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
-        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
-           |                                                          ^
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘tidyjson’ ...
-** package ‘tidyjson’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘at_depth’ is not exported by 'namespace:purrr'
-Execution halted
-ERROR: lazy loading failed for package ‘tidyjson’
-* removing ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/tidyjson’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘tidyjson’ ...
-** package ‘tidyjson’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (tidyjson)
 
 
 ```

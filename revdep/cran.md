@@ -1,17 +1,14 @@
 ## revdepcheck results
 
-We checked 2125 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 1702 reverse dependencies (1701 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 9 new problems
- * We failed to check 24 packages
+ * We saw 8 new problems
+ * We failed to check 30 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
-
-* autothresholdr
-  checking re-building of vignette outputs ... ERROR
 
 * casino
   checking re-building of vignette outputs ... ERROR
@@ -26,6 +23,9 @@ Issues with CRAN packages are summarised below.
 * immunarch
   checking examples ... ERROR
 
+* meta
+  checking installed package size ... NOTE
+
 * moranajp
   checking examples ... ERROR
 
@@ -36,9 +36,6 @@ Issues with CRAN packages are summarised below.
 * SCORPIUS
   checking whether package ‘SCORPIUS’ can be installed ... WARNING
 
-* tfrmt
-  checking examples ... ERROR
-
 ### Failed to check
 
 * apa              (NA)
@@ -46,7 +43,15 @@ Issues with CRAN packages are summarised below.
 * ClusterGVis      (NA)
 * dsTidyverse      (NA)
 * ggmosaic         (NA)
+* heplots          (NA)
+* hmde             (NA)
+* httk             (NA)
 * immcp            (NA)
+* imt              (NA)
+* intervalpsych    (NA)
+* irtQ             (NA)
+* isotracer        (NA)
+* jpcity           (NA)
 * kerastuneR       (NA)
 * lcsm             (NA)
 * metajam          (NA)
@@ -55,13 +60,11 @@ Issues with CRAN packages are summarised below.
 * numbat           (NA)
 * ontologics       (NA)
 * rdflib           (NA)
+* rmweather        (NA)
+* rstanemax        (NA)
 * RVA              (NA)
+* sampler          (NA)
+* sbm              (NA)
 * SCpubr           (NA)
-* sprtt            (NA)
-* ssdGSA           (NA)
-* stoRy            (NA)
 * Surrogate        (NA)
-* tidybins         (NA)
-* tidycomm         (NA)
-* tidyjson         (NA)
 * TriDimRegression (NA)
