@@ -47,7 +47,6 @@ rate <- new_class(
   }
 )
 
-
 #' @rdname rate-helpers
 #' @param pause Delay between attempts in seconds.
 #' @export
@@ -130,6 +129,27 @@ is_rate <- function(x) {
   S7_inherits(x, rate)
 }
 
+rate_expired <- function(rate) {
+  rate_count(rate) > rate@max_times
+}
+
+rate_get_delay <- new_generic("rate_expired", "rate")
+
+method(rate_get_delay, rate_backoff) <- function(rate) {
+  i <- rate_count(rate)
+
+  pause_max <- min(rate@pause_cap, rate@pause_base * 2^i)
+  if (rate@jitter) {
+    pause_max <- stats::runif(1, 0, pause_max)
+  }
+
+  max(rate@pause_min, pause_max)
+}
+
+method(rate_get_delay, rate_delay) <- function(rate) {
+  rate@pause
+}
+
 method(print, rate_delay) <- function(x, ...) {
   cli::cli_text("<rate: delay>")
   cli::cli_bullets(c(
@@ -167,53 +187,25 @@ method(print, rate_backoff) <- function(x, ...) {
 #' @seealso [rate_backoff()], [insistently()]
 #' @keywords internal
 #' @export
-rate_sleep <- new_generic(
-  "rate_sleep",
-  "rate",
-  function(rate, ..., quiet = TRUE) {
-    stopifnot(is_rate(rate))
+rate_sleep <- function(rate, quiet = TRUE) {
+  stopifnot(is_rate(rate))
 
-    i <- rate_count(rate)
-
-    if (i > rate@max_times) {
-      stop_rate_expired(rate)
-    }
-    if (i == rate@max_times) {
-      stop_rate_excess(rate)
-    }
-
-    if (i == 0L) {
-      rate_bump_count(rate)
-      signal_rate_init(rate)
-      return(invisible())
-    }
-
-    on.exit(rate_bump_count(rate))
-    S7_dispatch()
-  }
-)
-
-method(rate_sleep, rate_backoff) <- function(rate, quiet = TRUE) {
-  i <- rate_count(rate)
-
-  pause_max <- min(rate@pause_cap, rate@pause_base * 2^i)
-  if (rate@jitter) {
-    pause_max <- stats::runif(1, 0, pause_max)
+  if (rate_expired(rate)) {
+    cli::cli_abort(
+      c(
+        "This `rate` object has already been called the maximum number of times.",
+        i = "Do you need to reset it with `rate_reset()`?"
+      )
+    )
   }
 
-  length <- max(rate@pause_min, pause_max)
-  rate_sleep_impl(rate, length, quiet)
-}
-
-method(rate_sleep, rate_delay) <- function(rate, quiet = TRUE) {
-  rate_sleep_impl(rate, rate@pause, quiet)
-}
-
-rate_sleep_impl <- function(rate, length, quiet) {
-  if (!quiet) {
-    signal_rate_retry(rate, length, quiet)
+  delay <- rate_get_delay(rate)
+  if (quiet) {
+    signal(msg, class = "purrr_message_rate_retry", delay = delay)
+  } else {
+    cli::cli_inform(sprintf("Retrying in {length} second{?s}."))
   }
-  Sys.sleep(length)
+  Sys.sleep(delay)
 }
 
 #' @rdname rate_sleep
