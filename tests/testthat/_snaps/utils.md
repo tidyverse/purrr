@@ -43,7 +43,7 @@
       x <- vctrs_vec_compat(expression(1, 2), globalenv())
     Condition
       Warning:
-      Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
+      Use of calls and expressions in purrr functions was deprecated in purrr 1.0.0.
       i Please coerce explicitly with `as.list()`
 
 ---
@@ -52,7 +52,7 @@
       x <- vctrs_vec_compat(pairlist(1, 2), globalenv())
     Condition
       Warning:
-      Use of pairlists in map functions was deprecated in purrr 1.0.0.
+      Use of pairlists in purrr functions was deprecated in purrr 1.0.0.
       i Please coerce explicitly with `as.list()`
 
 ---
@@ -61,7 +61,7 @@
       x <- vctrs_vec_compat(quote(f(a, b = 1)), globalenv())
     Condition
       Warning:
-      Use of calls and pairlists in map functions was deprecated in purrr 1.0.0.
+      Use of calls and expressions in purrr functions was deprecated in purrr 1.0.0.
       i Please coerce explicitly with `as.list()`
 
 # can't work with regular S4 objects

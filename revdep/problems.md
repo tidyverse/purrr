@@ -1,35 +1,3 @@
-# autothresholdr
-
-<details>
-
-* Version: 1.4.2
-* GitHub: https://github.com/rorynolan/autothresholdr
-* Source code: https://github.com/cran/autothresholdr
-* Date/Publication: 2023-12-13 06:00:02 UTC
-* Number of recursive dependencies: 95
-
-Run `revdepcheck::cloud_details(, "autothresholdr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘finding-thresholds.Rmd’ using rmarkdown
-    ```
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is  5.0Mb
-      sub-directories of 1Mb or more:
-        doc    1.8Mb
-        libs   2.5Mb
-    ```
-
 # casino
 
 <details>
@@ -312,6 +280,37 @@ ERROR: lazy loading failed for package ‘kerastuneR’
 
 
 ```
+# meta
+
+<details>
+
+* Version: 8.2-1
+* GitHub: https://github.com/guido-s/meta
+* Source code: https://github.com/cran/meta
+* Date/Publication: 2025-09-01 17:00:13 UTC
+* Number of recursive dependencies: 121
+
+Run `revdepcheck::cloud_details(, "meta")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.6Mb
+      sub-directories of 1Mb or more:
+        R      3.5Mb
+        help   1.5Mb
+    ```
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Packages unavailable to check Rd xrefs: ‘metasens’, ‘robumeta’
+    ```
+
 # moranajp
 
 <details>
@@ -457,213 +456,3 @@ Run `revdepcheck::cloud_details(, "SCORPIUS")` for more info
            |                                                                               ^
     ```
 
-# stoRy
-
-<details>
-
-* Version: 0.2.2
-* GitHub: https://github.com/theme-ontology/stoRy
-* Source code: https://github.com/cran/stoRy
-* Date/Publication: 2023-06-13 23:10:02 UTC
-* Number of recursive dependencies: 76
-
-Run `revdepcheck::cloud_details(, "stoRy")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking whether package ‘stoRy’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/00install.out’ for details.
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘stoRy’ ...
-** package ‘stoRy’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-Warning: namespace ‘stoRy’ is not available and has been replaced
-by .GlobalEnv when processing object ‘background_collection’
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘at_depth’ is not exported by 'namespace:purrr'
-Execution halted
-ERROR: lazy loading failed for package ‘stoRy’
-* removing ‘/tmp/workdir/stoRy/new/stoRy.Rcheck/stoRy’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘stoRy’ ...
-** package ‘stoRy’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-*** copying figures
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (stoRy)
-
-
-```
-# tfrmt
-
-<details>
-
-* Version: 0.2.0
-* GitHub: https://github.com/GSK-Biostatistics/tfrmt
-* Source code: https://github.com/cran/tfrmt
-* Date/Publication: 2025-09-06 05:10:20 UTC
-* Number of recursive dependencies: 93
-
-Run `revdepcheck::cloud_details(, "tfrmt")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘tfrmt-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: display_val_frmts
-    > ### Title: Display formatted values
-    > ### Aliases: display_val_frmts
-    > 
-    > ### ** Examples
-    > 
-    >  tf_spec <- tfrmt(
-    ...
-     24. ├─purrr::map_chr(., f_lhs)
-     25. │ └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
-     26. │   ├─purrr:::with_indexed_errors(...)
-     27. │   │ └─base::withCallingHandlers(...)
-     28. │   └─purrr:::call_with_cleanup(...)
-     29. └─base::.handleSimpleError(...)
-     30.   └─purrr (local) h(simpleError(msg, call))
-     31.     └─cli::cli_abort(...)
-     32.       └─rlang::abort(...)
-    Execution halted
-    ```
-
-## In both
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Complete output:
-      > library(testthat)
-      > library(tfrmt)
-      > 
-      > test_check("tfrmt")
-      The following rows of the given dataset have no format applied to them 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
-      The following rows of the given dataset have no format applied to them 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-      [ FAIL 13 | WARN 2 | SKIP 32 | PASS 572 ]
-    ...
-       18. ├─gt::sub_missing(...)
-       19. │ └─gt:::stop_if_not_gt_tbl(data = data)
-       20. │   └─gt:::is_gt_tbl(data = data)
-       21. └─gt::gt(., rowname_col = as_label(tfrmt$label))
-       22.   └─cli::cli_abort(...)
-       23.     └─rlang::abort(...)
-      
-      [ FAIL 13 | WARN 2 | SKIP 32 | PASS 572 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# tidyjson
-
-<details>
-
-* Version: 0.3.2
-* GitHub: https://github.com/colearendt/tidyjson
-* Source code: https://github.com/cran/tidyjson
-* Date/Publication: 2023-01-07 00:20:02 UTC
-* Number of recursive dependencies: 91
-
-Run `revdepcheck::cloud_details(, "tidyjson")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking whether package ‘tidyjson’ can be installed ... ERROR
-    ```
-    Installation failed.
-    See ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/00install.out’ for details.
-    ```
-
-## Newly fixed
-
-*   checking Rd files ... NOTE
-    ```
-    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
-        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
-           |                    ^
-    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
-        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
-           |                                           ^
-    checkRd: (-1) json_schema.Rd:33: Lost braces; missing escapes or markup?
-        33 |   \item object  -> {"name": <type>} e.g., {"age": 32} -> {"age": "number"}
-           |                                                          ^
-    ```
-
-## Installation
-
-### Devel
-
-```
-* installing *source* package ‘tidyjson’ ...
-** package ‘tidyjson’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-Error: object ‘at_depth’ is not exported by 'namespace:purrr'
-Execution halted
-ERROR: lazy loading failed for package ‘tidyjson’
-* removing ‘/tmp/workdir/tidyjson/new/tidyjson.Rcheck/tidyjson’
-
-
-```
-### CRAN
-
-```
-* installing *source* package ‘tidyjson’ ...
-** package ‘tidyjson’ successfully unpacked and MD5 sums checked
-** using staged installation
-** R
-** data
-*** moving datasets to lazyload DB
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (tidyjson)
-
-
-```

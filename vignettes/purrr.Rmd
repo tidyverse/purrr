@@ -58,10 +58,10 @@ str(out)
 
 Even on its own, there are some benefits to `map()`: once you get used to the syntax, it's a very compact way to express the idea of transforming a vector, returning one output element for each input element. But there are several other reasons to use `map()`, which we'll explore in the following sections:
 
-* Progress bars
-* Parallel computing
-* Output variants
-* Input variants
+-   Progress bars
+-   Parallel computing
+-   Output variants
+-   Input variants
 
 ### Progress bars
 
@@ -78,12 +78,13 @@ Learn more about progress bars in `?progress_bars`.
 
 By default, `map()` runs only in your current R session. But you can easily opt in to spreading your task across multiple R sessions, and hence multiple cores with `in_parallel()`. This can give big performance improvements if your task is primarily bound by compute performance.
 
-purrr's parallelism is powered by mirai, so to begin, you need to start up a number of background R sessions, called __daemons__:
+purrr's parallelism is powered by mirai, so to begin, you need to start up a number of background R sessions, called **daemons**:
 
 ```{r}
 #| eval: false
 mirai::daemons(6)
 ```
+
 ```{r}
 #| echo: false
 # Can be updated to mirai::daemons(sync = TRUE) once mirai >= 2.5.1 is released
@@ -122,17 +123,18 @@ Learn more about parallel computing in `?in_parallel`.
 
 purrr functions are type-stable, which means it's easy to predict what type of output they return, e.g., `map()` always returns a list. But what if you want a different type of output? That's where the output variants come into play:
 
-* There are four variants for the four most important types of atomic vector:
-  * `map_lgl()` returns a logical vector.
-  * `map_int()` returns an integer vector.
-  * `map_dbl()` returns a numeric (double) vector.
-  * `map_chr()` returns a character vector.
+-   There are four variants for the four most important types of atomic vector:
 
-* For all other types of vector (like dates, date-times, factors, etc.), there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns a length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo".
+    -   `map_lgl()` returns a logical vector.
+    -   `map_int()` returns an integer vector.
+    -   `map_dbl()` returns a numeric (double) vector.
+    -   `map_chr()` returns a character vector.
 
-* `modify()` returns output with the same type as the input. For example, if the input is a data frame, the output will also be a data frame.
+-   For all other types of vector (like dates, date-times, factors, etc.), there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns a length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo".
 
-* `walk()` returns the input (invisibly); it's useful when you're calling a function purely for its side effects, for example, generating plots or saving files.
+-   `modify()` returns output with the same type as the input. For example, if the input is a data frame, the output will also be a data frame.
+
+-   `walk()` returns the input (invisibly); it's useful when you're calling a function purely for its side effects, for example, generating plots or saving files.
 
 purrr, like many tidyverse functions, is designed to help you solve complex problems by stringing together simple pieces. This is particularly natural to do with the pipe. For example, the following code splits `mtcars` into one data frame for each value of `cyl`, fits a linear model to each subset, computes the model summary, and then extracts the R-squared:
 
@@ -186,7 +188,7 @@ There are two important variants of `map2()`: `pmap()` which can take any number
 What makes purrr particularly special is that all of the above features (progress bars, parallel computing, output variants, and input variants) can be combined any way that you choose. The combination of inputs (prefixes) and outputs (suffixes) forms a matrix, and you can use `.progress` or `in_parallel()` with any of them:
 
 | Output type | Single input (`.x`) | Two inputs (`.x`, `.y`) | Multiple inputs (`.l`) |
-|-------------|-------------------|---------------------|----------------------|
+|-----------------|-----------------|-------------------|--------------------|
 | **List** | `map(.x, .f)` | `map2(.x, .y, .f)` | `pmap(.l, .f)` |
 | **Logical** | `map_lgl(.x, .f)` | `map2_lgl(.x, .y, .f)` | `pmap_lgl(.l, .f)` |
 | **Integer** | `map_int(.x, .f)` | `map2_int(.x, .y, .f)` | `pmap_int(.l, .f)` |
@@ -198,19 +200,20 @@ What makes purrr particularly special is that all of the above features (progres
 ## Filtering and finding with predicates
 
 <!-- FIXME: Consider providing a more concrete motivating example at the start - perhaps finding the first numeric column in a data frame -->
+
 purrr provides a number of functions that work with predicate functions. Predicate functions take a vector and return either `TRUE` or `FALSE`, with examples including `is.character()` and `\(x) any(is.na(x))`. You typically use them to filter or find; for example, you could use them to locate the first element of a list that's a character vector, or only keep the columns in a data frame that have missing values.
 
 purrr comes with a bunch of helpers to make predicate functions easier to use:
 
-* `detect(.x, .p)` returns the value of the first element in `.x` where `.p` is `TRUE`.
-* `detect_index(.x, .p)` returns the position of the first element in `.x` where `.p` is `TRUE`.
-* `keep(.x, .p)` returns all elements from `.x` where `.p` evaluates to `TRUE`.
-* `discard(.x, .p)` returns all elements from `.x` where `.p` evaluates to `FALSE`.
-* `every(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for every element in `.x`.
-* `some(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for at least one element in `.x`.
-* `none(.x, .p)` returns `TRUE` if `.p` returns `FALSE` for all elements in `.x`.
-* `head_while(.x, .p)` returns elements from the beginning of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`.
-* `tail_while(.x, .p)` returns elements from the end of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`.
+-   `detect(.x, .p)` returns the value of the first element in `.x` where `.p` is `TRUE`.
+-   `detect_index(.x, .p)` returns the position of the first element in `.x` where `.p` is `TRUE`.
+-   `keep(.x, .p)` returns all elements from `.x` where `.p` evaluates to `TRUE`.
+-   `discard(.x, .p)` returns all elements from `.x` where `.p` evaluates to `FALSE`.
+-   `every(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for every element in `.x`.
+-   `some(.x, .p)` returns `TRUE` if `.p` returns `TRUE` for at least one element in `.x`.
+-   `none(.x, .p)` returns `TRUE` if `.p` returns `FALSE` for all elements in `.x`.
+-   `head_while(.x, .p)` returns elements from the beginning of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`.
+-   `tail_while(.x, .p)` returns elements from the end of `.x` while `.p` is `TRUE`, stopping at the first `FALSE`.
 
 You'll typically use these functions with lists, since you can usually rely on vectorization for simpler vectors.
 
