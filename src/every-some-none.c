@@ -100,11 +100,11 @@ SEXP satisfies_predicate(
 }
 
 SEXP every_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i) {
-  return satisfies_predicate(ffi_env, ffi_n, ffi_i, 1, 0);
+  return satisfies_predicate(ffi_env, ffi_n, ffi_i, /*initial=*/ true, /*early_stop=*/ false);
 }
 SEXP some_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i) {
-  return satisfies_predicate(ffi_env, ffi_n, ffi_i, 0, 1);
+  return satisfies_predicate(ffi_env, ffi_n, ffi_i, /*initial=*/ false, /*early_stop=*/ true);
 }
 SEXP none_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i) {
-  return satisfies_predicate(ffi_env, ffi_n, ffi_i, 1, 1);
+  return satisfies_predicate(ffi_env, ffi_n, ffi_i, /*initial=*/ true, /*early_stop=*/ true);
 }
