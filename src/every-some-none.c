@@ -64,9 +64,9 @@ SEXP satisfies_predicate(
       R_CheckUserInterrupt();
     }
 
-    SEXP ffi_elt = PROTECT(R_forceAndCall(call, force, env));
+    SEXP elt_sexp = PROTECT(R_forceAndCall(call, force, env));
 
-    if (!is_scalar_logicalish(ffi_elt)) {
+    if (!is_scalar_logicalish(elt_sexp)) {
       // We don't pass `.purrr_error_call` through `.Call()` so we can avoid
       // evaluating it when it isn't needed, so we have to retrieve it when
       // required.
@@ -75,11 +75,11 @@ SEXP satisfies_predicate(
       r_abort_call(
         error_call,
         "`.p()` must return a single `TRUE`, `FALSE`, or `NA`, not %s.",
-        rlang_obj_type_friendly_full(ffi_elt, true, false)
+        rlang_obj_type_friendly_full(elt_sexp, true, false)
       );
     }
 
-    const int elt = LOGICAL_ELT(ffi_elt, 0);
+    const int elt = LOGICAL_ELT(elt_sexp, 0);
     UNPROTECT(1);
 
     if (elt == early_stop) {
