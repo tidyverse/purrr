@@ -87,8 +87,7 @@ mirai::daemons(6)
 
 ```{r}
 #| echo: false
-# Can be updated to mirai::daemons(sync = TRUE) once mirai >= 2.5.1 is released
-mirai::daemons(1, dispatcher = FALSE)
+mirai::daemons(sync = TRUE)
 ```
 
 (You only need to do this once per session.)
@@ -118,6 +117,11 @@ out <- map(by_cyl, in_parallel(\(df) my_lm(mpg ~ disp, data = df), my_lm = my_lm
 ```
 
 Learn more about parallel computing in `?in_parallel`.
+
+```{r}
+#| echo: false
+mirai::daemons(0)
+```
 
 ### Output variants
 
