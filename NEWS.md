@@ -26,6 +26,8 @@
 
 * `map()`, `map2()`, and `pmap()` now automatically set the correct environment so that `format` strings to access to local variables (@jcolt45, #1078).
 
+* `map_vec()` no longer fails on empty named lists (#1206).
+
 # purrr 1.1.0
 
 * purrr now requires R >= 4.1, so we can rely on the base pipe and lambda

@@ -101,5 +101,8 @@ simplify_impl <- function(
       }
     }
   )
-  vec_set_names(out, names)
+  if (!is.null(out)) {
+    out <- vec_set_names(out, names)
+  }
+  out
 }
