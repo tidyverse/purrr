@@ -6,6 +6,7 @@ template:
 
   includes:
     in_header: |
+      <script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script>
       <script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 
 development:
@@ -96,9 +97,9 @@ reference:
 
 - title: Superseded
   description: |
-     Superseded functions have been replaced by superior solutions, but
-     due to their widespread use will not go away. However, they will not
-     get any new features and will only receive critical bug fixes.
+    Superseded functions have been replaced by superior solutions, but
+    due to their widespread use will not go away. However, they will not
+    get any new features and will only receive critical bug fixes.
   contents:
   - flatten
   - map_df
