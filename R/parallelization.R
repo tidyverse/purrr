@@ -129,7 +129,7 @@
 #' practice to do so.
 #'
 #' Note: if you are using parallel map within a package, do not make any
-#' [mirai::daemons()] calls within the package. This is as it should always be
+#' [mirai::daemons()] calls within your package. It should always be
 #' up to the user how they wish to set up parallel processing: (i) resources are
 #' only known at run-time e.g. availability of local or remote daemons, (ii)
 #' packages should make use of existing daemons when already set, rather than
