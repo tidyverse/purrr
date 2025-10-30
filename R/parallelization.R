@@ -45,10 +45,9 @@
 #'   as they are modified to share the same closure as the main function. This
 #'   means that all helper functions and other required variables must also be
 #'   supplied as further `...` arguments. This applies only for functions
-#'   directly supplied to `...`, and containers such as lists are not
-#'   recursively walked to find functions (meaning you're at risk of
-#'   unexpectedly including large objects with your parallel function if you
-#'   supply complex lists).
+#'   directly supplied to `...`: containers (such as lists) are not
+#'   recursively analysed. In other words, if you supply complex
+#'   objects to `...` you're at risk of unexpectedly including large objects.
 #'
 #' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
 #' to that package for more details.
