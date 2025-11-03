@@ -5,7 +5,7 @@ articles:
   base: base.html
   other-langs: other-langs.html
   purrr: purrr.html
-last_built: 2025-10-30T13:17Z
+last_built: 2025-11-03T22:06Z
 urls:
   reference: https://purrr.tidyverse.org/reference
   article: https://purrr.tidyverse.org/articles
