@@ -1,9 +1,9 @@
 ## revdepcheck results
 
-We checked 2156 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 2164 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 6 new problems
- * We failed to check 7 packages
+ * We saw 5 new problems
+ * We failed to check 6 packages
 
 Issues with CRAN packages are summarised below.
 
@@ -14,10 +14,6 @@ Issues with CRAN packages are summarised below.
   checking re-building of vignette outputs ... ERROR
 
 * CPAT
-  checking tests ... ERROR
-
-* egor
-  checking examples ... ERROR
   checking tests ... ERROR
 
 * quincunx
@@ -35,7 +31,6 @@ Issues with CRAN packages are summarised below.
 * dsTidyverse      (NA)
 * ggmosaic         (NA)
 * kerastuneR       (NA)
-* multinma         (NA)
 * stoRy            (NA)
 * tidyjson         (NA)
 * TriDimRegression (NA)

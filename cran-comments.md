@@ -4,4 +4,9 @@
 
 ## revdepcheck results
 
-This was a patch release to fix R CMD check issues. I saw 2 false positives in my revdepchecks (meta and waywiser) and failed to check a further 45 packages.
+We checked 2164 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 5 new problems
+ * We failed to check 6 packages
+
+https://github.com/tidyverse/purrr/issues/1204 tracks the revdep failures and the various patches and notifications I performed.
