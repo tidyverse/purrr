@@ -17,19 +17,65 @@
 #' @name rate-helpers
 NULL
 
+rate <- new_class(
+  "rate",
+  package = "purrr",
+  properties = list(
+    jitter = new_property(class_logical, validator = function(value) {
+      if (!is_bool(value)) {
+        "must be a logical of length 1"
+      }
+    }),
+    max_times = new_property(class_numeric, validator = function(value) {
+      if (!is_number(value, allow_infinite = TRUE)) {
+        "must be a numeric or `Inf`"
+      }
+    }),
+    state = new_property(class_environment)
+  ),
+  constructor = function(jitter = TRUE, max_times = 3, state = env(i = 0L)) {
+    force(jitter)
+    force(max_times)
+    force(state)
+
+    new_object(
+      S7_object(),
+      jitter = jitter,
+      max_times = max_times,
+      state = state
+    )
+  }
+)
+
 #' @rdname rate-helpers
 #' @param pause Delay between attempts in seconds.
 #' @export
-rate_delay <- function(pause = 1, max_times = Inf) {
-  check_number_decimal(pause, allow_infinite = TRUE, min = 0)
+rate_delay <- new_class(
+  "rate_delay",
+  parent = rate,
+  package = "purrr",
+  properties = list(
+    pause = new_property(class_numeric, validator = function(value) {
+      check_number_decimal(value, allow_infinite = TRUE, min = 0)
+    }),
+    max_times = new_property(
+      class_numeric,
+      default = Inf,
+      validator = function(value) {
+        if (!is_number(value, allow_infinite = TRUE)) {
+          "must be a numeric or `Inf`"
+        }
+      }
+    )
+  ),
+  constructor = function(pause = 1, max_times = Inf, jitter = FALSE) {
+    force(pause)
+    force(jitter)
+    force(max_times)
 
-  new_rate(
-    "purrr_rate_delay",
-    pause = pause,
-    max_times = max_times,
-    jitter = FALSE
-  )
-}
+    new_object(rate(jitter = jitter, max_times = max_times), pause = pause)
+  }
+)
 
 #' @rdname rate-helpers
 #' @param pause_base,pause_cap `rate_backoff()` uses an exponential
@@ -39,73 +85,88 @@ rate_delay <- function(pause = 1, max_times = Inf) {
 #'   only necessary if you need pauses less than one second (which may
 #'   not be kind to the server, use with caution!).
 #' @export
-rate_backoff <- function(
-  pause_base = 1,
-  pause_cap = 60,
-  pause_min = 1,
-  max_times = 3,
-  jitter = TRUE
-) {
-  check_number_decimal(pause_base, min = 0)
-  check_number_decimal(pause_cap, allow_infinite = TRUE, min = 0)
-  check_number_decimal(pause_min, allow_infinite = TRUE, min = 0)
-  check_number_whole(max_times, min = 1)
-  check_bool(jitter)
+rate_backoff <- new_class(
+  "rate_backoff",
+  parent = rate,
+  package = "purrr",
+  properties = list(
+    pause_base = new_property(class_numeric, validator = function(value) {
+      check_number_decimal(value, min = 0) # TODO: maybe allow_infinite needs to be FALSE?
+    }),
+    pause_cap = new_property(class_numeric, validator = function(value) {
+      check_number_decimal(value, allow_infinite = TRUE, min = 0)
+    }),
+    pause_min = new_property(class_numeric, validator = function(value) {
+      check_number_decimal(value, allow_infinite = TRUE, min = 0)
+    })
+  ),
+  constructor = function(
+    pause_base = 1,
+    pause_cap = 60,
+    pause_min = 1,
+    max_times = 3,
+    jitter = TRUE
+  ) {
+    force(pause_base)
+    force(pause_cap)
+    force(pause_min)
+    force(max_times)
+    force(jitter)
 
-  new_rate(
-    "purrr_rate_backoff",
-    pause_base = pause_base,
-    pause_cap = pause_cap,
-    pause_min = pause_min,
-    max_times = max_times,
-    jitter = jitter
-  )
-}
+    new_object(
+      rate(jitter = jitter, max_times = max_times),
+      pause_base = pause_base,
+      pause_cap = pause_cap,
+      pause_min = pause_min
+    )
+  }
+)
 
-new_rate <- function(.subclass, ..., jitter = TRUE, max_times = 3) {
-  stopifnot(
-    is_bool(jitter),
-    is_number(max_times) || identical(max_times, Inf)
-  )
-
-  rate <- list(
-    ...,
-    state = env(i = 0L),
-    jitter = jitter,
-    max_times = max_times
-  )
-
-  structure(
-    rate,
-    class = c(.subclass, "purrr_rate")
-  )
-}
 #' @rdname rate-helpers
 #' @param x An object to test.
 #' @export
 is_rate <- function(x) {
-  inherits(x, "purrr_rate")
+  S7_inherits(x, rate)
 }
 
-#' @export
-print.purrr_rate_delay <- function(x, ...) {
+rate_expired <- function(rate) {
+  rate_count(rate) > rate@max_times
+}
+
+rate_get_delay <- new_generic("rate_expired", "rate")
+
+method(rate_get_delay, rate_backoff) <- function(rate) {
+  i <- rate_count(rate)
+
+  pause_max <- min(rate@pause_cap, rate@pause_base * 2^i)
+  if (rate@jitter) {
+    pause_max <- stats::runif(1, 0, pause_max)
+  }
+
+  max(rate@pause_min, pause_max)
+}
+
+method(rate_get_delay, rate_delay) <- function(rate) {
+  rate@pause
+}
+
+method(print, rate_delay) <- function(x, ...) {
   cli::cli_text("<rate: delay>")
   cli::cli_bullets(c(
-    " " = "Attempts: {rate_count(x)}/{x$max_times}",
-    " " = "{.field pause}: {x$pause}"
+    " " = "Attempts: {rate_count(x)}/{x@max_times}",
+    " " = "{.field pause}: {x@pause}"
   ))
 
   invisible(x)
 }
-#' @export
-print.purrr_rate_backoff <- function(x, ...) {
-  cli::cli_text("<rate: backoff>")
 
+method(print, rate_backoff) <- function(x, ...) {
+  cli::cli_text("<rate: backoff>")
   cli::cli_bullets(c(
-    " " = "Attempts: {rate_count(x)}/{x$max_times}",
-    " " = "{.field pause_base}: {x$pause_base}",
-    " " = "{.field pause_cap}: {x$pause_cap}",
-    " " = "{.field pause_min}: {x$pause_min}"
+    " " = "Attempts: {rate_count(x)}/{x@max_times}",
+    " " = "{.field pause_base}: {x@pause_base}",
+    " " = "{.field pause_cap}: {x@pause_cap}",
+    " " = "{.field pause_min}: {x@pause_min}"
   ))
 
   invisible(x)
@@ -129,47 +190,22 @@ print.purrr_rate_backoff <- function(x, ...) {
 rate_sleep <- function(rate, quiet = TRUE) {
   stopifnot(is_rate(rate))
 
-  i <- rate_count(rate)
-
-  if (i > rate$max_times) {
-    stop_rate_expired(rate)
-  }
-  if (i == rate$max_times) {
-    stop_rate_excess(rate)
-  }
-
-  if (i == 0L) {
-    rate_bump_count(rate)
-    signal_rate_init(rate)
-    return(invisible())
+  if (rate_expired(rate)) {
+    cli::cli_abort(
+      c(
+        "This `rate` object has already been called the maximum number of times.",
+        i = "Do you need to reset it with `rate_reset()`?"
+      )
+    )
   }
 
-  on.exit(rate_bump_count(rate))
-  UseMethod("rate_sleep")
-}
-
-#' @export
-rate_sleep.purrr_rate_backoff <- function(rate, quiet = TRUE) {
-  i <- rate_count(rate)
-
-  pause_max <- min(rate$pause_cap, rate$pause_base * 2^i)
-  if (rate$jitter) {
-    pause_max <- stats::runif(1, 0, pause_max)
+  delay <- rate_get_delay(rate)
+  if (quiet) {
+    signal(msg, class = "purrr_message_rate_retry", delay = delay)
+  } else {
+    cli::cli_inform(sprintf("Retrying in {length} second{?s}."))
   }
-
-  length <- max(rate$pause_min, pause_max)
-  rate_sleep_impl(rate, length, quiet)
-}
-#' @export
-rate_sleep.purrr_rate_delay <- function(rate, quiet = TRUE) {
-  rate_sleep_impl(rate, rate$pause, quiet)
-}
-
-rate_sleep_impl <- function(rate, length, quiet) {
-  if (!quiet) {
-    signal_rate_retry(rate, length, quiet)
-  }
-  Sys.sleep(length)
+  Sys.sleep(delay)
 }
 
 #' @rdname rate_sleep
@@ -177,16 +213,16 @@ rate_sleep_impl <- function(rate, length, quiet) {
 rate_reset <- function(rate) {
   stopifnot(is_rate(rate))
 
-  rate$state$i <- 0L
+  rate@state$i <- 0L
 
   invisible(rate)
 }
 
 rate_count <- function(rate) {
-  rate$state$i
+  rate@state$i
 }
 rate_bump_count <- function(rate, n = 1L) {
-  rate$state$i <- rate$state$i + n
+  rate@state$i <- rate@state$i + n
   invisible(rate)
 }
 
