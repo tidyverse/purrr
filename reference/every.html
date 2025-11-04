@@ -11,7 +11,7 @@ some() returns TRUE when .p is TRUE for at least one element.
 every() returns TRUE when .p is TRUE for all elements.
 none() returns TRUE when .p is FALSE for all elements.
 
-"><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+"><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -19,7 +19,7 @@ none() returns TRUE when .p is FALSE for all elements.
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,8 @@ none() returns TRUE when .p is FALSE for all elements.
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/purrr.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a></li>
@@ -36,6 +37,7 @@ none() returns TRUE when .p is FALSE for all elements.
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/11/purrr-1-2-0/">Version 1.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/">Version 1.1.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a></li>
@@ -86,8 +88,8 @@ none() returns TRUE when .p is FALSE for all elements.
 <dd><p>A predicate function (i.e. a function that returns either <code>TRUE</code>
 or <code>FALSE</code>) specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>is.character</code>.</p></li>
 <li><p>An anonymous function, e.g. <code>\(x) all(x &lt; 0)</code> or <code>function(x) all(x &lt; 0)</code>.</p></li>
-<li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. You must use <code>.x</code> to refer to the first
-argument). No longer recommended.</p></li>
+<li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. Use <code>.x</code> to refer to the first argument.
+No longer recommended.</p></li>
 </ul></dd>
 
 

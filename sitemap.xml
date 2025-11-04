@@ -8,6 +8,7 @@
 <url><loc>https://purrr.tidyverse.org/articles/base.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/articles/index.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/articles/other-langs.html</loc></url>
+<url><loc>https://purrr.tidyverse.org/articles/purrr.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/authors.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/index.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/news/index.html</loc></url>
@@ -16,7 +17,6 @@
 <url><loc>https://purrr.tidyverse.org/reference/array-coercion.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/as_mapper.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/as_vector.html</loc></url>
-<url><loc>https://purrr.tidyverse.org/reference/at_depth.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/attr_getter.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/auto_browse.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/chuck.html</loc></url>
@@ -26,7 +26,6 @@
 <url><loc>https://purrr.tidyverse.org/reference/every.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/faq-adverbs-export.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/flatten.html</loc></url>
-<url><loc>https://purrr.tidyverse.org/reference/get-attr.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/has_element.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/head_while.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/imap.html</loc></url>
@@ -69,7 +68,6 @@
 <url><loc>https://purrr.tidyverse.org/reference/rbernoulli.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/rdunif.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/reduce.html</loc></url>
-<url><loc>https://purrr.tidyverse.org/reference/reduce_right.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/reexports.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/rerun.html</loc></url>
 <url><loc>https://purrr.tidyverse.org/reference/safely.html</loc></url>

@@ -18,7 +18,7 @@
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="purrr &lt;-&gt; base R">
-<script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/purrr.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -49,6 +50,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news">
 <li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/11/purrr-1-2-0/">Version 1.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/">Version 1.1.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a></li>
@@ -178,7 +180,7 @@ function</p>
 <td>
 <code><a href="../reference/map.html">map_lgl()</a></code> (logical), <code><a href="../reference/map.html">map_int()</a></code> (integer),
 <code><a href="../reference/map.html">map_dbl()</a></code> (double), <code><a href="../reference/map.html">map_chr()</a></code> (character),
-<code><a href="../reference/map_raw.html">map_raw()</a></code> (raw)</td>
+<code><a href="../reference/map.html">map_vec()</a></code> (other vectors)</td>
 </tr>
 <tr class="odd">
 <td>Atomic vector of desired type</td>
@@ -189,7 +191,7 @@ to check type</td>
 <td>
 <code><a href="../reference/map2.html">map2_lgl()</a></code> (logical), <code><a href="../reference/map2.html">map2_int()</a></code>
 (integer), <code><a href="../reference/map2.html">map2_dbl()</a></code> (double), <code><a href="../reference/map2.html">map2_chr()</a></code>
-(character), <code><a href="../reference/map_raw.html">map2_raw()</a></code> (raw)</td>
+(character), <code><a href="../reference/map2.html">map2_vec()</a></code> (other vectors)</td>
 </tr>
 <tr class="even">
 <td>Atomic vector of desired type</td>
@@ -200,19 +202,19 @@ to check type</td>
 <td>
 <code><a href="../reference/pmap.html">pmap_lgl()</a></code> (logical), <code><a href="../reference/pmap.html">pmap_int()</a></code>
 (integer), <code><a href="../reference/pmap.html">pmap_dbl()</a></code> (double), <code><a href="../reference/pmap.html">pmap_chr()</a></code>
-(character), <code><a href="../reference/map_raw.html">pmap_raw()</a></code> (raw)</td>
+(character), <code><a href="../reference/pmap.html">pmap_vec()</a></code> (other vectors)</td>
 </tr>
 <tr class="odd">
-<td>Side effect only</td>
-<td>1 vector</td>
-<td>loops</td>
-<td><code><a href="../reference/map.html">walk()</a></code></td>
-</tr>
-<tr class="even">
 <td>Side effect only</td>
 <td>2 vectors</td>
 <td>loops</td>
 <td><code><a href="../reference/map2.html">walk2()</a></code></td>
+</tr>
+<tr class="even">
+<td>Side effect only</td>
+<td>1 vector</td>
+<td>loops</td>
+<td><code><a href="../reference/map.html">walk()</a></code></td>
 </tr>
 <tr class="odd">
 <td>Side effect only</td>
@@ -226,7 +228,9 @@ to check type</td>
 <td>
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map_dfr()</a></code></td>
+<td>
+<code><a href="../reference/map.html">map()</a></code> then <code><a href="../reference/list_c.html">list_rbind()</a></code>
+</td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>rbind</code> outputs)</td>
@@ -235,7 +239,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map2_dfr()</a></code></td>
+<td>
+<code><a href="../reference/map2.html">map2()</a></code> then <code><a href="../reference/list_c.html">list_rbind()</a></code>
+</td>
 </tr>
 <tr class="even">
 <td>Data frame (<code>rbind</code> outputs)</td>
@@ -244,7 +250,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">pmap_dfr()</a></code></td>
+<td>
+<code><a href="../reference/pmap.html">pmap()</a></code> then <code><a href="../reference/list_c.html">list_rbind()</a></code>
+</td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -252,7 +260,9 @@ to check type</td>
 <td>
 <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> then <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map_dfc()</a></code></td>
+<td>
+<code><a href="../reference/map.html">map()</a></code> then <code><a href="../reference/list_c.html">list_cbind()</a></code>
+</td>
 </tr>
 <tr class="even">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -261,7 +271,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">map2_dfc()</a></code></td>
+<td>
+<code><a href="../reference/map2.html">map2()</a></code> then <code><a href="../reference/list_c.html">list_cbind()</a></code>
+</td>
 </tr>
 <tr class="odd">
 <td>Data frame (<code>cbind</code> outputs)</td>
@@ -270,7 +282,9 @@ to check type</td>
 <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>/<code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> then
 <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code>
 </td>
-<td><code><a href="../reference/map_dfr.html">pmap_dfc()</a></code></td>
+<td>
+<code><a href="../reference/pmap.html">pmap()</a></code> then <code><a href="../reference/list_c.html">list_cbind()</a></code>
+</td>
 </tr>
 <tr class="even">
 <td>Any</td>
@@ -281,7 +295,7 @@ to check type</td>
 </td>
 <td>
 <code><a href="../reference/imap.html">imap()</a></code>, <code>imap_*()</code> (<code>lgl</code>,
-<code>dbl</code>, <code>dfr</code>, and etc. just like for
+<code>dbl</code>, <code>chr</code>, and etc. just like for
 <code><a href="../reference/map.html">map()</a></code>, <code><a href="../reference/map2.html">map2()</a></code>, and <code><a href="../reference/pmap.html">pmap()</a></code>)</td>
 </tr>
 <tr class="odd">
@@ -519,9 +533,9 @@ number of <code><a href="https://rdrr.io/r/base/mapply.html" class="external-lin
 <span><span class="co">#&gt;  $ : num [1:5] 3.44 3.88 1.54 5.52 2.23</span></span>
 <span><span class="co">#&gt;  $ : num [1:5] 0.441 5.728 6.589 1.885 2.63</span></span>
 <span><span class="co">#&gt;  $ : num [1:5] 11.2 10.82 -8.16 -5.16 4.23</span></span></code></pre></div>
-<p>Alternatively, we could use <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> which doesn’t simply,
-but also doesn’t take any constant arguments, so we need to use an
-anonymous function:</p>
+<p>Alternatively, we could use <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code> which doesn’t
+simplify, but also doesn’t take any constant arguments, so we need to
+use an anonymous function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">...</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, mean <span class="op">=</span> <span class="va">means</span>, sd <span class="op">=</span> <span class="va">sds</span><span class="op">)</span></span></code></pre></div>
 <p>In R 4.1 and up, you could use the shorter anonymous function

@@ -33,7 +33,7 @@ large objects between processes.
 For maps to actually be performed in parallel, the user must also set
 mirai::daemons(), otherwise they fall back to sequential processing.
 mirai::require_daemons() may be used to enforce the use of parallel
-processing. See the section 'Daemons settings' below."><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+processing. See the section 'Daemons settings' below."><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -41,7 +41,7 @@ processing. See the section 'Daemons settings' below."><meta property="og:image"
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,8 @@ processing. See the section 'Daemons settings' below."><meta property="og:image"
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/purrr.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a></li>
@@ -58,6 +59,7 @@ processing. See the section 'Daemons settings' below."><meta property="og:image"
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/11/purrr-1-2-0/">Version 1.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/">Version 1.1.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a></li>
@@ -129,11 +131,18 @@ instance <code>ggplot()</code> from the ggplot2 package must be called with its
 namespace prefix: <code>ggplot2::ggplot()</code>. An alternative is to use <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>
 within the function to attach a package to the search path, which allows
 subsequent use of package functions without the explicit namespace.</p></li>
-<li><p>They should declare any data they depend on. You can declare data by
-supplying additional named arguments to <code>...</code>. When supplying an anonymous
-function to a locally-defined function of the form <code>\(x) fun(x)</code>, the
-function <code>fun</code> itself must be supplied to <code>...</code>. The entire call would then
-be of the form: <code>in_parallel(\(x) fun(x), fun = fun)</code>.</p></li>
+<li><p>They should declare any data they depend on. Declare data by supplying
+named arguments to <code>...</code>. When <code>.f</code> is an anonymous function to a
+locally-defined function of the form <code>\(x) fun(x)</code>, <code>fun</code> itself must be
+supplied to <code>...</code> in the manner of: <code>in_parallel(\(x) fun(x), fun = fun)</code>.</p></li>
+<li><p>Functions (closures) supplied to <code>...</code> must themselves be self-contained,
+as they are modified to share the same closure as the main function. This
+means that all helper functions and other required variables must also be
+supplied as further <code>...</code> arguments. This applies only for functions
+directly supplied to <code>...</code>, and containers such as lists are not
+recursively walked to find functions (meaning you're at risk of
+unexpectedly including large objects with your parallel function if you
+supply complex lists).</p></li>
 </ul><p><code>in_parallel()</code> is a simple wrapper of <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> and you may refer
 to that package for more details.</p>
 <p>Example usage:</p>
@@ -147,11 +156,14 @@ to that package for more details.</p>
 <span><span class="co"># Use :: to namespace all package functions:</span></span>
 <span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">vctrs</span><span class="fu">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/vec_init.html" class="external-link">vec_init</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">}</span></span>
-<span><span class="co"># Operating in parallel, locally-defined objects will not be found:</span></span>
-<span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># Use the ... argument to supply those objects:</span></span>
-<span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, fun <span class="op">=</span> <span class="va">fun</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">param</span> <span class="op">+</span> <span class="fu">helper</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">helper</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2</span> <span class="op">}</span></span>
+<span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
+<span><span class="co"># Operating in parallel, locally-defined functions, including helper</span></span>
+<span><span class="co"># functions and other objects required by it, will not be found:</span></span>
+<span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Use the ... argument to supply these objects:</span></span>
+<span><span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">fun</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, fun <span class="op">=</span> <span class="va">fun</span>, helper <span class="op">=</span> <span class="va">helper</span>, param <span class="op">=</span> <span class="va">param</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="when-to-use">When to use<a class="anchor" aria-label="anchor" href="#when-to-use"></a></h2>
@@ -161,8 +173,8 @@ to that package for more details.</p>
 <p>Parallelizing a map using 'n' processes does not automatically lead to it
 taking 1/n of the time. Additional overhead from setting up the parallel task
 and communicating with parallel processes eats into this benefit, and can
-outweigh it for very short tasks or those involving large amounts of data.
-The threshold at which parallelization becomes clearly beneficial will differ
+outweigh it for very short tasks or those involving large amounts of data.</p>
+<p>The threshold at which parallelization becomes clearly beneficial will differ
 according to your individual setup and task, but a rough guide would be in
 the order of 100 microseconds to 1 millisecond for each map iteration.</p>
     </div>
@@ -177,7 +189,7 @@ This is a function from the <span class="pkg">mirai</span> package that sets up 
 local machine or across the network.</p>
 <p>Daemons must be set prior to performing any parallel map operation, otherwise
 <code>in_parallel()</code> will fall back to sequential processing. To ensure that maps
-are always performed in parallel, put <code><a href="https://mirai.r-lib.org/reference/require_daemons.html" class="external-link">mirai::require_daemons()</a></code> before the
+are always performed in parallel, place <code><a href="https://mirai.r-lib.org/reference/require_daemons.html" class="external-link">mirai::require_daemons()</a></code> before the
 map.</p>
 <p>It is usual to set daemons once per session. You can leave them running on
 your local machine as they consume almost no resources whilst waiting to
@@ -197,12 +209,13 @@ existing daemons:</p>
 <p>All daemons automatically terminate when your session ends. You do not need
 to explicitly terminate daemons in this instance, although it is still good
 practice to do so.</p>
-<p>Note: it should always be for the user to set daemons. If you are using
-parallel map within a package, do not make any <code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> calls
-within the package, as it should always be up to the user how they wish to
-set up parallel processing e.g. using local or remote daemons. This also
-helps prevent inadvertently spawning too many daemons if functions are used
-recursively within each other.</p>
+<p>Note: if you are using parallel map within a package, do not make any
+<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> calls within the package. This is as it should always be
+up to the user how they wish to set up parallel processing: (i) resources are
+only known at run-time e.g. availability of local or remote daemons, (ii)
+packages should make use of existing daemons when already set, rather than
+reset them, and (iii) it helps prevent inadvertently spawning too many
+daemons when functions are used recursively within each other.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -219,14 +232,25 @@ recursively within each other.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive() &amp;&amp; rlang::is_installed("mirai") &amp;&amp; rlang::is_installed("carrier")</span></span></span>
 <span class="r-in"><span><span class="co"># Run in interactive sessions only as spawns additional processes</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">default_param</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">delay</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">secs</span> <span class="op">=</span> <span class="va">default_param</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="va">secs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">slow_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">delay</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example of a 'crate' returned by in_parallel(). The object print method</span></span></span>
 <span class="r-in"><span><span class="co"># shows the size of the crate and any objects contained within:</span></span></span>
-<span class="r-in"><span><span class="va">crate</span> <span class="op">&lt;-</span> <span class="fu">in_parallel</span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">slow_lm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>, slow_lm <span class="op">=</span> <span class="va">slow_lm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">crate</span> <span class="op">&lt;-</span> <span class="fu">in_parallel</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">slow_lm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  slow_lm <span class="op">=</span> <span class="va">slow_lm</span>,</span></span>
+<span class="r-in"><span>  delay <span class="op">=</span> <span class="va">delay</span>,</span></span>
+<span class="r-in"><span>  default_param <span class="op">=</span> <span class="va">default_param</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">crate</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use mirai::mirai() to test that a crate is self-contained</span></span></span>

@@ -3,7 +3,7 @@
 some of the arguments. It is particularly useful in conjunction with
 functionals and other function operators."><meta property="og:description" content="Partial function application allows you to modify a function by pre-filling
 some of the arguments. It is particularly useful in conjunction with
-functionals and other function operators."><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+functionals and other function operators."><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -11,7 +11,7 @@ functionals and other function operators."><meta property="og:image" content="ht
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,8 @@ functionals and other function operators."><meta property="og:image" content="ht
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/purrr.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a></li>
@@ -28,6 +29,7 @@ functionals and other function operators."><meta property="og:image" content="ht
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/11/purrr-1-2-0/">Version 1.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/">Version 1.1.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a></li>
@@ -58,13 +60,7 @@ functionals and other function operators.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">partial</span><span class="op">(</span></span>
-<span>  <span class="va">.f</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  .env <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  .lazy <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  .first <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">partial</span><span class="op">(</span><span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -84,23 +80,6 @@ arguments relative to partialised ones. See
 <p>These dots support quasiquotation. If you unquote a value, it is
 evaluated only once at function creation time.  Otherwise, it is
 evaluated each time the function is called.</p></dd>
-
-
-<dt id="arg--env">.env<a class="anchor" aria-label="anchor" href="#arg--env"></a></dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> The environments are
-now captured via quosures.</p></dd>
-
-
-<dt id="arg--lazy">.lazy<a class="anchor" aria-label="anchor" href="#arg--lazy"></a></dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Please unquote the
-arguments that should be evaluated once at function creation time
-with <code>!!</code>.</p></dd>
-
-
-<dt id="arg--first">.first<a class="anchor" aria-label="anchor" href="#arg--first"></a></dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Please pass an
-empty argument <code>... = </code> to specify the position of future
-arguments.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -173,7 +152,7 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;partialised&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = rpois(1, 5), ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ad89ff7e40&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbe6e5c798&gt;</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9465589 0.8754108 0.2600589 0.6572984</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -186,7 +165,7 @@ in a package, be sure to read <a href="faq-adverbs-export.html">faq-adverbs-expo
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;partialised&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> runif(n = 5L, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ad89ff7e40&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbe6e5c798&gt;</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7082934 0.8900290 0.1043065 0.6304117 0.8415589</span>
 <span class="r-in"><span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>

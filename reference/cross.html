@@ -14,13 +14,9 @@ data &amp;lt;- list(
 
 # With deprecated `cross()`
 data |&amp;gt; cross() |&amp;gt; map_chr(\(...) paste0(..., collapse = ""))
-#&amp;gt; [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."
-#&amp;gt; [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."
 
 # With `expand_grid()`
 tidyr::expand_grid(!!!data) |&amp;gt; pmap_chr(paste)
-#&amp;gt; [1] "John! Hello."     "John! Bonjour."   "John... Hello."   "John... Bonjour."
-#&amp;gt; [5] "Jane! Hello."     "Jane! Bonjour."   "Jane... Hello."   "Jane... Bonjour."
 '><meta property="og:description" content='
 These functions were deprecated in purrr 1.0.0 because they
 are slow and buggy, and we no longer think they are the right
@@ -36,14 +32,10 @@ data &amp;lt;- list(
 
 # With deprecated `cross()`
 data |&amp;gt; cross() |&amp;gt; map_chr(\(...) paste0(..., collapse = ""))
-#&amp;gt; [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."
-#&amp;gt; [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."
 
 # With `expand_grid()`
 tidyr::expand_grid(!!!data) |&amp;gt; pmap_chr(paste)
-#&amp;gt; [1] "John! Hello."     "John! Bonjour."   "John... Hello."   "John... Bonjour."
-#&amp;gt; [5] "Jane! Hello."     "Jane! Bonjour."   "Jane... Hello."   "Jane... Bonjour."
-'><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+'><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="purrr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
 
 
@@ -51,7 +43,7 @@ tidyr::expand_grid(!!!data) |&amp;gt; pmap_chr(paste)
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +51,8 @@ tidyr::expand_grid(!!!data) |&amp;gt; pmap_chr(paste)
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/purrr.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/base.html">purrr &lt;-&gt; base R</a></li>
@@ -68,6 +61,7 @@ tidyr::expand_grid(!!!data) |&amp;gt; pmap_chr(paste)
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/11/purrr-1-2-0/">Version 1.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/">Version 1.1.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a></li>
@@ -98,7 +92,7 @@ approach to solving this problem. Please use <code><a href="https://tidyr.tidyve
 instead.</p>
 <p>Here is an example of equivalent usages for <code>cross()</code> and
 <code>expand_grid()</code>:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<p></p><div class="sourceCode R"><pre><code><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"John"</span>, <span class="st">"Jane"</span><span class="op">)</span>,</span>
 <span>  sep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"! "</span>, <span class="st">"... "</span><span class="op">)</span>,</span>
 <span>  greeting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello."</span>, <span class="st">"Bonjour."</span><span class="op">)</span></span>
@@ -106,13 +100,9 @@ instead.</p>
 <span></span>
 <span><span class="co"># With deprecated `cross()`</span></span>
 <span><span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map_chr</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">...</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "John! Hello."     "Jane! Hello."     "John... Hello."   "Jane... Hello."</span></span>
-<span><span class="co">#&gt; [5] "John! Bonjour."   "Jane! Bonjour."   "John... Bonjour." "Jane... Bonjour."</span></span>
 <span></span>
 <span><span class="co"># With `expand_grid()`</span></span>
-<span><span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/pmap.html">pmap_chr</a></span><span class="op">(</span><span class="va">paste</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "John! Hello."     "John! Bonjour."   "John... Hello."   "John... Bonjour."</span></span>
-<span><span class="co">#&gt; [5] "Jane! Hello."     "Jane! Bonjour."   "Jane... Hello."   "Jane... Bonjour."</span></span></code></pre><p></p></div>
+<span><span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/pmap.html">pmap_chr</a></span><span class="op">(</span><span class="va">paste</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
 
     <div class="section level2">
