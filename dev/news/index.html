@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,6 +25,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><h6 class="dropdown-header" data-toc-skip>Releases</h6></li>
+    <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/11/purrr-1-2-0/">Version 1.2.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/">Version 1.1.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">Version 1.0.0</a></li>
     <li><a class="external-link dropdown-item" href="https://www.tidyverse.org/articles/2019/02/purrr-0-3-0/">Version 0.3.0</a></li>
@@ -48,15 +49,18 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="purrr-development-version">purrr (development version)<a class="anchor" aria-label="anchor" href="#purrr-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.0" id="purrr-120">purrr 1.2.0<a class="anchor" aria-label="anchor" href="#purrr-120"></a></h2><p class="text-muted">CRAN release: 2025-11-04</p>
 <div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<h3 id="breaking-changes-1-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-2-0"></a></h3>
 <ul><li><p>All functions and arguments deprecated in purrr 0.3.0 have now been removed. This includes <code>%@%</code>, <code>accumulate_right()</code>, <code>at_depth()</code>, <code>cross_d()</code>, <code>cross_n()</code>, <code>reduce2_right()</code>, and <code>reduce_right()</code>.</p></li>
 <li><p>All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: <code>invoke_*()</code>, <code>lift_*()</code>, <code>cross*()</code>, <code><a href="../reference/prepend.html">prepend()</a></code>, <code><a href="../reference/splice.html">splice()</a></code>, <code><a href="../reference/rbernoulli.html">rbernoulli()</a></code>, <code><a href="../reference/rdunif.html">rdunif()</a></code>, <code><a href="../reference/when.html">when()</a></code>, <code><a href="../reference/update_list.html">update_list()</a></code>, <code>*_raw()</code>, <code><a href="../reference/pluck_depth.html">vec_depth()</a></code>.</p></li>
 <li><p><code><a href="../reference/map.html">map_chr()</a></code> no longer coereces from logical, integer, or double to strings.</p></li>
 <li><p><code><a href="../reference/every.html">every()</a></code>, <code><a href="../reference/every.html">some()</a></code>, and <code><a href="../reference/every.html">none()</a></code> now require that <code>.p</code> return logical scalar <code>TRUE</code>, <code>FALSE</code>, or <code>NA</code>. Previously, <code>NA</code> was allowed to be a non-logical <code>NA</code>, and would be coerced to a logical <code>NA</code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-1-2-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-1-2-0"></a></h3>
 <ul><li><p>New “getting started” vignette, <code><a href="../articles/purrr.html">vignette("purrr")</a></code> (<a href="https://github.com/tidyverse/purrr/issues/915" class="external-link">#915</a>, <a href="https://github.com/ogolovkina" class="external-link">@ogolovkina</a>).</p></li>
 <li><p><code><a href="../reference/every.html">every()</a></code>, <code><a href="../reference/every.html">some()</a></code>, and <code><a href="../reference/every.html">none()</a></code> are now more performant. They are now as fast as or faster than their equivalent <code>any(map_lgl())</code> or <code>all(map_lgl())</code> calls (<a href="https://github.com/tidyverse/purrr/issues/1036" class="external-link">#1036</a>, <a href="https://github.com/ErdaradunGaztea" class="external-link">@ErdaradunGaztea</a>).</p></li>
 <li><p><code>as_mapper.default()</code> optimized by removing special named argument handling for primitive functions (<a href="https://github.com/mtcarsalot" class="external-link">@mtcarsalot</a>, <a href="https://github.com/tidyverse/purrr/issues/1088" class="external-link">#1088</a>).</p></li>
