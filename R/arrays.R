@@ -59,7 +59,11 @@ array_branch <- function(array, margin = NULL) {
     }
     as.list(array)
   } else {
-    list_flatten(apply(array, margin, list))
+    out <- apply(array, margin, list)
+    if (!is.null(dim(out))) {
+      dim(out) <- NULL
+    }
+    list_flatten(out)
   }
 }
 
