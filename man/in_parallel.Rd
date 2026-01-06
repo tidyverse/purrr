@@ -56,10 +56,9 @@ supplied to \code{...} in the manner of: \verb{in_parallel(\\(x) fun(x), fun = f
 as they are modified to share the same closure as the main function. This
 means that all helper functions and other required variables must also be
 supplied as further \code{...} arguments. This applies only for functions
-directly supplied to \code{...}, and containers such as lists are not
-recursively walked to find functions (meaning you're at risk of
-unexpectedly including large objects with your parallel function if you
-supply complex lists).
+directly supplied to \code{...}: containers (such as lists) are not
+recursively analysed. In other words, if you supply complex
+objects to \code{...} you're at risk of unexpectedly including large objects.
 }
 
 \code{\link[=in_parallel]{in_parallel()}} is a simple wrapper of \code{\link[carrier:crate]{carrier::crate()}} and you may refer
@@ -145,7 +144,7 @@ to explicitly terminate daemons in this instance, although it is still good
 practice to do so.
 
 Note: if you are using parallel map within a package, do not make any
-\code{\link[mirai:daemons]{mirai::daemons()}} calls within the package. This is as it should always be
+\code{\link[mirai:daemons]{mirai::daemons()}} calls within your package. It should always be
 up to the user how they wish to set up parallel processing: (i) resources are
 only known at run-time e.g. availability of local or remote daemons, (ii)
 packages should make use of existing daemons when already set, rather than
