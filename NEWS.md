@@ -1,4 +1,4 @@
-# purrr (development version)
+# purrr 1.2.1
 
 * Tweaks for compatibility with upcoming vctrs 0.7.0.
 
