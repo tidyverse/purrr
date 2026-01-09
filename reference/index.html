@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,7 @@
 
       <div class="section-desc"><p>The <code>map(.x, .f)</code> functions transforms each element of the vector <code>.x</code> with the function <code>.f</code>, returning a vector defined by the suffix (<code>_lgl</code>, <code>_chr()</code> etc). <code><a href="../reference/map.html">walk()</a></code> is a variant for functions called primarily for their side-effects; it returns <code>.x</code> invisibly.</p><p>As well as functions, <code>.f</code>, can take numbers and characters (used as a shorthand for <code>[[</code>), and formulas (used as a succint function definition). See details in <code><a href="../reference/as_mapper.html">as_mapper()</a></code></p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -63,7 +62,8 @@
 
         </dt>
         <dd>Apply a function to each element of a vector</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_mapper.html">as_mapper()</a></code>
 
@@ -74,8 +74,7 @@
 
       <div class="section-desc"><p>A rich set of variants builds on the basic idea of <code><a href="../reference/map.html">map()</a></code>: <code><a href="../reference/modify.html">modify()</a></code> modifies “in place”, returning a vector the same type as <code>.x</code>; <code><a href="../reference/map2.html">map2()</a></code> iterates over two vectors in parallel; <code><a href="../reference/pmap.html">pmap()</a></code> (parallel map) iterates over a list of vectors; <code><a href="../reference/imap.html">imap()</a></code> (index map) is a shortcut for the common pattern <code>map2(x, names(x))</code>.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -86,43 +85,50 @@
 
         </dt>
         <dd>Apply a function to each element of a vector conditionally</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="map_depth.html">map_depth()</a></code> <code><a href="map_depth.html">modify_depth()</a></code>
 
         </dt>
         <dd>Map/modify elements at given depth</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="map2.html">map2()</a></code> <code><a href="map2.html">map2_lgl()</a></code> <code><a href="map2.html">map2_int()</a></code> <code><a href="map2.html">map2_dbl()</a></code> <code><a href="map2.html">map2_chr()</a></code> <code><a href="map2.html">map2_vec()</a></code> <code><a href="map2.html">walk2()</a></code>
 
         </dt>
         <dd>Map over two inputs</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="pmap.html">pmap()</a></code> <code><a href="pmap.html">pmap_lgl()</a></code> <code><a href="pmap.html">pmap_int()</a></code> <code><a href="pmap.html">pmap_dbl()</a></code> <code><a href="pmap.html">pmap_chr()</a></code> <code><a href="pmap.html">pmap_vec()</a></code> <code><a href="pmap.html">pwalk()</a></code>
 
         </dt>
         <dd>Map over multiple input simultaneously (in "parallel")</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="modify.html">modify()</a></code> <code><a href="modify.html">modify_if()</a></code> <code><a href="modify.html">modify_at()</a></code> <code><a href="modify.html">modify2()</a></code> <code><a href="modify.html">imodify()</a></code>
 
         </dt>
         <dd>Modify elements selectively</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="modify_tree.html">modify_tree()</a></code>
 
         </dt>
         <dd>Recursively modify a list</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="imap.html">imap()</a></code> <code><a href="imap.html">imap_lgl()</a></code> <code><a href="imap.html">imap_chr()</a></code> <code><a href="imap.html">imap_int()</a></code> <code><a href="imap.html">imap_dbl()</a></code> <code><a href="imap.html">imap_vec()</a></code> <code><a href="imap.html">iwalk()</a></code>
 
         </dt>
         <dd>Apply a function to each element of a vector, and its index</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="lmap.html">lmap()</a></code> <code><a href="lmap.html">lmap_if()</a></code> <code><a href="lmap.html">lmap_at()</a></code>
 
@@ -133,8 +139,7 @@
 
       <div class="section-desc"><p>A predicate function is a function that either returns <code>TRUE</code> or <code>FALSE</code>. The predicate functionals take a vector and a predicate function and do something useful.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -145,31 +150,36 @@
 
         </dt>
         <dd>Find the value or position of the first match</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="every.html">every()</a></code> <code><a href="every.html">some()</a></code> <code><a href="every.html">none()</a></code>
 
         </dt>
         <dd>Do every, some, or none of the elements of a list satisfy a predicate?</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="has_element.html">has_element()</a></code>
 
         </dt>
         <dd>Does a list contain an object?</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="head_while.html">head_while()</a></code> <code><a href="head_while.html">tail_while()</a></code>
 
         </dt>
         <dd>Find head/tail that all satisfies a predicate.</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="keep.html">keep()</a></code> <code><a href="keep.html">discard()</a></code> <code><a href="keep.html">compact()</a></code>
 
         </dt>
         <dd>Keep/discard elements based on their values</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="keep_at.html">keep_at()</a></code> <code><a href="keep_at.html">discard_at()</a></code>
 
@@ -180,8 +190,7 @@
 
       <div class="section-desc"><p>Getting or setting a single element.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -192,25 +201,29 @@
 
         </dt>
         <dd>Safely get or set an element deep within a nested data structure</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="chuck.html">chuck()</a></code>
 
         </dt>
         <dd>Get an element deep within a nested data structure, failing if it doesn't exist</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="pluck_depth.html">pluck_depth()</a></code>
 
         </dt>
         <dd>Compute the depth of a vector</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="modify_in.html">modify_in()</a></code> <code><a href="modify_in.html">assign_in()</a></code>
 
         </dt>
         <dd>Modify a pluck location</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="attr_getter.html">attr_getter()</a></code>
 
@@ -221,8 +234,7 @@
 
       <div class="section-desc"><p>A grab bag of useful tools for manipulating vectors.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -233,37 +245,43 @@
 
         </dt>
         <dd>Accumulate intermediate results of a vector reduction</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="list_c.html">list_c()</a></code> <code><a href="list_c.html">list_cbind()</a></code> <code><a href="list_c.html">list_rbind()</a></code>
 
         </dt>
         <dd>Combine list elements into a single data structure</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="list_flatten.html">list_flatten()</a></code>
 
         </dt>
         <dd>Flatten a list</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="list_assign.html">list_assign()</a></code> <code><a href="list_assign.html">list_modify()</a></code> <code><a href="list_assign.html">list_merge()</a></code>
 
         </dt>
         <dd>Modify a list</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="list_simplify.html">list_simplify()</a></code>
 
         </dt>
         <dd>Simplify a list to an atomic or S3 vector</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="list_transpose.html">list_transpose()</a></code>
 
         </dt>
         <dd>Transpose a list</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="reduce.html">reduce()</a></code> <code><a href="reduce.html">reduce2()</a></code>
 
@@ -274,8 +292,7 @@
 
       <div class="section-desc"><p>Superseded functions have been replaced by superior solutions, but due to their widespread use will not go away. However, they will not get any new features and will only receive critical bug fixes.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -286,19 +303,22 @@
           <span class="badge lifecycle lifecycle-superseded">superseded</span>
         </dt>
         <dd>Flatten a list of lists into a simple vector</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="map_dfr.html">map_dfr()</a></code> <code><a href="map_dfr.html">map_dfc()</a></code> <code><a href="map_dfr.html">imap_dfr()</a></code> <code><a href="map_dfr.html">imap_dfc()</a></code> <code><a href="map_dfr.html">map2_dfr()</a></code> <code><a href="map_dfr.html">map2_dfc()</a></code> <code><a href="map_dfr.html">pmap_dfr()</a></code> <code><a href="map_dfr.html">pmap_dfc()</a></code>
           <span class="badge lifecycle lifecycle-superseded">superseded</span>
         </dt>
         <dd>Functions that return data frames</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="as_vector.html">as_vector()</a></code> <code><a href="as_vector.html">simplify()</a></code> <code><a href="as_vector.html">simplify_all()</a></code>
           <span class="badge lifecycle lifecycle-superseded">superseded</span>
         </dt>
         <dd>Coerce a list to a vector</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="transpose.html">transpose()</a></code>
           <span class="badge lifecycle lifecycle-superseded">superseded</span>
@@ -309,8 +329,7 @@
 
       <div class="section-desc"><p>Adverbs modify the action of a function; they take a function as input and return a function with modified action as output.</p></div>
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -321,49 +340,57 @@
 
         </dt>
         <dd>Wrap a function so it will automatically <code>browse()</code> on error</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="compose.html">compose()</a></code>
 
         </dt>
         <dd>Compose multiple functions together to create a new function</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="insistently.html">insistently()</a></code>
 
         </dt>
         <dd>Transform a function to wait then retry after an error</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="negate.html">negate()</a></code>
 
         </dt>
         <dd>Negate a predicate function so it selects what it previously rejected</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="partial.html">partial()</a></code>
 
         </dt>
         <dd>Partially apply a function, filling in some arguments</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="possibly.html">possibly()</a></code>
 
         </dt>
         <dd>Wrap a function to return a value instead of an error</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="quietly.html">quietly()</a></code>
 
         </dt>
         <dd>Wrap a function to capture side-effects</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="safely.html">safely()</a></code>
 
         </dt>
         <dd>Wrap a function to capture errors</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="slowly.html">slowly()</a></code>
 
@@ -374,8 +401,7 @@
 
 
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -386,19 +412,22 @@
 
         </dt>
         <dd>Coerce array to list</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="rate-helpers.html">rate_delay()</a></code> <code><a href="rate-helpers.html">rate_backoff()</a></code> <code><a href="rate-helpers.html">is_rate()</a></code>
 
         </dt>
         <dd>Create delaying rate settings</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="progress_bars.html">progress_bars</a></code>
 
         </dt>
         <dd>Progress bars in purrr</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="in_parallel.html">in_parallel()</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
@@ -416,7 +445,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer></body></html>

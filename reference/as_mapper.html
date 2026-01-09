@@ -13,7 +13,7 @@ rlang::as_function()."><meta property="og:image" content="https://purrr.tidyvers
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,35 +108,35 @@ value is absent (does not exist) or empty (has length 0).
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x + 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbdb255458&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563ec2bd3bc8&gt;</span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list(1), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbdb05b2d8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563ec29526b8&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list("a", "b", "c"), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbdaf4bba0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563ec2830640&gt;</span>
 <span class="r-in"><span><span class="co"># Equivalent to function(x) x[["a"]][["b"]][["c"]]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list(1, "a", 2), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbdaed91e8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563ec2671828&gt;</span>
 <span class="r-in"><span><span class="co"># Equivalent to function(x) x[[1]][["a"]][[2]]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="attr_getter.html">attr_getter</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list(1, function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(x, attr, exact = TRUE)), .default = NULL)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbdae72198&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563ec25d92c8&gt;</span>
 <span class="r-in"><span><span class="co"># Equivalent to function(x) attr(x[[1]], "a")</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">as_mapper</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, .default <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pluck_raw(x, list("a", "b", "c"), .default = NA)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55bbdadf2e38&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563ec244f130&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -150,7 +150,7 @@ value is absent (does not exist) or empty (has length 0).
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer></body></html>

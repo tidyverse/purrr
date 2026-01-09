@@ -1,11 +1,11 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   base: base.html
   other-langs: other-langs.html
   purrr: purrr.html
-last_built: 2025-11-04T14:16Z
+last_built: 2026-01-09T14:05Z
 urls:
   reference: https://purrr.tidyverse.org/reference
   article: https://purrr.tidyverse.org/articles

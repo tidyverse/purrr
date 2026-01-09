@@ -41,7 +41,7 @@ processing. See the section 'Daemons settings' below."><meta property="og:image"
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,10 +139,9 @@ supplied to <code>...</code> in the manner of: <code>in_parallel(\(x) fun(x), fu
 as they are modified to share the same closure as the main function. This
 means that all helper functions and other required variables must also be
 supplied as further <code>...</code> arguments. This applies only for functions
-directly supplied to <code>...</code>, and containers such as lists are not
-recursively walked to find functions (meaning you're at risk of
-unexpectedly including large objects with your parallel function if you
-supply complex lists).</p></li>
+directly supplied to <code>...</code>: containers (such as lists) are not
+recursively analysed. In other words, if you supply complex
+objects to <code>...</code> you're at risk of unexpectedly including large objects.</p></li>
 </ul><p><code>in_parallel()</code> is a simple wrapper of <code><a href="https://rdrr.io/pkg/carrier/man/crate.html" class="external-link">carrier::crate()</a></code> and you may refer
 to that package for more details.</p>
 <p>Example usage:</p>
@@ -210,7 +209,7 @@ existing daemons:</p>
 to explicitly terminate daemons in this instance, although it is still good
 practice to do so.</p>
 <p>Note: if you are using parallel map within a package, do not make any
-<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> calls within the package. This is as it should always be
+<code><a href="https://mirai.r-lib.org/reference/daemons.html" class="external-link">mirai::daemons()</a></code> calls within your package. It should always be
 up to the user how they wish to set up parallel processing: (i) resources are
 only known at run-time e.g. availability of local or remote daemons, (ii)
 packages should make use of existing daemons when already set, rather than
@@ -270,7 +269,7 @@ daemons when functions are used recursively within each other.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer></body></html>
