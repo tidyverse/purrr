@@ -116,7 +116,7 @@
 #' letters |> reduce(paste4)
 #' @export
 reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
-  reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
+  reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
 }
 #' @rdname reduce
 #' @export
@@ -124,7 +124,18 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
 }
 
-reduce_impl <- function(
+#' @rdname reduce
+#' @export
+reduce_new <- function(.x, .f, ..., .init) {
+  .f <- as_mapper(.f, ...)
+
+  n <- vec_size(.x)
+  i <- 0L
+
+  .Call(reduce_impl, environment(), n, i, .init)
+}
+
+reduce_impl_old <- function(
   .x,
   .f,
   ...,
@@ -478,7 +489,7 @@ accumulate <- function(
   .dir <- arg_match0(.dir, c("forward", "backward"))
   .f <- as_mapper(.f, ...)
 
-  res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
+  res <- reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
   names(res) <- accumulate_names(names(.x), .init, .dir)
 
   res <- list_simplify_internal(res, .simplify, .ptype)
