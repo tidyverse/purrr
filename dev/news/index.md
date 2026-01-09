@@ -2,6 +2,10 @@
 
 ## purrr (development version)
 
+## purrr 1.2.1
+
+CRAN release: 2026-01-09
+
 - Tweaks for compatibility with upcoming vctrs 0.7.0.
 
 ## purrr 1.2.0

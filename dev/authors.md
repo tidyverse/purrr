@@ -17,12 +17,12 @@ Source:
 [`DESCRIPTION`](https://github.com/tidyverse/purrr/blob/main/DESCRIPTION)
 
 Wickham H, Henry L (2026). *purrr: Functional Programming Tools*. R
-package version 1.2.0.9000, <https://purrr.tidyverse.org/>.
+package version 1.2.1.9000, <https://purrr.tidyverse.org/>.
 
     @Manual{,
       title = {purrr: Functional Programming Tools},
       author = {Hadley Wickham and Lionel Henry},
       year = {2026},
-      note = {R package version 1.2.0.9000},
+      note = {R package version 1.2.1.9000},
       url = {https://purrr.tidyverse.org/},
     }
