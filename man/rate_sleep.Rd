@@ -5,7 +5,7 @@
 \alias{rate_reset}
 \title{Wait for a given time}
 \usage{
-rate_sleep(rate, quiet = TRUE)
+rate_sleep(rate, ..., quiet = TRUE)
 
 rate_reset(rate)
 }
