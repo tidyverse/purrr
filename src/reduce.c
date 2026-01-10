@@ -24,10 +24,6 @@ SEXP reduce_impl(
   const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
 
-  // Number of arguments within `call` to force.
-  // Same as `map()`.
-  const int force = 1;
-
   SEXP bar = cli_progress_bar(n, progress);
   R_PreserveObject(bar);
   r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
@@ -36,7 +32,7 @@ SEXP reduce_impl(
   PROTECT_INDEX out_shelter;
   PROTECT_WITH_INDEX(out, &out_shelter);
 
-  for (int i = 0; i < n; i++) {
+  for (int i = *p_i; i < n; i++) {
     *p_i = i + 1;
 
     if (CLI_SHOULD_TICK) {
@@ -60,6 +56,7 @@ SEXP reduce_impl(
     // `out` is updated each iteration and thus the call must be created each time
     SEXP call = PROTECT(Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol));
 
+    const int force = 1; // Number of arguments to force
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
     out = res;
     REPROTECT(out, out_shelter);
