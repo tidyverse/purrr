@@ -129,19 +129,44 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
 
 #' @rdname reduce
 #' @export
-reduce_new <- function(.x, .f, ..., .init, .progress = FALSE) {
+reduce_new <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE) {
+  reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress)
+}
+
+reduce_ <- function(
+  .x,
+  .f,
+  ...,
+  .init,
+  .dir,
+  .progress = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
   .progress <- as_progress(
     .progress,
-    user_env = .purrr_user_env,
-    caller_env = .purrr_error_call
+    user_env = caller_env(2),
+    caller_env = caller_env()
   )
+  left <- arg_match0(.dir, c("forward", "backward")) == "forward"
+
+  out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
 
   .f <- as_mapper(.f, ...)
 
-  n <- vec_size(.x)
-  i <- 0L
+  # Left-reduce passes the result-so-far on the left, right-reduce
+  # passes it on the right. A left-reduce produces left-leaning
+  # computation trees while right-reduce produces right-leaning trees.
+  if (left) {
+    fn <- .f
+  } else {
+    fn <- function(x, y, ...) .f(y, x, ...)
+  }
 
-  call_with_cleanup(reduce_impl, environment(), n, i, .init, .progress)
+  n <- vec_size(.x)
+  i <- reduce_start_index(.init)
+
+  call_with_cleanup(reduce_impl, environment(), n, i, out, .progress)
 }
 
 reduce_impl_old <- function(
@@ -252,6 +277,10 @@ reduce_index <- function(x, init, left = TRUE) {
       rev(seq_len(n))
     }
   }
+}
+
+reduce_start_index <- function(init) {
+  if (missing(init)) 1L else 0L
 }
 
 accum_init <- function(first, idx, left) {

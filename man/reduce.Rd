@@ -10,7 +10,14 @@ reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
 
 reduce2(.x, .y, .f, ..., .init)
 
-reduce_new(.x, .f, ..., .init, .progress = FALSE)
+reduce_new(
+  .x,
+  .f,
+  ...,
+  .init,
+  .dir = c("forward", "backward"),
+  .progress = FALSE
+)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
