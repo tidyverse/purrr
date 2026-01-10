@@ -10,7 +10,7 @@ reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
 
 reduce2(.x, .y, .f, ..., .init)
 
-reduce_new(.x, .f, ..., .init)
+reduce_new(.x, .f, ..., .init, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -52,6 +52,10 @@ direction below.}
 \item{.y}{For \code{reduce2()} an additional
 argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
 should be 1 element shorter than \code{.x}.}
+
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 }
 \description{
 \code{reduce()} is an operation that combines the elements of a vector

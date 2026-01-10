@@ -44,6 +44,9 @@
 #' @param .dir The direction of reduction as a string, one of
 #'   `"forward"` (the default) or `"backward"`. See the section about
 #'   direction below.
+#' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
+#'   a basic progress bar, use a string to give it a name, or see
+#'   [progress_bars] for more details.
 #'
 #' @section Direction:
 #'
@@ -126,13 +129,19 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
 
 #' @rdname reduce
 #' @export
-reduce_new <- function(.x, .f, ..., .init) {
+reduce_new <- function(.x, .f, ..., .init, .progress = FALSE) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
+
   .f <- as_mapper(.f, ...)
 
   n <- vec_size(.x)
   i <- 0L
 
-  .Call(reduce_impl, environment(), n, i, .init)
+  call_with_cleanup(reduce_impl, environment(), n, i, .init, .progress)
 }
 
 reduce_impl_old <- function(
