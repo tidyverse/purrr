@@ -2,6 +2,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
+#include <stdbool.h>
+
 // Including <cli/progress.h> before "cleancall.h" because we want to register
 // exiting handlers ourselves, rather than letting cli register them for us.
 #include <cli/progress.h>
@@ -19,10 +21,12 @@ SEXP reduce_impl(
   SEXP ffi_n,
   SEXP ffi_i,
   SEXP ffi_init,
+  SEXP left_arg,
   SEXP progress
 ) {
   const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
+  bool left = Rf_asLogical(left_arg);
 
   SEXP bar = cli_progress_bar(n, progress);
   R_PreserveObject(bar);
@@ -41,6 +45,7 @@ SEXP reduce_impl(
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
+    *p_i = left ? *p_i : n - *p_i + 1;
 
     static SEXP x_i_sym = NULL;
     if (x_i_sym == NULL) {
