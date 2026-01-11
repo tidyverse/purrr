@@ -52,7 +52,7 @@ SEXP reduce_impl(
       R_PreserveObject(x_i_sym);
     }
 
-    SEXP f_sym = Rf_install(".f");
+    SEXP f_sym = Rf_install("fn");
     // `out` is updated each iteration and thus the call must be created each time
     SEXP call = PROTECT(Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol));
 
