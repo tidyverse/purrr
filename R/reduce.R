@@ -157,6 +157,7 @@ reduce_ <- function(
   # Left-reduce passes the result-so-far on the left, right-reduce
   # passes it on the right. A left-reduce produces left-leaning
   # computation trees while right-reduce produces right-leaning trees.
+  # TODO: Test if making this distinction in C is better than adding a lambda here
   if (left) {
     fn <- .f
   } else {
@@ -166,7 +167,7 @@ reduce_ <- function(
   n <- vec_size(.x)
   i <- reduce_start_index(.init)
 
-  call_with_cleanup(reduce_impl, environment(), n, i, out, .progress)
+  call_with_cleanup(reduce_impl, environment(), n, i, out, left, .progress)
 }
 
 reduce_impl_old <- function(
