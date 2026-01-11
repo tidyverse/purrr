@@ -56,7 +56,7 @@ SEXP reduce_impl(
     // `out` is updated each iteration and thus the call must be created each time
     SEXP call = PROTECT(Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol));
 
-    const int force = 1; // Number of arguments to force
+    const int force = 2; // Number of arguments to force
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
     out = res;
     REPROTECT(out, out_shelter);
