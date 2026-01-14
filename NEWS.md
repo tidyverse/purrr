@@ -12,7 +12,7 @@
 
 * All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
 
-* `map_chr()` no longer coereces from logical, integer, or double to strings.
+* `map_chr()` no longer  from logical, integer, or double to strings.
 
 * `every()`, `some()`, and `none()` now require that `.p` return logical scalar `TRUE`, `FALSE`, or `NA`. Previously, `NA` was allowed to be a non-logical `NA`, and would be coerced to a logical `NA`.
 
@@ -675,7 +675,7 @@ The interface of `partial()` has been simplified (see more about
 
 `invoke()` and `invoke_map()` are retired in favour of `exec()`. Note
 that retired functions are no longer under active development, but
-continue to be maintained undefinitely in the package.
+continue to be maintained indefinitely in the package.
 
 * `invoke()` is retired in favour of the `exec()` function, reexported
   from rlang. `exec()` evaluates a function call built from its inputs
@@ -690,7 +690,7 @@ continue to be maintained undefinitely in the package.
   ```
 
   Note that retired functions are not removed from the package and
-  will be maintained undefinitely.
+  will be maintained indefinitely.
 
 * `invoke_map()` is retired without replacement because it is more
   complex to understand than the corresponding code using `map()`,
@@ -804,7 +804,7 @@ x |> pluck(1, accessor, "foo")
 
 ## Map helpers
 
-* `as_function()` is now `as_mapper()` because it is a tranformation that
+* `as_function()` is now `as_mapper()` because it is a transformation that
   makes sense primarily for mapping functions, not in general (#298).
   `.null` has been renamed to `.default` to better reflect its intent (#298).
   `.default` is returned whenever an element is absent or empty (#231, #254).
@@ -906,7 +906,7 @@ of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
 * `every()` and `some()` now return `NA` if present in the input (#174).
 
 * `invoke()` uses a more robust approach to generate the argument list (#249)
-  It no longer uses lazyeval to figure out which enviroment a character `f`
+  It no longer uses lazyeval to figure out which environment a character `f`
   comes from.
 
 * `is_numeric()` and `is_scalar_numeric()` are deprecated because they
@@ -923,7 +923,7 @@ of `[<-`.  `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
 
 * `rdunif()` checks its inputs for validity (#211).
 
-* `set_names()` can now take a function to tranform the names programmatically
+* `set_names()` can now take a function to transform the names programmatically
   (#276), and you can supply names in `...` to reduce typing even more
   more (#316). `set_names()` is now powered by `rlang::set_names()`.
 
@@ -945,7 +945,7 @@ This is a compatibility release with dplyr 0.6.0.
   functions and idioms in the tidyverse. `dmap()`, `dmap_at()`,
   `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`,
   `by_slice()`, `by_row()`, and `unslice()` have been moved to
-  purrrlyr. This is a bit of an aggresive change but it allows us to
+  purrrlyr. This is a bit of an aggressive change but it allows us to
   make the dependencies much lighter.
 
 
@@ -983,7 +983,7 @@ This is a compatibility release with dplyr 0.6.0.
     * `x %||% y` is shorthand for `if (is.null(x)) y else x` (#109).
     * `x %@% "a"` is shorthand for `attr(x, "a", exact = TRUE)` (#69).
 
-* `accumulate()` has been added to handle recursive folding. It is shortand
+* `accumulate()` has been added to handle recursive folding. It is shorthand
   for `Reduce(f, .x, accumulate = TRUE)` and follows a similar syntax to
   `reduce()` (#145). A right-hand version `accumulate_right()` was also added.
 
@@ -1058,7 +1058,7 @@ functions.
 * `update_list()` can now modify an element called `x` (#98).
 
 * `map*()` now use custom C code, rather than relying on `lapply()`, `mapply()`
-  etc. The performance characteristcs are very similar, but it allows us greater
+  etc. The performance characteristics are very similar, but it allows us greater
   control over the output (#118).
 
 * `map_lgl()` now has second argument `.f`, not `.p` (#134).
