@@ -145,8 +145,8 @@ reduce_ <- function(
 ) {
   .progress <- as_progress(
     .progress,
-    user_env = caller_env(2),
-    caller_env = caller_env()
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
   )
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
 
