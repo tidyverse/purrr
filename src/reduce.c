@@ -16,6 +16,15 @@ void cb_progress_done(void* bar_ptr) {
   R_ReleaseObject(bar);
 }
 
+bool is_done_box(SEXP out, bool check_empty) {
+  // TODO: Think if it's possible to make one static "empty" R string for all calls
+  return Rf_inherits(out, "rlang_box_done") && (!check_empty || Rf_asLogical(Rf_getAttrib(out, Rf_mkChar("empty"))));
+}
+
+SEXP unbox(SEXP box) {
+  return VECTOR_ELT(box, 0);
+}
+
 SEXP reduce_impl(
   SEXP ffi_env,
   SEXP ffi_n,
@@ -63,10 +72,21 @@ SEXP reduce_impl(
 
     const int force = 2; // Number of arguments to force
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
+
+    if (is_done_box(res, false)) {
+      if (is_done_box(res, true)) {
+        UNPROTECT(3);  // res, call, out
+        return out;
+      }
+      SEXP unboxed_res = unbox(res);
+      UNPROTECT(3);  // res, call, out
+      return unboxed_res;
+    }
+
     out = res;
     REPROTECT(out, out_shelter);
 
-    UNPROTECT(2); // res, call
+    UNPROTECT(2);  // res, call
   }
 
   *p_i = 0;
