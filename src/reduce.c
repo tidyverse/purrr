@@ -3,18 +3,7 @@
 #include <Rinternals.h>
 
 #include <stdbool.h>
-
-// Including <cli/progress.h> before "cleancall.h" because we want to register
-// exiting handlers ourselves, rather than letting cli register them for us.
-#include <cli/progress.h>
-#include "cleancall.h"
-
-static
-void cb_progress_done(void* bar_ptr) {
-  SEXP bar = (SEXP)bar_ptr;
-  cli_progress_done(bar);
-  R_ReleaseObject(bar);
-}
+#include "progress.h"
 
 bool is_done_box(SEXP out, bool check_empty) {
   // TODO: Think if it's possible to make one static "empty" R string for all calls
@@ -39,24 +28,25 @@ SEXP reduce_impl(
   int* p_i = INTEGER(ffi_i);
   const bool left = Rf_asLogical(left_arg);
   const bool init_missing = Rf_asLogical(init_missing_arg);
+  // Initial value cannot be accessed through pointer dereference *p_i, as it
+  // results in unexpected interactions between calls and hard-to-diagnose
+  // errors.
   const int init_value = init_missing ? 1 : 0;
 
-  SEXP bar = cli_progress_bar(n, progress);
-  R_PreserveObject(bar);
-  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
+  SEXP bar = make_progress_bar(n, progress);
 
   SEXP out = Rf_duplicate(ffi_init);
   PROTECT_INDEX out_shelter;
   PROTECT_WITH_INDEX(out, &out_shelter);
 
   for (int i = init_value; i < n; i++) {
-    if (CLI_SHOULD_TICK) {
-      cli_progress_set(bar, i);
-    }
+    set_progress(bar, i);
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
 
+    // Translating 0-based `i` to 1-based R indexing, starting from left or
+    // right depending on the `left` argument
     *p_i = left ? i + 1 : n - i;
 
     static SEXP x_i_sym = NULL;
