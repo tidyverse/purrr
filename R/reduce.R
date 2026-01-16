@@ -150,6 +150,7 @@ reduce_ <- function(
     caller_env = .purrr_error_call
   )
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
+  init_missing <- missing(.init)
 
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
@@ -170,10 +171,10 @@ reduce_ <- function(
   }
 
   n <- vec_size(.x)
-  i <- reduce_start_index(.init)
+  i <- 0L
 
   # We refer to `fn`, `.x`, `i`, `n`, and `...` all from C level
-  call_with_cleanup(reduce_impl, environment(), n, i, out, left, .progress)
+  call_with_cleanup(reduce_impl, environment(), n, i, out, left, init_missing, .progress)
 }
 
 reduce_impl_old <- function(
@@ -284,10 +285,6 @@ reduce_index <- function(x, init, left = TRUE) {
       rev(seq_len(n))
     }
   }
-}
-
-reduce_start_index <- function(init) {
-  if (missing(init)) 1L else 0L
 }
 
 accum_init <- function(first, idx, left) {
