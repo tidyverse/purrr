@@ -160,20 +160,10 @@ reduce_ <- function(
 
   .f <- as_mapper(.f, ...)
 
-  # Left-reduce passes the result-so-far on the left, right-reduce
-  # passes it on the right. A left-reduce produces left-leaning
-  # computation trees while right-reduce produces right-leaning trees.
-  # TODO: Test if making this distinction in C is better than adding a lambda here
-  if (left) {
-    fn <- .f
-  } else {
-    fn <- function(x, y, ...) .f(y, x, ...)
-  }
-
   n <- vec_size(.x)
   i <- 0L
 
-  # We refer to `fn`, `.x`, `i`, `n`, and `...` all from C level
+  # We refer to `.f`, `.x`, `i`, `n`, and `...` all from C level
   call_with_cleanup(reduce_impl, environment(), n, i, out, left, init_missing, .progress)
 }
 

@@ -18,7 +18,8 @@ void cb_progress_done(void* bar_ptr) {
 
 bool is_done_box(SEXP out, bool check_empty) {
   // TODO: Think if it's possible to make one static "empty" R string for all calls
-  return Rf_inherits(out, "rlang_box_done") && (!check_empty || Rf_asLogical(Rf_getAttrib(out, Rf_mkChar("empty"))));
+  return Rf_inherits(out, "rlang_box_done") &&
+    (!check_empty || Rf_asLogical(Rf_getAttrib(out, Rf_mkChar("empty"))));
 }
 
 SEXP unbox(SEXP box) {
@@ -68,9 +69,12 @@ SEXP reduce_impl(
       R_PreserveObject(x_i_sym);
     }
 
-    SEXP f_sym = Rf_install("fn");
-    // `out` is updated each iteration and thus the call must be created each time
-    SEXP call = PROTECT(Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol));
+    SEXP f_sym = Rf_install(".f");
+    // Left-reduce passes the result-so-far on the left, right-reduce
+    // passes it on the right. A left-reduce produces left-leaning
+    // computation trees while right-reduce produces right-leaning trees.
+    SEXP call = PROTECT(left ? Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol) :
+      Rf_lang4(f_sym, x_i_sym, out, R_DotsSymbol));
 
     const int force = 2; // Number of arguments to force
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
