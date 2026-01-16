@@ -31,11 +31,14 @@ SEXP reduce_impl(
   SEXP ffi_i,
   SEXP ffi_init,
   SEXP left_arg,
+  SEXP init_missing_arg,
   SEXP progress
 ) {
   const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
-  bool left = Rf_asLogical(left_arg);
+  const bool left = Rf_asLogical(left_arg);
+  const bool init_missing = Rf_asLogical(init_missing_arg);
+  const int init_value = init_missing ? 1 : 0;
 
   SEXP bar = cli_progress_bar(n, progress);
   R_PreserveObject(bar);
@@ -45,16 +48,15 @@ SEXP reduce_impl(
   PROTECT_INDEX out_shelter;
   PROTECT_WITH_INDEX(out, &out_shelter);
 
-  for (int i = *p_i; i < n; i++) {
-    *p_i = i + 1;
-
+  for (int i = init_value; i < n; i++) {
     if (CLI_SHOULD_TICK) {
       cli_progress_set(bar, i);
     }
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
-    *p_i = left ? *p_i : n - *p_i + 1;
+
+    *p_i = left ? i + 1 : n - i;
 
     static SEXP x_i_sym = NULL;
     if (x_i_sym == NULL) {

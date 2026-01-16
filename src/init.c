@@ -22,32 +22,4 @@ extern SEXP none_impl(SEXP, SEXP, SEXP);
 extern SEXP map_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP map2_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP pmap_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP reduce_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP transpose_impl(SEXP, SEXP);
-extern SEXP vflatten_impl(SEXP, SEXP);
-
-static const R_CallMethodDef CallEntries[] = {
-  CLEANCALL_METHOD_RECORD,
-  {"coerce_impl",           (DL_FUNC) &coerce_impl,    2},
-  {"pluck_impl",            (DL_FUNC) &pluck_impl,     4},
-  {"flatten_impl",          (DL_FUNC) &flatten_impl,   1},
-  {"every_impl",            (DL_FUNC) &every_impl,     3},
-  {"some_impl",             (DL_FUNC) &some_impl,      3},
-  {"none_impl",             (DL_FUNC) &none_impl,      3},
-  {"map_impl",              (DL_FUNC) &map_impl,       7},
-  {"map2_impl",             (DL_FUNC) &map2_impl,      8},
-  {"pmap_impl",             (DL_FUNC) &pmap_impl,      7},
-  {"reduce_impl",           (DL_FUNC) &reduce_impl,    6},
-  {"transpose_impl",        (DL_FUNC) &transpose_impl, 2},
-  {"vflatten_impl",         (DL_FUNC) &vflatten_impl,  2},
-  {NULL, NULL, 0}
-};
-
-export void R_init_purrr(DllInfo *dll)
-{
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
-    cleancall_init();
-    unbound_init();
-    map_init();
-}
+extern SEXP reduce_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
