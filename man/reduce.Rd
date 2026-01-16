@@ -3,21 +3,14 @@
 \name{reduce}
 \alias{reduce}
 \alias{reduce2}
-\alias{reduce_new}
+\alias{reduce_old}
 \title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
-reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
+reduce(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE)
 
 reduce2(.x, .y, .f, ..., .init)
 
-reduce_new(
-  .x,
-  .f,
-  ...,
-  .init,
-  .dir = c("forward", "backward"),
-  .progress = FALSE
-)
+reduce_old(.x, .f, ..., .init, .dir = c("forward", "backward"))
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -56,13 +49,13 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
 
-\item{.y}{For \code{reduce2()} an additional
-argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
-should be 1 element shorter than \code{.x}.}
-
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
 \link{progress_bars} for more details.}
+
+\item{.y}{For \code{reduce2()} an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \description{
 \code{reduce()} is an operation that combines the elements of a vector

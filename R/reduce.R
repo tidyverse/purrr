@@ -118,8 +118,9 @@
 #' }
 #' letters |> reduce(paste4)
 #' @export
-reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
-  reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
+reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE) {
+  # reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
+  reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress)
 }
 #' @rdname reduce
 #' @export
@@ -129,8 +130,8 @@ reduce2 <- function(.x, .y, .f, ..., .init) {
 
 #' @rdname reduce
 #' @export
-reduce_new <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE) {
-  reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress)
+reduce_old <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
+  reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
 }
 
 reduce_ <- function(
@@ -150,6 +151,10 @@ reduce_ <- function(
   )
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
 
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
 
   .f <- as_mapper(.f, ...)
@@ -167,6 +172,7 @@ reduce_ <- function(
   n <- vec_size(.x)
   i <- reduce_start_index(.init)
 
+  # We refer to `fn`, `.x`, `i`, `n`, and `...` all from C level
   call_with_cleanup(reduce_impl, environment(), n, i, out, left, .progress)
 }
 
