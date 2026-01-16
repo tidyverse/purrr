@@ -5,18 +5,7 @@
 #include "coerce.h"
 #include "conditions.h"
 #include "utils.h"
-
-// Including <cli/progress.h> before "cleancall.h" because we want to register
-// exiting handlers ourselves, rather than letting cli register them for us.
-#include <cli/progress.h>
-#include "cleancall.h"
-
-static
-void cb_progress_done(void* bar_ptr) {
-  SEXP bar = (SEXP)bar_ptr;
-  cli_progress_done(bar);
-  R_ReleaseObject(bar);
-}
+#include "progress.h"
 
 // call must involve i
 SEXP call_loop(SEXP env,
@@ -27,9 +16,7 @@ SEXP call_loop(SEXP env,
                SEXP names,
                int* p_i,
                int force) {
-  SEXP bar = cli_progress_bar(n, progress);
-  R_PreserveObject(bar);
-  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
+  SEXP bar = make_progress_bar(n, progress);
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   Rf_setAttrib(out, R_NamesSymbol, names);
@@ -37,9 +24,7 @@ SEXP call_loop(SEXP env,
   for (int i = 0; i < n; ++i) {
     *p_i = i + 1;
 
-    if (CLI_SHOULD_TICK) {
-      cli_progress_set(bar, i);
-    }
+    set_progress(bar, i);
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
