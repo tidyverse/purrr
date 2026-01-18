@@ -68,10 +68,9 @@ prototype to enforce the output type.}
 a basic progress bar, use a string to give it a name, or see
 \link{progress_bars} for more details.}
 
-\item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
-needs to be 1 element shorter than the vector to be accumulated (\code{.x}).
-If \code{.init} is set, \code{.y} needs to be one element shorted than the
-concatenation of the initial value and \code{.x}.}
+\item{.y}{For \code{accumulate2()} an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.

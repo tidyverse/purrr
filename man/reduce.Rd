@@ -3,14 +3,11 @@
 \name{reduce}
 \alias{reduce}
 \alias{reduce2}
-\alias{reduce_old}
 \title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
 reduce(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE)
 
 reduce2(.x, .y, .f, ..., .init)
-
-reduce_old(.x, .f, ..., .init, .dir = c("forward", "backward"))
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

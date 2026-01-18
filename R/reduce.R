@@ -44,9 +44,6 @@
 #' @param .dir The direction of reduction as a string, one of
 #'   `"forward"` (the default) or `"backward"`. See the section about
 #'   direction below.
-#' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
-#'   a basic progress bar, use a string to give it a name, or see
-#'   [progress_bars] for more details.
 #'
 #' @section Direction:
 #'
@@ -119,19 +116,12 @@
 #' letters |> reduce(paste4)
 #' @export
 reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE) {
-  # reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
   reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress, .acc = FALSE)
 }
 #' @rdname reduce
 #' @export
 reduce2 <- function(.x, .y, .f, ..., .init) {
   reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
-}
-
-#' @rdname reduce
-#' @export
-reduce_old <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
-  reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
 }
 
 reduce_ <- function(
@@ -182,58 +172,6 @@ accumulate_names_new <- function(nms, init_missing, left) {
   }
 
   nms
-}
-
-reduce_impl_old <- function(
-  .x,
-  .f,
-  ...,
-  .init,
-  .dir,
-  .acc = FALSE,
-  .purrr_error_call = caller_env()
-) {
-  left <- arg_match0(.dir, c("forward", "backward")) == "forward"
-
-  out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
-  idx <- reduce_index(.x, .init, left = left)
-
-  if (.acc) {
-    acc_out <- accum_init(out, idx, left = left)
-    acc_idx <- accum_index(acc_out, left = left)
-  }
-
-  .f <- as_mapper(.f, ...)
-
-  # Left-reduce passes the result-so-far on the left, right-reduce
-  # passes it on the right. A left-reduce produces left-leaning
-  # computation trees while right-reduce produces right-leaning trees.
-  if (left) {
-    fn <- .f
-  } else {
-    fn <- function(x, y, ...) .f(y, x, ...)
-  }
-
-  for (i in seq_along(idx)) {
-    prev <- out
-    elt <- .x[[idx[[i]]]]
-
-    out <- forceAndCall(2, fn, out, elt, ...)
-
-    if (is_done_box(out)) {
-      return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]], left))
-    }
-
-    if (.acc) {
-      acc_out[[acc_idx[[i]]]] <- out
-    }
-  }
-
-  if (.acc) {
-    acc_out
-  } else {
-    out
-  }
 }
 
 reduce_early <- function(out, prev, acc, acc_out, acc_idx, left = TRUE) {
@@ -397,10 +335,9 @@ seq_len2 <- function(start, end) {
 #'
 #' @inheritParams map
 #'
-#' @param .y For `accumulate2()` `.y` is the second argument of the pair. It
-#'     needs to be 1 element shorter than the vector to be accumulated (`.x`).
-#'     If `.init` is set, `.y` needs to be one element shorted than the
-#'     concatenation of the initial value and `.x`.
+#' @param .y For `accumulate2()` an additional
+#'   argument that is passed to `.f`. If `init` is not set, `.y`
+#'   should be 1 element shorter than `.x`.
 #'
 #' @param .f For `accumulate()` `.f` is 2-argument function. The function will
 #'     be passed the accumulated result or initial value as the first argument.
@@ -545,19 +482,4 @@ accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
   res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
   res <- list_simplify_internal(res, .simplify, .ptype)
   res
-}
-
-accumulate_names <- function(nms, init, dir) {
-  if (is_null(nms)) {
-    return(NULL)
-  }
-
-  if (!missing(init)) {
-    nms <- c(".init", nms)
-  }
-  if (dir == "backward") {
-    nms <- rev(nms)
-  }
-
-  nms
 }
