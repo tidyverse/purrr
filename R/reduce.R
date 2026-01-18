@@ -120,7 +120,7 @@
 #' @export
 reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE) {
   # reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir)
-  reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress)
+  reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress, .acc = FALSE)
 }
 #' @rdname reduce
 #' @export
@@ -141,6 +141,7 @@ reduce_ <- function(
   .init,
   .dir,
   .progress = FALSE,
+  .acc = FALSE,
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
@@ -157,14 +158,30 @@ reduce_ <- function(
   obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
+  input_names <- accumulate_names_new(names(.x), init_missing, left)
 
   .f <- as_mapper(.f, ...)
 
   n <- vec_size(.x)
   i <- 0L
 
-  # We refer to `.f`, `.x`, `i`, `n`, and `...` all from C level
-  call_with_cleanup(reduce_impl, environment(), n, i, out, left, init_missing, .progress)
+  # We refer to `.f`, `.x`, `i`, `input_names`, and `...` all from C level
+  call_with_cleanup(reduce_impl, .acc, environment(), n, i, out, left, init_missing, .progress)
+}
+
+accumulate_names_new <- function(nms, init_missing, left) {
+  if (is_null(nms)) {
+    return(NULL)
+  }
+
+  if (!init_missing) {
+    nms <- c(".init", nms)
+  }
+  if (!left) {
+    nms <- rev(nms)
+  }
+
+  nms
 }
 
 reduce_impl_old <- function(
@@ -516,16 +533,11 @@ accumulate <- function(
   .init,
   .dir = c("forward", "backward"),
   .simplify = NA,
-  .ptype = NULL
+  .ptype = NULL,
+  .progress = FALSE
 ) {
-  .dir <- arg_match0(.dir, c("forward", "backward"))
-  .f <- as_mapper(.f, ...)
-
-  res <- reduce_impl_old(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
-  names(res) <- accumulate_names(names(.x), .init, .dir)
-
-  res <- list_simplify_internal(res, .simplify, .ptype)
-  res
+  res <- reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress, .acc = TRUE)
+  list_simplify_internal(res, .simplify, .ptype)
 }
 #' @rdname accumulate
 #' @export
