@@ -2,21 +2,12 @@
 #include <R.h>
 #include <Rinternals.h>
 
+#include "box.h"
 #include "coerce.h"
 #include "subset.h"
 
 #include <stdbool.h>
 #include "progress.h"
-
-bool is_done_box(SEXP out, bool check_empty) {
-  // TODO: Think if it's possible to make one static "empty" R string for all calls
-  return Rf_inherits(out, "rlang_box_done") &&
-    (!check_empty || Rf_asLogical(Rf_getAttrib(out, Rf_install("empty"))));
-}
-
-SEXP unbox(SEXP box) {
-  return VECTOR_ELT(box, 0);
-}
 
 static
 int get_acc_size(int n, int init_index) {
