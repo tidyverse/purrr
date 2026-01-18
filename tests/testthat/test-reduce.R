@@ -23,13 +23,13 @@ test_that("direction of reduce determines how generated trees lean", {
 
 test_that("can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
-  expect_identical(out, c("foo", "foo"))
+  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(paste0(.x, "+")), .init = NULL)
+  expect_identical(out, c("foo+", "foo+"))
 
   # Empty done box yields the same value as returning the
   # result-so-far (the last value) in a done box
   out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done(), .init = NULL)
-  expect_identical(out2, out)
+  expect_identical(out2, c("foo", "foo"))
 })
 
 test_that("reduce() forces arguments (#643)", {
