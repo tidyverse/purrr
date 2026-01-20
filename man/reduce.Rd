@@ -7,7 +7,7 @@
 \usage{
 reduce(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE)
 
-reduce2(.x, .y, .f, ..., .init)
+reduce2(.x, .y, .f, ..., .init, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

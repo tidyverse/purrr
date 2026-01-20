@@ -16,7 +16,16 @@ accumulate(
   .progress = FALSE
 )
 
-accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
+accumulate2(
+  .x,
+  .y,
+  .f,
+  ...,
+  .init,
+  .simplify = NA,
+  .ptype = NULL,
+  .progress = FALSE
+)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}

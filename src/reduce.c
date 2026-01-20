@@ -62,7 +62,7 @@ SEXP shorten_acc_out(
 static
 SEXP call_loop(
   SEXP accumulate_arg,
-  SEXP (*call_fn)(SEXP out, bool left),
+  SEXP (*call_fn)(SEXP out, bool left, bool init_missing),
   SEXP ffi_env,
   SEXP ffi_n,
   SEXP ffi_i,
@@ -74,13 +74,14 @@ SEXP call_loop(
 ) {
   const bool accumulate = Rf_asLogical(accumulate_arg);
   const bool left = Rf_asLogical(left_arg);
+  const bool init_missing = Rf_asLogical(init_missing_arg);
 
   const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
   // Initial value cannot be accessed through pointer dereference *p_i, as it
   // results in unexpected interactions between calls and hard-to-diagnose
   // errors.
-  const int init_index = Rf_asLogical(init_missing_arg) ? 1 : 0;
+  const int init_index = init_missing ? 1 : 0;
   const int acc_size = get_acc_size(n, init_index);
 
   SEXP bar = make_progress_bar(n, progress);
@@ -110,7 +111,7 @@ SEXP call_loop(
       R_CheckUserInterrupt();
     }
 
-    SEXP call = PROTECT(call_fn(out, left));
+    SEXP call = PROTECT(call_fn(out, left, init_missing));
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
 
     if (is_done_box(res, false)) {
@@ -160,7 +161,7 @@ SEXP call_loop(
 }
 
 static
-SEXP make_reduce_call_(SEXP out, bool left) {
+SEXP make_reduce_call_(SEXP out, bool left, bool init_missing) {
   static SEXP x_i_sym = NULL;
   if (x_i_sym == NULL) {
     SEXP x_sym = Rf_install(".x");
@@ -194,6 +195,74 @@ SEXP reduce_impl(
   return call_loop(
     accumulate_arg,
     make_reduce_call_,
+    ffi_env,
+    ffi_n,
+    ffi_i,
+    ffi_init,
+    left_arg,
+    init_missing_arg,
+    progress,
+    force
+  );
+}
+
+static
+SEXP make_reduce2_call_(SEXP out, bool left, bool init_missing) {
+  if (!left) {
+    // This shouldn't be accessible by a normal user
+    Rf_errorcall(
+      R_NilValue,
+      "Cannot use `.dir = \"backward\"` with `reduce2()` or `accumulate2()`."
+    );
+  }
+
+  SEXP i_sym = Rf_install("i");
+
+  static SEXP x_i_sym = NULL;
+  if (x_i_sym == NULL) {
+    SEXP x_sym = Rf_install(".x");
+    // Constructs a call of the form x[[i]]
+    x_i_sym = Rf_lang3(R_Bracket2Symbol, x_sym, i_sym);
+    R_PreserveObject(x_i_sym);
+  }
+
+  static SEXP i_minus_sym = NULL;
+  if (i_minus_sym == NULL) {
+    SEXP minus_sym = Rf_install("-");
+    // Constructs a call of the form `i - 1`
+    i_minus_sym = Rf_lang3(minus_sym, i_sym, Rf_ScalarInteger(1));
+    R_PreserveObject(i_minus_sym);
+  }
+
+  SEXP index_sym = init_missing ? i_minus_sym : i_sym;
+
+  SEXP y_sym = Rf_install(".y");
+  // Constructs a call of the form y[[i]] or y[[i - 1]]
+  SEXP y_i_sym = PROTECT(Rf_lang3(R_Bracket2Symbol, y_sym, index_sym));
+
+  SEXP f_sym = Rf_install(".f");
+
+  // No direction choice for `reduce2()`
+  SEXP call = PROTECT(Rf_lang5(f_sym, out, x_i_sym, y_i_sym, R_DotsSymbol));
+  UNPROTECT(2);  // call, y_i_sym
+  return call;
+}
+
+SEXP reduce2_impl(
+  SEXP accumulate_arg,
+  SEXP ffi_env,
+  SEXP ffi_n,
+  SEXP ffi_i,
+  SEXP ffi_init,
+  SEXP left_arg,
+  SEXP init_missing_arg,
+  SEXP progress
+  ) {
+  const int force = 3; // Number of arguments to force
+
+  return call_loop(
+    accumulate_arg,
+    make_reduce2_call_,
     ffi_env,
     ffi_n,
     ffi_i,
