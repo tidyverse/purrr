@@ -120,8 +120,8 @@ reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progres
 }
 #' @rdname reduce
 #' @export
-reduce2 <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
+reduce2 <- function(.x, .y, .f, ..., .init, .progress = FALSE) {
+  reduce2_(.x, .y, .f, ..., .init = .init, .progress = .progress, .acc = FALSE)
 }
 
 reduce_ <- function(
@@ -148,7 +148,7 @@ reduce_ <- function(
   obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
-  input_names <- accumulate_names_new(names(.x), init_missing, left)
+  input_names <- accumulate_names(names(.x), init_missing, left)
 
   .f <- as_mapper(.f, ...)
 
@@ -159,7 +159,54 @@ reduce_ <- function(
   call_with_cleanup(reduce_impl, .acc, environment(), n, i, out, left, init_missing, .progress)
 }
 
-accumulate_names_new <- function(nms, init_missing, left) {
+reduce2_ <- function(
+  .x,
+  .y,
+  .f,
+  ...,
+  .init,
+  .progress = FALSE,
+  .acc = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
+  left <- TRUE
+  init_missing <- missing(.init)
+
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
+  out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
+  input_names <- NULL
+
+  .y <- vctrs_vec_compat(.y, .purrr_user_env)
+  obj_check_vector(.y, arg = ".y", call = .purrr_error_call)
+
+  .f <- as_mapper(.f, ...)
+
+  n <- vec_size(.x)
+  i <- 0L
+
+  expected_y_size <- n - init_missing
+  if (vec_size(.y) != expected_y_size) {
+    cli::cli_abort(
+      "{.arg .y} must have length {expected_y_size}, not {vec_size(.y)}.",
+      arg = ".y",
+      call = .purrr_error_call
+    )
+  }
+
+  # We refer to `.f`, `.x`, `.y`, `i`, `input_names`, and `...` all from C level
+  call_with_cleanup(reduce2_impl, .acc, environment(), n, i, out, left, init_missing, .progress)
+}
+
+accumulate_names <- function(nms, init_missing, left) {
   if (is_null(nms)) {
     return(NULL)
   }
@@ -172,29 +219,6 @@ accumulate_names_new <- function(nms, init_missing, left) {
   }
 
   nms
-}
-
-reduce_early <- function(out, prev, acc, acc_out, acc_idx, left = TRUE) {
-  if (is_done_box(out, empty = TRUE)) {
-    out <- prev
-    offset <- if (left) -1L else 1L
-  } else {
-    out <- unbox(out)
-    offset <- 0L
-  }
-
-  if (!acc) {
-    return(out)
-  }
-
-  acc_idx <- acc_idx + offset
-  acc_out[[acc_idx]] <- out
-
-  if (left) {
-    acc_out[seq_len(acc_idx)]
-  } else {
-    acc_out[seq(acc_idx, length(acc_out))]
-  }
 }
 
 reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
@@ -213,106 +237,6 @@ reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
       x[[length(x)]]
     }
   }
-}
-reduce_index <- function(x, init, left = TRUE) {
-  n <- length(x)
-
-  if (left) {
-    if (missing(init)) {
-      seq_len2(2L, n)
-    } else {
-      seq_len(n)
-    }
-  } else {
-    if (missing(init)) {
-      rev(seq_len(n - 1L))
-    } else {
-      rev(seq_len(n))
-    }
-  }
-}
-
-accum_init <- function(first, idx, left) {
-  len <- length(idx) + 1L
-  out <- new_list(len)
-
-  if (left) {
-    out[[1]] <- first
-  } else {
-    out[[len]] <- first
-  }
-
-  out
-}
-accum_index <- function(out, left) {
-  n <- length(out)
-
-  if (left) {
-    seq_len2(2, n)
-  } else {
-    rev(seq_len(n - 1L))
-  }
-}
-
-reduce2_impl <- function(
-  .x,
-  .y,
-  .f,
-  ...,
-  .init,
-  .left = TRUE,
-  .acc = FALSE,
-  .purrr_error_call = caller_env()
-) {
-  out <- reduce_init(.x, .init, left = .left, error_call = .purrr_error_call)
-  x_idx <- reduce_index(.x, .init, left = .left)
-  y_idx <- reduce_index(.y, NULL, left = .left)
-
-  if (length(x_idx) != length(y_idx)) {
-    cli::cli_abort(
-      "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
-      arg = ".y",
-      call = .purrr_error_call
-    )
-  }
-
-  .f <- as_mapper(.f, ...)
-
-  if (.acc) {
-    acc_out <- accum_init(out, x_idx, left = .left)
-    acc_idx <- accum_index(acc_out, left = .left)
-  }
-
-  for (i in seq_along(x_idx)) {
-    prev <- out
-
-    x_i <- x_idx[[i]]
-    y_i <- y_idx[[i]]
-
-    out <- forceAndCall(3, .f, out, .x[[x_i]], .y[[y_i]], ...)
-
-    if (is_done_box(out)) {
-      return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]]))
-    }
-
-    if (.acc) {
-      acc_out[[acc_idx[[i]]]] <- out
-    }
-  }
-
-  if (.acc) {
-    acc_out
-  } else {
-    out
-  }
-}
-
-seq_len2 <- function(start, end) {
-  if (start > end) {
-    return(integer(0))
-  }
-
-  start:end
 }
 
 #' Accumulate intermediate results of a vector reduction
@@ -478,8 +402,7 @@ accumulate <- function(
 }
 #' @rdname accumulate
 #' @export
-accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
-  res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
-  res <- list_simplify_internal(res, .simplify, .ptype)
-  res
+accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL, .progress = FALSE) {
+  res <- reduce2_(.x, .y, .f, ..., .init = .init, .progress = .progress, .acc = TRUE)
+  list_simplify_internal(res, .simplify, .ptype)
 }
