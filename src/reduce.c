@@ -46,20 +46,37 @@ int i_to_output_index(int i, int n, int init_index, bool left) {
   return left ? iter + 1 : acc_size - iter - 2;
 }
 
-SEXP reduce_impl(
+static
+SEXP shorten_acc_out(
+  SEXP acc_out,
+  int output_index,
+  int acc_size,
+  bool left,
+  bool box_empty
+) {
+  const int from = left ? 0 : output_index + (box_empty ? 1 : 0);
+  const int to = left ? output_index - (box_empty ? 1 : 0) : acc_size - 1;
+  return subset_list(acc_out, from, to);
+}
+
+static
+SEXP call_loop(
   SEXP accumulate_arg,
+  SEXP (*call_fn)(SEXP out, bool left),
   SEXP ffi_env,
   SEXP ffi_n,
   SEXP ffi_i,
   SEXP ffi_init,
   SEXP left_arg,
   SEXP init_missing_arg,
-  SEXP progress
+  SEXP progress,
+  int force
 ) {
   const bool accumulate = Rf_asLogical(accumulate_arg);
+  const bool left = Rf_asLogical(left_arg);
+
   const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
-  const bool left = Rf_asLogical(left_arg);
   // Initial value cannot be accessed through pointer dereference *p_i, as it
   // results in unexpected interactions between calls and hard-to-diagnose
   // errors.
@@ -93,33 +110,15 @@ SEXP reduce_impl(
       R_CheckUserInterrupt();
     }
 
-    static SEXP x_i_sym = NULL;
-    if (x_i_sym == NULL) {
-      SEXP x_sym = Rf_install(".x");
-      SEXP i_sym = Rf_install("i");
-
-      // Constructs a call of the form x[[i]]
-      x_i_sym = Rf_lang3(R_Bracket2Symbol, x_sym, i_sym);
-      R_PreserveObject(x_i_sym);
-    }
-
-    SEXP f_sym = Rf_install(".f");
-    // Left-reduce passes the result-so-far on the left, right-reduce
-    // passes it on the right. A left-reduce produces left-leaning
-    // computation trees while right-reduce produces right-leaning trees.
-    SEXP call = PROTECT(left ? Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol) :
-      Rf_lang4(f_sym, x_i_sym, out, R_DotsSymbol));
-
-    const int force = 2; // Number of arguments to force
+    SEXP call = PROTECT(call_fn(out, left));
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
 
     if (is_done_box(res, false)) {
       if (is_done_box(res, true)) {
         if (accumulate) {
-          // TODO: Extract as static function
-          const int from = left ? 0 : output_index + 1;
-          const int to = left ? output_index - 1 : acc_size - 1;
-          SEXP acc_out_shortened = subset_list(acc_out, from, to);
+          SEXP acc_out_shortened = shorten_acc_out(
+            acc_out, output_index, acc_size, left, true
+          );
           UNPROTECT(4);  // res, call, acc_out, out
           return acc_out_shortened;
         }
@@ -130,10 +129,9 @@ SEXP reduce_impl(
       if (accumulate) {
         set_vector_value(acc_out, output_index, unboxed_res, 0);
         UNPROTECT(1);  // unboxed_res
-        // TODO: Extract as static function
-        const int from = left ? 0 : output_index;
-        const int to = left ? output_index : acc_size - 1;
-        SEXP acc_out_shortened = subset_list(acc_out, from, to);
+        SEXP acc_out_shortened = shorten_acc_out(
+          acc_out, output_index, acc_size, left, false
+        );
         UNPROTECT(4);  // res, call, acc_out, out
         return acc_out_shortened;
       }
@@ -159,4 +157,50 @@ SEXP reduce_impl(
   }
   UNPROTECT(1);  // out
   return out;
+}
+
+static
+SEXP make_reduce_call_(SEXP out, bool left) {
+  static SEXP x_i_sym = NULL;
+  if (x_i_sym == NULL) {
+    SEXP x_sym = Rf_install(".x");
+    SEXP i_sym = Rf_install("i");
+
+    // Constructs a call of the form x[[i]]
+    x_i_sym = Rf_lang3(R_Bracket2Symbol, x_sym, i_sym);
+    R_PreserveObject(x_i_sym);
+  }
+
+  SEXP f_sym = Rf_install(".f");
+  // Left-reduce passes the result-so-far on the left, right-reduce
+  // passes it on the right. A left-reduce produces left-leaning
+  // computation trees while right-reduce produces right-leaning trees.
+  return left ? Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol) :
+    Rf_lang4(f_sym, x_i_sym, out, R_DotsSymbol);
+}
+
+SEXP reduce_impl(
+  SEXP accumulate_arg,
+  SEXP ffi_env,
+  SEXP ffi_n,
+  SEXP ffi_i,
+  SEXP ffi_init,
+  SEXP left_arg,
+  SEXP init_missing_arg,
+  SEXP progress
+) {
+  const int force = 2; // Number of arguments to force
+
+  return call_loop(
+    accumulate_arg,
+    make_reduce_call_,
+    ffi_env,
+    ffi_n,
+    ffi_i,
+    ffi_init,
+    left_arg,
+    init_missing_arg,
+    progress,
+    force
+  );
 }
