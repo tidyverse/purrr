@@ -12,6 +12,13 @@ void cb_progress_done(void* bar_ptr) {
   R_ReleaseObject(bar);
 }
 
+/**
+ * Create a progress bar including its cleanup upon exit
+ *
+ * @param n Number of iterations.
+ * @param progress Parameters to the progress bar.
+ * @return A `SEXP` containing a progress bar.
+ */
 SEXP make_progress_bar(int n, SEXP progress) {
   SEXP bar = cli_progress_bar(n, progress);
   R_PreserveObject(bar);
@@ -19,6 +26,12 @@ SEXP make_progress_bar(int n, SEXP progress) {
   return bar;
 }
 
+/**
+ * Set progress bar to a certain value
+ *
+ * @param bar Progress bar to update.
+ * @param i Value to set the bar to.
+ */
 void set_progress(SEXP bar, int i) {
   if (CLI_SHOULD_TICK) {
     cli_progress_set(bar, i);
