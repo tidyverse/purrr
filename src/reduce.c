@@ -46,21 +46,31 @@ int i_to_output_index(int i, int n, int init_index, bool left) {
   return left ? iter + 1 : acc_size - iter - 2;
 }
 
+/**
+ * Shorten the accumulated output when early return happens.
+ *
+ * @param acc_out Accumulated output to subset from.
+ * @param output_index Index of the currently saved value.
+ * @param left Whether the reduction direction is forwards.
+ * @param box_empty Whether the "done" box is empty (and should be discarded).
+ *
+ * @return A `SEXP` being a subset of the original `acc_out`.
+ */
 static
 SEXP shorten_acc_out(
   SEXP acc_out,
   int output_index,
-  int acc_size,
   bool left,
   bool box_empty
 ) {
+  const int acc_size = Rf_length(acc_out);
   const int from = left ? 0 : output_index + (box_empty ? 1 : 0);
   const int to = left ? output_index - (box_empty ? 1 : 0) : acc_size - 1;
   return subset_list(acc_out, from, to);
 }
 
 static
-SEXP call_loop(
+SEXP reduce_loop(
   SEXP accumulate_arg,
   SEXP (*call_fn)(SEXP out, bool left, bool init_missing),
   SEXP ffi_env,
@@ -116,24 +126,25 @@ SEXP call_loop(
 
     if (is_done_box(res, false)) {
       if (is_done_box(res, true)) {
+        UNPROTECT(2);  // res, call
         if (accumulate) {
           SEXP acc_out_shortened = shorten_acc_out(
-            acc_out, output_index, acc_size, left, true
+            acc_out, output_index, left, true
           );
-          UNPROTECT(4);  // res, call, acc_out, out
+          UNPROTECT(2);  // acc_out, out
           return acc_out_shortened;
         }
-        UNPROTECT(3);  // res, call, out
+        UNPROTECT(1);  // out
         return out;
       }
       SEXP unboxed_res = PROTECT(unbox(res));
       if (accumulate) {
         set_vector_value(acc_out, output_index, unboxed_res, 0);
-        UNPROTECT(1);  // unboxed_res
+        UNPROTECT(3);  // unboxed_res, res, call
         SEXP acc_out_shortened = shorten_acc_out(
-          acc_out, output_index, acc_size, left, false
+          acc_out, output_index, left, false
         );
-        UNPROTECT(4);  // res, call, acc_out, out
+        UNPROTECT(2);  // acc_out, out
         return acc_out_shortened;
       }
       UNPROTECT(4);  // unboxed_res, res, call, out
@@ -192,7 +203,7 @@ SEXP reduce_impl(
 ) {
   const int force = 2; // Number of arguments to force
 
-  return call_loop(
+  return reduce_loop(
     accumulate_arg,
     make_reduce_call_,
     ffi_env,
@@ -260,7 +271,7 @@ SEXP reduce2_impl(
   ) {
   const int force = 3; // Number of arguments to force
 
-  return call_loop(
+  return reduce_loop(
     accumulate_arg,
     make_reduce2_call_,
     ffi_env,

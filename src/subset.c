@@ -1,6 +1,18 @@
 #define R_NO_REMAP
 #include <Rinternals.h>
 
+/**
+ * Extract a contiguous subset of a list
+ *
+ * This function is equivalent to an R call `list[from:to]`. It will also make
+ * sure to keep names of the input `list`.
+ *
+ * @param list An object of type `VECSXP` to subset.
+ * @param from First index to include in the output.
+ * @param to Last index to include in the output.
+ *
+ * @return A `VECSXP` object being a subset of `list`.
+ */
 SEXP subset_list(SEXP list, int from, int to) {
   const SEXPTYPE type = VECSXP;
   const int output_length = to - from + 1;

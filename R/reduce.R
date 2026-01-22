@@ -175,6 +175,7 @@ reduce2_ <- function(
     user_env = .purrr_user_env,
     caller_env = .purrr_error_call
   )
+  # This can be easily converted into `.dir` parameter if one so wishes
   left <- TRUE
   init_missing <- missing(.init)
 
@@ -183,6 +184,8 @@ reduce2_ <- function(
   obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
+  # Here it'd only take replicating analogous line from `reduce_()` to use
+  # `.x` names for the output like `map2()` does
   input_names <- NULL
 
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
