@@ -4,7 +4,18 @@
 #include <Rinternals.h>
 #include "coerce.h"
 #include "utils.h"
-#include "progress.h"
+
+// Including <progress.h> before "cleancall.h" because we want to register
+// exiting handlers ourselves, rather than letting cli register them for us.
+#include <cli/progress.h>
+#include "cleancall.h"
+
+static
+void cb_progress_done(void* bar_ptr) {
+  SEXP bar = (SEXP)bar_ptr;
+  cli_progress_done(bar);
+  R_ReleaseObject(bar);
+}
 
 static SEXP sym_i = NULL;
 static SEXP sym_dot_f = NULL;
@@ -32,13 +43,17 @@ static inline SEXP call_loop(
   int n,
   SEXP names
 ) {
-  SEXP bar = make_progress_bar(n, progress);
+  SEXP bar = cli_progress_bar(n, progress);
+  R_PreserveObject(bar);
+  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   Rf_setAttrib(out, R_NamesSymbol, names);
 
   for (int i = 0; i < n; ++i) {
-    set_progress(bar, i);
+    if (CLI_SHOULD_TICK) {
+      cli_progress_set(bar, i);
+    }
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
