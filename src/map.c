@@ -5,7 +5,7 @@
 #include "coerce.h"
 #include "utils.h"
 
-// Including <progress.h> before "cleancall.h" because we want to register
+// Including <cli/progress.h> before "cleancall.h" because we want to register
 // exiting handlers ourselves, rather than letting cli register them for us.
 #include <cli/progress.h>
 #include "cleancall.h"
