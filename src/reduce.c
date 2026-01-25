@@ -90,6 +90,7 @@ SEXP reduce_loop(
   SEXP ffi_init,
   SEXP left_arg,
   SEXP init_missing_arg,
+  SEXP input_names,
   SEXP progress,
   int force
 ) {
@@ -117,10 +118,7 @@ SEXP reduce_loop(
   if (accumulate) {
     acc_out = PROTECT(Rf_allocVector(VECSXP, acc_size));
     set_vector_value(acc_out, left ? 0 : acc_size - 1, out, 0);
-    Rf_setAttrib(acc_out, R_NamesSymbol, Rf_eval(Rf_install("input_names"), ffi_env));
-    // SEXP names_x_sym = PROTECT(Rf_lang2(R_NamesSymbol, Rf_install(".x")));
-    // SEXP input_names = PROTECT(R_forceAndCall(names_x_sym, 1, ffi_env));
-    // UNPROTECT(2);  // input_names, names_x_sym
+    Rf_setAttrib(acc_out, R_NamesSymbol, input_names);
   }
 
   for (int i = init_index; i < n; i++) {
@@ -214,6 +212,7 @@ SEXP reduce_impl(
   SEXP ffi_init,
   SEXP left_arg,
   SEXP init_missing_arg,
+  SEXP input_names,
   SEXP progress
 ) {
   const int force = 2; // Number of arguments to force
@@ -227,6 +226,7 @@ SEXP reduce_impl(
     ffi_init,
     left_arg,
     init_missing_arg,
+    input_names,
     progress,
     force
   );
@@ -282,6 +282,7 @@ SEXP reduce2_impl(
   SEXP ffi_init,
   SEXP left_arg,
   SEXP init_missing_arg,
+  SEXP input_names,
   SEXP progress
   ) {
   const int force = 3; // Number of arguments to force
@@ -295,6 +296,7 @@ SEXP reduce2_impl(
     ffi_init,
     left_arg,
     init_missing_arg,
+    input_names,
     progress,
     force
   );
