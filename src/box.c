@@ -11,8 +11,13 @@
  * @return `TRUE` if a done box, `FALSE` otherwise.
  */
 bool is_done_box(SEXP out, bool check_empty) {
-  return Rf_inherits(out, "rlang_box_done") &&
-    (!check_empty || Rf_asLogical(Rf_getAttrib(out, Rf_install("empty"))));
+  if (!Rf_inherits(out, "rlang_box_done")) {
+    return false;
+  }
+  if (!check_empty) {
+    return true;
+  }
+  return Rf_asLogical(Rf_getAttrib(out, Rf_install("empty")));
 }
 
 SEXP unbox(SEXP box) {
