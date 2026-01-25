@@ -155,8 +155,8 @@ reduce_ <- function(
   n <- vec_size(.x)
   i <- 0L
 
-  # We refer to `.f`, `.x`, `i`, `input_names`, and `...` all from C level
-  call_with_cleanup(reduce_impl, .acc, environment(), n, i, out, left, init_missing, .progress)
+  # We refer to `.f`, `.x`, `i`, and `...` all from C level
+  call_with_cleanup(reduce_impl, .acc, environment(), n, i, out, left, init_missing, input_names, .progress)
 }
 
 reduce2_ <- function(
@@ -205,8 +205,8 @@ reduce2_ <- function(
     )
   }
 
-  # We refer to `.f`, `.x`, `.y`, `i`, `input_names`, and `...` all from C level
-  call_with_cleanup(reduce2_impl, .acc, environment(), n, i, out, left, init_missing, .progress)
+  # We refer to `.f`, `.x`, `.y`, `i`, and `...` all from C level
+  call_with_cleanup(reduce2_impl, .acc, environment(), n, i, out, left, init_missing, input_names, .progress)
 }
 
 accumulate_names <- function(nms, init_missing, left) {
