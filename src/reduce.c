@@ -7,7 +7,18 @@
 #include "subset.h"
 
 #include <stdbool.h>
-#include "progress.h"
+
+// Including <progress.h> before "cleancall.h" because we want to register
+// exiting handlers ourselves, rather than letting cli register them for us.
+#include <cli/progress.h>
+#include "cleancall.h"
+
+static
+void cb_progress_done(void* bar_ptr) {
+  SEXP bar = (SEXP)bar_ptr;
+  cli_progress_done(bar);
+  R_ReleaseObject(bar);
+}
 
 static
 int get_acc_size(int n, int init_index) {
@@ -94,7 +105,9 @@ SEXP reduce_loop(
   const int init_index = init_missing ? 1 : 0;
   const int acc_size = get_acc_size(n, init_index);
 
-  SEXP bar = make_progress_bar(n, progress);
+  SEXP bar = cli_progress_bar(n, progress);
+  R_PreserveObject(bar);
+  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
 
   SEXP out = Rf_duplicate(ffi_init);
   PROTECT_INDEX out_shelter;
@@ -116,7 +129,9 @@ SEXP reduce_loop(
     *p_i = i_to_input_index(i, n, left);
     const int output_index = i_to_output_index(i, n, init_index, left);
 
-    set_progress(bar, i);
+    if (CLI_SHOULD_TICK) {
+      cli_progress_set(bar, i);
+    }
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
