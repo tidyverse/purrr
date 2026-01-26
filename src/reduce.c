@@ -94,6 +94,8 @@ SEXP reduce_loop(
   SEXP progress,
   int force
 ) {
+  int nprot = 0;
+
   const bool accumulate = Rf_asLogical(accumulate_arg);
   const bool left = Rf_asLogical(left_arg);
   const bool init_missing = Rf_asLogical(init_missing_arg);
@@ -112,11 +114,11 @@ SEXP reduce_loop(
 
   SEXP out = Rf_duplicate(ffi_init);
   PROTECT_INDEX out_shelter;
-  PROTECT_WITH_INDEX(out, &out_shelter);
+  PROTECT_WITH_INDEX(out, &out_shelter); ++nprot;
 
   SEXP acc_out = NULL;
   if (accumulate) {
-    acc_out = PROTECT(Rf_allocVector(VECSXP, acc_size));
+    acc_out = PROTECT(Rf_allocVector(VECSXP, acc_size)); ++nprot;
     set_vector_value(acc_out, left ? 0 : acc_size - 1, out, 0);
     Rf_setAttrib(acc_out, R_NamesSymbol, input_names);
   }
@@ -134,33 +136,31 @@ SEXP reduce_loop(
       R_CheckUserInterrupt();
     }
 
-    SEXP call = PROTECT(call_fn(out, left, init_missing));
-    SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env));
+    SEXP call = PROTECT(call_fn(out, left, init_missing)); ++nprot;
+    SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env)); ++nprot;
 
     if (is_done_box(res, false)) {
       if (is_done_box(res, true)) {
-        UNPROTECT(2);  // res, call
         if (accumulate) {
           SEXP acc_out_shortened = shorten_acc_out(
             acc_out, output_index, left, true
           );
-          UNPROTECT(2);  // acc_out, out
+          UNPROTECT(nprot);  // res, call, acc_out, out
           return acc_out_shortened;
         }
-        UNPROTECT(1);  // out
+        UNPROTECT(nprot);  // res, call, out
         return out;
       }
-      SEXP unboxed_res = PROTECT(unbox(res));
+      SEXP unboxed_res = PROTECT(unbox(res)); ++nprot;
       if (accumulate) {
         set_vector_value(acc_out, output_index, unboxed_res, 0);
-        UNPROTECT(3);  // unboxed_res, res, call
         SEXP acc_out_shortened = shorten_acc_out(
           acc_out, output_index, left, false
         );
-        UNPROTECT(2);  // acc_out, out
+        UNPROTECT(nprot);  // unboxed_res, res, call, acc_out, out
         return acc_out_shortened;
       }
-      UNPROTECT(4);  // unboxed_res, res, call, out
+      UNPROTECT(nprot);  // unboxed_res, res, call, out
       return unboxed_res;
     }
 
@@ -172,15 +172,16 @@ SEXP reduce_loop(
     REPROTECT(out, out_shelter);
 
     UNPROTECT(2);  // res, call
+    nprot -= 2;
   }
 
   *p_i = 0;
 
   if (accumulate) {
-    UNPROTECT(2);  // acc_out, out
+    UNPROTECT(nprot);  // acc_out, out
     return acc_out;
   }
-  UNPROTECT(1);  // out
+  UNPROTECT(nprot);  // out
   return out;
 }
 
@@ -269,8 +270,8 @@ SEXP make_reduce2_call_(SEXP out, bool left, bool init_missing) {
   SEXP f_sym = Rf_install(".f");
 
   // No direction choice for `reduce2()`
-  SEXP call = PROTECT(Rf_lang5(f_sym, out, x_i_sym, y_i_sym, R_DotsSymbol));
-  UNPROTECT(2);  // call, y_i_sym
+  SEXP call = Rf_lang5(f_sym, out, x_i_sym, y_i_sym, R_DotsSymbol);
+  UNPROTECT(1);  // y_i_sym
   return call;
 }
 
