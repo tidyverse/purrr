@@ -1,46 +1,116 @@
-test_that("empty input returns init or error", {
-  expect_snapshot(reduce(list()), error = TRUE)
+# reduce ------------------------------------------------------------------
 
+test_that("reduce() works correctly in the basic case", {
+  # Example of function that gives the same result in both directions
+  expect_identical(reduce(letters[1:4], paste0), "abcd")
+  # Example of function that gives different results when reduced backward
+  expect_equal(reduce(c(30, 5, 3, 2), `/`), 1)
+})
+
+test_that("reduce() extracts each element with [[", {
+  expect_identical(
+    reduce(as.list(1:5), `+`),
+    reduce(1:5, `+`)
+  )
+})
+
+test_that("reduce() uses init as initial value if given", {
+  expect_identical(reduce(letters[1:4], paste0), "abcd")
+  expect_identical(reduce(letters[1:4], paste0, .init = "-"), "-abcd")
+})
+
+test_that("reduce() accepts NULL as init", {
+  expect_identical(
+    reduce(1:3, list, .init = NULL),
+    list(list(list(NULL, 1L), 2L), 3L)
+  )
+})
+
+test_that("if input empty, reduce() returns error", {
+  expect_snapshot(reduce(list()), error = TRUE)
+})
+
+test_that("if input empty and init given, reduce() returns init", {
   expect_equal(reduce(list(), `+`, .init = 0), 0)
 })
 
-test_that("first/value value used as first value", {
-  expect_equal(reduce(c(1, 1), `+`), 2)
-  expect_equal(reduce(c(1, 1), `+`, .init = 1), 3)
+test_that("if input length 1, reduce() returns the first element", {
+  x <- list("a")
+  paste_dot <- function(.x, .y) { sprintf("%s.%s", .x, .y) }
+  expect_identical(reduce(x, paste_dot), x[[1]])
 })
 
-test_that("length 1 argument reduced with init", {
+test_that("if input length 1 and init given, reduce() reduces value with init", {
   expect_equal(reduce(1, `+`, .init = 1), 2)
 })
 
-test_that("direction of reduce determines how generated trees lean", {
-  expect_identical(reduce(1:4, list), list(list(list(1L, 2L), 3L), 4L))
+test_that("direction of reduce() determines how generated trees lean", {
+  expect_identical(
+    reduce(1:4, list),
+    list(list(list(1L, 2L), 3L), 4L)
+  )
   expect_identical(
     reduce(1:4, list, .dir = "backward"),
     list(1L, list(2L, list(3L, 4L)))
   )
 })
 
-test_that("can shortcircuit reduction with done()", {
+test_that("direction of reduce() is irrelevant for associative functions", {
+  expect_identical(
+    reduce(letters[1:4], paste),
+    reduce(letters[1:4], paste, .dir = "backward")
+  )
+})
+
+test_that("reduce() still uses init as initial value if direction is backward", {
+  expect_identical(reduce(letters[1:4], paste0, .init = "-"), "-abcd")
+  # Note that "initial" doesn't mean "placed before the first element of input"
+  expect_identical(
+    reduce(letters[1:4], paste0, .init = "-", .dir = "backward"),
+    "abcd-"
+  )
+})
+
+test_that("reduce() can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  out <- reduce(x, ~{ if (.y) c(.x, "foo") else done(.x) }, .init = NULL)
   expect_identical(out, c("foo", "foo"))
 
   # Empty done box yields the same value as returning the
   # result-so-far (the last value) in a done box
-  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done(), .init = NULL)
+  out2 <- reduce(x, ~{ if (.y) c(.x, "foo") else done() }, .init = NULL)
   expect_identical(out2, out)
 
   # Done box can also return a value that had one last transformation applied to it
-  out3 <- reduce(x, ~ if (.y) c(.x, "foo") else done(paste0(.x, "+")), .init = NULL)
+  out3 <- reduce(x, ~{ if (.y) c(.x, "foo") else done(paste0(.x, "+")) }, .init = NULL)
   expect_identical(out3, c("foo+", "foo+"))
+})
+
+test_that("reduce() passes ... to function", {
+  expect_identical(
+    reduce(letters[1:4], paste, sep = "."),
+    reduce(letters[1:4], function(x, y) { paste(x, y, sep = ".") })
+  )
+})
+
+test_that("reduce() treats .f with as_mapper()", {
+  # "a" -> \(x, ...) pluck_raw(x, list("a"))
+  # Therefore, if direction set to backward, it should return .x[[1]][["a"]]
+  expect_identical(
+    reduce(list(list(a = "A"), list(a = "B"), list(a = "C")), "a", .dir = "backward"),
+    "A"
+  )
+  expect_snapshot(reduce(1:4, NULL), error = TRUE)
+})
+
+test_that("reduce() cannot take .acc in ... due to argument collision", {
+  expect_snapshot(reduce(1:4, `+`, .acc = TRUE), error = TRUE)
 })
 
 test_that("reduce() forces arguments (#643)", {
   compose <- function(f, g) function(x) f(g(x))
   expect_identical(reduce(list(identity, identity), compose)(1), 1)
 })
-
 
 # accumulate --------------------------------------------------------------
 
