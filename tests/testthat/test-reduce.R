@@ -1,5 +1,6 @@
 # reduce ------------------------------------------------------------------
 
+## Basic tests ----
 test_that("reduce() works correctly in the basic case", {
   # Example of function that gives the same result in both directions
   expect_identical(reduce(letters[1:4], paste0), "abcd")
@@ -14,6 +15,7 @@ test_that("reduce() extracts each element with [[", {
   )
 })
 
+## .init tests ----
 test_that("reduce() uses init as initial value if given", {
   expect_identical(reduce(letters[1:4], paste0), "abcd")
   expect_identical(reduce(letters[1:4], paste0, .init = "-"), "-abcd")
@@ -44,6 +46,7 @@ test_that("if input length 1 and init given, reduce() reduces value with init", 
   expect_equal(reduce(1, `+`, .init = 1), 2)
 })
 
+## .dir tests ----
 test_that("direction of reduce() determines how generated trees lean", {
   expect_identical(
     reduce(1:4, list),
@@ -71,6 +74,7 @@ test_that("reduce() still uses init as initial value if direction is backward", 
   )
 })
 
+## Early return tests ----
 test_that("reduce() can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
   out <- reduce(x, ~{ if (.y) c(.x, "foo") else done(.x) }, .init = NULL)
@@ -86,6 +90,7 @@ test_that("reduce() can shortcircuit reduction with done()", {
   expect_identical(out3, c("foo+", "foo+"))
 })
 
+## ... tests ----
 test_that("reduce() passes ... to function", {
   expect_identical(
     reduce(letters[1:4], paste, sep = "."),
@@ -107,6 +112,7 @@ test_that("reduce() cannot take .acc in ... due to argument collision", {
   expect_snapshot(reduce(1:4, `+`, .acc = TRUE), error = TRUE)
 })
 
+## Other tests ----
 test_that("reduce() forces arguments (#643)", {
   compose <- function(f, g) function(x) f(g(x))
   expect_identical(reduce(list(identity, identity), compose)(1), 1)
@@ -114,25 +120,100 @@ test_that("reduce() forces arguments (#643)", {
 
 # accumulate --------------------------------------------------------------
 
-test_that("accumulate passes arguments to function", {
-  tt <- c("a", "b", "c")
+## Basic tests ----
+test_that("accumulate() works correctly in the basic case", {
+  # Example of function that gives the same result in both directions
+  expect_identical(accumulate(letters[1:4], paste0), c("a", "ab", "abc", "abcd"))
+  # Example of function that gives different results when reduced backward
+  expect_equal(accumulate(c(30, 5, 3, 2), `/`), c(30, 6, 2, 1))
+})
 
-  expect_equal(accumulate(tt, paste, sep = "."), c("a", "a.b", "a.b.c"))
-  expect_equal(
-    accumulate(tt, paste, sep = ".", .dir = "backward"),
-    c("a.b.c", "b.c", "c")
-  )
-
-  expect_equal(
-    accumulate(tt, paste, sep = ".", .init = "z"),
-    c("z", "z.a", "z.a.b", "z.a.b.c")
-  )
-  expect_equal(
-    accumulate(tt, paste, sep = ".", .dir = "backward", .init = "z"),
-    c("a.b.c.z", "b.c.z", "c.z", "z")
+test_that("accumulate() extracts each element with [[", {
+  expect_identical(
+    accumulate(as.list(1:5), `+`),
+    accumulate(1:5, `+`)
   )
 })
 
+## .init tests ----
+test_that("accumulate() uses init as initial value if given", {
+  expect_identical(
+    accumulate(letters[1:4], paste0),
+    c("a", "ab", "abc", "abcd")
+  )
+  expect_identical(
+    accumulate(letters[1:4], paste0, .init = "-"),
+    c("-", "-a", "-ab", "-abc", "-abcd")
+  )
+})
+
+test_that("accumulate() accepts NULL as init", {
+  expect_identical(
+    accumulate(list(1L, "a"), list, .init = NULL),
+    list(NULL, list(NULL, 1L), list(list(NULL, 1L), "a"))
+  )
+})
+
+test_that("if input empty, accumulate() returns error", {
+  expect_snapshot(accumulate(list()), error = TRUE)
+})
+
+test_that("if input empty and init given, accumulate() returns init", {
+  expect_equal(accumulate(list(), `+`, .init = 0), 0)
+})
+
+test_that("if input length 1, accumulate() returns the first element", {
+  x <- list("a")
+  paste_dot <- function(.x, .y) { sprintf("%s.%s", .x, .y) }
+  expect_identical(accumulate(x, paste_dot), x[[1]])
+})
+
+test_that("if input length 1 and init given, accumulate() reduces value with init", {
+  expect_equal(accumulate(1, `+`, .init = 1), c(1L, 2L))
+})
+
+## .dir tests ----
+test_that("direction of accumulate() determines how generated trees lean", {
+  expect_identical(
+    accumulate(1:4, list),
+    list(1L, list(1L, 2L), list(list(1L, 2L), 3L), list(list(list(1L, 2L), 3L), 4L))
+  )
+  expect_identical(
+    accumulate(1:4, list, .dir = "backward"),
+    list(list(1L, list(2L, list(3L, 4L))), list(2L, list(3L, 4L)), list(3L, 4L), 4L)
+  )
+})
+
+test_that("accumulate() still uses init as initial value if direction is backward", {
+  expect_identical(
+    accumulate(letters[1:4], paste0, .init = "-"),
+    c("-", "-a", "-ab", "-abc", "-abcd")
+  )
+  # Note that "initial" doesn't mean "placed before the first element of input"
+  expect_identical(
+    accumulate(letters[1:4], paste0, .init = "-", .dir = "backward"),
+    c("abcd-", "bcd-", "cd-", "d-", "-")
+  )
+})
+
+## Comparisons to reduce() ----
+test_that("last element of accumulate() is equal to the reduce() output", {
+  x <- letters[1:4]
+  expect_identical(
+    accumulate(x, paste)[[length(x)]],
+    reduce(x, paste)
+  )
+})
+
+test_that("if direction is backward, first element of accumulate() is equal to the reduce() output", {
+  x <- letters[1:4]
+  expect_identical(
+    accumulate(x, paste, .dir = "backward")[[1]],
+    reduce(x, paste)
+  )
+})
+
+## Tests of output names ----
 test_that("accumulate keeps input names", {
   input <- set_names(1:26, letters)
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
@@ -159,6 +240,7 @@ test_that("accumulate keeps input names when init is supplied", {
   )
 })
 
+## Early return tests ----
 test_that("can terminate accumulate() early", {
   tt <- c("a", "b", "c")
   paste2 <- function(x, y) {
@@ -204,15 +286,39 @@ test_that("can terminate accumulate() early with an empty box", {
   expect_equal(accumulate(c("b", "c"), paste2), "b")
 })
 
-test_that("accumulate() forces arguments (#643)", {
-  compose <- function(f, g) function(x) f(g(x))
-  fns <- accumulate(list(identity, identity), compose)
-  expect_true(every(fns, function(f) identical(f(1), 1)))
+test_that("can terminate accumulate() early if input has names (#1243)", {
+  x <- list(a = 1, b = 2, c = 3, d = 4)
+  expect_identical(
+    purrr::accumulate(x, \(x, y) { if (y < 3) x + y else rlang::done() }, .init = 0),
+    c(.init = 0, a = 1, b = 3)
+  )
 })
 
+## ... tests ----
+test_that("accumulate() passes ... to function", {
+  expect_identical(
+    accumulate(letters[1:4], paste, sep = "."),
+    accumulate(letters[1:4], function(x, y) { paste(x, y, sep = ".") })
+  )
+})
+
+test_that("accumulate() treats .f with as_mapper()", {
+  # "a" -> \(x, ...) pluck_raw(x, list("a"))
+  # Therefore, if direction set to backward, it should return [["a"]] of every element, and init value
+  expect_identical(
+    accumulate(list(list(a = "A"), list(a = "B"), list(a = "C")), "a", .init = NULL, .dir = "backward"),
+    list("A", "B", "C", NULL)
+  )
+  expect_snapshot(reduce(1:4, NULL), error = TRUE)
+})
+
+test_that("accumulate() cannot take .acc in ... due to argument collision", {
+  expect_snapshot(accumulate(1:4, `+`, .acc = FALSE), error = TRUE)
+})
+
+## .simplify tests ----
 test_that("accumulate() uses vctrs to simplify results", {
-  out <- list("foo", factor("bar")) |> accumulate(~.y)
-  expect_identical(out, c("foo", "bar"))
+  expect_identical(accumulate(list("foo", factor("bar")), ~.y), c("foo", "bar"))
 })
 
 test_that("accumulate() does not fail when input can't be simplified", {
@@ -220,8 +326,38 @@ test_that("accumulate() does not fail when input can't be simplified", {
   expect_identical(accumulate(list(1, "a"), ~.y), list(1, "a"))
 })
 
-test_that("accumulate() does fail when simpification is required", {
+test_that("accumulate() does fail when simplification is required yet impossible", {
   expect_snapshot(accumulate(list(1, "a"), ~.y, .simplify = TRUE), error = TRUE)
+})
+
+test_that("accumulate() won't simplify if told not to", {
+  expect_identical(
+    accumulate(list("foo", factor("bar")), ~.y, .simplify = FALSE),
+    list("foo", factor("bar"))
+  )
+})
+
+## .ptype tests ----
+test_that("prototype can be specified for accumulate() to simplify to", {
+  expect_identical(
+    accumulate(list("foo", factor("bar")), ~.y, .ptype = factor(levels = c("foo", "bar", "baz"))),
+    factor(c("foo", "bar"), levels = c("foo", "bar", "baz"))
+  )
+})
+
+test_that("prototype cannot be specified for accumulate() if told not to simplify", {
+  expect_snapshot(accumulate(c("b", "a"), ~.y, .simplify = FALSE, .ptype = character()), error = TRUE)
+})
+
+test_that("accumulate() fails when cannot simplify to prototype", {
+  expect_snapshot(accumulate(list("foo", factor("bar")), ~.y, .ptype = factor(levels = "baz")), error = TRUE)
+})
+
+## Other tests ----
+test_that("accumulate() forces arguments (#643)", {
+  compose <- function(f, g) function(x) f(g(x))
+  fns <- accumulate(list(identity, identity), compose)
+  expect_true(every(fns, function(f) identical(f(1), 1)))
 })
 
 # reduce2 -----------------------------------------------------------------
