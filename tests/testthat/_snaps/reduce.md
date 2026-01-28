@@ -71,19 +71,43 @@
       ! Can't convert from `res[[1]]` <character> to <factor<3697e>> due to loss of generality.
       * Locations: 1
 
-# requires equal length vectors
+# reduce2() requires .x to be 1 element longer than .y (used for initial value)
 
     Code
-      reduce2(1:3, 1, `+`)
+      reduce2(1:4, 1:4, paste)
     Condition
       Error in `reduce2()`:
-      ! `.y` must have length 2, not 1.
+      ! `.y` must have length 3, not 4.
 
-# requires init if `.x` is empty
+---
 
     Code
-      reduce2(list())
+      reduce2(1:4, list(), paste)
+    Condition
+      Error in `reduce2()`:
+      ! `.y` must have length 3, not 0.
+
+# reduce2() requires .x and .y to be equal length if init given
+
+    Code
+      reduce2(1:4, 1:3, paste, .init = 6)
+    Condition
+      Error in `reduce2()`:
+      ! `.y` must have length 4, not 3.
+
+# if input empty, reduce2() returns error
+
+    Code
+      reduce2(list(), list())
     Condition
       Error in `reduce2()`:
       ! Must supply `.init` when `.x` is empty.
+
+# reduce2() cannot take .acc in ... due to argument collision
+
+    Code
+      reduce2(1:4, 1:3, `+`, .acc = TRUE)
+    Condition
+      Error in `reduce2_()`:
+      ! formal argument ".acc" matched by multiple actual arguments
 

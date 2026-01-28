@@ -362,33 +362,90 @@ test_that("accumulate() forces arguments (#643)", {
 
 # reduce2 -----------------------------------------------------------------
 
-test_that("basic application works", {
+## Basic tests ----
+test_that("reduce2() works correctly in the basic case", {
   paste2 <- function(x, y, sep) paste(x, y, sep = sep)
-
   x <- c("a", "b", "c")
   expect_equal(reduce2(x, c("-", "."), paste2), "a-b.c")
   expect_equal(reduce2(x, c(".", "-", "."), paste2, .init = "x"), "x.a-b.c")
 })
 
-test_that("requires equal length vectors", {
-  expect_snapshot(reduce2(1:3, 1, `+`), error = TRUE)
+test_that("reduce2() requires .x to be 1 element longer than .y (used for initial value)", {
+  expect_snapshot(reduce2(1:4, 1:4, paste), error = TRUE)
+  expect_snapshot(reduce2(1:4, list(), paste), error = TRUE)
 })
 
-test_that("requires init if `.x` is empty", {
-  expect_snapshot(reduce2(list()), error = TRUE)
+test_that("reduce2() extracts each element with [[", {
+  expect_identical(
+    reduce2(as.list(0:5), as.list(5:1), function(out, x, y) { out + x / y }),
+    reduce2(0:5, 5:1, function(out, x, y) { out + x / y })
+  )
 })
 
-test_that("reduce returns original input if it was length one", {
-  x <- list(c(0, 1), c(2, 3), c(4, 5))
-  expect_equal(reduce(x[1], paste), x[[1]])
+## .init tests ----
+test_that("reduce2() uses init as initial value if given", {
+  expect_identical(reduce2(letters[1:4], LETTERS[1:3], paste0), "abAcBdC")
+  expect_identical(reduce2(letters[2:4], LETTERS[1:3], paste0, .init = "-"), "-bAcBdC")
 })
 
-test_that("can shortcircuit reduce2() with done()", {
+test_that("reduce2() requires .x and .y to be equal length if init given", {
+  expect_snapshot(reduce2(1:4, 1:3, paste, .init = 6), error = TRUE)
+})
+
+test_that("reduce2() accepts NULL as init", {
+  expect_identical(
+    reduce2(1:3, 1:3, list, .init = NULL),
+    list(list(list(NULL, 1L, 1L), 2L, 2L), 3L, 3L)
+  )
+})
+
+test_that("if input empty, reduce2() returns error", {
+  expect_snapshot(reduce2(list(), list()), error = TRUE)
+})
+
+test_that("if input empty and init given, reduce2() returns init", {
+  expect_equal(reduce2(list(), list(), `+`, .init = 0), 0)
+})
+
+test_that("if input length 1, reduce2() returns the first element of .x", {
+  x <- list("a")
+  paste_dot <- function(out, .x, .y) { sprintf("%s..%s.%s", out, .x, .y) }
+  expect_identical(reduce2(x, list(), paste_dot), x[[1]])
+})
+
+test_that("if input length 1 and init given, reduce2() reduces value with init", {
+  expect_equal(reduce2(1, 2, paste0, .init = 0), "012")
+})
+
+## Early return tests ----
+test_that("reduce2() can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  out <- reduce2(x, 1:5, ~{ if (.y) c(.x, "foo") else done(.x) }, .init = NULL)
   expect_identical(out, c("foo", "foo"))
+
+  # Empty done box yields the same value as returning the
+  # result-so-far (the last value) in a done box
+  out2 <- reduce2(x, 1:5, ~{ if (.y) c(.x, "foo") else done() }, .init = NULL)
+  expect_identical(out2, out)
+
+  # Done box can also return a value that had one last transformation applied to it
+  out3 <- reduce2(x, 1:5, ~{ if (.y) c(.x, "foo") else done(paste0(.x, "+")) }, .init = NULL)
+  expect_identical(out3, c("foo+", "foo+"))
 })
 
+## ... tests ----
+test_that("reduce2() passes ... to function", {
+  expect_identical(
+    reduce2(letters[1:4], LETTERS[1:3], paste, sep = "."),
+    reduce2(letters[1:4], LETTERS[1:3], function(out, x, y) { paste(out, x, y, sep = ".") })
+  )
+})
+
+test_that("reduce2() cannot take .acc in ... due to argument collision", {
+  expect_snapshot(reduce2(1:4, 1:3, `+`, .acc = TRUE), error = TRUE)
+})
+
+## Other tests ----
 test_that("reduce2() forces arguments (#643)", {
   compose <- function(f, g, ...) function(x) f(g(x))
   fns <- reduce2(list(identity, identity), "foo", compose)
