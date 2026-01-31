@@ -121,6 +121,9 @@ test_that("map() with empty input copies names", {
   expect_identical(map_chr(named_list, identity), named(chr()))
 })
 
+test_that("passing .type parameter to map() results in an error (#1248)", {
+  expect_snapshot(map_lgl(\(x, ...) x, .type = "character"), error = TRUE)
+})
 
 # map_vec -----------------------------------------------------------------
 
