@@ -8,15 +8,15 @@
 \alias{imodify}
 \title{Modify elements selectively}
 \usage{
-modify(.x, .f, ...)
+modify(.x, .f, ..., .progress = FALSE)
 
 modify_if(.x, .p, .f, ..., .else = NULL)
 
 modify_at(.x, .at, .f, ...)
 
-modify2(.x, .y, .f, ...)
+modify2(.x, .y, .f, ..., .progress = FALSE)
 
-imodify(.x, .f, ...)
+imodify(.x, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A vector.}
@@ -37,6 +37,10 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
