@@ -51,8 +51,8 @@ where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE, .purrr_error_call = NULL)
-    map_(.x, .p, ..., .type = "logical", .purrr_error_call = .purrr_error_call)
+    .p <- as_predicate(.fn = .p, ..., .mapper = TRUE, .purrr_error_call = NULL)
+    map_(.x, .f = .p, ..., .type = "logical", .purrr_error_call = .purrr_error_call)
   }
 }
 
@@ -67,7 +67,7 @@ as_predicate <- function(
   force(.purrr_error_arg)
 
   if (.mapper) {
-    .fn <- as_mapper(.fn, ...)
+    .fn <- as_mapper(.f = .fn, ...)
   }
 
   function(...) {

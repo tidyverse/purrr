@@ -114,11 +114,11 @@ modify <- function(.x, .f, ...) {
 #' @export
 modify_if <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
-  .x <- modify_where(.x, where, .f, ...)
+  .x <- modify_where(.x, .where = where, .f, ...)
 
   if (!is.null(.else)) {
     .else <- as_mapper(.else, ...)
-    .x <- modify_where(.x, !where, .else, ...)
+    .x <- modify_where(.x, .where = !where, .else, ...)
   }
 
   .x
@@ -166,7 +166,7 @@ modify2 <- function(.x, .y, .f, ...) {
 #' @rdname modify
 #' @export
 imodify <- function(.x, .f, ...) {
-  modify2(.x, vec_index(.x), .f, ...)
+  modify2(.x, .y = vec_index(.x), .f, ...)
 }
 
 # helpers -----------------------------------------------------------------

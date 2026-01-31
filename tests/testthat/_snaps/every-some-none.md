@@ -124,3 +124,27 @@
       Use of calls and expressions in purrr functions was deprecated in purrr 1.0.0.
       i Please coerce explicitly with `as.list()`
 
+# .f parameter passed to every(), some(), and none() doesn't override .p parameter
+
+    Code
+      every(1:5, is.null, .f = function(...) TRUE)
+    Condition
+      Error in `as_mapper()`:
+      ! formal argument ".f" matched by multiple actual arguments
+
+---
+
+    Code
+      some(1:5, is.null, .f = function(...) TRUE)
+    Condition
+      Error in `as_mapper()`:
+      ! formal argument ".f" matched by multiple actual arguments
+
+---
+
+    Code
+      none(1:5, is.null, .f = function(...) FALSE)
+    Condition
+      Error in `as_mapper()`:
+      ! formal argument ".f" matched by multiple actual arguments
+
