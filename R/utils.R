@@ -46,13 +46,13 @@ where_at <- function(
   }
 }
 
-where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
+where_if <- function(.x, .p, ..., .progress = FALSE, .purrr_error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
     .p <- as_predicate(.fn = .p, ..., .mapper = TRUE, .purrr_error_call = NULL)
-    map_(.x, .f = .p, ..., .type = "logical", .purrr_error_call = .purrr_error_call)
+    map_(.x, .f = .p, ..., .type = "logical", .progress = .progress, .purrr_error_call = .purrr_error_call)
   }
 }
 
