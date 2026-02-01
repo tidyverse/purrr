@@ -76,8 +76,7 @@ which_satisfies_predicate <- function(
 ) {
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
   # Not using `as_predicate()` as R level predicate result checks are too slow.
-  # Checks are done at the C level instead (#1169). Also, `NA` propagates
-  # through these functions, which `as_predicate()` doesn't allow.
+  # Checks are done at the C level instead (#1169).
   .p <- as_mapper(.f, ...)
 
   # Consistent with `map()`
