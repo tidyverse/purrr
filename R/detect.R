@@ -56,7 +56,7 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  index <- detect_index(.x, .f, ..., .dir = .dir)
+  index <- which_satisfies_predicate(.x, .f, ..., .dir = .dir)
   if (index == 0) .default else .x[[index]]
 }
 
