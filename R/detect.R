@@ -56,40 +56,40 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE)
-  .dir <- arg_match0(.dir, c("forward", "backward"))
-
-  for (i in index(.x, .dir, "detect")) {
-    if (.f(.x[[i]], ...)) {
-      return(.x[[i]])
-    }
-  }
-
-  .default
+  index <- detect_index(.x, .f, ..., .dir = .dir)
+  if (index == 0) .default else .x[[index]]
 }
 
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE)
-  .dir <- arg_match0(.dir, c("forward", "backward"))
-
-  for (i in index(.x, .dir, "detect_index")) {
-    if (.f(.x[[i]], ...)) {
-      return(i)
-    }
-  }
-
-  0L
+  which_satisfies_predicate(.x, .f, ..., .dir = .dir)
 }
 
+which_satisfies_predicate <- function(
+  .x,
+  .f,
+  ...,
+  .dir = c("forward", "backward"),
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
+  left <- arg_match0(.dir, c("forward", "backward")) == "forward"
+  # Not using `as_predicate()` as R level predicate result checks are too slow.
+  # Checks are done at the C level instead (#1169). Also, `NA` propagates
+  # through these functions, which `as_predicate()` doesn't allow.
+  .p <- as_mapper(.f, ...)
 
-index <- function(x, dir, right = NULL, fn) {
-  idx <- seq_along(x)
-  if (dir == "backward") {
-    idx <- rev(idx)
-  }
-  idx
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
+  n <- vec_size(.x)
+
+  i <- 0L
+
+  # We refer to `.p`, `.x`, `i`, `...`, and `.purrr_error_call` all from C level
+  .Call(detect_index_impl, environment(), n, i, left)
 }
 
 #' Does a list contain an object?
