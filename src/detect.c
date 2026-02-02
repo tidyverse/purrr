@@ -7,7 +7,7 @@
 
 static
 bool is_bool(SEXP x) {
-  return TYPEOF(x) == LGLSXP && Rf_xlength(x) == 1 && !R_IsNA(LOGICAL_ELT(x, 0));
+  return TYPEOF(x) == LGLSXP && Rf_xlength(x) == 1 && LOGICAL_ELT(x, 0) != NA_LOGICAL;
 }
 
 /**
