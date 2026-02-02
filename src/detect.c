@@ -11,11 +11,19 @@ bool is_bool(SEXP x) {
 }
 
 /**
- * C loop for `every()`, `some()`, and `none()`
+ * C loop for `detect_index()`
  *
  * Uses `vctrs_vec_compat()` at the R level so that we can use `vec_size()` to
  * compute `n`, while also using `[[` to extract elements, which is consistent
  * with `map()`.
+ *
+ * Very similar to `satisfies_predicate()` used by `every()`, `some()`, and
+ * `none()`. The differences are:
+ * - this function returns an index of the element that satisfies the predicate,
+ *   while the other one returns a boolean;
+ * - this function doesn't allow NA, while the other one propagates it;
+ * - this function allows both "forward" and "backward" directions, while the
+ *   other one has only implicit "forward".
  */
 static
 int which_satisfies_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, SEXP left_arg) {
