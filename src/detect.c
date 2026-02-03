@@ -70,10 +70,12 @@ int which_satisfies_predicate(
       // evaluating it when it isn't needed, so we have to retrieve it when
       // required.
       SEXP error_call = PROTECT(Rf_eval(Rf_install(".purrr_error_call"), env));
+      SEXP p_arg_name = PROTECT(Rf_eval(Rf_install(".p_arg_name"), env));
 
       r_abort_call(
         error_call,
-        "`.f()` must return a single `TRUE` or `FALSE`, not %s.",
+        "`%s()` must return a single `TRUE` or `FALSE`, not %s.",
+        CHAR(STRING_ELT(p_arg_name, 0)),
         rlang_obj_type_friendly_full(elt_sexp, true, false)
       );
     }
