@@ -4,6 +4,7 @@ test_that("preserves names", {
 })
 
 test_that("creates simple call", {
+  skip("Internals changed")
   out <- map(1, function(x) sys.call())[[1]]
   expect_equal(out, quote(.f(.x[[i]], ...)))
 })

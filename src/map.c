@@ -2,6 +2,7 @@
 #include <R.h>
 #include <Rversion.h>
 #include <Rinternals.h>
+#include "extract.h"
 #include "coerce.h"
 #include "conditions.h"
 #include "utils.h"
@@ -60,44 +61,64 @@ SEXP call_loop(SEXP env,
   return out;
 }
 
+static
+SEXP call_loop_2(
+  SEXP env,
+  SEXPTYPE type,
+  SEXP progress,
+  SEXP x,
+  int n,
+  SEXP names,
+  int* p_i,
+  int force
+) {
+  SEXP bar = cli_progress_bar(n, progress);
+  R_PreserveObject(bar);
+  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
+
+  SEXP out = PROTECT(Rf_allocVector(type, n));
+  Rf_setAttrib(out, R_NamesSymbol, names);
+
+  for (int i = 0; i < n; ++i) {
+    *p_i = i + 1;
+
+    if (CLI_SHOULD_TICK) {
+      cli_progress_set(bar, i);
+    }
+    if (i % 1024 == 0) {
+      R_CheckUserInterrupt();
+    }
+
+    SEXP call = PROTECT(make_map_call(x, i));
+    SEXP res = PROTECT(R_forceAndCall(call, force, env));
+
+    if (type != VECSXP && Rf_length(res) != 1) {
+      Rf_errorcall(R_NilValue, "Result must be length 1, not %i.", Rf_length(res));
+    }
+
+    set_vector_value(out, i, res, 0);
+    UNPROTECT(2);  // res, call
+  }
+
+  *p_i = 0;
+
+  UNPROTECT(1);  // out
+  return out;
+}
+
 SEXP map_impl(SEXP env,
               SEXP ffi_type,
               SEXP progress,
+              SEXP x,
               SEXP ffi_n,
               SEXP names,
               SEXP i) {
-  static SEXP call = NULL;
-  if (call == NULL) {
-    SEXP x_sym = Rf_install(".x");
-    SEXP f_sym = Rf_install(".f");
-    SEXP i_sym = Rf_install("i");
-
-    // Constructs a call like f(x[[i]], ...) - don't want to substitute
-    // actual values for f or x, because they may be long, which creates
-    // bad tracebacks()
-    SEXP x_i_sym = PROTECT(Rf_lang3(R_Bracket2Symbol, x_sym, i_sym));
-
-    call = Rf_lang3(f_sym, x_i_sym, R_DotsSymbol);
-    R_PreserveObject(call);
-
-    UNPROTECT(1);
-  }
-
   SEXPTYPE type = Rf_str2type(CHAR(STRING_ELT(ffi_type, 0)));
   int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(i);
   int force = 1;
 
-  return call_loop(
-    env,
-    call,
-    type,
-    progress,
-    n,
-    names,
-    p_i,
-    force
-  );
+  return call_loop_2(env, type, progress, x, n, names, p_i, force);
 }
 
 SEXP map2_impl(SEXP env,
