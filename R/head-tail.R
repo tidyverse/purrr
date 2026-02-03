@@ -24,8 +24,7 @@
 #' tail_while(0:10, big)
 head_while <- function(.x, .p, ...) {
   # Find location of first FALSE
-  .p <- as_predicate(.fn = .p, ..., .mapper = TRUE)
-  loc <- detect_index(.x, .f = negate(.p), ..., .dir = "forward")
+  loc <- which_satisfies_predicate(.x, .f = .p, ..., .dir = "forward", .negate = TRUE)
   if (loc == 0) {
     return(.x)
   }
@@ -36,9 +35,8 @@ head_while <- function(.x, .p, ...) {
 #' @export
 #' @rdname head_while
 tail_while <- function(.x, .p, ...) {
-  .p <- as_predicate(.fn = .p, ..., .mapper = TRUE)
   # Find location of last FALSE
-  loc <- detect_index(.x, .f = negate(.p), ..., .dir = "backward")
+  loc <- which_satisfies_predicate(.x, .f = .p, ..., .dir = "backward", .negate = TRUE)
   if (loc == 0) {
     return(.x)
   }
