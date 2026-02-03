@@ -56,29 +56,30 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  index <- which_satisfies_predicate(.x, .f, ..., .dir = .dir, .negate = FALSE)
+  index <- which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
   if (index == 0) .default else .x[[index]]
 }
 
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
-  which_satisfies_predicate(.x, .f, ..., .dir = .dir, .negate = FALSE)
+  which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
 }
 
 which_satisfies_predicate <- function(
   .x,
-  .f,
+  .p,
   ...,
   .dir = c("forward", "backward"),
   .negate = FALSE,
+  .p_arg_name = ".p",
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
   # Not using `as_predicate()` as R level predicate result checks are too slow.
   # Checks are done at the C level instead (#1169).
-  .p <- as_mapper(.f, ...)
+  .p <- as_mapper(.p, ...)
 
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
@@ -88,7 +89,7 @@ which_satisfies_predicate <- function(
 
   i <- 0L
 
-  # We refer to `.p`, `.x`, `i`, `...`, and `.purrr_error_call` all from C level
+  # We refer to `.p`, `.x`, `i`, `...`, `.p_arg_name`, and `.purrr_error_call` all from C level
   .Call(detect_index_impl, environment(), n, i, left, .negate)
 }
 
