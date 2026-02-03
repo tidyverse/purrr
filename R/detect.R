@@ -56,14 +56,14 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  index <- which_satisfies_predicate(.x, .f, ..., .dir = .dir)
+  index <- which_satisfies_predicate(.x, .f, ..., .dir = .dir, .negate = FALSE)
   if (index == 0) .default else .x[[index]]
 }
 
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
-  which_satisfies_predicate(.x, .f, ..., .dir = .dir)
+  which_satisfies_predicate(.x, .f, ..., .dir = .dir, .negate = FALSE)
 }
 
 which_satisfies_predicate <- function(
@@ -71,6 +71,7 @@ which_satisfies_predicate <- function(
   .f,
   ...,
   .dir = c("forward", "backward"),
+  .negate = FALSE,
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
@@ -88,7 +89,7 @@ which_satisfies_predicate <- function(
   i <- 0L
 
   # We refer to `.p`, `.x`, `i`, `...`, and `.purrr_error_call` all from C level
-  .Call(detect_index_impl, environment(), n, i, left)
+  .Call(detect_index_impl, environment(), n, i, left, .negate)
 }
 
 #' Does a list contain an object?

@@ -26,8 +26,15 @@ bool is_bool(SEXP x) {
  *   other one has only implicit "forward".
  */
 static
-int which_satisfies_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, SEXP left_arg) {
+int which_satisfies_predicate(
+  SEXP env,
+  SEXP ffi_n,
+  SEXP ffi_i,
+  SEXP left_arg,
+  SEXP negate_arg
+) {
   const bool left = Rf_asLogical(left_arg);
+  const bool negate = Rf_asLogical(negate_arg);
   const int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
 
@@ -74,7 +81,7 @@ int which_satisfies_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, SEXP left_arg) {
     const int elt = LOGICAL_ELT(elt_sexp, 0);
     UNPROTECT(1);
 
-    if (elt) {
+    if (elt != negate) {
       // Early exit
       out = r_index;
       break;
@@ -86,7 +93,15 @@ int which_satisfies_predicate(SEXP env, SEXP ffi_n, SEXP ffi_i, SEXP left_arg) {
   return out;
 }
 
-SEXP detect_index_impl(SEXP ffi_env, SEXP ffi_n, SEXP ffi_i, SEXP left_arg) {
-  const int which = which_satisfies_predicate(ffi_env, ffi_n, ffi_i, left_arg);
+SEXP detect_index_impl(
+  SEXP ffi_env,
+  SEXP ffi_n,
+  SEXP ffi_i,
+  SEXP left_arg,
+  SEXP negate_arg
+) {
+  const int which = which_satisfies_predicate(
+    ffi_env, ffi_n, ffi_i, left_arg, negate_arg
+  );
   return Rf_ScalarInteger(which);
 }
