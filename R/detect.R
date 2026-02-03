@@ -66,6 +66,18 @@ detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
   which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
 }
 
+#' Which element satisfies a predicate?
+#'
+#' @inheritParams detect_index
+#' @param .negate If `TRUE`, this function finds the first element that
+#'  _doesn't_ satisfy the predicate instead.
+#' @param .p_arg_name Name of the `.p` argument in the caller function.
+#'  Used to handle the fact that `detect()` and `detect_index()` use `.f`
+#'  instead of expected `p`.
+#'
+#' @return The position of the matching item; if no match, 0.
+#'
+#' @noRd
 which_satisfies_predicate <- function(
   .x,
   .p,
