@@ -105,7 +105,11 @@ map2_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(map2_impl, environment(), .type, .progress, n, names, i)
+    if (is.object(.x)) {
+      call_with_cleanup(map2_impl, environment(), .type, .progress, n, names, i)
+    } else {
+      call_with_cleanup(map2_fast_impl, environment(), .type, .progress, .x, .y, n, names, i)
+    }
   )
 }
 

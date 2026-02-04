@@ -28,3 +28,12 @@ SEXP make_map_call(SEXP x, int index) {
   UNPROTECT(2);  // call, x_i
   return call;
 }
+
+SEXP make_map2_call(SEXP x, SEXP y, int index) {
+  SEXP f_sym = Rf_install(".f");
+  SEXP x_i = PROTECT(extract_from_vector(x, index));
+  SEXP y_i = PROTECT(extract_from_vector(y, index));
+  SEXP call = PROTECT(Rf_lang4(f_sym, x_i, y_i, R_DotsSymbol));
+  UNPROTECT(3);  // call, y_i, x_i
+  return call;
+}
