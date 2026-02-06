@@ -122,6 +122,9 @@ test_that("map() with empty input copies names", {
   expect_identical(map_chr(named_list, identity), named(chr()))
 })
 
+test_that("don't evaluate symbolic objects (#428)", {
+  expect_identical(map(exprs(1 + 2), identity), exprs(1 + 2))
+})
 
 # map_vec -----------------------------------------------------------------
 
