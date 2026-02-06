@@ -21,7 +21,8 @@ SEXP extract_from_vector(SEXP x, int index) {
   }
 }
 
-SEXP make_map_call(SEXP x, int index) {
+SEXP make_map_call(SEXP x, SEXP y, int index) {
+  (void) y;
   SEXP f_sym = Rf_install(".f");
   SEXP x_i = PROTECT(extract_from_vector(x, index));
   SEXP call = PROTECT(Rf_lang3(f_sym, x_i, R_DotsSymbol));

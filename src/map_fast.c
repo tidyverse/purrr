@@ -15,15 +15,19 @@ void cb_progress_done(void* bar_ptr) {
   R_ReleaseObject(bar);
 }
 
-SEXP map_fast_impl(
+static
+SEXP map_fast_(
+  SEXP (*make_call)(SEXP x, SEXP y, int index),
   SEXP env,
   SEXP ffi_type,
   SEXP progress,
   SEXP x,
+  SEXP y,
   SEXP ffi_n,
   SEXP names,
-  SEXP ffi_i
-) {
+  SEXP ffi_i,
+  int force
+  ) {
   SEXPTYPE type = Rf_str2type(CHAR(STRING_ELT(ffi_type, 0)));
   int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
@@ -45,8 +49,8 @@ SEXP map_fast_impl(
       R_CheckUserInterrupt();
     }
 
-    SEXP call = PROTECT(make_map_call(x, i));
-    SEXP res = PROTECT(R_forceAndCall(call, 1, env));
+    SEXP call = PROTECT(make_call(x, y, i));
+    SEXP res = PROTECT(R_forceAndCall(call, force, env));
 
     if (type != VECSXP && Rf_length(res) != 1) {
       Rf_errorcall(R_NilValue, "Result must be length 1, not %i.", Rf_length(res));
@@ -62,6 +66,22 @@ SEXP map_fast_impl(
   return out;
 }
 
+SEXP map_fast_impl(
+  SEXP env,
+  SEXP ffi_type,
+  SEXP progress,
+  SEXP x,
+  SEXP ffi_n,
+  SEXP names,
+  SEXP ffi_i
+  ) {
+  const int force = 1;
+  SEXP y = R_NilValue;
+  return map_fast_(
+    make_map_call, env, ffi_type, progress, x, y, ffi_n, names, ffi_i, force
+  );
+}
+
 SEXP map2_fast_impl(
   SEXP env,
   SEXP ffi_type,
@@ -72,40 +92,8 @@ SEXP map2_fast_impl(
   SEXP names,
   SEXP ffi_i
 ) {
-  SEXPTYPE type = Rf_str2type(CHAR(STRING_ELT(ffi_type, 0)));
-  int n = INTEGER_ELT(ffi_n, 0);
-  int* p_i = INTEGER(ffi_i);
-
-  SEXP bar = cli_progress_bar(n, progress);
-  R_PreserveObject(bar);
-  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
-
-  SEXP out = PROTECT(Rf_allocVector(type, n));
-  Rf_setAttrib(out, R_NamesSymbol, names);
-
-  for (int i = 0; i < n; ++i) {
-    *p_i = i + 1;
-
-    if (CLI_SHOULD_TICK) {
-      cli_progress_set(bar, i);
-    }
-    if (i % 1024 == 0) {
-      R_CheckUserInterrupt();
-    }
-
-    SEXP call = PROTECT(make_map2_call(x, y, i));
-    SEXP res = PROTECT(R_forceAndCall(call, 1, env));
-
-    if (type != VECSXP && Rf_length(res) != 1) {
-      Rf_errorcall(R_NilValue, "Result must be length 1, not %i.", Rf_length(res));
-    }
-
-    set_vector_value(out, i, res, 0);
-    UNPROTECT(2);  // res, call
-  }
-
-  *p_i = 0;
-
-  UNPROTECT(1);  // out
-  return out;
+  const int force = 2;
+  return map_fast_(
+    make_map2_call, env, ffi_type, progress, x, y, ffi_n, names, ffi_i, force
+  );
 }
