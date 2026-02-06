@@ -3,6 +3,18 @@
 
 #include "conditions.h"
 
+static
+SEXP maybe_quote(SEXP x) {
+  switch (TYPEOF(x)) {
+  case LANGSXP:
+  case SYMSXP:
+  case EXPRSXP:
+    return Rf_lang2(R_QuoteSymbol, x);
+  default:
+    return x;
+  }
+}
+
 SEXP extract_from_vector(SEXP x, int index) {
   // We assume that `x` is not an R object (i.e. doesn't have S3/S4/... classes)
   switch (TYPEOF(x)) {
@@ -25,8 +37,9 @@ SEXP make_map_call(SEXP x, SEXP y, int index) {
   (void) y;
   SEXP f_sym = Rf_install(".f");
   SEXP x_i = PROTECT(extract_from_vector(x, index));
-  SEXP call = PROTECT(Rf_lang3(f_sym, x_i, R_DotsSymbol));
-  UNPROTECT(2);  // call, x_i
+  SEXP x_arg = PROTECT(maybe_quote(x_i));
+  SEXP call = PROTECT(Rf_lang3(f_sym, x_arg, R_DotsSymbol));
+  UNPROTECT(3);  // call, x_arg, x_i
   return call;
 }
 
@@ -34,7 +47,9 @@ SEXP make_map2_call(SEXP x, SEXP y, int index) {
   SEXP f_sym = Rf_install(".f");
   SEXP x_i = PROTECT(extract_from_vector(x, index));
   SEXP y_i = PROTECT(extract_from_vector(y, index));
-  SEXP call = PROTECT(Rf_lang4(f_sym, x_i, y_i, R_DotsSymbol));
-  UNPROTECT(3);  // call, y_i, x_i
+  SEXP x_arg = PROTECT(maybe_quote(x_i));
+  SEXP y_arg = PROTECT(maybe_quote(y_i));
+  SEXP call = PROTECT(Rf_lang4(f_sym, x_arg, y_arg, R_DotsSymbol));
+  UNPROTECT(5);  // call, y_arg, x_arg, y_i, x_i
   return call;
 }
