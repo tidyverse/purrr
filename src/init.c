@@ -21,6 +21,7 @@ extern SEXP map2_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP pmap_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP map_fast_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP map2_fast_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP pmap_fast_impl(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP transpose_impl(SEXP, SEXP);
 extern SEXP vflatten_impl(SEXP, SEXP);
 
@@ -37,6 +38,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"pmap_impl",             (DL_FUNC) &pmap_impl,      8},
   {"map_fast_impl",         (DL_FUNC) &map_fast_impl,  7},
   {"map2_fast_impl",        (DL_FUNC) &map2_fast_impl, 8},
+  {"pmap_fast_impl",        (DL_FUNC) &pmap_fast_impl, 8},
   {"transpose_impl",        (DL_FUNC) &transpose_impl, 2},
   {"vflatten_impl",         (DL_FUNC) &vflatten_impl,  2},
   {"purrr_eval",            (DL_FUNC) &Rf_eval,        2},

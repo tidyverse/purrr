@@ -17,7 +17,7 @@ void cb_progress_done(void* bar_ptr) {
 
 static
 SEXP map_fast_(
-  SEXP (*make_call)(SEXP x, SEXP y, int index),
+  SEXP (*make_call)(SEXP, SEXP, SEXP, int),
   SEXP env,
   SEXP ffi_type,
   SEXP progress,
@@ -26,8 +26,9 @@ SEXP map_fast_(
   SEXP ffi_n,
   SEXP names,
   SEXP ffi_i,
+  SEXP call_names,
   int force
-  ) {
+) {
   SEXPTYPE type = Rf_str2type(CHAR(STRING_ELT(ffi_type, 0)));
   int n = INTEGER_ELT(ffi_n, 0);
   int* p_i = INTEGER(ffi_i);
@@ -49,7 +50,7 @@ SEXP map_fast_(
       R_CheckUserInterrupt();
     }
 
-    SEXP call = PROTECT(make_call(x, y, i));
+    SEXP call = PROTECT(make_call(x, y, call_names, i));
     SEXP res = PROTECT(R_forceAndCall(call, force, env));
 
     if (type != VECSXP && Rf_length(res) != 1) {
@@ -77,8 +78,20 @@ SEXP map_fast_impl(
   ) {
   const int force = 1;
   SEXP y = R_NilValue;
+  SEXP call_names = R_NilValue;
+
   return map_fast_(
-    make_map_call, env, ffi_type, progress, x, y, ffi_n, names, ffi_i, force
+    make_map_call,
+    env,
+    ffi_type,
+    progress,
+    x,
+    y,
+    ffi_n,
+    names,
+    ffi_i,
+    call_names,
+    force
   );
 }
 
@@ -93,7 +106,47 @@ SEXP map2_fast_impl(
   SEXP ffi_i
 ) {
   const int force = 2;
+  SEXP call_names = R_NilValue;
+
   return map_fast_(
-    make_map2_call, env, ffi_type, progress, x, y, ffi_n, names, ffi_i, force
+    make_map2_call,
+    env,
+    ffi_type,
+    progress,
+    x,
+    y,
+    ffi_n,
+    names,
+    ffi_i,
+    call_names,
+    force
+  );
+}
+
+SEXP pmap_fast_impl(
+  SEXP env,
+  SEXP ffi_type,
+  SEXP progress,
+  SEXP l,
+  SEXP ffi_n,
+  SEXP names,
+  SEXP ffi_i,
+  SEXP call_names
+) {
+  const int force = Rf_length(l);
+  SEXP y = R_NilValue;
+
+  return map_fast_(
+    make_pmap_call,
+    env,
+    ffi_type,
+    progress,
+    l,
+    y,
+    ffi_n,
+    names,
+    ffi_i,
+    call_names,
+    force
   );
 }

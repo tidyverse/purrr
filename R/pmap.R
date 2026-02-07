@@ -173,17 +173,11 @@ pmap_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(
-      pmap_impl,
-      environment(),
-      .type,
-      .progress,
-      n,
-      names,
-      i,
-      call_names,
-      call_n
-    )
+    if (some(.l, is.object)) {
+      call_with_cleanup(pmap_impl, environment(), .type, .progress, n, names, i, call_names, call_n)
+    } else {
+      call_with_cleanup(pmap_fast_impl, environment(), .type, .progress, .l, n, names, i, call_names)
+    }
   )
 }
 
