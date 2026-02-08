@@ -67,6 +67,13 @@ SEXP map_fast_(
   return out;
 }
 
+static
+SEXP make_map_call(SEXP x, SEXP y, SEXP call_names, int index) {
+  (void) y;
+  (void) call_names;
+  return make_call_1(x, index, ".f");
+}
+
 SEXP map_fast_impl(
   SEXP env,
   SEXP ffi_type,
@@ -95,6 +102,12 @@ SEXP map_fast_impl(
   );
 }
 
+static
+SEXP make_map2_call(SEXP x, SEXP y, SEXP call_names, int index) {
+  (void) call_names;
+  return make_call_2(x, y, index, ".f");
+}
+
 SEXP map2_fast_impl(
   SEXP env,
   SEXP ffi_type,
@@ -121,6 +134,12 @@ SEXP map2_fast_impl(
     call_names,
     force
   );
+}
+
+static
+SEXP make_pmap_call(SEXP xs, SEXP y, SEXP call_names, int index) {
+  (void) y;
+  return make_call_n(xs, call_names, index, ".f");
 }
 
 SEXP pmap_fast_impl(

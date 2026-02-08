@@ -33,11 +33,8 @@ SEXP extract_from_vector(SEXP x, int index) {
   }
 }
 
-SEXP make_map_call(SEXP x, SEXP y, SEXP call_names, int index) {
-  (void) y;
-  (void) call_names;
-
-  SEXP f_sym = Rf_install(".f");
+SEXP make_call_1(SEXP x, int index, const char* symbol) {
+  SEXP f_sym = Rf_install(symbol);
   SEXP x_i = PROTECT(extract_from_vector(x, index));
   SEXP x_arg = PROTECT(maybe_quote(x_i));
   SEXP call = PROTECT(Rf_lang3(f_sym, x_arg, R_DotsSymbol));
@@ -45,10 +42,8 @@ SEXP make_map_call(SEXP x, SEXP y, SEXP call_names, int index) {
   return call;
 }
 
-SEXP make_map2_call(SEXP x, SEXP y, SEXP call_names, int index) {
-  (void) call_names;
-
-  SEXP f_sym = Rf_install(".f");
+SEXP make_call_2(SEXP x, SEXP y, int index, const char* symbol) {
+  SEXP f_sym = Rf_install(symbol);
   SEXP x_i = PROTECT(extract_from_vector(x, index));
   SEXP y_i = PROTECT(extract_from_vector(y, index));
   SEXP x_arg = PROTECT(maybe_quote(x_i));
@@ -58,9 +53,7 @@ SEXP make_map2_call(SEXP x, SEXP y, SEXP call_names, int index) {
   return call;
 }
 
-SEXP make_pmap_call(SEXP xs, SEXP y, SEXP call_names, int index) {
-  (void) y;
-
+SEXP make_call_n(SEXP xs, SEXP call_names, int index, const char* symbol) {
   const int call_n = Rf_length(xs);
   const bool has_call_names = call_names != R_NilValue;
   const SEXP* v_call_names = has_call_names ? STRING_PTR_RO(call_names) : NULL;
@@ -88,7 +81,7 @@ SEXP make_pmap_call(SEXP xs, SEXP y, SEXP call_names, int index) {
     UNPROTECT(2);  // arg, x_j_i
   }
 
-  SEXP f_sym = Rf_install(".f");
+  SEXP f_sym = Rf_install(symbol);
   call = Rf_lcons(f_sym, call);
 
   UNPROTECT(1);  // call
