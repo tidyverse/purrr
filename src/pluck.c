@@ -6,6 +6,7 @@
 #include "backports.h"
 #include "coerce.h"
 #include "conditions.h"
+#include "extract.h"
 
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
 static int check_double_index_length(double val, int n, int i, bool strict);
@@ -120,22 +121,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
     return out;
   }
 
-  switch (TYPEOF(x)) {
-  case LGLSXP:  return Rf_ScalarLogical(LOGICAL(x)[offset]);
-  case INTSXP:  return Rf_ScalarInteger(INTEGER(x)[offset]);
-  case REALSXP: return Rf_ScalarReal(REAL(x)[offset]);
-  case STRSXP:  return Rf_ScalarString(STRING_ELT(x, offset));
-  case VECSXP:  return VECTOR_ELT(x, offset);
-  case RAWSXP:  return Rf_ScalarRaw(RAW(x)[offset]) ;
-  case CPLXSXP: return Rf_ScalarComplex(COMPLEX_ELT(x, offset));
-  default:
-    r_abort(
-      "Internal error: found in extract_vector()",
-      Rf_type2char(TYPEOF(x))
-    );
-  }
-
-  return R_NilValue;
+  return extract_from_vector(x, offset);
 }
 
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
