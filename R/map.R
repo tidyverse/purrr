@@ -216,6 +216,8 @@ map_ <- function(
   n <- vec_size(.x)
   names <- vec_names(.x)
 
+  .x_i <- NULL
+
   i <- 0L
   with_indexed_errors(
     i = i,
