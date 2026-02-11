@@ -69,7 +69,10 @@ SEXP map_fast_(
 
 static
 void update_extracted(SEXP x, int index, SEXP env) {
-  SEXP x_i_sym = Rf_install(".x_i");
+  static SEXP x_i_sym = NULL;
+  if (x_i_sym == NULL) {
+    x_i_sym = Rf_install(".x_i");
+  }
   SEXP x_i = PROTECT(extract_from_vector(x, index));
   Rf_defineVar(x_i_sym, x_i, env);
   UNPROTECT(1);  // x_i
