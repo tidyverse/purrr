@@ -223,11 +223,7 @@ map_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    if (is.object(.x)) {
-      call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i)
-    } else {
-      call_with_cleanup(map_fast_impl, environment(), .type, .progress, .x, n, names, i)
-    }
+    call_with_cleanup(map_impl, environment(), .type, .progress, .x, n, names, i)
   )
 }
 
