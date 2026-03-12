@@ -21,18 +21,27 @@ void cb_progress_done(void* bar_ptr) {
 }
 
 static
-void update_extracted(SEXP x, int index, SEXP env) {
-  static SEXP x_i_sym = NULL;
-  if (x_i_sym == NULL) {
-    x_i_sym = Rf_install(".x_i");
-  }
-  SEXP x_i = PROTECT(extract_from_vector(x, index));
-  Rf_defineVar(x_i_sym, x_i, env);
-  UNPROTECT(1);  // x_i
+void update_extracted_impl(const char* symbol, SEXP value, int index, SEXP env) {
+  SEXP value_i_sym = Rf_install(symbol);
+  SEXP value_i = PROTECT(extract_from_vector(value, index));
+  Rf_defineVar(value_i_sym, value_i, env);
+  UNPROTECT(1);  // value_i
 }
 
 static
-void do_nothing(SEXP x, int index, SEXP env) {}
+void update_extracted_1(SEXP x, SEXP y, int index, SEXP env) {
+  (void) y;
+  update_extracted_impl(".x_i", x, index, env);
+}
+
+static
+void update_extracted_2(SEXP x, SEXP y, int index, SEXP env) {
+  update_extracted_impl(".x_i", x, index, env);
+  update_extracted_impl(".y_i", y, index, env);
+}
+
+static
+void do_nothing(SEXP x, SEXP y, int index, SEXP env) {}
 
 // call must involve i
 SEXP call_loop(SEXP env,
@@ -40,11 +49,12 @@ SEXP call_loop(SEXP env,
                SEXPTYPE type,
                SEXP progress,
                SEXP x,
+               SEXP y,
                int n,
                SEXP names,
                int* p_i,
                int force,
-               void (*r_extractor)(SEXP, int, SEXP)) {
+               void (*r_extractor)(SEXP, SEXP, int, SEXP)) {
   SEXP bar = cli_progress_bar(n, progress);
   R_PreserveObject(bar);
   r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
@@ -62,7 +72,7 @@ SEXP call_loop(SEXP env,
       R_CheckUserInterrupt();
     }
 
-    r_extractor(x, i, env);
+    r_extractor(x, y, i, env);
     SEXP res = PROTECT(R_forceAndCall(call, force, env));
 
     if (type != VECSXP && Rf_length(res) != 1) {
@@ -87,14 +97,14 @@ SEXP map_impl(SEXP env,
               SEXP names,
               SEXP i) {
   SEXP call;
-  void (*r_extractor)(SEXP, int, SEXP);
+  void (*r_extractor)(SEXP, SEXP, int, SEXP);
 
   if (Rf_isObject(x)) {
     call = make_object_f_call_1();
     r_extractor = do_nothing;
   } else {
     call = make_vector_f_call_1();
-    r_extractor = update_extracted;
+    r_extractor = update_extracted_1;
   }
 
   SEXPTYPE type = Rf_str2type(CHAR(STRING_ELT(ffi_type, 0)));
@@ -108,6 +118,7 @@ SEXP map_impl(SEXP env,
     type,
     progress,
     x,
+    NULL,
     n,
     names,
     p_i,
@@ -119,24 +130,20 @@ SEXP map_impl(SEXP env,
 SEXP map2_impl(SEXP env,
                SEXP ffi_type,
                SEXP progress,
+               SEXP x,
+               SEXP y,
                SEXP ffi_n,
                SEXP names,
                SEXP i) {
-  static SEXP call = NULL;
-  if (call == NULL) {
-    SEXP x_sym = Rf_install(".x");
-    SEXP y_sym = Rf_install(".y");
-    SEXP f_sym = Rf_install(".f");
-    SEXP i_sym = Rf_install("i");
+  SEXP call;
+  void (*r_extractor)(SEXP, SEXP, int, SEXP);
 
-    // Constructs a call like f(x[[i]], y[[i]], ...)
-    SEXP x_i_sym = PROTECT(Rf_lang3(R_Bracket2Symbol, x_sym, i_sym));
-    SEXP y_i_sym = PROTECT(Rf_lang3(R_Bracket2Symbol, y_sym, i_sym));
-
-    call = Rf_lang4(f_sym, x_i_sym, y_i_sym, R_DotsSymbol);
-    R_PreserveObject(call);
-
-    UNPROTECT(2);
+  if (Rf_isObject(x) || Rf_isObject(y)) {
+    call = make_object_f_call_2();
+    r_extractor = do_nothing;
+  } else {
+    call = make_vector_f_call_2();
+    r_extractor = update_extracted_2;
   }
 
   SEXPTYPE type = Rf_str2type(CHAR(STRING_ELT(ffi_type, 0)));
@@ -149,12 +156,13 @@ SEXP map2_impl(SEXP env,
     call,
     type,
     progress,
-    NULL,
+    x,
+    y,
     n,
     names,
     p_i,
     force,
-    do_nothing
+    r_extractor
   );
 }
 
@@ -219,6 +227,7 @@ SEXP pmap_impl(SEXP env,
     call,
     type,
     progress,
+    NULL,
     NULL,
     n,
     names,
