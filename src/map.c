@@ -21,23 +21,35 @@ void cb_progress_done(void* bar_ptr) {
 }
 
 static
-void update_extracted_impl(const char* symbol, SEXP value, int index, SEXP env) {
-  SEXP value_i_sym = Rf_install(symbol);
-  SEXP value_i = PROTECT(extract_from_vector(value, index));
-  Rf_defineVar(value_i_sym, value_i, env);
-  UNPROTECT(1);  // value_i
-}
-
-static
 void update_extracted_1(SEXP x, SEXP y, int index, SEXP env) {
   (void) y;
-  update_extracted_impl(".x_i", x, index, env);
+
+  static SEXP x_i_sym = NULL;
+  if (x_i_sym == NULL) {
+    x_i_sym = Rf_install(".x_i");
+  }
+  SEXP x_i = PROTECT(extract_from_vector(x, index));
+  Rf_defineVar(x_i_sym, x_i, env);
+  UNPROTECT(1);  // x_i
 }
 
 static
 void update_extracted_2(SEXP x, SEXP y, int index, SEXP env) {
-  update_extracted_impl(".x_i", x, index, env);
-  update_extracted_impl(".y_i", y, index, env);
+  static SEXP x_i_sym = NULL;
+  if (x_i_sym == NULL) {
+    x_i_sym = Rf_install(".x_i");
+  }
+  SEXP x_i = PROTECT(extract_from_vector(x, index));
+  Rf_defineVar(x_i_sym, x_i, env);
+  UNPROTECT(1);  // x_i
+
+  static SEXP y_i_sym = NULL;
+  if (y_i_sym == NULL) {
+    y_i_sym = Rf_install(".y_i");
+  }
+  SEXP y_i = PROTECT(extract_from_vector(y, index));
+  Rf_defineVar(y_i_sym, y_i, env);
+  UNPROTECT(1);  // y_i
 }
 
 static
