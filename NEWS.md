@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `map()` and `map2()` are now a bit faster when passing anything other than a vector list with classes.
+
 # purrr 1.2.1
 
 * Tweaks for compatibility with upcoming vctrs 0.7.0.
