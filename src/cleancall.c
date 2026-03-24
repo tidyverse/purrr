@@ -17,6 +17,23 @@
  }
 #endif
 
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+ SEXP R_getVar(SEXP symbol, SEXP rho, Rboolean inherits) {
+   SEXP out;
+   if (inherits) {
+     out = Rf_findVar(symbol, rho);
+   } else {
+     out = Rf_findVarInFrame(rho, symbol);
+   }
+
+   if (out == R_UnboundValue) {
+     const char *name = CHAR(PRINTNAME(symbol));
+     Rf_error("object '%s' not found", name);
+   }
+   return out;
+ }
+#endif
+
 // The R API does not have a setter for function pointers
 
 SEXP cleancall_MakeExternalPtrFn(DL_FUNC p, SEXP tag, SEXP prot) {
@@ -38,7 +55,7 @@ SEXP cleancall_fns_dot_call = NULL;
 static SEXP callbacks = NULL;
 
 void cleancall_init(void) {
-  cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
+  cleancall_fns_dot_call = R_getVar(Rf_install(".Call"), R_BaseEnv, TRUE);
   callbacks = R_NilValue;
 }
 
