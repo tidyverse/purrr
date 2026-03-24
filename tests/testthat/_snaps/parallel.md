@@ -111,11 +111,13 @@
     Condition
       Error in `map2()`:
       ! `.x` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
     Code
       map2("a", environment(), "a", in_parallel(function(x) identity(x)))
     Condition
       Error in `map2()`:
       ! `.y` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 # recycles inputs
 
@@ -155,4 +157,5 @@
     Condition
       Error in `pmap()`:
       ! `.l[[1]]` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 

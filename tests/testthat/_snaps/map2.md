@@ -27,11 +27,13 @@
     Condition
       Error in `map2()`:
       ! `.x` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
     Code
       map2("a", environment(), "a", identity)
     Condition
       Error in `map2()`:
       ! `.y` must be a vector, not an environment.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 # recycles inputs
 
