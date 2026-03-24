@@ -7,6 +7,18 @@
 #include "coerce.h"
 #include "conditions.h"
 
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+ SEXP R_getVarEx(SEXP symbol, SEXP rho, Rboolean inherits, SEXP ifnotfound) {
+   SEXP out;
+   if (inherits) {
+     out = Rf_findVar(symbol, rho);
+   } else {
+     out = Rf_findVarInFrame(rho, symbol);
+   }
+   return out == R_UnboundValue ? ifnotfound : out;
+ }
+#endif
+
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
 static int check_double_index_length(double val, int n, int i, bool strict);
 static int check_character_index(SEXP string, int i, bool strict);
@@ -152,7 +164,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   }
 
   SEXP sym = Rf_installChar(index);
-  SEXP out = Rf_findVarInFrame(x, sym);
+  SEXP out = R_getVarEx(sym, x, FALSE, R_UnboundValue);
 
   if (check_unbound_value(out, index_i, strict)) {
     return R_NilValue;
