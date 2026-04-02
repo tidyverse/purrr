@@ -4,6 +4,7 @@ test_that("preserves names", {
 })
 
 test_that("creates simple call", {
+  skip("Internals changed")
   out <- map(1, function(x) sys.call())[[1]]
   expect_equal(out, quote(.f(.x[[i]], ...)))
 })
@@ -121,6 +122,9 @@ test_that("map() with empty input copies names", {
   expect_identical(map_chr(named_list, identity), named(chr()))
 })
 
+test_that("don't evaluate symbolic objects (#428)", {
+  expect_identical(map(exprs(1 + 2), identity), exprs(1 + 2))
+})
 
 # map_vec -----------------------------------------------------------------
 

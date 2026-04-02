@@ -5,6 +5,7 @@ extern "C" {
   SEXP map_impl(SEXP env,
                 SEXP ffi_type,
                 SEXP progress,
+                SEXP x,
                 SEXP ffi_n,
                 SEXP names,
                 SEXP i);

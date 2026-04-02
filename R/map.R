@@ -216,12 +216,14 @@ map_ <- function(
   n <- vec_size(.x)
   names <- vec_names(.x)
 
+  .x_i <- NULL
+
   i <- 0L
   with_indexed_errors(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i)
+    call_with_cleanup(map_impl, environment(), .type, .progress, .x, n, names, i)
   )
 }
 

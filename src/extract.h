@@ -1,0 +1,6 @@
+#ifndef PURRR_EXTRACT_H
+#define PURRR_EXTRACT_H
+
+SEXP extract_from_vector(SEXP x, int index);
+
+#endif //PURRR_EXTRACT_H
