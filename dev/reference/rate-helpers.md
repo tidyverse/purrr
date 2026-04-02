@@ -65,6 +65,6 @@ for (i in 1:3) rate_sleep(rate, quiet = FALSE)
 # jitter by default:
 rate <- rate_backoff(pause_base = 0.2, pause_min = 0.005)
 for (i in 1:3) rate_sleep(rate, quiet = FALSE)
-#> Retrying in 0.25 seconds.
-#> Retrying in 0.66 seconds.
+#> Retrying in 0.047 seconds.
+#> Retrying in 0.29 seconds.
 ```

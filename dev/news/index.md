@@ -31,7 +31,7 @@ CRAN release: 2025-11-04
   [`vec_depth()`](https://purrr.tidyverse.org/dev/reference/pluck_depth.md).
 
 - [`map_chr()`](https://purrr.tidyverse.org/dev/reference/map.md) no
-  longer coereces from logical, integer, or double to strings.
+  longer from logical, integer, or double to strings.
 
 - [`every()`](https://purrr.tidyverse.org/dev/reference/every.md),
   [`some()`](https://purrr.tidyverse.org/dev/reference/every.md), and
@@ -1091,7 +1091,7 @@ below):
 are retired in favour of
 [`exec()`](https://rlang.r-lib.org/reference/exec.html). Note that
 retired functions are no longer under active development, but continue
-to be maintained undefinitely in the package.
+to be maintained indefinitely in the package.
 
 - [`invoke()`](https://purrr.tidyverse.org/dev/reference/invoke.md) is
   retired in favour of the
@@ -1109,7 +1109,7 @@ to be maintained undefinitely in the package.
   ```
 
   Note that retired functions are not removed from the package and will
-  be maintained undefinitely.
+  be maintained indefinitely.
 
 - [`invoke_map()`](https://purrr.tidyverse.org/dev/reference/invoke.md)
   is retired without replacement because it is more complex to
@@ -1233,7 +1233,7 @@ to the equivalent pluck:
 
 - `as_function()` is now
   [`as_mapper()`](https://purrr.tidyverse.org/dev/reference/as_mapper.md)
-  because it is a tranformation that makes sense primarily for mapping
+  because it is a transformation that makes sense primarily for mapping
   functions, not in general
   ([\#298](https://github.com/tidyverse/purrr/issues/298)). `.null` has
   been renamed to `.default` to better reflect its intent
@@ -1382,7 +1382,7 @@ of `[<-`. `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
 - [`invoke()`](https://purrr.tidyverse.org/dev/reference/invoke.md) uses
   a more robust approach to generate the argument list
   ([\#249](https://github.com/tidyverse/purrr/issues/249)) It no longer
-  uses lazyeval to figure out which enviroment a character `f` comes
+  uses lazyeval to figure out which environment a character `f` comes
   from.
 
 - `is_numeric()` and `is_scalar_numeric()` are deprecated because they
@@ -1404,7 +1404,7 @@ of `[<-`. `modify.default()` is thus a shorthand for `x[] <- map(x, f)`.
   ([\#211](https://github.com/tidyverse/purrr/issues/211)).
 
 - [`set_names()`](https://rlang.r-lib.org/reference/set_names.html) can
-  now take a function to tranform the names programmatically
+  now take a function to transform the names programmatically
   ([\#276](https://github.com/tidyverse/purrr/issues/276)), and you can
   supply names in `...` to reduce typing even more more
   ([\#316](https://github.com/tidyverse/purrr/issues/316)).
@@ -1435,7 +1435,7 @@ This is a compatibility release with dplyr 0.6.0.
   functions and idioms in the tidyverse. `dmap()`, `dmap_at()`,
   `dmap_if()`, `invoke_rows()`, `slice_rows()`, `map_rows()`,
   `by_slice()`, `by_row()`, and `unslice()` have been moved to purrrlyr.
-  This is a bit of an aggresive change but it allows us to make the
+  This is a bit of an aggressive change but it allows us to make the
   dependencies much lighter.
 
 ## purrr 0.2.2
@@ -1484,7 +1484,7 @@ CRAN release: 2016-01-04
     ([\#69](https://github.com/tidyverse/purrr/issues/69)).
 
 - [`accumulate()`](https://purrr.tidyverse.org/dev/reference/accumulate.md)
-  has been added to handle recursive folding. It is shortand for
+  has been added to handle recursive folding. It is shorthand for
   `Reduce(f, .x, accumulate = TRUE)` and follows a similar syntax to
   [`reduce()`](https://purrr.tidyverse.org/dev/reference/reduce.md)
   ([\#145](https://github.com/tidyverse/purrr/issues/145)). A right-hand
@@ -1607,8 +1607,9 @@ functions.
 - `map*()` now use custom C code, rather than relying on
   [`lapply()`](https://rdrr.io/r/base/lapply.html),
   [`mapply()`](https://rdrr.io/r/base/mapply.html) etc. The performance
-  characteristcs are very similar, but it allows us greater control over
-  the output ([\#118](https://github.com/tidyverse/purrr/issues/118)).
+  characteristics are very similar, but it allows us greater control
+  over the output
+  ([\#118](https://github.com/tidyverse/purrr/issues/118)).
 
 - [`map_lgl()`](https://purrr.tidyverse.org/dev/reference/map.md) now
   has second argument `.f`, not `.p`

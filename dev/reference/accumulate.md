@@ -168,8 +168,8 @@ accumulate(letters[1:5], paste, sep = ".", .dir = "backward")
 # By ignoring the input vector (nxt), you can turn output of one step into
 # the input for the next. This code takes 10 steps of a random walk:
 accumulate(1:10, \(acc, nxt) acc + rnorm(1), .init = 0)
-#>  [1]  0.0000000  0.2553171 -2.1819466 -2.1875178 -1.5659651 -0.4175535
-#>  [7] -2.2393712 -2.4866965 -2.7308961 -3.0136015 -3.5673009
+#>  [1]  0.000000 -1.400044 -1.144726 -3.581990 -3.587561 -2.966009
+#>  [7] -1.817597 -3.639415 -3.886740 -4.130940 -4.413645
 
 # `accumulate2()` is a version of `accumulate()` that works with
 # 3-argument functions and one additional vector:
