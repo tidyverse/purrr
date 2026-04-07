@@ -6,18 +6,7 @@
 #include "backports.h"
 #include "coerce.h"
 #include "conditions.h"
-
-#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
- SEXP R_getVarEx(SEXP symbol, SEXP rho, Rboolean inherits, SEXP ifnotfound) {
-   SEXP out;
-   if (inherits) {
-     out = Rf_findVar(symbol, rho);
-   } else {
-     out = Rf_findVarInFrame(rho, symbol);
-   }
-   return out == R_UnboundValue ? ifnotfound : out;
- }
-#endif
+#include "utils.h"
 
 static int check_double_index_finiteness(double val, SEXP index, int i, bool strict);
 static int check_double_index_length(double val, int n, int i, bool strict);

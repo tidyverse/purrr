@@ -2,7 +2,13 @@
 #define UTILS_H
 
 #include <stdbool.h>
+#include <Rversion.h>
 
+
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+ SEXP R_getVarEx(SEXP symbol, SEXP rho, Rboolean inherits, SEXP ifnotfound);
+ SEXP R_getVar(SEXP symbol, SEXP rho, Rboolean inherits);
+#endif
 
 SEXP sym_protect(SEXP x);
 
