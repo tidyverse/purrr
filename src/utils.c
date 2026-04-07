@@ -15,12 +15,7 @@
  }
 
  SEXP R_getVar(SEXP symbol, SEXP rho, Rboolean inherits) {
-   SEXP out;
-   if (inherits) {
-     out = Rf_findVar(symbol, rho);
-   } else {
-     out = Rf_findVarInFrame(rho, symbol);
-   }
+   SEXP out = R_getVarEx(symbol, rho, inherits, R_UnboundValue);
 
    if (out == R_UnboundValue) {
      const char *name = CHAR(PRINTNAME(symbol));
