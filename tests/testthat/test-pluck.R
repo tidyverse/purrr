@@ -207,6 +207,14 @@ test_that("environments error with invalid indices", {
   expect_snapshot(pluck(environment(), letters), error = TRUE)
 })
 
+test_that("plucking promise from an environment returns the unevaluated promise", {
+  x <- new_environment()
+  delayedAssign("q", { 1 }, assign.env = x)
+
+  # Can't use expect_type(..., "promise") because labelled_value() inside it forces promise evaluation
+  expect_true(inherits_only(pluck(x, "q"), "promise"))
+})
+
 # S4 ----------------------------------------------------------------------
 
 newA <- methods::setClass("A", list(a = "numeric"))
