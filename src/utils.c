@@ -11,6 +11,16 @@
    } else {
      out = Rf_findVarInFrame(rho, symbol);
    }
+
+   if (out == R_MissingArg) {
+     const char *name = CHAR(PRINTNAME(symbol));
+     Rf_error("argument \"%s\" is missing, with no default", name);
+   }
+
+   if (TYPEOF(out) == PROMSXP) {
+     return PRVALUE(out);
+   }
+
    return out == R_UnboundValue ? ifnotfound : out;
  }
 
