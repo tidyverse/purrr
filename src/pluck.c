@@ -139,6 +139,12 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
   return R_NilValue;
 }
 
+static SEXP unbound = NULL;
+
+void unbound_init() {
+  unbound = Rf_install(".__purrr_unbound__.");
+}
+
 SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   if (TYPEOF(index_i) != STRSXP) {
     stop_bad_element_type(index_i, i + 1, "a string", "Index", NULL);
@@ -153,7 +159,7 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   }
 
   SEXP sym = Rf_installChar(index);
-  SEXP out = R_getVarEx(sym, x, FALSE, R_UnboundValue);
+  SEXP out = R_getVarEx(sym, x, FALSE, unbound);
 
   if (check_unbound_value(out, index_i, strict)) {
     return R_NilValue;
@@ -350,7 +356,7 @@ static int check_names(SEXP names, int i, bool strict) {
 }
 
 static int check_unbound_value(SEXP val, SEXP index_i, bool strict) {
-  if (val != R_UnboundValue) {
+  if (val != unbound) {
     return 0;
   }
 
