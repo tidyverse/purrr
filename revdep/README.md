@@ -1,23 +1,58 @@
 # Revdeps
 
-## Failed to check (6)
+## Failed to check (45)
 
-|package          |version |error  |warning |note |
-|:----------------|:-------|:------|:-------|:----|
-|dsTidyverse      |?       |       |        |     |
-|ggmosaic         |0.3.3   |1      |        |     |
-|[kerastuneR](failures.md#kerastuner)|0.1.0.7 |__+1__ |        |     |
-|[stoRy](failures.md#story)|0.2.2   |__+1__ |        |     |
-|[tidyjson](failures.md#tidyjson)|0.3.2   |__+1__ |        |-1   |
-|TriDimRegression |1.0.3   |1      |        |     |
+|package          |version |error |warning |note |
+|:----------------|:-------|:-----|:-------|:----|
+|apa              |?       |      |        |     |
+|BayesVolcano     |?       |      |        |     |
+|ClusterGVis      |?       |      |        |     |
+|colleyRstats     |?       |      |        |     |
+|cylcop           |?       |      |        |     |
+|DataSimilarity   |?       |      |        |     |
+|deepSTRAPP       |?       |      |        |     |
+|detourr          |?       |      |        |     |
+|effectcheck      |?       |      |        |     |
+|eye              |?       |      |        |     |
+|fastplyr         |?       |      |        |     |
+|ferrn            |?       |      |        |     |
+|ffp              |?       |      |        |     |
+|ggsem            |?       |      |        |     |
+|gMOIP            |?       |      |        |     |
+|gratia           |?       |      |        |     |
+|lcsm             |?       |      |        |     |
+|measureR         |?       |      |        |     |
+|metrica          |?       |      |        |     |
+|MiscMetabar      |?       |      |        |     |
+|mulgar           |?       |      |        |     |
+|multinma         |?       |      |        |     |
+|MVN              |?       |      |        |     |
+|numbat           |?       |      |        |     |
+|outstandR        |?       |      |        |     |
+|plot3logit       |?       |      |        |     |
+|projectLSA       |?       |      |        |     |
+|qch              |?       |      |        |     |
+|quollr           |?       |      |        |     |
+|RegDDM           |?       |      |        |     |
+|rmdcev           |1.3.0   |1     |        |     |
+|rmedsem          |?       |      |        |     |
+|rollout          |?       |      |        |     |
+|SCpubr           |?       |      |        |     |
+|semidist         |?       |      |        |     |
+|SimDesign        |?       |      |        |     |
+|spinebil         |?       |      |        |     |
+|sprtt            |?       |      |        |     |
+|Surrogate        |?       |      |        |     |
+|tepr             |?       |      |        |     |
+|tidybins         |?       |      |        |     |
+|tidycomm         |?       |      |        |     |
+|tidylearn        |?       |      |        |     |
+|TriDimRegression |1.0.3   |1     |        |     |
+|woylier          |?       |      |        |     |
 
-## New problems (5)
+## New problems (1)
 
-|package  |version |error  |warning |note |
-|:--------|:-------|:------|:-------|:----|
-|[casino](problems.md#casino)|0.1.0   |__+1__ |        |1    |
-|[CPAT](problems.md#cpat)|0.1.0   |__+1__ |        |1    |
-|[quincunx](problems.md#quincunx)|0.1.10  |__+2__ |        |     |
-|[SCORPIUS](problems.md#scorpius)|1.0.9   |       |__+1__  |1    |
-|[tidybins](problems.md#tidybins)|0.1.1   |__+1__ |        |1    |
+|package |version |error  |warning |note |
+|:-------|:-------|:------|:-------|:----|
+|[myTAI](problems.md#mytai)|2.3.5   |__+1__ |        |1    |
 
