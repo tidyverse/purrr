@@ -12,16 +12,22 @@
      out = Rf_findVarInFrame(rho, symbol);
    }
 
+   if (out == R_UnboundValue) {
+     return ifnotfound;
+   }
+
    if (out == R_MissingArg) {
      const char *name = CHAR(PRINTNAME(symbol));
      Rf_error("argument \"%s\" is missing, with no default", name);
    }
 
    if (TYPEOF(out) == PROMSXP) {
-     return PRVALUE(out);
+     PROTECT(out);
+     out = Rf_eval(out, R_BaseEnv);
+     UNPROTECT(1);
    }
 
-   return out == R_UnboundValue ? ifnotfound : out;
+   return out;
  }
 
  SEXP R_getVar(SEXP symbol, SEXP rho, Rboolean inherits) {
