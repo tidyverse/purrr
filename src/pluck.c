@@ -12,7 +12,7 @@ static int check_double_index_finiteness(double val, SEXP index, int i, bool str
 static int check_double_index_length(double val, int n, int i, bool strict);
 static int check_character_index(SEXP string, int i, bool strict);
 static int check_names(SEXP names, int i, bool strict);
-static int check_unbound_value(SEXP val, SEXP index_i, bool strict);
+
 static int check_s4_slot(SEXP val, SEXP index_i, bool strict);
 static int check_obj_length(SEXP n, bool strict);
 
@@ -141,7 +141,7 @@ SEXP extract_vector(SEXP x, SEXP index_i, int i, bool strict) {
 
 static SEXP unbound = NULL;
 
-void unbound_init() {
+void unbound_init(void) {
   unbound = Rf_install(".__purrr_unbound__.");
 }
 
@@ -159,12 +159,18 @@ SEXP extract_env(SEXP x, SEXP index_i, int i, bool strict) {
   }
 
   SEXP sym = Rf_installChar(index);
-  SEXP out = R_getVarEx(sym, x, FALSE, unbound);
 
-  if (check_unbound_value(out, index_i, strict)) {
-    return R_NilValue;
+  if (!strict) {
+    return R_getVarEx(sym, x, FALSE, R_NilValue);
   }
 
+  SEXP out = R_getVarEx(sym, x, FALSE, unbound);
+  if (out == unbound) {
+    r_abort(
+      "Can't find object `%s` in environment.",
+      Rf_translateCharUTF8(Rf_asChar(index_i))
+    );
+  }
   return out;
 }
 
@@ -355,21 +361,6 @@ static int check_names(SEXP names, int i, bool strict) {
   }
 }
 
-static int check_unbound_value(SEXP val, SEXP index_i, bool strict) {
-  if (val != unbound) {
-    return 0;
-  }
-
-  if (strict) {
-    r_abort(
-      "Can't find object `%s` in environment.",
-      Rf_translateCharUTF8(Rf_asChar(index_i))
-    );
-  } else {
-    return -1;
-  }
-}
-
 static int check_s4_slot(SEXP val, SEXP index_i, bool strict) {
   if (R_has_slot(val, index_i)) {
     return 0;
@@ -396,7 +387,6 @@ static int check_obj_length(SEXP n, bool strict) {
 
   return 0;
 }
-
 
 int obj_length(SEXP x, bool strict) {
   if (!Rf_isObject(x)) {

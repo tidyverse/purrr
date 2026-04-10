@@ -9,6 +9,8 @@
 
 #include "cleancall.h"
 
+extern void unbound_init(void);
+
 /* .Call calls */
 extern SEXP coerce_impl(SEXP, SEXP);
 extern SEXP pluck_impl(SEXP, SEXP, SEXP, SEXP);
@@ -44,4 +46,5 @@ export void R_init_purrr(DllInfo *dll)
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
     cleancall_init();
+    unbound_init();
 }
