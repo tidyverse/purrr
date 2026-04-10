@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* Fixes for CRAN checks (@ErdaradunGaztea, #1256).
+
 # purrr 1.2.1
 
 * Tweaks for compatibility with upcoming vctrs 0.7.0.
@@ -39,7 +41,7 @@
 * purrr now requires R >= 4.1, so we can rely on the base pipe and lambda
   syntax (#1177).
 
-* purrr gains `in_parallel()` to support parallel and distributed maps, powered 
+* purrr gains `in_parallel()` to support parallel and distributed maps, powered
   by {mirai}. See `?in_parallel` for more details (@shikokuchuo, #1163, #1185).
 
 # purrr 1.0.4

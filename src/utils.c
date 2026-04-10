@@ -1,6 +1,45 @@
 #define R_NO_REMAP
 #include <Rinternals.h>
 #include <stdbool.h>
+#include <Rversion.h>
+
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+ SEXP R_getVarEx(SEXP symbol, SEXP rho, Rboolean inherits, SEXP ifnotfound) {
+   SEXP out;
+   if (inherits) {
+     out = Rf_findVar(symbol, rho);
+   } else {
+     out = Rf_findVarInFrame(rho, symbol);
+   }
+
+   if (out == R_UnboundValue) {
+     return ifnotfound;
+   }
+
+   if (out == R_MissingArg) {
+     const char *name = CHAR(PRINTNAME(symbol));
+     Rf_error("argument \"%s\" is missing, with no default", name);
+   }
+
+   if (TYPEOF(out) == PROMSXP) {
+     PROTECT(out);
+     out = Rf_eval(out, R_BaseEnv);
+     UNPROTECT(1);
+   }
+
+   return out;
+ }
+
+ SEXP R_getVar(SEXP symbol, SEXP rho, Rboolean inherits) {
+   SEXP out = R_getVarEx(symbol, rho, inherits, R_UnboundValue);
+
+   if (out == R_UnboundValue) {
+     const char *name = CHAR(PRINTNAME(symbol));
+     Rf_error("object '%s' not found", name);
+   }
+   return out;
+ }
+#endif
 
 SEXP sym_protect(SEXP x) {
   if (TYPEOF(x) == LANGSXP || TYPEOF(x) == SYMSXP) {

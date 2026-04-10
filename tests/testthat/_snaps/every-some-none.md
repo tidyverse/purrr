@@ -77,6 +77,7 @@
     Condition
       Error in `every()`:
       ! `.x` must be a vector, not a function.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 ---
 
@@ -85,6 +86,7 @@
     Condition
       Error in `some()`:
       ! `.x` must be a vector, not a function.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 ---
 
@@ -93,6 +95,7 @@
     Condition
       Error in `none()`:
       ! `.x` must be a vector, not a function.
+      i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
 # pairlists, expressions, and calls are deprecated but work
 

@@ -2,6 +2,7 @@
 #include <Rinternals.h>
 
 #include "cleancall.h"
+#include "utils.h"
 
 
 #if (defined(R_VERSION) && R_VERSION < R_Version(3, 4, 0))
@@ -38,7 +39,7 @@ SEXP cleancall_fns_dot_call = NULL;
 static SEXP callbacks = NULL;
 
 void cleancall_init(void) {
-  cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
+  cleancall_fns_dot_call = R_getVar(Rf_install(".Call"), R_BaseEnv, TRUE);
   callbacks = R_NilValue;
 }
 
