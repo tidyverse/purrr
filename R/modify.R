@@ -48,8 +48,8 @@
 #' modify(x, compose(f, g)) === modify(x, g) |> modify(f)
 #' ```
 #'
-#' These invariants are known as the [functor
-#' laws](https://wiki.haskell.org/Functor#Functor_Laws) in computer
+#' These invariants are known as the functor
+#' laws (https://wiki.haskell.org/Functor#Functor_Laws) in computer
 #' science.
 #'
 #'
