@@ -1,4 +1,4 @@
-# purrr (development version)
+# purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).
 
