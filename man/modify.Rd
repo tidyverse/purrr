@@ -97,7 +97,8 @@ the following invariants:
 modify(x, compose(f, g)) === modify(x, g) |> modify(f)
 }\if{html}{\out{</div>}}
 
-These invariants are known as the \href{https://wiki.haskell.org/Functor#Functor_Laws}{functor laws} in computer
+These invariants are known as the functor
+laws (https://wiki.haskell.org/Functor#Functor_Laws) in computer
 science.
 }
 
