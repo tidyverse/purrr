@@ -107,11 +107,11 @@ f
 #> <partialised>
 #> function (...) 
 #> runif(n = rpois(1, 5), ...)
-#> <environment: 0x563ece16a010>
+#> <environment: 0x55d4d2642cd0>
 f()
-#> [1] 0.9465589 0.8754108 0.2600589 0.6572984
+#> [1] 0.52365044 0.83706173 0.03350404 0.04332844 0.79210294
 f()
-#> [1] 0.318848 0.623061
+#> [1] 0.06879545 0.86444107 0.07708986
 
 # You can unquote an argument to fix it to a particular value.
 # Unquoted arguments are evaluated only once when the function is created:
@@ -119,12 +119,12 @@ f <- partial(runif, n = !!rpois(1, 5))
 f
 #> <partialised>
 #> function (...) 
-#> runif(n = 5L, ...)
-#> <environment: 0x563ece16a010>
+#> runif(n = 4L, ...)
+#> <environment: 0x55d4d2642cd0>
 f()
-#> [1] 0.7082934 0.8900290 0.1043065 0.6304117 0.8415589
+#> [1] 0.9736226 0.5709573 0.7544066 0.2424543
 f()
-#> [1] 0.3642624 0.6229228 0.4607475 0.1634123 0.5138669
+#> [1] 0.6271579 0.1684146 0.4447896 0.1646752
 
 
 # By default, partialised arguments are passed before new ones:

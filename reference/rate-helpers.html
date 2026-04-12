@@ -9,7 +9,7 @@ slowly(). You can also use them in your own functions with rate_sleep()."><meta 
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,8 +115,8 @@ not be kind to the server, use with caution!).</p></dd>
 <span class="r-in"><span><span class="co"># jitter by default:</span></span></span>
 <span class="r-in"><span><span class="va">rate</span> <span class="op">&lt;-</span> <span class="fu">rate_backoff</span><span class="op">(</span>pause_base <span class="op">=</span> <span class="fl">0.2</span>, pause_min <span class="op">=</span> <span class="fl">0.005</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="fu"><a href="rate_sleep.html">rate_sleep</a></span><span class="op">(</span><span class="va">rate</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrying in 0.25 seconds.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrying in 0.66 seconds.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrying in 0.047 seconds.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrying in 0.29 seconds.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

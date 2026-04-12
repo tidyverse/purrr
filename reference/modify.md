@@ -114,9 +114,8 @@ following invariants:
     modify(x, identity) === x
     modify(x, compose(f, g)) === modify(x, g) |> modify(f)
 
-These invariants are known as the [functor
-laws](https://wiki.haskell.org/Functor#Functor_Laws) in computer
-science.
+These invariants are known as the functor laws
+(https://wiki.haskell.org/Functor#Functor_Laws) in computer science.
 
 ## See also
 
@@ -182,26 +181,28 @@ list(x = sample(c(TRUE, FALSE), 100, replace = TRUE), y = 1:100) |>
   modify_if("x", \(l) list(x = l$x, y = l$y * 100)) |>
   list_transpose()
 #> $x
-#>   [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
-#>  [12]  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
-#>  [23] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
-#>  [34] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
-#>  [45]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
-#>  [56]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
-#>  [67] FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
-#>  [78]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE
-#>  [89]  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
-#> [100] FALSE
+#>   [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+#>  [12] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+#>  [23] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
+#>  [34] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+#>  [45] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+#>  [56] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+#>  [67] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+#>  [78] FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE
+#>  [89]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+#> [100]  TRUE
 #> 
 #> $y
-#>   [1]  100  200  300    4  500    6  700    8  900 1000   11 1200 1300
-#>  [14]   14   15 1600   17 1800   19 2000   21   22   23 2400   25   26
-#>  [27]   27   28   29 3000   31   32   33   34 3500   36   37 3800   39
-#>  [40] 4000   41 4200 4300   44 4500 4600   47   48   49   50   51 5200
-#>  [53] 5300   54   55 5600   57   58 5900 6000 6100 6200 6300   64   65
-#>  [66]   66   67 6800   69 7000   71 7200 7300 7400   75   76 7700 7800
-#>  [79]   79   80 8100 8200   83   84 8500   86 8700 8800 8900 9000 9100
-#>  [92]   92   93 9400 9500 9600   97 9800 9900  100
+#>   [1]     1   200   300     4     5     6     7   800     9  1000  1100
+#>  [12]    12  1300  1400  1500    16  1700    18  1900    20  2100  2200
+#>  [23]    23  2400  2500    26    27  2800    29  3000    31  3200    33
+#>  [34]    34    35  3600    37    38    39    40    41  4200    43    44
+#>  [45]    45    46  4700    48    49  5000    51  5200    53  5400  5500
+#>  [56]    56  5700  5800    59    60    61    62    63  6400  6500    66
+#>  [67]    67  6800    69    70  7100  7200  7300  7400  7500    76    77
+#>  [78]    78    79  8000    81  8200    83  8400  8500  8600    87    88
+#>  [89]  8900  9000    91    92  9300  9400    95    96  9700    98  9900
+#> [100] 10000
 #> 
 
 # Use modify2() to map over two vectors and preserve the type of

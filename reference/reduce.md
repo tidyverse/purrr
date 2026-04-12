@@ -98,7 +98,7 @@ for a version that returns all intermediate values of the reduction.
 # By ignoring the input vector (nxt), you can turn output of one step into
 # the input for the next. This code takes 10 steps of a random walk:
 reduce(1:10, \(acc, nxt) acc + rnorm(1), .init = 0)
-#> [1] -0.1895743
+#> [1] 5.293988
 
 # When the operation is associative, the direction of reduction
 # does not matter:
