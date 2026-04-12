@@ -31,7 +31,7 @@ modify_in() modifies a single element in a pluck() location.
 
     <a class="navbar-brand me-2" href="../index.html">purrr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,7 +174,8 @@ own methods.</p>
 the following invariants:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">modify</span>(x, identity) <span class="sc">==</span><span class="er">=</span> x</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">modify</span>(x, <span class="fu">compose</span>(f, g)) <span class="sc">==</span><span class="er">=</span> <span class="fu">modify</span>(x, g) <span class="sc">|&gt;</span> <span class="fu">modify</span>(f)</span></code></pre><p></p></div>
-<p>These invariants are known as the <a href="https://wiki.haskell.org/Functor#Functor_Laws" class="external-link">functor laws</a> in computer
+<p>These invariants are known as the functor
+laws (https://wiki.haskell.org/Functor#Functor_Laws) in computer
 science.</p>
     </div>
     <div class="section level2">

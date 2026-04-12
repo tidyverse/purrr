@@ -2,6 +2,10 @@
 
 ## purrr (development version)
 
+## purrr 1.2.2
+
+CRAN release: 2026-04-10
+
 - Fixes for CRAN checks
   ([@ErdaradunGaztea](https://github.com/ErdaradunGaztea),
   [\#1256](https://github.com/tidyverse/purrr/issues/1256)).

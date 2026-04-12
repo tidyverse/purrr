@@ -107,7 +107,7 @@ f
 #> <partialised>
 #> function (...) 
 #> runif(n = rpois(1, 5), ...)
-#> <environment: 0x561f70f6aef0>
+#> <environment: 0x56456040bd40>
 f()
 #> [1] 0.52365044 0.83706173 0.03350404 0.04332844 0.79210294
 f()
@@ -120,7 +120,7 @@ f
 #> <partialised>
 #> function (...) 
 #> runif(n = 4L, ...)
-#> <environment: 0x561f70f6aef0>
+#> <environment: 0x56456040bd40>
 f()
 #> [1] 0.9736226 0.5709573 0.7544066 0.2424543
 f()
