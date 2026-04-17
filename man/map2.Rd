@@ -101,13 +101,13 @@ mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 map2(mods, by_cyl, predict)
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

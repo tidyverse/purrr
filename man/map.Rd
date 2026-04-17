@@ -190,13 +190,13 @@ mirai::daemons(0)
 \code{\link[=map_if]{map_if()}} for applying a function to only those elements
 of \code{.x} that meet a specified condition.
 
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}
