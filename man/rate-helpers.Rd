@@ -7,7 +7,7 @@
 \alias{is_rate}
 \title{Create delaying rate settings}
 \usage{
-rate_delay(pause = 1, max_times = Inf)
+rate_delay(pause = 1, max_times = Inf, jitter = FALSE)
 
 rate_backoff(
   pause_base = 1,
@@ -24,6 +24,8 @@ is_rate(x)
 
 \item{max_times}{Maximum number of requests to attempt.}
 
+\item{jitter}{Whether to introduce a random jitter in the waiting time.}
+
 \item{pause_base, pause_cap}{\code{rate_backoff()} uses an exponential
 back-off so that each request waits \code{pause_base * 2^i} seconds,
 up to a maximum of \code{pause_cap} seconds.}
@@ -31,8 +33,6 @@ up to a maximum of \code{pause_cap} seconds.}
 \item{pause_min}{Minimum time to wait in the backoff; generally
 only necessary if you need pauses less than one second (which may
 not be kind to the server, use with caution!).}
-
-\item{jitter}{Whether to introduce a random jitter in the waiting time.}
 
 \item{x}{An object to test.}
 }
