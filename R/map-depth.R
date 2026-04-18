@@ -81,7 +81,7 @@ map_depth <- function(
   .f <- as_mapper(.f, ...)
   .is_node <- as_is_node(.is_node)
   map_depth_rec(
-    map,
+    .fmap = map,
     .x,
     .depth,
     .f,
@@ -106,7 +106,7 @@ modify_depth <- function(
   .f <- as_mapper(.f, ...)
   .is_node <- as_is_node(.is_node)
   map_depth_rec(
-    modify,
+    .fmap = modify,
     .x,
     .depth,
     .f,

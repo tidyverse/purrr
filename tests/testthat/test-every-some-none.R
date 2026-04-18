@@ -172,3 +172,9 @@ test_that("pairlists, expressions, and calls are deprecated but work", {
   expect_snapshot(x <- every(quote(f(a, b)), is.name))
   expect_true(out)
 })
+
+test_that(".f parameter passed to every(), some(), and none() doesn't override .p parameter", {
+  expect_snapshot(every(1:5, is.null, .f = \(...) TRUE), error = TRUE)
+  expect_snapshot(some(1:5, is.null, .f = \(...) TRUE), error = TRUE)
+  expect_snapshot(none(1:5, is.null, .f = \(...) FALSE), error = TRUE)
+})

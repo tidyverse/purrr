@@ -48,7 +48,7 @@ satisfies_predicate <- function(
   # Not using `as_predicate()` as R level predicate result checks are too slow.
   # Checks are done at the C level instead (#1169). Also, `NA` propagates
   # through these functions, which `as_predicate()` doesn't allow.
-  .p <- as_mapper(.p, ...)
+  .p <- as_mapper(.f = .p, ...)
 
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)

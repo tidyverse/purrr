@@ -58,6 +58,14 @@
       Caused by error in `fail_at_3()`:
       ! Error
 
+# passing .type parameter to map() results in an error (#1248)
+
+    Code
+      map_lgl(function(x, ...) x, .type = "character")
+    Condition
+      Error in `map_()`:
+      ! formal argument ".type" matched by multiple actual arguments
+
 # requires output be length 1 and have common type
 
     Code
