@@ -1,5 +1,9 @@
 # purrr (development version)
 
+* `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` have now a `.progress` argument to create a progress bar (#1168).
+
+* `accumulate()` no longer fails when calling early return with named input vector (#1243).
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).

@@ -115,88 +115,113 @@
 #' }
 #' letters |> reduce(paste4)
 #' @export
-reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward")) {
-  reduce_impl(.x, .f, ..., .init = .init, .dir = .dir)
+reduce <- function(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE) {
+  reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress, .acc = FALSE)
 }
 #' @rdname reduce
 #' @export
-reduce2 <- function(.x, .y, .f, ..., .init) {
-  reduce2_impl(.x, .y, .f, ..., .init = .init, .left = TRUE)
+reduce2 <- function(.x, .y, .f, ..., .init, .progress = FALSE) {
+  reduce2_(.x, .y, .f, ..., .init = .init, .progress = .progress, .acc = FALSE)
 }
 
-reduce_impl <- function(
+reduce_ <- function(
   .x,
   .f,
   ...,
   .init,
   .dir,
+  .progress = FALSE,
   .acc = FALSE,
+  .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
+  init_missing <- missing(.init)
+
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
-  idx <- reduce_index(.x, .init, left = left)
-
-  if (.acc) {
-    acc_out <- accum_init(out, idx, left = left)
-    acc_idx <- accum_index(acc_out, left = left)
-  }
+  input_names <- accumulate_names(names(.x), init_missing, left)
 
   .f <- as_mapper(.f, ...)
 
-  # Left-reduce passes the result-so-far on the left, right-reduce
-  # passes it on the right. A left-reduce produces left-leaning
-  # computation trees while right-reduce produces right-leaning trees.
-  if (left) {
-    fn <- .f
-  } else {
-    fn <- function(x, y, ...) .f(y, x, ...)
-  }
+  n <- vec_size(.x)
+  i <- 0L
 
-  for (i in seq_along(idx)) {
-    prev <- out
-    elt <- .x[[idx[[i]]]]
-
-    out <- forceAndCall(2, fn, out, elt, ...)
-
-    if (is_done_box(out)) {
-      return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]], left))
-    }
-
-    if (.acc) {
-      acc_out[[acc_idx[[i]]]] <- out
-    }
-  }
-
-  if (.acc) {
-    acc_out
-  } else {
-    out
-  }
+  # We refer to `.f`, `.x`, `i`, and `...` all from C level
+  call_with_cleanup(reduce_impl, .acc, environment(), n, i, out, left, init_missing, input_names, .progress)
 }
 
-reduce_early <- function(out, prev, acc, acc_out, acc_idx, left = TRUE) {
-  if (is_done_box(out, empty = TRUE)) {
-    out <- prev
-    offset <- if (left) -1L else 1L
-  } else {
-    out <- unbox(out)
-    offset <- 0L
+reduce2_ <- function(
+  .x,
+  .y,
+  .f,
+  ...,
+  .init,
+  .progress = FALSE,
+  .acc = FALSE,
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
+  .progress <- as_progress(
+    .progress,
+    user_env = .purrr_user_env,
+    caller_env = .purrr_error_call
+  )
+  # This can be easily converted into `.dir` parameter if one so wishes
+  left <- TRUE
+  init_missing <- missing(.init)
+
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
+  out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
+  # Here it'd only take replicating analogous line from `reduce_()` to use
+  # `.x` names for the output like `map2()` does
+  input_names <- NULL
+
+  .y <- vctrs_vec_compat(.y, .purrr_user_env)
+  obj_check_vector(.y, arg = ".y", call = .purrr_error_call)
+
+  .f <- as_mapper(.f, ...)
+
+  n <- vec_size(.x)
+  i <- 0L
+
+  expected_y_size <- n - init_missing
+  if (vec_size(.y) != expected_y_size) {
+    cli::cli_abort(
+      "{.arg .y} must have length {expected_y_size}, not {vec_size(.y)}.",
+      arg = ".y",
+      call = .purrr_error_call
+    )
   }
 
-  if (!acc) {
-    return(out)
+  # We refer to `.f`, `.x`, `.y`, `i`, and `...` all from C level
+  call_with_cleanup(reduce2_impl, .acc, environment(), n, i, out, left, init_missing, input_names, .progress)
+}
+
+accumulate_names <- function(nms, init_missing, left) {
+  if (is_null(nms)) {
+    return(NULL)
   }
 
-  acc_idx <- acc_idx + offset
-  acc_out[[acc_idx]] <- out
-
-  if (left) {
-    acc_out[seq_len(acc_idx)]
-  } else {
-    acc_out[seq(acc_idx, length(acc_out))]
+  if (!init_missing) {
+    nms <- c(".init", nms)
   }
+  if (!left) {
+    nms <- rev(nms)
+  }
+
+  nms
 }
 
 reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
@@ -215,106 +240,6 @@ reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
       x[[length(x)]]
     }
   }
-}
-reduce_index <- function(x, init, left = TRUE) {
-  n <- length(x)
-
-  if (left) {
-    if (missing(init)) {
-      seq_len2(2L, n)
-    } else {
-      seq_len(n)
-    }
-  } else {
-    if (missing(init)) {
-      rev(seq_len(n - 1L))
-    } else {
-      rev(seq_len(n))
-    }
-  }
-}
-
-accum_init <- function(first, idx, left) {
-  len <- length(idx) + 1L
-  out <- new_list(len)
-
-  if (left) {
-    out[[1]] <- first
-  } else {
-    out[[len]] <- first
-  }
-
-  out
-}
-accum_index <- function(out, left) {
-  n <- length(out)
-
-  if (left) {
-    seq_len2(2, n)
-  } else {
-    rev(seq_len(n - 1L))
-  }
-}
-
-reduce2_impl <- function(
-  .x,
-  .y,
-  .f,
-  ...,
-  .init,
-  .left = TRUE,
-  .acc = FALSE,
-  .purrr_error_call = caller_env()
-) {
-  out <- reduce_init(.x, .init, left = .left, error_call = .purrr_error_call)
-  x_idx <- reduce_index(.x, .init, left = .left)
-  y_idx <- reduce_index(.y, NULL, left = .left)
-
-  if (length(x_idx) != length(y_idx)) {
-    cli::cli_abort(
-      "{.arg .y} must have length {length(x_idx)}, not {length(y_idx)}.",
-      arg = ".y",
-      call = .purrr_error_call
-    )
-  }
-
-  .f <- as_mapper(.f, ...)
-
-  if (.acc) {
-    acc_out <- accum_init(out, x_idx, left = .left)
-    acc_idx <- accum_index(acc_out, left = .left)
-  }
-
-  for (i in seq_along(x_idx)) {
-    prev <- out
-
-    x_i <- x_idx[[i]]
-    y_i <- y_idx[[i]]
-
-    out <- forceAndCall(3, .f, out, .x[[x_i]], .y[[y_i]], ...)
-
-    if (is_done_box(out)) {
-      return(reduce_early(out, prev, .acc, acc_out, acc_idx[[i]]))
-    }
-
-    if (.acc) {
-      acc_out[[acc_idx[[i]]]] <- out
-    }
-  }
-
-  if (.acc) {
-    acc_out
-  } else {
-    out
-  }
-}
-
-seq_len2 <- function(start, end) {
-  if (start > end) {
-    return(integer(0))
-  }
-
-  start:end
 }
 
 #' Accumulate intermediate results of a vector reduction
@@ -337,10 +262,9 @@ seq_len2 <- function(start, end) {
 #'
 #' @inheritParams map
 #'
-#' @param .y For `accumulate2()` `.y` is the second argument of the pair. It
-#'     needs to be 1 element shorter than the vector to be accumulated (`.x`).
-#'     If `.init` is set, `.y` needs to be one element shorted than the
-#'     concatenation of the initial value and `.x`.
+#' @param .y For `accumulate2()` an additional
+#'   argument that is passed to `.f`. If `init` is not set, `.y`
+#'   should be 1 element shorter than `.x`.
 #'
 #' @param .f For `accumulate()` `.f` is 2-argument function. The function will
 #'     be passed the accumulated result or initial value as the first argument.
@@ -473,36 +397,15 @@ accumulate <- function(
   .init,
   .dir = c("forward", "backward"),
   .simplify = NA,
-  .ptype = NULL
+  .ptype = NULL,
+  .progress = FALSE
 ) {
-  .dir <- arg_match0(.dir, c("forward", "backward"))
-  .f <- as_mapper(.f, ...)
-
-  res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
-  names(res) <- accumulate_names(names(.x), .init, .dir)
-
-  res <- list_simplify_internal(res, .simplify, .ptype)
-  res
+  res <- reduce_(.x, .f, ..., .init = .init, .dir = .dir, .progress = .progress, .acc = TRUE)
+  list_simplify_internal(res, .simplify, .ptype)
 }
 #' @rdname accumulate
 #' @export
-accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
-  res <- reduce2_impl(.x, .y, .f, ..., .init = .init, .acc = TRUE)
-  res <- list_simplify_internal(res, .simplify, .ptype)
-  res
-}
-
-accumulate_names <- function(nms, init, dir) {
-  if (is_null(nms)) {
-    return(NULL)
-  }
-
-  if (!missing(init)) {
-    nms <- c(".init", nms)
-  }
-  if (dir == "backward") {
-    nms <- rev(nms)
-  }
-
-  nms
+accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL, .progress = FALSE) {
+  res <- reduce2_(.x, .y, .f, ..., .init = .init, .progress = .progress, .acc = TRUE)
+  list_simplify_internal(res, .simplify, .ptype)
 }
