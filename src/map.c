@@ -18,8 +18,8 @@ static SEXP sym_dot_y = NULL;
 static SEXP call_dot_x_subset2_i = NULL;
 static SEXP call_dot_y_subset2_i = NULL;
 
-static int force_map = 1;
-static int force_map2 = 2;
+static int force_map = 0;
+static int force_map2 = 0;
 
 static inline bool has_dots(SEXP env) {
   SEXP dots = Rf_findVarInFrame(env, R_DotsSymbol);
@@ -38,6 +38,33 @@ static inline SEXP as_call_arg(SEXP x, int* n_prot) {
   }
 }
 
+static inline void set_map_value(
+  SEXP out,
+  void* v_out,
+  SEXPTYPE type,
+  int i,
+  SEXP value
+) {
+  if (type == VECSXP) {
+    SET_VECTOR_ELT(out, i, value);
+    return;
+  }
+
+  if (TYPEOF(value) != type) {
+    set_vector_value(out, i, value, 0);
+    return;
+  }
+
+  switch (type) {
+  case LGLSXP: ((int*) v_out)[i] = LOGICAL_ELT(value, 0); break;
+  case INTSXP: ((int*) v_out)[i] = INTEGER_ELT(value, 0); break;
+  case REALSXP: ((double*) v_out)[i] = REAL_ELT(value, 0); break;
+  case STRSXP: SET_STRING_ELT(out, i, STRING_ELT(value, 0)); break;
+  case RAWSXP: RAW(out)[i] = RAW(value)[0]; break;
+  default: set_vector_value(out, i, value, 0);
+  }
+}
+
 static void cb_progress_done(void* bar_ptr) {
   SEXP bar = (SEXP)bar_ptr;
   cli_progress_done(bar);
@@ -52,32 +79,45 @@ static inline SEXP call_loop(
   int n,
   SEXP names
 ) {
-  SEXP bar = cli_progress_bar(n, progress);
-  R_PreserveObject(bar);
-  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
+  const bool use_progress = !(
+    TYPEOF(progress) == LGLSXP &&
+    Rf_xlength(progress) == 1 &&
+    LOGICAL_ELT(progress, 0) == 0
+  );
+  SEXP bar = R_NilValue;
+
+  if (use_progress) {
+    bar = cli_progress_bar(n, progress);
+    R_PreserveObject(bar);
+    r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
+  }
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   Rf_setAttrib(out, R_NamesSymbol, names);
+  void* v_out = type == VECSXP ? NULL : DATAPTR(out);
 
   for (int i = 0; i < n; ++i) {
-    if (CLI_SHOULD_TICK) {
+    if (use_progress && CLI_SHOULD_TICK) {
       cli_progress_set(bar, i);
     }
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
     }
 
-    SEXP res = PROTECT(fn_exec(p_data, i));
-
-    if (type != VECSXP && Rf_length(res) != 1) {
-      Rf_errorcall(R_NilValue, "Result must be length 1, not %i.", Rf_length(res));
-    }
+    SEXP res = fn_exec(p_data, i);
 
     if (type == VECSXP) {
       SET_VECTOR_ELT(out, i, res);
-    } else {
-      set_vector_value(out, i, res, 0);
+      continue;
     }
+
+    PROTECT(res);
+
+    if (Rf_length(res) != 1) {
+      Rf_errorcall(R_NilValue, "Result must be length 1, not %i.", Rf_length(res));
+    }
+
+    set_map_value(out, v_out, type, i, res);
     UNPROTECT(1);
   }
 
@@ -90,6 +130,7 @@ struct map_exec_data {
   const void* v_x;
   SEXPTYPE x_type;
   bool x_object;
+  bool x_self_evaluating;
 
   SEXP call_arg;
   SEXP call;
@@ -102,11 +143,13 @@ struct map2_exec_data {
   const void* v_x;
   SEXPTYPE x_type;
   bool x_object;
+  bool x_self_evaluating;
 
   SEXP y;
   const void* v_y;
   SEXPTYPE y_type;
   bool y_object;
+  bool y_self_evaluating;
 
   SEXP call_x_arg;
   SEXP call_y_arg;
@@ -120,6 +163,7 @@ struct pmap_elt {
   const void* v_elt;
   SEXPTYPE elt_type;
   bool elt_object;
+  bool elt_self_evaluating;
 
   SEXP call_arg;
   // .l_{elt}[[i]]
@@ -147,7 +191,10 @@ static inline SEXP map_exec(const void* p_data_void, int i) {
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  SETCAR(p_data->call_arg, as_call_arg(x_i, &n_prot));
+  SETCAR(
+    p_data->call_arg,
+    p_data->x_self_evaluating ? x_i : as_call_arg(x_i, &n_prot)
+  );
 
   SEXP out = R_forceAndCall(p_data->call, force_map, p_data->env);
   UNPROTECT(n_prot);
@@ -163,12 +210,18 @@ static inline SEXP map2_exec(const void* p_data_void, int i) {
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  SETCAR(p_data->call_x_arg, as_call_arg(x_i, &n_prot));
+  SETCAR(
+    p_data->call_x_arg,
+    p_data->x_self_evaluating ? x_i : as_call_arg(x_i, &n_prot)
+  );
 
   SEXP y_i = (p_data->y_object) ?
     Rf_eval(call_dot_y_subset2_i, p_data->env) :
     p_vec_get(p_data->v_y, p_data->y_type, i);
-  SETCAR(p_data->call_y_arg, as_call_arg(y_i, &n_prot));
+  SETCAR(
+    p_data->call_y_arg,
+    p_data->y_self_evaluating ? y_i : as_call_arg(y_i, &n_prot)
+  );
 
   SEXP out = R_forceAndCall(p_data->call, force_map2, p_data->env);
   UNPROTECT(n_prot);
@@ -187,7 +240,10 @@ static inline SEXP pmap_exec(const void* p_data_void, int i) {
     SEXP elt_i = (p_elt->elt_object) ?
       Rf_eval(p_elt->call_elt_subset2_i, p_data->env) :
       p_vec_get(p_elt->v_elt, p_elt->elt_type, i);
-    SETCAR(p_elt->call_arg, as_call_arg(elt_i, &n_prot));
+    SETCAR(
+      p_elt->call_arg,
+      p_elt->elt_self_evaluating ? elt_i : as_call_arg(elt_i, &n_prot)
+    );
   }
 
   SEXP out = R_forceAndCall(p_data->call_pmap, p_data->force_pmap, p_data->env);
@@ -212,15 +268,18 @@ SEXP map_impl(
   const SEXPTYPE x_type = TYPEOF(x);
   const void* v_x = x_object ? NULL : vec_cbegin(x, x_type);
 
+  SEXP f = PROTECT(Rf_eval(sym_dot_f, env));
+
   SEXP call = PROTECT(has_dots(env) ?
-    Rf_lang3(sym_dot_f, R_NilValue, R_DotsSymbol) :
-    Rf_lang2(sym_dot_f, R_NilValue));
+    Rf_lang3(f, R_NilValue, R_DotsSymbol) :
+    Rf_lang2(f, R_NilValue));
 
   const struct map_exec_data data = (struct map_exec_data) {
     .x = x,
     .v_x = v_x,
     .x_type = x_type,
     .x_object = x_object,
+    .x_self_evaluating = !x_object && x_type != VECSXP,
     .call_arg = CDR(call),
     .call = call,
     .v_i = v_i,
@@ -231,7 +290,7 @@ SEXP map_impl(
   SEXP out = call_loop(&data, map_exec, type, progress, n, names);
   *v_i = 0;
 
-  UNPROTECT(1);
+  UNPROTECT(2);
   return out;
 }
 
@@ -257,19 +316,23 @@ SEXP map2_impl(
   const SEXPTYPE y_type = TYPEOF(y);
   const void* v_y = y_object ? NULL : vec_cbegin(y, y_type);
 
+  SEXP f = PROTECT(Rf_eval(sym_dot_f, env));
+
   SEXP call = PROTECT(has_dots(env) ?
-    Rf_lang4(sym_dot_f, R_NilValue, R_NilValue, R_DotsSymbol) :
-    Rf_lang3(sym_dot_f, R_NilValue, R_NilValue));
+    Rf_lang4(f, R_NilValue, R_NilValue, R_DotsSymbol) :
+    Rf_lang3(f, R_NilValue, R_NilValue));
 
   const struct map2_exec_data data = (struct map2_exec_data) {
     .x = x,
     .v_x = v_x,
     .x_type = x_type,
     .x_object = x_object,
+    .x_self_evaluating = !x_object && x_type != VECSXP,
     .y = y,
     .v_y = v_y,
     .y_type = y_type,
     .y_object = y_object,
+    .y_self_evaluating = !y_object && y_type != VECSXP,
     .call_x_arg = CDR(call),
     .call_y_arg = CDDR(call),
     .call = call,
@@ -281,7 +344,7 @@ SEXP map2_impl(
   SEXP out = call_loop(&data, map2_exec, type, progress, n, names);
   *v_i = 0;
 
-  UNPROTECT(1);
+  UNPROTECT(2);
   return out;
 }
 
@@ -305,6 +368,8 @@ SEXP pmap_impl(
   const int n_l = (int) Rf_xlength(l);
   struct pmap_elt* v_l = (struct pmap_elt*) R_alloc(n_l, sizeof(struct pmap_elt));
 
+  SEXP f = PROTECT_N(Rf_eval(sym_dot_f, env), &n_prot);
+
   // Build `pmap_elt`s!
   for (int j = 0; j < n_l; ++j) {
     // `l` is guaranteed to be a bare list at this point by `pmap()`
@@ -318,6 +383,7 @@ SEXP pmap_impl(
     v_l[j].v_elt = v_elt;
     v_l[j].elt_type = elt_type;
     v_l[j].elt_object = elt_object;
+    v_l[j].elt_self_evaluating = !elt_object && elt_type != VECSXP;
 
     // For objects, use `[[` to preserve dispatch. Install the object as
     // `.l_{elt}` and construct `.l_{elt}[[i]]`.
@@ -358,14 +424,14 @@ SEXP pmap_impl(
     }
   }
 
-  call_pmap = Rf_lcons(sym_dot_f, call_pmap);
+  call_pmap = Rf_lcons(f, call_pmap);
   REPROTECT(call_pmap, call_pmap_pi);
 
   const struct pmap_exec_data data = (struct pmap_exec_data) {
     .v_l = v_l,
     .n_l = n_l,
     .call_pmap = call_pmap,
-    .force_pmap = n_l,
+    .force_pmap = 0,
     .v_i = v_i,
     .env = env
   };
