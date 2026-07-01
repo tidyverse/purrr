@@ -11,6 +11,12 @@
  SEXP R_getVar(SEXP symbol, SEXP rho, Rboolean inherits);
 #endif
 
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+static inline const SEXP* VECTOR_PTR_RO(SEXP x) {
+  return (const SEXP*) DATAPTR_RO(x);
+}
+#endif
+
 SEXP sym_protect(SEXP x);
 
 bool is_vector(SEXP x);
