@@ -5,7 +5,7 @@ test_that("preserves names", {
 
 test_that("creates simple call", {
   out <- map(1, function(x) sys.call())[[1]]
-  expect_equal(out, quote(.f(.x_i, ...)))
+  expect_equal(out, quote(.f(1)))
 })
 
 test_that("fails on non-vectors", {

@@ -14,17 +14,29 @@ static SEXP sym_i = NULL;
 static SEXP sym_dot_f = NULL;
 static SEXP sym_dot_x = NULL;
 static SEXP sym_dot_y = NULL;
-static SEXP sym_dot_x_i = NULL;
-static SEXP sym_dot_y_i = NULL;
 
 static SEXP call_dot_x_subset2_i = NULL;
 static SEXP call_dot_y_subset2_i = NULL;
 
-static SEXP call_map = NULL;
-static SEXP call_map2 = NULL;
-
 static int force_map = 1;
 static int force_map2 = 2;
+
+static inline bool has_dots(SEXP env) {
+  SEXP dots = Rf_findVarInFrame(env, R_DotsSymbol);
+  return dots != R_MissingArg && dots != R_NilValue;
+}
+
+static inline SEXP as_call_arg(SEXP x, int* n_prot) {
+  switch (TYPEOF(x)) {
+  case SYMSXP:
+    return PROTECT_N(Rf_lang2(R_QuoteSymbol, x), n_prot);
+  case LANGSXP:
+    PROTECT_N(x, n_prot);
+    return PROTECT_N(Rf_lang2(R_QuoteSymbol, x), n_prot);
+  default:
+    return x;
+  }
+}
 
 static void cb_progress_done(void* bar_ptr) {
   SEXP bar = (SEXP)bar_ptr;
@@ -61,7 +73,11 @@ static inline SEXP call_loop(
       Rf_errorcall(R_NilValue, "Result must be length 1, not %i.", Rf_length(res));
     }
 
-    set_vector_value(out, i, res, 0);
+    if (type == VECSXP) {
+      SET_VECTOR_ELT(out, i, res);
+    } else {
+      set_vector_value(out, i, res, 0);
+    }
     UNPROTECT(1);
   }
 
@@ -75,6 +91,8 @@ struct map_exec_data {
   SEXPTYPE x_type;
   bool x_object;
 
+  SEXP call_arg;
+  SEXP call;
   int* v_i;
   SEXP env;
 };
@@ -90,6 +108,9 @@ struct map2_exec_data {
   SEXPTYPE y_type;
   bool y_object;
 
+  SEXP call_x_arg;
+  SEXP call_y_arg;
+  SEXP call;
   int* v_i;
   SEXP env;
 };
@@ -100,8 +121,7 @@ struct pmap_elt {
   SEXPTYPE elt_type;
   bool elt_object;
 
-  // .l_{elt}_i
-  SEXP sym_elt_i;
+  SEXP call_arg;
   // .l_{elt}[[i]]
   SEXP call_elt_subset2_i;
 };
@@ -120,37 +140,44 @@ struct pmap_exec_data {
 
 static inline SEXP map_exec(const void* p_data_void, int i) {
   const struct map_exec_data* p_data = (const struct map_exec_data*) p_data_void;
+  int n_prot = 0;
 
   *p_data->v_i = i + 1;
 
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+  SETCAR(p_data->call_arg, as_call_arg(x_i, &n_prot));
 
-  return R_forceAndCall(call_map, force_map, p_data->env);
+  SEXP out = R_forceAndCall(p_data->call, force_map, p_data->env);
+  UNPROTECT(n_prot);
+  return out;
 }
 
 static inline SEXP map2_exec(const void* p_data_void, int i) {
   const struct map2_exec_data* p_data = (const struct map2_exec_data*) p_data_void;
+  int n_prot = 0;
 
   *p_data->v_i = i + 1;
 
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+  SETCAR(p_data->call_x_arg, as_call_arg(x_i, &n_prot));
 
   SEXP y_i = (p_data->y_object) ?
     Rf_eval(call_dot_y_subset2_i, p_data->env) :
     p_vec_get(p_data->v_y, p_data->y_type, i);
-  Rf_defineVar(sym_dot_y_i, y_i, p_data->env);
+  SETCAR(p_data->call_y_arg, as_call_arg(y_i, &n_prot));
 
-  return R_forceAndCall(call_map2, force_map2, p_data->env);
+  SEXP out = R_forceAndCall(p_data->call, force_map2, p_data->env);
+  UNPROTECT(n_prot);
+  return out;
 }
 
 static inline SEXP pmap_exec(const void* p_data_void, int i) {
   const struct pmap_exec_data* p_data = (const struct pmap_exec_data*) p_data_void;
+  int n_prot = 0;
 
   *p_data->v_i = i + 1;
 
@@ -160,10 +187,12 @@ static inline SEXP pmap_exec(const void* p_data_void, int i) {
     SEXP elt_i = (p_elt->elt_object) ?
       Rf_eval(p_elt->call_elt_subset2_i, p_data->env) :
       p_vec_get(p_elt->v_elt, p_elt->elt_type, i);
-    Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
+    SETCAR(p_elt->call_arg, as_call_arg(elt_i, &n_prot));
   }
 
-  return R_forceAndCall(p_data->call_pmap, p_data->force_pmap, p_data->env);
+  SEXP out = R_forceAndCall(p_data->call_pmap, p_data->force_pmap, p_data->env);
+  UNPROTECT(n_prot);
+  return out;
 }
 
 SEXP map_impl(
@@ -183,11 +212,17 @@ SEXP map_impl(
   const SEXPTYPE x_type = TYPEOF(x);
   const void* v_x = x_object ? NULL : vec_cbegin(x, x_type);
 
+  SEXP call = PROTECT(has_dots(env) ?
+    Rf_lang3(sym_dot_f, R_NilValue, R_DotsSymbol) :
+    Rf_lang2(sym_dot_f, R_NilValue));
+
   const struct map_exec_data data = (struct map_exec_data) {
     .x = x,
     .v_x = v_x,
     .x_type = x_type,
     .x_object = x_object,
+    .call_arg = CDR(call),
+    .call = call,
     .v_i = v_i,
     .env = env
   };
@@ -196,6 +231,7 @@ SEXP map_impl(
   SEXP out = call_loop(&data, map_exec, type, progress, n, names);
   *v_i = 0;
 
+  UNPROTECT(1);
   return out;
 }
 
@@ -221,6 +257,10 @@ SEXP map2_impl(
   const SEXPTYPE y_type = TYPEOF(y);
   const void* v_y = y_object ? NULL : vec_cbegin(y, y_type);
 
+  SEXP call = PROTECT(has_dots(env) ?
+    Rf_lang4(sym_dot_f, R_NilValue, R_NilValue, R_DotsSymbol) :
+    Rf_lang3(sym_dot_f, R_NilValue, R_NilValue));
+
   const struct map2_exec_data data = (struct map2_exec_data) {
     .x = x,
     .v_x = v_x,
@@ -230,6 +270,9 @@ SEXP map2_impl(
     .v_y = v_y,
     .y_type = y_type,
     .y_object = y_object,
+    .call_x_arg = CDR(call),
+    .call_y_arg = CDDR(call),
+    .call = call,
     .v_i = v_i,
     .env = env
   };
@@ -238,6 +281,7 @@ SEXP map2_impl(
   SEXP out = call_loop(&data, map2_exec, type, progress, n, names);
   *v_i = 0;
 
+  UNPROTECT(1);
   return out;
 }
 
@@ -275,24 +319,23 @@ SEXP pmap_impl(
     v_l[j].elt_type = elt_type;
     v_l[j].elt_object = elt_object;
 
-    // `.l_{elt}_i`
-    snprintf(buf, sizeof(buf), ".l_%d_i", j + 1);
-    v_l[j].sym_elt_i = Rf_install(buf);
-
-    // `.l_{elt}[[i]]`, with `elt` installed as `.l_{elt}` in `env`.
-    // Only used when `elt_object` is true, but we always set it up for simplicity.
+    // For objects, use `[[` to preserve dispatch. Install the object as
+    // `.l_{elt}` and construct `.l_{elt}[[i]]`.
     snprintf(buf, sizeof(buf), ".l_%d", j + 1);
     SEXP sym_elt = Rf_install(buf);
     Rf_defineVar(sym_elt, elt, env);
-    v_l[j].call_elt_subset2_i = PROTECT_N(Rf_lang3(R_Bracket2Symbol, sym_elt, sym_i), &n_prot);
+    v_l[j].call_elt_subset2_i = PROTECT_N(
+      Rf_lang3(R_Bracket2Symbol, sym_elt, sym_i),
+      &n_prot
+    );
   }
 
-  // Construct call like `f(.l_1_i, .l_2_i, ...l_{elt}_i, ...)`
+  // Construct a call whose argument cells are updated on each iteration.
   //
   // We construct the call backwards because can only add to the front of a
   // linked list. That makes PROTECTion tricky because we need to update it
   // each time to point to the start of the linked list.
-  SEXP call_pmap = Rf_lang1(R_DotsSymbol);
+  SEXP call_pmap = has_dots(env) ? Rf_lang1(R_DotsSymbol) : R_NilValue;
   PROTECT_INDEX call_pmap_pi;
   PROTECT_WITH_INDEX(call_pmap, &call_pmap_pi);
   ++n_prot;
@@ -302,8 +345,9 @@ SEXP pmap_impl(
   const SEXP* v_call_names = has_call_names ? STRING_PTR_RO(call_names) : NULL;
 
   for (int j = n_l - 1; j >= 0; --j) {
-    call_pmap = Rf_lcons(v_l[j].sym_elt_i, call_pmap);
+    call_pmap = Rf_lcons(R_NilValue, call_pmap);
     REPROTECT(call_pmap, call_pmap_pi);
+    v_l[j].call_arg = call_pmap;
 
     if (has_call_names) {
       const char* call_name = CHAR(v_call_names[j]);
@@ -339,8 +383,6 @@ void map_init(void) {
   sym_dot_f = Rf_install(".f");
   sym_dot_x = Rf_install(".x");
   sym_dot_y = Rf_install(".y");
-  sym_dot_x_i = Rf_install(".x_i");
-  sym_dot_y_i = Rf_install(".y_i");
 
   // `.x[[i]]`
   call_dot_x_subset2_i = Rf_lang3(R_Bracket2Symbol, sym_dot_x, sym_i);
@@ -350,11 +392,4 @@ void map_init(void) {
   call_dot_y_subset2_i = Rf_lang3(R_Bracket2Symbol, sym_dot_y, sym_i);
   R_PreserveObject(call_dot_y_subset2_i);
 
-  // `.f(.x_i, ...)`
-  call_map = Rf_lang3(sym_dot_f, sym_dot_x_i, R_DotsSymbol);
-  R_PreserveObject(call_map);
-
-  // `.f(.x_i, .y_i, ...)`
-  call_map2 = Rf_lang4(sym_dot_f, sym_dot_x_i, sym_dot_y_i, R_DotsSymbol);
-  R_PreserveObject(call_map2);
 }
