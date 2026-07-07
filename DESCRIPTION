@@ -19,9 +19,9 @@ Imports:
     cli (>= 3.6.1),
     lifecycle (>= 1.0.3),
     magrittr (>= 1.5.0),
-    rlang (>= 1.1.1),
+    rlang (>= 1.3.0),
     vctrs (>= 0.6.3)
-Suggests: 
+Suggests:
     carrier (>= 0.3.0),
     covr,
     dplyr (>= 0.7.8),
