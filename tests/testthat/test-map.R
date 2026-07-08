@@ -5,7 +5,7 @@ test_that("preserves names", {
 
 test_that("creates simple call", {
   out <- map(1, function(x) sys.call())[[1]]
-  expect_equal(out, quote(.f(.x[[i]], ...)))
+  expect_equal(out, quote(.f(.x_i, ...)))
 })
 
 test_that("fails on non-vectors", {
@@ -90,8 +90,16 @@ test_that("logical and integer NA become correct double NA", {
 })
 
 test_that("map forces arguments in same way as base R", {
+  x <- 1:2
   f_map <- map(1:2, function(i) function(x) x + i)
   f_base <- lapply(1:2, function(i) function(x) x + i)
+
+  expect_equal(f_map[[1]](0), f_base[[1]](0))
+  expect_equal(f_map[[2]](0), f_base[[2]](0))
+
+  x <- structure(1:2, class = "foo")
+  f_map <- map(x, function(i) function(x) x + i)
+  f_base <- lapply(x, function(i) function(x) x + i)
 
   expect_equal(f_map[[1]](0), f_base[[1]](0))
   expect_equal(f_map[[2]](0), f_base[[2]](0))
