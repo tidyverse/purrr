@@ -16,6 +16,7 @@ Science.
 ## Installation
 
 ``` r
+
 # The easiest way to get purrr is to install the whole tidyverse:
 install.packages("tidyverse")
 
@@ -38,6 +39,7 @@ split a data frame into pieces, fit a model to each piece, compute the
 summary, then extract the R².
 
 ``` r
+
 library(purrr)
 
 mtcars |> 

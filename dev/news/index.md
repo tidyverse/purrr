@@ -871,6 +871,7 @@ syntax to control the position of partialised arguments.
   soft-deprecated in favour of quasiquotation:
 
   ``` r
+
   # Before
   partial(fn, u = runif(1), n = rnorm(1), .lazy = FALSE)
 
@@ -1025,6 +1026,7 @@ We have standardised the purrr API for reverse iteration with a common
 
   reduce(1:3, f, .dir = “backward”)
 
+
       Note that the details of the computation have changed. Whereas
       `reduce_right()` computed `f(f(3, 2), 1)`, it now computes `f(1,
       f(2, 3))`. This is the standard way of reducing from the right.
@@ -1109,6 +1111,7 @@ to be maintained indefinitely in the package.
   function call built from its inputs and supports tidy dots:
 
   ``` r
+
   # Before:
   invoke(mean, list(na.rm = TRUE), x = 1:10)
 
@@ -1127,6 +1130,7 @@ to be maintained indefinitely in the package.
   [`exec()`](https://rlang.r-lib.org/reference/exec.html):
 
   ``` r
+
   # Before:
   invoke_map(fns, list(args))
   invoke_map(fns, list(args1, args2))

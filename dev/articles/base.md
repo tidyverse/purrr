@@ -10,6 +10,7 @@ start with a rough overview of the major differences, give a rough
 translation guide, and then show a few examples.
 
 ``` r
+
 library(purrr)
 library(tibble)
 ```
@@ -54,38 +55,38 @@ details.
 
 Here `x` denotes a vector and `f` denotes a function
 
-| Output                        | Input                                 | Base R                                                                                                                                              | purrr                                                                                                                                                                                                                                                                                                                                                                                                  |
-|-------------------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| List                          | 1 vector                              | [`lapply()`](https://rdrr.io/r/base/lapply.html)                                                                                                    | [`map()`](https://purrr.tidyverse.org/dev/reference/map.md)                                                                                                                                                                                                                                                                                                                                            |
-| List                          | 2 vectors                             | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html)                                                    | [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md)                                                                                                                                                                                                                                                                                                                                          |
-| List                          | \>2 vectors                           | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html)                                                    | [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md)                                                                                                                                                                                                                                                                                                                                          |
-| Atomic vector of desired type | 1 vector                              | [`vapply()`](https://rdrr.io/r/base/lapply.html)                                                                                                    | [`map_lgl()`](https://purrr.tidyverse.org/dev/reference/map.md) (logical), [`map_int()`](https://purrr.tidyverse.org/dev/reference/map.md) (integer), [`map_dbl()`](https://purrr.tidyverse.org/dev/reference/map.md) (double), [`map_chr()`](https://purrr.tidyverse.org/dev/reference/map.md) (character), [`map_vec()`](https://purrr.tidyverse.org/dev/reference/map.md) (other vectors)           |
-| Atomic vector of desired type | 2 vectors                             | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), then `is.*()` to check type                       | [`map2_lgl()`](https://purrr.tidyverse.org/dev/reference/map2.md) (logical), [`map2_int()`](https://purrr.tidyverse.org/dev/reference/map2.md) (integer), [`map2_dbl()`](https://purrr.tidyverse.org/dev/reference/map2.md) (double), [`map2_chr()`](https://purrr.tidyverse.org/dev/reference/map2.md) (character), [`map2_vec()`](https://purrr.tidyverse.org/dev/reference/map2.md) (other vectors) |
-| Atomic vector of desired type | \>2 vectors                           | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), then `is.*()` to check type                       | [`pmap_lgl()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (logical), [`pmap_int()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (integer), [`pmap_dbl()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (double), [`pmap_chr()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (character), [`pmap_vec()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (other vectors) |
-| Side effect only              | 2 vectors                             | loops                                                                                                                                               | [`walk2()`](https://purrr.tidyverse.org/dev/reference/map2.md)                                                                                                                                                                                                                                                                                                                                         |
-| Side effect only              | 1 vector                              | loops                                                                                                                                               | [`walk()`](https://purrr.tidyverse.org/dev/reference/map.md)                                                                                                                                                                                                                                                                                                                                           |
-| Side effect only              | \>2 vectors                           | loops                                                                                                                                               | [`pwalk()`](https://purrr.tidyverse.org/dev/reference/pmap.md)                                                                                                                                                                                                                                                                                                                                         |
-| Data frame (`rbind` outputs)  | 1 vector                              | [`lapply()`](https://rdrr.io/r/base/lapply.html) then [`rbind()`](https://rdrr.io/r/base/cbind.html)                                                | [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) then [`list_rbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md)                                                                                                                                                                                                                                                                 |
-| Data frame (`rbind` outputs)  | 2 vectors                             | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`rbind()`](https://rdrr.io/r/base/cbind.html) | [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md) then [`list_rbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md)                                                                                                                                                                                                                                                               |
-| Data frame (`rbind` outputs)  | \>2 vectors                           | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`rbind()`](https://rdrr.io/r/base/cbind.html) | [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) then [`list_rbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md)                                                                                                                                                                                                                                                               |
-| Data frame (`cbind` outputs)  | 1 vector                              | [`lapply()`](https://rdrr.io/r/base/lapply.html) then [`cbind()`](https://rdrr.io/r/base/cbind.html)                                                | [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) then [`list_cbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md)                                                                                                                                                                                                                                                                 |
-| Data frame (`cbind` outputs)  | 2 vectors                             | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`cbind()`](https://rdrr.io/r/base/cbind.html) | [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md) then [`list_cbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md)                                                                                                                                                                                                                                                               |
-| Data frame (`cbind` outputs)  | \>2 vectors                           | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`cbind()`](https://rdrr.io/r/base/cbind.html) | [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) then [`list_cbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md)                                                                                                                                                                                                                                                               |
-| Any                           | Vector and its names                  | `l/s/vapply(X, function(x) f(x, names(x)))` or `mapply/Map(f, x, names(x))`                                                                         | [`imap()`](https://purrr.tidyverse.org/dev/reference/imap.md), `imap_*()` (`lgl`, `dbl`, `chr`, and etc. just like for [`map()`](https://purrr.tidyverse.org/dev/reference/map.md), [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md), and [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md))                                                                                  |
-| Any                           | Selected elements of the vector       | `l/s/vapply(X[index], FUN, ...)`                                                                                                                    | [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md), [`map_at()`](https://purrr.tidyverse.org/dev/reference/map_if.md)                                                                                                                                                                                                                                                                   |
-| List                          | Recursively apply to list within list | [`rapply()`](https://rdrr.io/r/base/rapply.html)                                                                                                    | [`map_depth()`](https://purrr.tidyverse.org/dev/reference/map_depth.md)                                                                                                                                                                                                                                                                                                                                |
-| List                          | List only                             | [`lapply()`](https://rdrr.io/r/base/lapply.html)                                                                                                    | [`lmap()`](https://purrr.tidyverse.org/dev/reference/lmap.md), [`lmap_at()`](https://purrr.tidyverse.org/dev/reference/lmap.md), [`lmap_if()`](https://purrr.tidyverse.org/dev/reference/lmap.md)                                                                                                                                                                                                      |
+| Output | Input | Base R | purrr |
+|----|----|----|----|
+| List | 1 vector | [`lapply()`](https://rdrr.io/r/base/lapply.html) | [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) |
+| List | 2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html) | [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md) |
+| List | \>2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html) | [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) |
+| Atomic vector of desired type | 1 vector | [`vapply()`](https://rdrr.io/r/base/lapply.html) | [`map_lgl()`](https://purrr.tidyverse.org/dev/reference/map.md) (logical), [`map_int()`](https://purrr.tidyverse.org/dev/reference/map.md) (integer), [`map_dbl()`](https://purrr.tidyverse.org/dev/reference/map.md) (double), [`map_chr()`](https://purrr.tidyverse.org/dev/reference/map.md) (character), [`map_vec()`](https://purrr.tidyverse.org/dev/reference/map.md) (other vectors) |
+| Atomic vector of desired type | 2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), then `is.*()` to check type | [`map2_lgl()`](https://purrr.tidyverse.org/dev/reference/map2.md) (logical), [`map2_int()`](https://purrr.tidyverse.org/dev/reference/map2.md) (integer), [`map2_dbl()`](https://purrr.tidyverse.org/dev/reference/map2.md) (double), [`map2_chr()`](https://purrr.tidyverse.org/dev/reference/map2.md) (character), [`map2_vec()`](https://purrr.tidyverse.org/dev/reference/map2.md) (other vectors) |
+| Atomic vector of desired type | \>2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html), [`Map()`](https://rdrr.io/r/base/funprog.html), then `is.*()` to check type | [`pmap_lgl()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (logical), [`pmap_int()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (integer), [`pmap_dbl()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (double), [`pmap_chr()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (character), [`pmap_vec()`](https://purrr.tidyverse.org/dev/reference/pmap.md) (other vectors) |
+| Side effect only | 2 vectors | loops | [`walk2()`](https://purrr.tidyverse.org/dev/reference/map2.md) |
+| Side effect only | 1 vector | loops | [`walk()`](https://purrr.tidyverse.org/dev/reference/map.md) |
+| Side effect only | \>2 vectors | loops | [`pwalk()`](https://purrr.tidyverse.org/dev/reference/pmap.md) |
+| Data frame (`rbind` outputs) | 1 vector | [`lapply()`](https://rdrr.io/r/base/lapply.html) then [`rbind()`](https://rdrr.io/r/base/cbind.html) | [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) then [`list_rbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md) |
+| Data frame (`rbind` outputs) | 2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`rbind()`](https://rdrr.io/r/base/cbind.html) | [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md) then [`list_rbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md) |
+| Data frame (`rbind` outputs) | \>2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`rbind()`](https://rdrr.io/r/base/cbind.html) | [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) then [`list_rbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md) |
+| Data frame (`cbind` outputs) | 1 vector | [`lapply()`](https://rdrr.io/r/base/lapply.html) then [`cbind()`](https://rdrr.io/r/base/cbind.html) | [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) then [`list_cbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md) |
+| Data frame (`cbind` outputs) | 2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`cbind()`](https://rdrr.io/r/base/cbind.html) | [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md) then [`list_cbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md) |
+| Data frame (`cbind` outputs) | \>2 vectors | [`mapply()`](https://rdrr.io/r/base/mapply.html)/[`Map()`](https://rdrr.io/r/base/funprog.html) then [`cbind()`](https://rdrr.io/r/base/cbind.html) | [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) then [`list_cbind()`](https://purrr.tidyverse.org/dev/reference/list_c.md) |
+| Any | Vector and its names | `l/s/vapply(X, function(x) f(x, names(x)))` or `mapply/Map(f, x, names(x))` | [`imap()`](https://purrr.tidyverse.org/dev/reference/imap.md), `imap_*()` (`lgl`, `dbl`, `chr`, and etc. just like for [`map()`](https://purrr.tidyverse.org/dev/reference/map.md), [`map2()`](https://purrr.tidyverse.org/dev/reference/map2.md), and [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md)) |
+| Any | Selected elements of the vector | `l/s/vapply(X[index], FUN, ...)` | [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md), [`map_at()`](https://purrr.tidyverse.org/dev/reference/map_if.md) |
+| List | Recursively apply to list within list | [`rapply()`](https://rdrr.io/r/base/rapply.html) | [`map_depth()`](https://purrr.tidyverse.org/dev/reference/map_depth.md) |
+| List | List only | [`lapply()`](https://rdrr.io/r/base/lapply.html) | [`lmap()`](https://purrr.tidyverse.org/dev/reference/lmap.md), [`lmap_at()`](https://purrr.tidyverse.org/dev/reference/lmap.md), [`lmap_if()`](https://purrr.tidyverse.org/dev/reference/lmap.md) |
 
 #### Extractor shorthands
 
 Since a common use case for map functions is list extracting components,
 purrr provides a handful of shortcut functions for various uses of `[[`.
 
-| Input                      | base R                                                            | purrr                      |
-|----------------------------|-------------------------------------------------------------------|----------------------------|
-| Extract by name            | `` lapply(x, `[[`, "a") ``                                        | `map(x, "a")`              |
-| Extract by position        | `` lapply(x, `[[`, 3) ``                                          | `map(x, 3)`                |
-| Extract deeply             | `lapply(x, \(y) y[[1]][["x"]][[3]])`                              | `map(x, list(1, "x", 3))`  |
+| Input | base R | purrr |
+|----|----|----|
+| Extract by name | `` lapply(x, `[[`, "a") `` | `map(x, "a")` |
+| Extract by position | `` lapply(x, `[[`, 3) `` | `map(x, 3)` |
+| Extract deeply | `lapply(x, \(y) y[[1]][["x"]][[3]])` | `map(x, list(1, "x", 3))` |
 | Extract with default value | `lapply(x, function(y) tryCatch(y[[3]], error = function(e) NA))` | `map(x, 3, .default = NA)` |
 
 #### Predicates
@@ -94,24 +95,24 @@ Here `p`, a predicate, denotes a function that returns `TRUE` or `FALSE`
 indicating whether an object fulfills a criterion,
 e.g. [`is.character()`](https://rdrr.io/r/base/character.html).
 
-| Description                                        | base R                           | purrr                 |
-|----------------------------------------------------|----------------------------------|-----------------------|
-| Find a matching element                            | `Find(p, x)`                     | `detect(x, p)`,       |
-| Find position of matching element                  | `Position(p, x)`                 | `detect_index(x, p)`  |
-| Do all elements of a vector satisfy a predicate?   | `all(sapply(x, p))`              | `every(x, p)`         |
-| Does any elements of a vector satisfy a predicate? | `any(sapply(x, p))`              | `some(x, p)`          |
-| Does a list contain an object?                     | `any(sapply(x, identical, obj))` | `has_element(x, obj)` |
-| Keep elements that satisfy a predicate             | `x[sapply(x, p)]`                | `keep(x, p)`          |
-| Discard elements that satisfy a predicate          | `x[!sapply(x, p)]`               | `discard(x, p)`       |
-| Negate a predicate function                        | `function(x) !p(x)`              | `negate(p)`           |
+| Description | base R | purrr |
+|----|----|----|
+| Find a matching element | `Find(p, x)` | `detect(x, p)`, |
+| Find position of matching element | `Position(p, x)` | `detect_index(x, p)` |
+| Do all elements of a vector satisfy a predicate? | `all(sapply(x, p))` | `every(x, p)` |
+| Does any elements of a vector satisfy a predicate? | `any(sapply(x, p))` | `some(x, p)` |
+| Does a list contain an object? | `any(sapply(x, identical, obj))` | `has_element(x, obj)` |
+| Keep elements that satisfy a predicate | `x[sapply(x, p)]` | `keep(x, p)` |
+| Discard elements that satisfy a predicate | `x[!sapply(x, p)]` | `discard(x, p)` |
+| Negate a predicate function | `function(x) !p(x)` | `negate(p)` |
 
 #### Other vector transforms
 
-| Description                                                               | base R                                               | purrr                                                                                                                                                   |
-|---------------------------------------------------------------------------|------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Accumulate intermediate results of a vector reduction                     | `Reduce(f, x, accumulate = TRUE)`                    | `accumulate(x, f)`                                                                                                                                      |
-| Recursively combine two lists                                             | `c(X, Y)`, but more complicated to merge recursively | [`list_merge()`](https://purrr.tidyverse.org/dev/reference/list_assign.md), [`list_modify()`](https://purrr.tidyverse.org/dev/reference/list_assign.md) |
-| Reduce a list to a single value by iteratively applying a binary function | `Reduce(f, x)`                                       | `reduce(x, f)`                                                                                                                                          |
+| Description | base R | purrr |
+|----|----|----|
+| Accumulate intermediate results of a vector reduction | `Reduce(f, x, accumulate = TRUE)` | `accumulate(x, f)` |
+| Recursively combine two lists | `c(X, Y)`, but more complicated to merge recursively | [`list_merge()`](https://purrr.tidyverse.org/dev/reference/list_assign.md), [`list_modify()`](https://purrr.tidyverse.org/dev/reference/list_assign.md) |
+| Reduce a list to a single value by iteratively applying a binary function | `Reduce(f, x)` | `reduce(x, f)` |
 
 ### Examples
 
@@ -123,6 +124,7 @@ Suppose we would like to generate a list of samples of 5 from normal
 distributions with different means:
 
 ``` r
+
 means <- 1:4
 ```
 
@@ -131,6 +133,7 @@ There’s little difference when generating the samples:
 - Base R uses [`lapply()`](https://rdrr.io/r/base/lapply.html):
 
   ``` r
+
   set.seed(2020)
   samples <- lapply(means, rnorm, n = 5, sd = 1)
   str(samples)
@@ -145,6 +148,7 @@ There’s little difference when generating the samples:
   [`map()`](https://purrr.tidyverse.org/dev/reference/map.md):
 
   ``` r
+
   set.seed(2020)
   samples <- map(means, rnorm, n = 5, sd = 1)
   str(samples)
@@ -161,6 +165,7 @@ Lets make the example a little more complicated by also varying the
 standard deviations:
 
 ``` r
+
 means <- 1:4
 sds <- 1:4
 ```
@@ -169,6 +174,7 @@ sds <- 1:4
   of [`mapply()`](https://rdrr.io/r/base/mapply.html)’s defaults.
 
   ``` r
+
   set.seed(2020)
   samples <- mapply(
     rnorm, 
@@ -191,12 +197,14 @@ sds <- 1:4
   anonymous function:
 
   ``` r
+
   samples <- Map(function(...) rnorm(..., n = 5), mean = means, sd = sds)
   ```
 
   In R 4.1 and up, you could use the shorter anonymous function form:
 
   ``` r
+
   samples <- Map(\(...) rnorm(..., n = 5), mean = means, sd = sds)
   ```
 
@@ -205,6 +213,7 @@ sds <- 1:4
   family of functions:
 
   ``` r
+
   set.seed(2020)
   samples <- map2(means, sds, rnorm, n = 5)
   str(samples)
@@ -221,6 +230,7 @@ We can make the challenge still more complex by also varying the number
 of samples:
 
 ``` r
+
 ns <- 4:1
 ```
 
@@ -228,6 +238,7 @@ ns <- 4:1
   more straightforward because there are no constant arguments.
 
   ``` r
+
   set.seed(2020)
   samples <- Map(rnorm, mean = means, sd = sds, n = ns)
   str(samples)
@@ -244,6 +255,7 @@ ns <- 4:1
   takes a list of any number of arguments.
 
   ``` r
+
   set.seed(2020)
   samples <- pmap(list(mean = means, sd = sds, n = ns), rnorm)
   str(samples)
@@ -271,6 +283,7 @@ a list.
   vector.
 
   ``` r
+
   # type stable
   medians <- vapply(samples, median, FUN.VALUE = numeric(1L))
   medians
@@ -284,6 +297,7 @@ a list.
   [`map_dbl()`](https://purrr.tidyverse.org/dev/reference/map.md).
 
   ``` r
+
   medians <- map_dbl(samples, median)
   medians
   #> [1] 0.6017626 3.4411470 5.2946304 4.4694671
@@ -296,6 +310,7 @@ but not the returned values?
   `lapply`.
 
   ``` r
+
   # for loop
   for (s in samples) {
     hist(s, xlab = "value", main = "")
@@ -311,6 +326,7 @@ but not the returned values?
   [`walk()`](https://purrr.tidyverse.org/dev/reference/map.md).
 
   ``` r
+
   walk(samples, ~ hist(.x, xlab = "value", main = ""))
   ```
 
@@ -319,6 +335,7 @@ but not the returned values?
 You can join multiple steps together with the pipe:
 
 ``` r
+
 set.seed(2020)
 means |>
   map(rnorm, n = 5, sd = 1) |>
@@ -332,6 +349,7 @@ transformations. For example, the following code splits `mtcars` up by
 first one (the intercept).
 
 ``` r
+
 mtcars |>
   split(mtcars$cyl) |> 
   map(\(df) lm(mpg ~ wt, data = df))|> 
