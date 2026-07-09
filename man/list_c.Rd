@@ -44,7 +44,9 @@ with \code{\link[vctrs:vec_c]{vctrs::vec_c()}}.
 \item \code{list_rbind()} combines elements into a data frame by row-binding them
 together with \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}}.
 \item \code{list_cbind()} combines elements into a data frame by column-binding them
-together with \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}.
+together with \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}. If \code{x} is named, those names are used
+by \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}} and may create packed data frame columns. Use
+\code{unname(x)} to avoid this.
 }
 }
 \examples{
@@ -60,4 +62,5 @@ list_rbind(x2, names_to = "id")
 list_rbind(unname(x2), names_to = "id")
 
 list_cbind(x2)
+list_cbind(unname(x2))
 }
