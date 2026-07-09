@@ -36,27 +36,27 @@
 #' mods <- by_cyl |> map(\(df) lm(mpg ~ wt, data = df))
 #' map2(mods, by_cyl, predict)
 map2 <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("list", .x, .y, .f, ..., .progress = .progress)
+  map2_(.type = "list", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_lgl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("logical", .x, .y, .f, ..., .progress = .progress)
+  map2_(.type = "logical", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_int <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("integer", .x, .y, .f, ..., .progress = .progress)
+  map2_(.type = "integer", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_dbl <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("double", .x, .y, .f, ..., .progress = .progress)
+  map2_(.type = "double", .x, .y, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname map2
 map2_chr <- function(.x, .y, .f, ..., .progress = FALSE) {
-  map2_("character", .x, .y, .f, ..., .progress = .progress)
+  map2_(.type = "character", .x, .y, .f, ..., .progress = .progress)
 }
 
 map2_ <- function(

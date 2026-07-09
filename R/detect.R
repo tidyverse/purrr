@@ -56,7 +56,7 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE)
+  .f <- as_predicate(.fn = .f, ..., .mapper = TRUE)
   .dir <- arg_match0(.dir, c("forward", "backward"))
 
   for (i in index(.x, .dir, "detect")) {
@@ -71,7 +71,7 @@ detect <- function(
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE)
+  .f <- as_predicate(.fn = .f, ..., .mapper = TRUE)
   .dir <- arg_match0(.dir, c("forward", "backward"))
 
   for (i in index(.x, .dir, "detect_index")) {

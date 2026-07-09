@@ -19,3 +19,7 @@ test_that("atomic vector imap works", {
 test_that("iwalk returns invisibly", {
   expect_output(iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = "")))
 })
+
+test_that("passing .y parameter to imap() results in an error", {
+  expect_snapshot(imap(5:1, sum, .y = 5:1), error = TRUE)
+})

@@ -73,3 +73,7 @@ test_that("don't evaluate symbolic objects (#428)", {
   map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
   walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
 })
+
+test_that("passing .type parameter to map2() results in an error (#1248)", {
+  expect_snapshot(map2_dbl(1:4, \(x, ...) x, .type = "character"), error = TRUE)
+})
