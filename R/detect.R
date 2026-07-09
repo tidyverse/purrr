@@ -56,40 +56,53 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE)
-  .dir <- arg_match0(.dir, c("forward", "backward"))
-
-  for (i in index(.x, .dir, "detect")) {
-    if (.f(.x[[i]], ...)) {
-      return(.x[[i]])
-    }
-  }
-
-  .default
+  index <- which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
+  if (index == 0) .default else .x[[index]]
 }
 
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
-  .f <- as_predicate(.f, ..., .mapper = TRUE)
-  .dir <- arg_match0(.dir, c("forward", "backward"))
-
-  for (i in index(.x, .dir, "detect_index")) {
-    if (.f(.x[[i]], ...)) {
-      return(i)
-    }
-  }
-
-  0L
+  which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
 }
 
+#' Which element satisfies a predicate?
+#'
+#' @inheritParams detect_index
+#' @param .negate If `TRUE`, this function finds the first element that
+#'  _doesn't_ satisfy the predicate instead.
+#' @param .p_arg_name Name of the `.p` argument in the caller function.
+#'  Used to handle the fact that `detect()` and `detect_index()` use `.f`
+#'  instead of expected `p`.
+#'
+#' @return The position of the matching item; if no match, 0.
+#'
+#' @noRd
+which_satisfies_predicate <- function(
+  .x,
+  .p,
+  ...,
+  .dir = c("forward", "backward"),
+  .negate = FALSE,
+  .p_arg_name = ".p",
+  .purrr_user_env = caller_env(2),
+  .purrr_error_call = caller_env()
+) {
+  left <- arg_match0(.dir, c("forward", "backward")) == "forward"
+  # Not using `as_predicate()` as R level predicate result checks are too slow.
+  # Checks are done at the C level instead (#1169).
+  .p <- as_mapper(.p, ...)
 
-index <- function(x, dir, right = NULL, fn) {
-  idx <- seq_along(x)
-  if (dir == "backward") {
-    idx <- rev(idx)
-  }
-  idx
+  # Consistent with `map()`
+  .x <- vctrs_vec_compat(.x, .purrr_user_env)
+  obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
+  n <- vec_size(.x)
+
+  i <- 0L
+
+  # We refer to `.p`, `.x`, `i`, `...`, `.p_arg_name`, and `.purrr_error_call` all from C level
+  .Call(detect_index_impl, environment(), n, i, left, .negate)
 }
 
 #' Does a list contain an object?
