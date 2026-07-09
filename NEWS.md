@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `compose()` now evaluates lazily, allowing composing with functions like `capture.output()` (#651).
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).

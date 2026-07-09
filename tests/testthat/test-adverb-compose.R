@@ -147,3 +147,11 @@ test_that("compose() can take dots from multiple environments", {
     c("_baz", "_bar", "_foo", "_quux")
   )
 })
+
+test_that("compose() evaluates lazily (#651)", {
+  expect_silent(compose(capture.output, print)("purrr, meow"))
+  expect_identical(
+    compose(capture.output, print)("purrr, meow"),
+    capture.output(print("purrr, meow"))
+  )
+})
