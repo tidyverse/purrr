@@ -53,14 +53,14 @@ list("a", 10, 100) |>
   simplify_all()
 }
 \seealso{
-Other adverbs: 
-\code{\link{auto_browse}()},
-\code{\link{compose}()},
-\code{\link{insistently}()},
-\code{\link{negate}()},
-\code{\link{partial}()},
-\code{\link{possibly}()},
-\code{\link{quietly}()},
-\code{\link{slowly}()}
+Other adverbs:
+\code{\link[=auto_browse]{auto_browse()}},
+\code{\link[=compose]{compose()}},
+\code{\link[=insistently]{insistently()}},
+\code{\link[=negate]{negate()}},
+\code{\link[=partial]{partial()}},
+\code{\link[=possibly]{possibly()}},
+\code{\link[=quietly]{quietly()}},
+\code{\link[=slowly]{slowly()}}
 }
 \concept{adverbs}

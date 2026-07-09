@@ -51,14 +51,14 @@ fn <- compose(!!!fns)
 fn("input")
 }
 \seealso{
-Other adverbs: 
-\code{\link{auto_browse}()},
-\code{\link{insistently}()},
-\code{\link{negate}()},
-\code{\link{partial}()},
-\code{\link{possibly}()},
-\code{\link{quietly}()},
-\code{\link{safely}()},
-\code{\link{slowly}()}
+Other adverbs:
+\code{\link[=auto_browse]{auto_browse()}},
+\code{\link[=insistently]{insistently()}},
+\code{\link[=negate]{negate()}},
+\code{\link[=partial]{partial()}},
+\code{\link[=possibly]{possibly()}},
+\code{\link[=quietly]{quietly()}},
+\code{\link[=safely]{safely()}},
+\code{\link[=slowly]{slowly()}}
 }
 \concept{adverbs}

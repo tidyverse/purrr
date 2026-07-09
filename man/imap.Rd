@@ -73,13 +73,13 @@ imap_chr(sample(10), \(x, idx) paste0(idx, ": ", x))
 iwalk(mtcars, \(x, idx) cat(idx, ": ", median(x), "\n", sep = ""))
 }
 \seealso{
-Other map variants: 
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

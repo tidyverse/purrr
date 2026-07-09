@@ -54,8 +54,8 @@ sort_named <- function(x) {
 x |> modify_tree(post = sort_named) |> str()
 }
 \seealso{
-Other modify variants: 
-\code{\link{map_depth}()},
-\code{\link{modify}()}
+Other modify variants:
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=modify]{modify()}}
 }
 \concept{modify variants}

@@ -91,13 +91,13 @@ iris |> map_at(c(4, 5), is.numeric) |> str()
 iris |> map_at("Species", toupper) |> str()
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

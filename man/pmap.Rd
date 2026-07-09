@@ -93,7 +93,7 @@ Any errors thrown by \code{.f} will be wrapped in an error with class
 These functions are variants of \code{\link[=map]{map()}} that iterate over multiple arguments
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing, i.e.
-they share the same notion of "parallel" as \code{\link[base:Extremes]{base::pmax()}} and \code{\link[base:Extremes]{base::pmin()}}.
+they share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
 }
 \examples{
 x <- list(1, 1, 1)
@@ -145,13 +145,13 @@ map2_dbl(df$x, df$y, min)
 pmap_dbl(df, min)
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}}
 }
 \concept{map variants}
