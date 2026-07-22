@@ -22,9 +22,20 @@
 #' [mirai::require_daemons()] may be used to enforce the use of parallel
 #' processing. See the section 'Daemons settings' below.
 #'
-#' @param .f A fresh formula or function. "Fresh" here means that they should be
-#'   declared in the call to [in_parallel()].
+#' @param .f A function or formula. The function may be defined inside the
+#'   call to [in_parallel()] as an anonymous function, or be an existing
+#'   function. The following applies to existing functions:
+#'
+#'   * A plain function (closure) has its enclosing environment replaced with
+#'     the crate's evaluation environment, so any data it depends on must be
+#'     declared via `...`.
+#'   * A namespaced function (such as `stats::sd`) or a primitive function
+#'     (such as `sum`) is already self-contained and is used directly, with its
+#'     environment left untouched. Data declared via `...` would not be
+#'     reachable from such a function, so it is an error to supply any.
 #' @param ... Named arguments to declare in the environment of the function.
+#'   It is an error to supply `...` when `.f` is a namespaced or primitive
+#'   function, as declared data would not be reachable from such functions.
 #'
 #' @return A 'crate' (classed function).
 #'
@@ -36,17 +47,18 @@
 #'   within the function to attach a package to the search path, which allows
 #'   subsequent use of package functions without the explicit namespace.
 #'
-#' * They should declare any data they depend on. Declare data by supplying
-#'   named arguments to `...`. When `.f` is an anonymous function to a
-#'   locally-defined function of the form `\(x) fun(x)`, `fun` itself must be
-#'   supplied to `...` in the manner of: `in_parallel(\(x) fun(x), fun = fun)`.
+#' * They should declare any data they depend on by supplying named arguments
+#'   to `...`. When an existing function is passed to `.f` directly, only its
+#'   dependencies need to be declared, e.g. `in_parallel(fun, helper = helper)`.
+#'   When it is wrapped in an anonymous function such as `\(x) fun(x)`, `fun`
+#'   itself must also be declared: `in_parallel(\(x) fun(x), fun = fun)`.
 #'
 #' * Functions (closures) supplied to `...` must themselves be self-contained,
-#'   as they are modified to share the same closure as the main function. This
-#'   means that all helper functions and other required variables must also be
-#'   supplied as further `...` arguments. This applies only for functions
-#'   directly supplied to `...`: containers (such as lists) are not
-#'   recursively analysed. In other words, if you supply complex
+#'   as they are modified to share the same enclosing environment as the main
+#'   function. This means that all helper functions and other required
+#'   variables must also be supplied as further `...` arguments. This applies
+#'   only to functions directly supplied to `...`: containers (such as lists)
+#'   are not recursively analysed. In other words, if you supply complex
 #'   objects to `...` you're at risk of unexpectedly including large objects.
 #'
 #' [in_parallel()] is a simple wrapper of [carrier::crate()] and you may refer
@@ -54,12 +66,13 @@
 #'
 #' Example usage:
 #' ```r
-#' # The function needs to be freshly-defined, so instead of:
+#' # Package functions can be passed directly, including primitives such as
+#' # sum() and namespaced functions such as stats::sd():
 #' mtcars |> map_dbl(in_parallel(sum))
-#' # Use an anonymous function:
-#' mtcars |> map_dbl(in_parallel(\(x) sum(x)))
+#' mtcars |> map_dbl(in_parallel(stats::sd))
 #'
-#' # Package functions need to be explicitly namespaced, so instead of:
+#' # Functions you define yourself must call package functions with an
+#' # explicit `::` namespace, so instead of:
 #' map(1:3, in_parallel(\(x) vec_init(integer(), x)))
 #' # Use :: to namespace all package functions:
 #' map(1:3, in_parallel(\(x) vctrs::vec_init(integer(), x)))
@@ -67,11 +80,11 @@
 #' fun <- function(x) { param + helper(x) }
 #' helper <- function(x) { x %% 2 }
 #' param <- 5
-#' # Operating in parallel, locally-defined functions, including helper
-#' # functions and other objects required by it, will not be found:
-#' map(1:3, in_parallel(\(x) fun(x)))
+#' # A locally-defined function can be passed directly, but its environment is
+#' # set to that of the crate, so the objects it depends on will not be found:
+#' map(1:3, in_parallel(fun))
 #' # Use the ... argument to supply these objects:
-#' map(1:3, in_parallel(\(x) fun(x), fun = fun, helper = helper, param = param))
+#' map(1:3, in_parallel(fun, helper = helper, param = param))
 #' ```
 #'
 #' @section When to use:
@@ -155,7 +168,7 @@
 #'
 #' slow_lm <- function(formula, data) {
 #'   delay()
-#'   lm(formula, data)
+#'   stats::lm(formula, data)
 #' }
 #'
 #' # Example of a 'crate' returned by in_parallel(). The object print method

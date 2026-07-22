@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).

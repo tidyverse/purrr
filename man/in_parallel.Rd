@@ -8,10 +8,22 @@
 in_parallel(.f, ...)
 }
 \arguments{
-\item{.f}{A fresh formula or function. "Fresh" here means that they should be
-declared in the call to \code{\link[=in_parallel]{in_parallel()}}.}
+\item{.f}{A function or formula. The function may be defined inside the
+call to \code{\link[=in_parallel]{in_parallel()}} as an anonymous function, or be an existing
+function. The following applies to existing functions:
+\itemize{
+\item A plain function (closure) has its enclosing environment replaced with
+the crate's evaluation environment, so any data it depends on must be
+declared via \code{...}.
+\item A namespaced function (such as \code{stats::sd}) or a primitive function
+(such as \code{sum}) is already self-contained and is used directly, with its
+environment left untouched. Data declared via \code{...} would not be
+reachable from such a function, so it is an error to supply any.
+}}
 
-\item{...}{Named arguments to declare in the environment of the function.}
+\item{...}{Named arguments to declare in the environment of the function.
+It is an error to supply \code{...} when \code{.f} is a namespaced or primitive
+function, as declared data would not be reachable from such functions.}
 }
 \value{
 A 'crate' (classed function).
@@ -48,16 +60,17 @@ instance \code{ggplot()} from the ggplot2 package must be called with its
 namespace prefix: \code{ggplot2::ggplot()}. An alternative is to use \code{library()}
 within the function to attach a package to the search path, which allows
 subsequent use of package functions without the explicit namespace.
-\item They should declare any data they depend on. Declare data by supplying
-named arguments to \code{...}. When \code{.f} is an anonymous function to a
-locally-defined function of the form \verb{\\(x) fun(x)}, \code{fun} itself must be
-supplied to \code{...} in the manner of: \verb{in_parallel(\\(x) fun(x), fun = fun)}.
+\item They should declare any data they depend on by supplying named arguments
+to \code{...}. When an existing function is passed to \code{.f} directly, only its
+dependencies need to be declared, e.g. \code{in_parallel(fun, helper = helper)}.
+When it is wrapped in an anonymous function such as \verb{\\(x) fun(x)}, \code{fun}
+itself must also be declared: \verb{in_parallel(\\(x) fun(x), fun = fun)}.
 \item Functions (closures) supplied to \code{...} must themselves be self-contained,
-as they are modified to share the same closure as the main function. This
-means that all helper functions and other required variables must also be
-supplied as further \code{...} arguments. This applies only for functions
-directly supplied to \code{...}: containers (such as lists) are not
-recursively analysed. In other words, if you supply complex
+as they are modified to share the same enclosing environment as the main
+function. This means that all helper functions and other required
+variables must also be supplied as further \code{...} arguments. This applies
+only to functions directly supplied to \code{...}: containers (such as lists)
+are not recursively analysed. In other words, if you supply complex
 objects to \code{...} you're at risk of unexpectedly including large objects.
 }
 
@@ -66,12 +79,13 @@ to that package for more details.
 
 Example usage:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# The function needs to be freshly-defined, so instead of:
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Package functions can be passed directly, including primitives such as
+# sum() and namespaced functions such as stats::sd():
 mtcars |> map_dbl(in_parallel(sum))
-# Use an anonymous function:
-mtcars |> map_dbl(in_parallel(\\(x) sum(x)))
+mtcars |> map_dbl(in_parallel(stats::sd))
 
-# Package functions need to be explicitly namespaced, so instead of:
+# Functions you define yourself must call package functions with an
+# explicit `::` namespace, so instead of:
 map(1:3, in_parallel(\\(x) vec_init(integer(), x)))
 # Use :: to namespace all package functions:
 map(1:3, in_parallel(\\(x) vctrs::vec_init(integer(), x)))
@@ -79,11 +93,11 @@ map(1:3, in_parallel(\\(x) vctrs::vec_init(integer(), x)))
 fun <- function(x) \{ param + helper(x) \}
 helper <- function(x) \{ x \%\% 2 \}
 param <- 5
-# Operating in parallel, locally-defined functions, including helper
-# functions and other objects required by it, will not be found:
-map(1:3, in_parallel(\\(x) fun(x)))
+# A locally-defined function can be passed directly, but its environment is
+# set to that of the crate, so the objects it depends on will not be found:
+map(1:3, in_parallel(fun))
 # Use the ... argument to supply these objects:
-map(1:3, in_parallel(\\(x) fun(x), fun = fun, helper = helper, param = param))
+map(1:3, in_parallel(fun, helper = helper, param = param))
 }\if{html}{\out{</div>}}
 }
 
@@ -164,7 +178,7 @@ delay <- function(secs = default_param) {
 
 slow_lm <- function(formula, data) {
   delay()
-  lm(formula, data)
+  stats::lm(formula, data)
 }
 
 # Example of a 'crate' returned by in_parallel(). The object print method
