@@ -13,8 +13,6 @@
 #'   * A formula, e.g. `~ .x + .y`. Use `.x` to refer to the current element and
 #'     `.y` to refer to the current index. No longer recommended.
 #'
-#'   `r lifecycle::badge("experimental")`
-#'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
 #'   Use of `...` is not permitted in this context.

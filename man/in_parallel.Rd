@@ -29,8 +29,6 @@ function, as declared data would not be reachable from such functions.}
 A 'crate' (classed function).
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 All map functions allow parallelized operation using \CRANpkg{mirai}.
 
 Wrap functions passed to the \code{.f} argument of \code{\link[=map]{map()}} and its variants with

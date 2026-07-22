@@ -1,8 +1,6 @@
 #' Parallelization in purrr
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
-#'
 #' All map functions allow parallelized operation using \CRANpkg{mirai}.
 #'
 #' Wrap functions passed to the `.f` argument of [map()] and its variants with
