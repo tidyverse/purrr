@@ -137,8 +137,8 @@ pmap_ <- function(
     caller_env = .purrr_error_call
   )
 
-  .l <- vctrs_list_compat(.l, error_call = .purrr_error_call)
-  .l <- map(.l, vctrs_vec_compat)
+  .l <- vctrs_list_compat(.l, .purrr_user_env, error_call = .purrr_error_call)
+  .l <- map(.l, vctrs_vec_compat, user_env = .purrr_user_env)
 
   n <- vec_size_common(!!!.l, .arg = ".l", .call = .purrr_error_call)
   .l <- vec_recycle_common(
