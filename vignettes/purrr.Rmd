@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-purrr helps you write cleaner, more maintainable R code through functional programming concepts. But what is functional programming? At its core, it's an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product. Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This notion is rather abstract, but we believe mastering functional programming makes your code clearer and less prone to errors. You'll hopefully get some sense of that by the end of this vignette!
+purrr helps you write cleaner, more maintainable R code through functional programming concepts. Functional programing is an approach to programming that emphasizes using functions to transform data, similar to how you might use a series of tools to process raw materials into a final product. Instead of writing loops and modifying data step by step, functional programming encourages you to think about your data transformations as a series of function applications. This notion is rather abstract, but we believe mastering functional programming makes your code clearer and less prone to errors. You'll hopefully get some sense of that by the end of this vignette!
 
 This vignette discusses two of the most important parts of purrr: map functions and predicate functions.
 
