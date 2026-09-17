@@ -137,7 +137,7 @@ purrr functions are type-stable, which means it's easy to predict what type of o
     -   `map_dbl()` returns a numeric (double) vector.
     -   `map_chr()` returns a character vector.
 
--   For all other types of vector (like dates, date-times, factors, etc.), there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns a length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo". Note that `map_vec()` simplifies similarly to `sapply()`, but with stricter, more predictable errors on incompatible types.
+-   For all other types of vector (like dates, date-times, factors, etc.), there's `map_vec()`. It's a little harder to precisely describe the output type, but if your function returns a length-1 vector of type "foo", then the output of `map_vec()` will be a length-n vector of type "foo".`map_vec()` simplifies types but is stricter than `sapply()`,
 
 -   `modify()` returns output with the same type as the input. For example, if the input is a data frame, the output will also be a data frame.
 
@@ -268,10 +268,11 @@ The `list_*()` family handles this combining step:
 list(1:3, 4:6, 7:9) |> list_c()
 
 # list_rbind() combines a list of data frames on top of each other into a single data frame
-mtcars |>
-  split(mtcars$cyl) |>
-  map(\(df) data.frame(mpg = mean(df$mpg), hp = mean(df$hp))) |>
-  list_rbind(names_to = "cyl")
+list(
+  data.frame(x = 1:3),
+  data.frame(x = 4:6)
+) |>
+  list_rbind()
 
 # list_cbind() places a list of data frames side by side
 list(
@@ -279,46 +280,4 @@ list(
   data.frame(y = 4:6)
 ) |>
   list_cbind()
-
-# list_flatten() removes one level of nesting
-list(a = list(1, 2), b = list(3, 4)) |> list_flatten() |> str()
 ```
-
-## Purrrfectly handle errors
-
-When you're mapping a function over many elements, it's common for a few of them to fail (e.g. A URL that doesn't resolve, a value that can't be parsed, a model that doesn't converge, etc.). `tryCatch()` is base R's tool for catching errors, but using it well inside `map()` takes a bit of care.
-
-A common mistake is calling `tryCatch()` on the outside of the mapped expression instead of inside the function passed to `map()`:
-
-```{r}
-#| eval: false
-# Wrong: tryCatch() only runs once, before mapping even starts,
-# not once per element
-map(x, tryCatch(f(.x), error = function(e) NA))
-```
-
-To catch errors on a per-element basis, wrap `tryCatch()` inside the function or formula itself, so it re-runs for every element:
-
-```{r}
-map(list(1, -1, "a"), \(x) {
-  tryCatch(log(x), error = function(e) NA, warning = function(w) NA)
-})
-```
-
-### `safely()` and `possibly()`
-
-purrr provides `safely()` and `possibly()`, which wrap a function in error-handling logic similar to `tryCatch()`, but are designed specifically for use with `map()`:
-
--   `tryCatch()` is general-purpose: you write the success and failure branches yourself at every call site, which means you're responsible for making sure they return compatible shapes when used inside `map_dbl()`, `map_chr()`, etc.
--   `safely(f)` wraps `f` once and returns a new function that always produces a `list(result, error)` — one of the two is always `NULL`. This guarantees a consistent shape across every element of `map()`'s output, and pairs well with `transpose()` to split the results into separate "successes" and "errors" lists. This also means the new function always succeeds.
--   `possibly(f, otherwise)` is a lighter-weight variant: on error, it simply substitutes `otherwise` and discards the error details, which is convenient when you just want to skip failures and keep going.
-
-```{r}
-safe_log <- safely(log)
-map(list(1, -1, "a"), safe_log) |> str()
-
-possible_log <- possibly(log, otherwise = NA)
-map_dbl(list(1, 4, "a"), possible_log)
-```
-
-In short: reach for `safely()`/`possibly()` when you're mapping over many elements and want reusable, pre-wrapped functions with a predictable output shape; reach for plain `tryCatch()` when you need one-off, finer-grained control over specific condition classes, or you're not inside a `map()`-style iteration at all.
