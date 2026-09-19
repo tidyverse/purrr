@@ -208,8 +208,12 @@ not work, because the worker daemons won’t have a copy of
 <p>You can resolve this by passing additional data along to
 <code><a href="../reference/in_parallel.html">in_parallel()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">by_cyl</span>, <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">my_lm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>, my_lm <span class="op">=</span> <span class="va">my_lm</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Learn more about parallel computing in <code><a href="../reference/in_parallel.html">?in_parallel</a></code>.</p>
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span></span>
+<span>  <span class="va">by_cyl</span>,</span>
+<span>  <span class="fu"><a href="../reference/in_parallel.html">in_parallel</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">my_lm</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>, my_lm <span class="op">=</span> <span class="va">my_lm</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>In this case, we needed to declare <code>my_lm</code>. Learn more
+about parallel computing in <code><a href="../reference/in_parallel.html">?in_parallel</a></code>.</p>
 </div>
 <div class="section level3">
 <h3 id="output-variants">Output variants<a class="anchor" aria-label="anchor" href="#output-variants"></a>
@@ -237,7 +241,8 @@ atomic vector:</p>
 etc.), there’s <code><a href="../reference/map.html">map_vec()</a></code>. It’s a little harder to precisely
 describe the output type, but if your function returns a length-1 vector
 of type “foo”, then the output of <code><a href="../reference/map.html">map_vec()</a></code> will be a
-length-n vector of type “foo”.</p></li>
+length-n vector of type “foo”.<code><a href="../reference/map.html">map_vec()</a></code> simplifies types
+but is stricter than <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>,</p></li>
 <li><p><code><a href="../reference/modify.html">modify()</a></code> returns output with the same type as the
 input. For example, if the input is a data frame, the output will also
 be a data frame.</p></li>
@@ -258,7 +263,22 @@ summary, and then extracts the R-squared:</p>
 <span>  <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span><span class="va">summary</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/map.html">map_dbl</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">r.squared</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         4         6         8 </span></span>
-<span><span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></span>
+<span></span>
+<span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2026-01-15 00:01:00"</span>, <span class="st">"2026-03-02 00:15:00"</span>, <span class="st">"2026-09-17 01:00:00"</span><span class="op">)</span></span>
+<span><span class="co"># Convert characters to datetime</span></span>
+<span><span class="fu"><a href="../reference/map.html">map_vec</a></span><span class="op">(</span><span class="va">dates</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="va">x</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2026-01-15 00:01:00 UTC" "2026-03-02 00:15:00 UTC"</span></span>
+<span><span class="co">#&gt; [3] "2026-09-17 01:00:00 UTC"</span></span>
+<span></span>
+<span><span class="co"># Stricter type compatibility checking than sapply</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">identity</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "1"    "a"    "TRUE"</span></span>
+<span><span class="co">#&gt; [1] "1"    "a"    "TRUE"</span></span>
+<span><span class="co"># Throws error due to incompatible types</span></span>
+<span><span class="fu"><a href="../reference/map.html">map_vec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">identity</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `map_vec()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't combine `&lt;list&gt;[[1]]` &lt;double&gt; and `&lt;list&gt;[[2]]` &lt;character&gt;.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="input-variants">Input variants<a class="anchor" aria-label="anchor" href="#input-variants"></a>
@@ -447,6 +467,60 @@ usually rely on vectorization for simpler vectors.</p>
 <span><span class="co">#&gt; [1] TRUE</span></span>
 <span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/every.html">none</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="combining-list-elements-into-a-single-data-structure">Combining list elements into a single data structure<a class="anchor" aria-label="anchor" href="#combining-list-elements-into-a-single-data-structure"></a>
+</h2>
+<p>purrr provides functions for combining the elements of a list into a
+single data structure, such as a data frame. As noted above,
+<code><a href="../reference/map.html">map()</a></code> returns a list, and often the next step is to combine
+that list’s elements together — for example, after mapping a function
+over each element of a data frame or each group of a split data
+frame.</p>
+<p>The <code>list_*()</code> family handles this combining step:</p>
+<ul>
+<li>
+<code>list_c(x)</code> combines the elements of <code>x</code> into
+a single vector.</li>
+<li>
+<code>list_rbind(x)</code> row-binds a list of data frames into a
+single data frame, stacking them on top of each other.</li>
+<li>
+<code>list_cbind(x)</code> column-binds a list of data frames (or
+vectors) into a single data frame, placing them side by side.</li>
+<li>
+<code>list_flatten(x)</code> removes one level of hierarchy from a
+nested list, without changing the type of the elements.</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># list_c() combines list elements into a single vector</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">7</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/list_c.html">list_c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1 2 3 4 5 6 7 8 9</span></span>
+<span></span>
+<span><span class="co"># list_rbind() combines a list of data frames on top of each other into a single data frame</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/list_c.html">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   x</span></span>
+<span><span class="co">#&gt; 1 1</span></span>
+<span><span class="co">#&gt; 2 2</span></span>
+<span><span class="co">#&gt; 3 3</span></span>
+<span><span class="co">#&gt; 4 4</span></span>
+<span><span class="co">#&gt; 5 5</span></span>
+<span><span class="co">#&gt; 6 6</span></span>
+<span></span>
+<span><span class="co"># list_cbind() places a list of data frames side by side</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/list_c.html">list_cbind</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   x y</span></span>
+<span><span class="co">#&gt; 1 1 4</span></span>
+<span><span class="co">#&gt; 2 2 5</span></span>
+<span><span class="co">#&gt; 3 3 6</span></span></code></pre></div>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

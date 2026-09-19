@@ -150,10 +150,14 @@ You can resolve this by passing additional data along to
 
 ``` r
 
-out <- map(by_cyl, in_parallel(\(df) my_lm(mpg ~ disp, data = df), my_lm = my_lm))
+out <- map(
+  by_cyl,
+  in_parallel(\(df) my_lm(mpg ~ disp, data = df), my_lm = my_lm)
+)
 ```
 
-Learn more about parallel computing in
+In this case, we needed to declare `my_lm`. Learn more about parallel
+computing in
 [`?in_parallel`](https://purrr.tidyverse.org/dev/reference/in_parallel.md).
 
 ### Output variants
@@ -182,7 +186,10 @@ where the output variants come into play:
   a little harder to precisely describe the output type, but if your
   function returns a length-1 vector of type “foo”, then the output of
   [`map_vec()`](https://purrr.tidyverse.org/dev/reference/map.md) will
-  be a length-n vector of type “foo”.
+  be a length-n vector of type
+  “foo”.[`map_vec()`](https://purrr.tidyverse.org/dev/reference/map.md)
+  simplifies types but is stricter than
+  [`sapply()`](https://rdrr.io/r/base/lapply.html),
 
 - [`modify()`](https://purrr.tidyverse.org/dev/reference/modify.md)
   returns output with the same type as the input. For example, if the
@@ -209,6 +216,21 @@ mtcars |>
   map_dbl(\(x) x$r.squared)
 #>         4         6         8 
 #> 0.5086326 0.4645102 0.4229655
+
+dates <- c("2026-01-15 00:01:00", "2026-03-02 00:15:00", "2026-09-17 01:00:00")
+# Convert characters to datetime
+map_vec(dates, \(x) as.POSIXct(x, tz = "UTC"))
+#> [1] "2026-01-15 00:01:00 UTC" "2026-03-02 00:15:00 UTC"
+#> [3] "2026-09-17 01:00:00 UTC"
+
+# Stricter type compatibility checking than sapply
+sapply(list(1, "a", TRUE), identity)
+#> [1] "1"    "a"    "TRUE"
+#> [1] "1"    "a"    "TRUE"
+# Throws error due to incompatible types
+map_vec(list(1, "a", TRUE), identity)
+#> Error in `map_vec()`:
+#> ! Can't combine `<list>[[1]]` <double> and `<list>[[2]]` <character>.
 ```
 
 ### Input variants
@@ -359,6 +381,57 @@ x |> some(\(x) length(x) > 10)
 #> [1] TRUE
 x |> none(\(x) length(x) == 0)
 #> [1] TRUE
+```
+
+## Combining list elements into a single data structure
+
+purrr provides functions for combining the elements of a list into a
+single data structure, such as a data frame. As noted above,
+[`map()`](https://purrr.tidyverse.org/dev/reference/map.md) returns a
+list, and often the next step is to combine that list’s elements
+together — for example, after mapping a function over each element of a
+data frame or each group of a split data frame.
+
+The `list_*()` family handles this combining step:
+
+- `list_c(x)` combines the elements of `x` into a single vector.
+- `list_rbind(x)` row-binds a list of data frames into a single data
+  frame, stacking them on top of each other.
+- `list_cbind(x)` column-binds a list of data frames (or vectors) into a
+  single data frame, placing them side by side.
+- `list_flatten(x)` removes one level of hierarchy from a nested list,
+  without changing the type of the elements.
+
+``` r
+
+# list_c() combines list elements into a single vector
+list(1:3, 4:6, 7:9) |> list_c()
+#> [1] 1 2 3 4 5 6 7 8 9
+
+# list_rbind() combines a list of data frames on top of each other into a single data frame
+list(
+  data.frame(x = 1:3),
+  data.frame(x = 4:6)
+) |>
+  list_rbind()
+#>   x
+#> 1 1
+#> 2 2
+#> 3 3
+#> 4 4
+#> 5 5
+#> 6 6
+
+# list_cbind() places a list of data frames side by side
+list(
+  data.frame(x = 1:3),
+  data.frame(y = 4:6)
+) |>
+  list_cbind()
+#>   x y
+#> 1 1 4
+#> 2 2 5
+#> 3 3 6
 ```
 
 [^1]: You might wonder why this function is called
