@@ -162,31 +162,31 @@
 #' mirai::daemons(0)
 #'
 map <- function(.x, .f, ..., .progress = FALSE) {
-  map_("list", .x, .f, ..., .progress = .progress)
+  map_(.type = "list", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("logical", .x, .f, ..., .progress = .progress)
+  map_(.type = "logical", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
-  map_("integer", .x, .f, ..., .progress = .progress)
+  map_(.type = "integer", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("double", .x, .f, ..., .progress = .progress)
+  map_(.type = "double", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
-  map_("character", .x, .f, ..., .progress = .progress)
+  map_(.type = "character", .x, .f, ..., .progress = .progress)
 }
 
 map_ <- function(

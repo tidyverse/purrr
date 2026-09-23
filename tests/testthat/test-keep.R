@@ -15,6 +15,13 @@ test_that("keep() and discard() require predicate functions", {
   })
 })
 
+test_that("passing .f parameter to keep() and discard() results in an error", {
+  expect_snapshot(error = TRUE, {
+    keep(1:5, .f = function(x, ...) x > 3, .p = NULL)
+    discard(1:5, .f = function(x, ...) x > 3, .p = NULL)
+  })
+})
+
 # keep_at / discard_at ----------------------------------------------------
 
 test_that("can keep_at/discard_at with character vector", {

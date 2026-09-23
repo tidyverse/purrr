@@ -84,23 +84,23 @@
 #' # Specify an alternative with the `.else` argument:
 #' modify_if(iris, is.factor, as.character, .else = as.integer)
 #' @export
-modify <- function(.x, .f, ...) {
+modify <- function(.x, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
 
   if (obj_is_list(.x)) {
-    out <- map(vec_proxy(.x), .f, ...)
+    out <- map(vec_proxy(.x), .f, ..., .progress = .progress)
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
     out <- unclass(vec_proxy(.x))
-    out <- map(out, .f, ...)
+    out <- map(out, .f, ..., .progress = .progress)
     out <- vec_recycle_common(!!!out, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
-    map_vec(.x, .f, ..., .ptype = .x)
+    map_vec(.x, .f, ..., .ptype = .x, .progress = .progress)
   } else if (is.list(.x) || is.null(.x)) {
-    .x[] <- map(.x, .f, ...)
+    .x[] <- map(.x, .f, ..., .progress = .progress)
     .x
   } else {
     cli::cli_abort(
@@ -114,11 +114,11 @@ modify <- function(.x, .f, ...) {
 #' @export
 modify_if <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
-  .x <- modify_where(.x, where, .f, ...)
+  .x <- modify_where(.x, .where = where, .f, ...)
 
   if (!is.null(.else)) {
     .else <- as_mapper(.else, ...)
-    .x <- modify_where(.x, !where, .else, ...)
+    .x <- modify_where(.x, .where = !where, .else, ...)
   }
 
   .x
@@ -129,28 +129,28 @@ modify_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @export
 modify_at <- function(.x, .at, .f, ...) {
   where <- where_at(.x, .at, user_env = caller_env())
-  modify_where(.x, where, .f, ...)
+  modify_where(.x, .where = where, .f, ...)
 }
 
 #' @rdname modify
 #' @export
-modify2 <- function(.x, .y, .f, ...) {
+modify2 <- function(.x, .y, .f, ..., .progress = FALSE) {
   .f <- as_mapper(.f, ...)
 
   if (obj_is_list(.x)) {
-    out <- map2(vec_proxy(.x), .y, .f, ...)
+    out <- map2(vec_proxy(.x), .y, .f, ..., .progress = .progress)
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
     out <- unclass(vec_proxy(.x))
-    out <- map2(out, .y, .f, ...)
+    out <- map2(out, .y, .f, ..., .progress = .progress)
     out <- vec_recycle_common(!!!out, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
-    map2_vec(.x, .y, .f, ..., .ptype = .x)
+    map2_vec(.x, .y, .f, ..., .ptype = .x, .progress = .progress)
   } else if (is.null(.x) || is.list(.x)) {
-    out <- map2(.x, .y, .f, ...)
+    out <- map2(.x, .y, .f, ..., .progress = .progress)
     if (length(out) > length(.x)) {
       .x <- .x[rep(1L, length(out))]
     }
@@ -165,8 +165,8 @@ modify2 <- function(.x, .y, .f, ...) {
 
 #' @rdname modify
 #' @export
-imodify <- function(.x, .f, ...) {
-  modify2(.x, vec_index(.x), .f, ...)
+imodify <- function(.x, .f, ..., .progress = FALSE) {
+  modify2(.x, .y = vec_index(.x), .f, ..., .progress = .progress)
 }
 
 # helpers -----------------------------------------------------------------

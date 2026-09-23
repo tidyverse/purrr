@@ -44,21 +44,21 @@
 #' # Or only where a condition is satisfied
 #' x |> lmap_if(is.character, maybe_rep) |> str()
 lmap <- function(.x, .f, ...) {
-  lmap_helper(.x, rep(TRUE, length(.x)), .f, ...)
+  lmap_helper(.x, .ind = rep(TRUE, length(.x)), .f, ..., .else = NULL)
 }
 
 #' @rdname lmap
 #' @export
 lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
   where <- where_if(.x, .p)
-  lmap_helper(.x, where, .f, ..., .else = .else)
+  lmap_helper(.x, .ind = where, .f, ..., .else = .else)
 }
 
 #' @rdname lmap
 #' @export
 lmap_at <- function(.x, .at, .f, ...) {
   where <- where_at(.x, .at, user_env = caller_env())
-  lmap_helper(.x, where, .f, ...)
+  lmap_helper(.x, .ind = where, .f, ..., .else = NULL)
 }
 
 lmap_helper <- function(

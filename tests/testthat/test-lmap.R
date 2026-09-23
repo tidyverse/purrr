@@ -54,6 +54,14 @@ test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
     lmap(list(1), ~1)
     lmap(list(1), environment())
-    lmap(list(1), ~1, .else = environment())
   })
+})
+
+test_that("passing .ind parameter to lmap() results in an error", {
+  expect_snapshot(lmap(1, .ind = FALSE), error = TRUE)
+})
+
+test_that("passing .else parameter to lmap_at() results in an error", {
+  x <- list(a = 1, b = 2, c = 3, d = 4)
+  expect_snapshot(lmap_at(x, "c", \(x) list(1), .else = \(x) list(NULL)), error = TRUE)
 })

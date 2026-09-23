@@ -30,42 +30,42 @@
 #' iwalk(mtcars, \(x, idx) cat(idx, ": ", median(x), "\n", sep = ""))
 imap <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  map2(.x, vec_index(.x), .f, ...)
+  map2(.x, .y = vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_lgl <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  map2_lgl(.x, vec_index(.x), .f, ...)
+  map2_lgl(.x, .y = vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_chr <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  map2_chr(.x, vec_index(.x), .f, ...)
+  map2_chr(.x, .y = vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_int <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  map2_int(.x, vec_index(.x), .f, ...)
+  map2_int(.x, .y = vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
 imap_dbl <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  map2_dbl(.x, vec_index(.x), .f, ...)
+  map2_dbl(.x, .y = vec_index(.x), .f, ...)
 }
 
 #' @rdname imap
 #' @export
-imap_vec <- function(.x, .f, ...) {
+imap_vec <- function(.x, .f, ..., .ptype = NULL) {
   .f <- as_mapper(.f, ...)
-  map2_vec(.x, vec_index(.x), .f, ...)
+  map2_vec(.x, .y = vec_index(.x), .f, ..., .ptype = .ptype)
 }
 
 
@@ -73,7 +73,7 @@ imap_vec <- function(.x, .f, ...) {
 #' @rdname imap
 iwalk <- function(.x, .f, ...) {
   .f <- as_mapper(.f, ...)
-  walk2(.x, vec_index(.x), .f, ...)
+  walk2(.x, .y = vec_index(.x), .f, ...)
 }
 
 

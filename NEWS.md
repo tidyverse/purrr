@@ -1,5 +1,11 @@
 # purrr (development version)
 
+* The following functions gain an explicit `.progress` parameter: `keep()`, `discard()`, `compact()`, `modify()`, `modify2()`, `imodify()` (#1249).
+
+* `imap_vec()` gains an explicit `.ptype` parameter to match `map2_vec()` (#1244).
+
+* Many internal parameters across several functions are now passed with names to avoid accidental overwrite by user passing the same parameter to `...` (#1248).
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).

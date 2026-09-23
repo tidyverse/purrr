@@ -20,7 +20,7 @@ imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
 
-imap_vec(.x, .f, ...)
+imap_vec(.x, .f, ..., .ptype = NULL)
 
 iwalk(.x, .f, ...)
 }
@@ -55,6 +55,10 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.ptype}{If \code{NULL}, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.}
 }
 \value{
 A vector the same length as \code{.x}.
