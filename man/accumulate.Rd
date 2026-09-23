@@ -12,10 +12,20 @@ accumulate(
   .init,
   .dir = c("forward", "backward"),
   .simplify = NA,
-  .ptype = NULL
+  .ptype = NULL,
+  .progress = FALSE
 )
 
-accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
+accumulate2(
+  .x,
+  .y,
+  .f,
+  ...,
+  .init,
+  .simplify = NA,
+  .ptype = NULL,
+  .progress = FALSE
+)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -63,10 +73,13 @@ If \code{FALSE}, the result is not simplified, always returning a list.}
 \item{.ptype}{If \code{simplify} is \code{NA} or \code{TRUE}, optionally supply a vector
 prototype to enforce the output type.}
 
-\item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
-needs to be 1 element shorter than the vector to be accumulated (\code{.x}).
-If \code{.init} is set, \code{.y} needs to be one element shorted than the
-concatenation of the initial value and \code{.x}.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
+
+\item{.y}{For \code{accumulate2()} an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.

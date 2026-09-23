@@ -5,9 +5,9 @@
 \alias{reduce2}
 \title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
-reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
+reduce(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE)
 
-reduce2(.x, .y, .f, ..., .init)
+reduce2(.x, .y, .f, ..., .init, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -45,6 +45,10 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 \item{.dir}{The direction of reduction as a string, one of
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
+
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 
 \item{.y}{For \code{reduce2()} an additional
 argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
