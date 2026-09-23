@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' These functions were superded in purrr 0.3.0 and deprecated in purrr 1.0.0.
+#' These functions were superseded in purrr 0.3.0 and deprecated in purrr 1.0.0.
 #'
 #' * `invoke()` is deprecated in favour of the simpler `exec()` function
 #'   reexported from rlang. `exec()` evaluates a function call built
