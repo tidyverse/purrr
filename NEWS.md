@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `detect()`, `detect_index()`, `head_while()`, and `tail_while()` were rewritten in C, leading to significantly improved performance.
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).
