@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `pmap()` now passes `user_env` to the vctrs compatibility helpers, fixing a spurious "argument `user_env` is missing" error when given a pairlist.
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).
