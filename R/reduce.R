@@ -479,7 +479,28 @@ accumulate <- function(
   .f <- as_mapper(.f, ...)
 
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
-  names(res) <- accumulate_names(names(.x), .init, .dir)
+  
+  # Apply names after accumulation to handle early termination correctly
+  # Fixes #1243 - names should match the actual length of results
+  nms <- names(.x)
+  if (!is_null(nms)) {
+    # Only add names if the input had names
+    if (!missing(.init)) {
+      nms <- c(".init", nms)
+    }
+    if (.dir == "backward") {
+      nms <- rev(nms)
+    }
+    # Trim names to match actual result length (handles early termination)
+    if (length(nms) > length(res)) {
+      if (.dir == "forward") {
+        nms <- nms[seq_len(length(res))]
+      } else {
+        nms <- nms[seq(length(nms) - length(res) + 1, length(nms))]
+      }
+    }
+    names(res) <- nms
+  }
 
   res <- list_simplify_internal(res, .simplify, .ptype)
   res
@@ -497,9 +518,13 @@ accumulate_names <- function(nms, init, dir) {
     return(NULL)
   }
 
+  # Add init name if provided
   if (!missing(init)) {
     nms <- c(".init", nms)
   }
+  
+  # For backward accumulation, reverse the names to match output order
+  # Fixes #1245 - ensure names match the actual output order
   if (dir == "backward") {
     nms <- rev(nms)
   }
