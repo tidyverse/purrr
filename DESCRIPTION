@@ -40,8 +40,8 @@ VignetteBuilder:
 Biarch: true
 Config/build/compilation-database: true
 Config/Needs/website: tidyverse/tidytemplate, tidyr
+Config/roxygen2/version: 7.3.3.9000
 Config/testthat/edition: 3
 Config/testthat/parallel: TRUE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3

@@ -90,13 +90,13 @@ x |> lmap_at(c("a", "d"), maybe_rep) |> str()
 x |> lmap_if(is.character, maybe_rep) |> str()
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}
