@@ -1,5 +1,9 @@
 # purrr (development version)
 
+* `list_cbind()` documentation now describes how named inputs can create packed
+  data frame columns and points to `unname()` when those outer names should be
+  ignored (#1080, @LeonidasZhak).
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).
