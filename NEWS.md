@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* All `map()` functions now have less overhead, particularly on unclassed vectors. This means that they should run faster when `.f` itself is very fast, like with the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea).
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).

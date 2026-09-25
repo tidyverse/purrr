@@ -165,9 +165,6 @@ pmap_ <- function(
     return(mmap_(.l, .f, .progress, .type, .purrr_error_call, ...))
   }
 
-  call_names <- names(.l)
-  call_n <- length(.l)
-
   i <- 0L
   with_indexed_errors(
     i = i,
@@ -175,14 +172,13 @@ pmap_ <- function(
     error_call = .purrr_error_call,
     call_with_cleanup(
       pmap_impl,
+      .l,
       environment(),
       .type,
       .progress,
       n,
       names,
-      i,
-      call_names,
-      call_n
+      i
     )
   )
 }
