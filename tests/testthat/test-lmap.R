@@ -23,6 +23,17 @@ test_that("lmap() returns a data frame if input is a data frame", {
   expect_equal(out, data.frame(x = 1, x.1 = 1, y = 2, y.1 = 2))
 })
 
+test_that("lmap() preserves tibbles", {
+  df <- tibble::tibble(x = 1, y = 2)
+
+  expect_equal(lmap(df, identity), df)
+  expect_equal(lmap_at(df, "x", identity), df)
+  expect_equal(lmap_if(df, is.numeric, identity), df)
+
+  out <- lmap(df, function(x) as.list(rep(x, 2)))
+  expect_equal(out, tibble::tibble(x = 1, x.1 = 1, y = 2, y.1 = 2))
+})
+
 test_that("lmap() can increase and decrease elements", {
   out <- lmap(list(0, 1, 2), ~ as.list(rep(.x, .x)))
   expect_equal(out, list(1, 2, 2))

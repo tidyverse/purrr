@@ -95,7 +95,11 @@ lmap_helper <- function(
 
   if (is.data.frame(.x)) {
     out <- lapply(out, as.data.frame)
-    list_cbind(out)
+    out <- list_cbind(out)
+    if (inherits(.x, "tbl_df")) {
+      out <- vec_restore(out, .x)
+    }
+    out
   } else {
     list_flatten(out)
   }
