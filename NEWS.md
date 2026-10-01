@@ -1,5 +1,7 @@
 # purrr (development version)
 
+* `lmap()`, `lmap_at()`, and `lmap_if()` now return a tibble when `.x` is a tibble (#1051).
+
 # purrr 1.2.2
 
 * Fixes for CRAN checks (@ErdaradunGaztea, #1256).
