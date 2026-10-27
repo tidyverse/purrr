@@ -1,9 +1,9 @@
 # Prepend a vector
 
-**\[deprecated\]**
+**\[defunct\]**
 
-This function was deprecated in purrr 1.0.0 because it's not related to
-the core purpose of purrr.
+This function was deprecated in purrr 1.0.0 and is now defunct because
+it's not related to the core purpose of purrr.
 
 This is a companion to [`append()`](https://rdrr.io/r/base/append.html)
 to help merging two lists or atomic vectors. `prepend()` is a clearer
@@ -41,22 +41,8 @@ A merged vector.
 ``` r
 x <- as.list(1:3)
 
-x |> append("a")
-#> [[1]]
-#> [1] 1
-#> 
-#> [[2]]
-#> [1] 2
-#> 
-#> [[3]]
-#> [1] 3
-#> 
-#> [[4]]
-#> [1] "a"
-#> 
-x |> prepend("a")
-#> Warning: `prepend()` was deprecated in purrr 1.0.0.
-#> ℹ Please use append(after = 0) instead.
+# Instead of prepend(), use append():
+x |> append("a", after = 0)
 #> [[1]]
 #> [1] "a"
 #> 
@@ -69,7 +55,7 @@ x |> prepend("a")
 #> [[4]]
 #> [1] 3
 #> 
-x |> prepend(list("a", "b"), before = 3)
+x |> append(list("a", "b"), after = 2)
 #> [[1]]
 #> [1] 1
 #> 
@@ -83,16 +69,6 @@ x |> prepend(list("a", "b"), before = 3)
 #> [1] "b"
 #> 
 #> [[5]]
-#> [1] 3
-#> 
-prepend(list(), x)
-#> [[1]]
-#> [1] 1
-#> 
-#> [[2]]
-#> [1] 2
-#> 
-#> [[3]]
 #> [1] 3
 #> 
 ```

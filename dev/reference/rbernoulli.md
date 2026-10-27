@@ -1,9 +1,9 @@
 # Generate random sample from a Bernoulli distribution
 
-**\[deprecated\]**
+**\[defunct\]**
 
-This function was deprecated in purrr 1.0.0 because it's not related to
-the core purpose of purrr.
+This function was deprecated in purrr 1.0.0 and is now defunct because
+it's not related to the core purpose of purrr.
 
 ## Usage
 
@@ -24,22 +24,3 @@ rbernoulli(n, p = 0.5)
 ## Value
 
 A logical vector
-
-## Examples
-
-``` r
-rbernoulli(10)
-#> Warning: `rbernoulli()` was deprecated in purrr 1.0.0.
-#>  [1]  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE
-rbernoulli(100, 0.1)
-#>   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#>  [12] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-#>  [23] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-#>  [34] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-#>  [45] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-#>  [56]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#>  [67] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#>  [78] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-#>  [89] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-#> [100] FALSE
-```

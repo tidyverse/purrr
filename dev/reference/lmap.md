@@ -73,10 +73,6 @@ lmap_at(.x, .at, .f, ...)
   Alternatively, a function that takes a vector of names, and returns a
   logical, integer, or character vector of elements to select.
 
-  **\[deprecated\]**: if the tidyselect package is installed, you can
-  use [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) and
-  tidyselect helpers to select elements.
-
 ## Value
 
 A list or data frame, matching `.x`. There are no guarantees about the

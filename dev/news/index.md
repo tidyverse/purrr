@@ -2,6 +2,35 @@
 
 ## purrr (development version)
 
+- All functions and arguments deprecated in purrr 1.0.0 (released
+  December 2022) are now defunct, so calling them throws an error. They
+  will be removed in a future release. This includes `cross*()`,
+  [`flatten_raw()`](https://purrr.tidyverse.org/dev/reference/map_raw.md),
+  [`invoke()`](https://purrr.tidyverse.org/dev/reference/invoke.md),
+  [`invoke_map()`](https://purrr.tidyverse.org/dev/reference/invoke.md)
+  (and its typed variants except
+  [`invoke_map_df()`](https://purrr.tidyverse.org/dev/reference/invoke.md)
+  and
+  [`invoke_map_dfc()`](https://purrr.tidyverse.org/dev/reference/invoke.md)),
+  `lift_*()`, `*map*_raw()`,
+  [`prepend()`](https://purrr.tidyverse.org/dev/reference/prepend.md),
+  [`rbernoulli()`](https://purrr.tidyverse.org/dev/reference/rbernoulli.md),
+  [`rdunif()`](https://purrr.tidyverse.org/dev/reference/rdunif.md),
+  [`rerun()`](https://purrr.tidyverse.org/dev/reference/rerun.md),
+  [`splice()`](https://purrr.tidyverse.org/dev/reference/splice.md),
+  [`update_list()`](https://purrr.tidyverse.org/dev/reference/update_list.md),
+  [`vec_depth()`](https://purrr.tidyverse.org/dev/reference/pluck_depth.md),
+  [`when()`](https://purrr.tidyverse.org/dev/reference/when.md), and
+  using [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) in
+  `.at`.
+- [`list_along()`](https://purrr.tidyverse.org/dev/reference/along.md),
+  [`invoke_map_df()`](https://purrr.tidyverse.org/dev/reference/invoke.md),
+  and
+  [`invoke_map_dfc()`](https://purrr.tidyverse.org/dev/reference/invoke.md)
+  now always warn about their deprecation, as does supplying pairlists,
+  calls, or expressions to
+  [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) and
+  friends.
 - All [`map()`](https://purrr.tidyverse.org/dev/reference/map.md)
   functions now have less overhead, particularly on unclassed vectors.
   This means that they should run faster when `.f` itself is very fast,

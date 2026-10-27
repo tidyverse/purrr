@@ -82,10 +82,6 @@ map_at(.x, .at, .f, ..., .progress = FALSE)
   Alternatively, a function that takes a vector of names, and returns a
   logical, integer, or character vector of elements to select.
 
-  **\[deprecated\]**: if the tidyselect package is installed, you can
-  use [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) and
-  tidyselect helpers to select elements.
-
 - .progress:
 
   Whether to show a progress bar. Use `TRUE` to turn on a basic progress

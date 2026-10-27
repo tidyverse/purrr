@@ -1,9 +1,9 @@
 # Functions that return raw vectors
 
-**\[deprecated\]**
+**\[defunct\]**
 
-These functions were deprecated in purrr 1.0.0 because they are of
-limited use and you can now use
+These functions were deprecated in purrr 1.0.0 and are now defunct
+because they are of limited use and you can now use
 [`map_vec()`](https://purrr.tidyverse.org/dev/reference/map.md) instead.
 They are variants of
 [`map()`](https://purrr.tidyverse.org/dev/reference/map.md),

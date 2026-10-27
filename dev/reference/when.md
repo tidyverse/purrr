@@ -1,10 +1,10 @@
 # Match/validate a set of conditions for an object and continue with the action associated with the first valid match.
 
-**\[deprecated\]**
+**\[defunct\]**
 
-This function was deprecated in purrr 1.0.0 because it's not related to
-the core purpose of purrr. You can pull your code out of a pipe and use
-regular `if`/`else` statements instead.
+This function was deprecated in purrr 1.0.0 and is now defunct because
+it's not related to the core purpose of purrr. You can pull your code
+out of a pipe and use regular `if`/`else` statements instead.
 
 `when()` is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets.
@@ -43,17 +43,7 @@ function.
 ## Examples
 
 ``` r
-1:10 |>
-  when(
-    sum(.) <=  50 ~ sum(.),
-    sum(.) <= 100 ~ sum(.)/2,
-    ~ 0
-  )
-#> Warning: `when()` was deprecated in purrr 1.0.0.
-#> ℹ Please use `if` instead.
-#> [1] 27.5
-
-# now
+# Instead of when(), use if/else:
 x <- 1:10
 if (sum(x) < 10) {
   sum(x)

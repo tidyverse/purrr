@@ -1,9 +1,10 @@
 # Update a list with formulas
 
-**\[deprecated\]**
+**\[defunct\]**
 
-`update_list()` was deprecated in purrr 1.0.0, because we no longer
-believe that functions that use NSE are a good fit for purrr.
+`update_list()` was deprecated in purrr 1.0.0 and is now defunct,
+because we no longer believe that functions that use NSE are a good fit
+for purrr.
 
 `update_list()` handles formulas and quosures that can refer to values
 existing within the input list. This function is deprecated because we

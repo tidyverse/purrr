@@ -1,10 +1,10 @@
 # Re-run expressions multiple times
 
-**\[deprecated\]**
+**\[defunct\]**
 
-This function was deprecated in purrr 1.0.0 because we believe that NSE
-functions are not a good fit for purrr. Also, `rerun(n, x)` can just as
-easily be expressed as `map(1:n, \(i) x)`
+This function was deprecated in purrr 1.0.0 and is now defunct because
+we believe that NSE functions are not a good fit for purrr. Also,
+`rerun(n, x)` can just as easily be expressed as `map(1:n, \(i) x)`
 
 `rerun()` is a convenient way of generating sample data. It works
 similarly to
@@ -38,45 +38,18 @@ level list will be dropped. In this case, `rerun(n, x)` behaves like
 ## Examples
 
 ``` r
-# old
-5 |> rerun(rnorm(5)) |> str()
-#> Warning: `rerun()` was deprecated in purrr 1.0.0.
-#> ℹ Please use `map()` instead.
-#>   # Previously
-#>   rerun(5, rnorm(5))
-#> 
-#>   # Now
-#>   map(1:5, ~ rnorm(5))
-#> List of 5
-#>  $ : num [1:5] 1.881 -0.125 -0.759 -0.509 -0.156
-#>  $ : num [1:5] 0.1326 -0.9741 -1.2509 -0.0463 1.1374
-#>  $ : num [1:5] 1.264 -0.549 0.682 -0.93 -0.975
-#>  $ : num [1:5] -0.0271 0.4467 -0.3291 0.113 1.0512
-#>  $ : num [1:5] 0.327 0.787 0.442 -1.019 -0.159
-# new
+# Instead of rerun(5, rnorm(5)), use:
 1:5 |> map(\(i) rnorm(5)) |> str()
 #> List of 5
-#>  $ : num [1:5] -1.638 2.839 0.962 0.508 0.26
-#>  $ : num [1:5] -0.773 -1.806 0.178 -0.526 0.4
-#>  $ : num [1:5] -0.1226 -0.0713 2.0957 1.3221 1.2006
-#>  $ : num [1:5] -0.7819 -0.4415 -0.246 0.3658 -0.0341
-#>  $ : num [1:5] 0.2962 -0.2211 0.1877 -0.4381 -0.0887
+#>  $ : num [1:5] -1.014 -1.367 -1.768 -0.565 -0.259
+#>  $ : num [1:5] 1.631 0.325 -1.058 -1.366 0.355
+#>  $ : num [1:5] -0.6728 0.4031 0.3333 1.4779 -0.0111
+#>  $ : num [1:5] -0.678 -0.359 0.602 -0.75 -0.397
+#>  $ : num [1:5] -1.9265 -2.2059 1.4322 -0.2397 -0.0294
 
-# old
-5 |>
-  rerun(x = rnorm(5), y = rnorm(5)) |>
-  map_dbl(\(l) cor(l$x, l$y))
-#> Warning: `rerun()` was deprecated in purrr 1.0.0.
-#> ℹ Please use `map()` instead.
-#>   # Previously
-#>   rerun(5, x = rnorm(5), y = rnorm(5))
-#> 
-#>   # Now
-#>   map(1:5, ~ list(x = rnorm(5), y = rnorm(5)))
-#> [1]  0.9497046 -0.3541633  0.8256722 -0.9416334 -0.5836642
-# new
+# Instead of rerun(5, x = rnorm(5), y = rnorm(5)), use:
 1:5 |>
   map(\(i) list(x = rnorm(5), y = rnorm(5))) |>
   map_dbl(\(l) cor(l$x, l$y))
-#> [1]  0.90817642  0.01256163  0.65647896 -0.52973208  0.53135577
+#> [1]  0.80655709  0.09687883  0.08911504  0.24502508 -0.84317770
 ```
