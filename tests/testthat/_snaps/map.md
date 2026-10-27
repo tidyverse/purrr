@@ -69,7 +69,7 @@
       map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
     Condition
       Error in `map_vec()`:
-      ! Can't combine `<list>[[1]]` <factor<bf275>> and `<list>[[2]]` <double>.
+      ! Can't combine `<list>[[1]]` <factor<9758a>> and `<list>[[2]]` <double>.
 
 # can enforce .ptype
 
@@ -77,5 +77,5 @@
       map_vec(1:2, ~ factor("x"), .ptype = integer())
     Condition
       Error in `map_vec()`:
-      ! Can't convert `<list>[[1]]` <factor<bf275>> to <integer>.
+      ! Can't convert `<list>[[1]]` <factor<9758a>> to <integer>.
 
