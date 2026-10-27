@@ -26,7 +26,7 @@ pwalk(.l, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.l}{A list of vectors. The length of \code{.l} determines the number of
-arguments that \code{.f} will be called with. Arguments will be supply by
+arguments that \code{.f} will be called with. Arguments will be supplied by
 position if unnamed, and by name if named.
 
 Vectors of length 1 will be recycled to any length; all other elements
