@@ -1,16 +1,31 @@
-# filtering requires a predicate function
+# cross functions are defunct
 
     Code
-      cross2(1:3, 1:3, .filter = ~ c(TRUE, TRUE))
+      cross(list())
     Condition
-      Error in `cross()`:
-      ! The filter function must return a single `TRUE` or `FALSE`, not a logical vector.
-
-# filtering fails when filter function doesn't return a logical
-
+      Error:
+      ! `cross()` was deprecated in purrr 1.0.0 and is now defunct.
+      i Please use `tidyr::expand_grid()` instead.
+      i See <https://github.com/tidyverse/purrr/issues/768>.
     Code
-      cross3(1:3, 1:3, 1:3, .filter = filter)
+      cross2(1, 2)
     Condition
-      Error in `cross()`:
-      ! The filter function must return a single `TRUE` or `FALSE`, not an integer.
+      Error:
+      ! `cross2()` was deprecated in purrr 1.0.0 and is now defunct.
+      i Please use `tidyr::expand_grid()` instead.
+      i See <https://github.com/tidyverse/purrr/issues/768>.
+    Code
+      cross3(1, 2, 3)
+    Condition
+      Error:
+      ! `cross3()` was deprecated in purrr 1.0.0 and is now defunct.
+      i Please use `tidyr::expand_grid()` instead.
+      i See <https://github.com/tidyverse/purrr/issues/768>.
+    Code
+      cross_df(list())
+    Condition
+      Error:
+      ! `cross_df()` was deprecated in purrr 1.0.0 and is now defunct.
+      i Please use `tidyr::expand_grid()` instead.
+      i See <https://github.com/tidyverse/purrr/issues/768>.
 

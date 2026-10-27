@@ -36,14 +36,6 @@ test_that("lmap_at() only affects selected elements", {
   expect_equal(out, list(0, 1, 2, 2))
 })
 
-test_that("lmap_at can use tidyselect", {
-  skip_if_not_installed("tidyselect")
-  local_options(lifecycle_verbosity = "quiet")
-
-  x <- lmap_at(mtcars, vars(tidyselect::contains("vs")), ~ .x + 10)
-  expect_equal(x$vs[1], 10)
-})
-
 test_that("`.else` preserves false elements", {
   x <- list("a", 99)
   out <- lmap_if(x, is.character, ~ list(1, 2), .else = ~ list(3, 4))

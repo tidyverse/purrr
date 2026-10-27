@@ -31,8 +31,7 @@ Suggests:
     mirai (>= 2.5.1),
     rmarkdown,
     testthat (>= 3.0.0),
-    tibble,
-    tidyselect
+    tibble
 LinkingTo:
     cli
 VignetteBuilder:

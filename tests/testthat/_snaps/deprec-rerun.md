@@ -1,10 +1,10 @@
-# is deprecated
+# rerun() is defunct
 
     Code
-      . <- rerun(5, rnorm(1))
+      rerun(5, rnorm(1))
     Condition
-      Warning:
-      `rerun()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `rerun()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `map()` instead.
         # Previously
         rerun(5, rnorm(1))
@@ -12,10 +12,10 @@
         # Now
         map(1:5, ~ rnorm(1))
     Code
-      . <- rerun(5, rnorm(1), rnorm(2))
+      rerun(5, rnorm(1), rnorm(2))
     Condition
-      Warning:
-      `rerun()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `rerun()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `map()` instead.
         # Previously
         rerun(5, rnorm(1), rnorm(2))
