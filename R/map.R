@@ -30,8 +30,6 @@
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
 #'     set a default value if the indexed element is `NULL` or does not exist.
 #'
-#'   `r lifecycle::badge("experimental")`
-#'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
 #'   Use of `...` is not permitted in this context.

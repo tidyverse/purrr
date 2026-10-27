@@ -45,14 +45,14 @@ if (interactive()) {
 
 }
 \seealso{
-Other adverbs: 
-\code{\link{compose}()},
-\code{\link{insistently}()},
-\code{\link{negate}()},
-\code{\link{partial}()},
-\code{\link{possibly}()},
-\code{\link{quietly}()},
-\code{\link{safely}()},
-\code{\link{slowly}()}
+Other adverbs:
+\code{\link[=compose]{compose()}},
+\code{\link[=insistently]{insistently()}},
+\code{\link[=negate]{negate()}},
+\code{\link[=partial]{partial()}},
+\code{\link[=possibly]{possibly()}},
+\code{\link[=quietly]{quietly()}},
+\code{\link[=safely]{safely()}},
+\code{\link[=slowly]{slowly()}}
 }
 \concept{adverbs}
