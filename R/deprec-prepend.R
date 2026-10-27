@@ -1,10 +1,10 @@
 #' Prepend a vector
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("defunct")`
 #'
-#' This function was deprecated in purrr 1.0.0 because it's not related to the
-#' core purpose of purrr.
+#' This function was deprecated in purrr 1.0.0 and is now defunct because it's
+#' not related to the core purpose of purrr.
 #'
 #' This is a companion to [append()] to help merging two
 #' lists or atomic vectors. `prepend()` is a clearer semantic
@@ -21,19 +21,9 @@
 #' @examples
 #' x <- as.list(1:3)
 #'
-#' x |> append("a")
-#' x |> prepend("a")
-#' x |> prepend(list("a", "b"), before = 3)
-#' prepend(list(), x)
+#' # Instead of prepend(), use append():
+#' x |> append("a", after = 0)
+#' x |> append(list("a", "b"), after = 2)
 prepend <- function(x, values, before = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "prepend()", I("append(after = 0)"))
-
-  n <- length(x)
-  stopifnot(is.null(before) || (before > 0 && before <= n))
-
-  if (is.null(before) || before == 1) {
-    c(values, x)
-  } else {
-    c(x[1:(before - 1)], values, x[before:n])
-  }
+  lifecycle::deprecate_stop("1.0.0", "prepend()", I("append(after = 0)"))
 }

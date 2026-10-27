@@ -12,13 +12,9 @@ rdunif(n, b, a = 1)
 \item{a, b}{Range of the distribution (inclusive).}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#defunct}{\figure{lifecycle-defunct.svg}{options: alt='[Defunct]'}}}{\strong{[Defunct]}}
 
-This function was deprecated in purrr 1.0.0 because it's not related to the
-core purpose of purrr.
-}
-\examples{
-table(rdunif(1e3, 10))
-table(rdunif(1e3, 10, -5))
+This function was deprecated in purrr 1.0.0 and is now defunct because it's
+not related to the core purpose of purrr.
 }
 \keyword{internal}

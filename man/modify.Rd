@@ -54,11 +54,7 @@ returns \code{FALSE}.}
 
 \item{.at}{A logical, integer, or character vector giving the elements
 to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
-installed, you can use \code{vars()} and tidyselect helpers to select
-elements.}
+and returns a logical, integer, or character vector of elements to select.}
 
 \item{.y}{A vector, usually the same length as \code{.x}.}
 }
@@ -136,18 +132,18 @@ modify_if(iris, is.factor, as.character)
 modify_if(iris, is.factor, as.character, .else = as.integer)
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=pmap]{pmap()}}
 
-Other modify variants: 
-\code{\link{map_depth}()},
-\code{\link{modify_tree}()}
+Other modify variants:
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=modify_tree]{modify_tree()}}
 }
 \concept{map variants}
 \concept{modify variants}

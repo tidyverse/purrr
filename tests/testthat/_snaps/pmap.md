@@ -55,3 +55,12 @@
       Error in `pmap_()`:
       ! formal argument ".type" matched by multiple actual arguments
 
+# pairlists are deprecated but work
+
+    Code
+      x <- f()
+    Condition
+      Warning:
+      Use of pairlists in purrr functions was deprecated in purrr 1.0.0.
+      i Please coerce explicitly with `as.list()`
+

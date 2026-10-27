@@ -13,11 +13,11 @@ splice(...)
 A list.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#defunct}{\figure{lifecycle-defunct.svg}{options: alt='[Defunct]'}}}{\strong{[Defunct]}}
 
-This function was deprecated in purrr 1.0.0 because we no longer believe that
-this style of implicit/automatic splicing is a good idea; instead use
-\code{rlang::list2()} + \verb{!!!} or \code{\link[=list_flatten]{list_flatten()}}.
+This function was deprecated in purrr 1.0.0 and is now defunct because we no
+longer believe that this style of implicit/automatic splicing is a good idea;
+instead use \code{rlang::list2()} + \verb{!!!} or \code{\link[=list_flatten]{list_flatten()}}.
 
 \code{splice()} splices all arguments into a list. Non-list objects and lists
 with a S3 class are encapsulated in a list before concatenation.
@@ -25,9 +25,8 @@ with a S3 class are encapsulated in a list before concatenation.
 \examples{
 inputs <- list(arg1 = "a", arg2 = "b")
 
-# splice() concatenates the elements of inputs with arg3
-splice(inputs, arg3 = c("c1", "c2")) |> str()
-list(inputs, arg3 = c("c1", "c2")) |> str()
-c(inputs, arg3 = c("c1", "c2")) |> str()
+# Instead of splice(inputs, arg3 = c("c1", "c2")), use:
+list(inputs, arg3 = c("c1", "c2")) |> list_flatten() |> str()
+rlang::list2(!!!inputs, arg3 = c("c1", "c2")) |> str()
 }
 \keyword{internal}

@@ -52,13 +52,9 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @param .at A logical, integer, or character vector giving the elements
 #'   to select. Alternatively, a function that takes a vector of names,
 #'   and returns a logical, integer, or character vector of elements to select.
-#'
-#'   `r lifecycle::badge("deprecated")`: if the tidyselect package is
-#'   installed, you can use `vars()` and tidyselect helpers to select
-#'   elements.
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
-  where <- where_at(.x, .at, user_env = caller_env())
+  where <- where_at(.x, .at)
 
   out <- vector("list", length(.x))
   out[where] <- map(.x[where], .f, ..., .progress = .progress)

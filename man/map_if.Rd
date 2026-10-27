@@ -31,8 +31,6 @@ are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 set a default value if the indexed element is \code{NULL} or does not exist.
 }
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
 Use of \code{...} is not permitted in this context.}
@@ -56,11 +54,7 @@ returns \code{FALSE}.}
 
 \item{.at}{A logical, integer, or character vector giving the elements
 to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
-installed, you can use \code{vars()} and tidyselect helpers to select
-elements.}
+and returns a logical, integer, or character vector of elements to select.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
@@ -91,13 +85,13 @@ iris |> map_at(c(4, 5), is.numeric) |> str()
 iris |> map_at("Species", toupper) |> str()
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

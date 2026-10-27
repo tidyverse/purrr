@@ -20,9 +20,9 @@ replacement values are stored in a list, you can splice that in with
 \verb{!!!}.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#defunct}{\figure{lifecycle-defunct.svg}{options: alt='[Defunct]'}}}{\strong{[Defunct]}}
 
-\code{update_list()} was deprecated in purrr 1.0.0, because we no longer believe
+\code{update_list()} was deprecated in purrr 1.0.0 and is now defunct, because we no longer believe
 that functions that use NSE are a good fit for purrr.
 
 \code{update_list()} handles formulas and quosures that can refer to

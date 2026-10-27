@@ -29,21 +29,21 @@ in a package, be sure to read \link{faq-adverbs-export}.
 }
 
 \examples{
-x <- list(x = 1:10, y = rbernoulli(10), z = letters)
+x <- list(x = 1:10, y = runif(10) > 0.5, z = letters)
 x |> keep(is.numeric) |> names()
 x |> keep(negate(is.numeric)) |> names()
 # Same as
 x |> discard(is.numeric)
 }
 \seealso{
-Other adverbs: 
-\code{\link{auto_browse}()},
-\code{\link{compose}()},
-\code{\link{insistently}()},
-\code{\link{partial}()},
-\code{\link{possibly}()},
-\code{\link{quietly}()},
-\code{\link{safely}()},
-\code{\link{slowly}()}
+Other adverbs:
+\code{\link[=auto_browse]{auto_browse()}},
+\code{\link[=compose]{compose()}},
+\code{\link[=insistently]{insistently()}},
+\code{\link[=partial]{partial()}},
+\code{\link[=possibly]{possibly()}},
+\code{\link[=quietly]{quietly()}},
+\code{\link[=safely]{safely()}},
+\code{\link[=slowly]{slowly()}}
 }
 \concept{adverbs}

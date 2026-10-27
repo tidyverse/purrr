@@ -1,32 +1,32 @@
-# _raw funtions are deprecated
+# _raw functions are defunct
 
     Code
-      . <- map_raw(list(), ~.x)
+      map_raw(1, identity)
     Condition
-      Warning:
-      `map_raw()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `map_raw()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `map_vec()` instead.
     Code
-      . <- map2_raw(list(), list(), ~.x)
+      map2_raw(1, 1, identity)
     Condition
-      Warning:
-      `map2_raw()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `map2_raw()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `map2_vec()` instead.
     Code
-      . <- imap_raw(list(), ~.x)
+      imap_raw(1, identity)
     Condition
-      Warning:
-      `imap_raw()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `imap_raw()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `imap_vec()` instead.
     Code
-      . <- pmap_raw(list(), ~.x)
+      pmap_raw(list(1), identity)
     Condition
-      Warning:
-      `pmap_raw()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `pmap_raw()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `pmap_vec()` instead.
     Code
-      . <- flatten_raw(list())
+      flatten_raw(list())
     Condition
-      Warning:
-      `flatten_raw()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `flatten_raw()` was deprecated in purrr 1.0.0 and is now defunct.
 

@@ -31,6 +31,23 @@ test_that("verifies result types and length", {
   })
 })
 
+test_that("creates simple call", {
+  out <- map2(1, 2, function(x, y) sys.call())[[1]]
+  expect_equal(out, quote(.f(.x_i, .y_i)))
+
+  out <- map2(1, 2, function(x, y, z) sys.call(), z = 1)[[1]]
+  expect_equal(out, quote(.f(.x_i, .y_i, ...)))
+})
+
+test_that("handles mix of objects and bare vectors", {
+  date <- as.Date(c("2020-01-01", "2020-01-02"))
+  expect_identical(
+    map2(date, 1:2, \(x, y) x + y),
+    list(date[1] + 1L, date[2] + 2L)
+  )
+  expect_identical(map2(1:2, date, \(x, y) y), list(date[1], date[2]))
+})
+
 test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))

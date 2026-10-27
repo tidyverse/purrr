@@ -49,9 +49,11 @@ as \code{.f} the name of a function rather than its value, or as
 \code{.x} symbols of objects rather than their values.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#defunct}{\figure{lifecycle-defunct.svg}{options: alt='[Defunct]'}}}{\strong{[Defunct]}}
 
-These functions were superded in purrr 0.3.0 and deprecated in purrr 1.0.0.
+These functions were superseded in purrr 0.3.0 and deprecated in purrr 1.0.0.
+They are now defunct, except for \code{invoke_map_df()} and \code{invoke_map_dfc()},
+which are deprecated.
 \itemize{
 \item \code{invoke()} is deprecated in favour of the simpler \code{exec()} function
 reexported from rlang. \code{exec()} evaluates a function call built
@@ -77,24 +79,15 @@ map2(fns, list(args1, args2), \\(fn, args) exec(fn, !!!args))
 }
 }
 \examples{
-# was
-invoke(runif, list(n = 10))
-invoke(runif, n = 10)
-# now
+# Instead of invoke(runif, n = 10), use:
 exec(runif, n = 10)
 
-# was
+# Instead of invoke(paste, args, sep = "-"), use:
 args <- list("01a", "01b")
-invoke(paste, args, sep = "-")
-# now
 exec(paste, !!!args, sep = "-")
 
-# was
+# Instead of invoke_map(), use map() + exec():
 funs <- list(runif, rnorm)
-funs |> invoke_map(n = 5)
-funs |> invoke_map(list(list(n = 10), list(n = 5)))
-
-# now
 funs |> map(exec, n = 5)
 funs |> map2(list(list(n = 10), list(n = 5)), function(f, args) exec(f, !!!args))
 
@@ -104,12 +97,5 @@ df <- tibble::tibble(
   args = list(list(n = 10), list(n = 5))
 )
 df |> pmap(function(fun, args) exec(fun, !!!args))
-
-
-# was
-list(m1 = mean, m2 = median) |> invoke_map(x = rcauchy(100))
-# now
-list(m1 = mean, m2 = median) |> map(function(f) f(rcauchy(100)))
-
 }
 \keyword{internal}

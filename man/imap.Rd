@@ -36,8 +36,6 @@ iwalk(.x, .f, ...)
 \code{.y} to refer to the current index. No longer recommended.
 }
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
 Use of \code{...} is not permitted in this context.}
@@ -77,13 +75,13 @@ imap_chr(sample(10), \(x, idx) paste0(idx, ": ", x))
 iwalk(mtcars, \(x, idx) cat(idx, ": ", median(x), "\n", sep = ""))
 }
 \seealso{
-Other map variants: 
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

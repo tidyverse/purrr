@@ -8,7 +8,9 @@
 #'   together with [vctrs::vec_rbind()].
 #'
 #' * `list_cbind()` combines elements into a data frame by column-binding them
-#'   together with [vctrs::vec_cbind()].
+#'   together with [vctrs::vec_cbind()]. If `x` is named, those names are used
+#'   by [vctrs::vec_cbind()] and may create packed data frame columns. Use
+#'   `unname(x)` to avoid this.
 #'
 #' @param x A list. For `list_rbind()` and `list_cbind()` the list must
 #'   only contain only data frames or `NULL`.
@@ -36,7 +38,10 @@
 #' list_rbind(x2, names_to = "id")
 #' list_rbind(unname(x2), names_to = "id")
 #'
-#' list_cbind(x2)
+#' # Note that named elements will create packed columns
+#' str(list_cbind(x2))
+#' # Unnamed to avoid
+#' str(list_cbind(unname(x2)))
 list_c <- function(x, ..., ptype = NULL) {
   obj_check_list(x)
   check_dots_empty()

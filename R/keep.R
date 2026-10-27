@@ -36,7 +36,7 @@
 #'
 #' # Using a string instead of a function will select all list elements
 #' # where that subelement is TRUE
-#' x <- rerun(5, a = rbernoulli(1), b = sample(10))
+#' x <- map(1:5, ~ list(a = runif(1) > 0.5, b = sample(10)))
 #' x
 #' x |> keep("a")
 #' x |> discard("a")
@@ -84,13 +84,13 @@ compact <- function(.x, .p = identity, .progress = FALSE) {
 #' x |> keep_at(\(x) nchar(x) == 3)
 #' x |> discard_at(\(x) nchar(x) == 3)
 keep_at <- function(x, at) {
-  where <- where_at(x, at, user_env = caller_env())
+  where <- where_at(x, at)
   x[where]
 }
 
 #' @export
 #' @rdname keep_at
 discard_at <- function(x, at) {
-  where <- where_at(x, at, user_env = caller_env())
+  where <- where_at(x, at)
   x[!where]
 }

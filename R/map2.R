@@ -14,8 +14,6 @@
 #'     element of `x` and `.y` to refer to the current element of `y`.
 #'     No longer recommended.
 #'
-#'   `r lifecycle::badge("experimental")`
-#'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
 #'   Use of `...` is not permitted in this context.
@@ -105,7 +103,17 @@ map2_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(map2_impl, environment(), .type, .progress, n, names, i)
+    call_with_cleanup(
+      map2_impl,
+      .x,
+      .y,
+      environment(),
+      .type,
+      .progress,
+      n,
+      names,
+      i
+    )
   )
 }
 

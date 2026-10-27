@@ -8,7 +8,7 @@
 #' @return A new predicate function.
 #' @export
 #' @examples
-#' x <- list(x = 1:10, y = rbernoulli(10), z = letters)
+#' x <- list(x = 1:10, y = runif(10) > 0.5, z = letters)
 #' x |> keep(is.numeric) |> names()
 #' x |> keep(negate(is.numeric)) |> names()
 #' # Same as
