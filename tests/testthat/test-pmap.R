@@ -133,3 +133,11 @@ test_that("don't evaluate symbolic objects (#428)", {
   pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
   pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
+
+test_that("pairlists are deprecated but work", {
+  f <- function() {
+    pmap(pairlist(1:2, 3:4), sum)
+  }
+  expect_snapshot(x <- f())
+  expect_equal(x, list(4, 6))
+})
