@@ -26,6 +26,8 @@ static SEXP call_map_dots = NULL;
 static SEXP call_map2 = NULL;
 static SEXP call_map2_dots = NULL;
 
+static SEXP call_quote_missing = NULL;
+
 static void cb_progress_done(void* bar_ptr) {
   SEXP bar = (SEXP)bar_ptr;
   cli_progress_done(bar);
@@ -69,14 +71,15 @@ static inline SEXP call_loop(
   return out;
 }
 
-// If an element is the missing argument, binding it to `.x_i` would make
-// `.x_i` itself missing. Instead, pass `.x[[i]]` lazily as the argument, which
-// evaluates to the missing argument without triggering an error.
-static SEXP call_replace_sym(SEXP call, SEXP sym, SEXP expr) {
+// If an element is the missing argument, binding it to `.x_i` makes `.x_i`
+// itself missing, and putting it directly in the call means the argument is
+// not supplied. Instead, pass `quote(<missing>)`, which evaluates to the
+// missing argument as an ordinary value.
+static SEXP call_quote_missing_sym(SEXP call, SEXP sym) {
   call = PROTECT(Rf_shallow_duplicate(call));
   for (SEXP node = CDR(call); node != R_NilValue; node = CDR(node)) {
     if (CAR(node) == sym) {
-      SETCAR(node, expr);
+      SETCAR(node, call_quote_missing);
     }
   }
   UNPROTECT(1);
@@ -146,7 +149,7 @@ static inline SEXP map_exec(const void* p_data_void, int i) {
 
   SEXP call = p_data->call;
   if (x_i == R_MissingArg) {
-    call = call_replace_sym(call, sym_dot_x_i, call_dot_x_subset2_i);
+    call = call_quote_missing_sym(call, sym_dot_x_i);
   }
   PROTECT(call);
   SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
@@ -173,10 +176,10 @@ static inline SEXP map2_exec(const void* p_data_void, int i) {
   SEXP call = p_data->call;
   PROTECT_WITH_INDEX(call, &pi);
   if (x_i == R_MissingArg) {
-    REPROTECT(call = call_replace_sym(call, sym_dot_x_i, call_dot_x_subset2_i), pi);
+    REPROTECT(call = call_quote_missing_sym(call, sym_dot_x_i), pi);
   }
   if (y_i == R_MissingArg) {
-    REPROTECT(call = call_replace_sym(call, sym_dot_y_i, call_dot_y_subset2_i), pi);
+    REPROTECT(call = call_quote_missing_sym(call, sym_dot_y_i), pi);
   }
   SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
   UNPROTECT(1);
@@ -201,7 +204,7 @@ static inline SEXP pmap_exec(const void* p_data_void, int i) {
     Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
 
     if (elt_i == R_MissingArg) {
-      REPROTECT(call = call_replace_sym(call, p_elt->sym_elt_i, p_elt->call_elt_subset2_i), pi);
+      REPROTECT(call = call_quote_missing_sym(call, p_elt->sym_elt_i), pi);
     }
   }
 
@@ -415,4 +418,8 @@ void map_init(void) {
   R_PreserveObject(call_map2);
   call_map2_dots = Rf_lang4(sym_dot_f, sym_dot_x_i, sym_dot_y_i, R_DotsSymbol);
   R_PreserveObject(call_map2_dots);
+
+  // `quote(<missing>)`
+  call_quote_missing = Rf_lang2(Rf_install("quote"), R_MissingArg);
+  R_PreserveObject(call_quote_missing);
 }
