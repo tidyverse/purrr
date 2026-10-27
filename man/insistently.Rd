@@ -82,14 +82,14 @@ possibly_insistent_risky_runif()
 \code{\link[httr:RETRY]{httr::RETRY()}} is a special case of \code{\link[=insistently]{insistently()}} for
 HTTP verbs.
 
-Other adverbs: 
-\code{\link{auto_browse}()},
-\code{\link{compose}()},
-\code{\link{negate}()},
-\code{\link{partial}()},
-\code{\link{possibly}()},
-\code{\link{quietly}()},
-\code{\link{safely}()},
-\code{\link{slowly}()}
+Other adverbs:
+\code{\link[=auto_browse]{auto_browse()}},
+\code{\link[=compose]{compose()}},
+\code{\link[=negate]{negate()}},
+\code{\link[=partial]{partial()}},
+\code{\link[=possibly]{possibly()}},
+\code{\link[=quietly]{quietly()}},
+\code{\link[=safely]{safely()}},
+\code{\link[=slowly]{slowly()}}
 }
 \concept{adverbs}

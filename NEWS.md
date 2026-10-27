@@ -1,6 +1,8 @@
 # purrr (development version)
 
 * `pmap()` now passes `user_env` to the vctrs compatibility helpers, fixing a spurious "argument `user_env` is missing" error when given a pairlist.
+* `in_parallel()` is no longer experimental.
+* `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
 
 # purrr 1.2.2
 
