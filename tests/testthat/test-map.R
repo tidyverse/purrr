@@ -192,7 +192,7 @@ test_that("can enforce .ptype", {
 })
 
 test_that("can map over missing arguments", {
-  x <- as.list(formals(function(a, b = 1) NULL))
+  x <- list(a = quote(expr = ), b = 1)
   expect_equal(map_lgl(x, is.name), c(a = TRUE, b = FALSE))
   expect_equal(map_lgl(x, \(x, y) is.name(x), y = 1), c(a = TRUE, b = FALSE))
   expect_equal(keep(x, is.name), x[1])
