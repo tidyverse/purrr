@@ -103,6 +103,26 @@ test_that("preserves S3 class of input vectors (#358)", {
   expect_output(pwalk(list(date), print), format(date))
 })
 
+test_that("creates simple call", {
+  out <- pmap(list(1, b = 2), function(...) sys.call())[[1]]
+  expect_equal(out, quote(.f(.l_1_i, b = .l_2_i)))
+
+  out <- pmap(list(1, b = 2), function(...) sys.call(), c = 3)[[1]]
+  expect_equal(out, quote(.f(.l_1_i, b = .l_2_i, ...)))
+})
+
+test_that("handles mix of objects and bare vectors", {
+  date <- as.Date(c("2020-01-01", "2020-01-02"))
+  out <- pmap(list(1:2, date, c("a", "b")), \(x, y, z) list(x, y, z))
+  expect_identical(out[[2]], list(2L, date[2], "b"))
+})
+
+test_that("pmap forces arguments in same way as base R", {
+  f_pmap <- pmap(list(1:2, 3:4), function(i, j) function() i + j)
+  expect_equal(f_pmap[[1]](), 4)
+  expect_equal(f_pmap[[2]](), 6)
+})
+
 test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))

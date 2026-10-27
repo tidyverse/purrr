@@ -11,6 +11,34 @@ test_that("creates simple call", {
   expect_equal(out, quote(.f(.x_i, ...)))
 })
 
+test_that("extracts elements of every bare vector type", {
+  x <- list(
+    c(TRUE, NA),
+    c(1L, NA),
+    c(1.5, NA),
+    c(1i, NA),
+    as.raw(1:2),
+    c("a", NA),
+    list(1, NULL)
+  )
+  for (xi in x) {
+    expect_identical(map(xi, identity), lapply(xi, identity))
+  }
+})
+
+test_that("drops names and attributes of atomic elements, like [[", {
+  x <- structure(c(a = 1, b = 2), foo = "bar")
+  expect_identical(map(x, identity), list(a = 1, b = 2))
+})
+
+test_that("uses [[ method for objects", {
+  x <- factor(c("a", "b"))
+  expect_identical(
+    map(x, identity),
+    list(factor("a", c("a", "b")), factor("b", c("a", "b")))
+  )
+})
+
 test_that("fails on non-vectors", {
   expect_snapshot(map(environment(), identity), error = TRUE)
   expect_snapshot(map(quote(a), identity), error = TRUE)

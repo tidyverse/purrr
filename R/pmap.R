@@ -7,7 +7,7 @@
 #' they share the same notion of "parallel" as [base::pmax()] and [base::pmin()].
 #'
 #' @param .l A list of vectors. The length of `.l` determines the number of
-#'   arguments that `.f` will be called with. Arguments will be supply by
+#'   arguments that `.f` will be called with. Arguments will be supplied by
 #'   position if unnamed, and by name if named.
 #'
 #'   Vectors of length 1 will be recycled to any length; all other elements
@@ -21,8 +21,6 @@
 #'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
 #'     `function(x, y, z) x + y / z`
 #'   * A formula, e.g. `~ ..1 + ..2 / ..3`. No longer recommended.
-#'
-#'   `r lifecycle::badge("experimental")`
 #'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
