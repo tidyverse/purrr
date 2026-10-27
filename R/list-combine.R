@@ -38,8 +38,10 @@
 #' list_rbind(x2, names_to = "id")
 #' list_rbind(unname(x2), names_to = "id")
 #'
-#' list_cbind(x2)
-#' list_cbind(unname(x2))
+#' # Note that named elements will create packed columns
+#' str(list_cbind(x2))
+#' # Unnamed to avoid
+#' str(list_cbind(unname(x2)))
 list_c <- function(x, ..., ptype = NULL) {
   obj_check_list(x)
   check_dots_empty()
