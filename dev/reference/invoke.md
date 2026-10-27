@@ -2,7 +2,7 @@
 
 **\[deprecated\]**
 
-These functions were superded in purrr 0.3.0 and deprecated in purrr
+These functions were superseded in purrr 0.3.0 and deprecated in purrr
 1.0.0.
 
 - `invoke()` is deprecated in favour of the simpler
