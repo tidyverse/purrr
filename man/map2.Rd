@@ -37,8 +37,6 @@ element of \code{x} and \code{.y} to refer to the current element of \code{y}.
 No longer recommended.
 }
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
 Use of \code{...} is not permitted in this context.}
