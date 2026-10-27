@@ -1,9 +1,9 @@
-# splice is deprecated
+# splice() is defunct
 
     Code
-      . <- splice()
+      splice(1, 2)
     Condition
-      Warning:
-      `splice()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `splice()` was deprecated in purrr 1.0.0 and is now defunct.
       i Please use `list_flatten()` instead.
 

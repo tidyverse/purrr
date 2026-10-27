@@ -1,7 +1,7 @@
 #' Lift the domain of a function
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("defunct")`
 #'
 #' `lift_xy()` is a composition helper. It helps you compose
 #' functions by lifting their domain from a kind of input to another
@@ -15,10 +15,9 @@
 #' functional tools. Since this is such a common function,
 #' `lift()` is provided as an alias for that operation.
 #'
-#' These functions were superseded in purrr 1.0.0 because we no longer believe
-#' "lifting" to be a mainstream operation, and we are striving to reduce purrr
-#' to its most useful core. Superseded functions will not go away, but will only
-#' receive critical bug fixes.
+#' These functions were deprecated in purrr 1.0.0 and are now defunct because we
+#' no longer believe "lifting" to be a mainstream operation, and we are striving
+#' to reduce purrr to its most useful core.
 #'
 #' @inheritParams as_vector
 #' @param ..f A function to lift.
@@ -46,38 +45,15 @@ NULL
 #' @keywords internal
 #' @export
 #' @examples
-#' ### Lifting from ... to list(...) or c(...)
-#'
+#' # Instead of lift_dl(mean)(x) or lift(mean)(x), use exec():
 #' x <- list(x = c(1:100, NA, 1000), na.rm = TRUE, trim = 0.9)
-#' lift_dl(mean)(x)
-#' # You can also use the lift() alias for this common operation:
-#' lift(mean)(x)
-#' # now:
 #' exec(mean, !!!x)
 #'
-#' # Default arguments can also be specified directly in lift_dl()
-#' list(c(1:100, NA, 1000)) |> lift_dl(mean, na.rm = TRUE)()
-#' # now:
-#' mean(c(1:100, NA, 1000), na.rm = TRUE)
-#'
-#' # lift_dl() and lift_ld() are inverse of each other.
-#' # Here we transform sum() so that it takes a list
-#' fun <- sum |> lift_dl()
-#' fun(list(3, NA, 4, na.rm = TRUE))
-#' # now:
+#' # Instead of lift_dl(sum), use:
 #' fun <- function(x) exec("sum", !!!x)
-#' exec(sum, 3, NA, 4, na.rm = TRUE)
+#' fun(list(3, NA, 4, na.rm = TRUE))
 lift <- function(..f, ..., .unnamed = FALSE) {
-  lifecycle::deprecate_warn("1.0.0", "lift()")
-
-  force(..f)
-  defaults <- list(...)
-  function(.x = list(), ...) {
-    if (.unnamed) {
-      .x <- unname(.x)
-    }
-    do.call("..f", c(.x, defaults, list(...)))
-  }
+  lifecycle::deprecate_stop("1.0.0", "lift()")
 }
 
 #' @rdname lift
@@ -87,18 +63,7 @@ lift_dl <- lift
 #' @rdname lift
 #' @export
 lift_dv <- function(..f, ..., .unnamed = FALSE) {
-  lifecycle::deprecate_warn("1.0.0", "lift_dv()")
-
-  force(..f)
-  defaults <- list(...)
-
-  function(.x, ...) {
-    if (.unnamed) {
-      .x <- unname(.x)
-    }
-    .x <- as.list(.x)
-    do.call("..f", c(.x, defaults, list(...)))
-  }
+  lifecycle::deprecate_stop("1.0.0", "lift_dv()")
 }
 
 #' @rdname lift
@@ -112,44 +77,16 @@ lift_dv <- function(..f, ..., .unnamed = FALSE) {
 #'   type by supplying `.type`.
 #' @export
 #' @examples
-#' ### Lifting from c(...) to list(...) or ...
-#'
-#' # In other situations we need the vector-valued function to take a
-#' # variable number of arguments as with pmap(). This is a job for
-#' # lift_vd():
-#' pmap_dbl(mtcars, lift_vd(mean))
-#' # now
+#' # Instead of pmap_dbl(mtcars, lift_vd(mean)), use:
 #' pmap_dbl(mtcars, \(...) mean(c(...)))
 lift_vl <- function(..f, ..., .type) {
-  lifecycle::deprecate_warn("1.0.0", "lift_vl()")
-
-  force(..f)
-  defaults <- list(...)
-  if (missing(.type)) {
-    .type <- NULL
-  }
-
-  function(.x = list(), ...) {
-    x <- as_vector_(.x, .type)
-    do.call("..f", c(list(x), defaults, list(...)))
-  }
+  lifecycle::deprecate_stop("1.0.0", "lift_vl()")
 }
 
 #' @rdname lift
 #' @export
 lift_vd <- function(..f, ..., .type) {
-  lifecycle::deprecate_warn("1.0.0", "lift_vd()")
-
-  force(..f)
-  defaults <- list(...)
-  if (missing(.type)) {
-    .type <- NULL
-  }
-
-  function(...) {
-    x <- as_vector_(list(...), .type)
-    do.call("..f", c(list(x), defaults))
-  }
+  lifecycle::deprecate_stop("1.0.0", "lift_vd()")
 }
 
 #' @rdname lift
@@ -165,35 +102,14 @@ lift_vd <- function(..f, ..., .type) {
 #'
 #' @export
 #' @examples
-#' ### Lifting from list(...) to c(...) or ...
-#'
-#' # This kind of lifting is sometimes needed for function
-#' # composition. An example would be to use pmap() with a function
-#' # that takes a list. In the following, we use some() on each row of
-#' # a data frame to check they each contain at least one element
-#' # satisfying a condition:
-#' mtcars |> pmap_lgl(lift_ld(some, partial(`<`, 200)))
-#' # now
+#' # Instead of pmap_lgl(mtcars, lift_ld(some, partial(`<`, 200))), use:
 #' mtcars |> pmap_lgl(\(...) any(c(...) > 200))
-#'
 lift_ld <- function(..f, ...) {
-  lifecycle::deprecate_warn("1.0.0", "lift_ld()")
-
-  force(..f)
-  defaults <- list(...)
-  function(...) {
-    do.call("..f", c(list(list(...)), defaults))
-  }
+  lifecycle::deprecate_stop("1.0.0", "lift_ld()")
 }
 
 #' @rdname lift
 #' @export
 lift_lv <- function(..f, ...) {
-  lifecycle::deprecate_warn("1.0.0", "lift_lv()")
-
-  force(..f)
-  defaults <- list(...)
-  function(.x, ...) {
-    do.call("..f", c(list(as.list(.x)), defaults, list(...)))
-  }
+  lifecycle::deprecate_stop("1.0.0", "lift_lv()")
 }

@@ -34,10 +34,9 @@ test_that("validates its inputs", {
   expect_snapshot(where_at(x, list()), error = TRUE)
 })
 
-test_that("tidyselect `at` is deprecated", {
-  skip_if_not_installed("tidyselect")
-  expect_snapshot({
-    . <- where_at(data.frame(x = 1), vars("x"), user_env = globalenv())
+test_that("tidyselect `at` is defunct", {
+  expect_snapshot(error = TRUE, {
+    where_at(data.frame(x = 1), quos(x))
   })
 })
 
