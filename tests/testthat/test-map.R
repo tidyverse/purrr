@@ -5,6 +5,9 @@ test_that("preserves names", {
 
 test_that("creates simple call", {
   out <- map(1, function(x) sys.call())[[1]]
+  expect_equal(out, quote(.f(.x_i)))
+
+  out <- map(1, function(x, y) sys.call(), y = 1)[[1]]
   expect_equal(out, quote(.f(.x_i, ...)))
 })
 

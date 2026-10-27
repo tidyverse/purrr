@@ -105,6 +105,9 @@ test_that("preserves S3 class of input vectors (#358)", {
 
 test_that("creates simple call", {
   out <- pmap(list(1, b = 2), function(...) sys.call())[[1]]
+  expect_equal(out, quote(.f(.l_1_i, b = .l_2_i)))
+
+  out <- pmap(list(1, b = 2), function(...) sys.call(), c = 3)[[1]]
   expect_equal(out, quote(.f(.l_1_i, b = .l_2_i, ...)))
 })
 
