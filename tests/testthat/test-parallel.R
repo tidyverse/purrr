@@ -6,7 +6,7 @@ test_that("All parallel map variants fall back to sequential with no daemons set
     map(list(x = 1, y = 2), \(x) list(x))
   )
   expect_equal(map2(1, 2, in_parallel(\(x, y) x)), list(1))
-  expect_identical(pmap(list(), in_parallel(~ 1)), list())
+  expect_identical(pmap(list(), in_parallel(~1)), list())
 })
 
 # set up daemons
@@ -438,23 +438,6 @@ test_that("atomic vector imap works", {
 })
 
 # map_at --------------------------------------------------------------------
-
-test_that("map_at() works with tidyselect", {
-  skip_if_not_installed("tidyselect")
-  local_options(lifecycle_verbosity = "quiet")
-
-  x <- list(a = "b", b = "c", aa = "bb")
-  one <- map_at(x, vars(a), in_parallel(\(x) toupper(x)))
-  expect_identical(one$a, "B")
-  expect_identical(one$aa, "bb")
-  two <- map_at(
-    x,
-    vars(tidyselect::contains("a")),
-    in_parallel(\(x) toupper(x))
-  )
-  expect_identical(two$a, "B")
-  expect_identical(two$aa, "BB")
-})
 
 test_that("negative .at omits locations", {
   x <- c(1, 2, 3)

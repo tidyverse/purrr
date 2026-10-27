@@ -1,33 +1,38 @@
-# lift functions are deprecated
+# lift functions are defunct
 
     Code
-      . <- lift_dl(function() { })
+      lift(sum)
     Condition
-      Warning:
-      `lift()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `lift()` was deprecated in purrr 1.0.0 and is now defunct.
     Code
-      . <- lift_dv(function() { })
+      lift_dl(sum)
     Condition
-      Warning:
-      `lift_dv()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `lift()` was deprecated in purrr 1.0.0 and is now defunct.
     Code
-      . <- lift_vl(function() { })
+      lift_dv(sum)
     Condition
-      Warning:
-      `lift_vl()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `lift_dv()` was deprecated in purrr 1.0.0 and is now defunct.
     Code
-      . <- lift_vd(function() { })
+      lift_ld(sum)
     Condition
-      Warning:
-      `lift_vd()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `lift_ld()` was deprecated in purrr 1.0.0 and is now defunct.
     Code
-      . <- lift_ld(function() { })
+      lift_lv(sum)
     Condition
-      Warning:
-      `lift_ld()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `lift_lv()` was deprecated in purrr 1.0.0 and is now defunct.
     Code
-      . <- lift_lv(function() { })
+      lift_vd(sum)
     Condition
-      Warning:
-      `lift_lv()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `lift_vd()` was deprecated in purrr 1.0.0 and is now defunct.
+    Code
+      lift_vl(sum)
+    Condition
+      Error:
+      ! `lift_vl()` was deprecated in purrr 1.0.0 and is now defunct.
 

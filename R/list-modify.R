@@ -121,9 +121,9 @@ check_list <- function(x, call = caller_env(), arg = caller_arg(x)) {
 #' Update a list with formulas
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("defunct")`
 #'
-#' `update_list()` was deprecated in purrr 1.0.0, because we no longer believe
+#' `update_list()` was deprecated in purrr 1.0.0 and is now defunct, because we no longer believe
 #' that functions that use NSE are a good fit for purrr.
 #'
 #' `update_list()` handles formulas and quosures that can refer to
@@ -135,13 +135,5 @@ check_list <- function(x, call = caller_env(), arg = caller_arg(x)) {
 #' @export
 #' @keywords internal
 update_list <- function(.x, ...) {
-  lifecycle::deprecate_warn("1.0.0", "update_list()")
-
-  dots <- dots_list(...)
-
-  formulas <- map_lgl(dots, is_bare_formula, lhs = FALSE, scoped = TRUE)
-  dots <- map_if(dots, formulas, as_quosure)
-  dots <- map_if(dots, is_quosure, eval_tidy, data = .x)
-
-  list_recurse(.x, dots, function(x, y) y)
+  lifecycle::deprecate_stop("1.0.0", "update_list()")
 }
