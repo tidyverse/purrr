@@ -31,7 +31,7 @@ pwalk(.l, .f, ..., .progress = FALSE)
 - .l:
 
   A list of vectors. The length of `.l` determines the number of
-  arguments that `.f` will be called with. Arguments will be supply by
+  arguments that `.f` will be called with. Arguments will be supplied by
   position if unnamed, and by name if named.
 
   Vectors of length 1 will be recycled to any length; all other elements
