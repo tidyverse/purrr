@@ -79,14 +79,7 @@ rep(10, 10) |>
 
 # Using a string instead of a function will select all list elements
 # where that subelement is TRUE
-x <- rerun(5, a = rbernoulli(1), b = sample(10))
-#> Warning: `rerun()` was deprecated in purrr 1.0.0.
-#> ℹ Please use `map()` instead.
-#>   # Previously
-#>   rerun(5, a = rbernoulli(1), b = sample(10))
-#> 
-#>   # Now
-#>   map(1:5, ~ list(a = rbernoulli(1), b = sample(10)))
+x <- map(1:5, ~ list(a = rbernoulli(1), b = sample(10)))
 #> Warning: `rbernoulli()` was deprecated in purrr 1.0.0.
 x
 #> [[1]]
