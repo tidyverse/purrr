@@ -90,3 +90,8 @@ test_that("don't evaluate symbolic objects (#428)", {
   map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
   walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
 })
+
+test_that("can map over missing arguments", {
+  x <- as.list(formals(function(a, b = 1) NULL))
+  expect_equal(map2_lgl(x, x, \(x, y) is.name(y)), c(a = TRUE, b = FALSE))
+})

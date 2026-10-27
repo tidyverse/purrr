@@ -69,6 +69,20 @@ static inline SEXP call_loop(
   return out;
 }
 
+// If an element is the missing argument, binding it to `.x_i` would make
+// `.x_i` itself missing. Instead, pass `.x[[i]]` lazily as the argument, which
+// evaluates to the missing argument without triggering an error.
+static SEXP call_replace_sym(SEXP call, SEXP sym, SEXP expr) {
+  call = PROTECT(Rf_shallow_duplicate(call));
+  for (SEXP node = CDR(call); node != R_NilValue; node = CDR(node)) {
+    if (CAR(node) == sym) {
+      SETCAR(node, expr);
+    }
+  }
+  UNPROTECT(1);
+  return call;
+}
+
 struct map_exec_data {
   SEXP x;
   const void* v_x;
@@ -130,7 +144,14 @@ static inline SEXP map_exec(const void* p_data_void, int i) {
     p_vec_get(p_data->v_x, p_data->x_type, i);
   Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
 
-  return R_forceAndCall(p_data->call, p_data->force, p_data->env);
+  SEXP call = p_data->call;
+  if (x_i == R_MissingArg) {
+    call = call_replace_sym(call, sym_dot_x_i, call_dot_x_subset2_i);
+  }
+  PROTECT(call);
+  SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
+  UNPROTECT(1);
+  return out;
 }
 
 static inline SEXP map2_exec(const void* p_data_void, int i) {
@@ -148,13 +169,28 @@ static inline SEXP map2_exec(const void* p_data_void, int i) {
     p_vec_get(p_data->v_y, p_data->y_type, i);
   Rf_defineVar(sym_dot_y_i, y_i, p_data->env);
 
-  return R_forceAndCall(p_data->call, p_data->force, p_data->env);
+  PROTECT_INDEX pi;
+  SEXP call = p_data->call;
+  PROTECT_WITH_INDEX(call, &pi);
+  if (x_i == R_MissingArg) {
+    REPROTECT(call = call_replace_sym(call, sym_dot_x_i, call_dot_x_subset2_i), pi);
+  }
+  if (y_i == R_MissingArg) {
+    REPROTECT(call = call_replace_sym(call, sym_dot_y_i, call_dot_y_subset2_i), pi);
+  }
+  SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
+  UNPROTECT(1);
+  return out;
 }
 
 static inline SEXP pmap_exec(const void* p_data_void, int i) {
   const struct pmap_exec_data* p_data = (const struct pmap_exec_data*) p_data_void;
 
   *p_data->v_i = i + 1;
+
+  PROTECT_INDEX pi;
+  SEXP call = p_data->call;
+  PROTECT_WITH_INDEX(call, &pi);
 
   for (int j = 0; j < p_data->n_l; ++j) {
     const struct pmap_elt* p_elt = &p_data->v_l[j];
@@ -163,9 +199,15 @@ static inline SEXP pmap_exec(const void* p_data_void, int i) {
       Rf_eval(p_elt->call_elt_subset2_i, p_data->env) :
       p_vec_get(p_elt->v_elt, p_elt->elt_type, i);
     Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
+
+    if (elt_i == R_MissingArg) {
+      REPROTECT(call = call_replace_sym(call, p_elt->sym_elt_i, p_elt->call_elt_subset2_i), pi);
+    }
   }
 
-  return R_forceAndCall(p_data->call, p_data->force, p_data->env);
+  SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
+  UNPROTECT(1);
+  return out;
 }
 
 SEXP map_impl(

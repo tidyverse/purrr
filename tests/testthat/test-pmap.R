@@ -133,3 +133,8 @@ test_that("don't evaluate symbolic objects (#428)", {
   pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
   pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
+
+test_that("can map over missing arguments", {
+  x <- as.list(formals(function(a, b = 1) NULL))
+  expect_equal(pmap_lgl(list(1, x), \(x, y) is.name(y)), c(TRUE, FALSE))
+})

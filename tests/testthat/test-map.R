@@ -190,3 +190,10 @@ test_that("can enforce .ptype", {
     map_vec(1:2, ~ factor("x"), .ptype = integer())
   })
 })
+
+test_that("can map over missing arguments", {
+  x <- as.list(formals(function(a, b = 1) NULL))
+  expect_equal(map_lgl(x, is.name), c(a = TRUE, b = FALSE))
+  expect_equal(map_lgl(x, \(x, y) is.name(x), y = 1), c(a = TRUE, b = FALSE))
+  expect_equal(keep(x, is.name), x[1])
+})
