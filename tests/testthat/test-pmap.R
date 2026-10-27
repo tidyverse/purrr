@@ -115,6 +115,9 @@ test_that("don't evaluate symbolic objects (#428)", {
 })
 
 test_that("pairlists are deprecated but work", {
-  local_options(lifecycle_verbosity = "quiet")
-  expect_equal(pmap(pairlist(1:2, 3:4), sum), list(4, 6))
+  f <- function() {
+    pmap(pairlist(1:2, 3:4), sum)
+  }
+  expect_snapshot(x <- f())
+  expect_equal(x, list(4, 6))
 })

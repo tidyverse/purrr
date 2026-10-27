@@ -47,3 +47,12 @@
       Error in `pmap()`:
       ! Can't recycle `.l[[1]]` (size 2) to match `.l[[2]]` (size 0).
 
+# pairlists are deprecated but work
+
+    Code
+      x <- f()
+    Condition
+      Warning:
+      Use of pairlists in purrr functions was deprecated in purrr 1.0.0.
+      i Please coerce explicitly with `as.list()`
+
