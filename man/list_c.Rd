@@ -42,10 +42,10 @@ the elements will be used instead of the names.}
 \item \code{list_c()} combines elements into a vector by concatenating them together
 with \code{\link[vctrs:vec_c]{vctrs::vec_c()}}.
 \item \code{list_rbind()} combines elements into a data frame by row-binding them
-together with \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}}.
+together with \code{\link[vctrs:vec_rbind]{vctrs::vec_rbind()}}.
 \item \code{list_cbind()} combines elements into a data frame by column-binding them
-together with \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}. If \code{x} is named, those names are used
-by \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}} and may create packed data frame columns. Use
+together with \code{\link[vctrs:vec_cbind]{vctrs::vec_cbind()}}. If \code{x} is named, those names are used
+by \code{\link[vctrs:vec_cbind]{vctrs::vec_cbind()}} and may create packed data frame columns. Use
 \code{unname(x)} to avoid this.
 }
 }

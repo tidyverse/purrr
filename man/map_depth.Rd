@@ -32,8 +32,6 @@ are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 set a default value if the indexed element is \code{NULL} or does not exist.
 }
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
 Use of \code{...} is not permitted in this context.}
@@ -121,18 +119,18 @@ l1 |> modify_depth(2, \(x) pmap(x, paste, sep = " / ")) |> str()
 \code{\link[=modify_tree]{modify_tree()}} for a recursive version of \code{modify_depth()} that
 allows you to apply a function to every leaf or every node.
 
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 
-Other modify variants: 
-\code{\link{modify}()},
-\code{\link{modify_tree}()}
+Other modify variants:
+\code{\link[=modify]{modify()}},
+\code{\link[=modify_tree]{modify_tree()}}
 }
 \concept{map variants}
 \concept{modify variants}

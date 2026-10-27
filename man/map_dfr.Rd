@@ -53,7 +53,7 @@ installed and have confusing semantics with edge cases. Superseded
 functions will not go away, but will only receive critical bug fixes.
 
 Instead, we recommend using \code{map()}, \code{map2()}, etc with \code{\link[=list_rbind]{list_rbind()}} and
-\code{\link[=list_cbind]{list_cbind()}}. These use \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}} and \code{\link[vctrs:vec_bind]{vctrs::vec_cbind()}}
+\code{\link[=list_cbind]{list_cbind()}}. These use \code{\link[vctrs:vec_rbind]{vctrs::vec_rbind()}} and \code{\link[vctrs:vec_cbind]{vctrs::vec_cbind()}}
 under the hood, and have names that more clearly reflect their semantics.
 }
 \examples{
