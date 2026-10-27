@@ -6,7 +6,9 @@ with vctrs::vec_c().
 list_rbind() combines elements into a data frame by row-binding them
 together with vctrs::vec_rbind().
 list_cbind() combines elements into a data frame by column-binding them
-together with vctrs::vec_cbind().
+together with vctrs::vec_cbind(). If x is named, those names are used
+by vctrs::vec_cbind() and may create packed data frame columns. Use
+unname(x) to avoid this.
 
 "><meta property="og:description" content="
 
@@ -15,7 +17,9 @@ with vctrs::vec_c().
 list_rbind() combines elements into a data frame by row-binding them
 together with vctrs::vec_rbind().
 list_cbind() combines elements into a data frame by column-binding them
-together with vctrs::vec_cbind().
+together with vctrs::vec_cbind(). If x is named, those names are used
+by vctrs::vec_cbind() and may create packed data frame columns. Use
+unname(x) to avoid this.
 
 "><meta property="og:image" content="https://purrr.tidyverse.org/logo.png"><meta name="robots" content="noindex"><script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><!-- Privacy-friendly analytics by Plausible --><script async src="https://plausible.io/js/pa-pnnvJjEP3jLVtE3ydK0e0.js"></script><script>
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
@@ -76,7 +80,9 @@ with <code><a href="https://vctrs.r-lib.org/reference/vec_c.html" class="externa
 <li><p><code>list_rbind()</code> combines elements into a data frame by row-binding them
 together with <code><a href="https://vctrs.r-lib.org/reference/vec_bind.html" class="external-link">vctrs::vec_rbind()</a></code>.</p></li>
 <li><p><code>list_cbind()</code> combines elements into a data frame by column-binding them
-together with <code><a href="https://vctrs.r-lib.org/reference/vec_bind.html" class="external-link">vctrs::vec_cbind()</a></code>.</p></li>
+together with <code><a href="https://vctrs.r-lib.org/reference/vec_bind.html" class="external-link">vctrs::vec_cbind()</a></code>. If <code>x</code> is named, those names are used
+by <code><a href="https://vctrs.r-lib.org/reference/vec_bind.html" class="external-link">vctrs::vec_cbind()</a></code> and may create packed data frame columns. Use
+<code>unname(x)</code> to avoid this.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -155,10 +161,18 @@ the elements will be used instead of the names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  1  2 &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  2 NA    a</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">list_cbind</span><span class="op">(</span><span class="va">x2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   x y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 a</span>
+<span class="r-in"><span><span class="co"># Note that named elements will create packed columns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_cbind</span><span class="op">(</span><span class="va">x2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	2 obs. of  2 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ a:'data.frame':	2 obs. of  1 variable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ x: int  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b:'data.frame':	2 obs. of  1 variable:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ y: chr  "a" "a"</span>
+<span class="r-in"><span><span class="co"># Unnamed to avoid</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">list_cbind</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	2 obs. of  2 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x: int  1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y: chr  "a" "a"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -5,18 +5,6 @@
 - [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) now
   passes `user_env` to the vctrs compatibility helpers, fixing a
   spurious “argument `user_env` is missing” error when given a pairlist.
-- All [`map()`](https://purrr.tidyverse.org/dev/reference/map.md)
-  functions now have less overhead, particularly on unclassed vectors.
-  This means that they should run faster when `.f` itself is very fast,
-  like with the common cases of `map(x, names)` or `map_lgl(x, is.null)`
-  ([\#1263](https://github.com/tidyverse/purrr/issues/1263), with an
-  assist from [@ErdaradunGaztea](https://github.com/ErdaradunGaztea)).
-  As a side effect, the call seen by `.f` has changed: it now looks like
-  `.f(.x_i, ...)` rather than `.f(.x[[i]], ...)`, which affects code
-  that uses [`substitute()`](https://rdrr.io/r/base/substitute.html),
-  [`match.call()`](https://rdrr.io/r/base/match.call.html), or
-  [`sys.call()`](https://rdrr.io/r/base/sys.parent.html) on its
-  arguments.
 - All functions and arguments deprecated in purrr 1.0.0 (released
   December 2022) are now defunct, so calling them throws an error. They
   will be removed in a future release. This includes `cross*()`,

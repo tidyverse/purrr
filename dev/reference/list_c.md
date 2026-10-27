@@ -11,6 +11,10 @@
 - `list_cbind()` combines elements into a data frame by column-binding
   them together with
   [`vctrs::vec_cbind()`](https://vctrs.r-lib.org/reference/vec_bind.html).
+  If `x` is named, those names are used by
+  [`vctrs::vec_cbind()`](https://vctrs.r-lib.org/reference/vec_bind.html)
+  and may create packed data frame columns. Use `unname(x)` to avoid
+  this.
 
 ## Usage
 
@@ -88,8 +92,16 @@ list_rbind(unname(x2), names_to = "id")
 #> 2  1  2 <NA>
 #> 3  2 NA    a
 
-list_cbind(x2)
-#>   x y
-#> 1 1 a
-#> 2 2 a
+# Note that named elements will create packed columns
+str(list_cbind(x2))
+#> 'data.frame':    2 obs. of  2 variables:
+#>  $ a:'data.frame':   2 obs. of  1 variable:
+#>   ..$ x: int  1 2
+#>  $ b:'data.frame':   2 obs. of  1 variable:
+#>   ..$ y: chr  "a" "a"
+# Unnamed to avoid
+str(list_cbind(unname(x2)))
+#> 'data.frame':    2 obs. of  2 variables:
+#>  $ x: int  1 2
+#>  $ y: chr  "a" "a"
 ```
