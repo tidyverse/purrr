@@ -8,12 +8,11 @@
   like with the common cases of `map(x, names)` or `map_lgl(x, is.null)`
   ([\#1263](https://github.com/tidyverse/purrr/issues/1263), with an
   assist from [@ErdaradunGaztea](https://github.com/ErdaradunGaztea)).
-  As a side effect, the call seen by `.f` has changed: it now looks like
-  `.f(.x_i, ...)` rather than `.f(.x[[i]], ...)`, which affects code
+  As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...`
+  omitted when empty) rather than `.f(.x[[i]], ...)`, which affects code
   that uses [`substitute()`](https://rdrr.io/r/base/substitute.html),
   [`match.call()`](https://rdrr.io/r/base/match.call.html), or
-  [`sys.call()`](https://rdrr.io/r/base/sys.parent.html) on its
-  arguments.
+  [`sys.call()`](https://rdrr.io/r/base/sys.parent.html).
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   is no longer experimental.
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
