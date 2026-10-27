@@ -1,7 +1,7 @@
 # purrr (development version)
 
+* All `map()` functions now have less overhead, particularly on unclassed vectors. This means that they should run faster when `.f` itself is very fast, like with the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea). As a side effect, the call seen by `.f` has changed: it now looks like `.f(.x_i, ...)` rather than `.f(.x[[i]], ...)`, which affects code that uses `substitute()`, `match.call()`, or `sys.call()` on its arguments.
 * `in_parallel()` is no longer experimental.
-
 * `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
 
 # purrr 1.2.2
