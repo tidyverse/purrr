@@ -42,8 +42,6 @@ walk2(.x, .y, .f, ..., .progress = FALSE)
     element of `x` and `.y` to refer to the current element of `y`. No
     longer recommended.
 
-  **\[experimental\]**
-
   Wrap a function with
   [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   to declare that it should be performed in parallel. See

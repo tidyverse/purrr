@@ -2,6 +2,14 @@
 
 ## purrr (development version)
 
+- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  is no longer experimental.
+
+- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  now accepts existing functions, so `.f` no longer needs to be defined
+  inside the call, e.g. `in_parallel(sum)` or
+  `in_parallel(fun, helper = helper)`.
+
 ## purrr 1.2.2
 
 CRAN release: 2026-04-10

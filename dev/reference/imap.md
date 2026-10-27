@@ -42,8 +42,6 @@ iwalk(.x, .f, ...)
     element and `.y` to refer to the current index. No longer
     recommended.
 
-  **\[experimental\]**
-
   Wrap a function with
   [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   to declare that it should be performed in parallel. See

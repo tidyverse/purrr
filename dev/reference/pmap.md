@@ -51,8 +51,6 @@ pwalk(.l, .f, ..., .progress = FALSE)
 
   - A formula, e.g. `~ ..1 + ..2 / ..3`. No longer recommended.
 
-  **\[experimental\]**
-
   Wrap a function with
   [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   to declare that it should be performed in parallel. See

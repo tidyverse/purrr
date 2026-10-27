@@ -310,7 +310,7 @@ and return a function with modified action as output.
 - [`progress_bars`](https://purrr.tidyverse.org/dev/reference/progress_bars.md)
   : Progress bars in purrr
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
-  **\[experimental\]** : Parallelization in purrr
+  : Parallelization in purrr
 
 # Articles
 

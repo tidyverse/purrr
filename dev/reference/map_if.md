@@ -50,8 +50,6 @@ map_at(.x, .at, .f, ..., .progress = FALSE)
     `.default` to set a default value if the indexed element is `NULL`
     or does not exist.
 
-  **\[experimental\]**
-
   Wrap a function with
   [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   to declare that it should be performed in parallel. See
