@@ -24,6 +24,12 @@ test_that(".f parameter passed to head_while()/tail_while() doesn't override .p 
 })
 
 test_that("passing .dir parameter to head_while()/tail_while() results in an error", {
-  expect_snapshot(head_while(5:-5, function(x) x < 0, .dir = "backward"), error = TRUE)
-  expect_snapshot(tail_while(5:-5, function(x) x > 0, .dir = "forward"), error = TRUE)
+  expect_snapshot(
+    head_while(5:-5, function(x) x < 0, .dir = "backward"),
+    error = TRUE
+  )
+  expect_snapshot(
+    tail_while(5:-5, function(x) x > 0, .dir = "forward"),
+    error = TRUE
+  )
 })

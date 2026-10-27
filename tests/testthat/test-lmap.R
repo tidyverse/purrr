@@ -55,5 +55,8 @@ test_that("passing .ind parameter to lmap() results in an error", {
 
 test_that("passing .else parameter to lmap_at() results in an error", {
   x <- list(a = 1, b = 2, c = 3, d = 4)
-  expect_snapshot(lmap_at(x, "c", \(x) list(1), .else = \(x) list(NULL)), error = TRUE)
+  expect_snapshot(
+    lmap_at(x, "c", \(x) list(1), .else = \(x) list(NULL)),
+    error = TRUE
+  )
 })

@@ -20,9 +20,7 @@
 #'
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
-#' @param .progress Whether to show a progress bar. Use `TRUE` to turn on
-#'   a basic progress bar, use a string to give it a name, or see
-#'   [progress_bars] for more details.
+#' @inheritParams map
 #' @export
 #' @examples
 #' rep(10, 10) |>
