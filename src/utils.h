@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <Rversion.h>
+#include <Rinternals.h>
 
 #define PROTECT_N(x, n) (++(*n), PROTECT(x))
 
@@ -48,6 +49,25 @@ static inline SEXP p_vec_get(const void* v_x, SEXPTYPE type, int i) {
     case VECSXP: return ((const SEXP*) v_x)[i];
     default: Rf_error("Unreachable");
   }
+}
+
+// rlang's `r_env_dots_length()`
+static inline R_xlen_t env_dots_length(SEXP env) {
+#if (defined(R_VERSION) && R_VERSION >= R_Version(4, 6, 0))
+    return (R_xlen_t) R_DotsLength(env);
+#else
+    SEXP dots = Rf_findVarInFrame(env, R_DotsSymbol);
+
+    if (dots == R_UnboundValue) {
+        Rf_error("incorrect context: the current call has no '...' to look in");
+    }
+
+    if (dots == R_MissingArg || TYPEOF(dots) != DOTSXP) {
+        return 0;
+    }
+
+    return Rf_xlength(dots);
+#endif
 }
 
 #endif

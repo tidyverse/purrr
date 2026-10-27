@@ -33,6 +33,9 @@ test_that("verifies result types and length", {
 
 test_that("creates simple call", {
   out <- map2(1, 2, function(x, y) sys.call())[[1]]
+  expect_equal(out, quote(.f(.x_i, .y_i)))
+
+  out <- map2(1, 2, function(x, y, z) sys.call(), z = 1)[[1]]
   expect_equal(out, quote(.f(.x_i, .y_i, ...)))
 })
 
