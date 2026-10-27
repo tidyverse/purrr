@@ -49,7 +49,7 @@ Other adverbs:
 ## Examples
 
 ``` r
-x <- list(x = 1:10, y = rbernoulli(10), z = letters)
+x <- list(x = 1:10, y = runif(10) > 0.5, z = letters)
 x |> keep(is.numeric) |> names()
 #> [1] "x"
 x |> keep(negate(is.numeric)) |> names()
