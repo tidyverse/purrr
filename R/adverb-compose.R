@@ -53,13 +53,13 @@ compose <- function(..., .dir = c("backward", "forward")) {
   }
 
   composed <- function() {
-    `_call` <- call2(first_fn, !!!call_args(sys.call()))
+    call <- call2(first_fn, !!!call_args(sys.call()))
 
     for (fn in fns) {
-      `_call` <- call2(.fn = fn, `_call`)
+      call <- call2(.fn = fn, call)
     }
 
-    eval_tidy(`_call`, env = caller_env())
+    eval_tidy(call, env = caller_env())
   }
   formals(composed) <- formals(first_fn)
 
