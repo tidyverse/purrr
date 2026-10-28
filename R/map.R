@@ -129,7 +129,7 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 #'
-#' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
+#' @examplesIf interactive()
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map:

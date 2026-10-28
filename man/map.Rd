@@ -153,7 +153,7 @@ mtcars |>
   map(summary) |>
   map_dbl("r.squared")
 
-\dontshow{if (interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Run in interactive sessions only as spawns additional processes
 
 # To use parallelized map:
