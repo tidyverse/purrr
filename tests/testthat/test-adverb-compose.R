@@ -6,6 +6,17 @@ test_that("composed functions are applied right to left by default", {
   expect_identical(unname(sort(table(x))), compose(unname, sort, table)(x))
 })
 
+test_that("compose() preserves missingness of caller's arguments", {
+  # The call can't be precomputed from formals(first_fn), as that would
+  # pass defaults explicitly to functions that inspect missing()
+  expect_true(compose(identity, function(x, y) missing(y))(1))
+  expect_false(compose(identity, function(x, y) missing(y))(1, 2))
+
+  set.seed(1)
+  x <- sample(1:4, 100, replace = TRUE)
+  expect_identical(compose(unname, sort, table)(x), unname(sort(table(x))))
+})
+
 test_that("composed functions are applied in reverse order if .dir is supplied", {
   expect_identical(compose(~ .x + 100, ~ .x * 2, .dir = "forward")(2), 204)
 })
@@ -145,5 +156,13 @@ test_that("compose() can take dots from multiple environments", {
   expect_identical(
     unname(map_chr(quos, as_name)),
     c("_baz", "_bar", "_foo", "_quux")
+  )
+})
+
+test_that("compose() evaluates lazily (#651)", {
+  expect_silent(compose(capture.output, print)("purrr, meow"))
+  expect_identical(
+    compose(capture.output, print)("purrr, meow"),
+    capture.output(print("purrr, meow"))
   )
 })

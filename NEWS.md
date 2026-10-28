@@ -5,6 +5,7 @@
 * `accumulate()` no longer errors when the input has names and the accumulation terminates early with `done()` (#1243).
 * Internal parameters are now passed by name to avoid being overwritten when the user passes an argument of the same name to `...` (#1248).
 * `compact()`, `discard()`, `keep()`, `map_if()`, and `modify_if()` now support parallel predicates wrapped with `in_parallel()` (#1252).
+* `compose()` now evaluates lazily, allowing composing with functions like `capture.output()` (#651).
 * `imap_vec()` gains an explicit `.ptype` parameter to match `map2_vec()` (#1244).
 * `in_parallel()` is no longer experimental.
 * `in_parallel()` and parallel maps no longer require any additional packages, as mirai (>= 2.5.1) and carrier (>= 0.4.0) are now imported by purrr.
