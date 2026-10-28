@@ -128,7 +128,16 @@ static inline SEXP map_exec(const void* p_data_void, int i) {
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+
+  if (x_i == R_MissingArg) {
+    // If an element is the missing argument, binding it directly to `.x_i` makes
+    // `.x_i` itself missing, so evaluating it is an error. Instead, bind it as a
+    // forced promise whose value is the missing argument, which evaluates to the
+    // missing argument as an ordinary value.
+    env_bind_forced(p_data->env, sym_dot_x_i, R_MissingArg, R_MissingArg);
+  } else {
+    Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+  }
 
   return R_forceAndCall(p_data->call, p_data->force, p_data->env);
 }
@@ -141,12 +150,22 @@ static inline SEXP map2_exec(const void* p_data_void, int i) {
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+
+  if (x_i == R_MissingArg) {
+    env_bind_forced(p_data->env, sym_dot_x_i, R_MissingArg, R_MissingArg);
+  } else {
+    Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+  }
 
   SEXP y_i = (p_data->y_object) ?
     Rf_eval(call_dot_y_subset2_i, p_data->env) :
     p_vec_get(p_data->v_y, p_data->y_type, i);
-  Rf_defineVar(sym_dot_y_i, y_i, p_data->env);
+
+  if (y_i == R_MissingArg) {
+    env_bind_forced(p_data->env, sym_dot_y_i, R_MissingArg, R_MissingArg);
+  } else {
+    Rf_defineVar(sym_dot_y_i, y_i, p_data->env);
+  }
 
   return R_forceAndCall(p_data->call, p_data->force, p_data->env);
 }
@@ -162,7 +181,12 @@ static inline SEXP pmap_exec(const void* p_data_void, int i) {
     SEXP elt_i = (p_elt->elt_object) ?
       Rf_eval(p_elt->call_elt_subset2_i, p_data->env) :
       p_vec_get(p_elt->v_elt, p_elt->elt_type, i);
-    Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
+
+    if (elt_i == R_MissingArg) {
+      env_bind_forced(p_data->env, p_elt->sym_elt_i, R_MissingArg, R_MissingArg);
+    } else {
+      Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
+    }
   }
 
   return R_forceAndCall(p_data->call, p_data->force, p_data->env);

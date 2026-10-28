@@ -134,6 +134,11 @@ test_that("don't evaluate symbolic objects (#428)", {
   pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
 
+test_that("can map over missing arguments", {
+  x <- list(a = quote(expr = ), b = 1)
+  expect_equal(pmap_lgl(list(1, x), \(x, y) is.name(y)), c(TRUE, FALSE))
+})
+
 test_that("passing .type parameter to map() results in an error (#1248)", {
   expect_snapshot(pmap(\(x, ...) x, .type = "character"), error = TRUE)
 })
