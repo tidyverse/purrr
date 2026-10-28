@@ -7,7 +7,7 @@
 #'
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
-
+#'
 #' @inheritSection safely Adverbs
 #' @family adverbs
 #' @return A new predicate function.

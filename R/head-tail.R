@@ -5,7 +5,7 @@
 #'
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
-
+#'
 #'   * A logical vector of the same length as `.x`.
 #'   * A string, if the elements of `.x` are themselves lists of objects,
 #'     giving the name of a logical element in the inner lists.

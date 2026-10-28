@@ -10,7 +10,7 @@
 #'   * A named function, e.g. `paste`.
 #'   * An anonymous function, e.g. `\(x, idx) x + idx` or
 #'     `function(x, idx) x + idx`.
-
+#'
 #'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.

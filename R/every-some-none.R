@@ -10,7 +10,7 @@
 #'
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
-
+#'
 #' @param ... Additional arguments passed on to `.p`.
 #' @return A logical vector of length 1.
 #' @export

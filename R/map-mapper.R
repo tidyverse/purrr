@@ -9,7 +9,7 @@
 #'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-
+#'
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are converted to extractor functions, i.e. `\(x) pluck(x, "idx")`,
 #'     `\(x) pluck(x, 1)`, and `\(x) pluck(x, "idx", 1)` respectively.
