@@ -36,17 +36,18 @@
 #' # Equivalent to function(x) attr(x[[1]], "a")
 #'
 #' as_mapper(c("a", "b", "c"), .default = NA)
-as_mapper <- function(.f, ...) {
+as_mapper <- function(.f, ..., .user_env = caller_env(2)) {
   UseMethod("as_mapper")
 }
 
 #' @export
-as_mapper.default <- function(.f, ...) {
+as_mapper.default <- function(.f, ..., .user_env = caller_env(2)) {
   if (inherits(.f, "formula")) {
     lifecycle::deprecate_soft(
       when = "1.3.0",
       what = I("Using a formula in place of a function"),
-      with = I("an anonymous function")
+      with = I("an anonymous function"),
+      user_env = .user_env
     )
   }
   rlang::as_function(.f)

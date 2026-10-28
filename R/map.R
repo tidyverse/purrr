@@ -207,7 +207,7 @@ map_ <- function(
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
   }
 
-  .f <- as_mapper(.f, ...)
+  .f <- as_mapper(.f, ..., .user_env = .purrr_user_env)
 
   n <- vec_size(.x)
   names <- vec_names(.x)

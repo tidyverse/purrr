@@ -86,7 +86,7 @@ map2_ <- function(
 
   names <- vec_names(.x)
 
-  .f <- as_mapper(.f, ...)
+  .f <- as_mapper(.f, ..., .user_env = .purrr_user_env)
 
   if (running_in_parallel(.f)) {
     attributes(args) <- list(
