@@ -246,7 +246,12 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
     ".stop"
   } else if (is.logical(.progress)) {
     c(".stop", ".progress")
-  } else if (is.character(.progress) || is.list(.progress)) {
+  } else if (is.character(.progress)) {
+    list(.stop = TRUE, .progress = .progress)
+  } else if (is.list(.progress)) {
+    # mirai passes the list to `cli::cli_progress_bar()`, which doesn't
+    # have a `caller` argument
+    .progress$caller <- NULL
     list(.stop = TRUE, .progress = .progress)
   } else {
     cli::cli_abort(
@@ -324,6 +329,11 @@ with_parallel_indexed_errors <- function(
     expr,
     error = function(cnd) {
       location <- cnd$location
+      if (is.null(location)) {
+        # Not a task error (e.g. a failure while collecting results),
+        # so rethrow as-is to preserve the message
+        cli::cli_abort("Parallel failure", parent = cnd, call = error_call)
+      }
       iname <- cnd$name
       cli::cli_abort(
         c(

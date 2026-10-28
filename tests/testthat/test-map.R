@@ -200,3 +200,18 @@ test_that("can map over missing arguments", {
   expect_equal(map_lgl(x, \(x, y) is.name(x), y = 1), c(a = TRUE, b = FALSE))
   expect_equal(keep(x, is.name), x[1])
 })
+
+
+test_that("named list progress bar works in parallel (#1253)", {
+  mirai::daemons(1, dispatcher = FALSE)
+  withr::defer(mirai::daemons(0))
+  withr::local_options(cli.progress_handlers = "cli")
+
+  f <- in_parallel(\(x) x)
+  expect_equal(map(1:2, f, .progress = list(name = "test")), list(1L, 2L))
+})
+
+test_that("errors without a location are rethrown with their message", {
+  f <- function() stop("boom")
+  expect_snapshot(with_parallel_indexed_errors(f()), error = TRUE)
+})

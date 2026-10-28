@@ -87,3 +87,13 @@
       Error in `map_vec()`:
       ! Can't convert `<list>[[1]]` <factor<9758a>> to <integer>.
 
+# errors without a location are rethrown with their message
+
+    Code
+      with_parallel_indexed_errors(f())
+    Condition
+      Error:
+      ! Parallel failure
+      Caused by error in `f()`:
+      ! boom
+
