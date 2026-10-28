@@ -53,12 +53,9 @@ where_if <- function(
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_mapper(.p, ..., .user_env = .purrr_user_env)
-    .p <- as_predicate(
-      .p,
-      # Call is `NULL` to avoid repeating the wrapper's "Error in `.fn()`"
-      .purrr_error_call = NULL
-    )
+    .p <- as_mapper(.f = .p, ..., .user_env = .purrr_user_env)
+    # Call is `NULL` to avoid repeating the wrapper's "Error in `.fn()`"
+    .p <- as_predicate(.p, .purrr_error_call = NULL)
     map_(
       .x,
       .f = .p,
