@@ -479,7 +479,7 @@ accumulate <- function(
   .f <- as_mapper(.f, ...)
 
   res <- reduce_impl(.x, .f, ..., .init = .init, .dir = .dir, .acc = TRUE)
-  names(res) <- accumulate_names(names(.x), .init, .dir)
+  names(res) <- accumulate_names(names(.x), length(res), .init, .dir)
 
   res <- list_simplify_internal(res, .simplify, .ptype)
   res
@@ -492,17 +492,19 @@ accumulate2 <- function(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL) {
   res
 }
 
-accumulate_names <- function(nms, init, dir) {
+accumulate_names <- function(nms, n, init, dir) {
   if (is_null(nms)) {
     return(NULL)
   }
 
   if (!missing(init)) {
-    nms <- c(".init", nms)
-  }
-  if (dir == "backward") {
-    nms <- rev(nms)
+    nms <- if (dir == "backward") c(nms, ".init") else c(".init", nms)
   }
 
-  nms
+  # Early return via done() shortens the result
+  if (dir == "backward") {
+    nms[(length(nms) - n + 1):length(nms)]
+  } else {
+    nms[seq_len(n)]
+  }
 }

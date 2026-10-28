@@ -1,6 +1,8 @@
 # purrr (development version)
 
 * All functions and arguments deprecated in purrr 1.0.0 (released December 2022) are now defunct, so calling them throws an error. They will be removed in a future release. This includes `cross*()`, `flatten_raw()`, `invoke()`, `invoke_map()` (and its typed variants except `invoke_map_df()` and `invoke_map_dfc()`), `lift_*()`, `*map*_raw()`, `prepend()`, `rbernoulli()`, `rdunif()`, `rerun()`, `splice()`, `update_list()`, `vec_depth()`, `when()`, and using `vars()` in `.at`.
+* `accumulate(.dir = "backward")` now names its output to match the input order, so each name corresponds to the element being accumulated (#1245).
+* `accumulate()` no longer errors when the input has names and the accumulation terminates early with `done()` (#1243).
 * Internal parameters are now passed by name to avoid being overwritten when the user passes an argument of the same name to `...` (#1248).
 * `compact()`, `discard()`, `keep()`, `map_if()`, and `modify_if()` now support parallel predicates wrapped with `in_parallel()` (#1252).
 * `imap_vec()` gains an explicit `.ptype` parameter to match `map2_vec()` (#1244).
