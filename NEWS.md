@@ -5,6 +5,7 @@
 * `list_along()`, `invoke_map_df()`, and `invoke_map_dfc()` now always warn about their deprecation, as does supplying pairlists, calls, or expressions to `map()` and friends.
 * All `map()` functions now have less overhead, particularly on unclassed vectors. This means that they should run faster when `.f` itself is very fast, like with the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea). As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...` omitted when empty) rather than `.f(.x[[i]], ...)`, which affects code that uses `substitute()`, `match.call()`, or `sys.call()`.
 * `in_parallel()` is no longer experimental.
+* `in_parallel()` and parallel maps no longer require you to install any additional packages, as mirai (>= 2.5.1) and carrier (>= 0.4.0) are now imported by purrr.
 * `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
 
 # purrr 1.2.2

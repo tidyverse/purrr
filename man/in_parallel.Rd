@@ -165,7 +165,7 @@ daemons when functions are used recursively within each other.
 }
 
 \examples{
-\dontshow{if (interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Run in interactive sessions only as spawns additional processes
 
 default_param <- 0.5

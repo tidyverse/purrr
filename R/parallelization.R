@@ -155,7 +155,7 @@
 #' @seealso [map()] for usage examples.
 #' @aliases parallelization
 #' @export
-#' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
+#' @examplesIf interactive()
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' default_param <- 0.5
@@ -184,7 +184,6 @@
 #' mirai::mirai(crate(mtcars), crate = crate) |> mirai::collect_mirai()
 #'
 in_parallel <- function(.f, ...) {
-  parallel_pkgs_installed()
   inject(
     carrier::crate(
       !!substitute(.f),
@@ -197,17 +196,5 @@ in_parallel <- function(.f, ...) {
 }
 
 running_in_parallel <- function(x) {
-  inherits(x, "crate") && parallel_pkgs_installed() && mirai::daemons_set()
-}
-
-parallel_pkgs_installed <- function() {
-  is.logical(the$parallel_pkgs_installed) ||
-    {
-      check_installed(
-        c("carrier", "mirai"),
-        version = c("0.3.0", "2.5.1"),
-        reason = "for parallel map."
-      )
-      the$parallel_pkgs_installed <- TRUE
-    }
+  inherits(x, "crate") && mirai::daemons_set()
 }

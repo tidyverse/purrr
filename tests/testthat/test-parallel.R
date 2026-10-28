@@ -1,5 +1,3 @@
-skip_if_not_installed("mirai")
-
 test_that("All parallel map variants fall back to sequential with no daemons set", {
   expect_identical(
     map(list(x = 1, y = 2), in_parallel(\(x) list(x))),
@@ -39,8 +37,6 @@ test_that("works with matrices/arrays (#970)", {
 })
 
 test_that("all inform about location of problem", {
-  skip_if_not_installed("carrier")
-
   expect_snapshot(error = TRUE, {
     map_int(1:3, in_parallel(\(x, bad = 2:1) if (x == 3) bad else x))
     map_int(1:3, in_parallel(\(x, bad = "x") if (x == 3) bad else x))
@@ -60,8 +56,6 @@ test_that("all inform about location of problem", {
 })
 
 test_that("error location uses name if present", {
-  skip_if_not_installed("carrier")
-
   expect_snapshot(error = TRUE, {
     map_int(
       c(a = 1, b = 2, c = 3),
@@ -136,8 +130,6 @@ test_that("map forces arguments in same way as base R", {
 })
 
 test_that("primitive dispatch correctly", {
-  skip_if_not_installed("carrier")
-
   method <- \(x) "dispatched!"
   x <- structure(list(), class = "test_class")
   expect_identical(
