@@ -2,9 +2,6 @@
 
 ## purrr (development version)
 
-- [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) now
-  passes `user_env` to the vctrs compatibility helpers, fixing a
-  spurious “argument `user_env` is missing” error when given a pairlist.
 - All functions and arguments deprecated in purrr 1.0.0 (released
   December 2022) are now defunct, so calling them throws an error. They
   will be removed in a future release. This includes `cross*()`,
@@ -26,6 +23,38 @@
   [`when()`](https://purrr.tidyverse.org/dev/reference/when.md), and
   using [`vars()`](https://dplyr.tidyverse.org/reference/vars.html) in
   `.at`.
+- Internal parameters are now passed by name to avoid being overwritten
+  when the user passes an argument of the same name to `...`
+  ([\#1248](https://github.com/tidyverse/purrr/issues/1248)).
+- [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md), and
+  [`modify_if()`](https://purrr.tidyverse.org/dev/reference/modify.md)
+  now support parallel predicates wrapped with
+  [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  ([\#1252](https://github.com/tidyverse/purrr/issues/1252)).
+- [`imap_vec()`](https://purrr.tidyverse.org/dev/reference/imap.md)
+  gains an explicit `.ptype` parameter to match
+  [`map2_vec()`](https://purrr.tidyverse.org/dev/reference/map2.md)
+  ([\#1244](https://github.com/tidyverse/purrr/issues/1244)).
+- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  is no longer experimental.
+- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  and parallel maps no longer require any additional packages, as mirai
+  (\>= 2.5.1) and carrier (\>= 0.4.0) are now imported by purrr.
+- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  now accepts existing functions, so `.f` no longer needs to be defined
+  inside the call, e.g. `in_parallel(sum)` or
+  `in_parallel(fun, helper = helper)`.
+- [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`modify()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  [`modify2()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  and [`imodify()`](https://purrr.tidyverse.org/dev/reference/modify.md)
+  gain an explicit `.progress` parameter
+  ([\#1249](https://github.com/tidyverse/purrr/issues/1249)).
 - [`list_along()`](https://purrr.tidyverse.org/dev/reference/along.md),
   [`invoke_map_df()`](https://purrr.tidyverse.org/dev/reference/invoke.md),
   and
@@ -35,9 +64,9 @@
   [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) and
   friends.
 - All [`map()`](https://purrr.tidyverse.org/dev/reference/map.md)
-  functions now have less overhead, particularly on unclassed vectors.
-  This means that they should run faster when `.f` itself is very fast,
-  like with the common cases of `map(x, names)` or `map_lgl(x, is.null)`
+  functions now have less overhead, particularly on unclassed vectors,
+  so they run faster when `.f` itself is very fast, as in the common
+  cases of `map(x, names)` or `map_lgl(x, is.null)`
   ([\#1263](https://github.com/tidyverse/purrr/issues/1263), with an
   assist from [@ErdaradunGaztea](https://github.com/ErdaradunGaztea)).
   As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...`
@@ -45,39 +74,9 @@
   that uses [`substitute()`](https://rdrr.io/r/base/substitute.html),
   [`match.call()`](https://rdrr.io/r/base/match.call.html), or
   [`sys.call()`](https://rdrr.io/r/base/sys.parent.html).
-- [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
-  [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
-  [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
-  [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md), and
-  [`modify_if()`](https://purrr.tidyverse.org/dev/reference/modify.md)
-  now support parallel predicates wrapped with
-  [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
-  ([\#1252](https://github.com/tidyverse/purrr/issues/1252)).
-- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
-  is no longer experimental.
-- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
-  and parallel maps no longer require you to install any additional
-  packages, as mirai (\>= 2.5.1) and carrier (\>= 0.4.0) are now
-  imported by purrr.
-- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
-  now accepts existing functions, so `.f` no longer needs to be defined
-  inside the call, e.g. `in_parallel(sum)` or
-  `in_parallel(fun, helper = helper)`.
-- The following functions gain an explicit `.progress` parameter:
-  [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
-  [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
-  [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
-  [`modify()`](https://purrr.tidyverse.org/dev/reference/modify.md),
-  [`modify2()`](https://purrr.tidyverse.org/dev/reference/modify.md),
-  [`imodify()`](https://purrr.tidyverse.org/dev/reference/modify.md)
-  ([\#1249](https://github.com/tidyverse/purrr/issues/1249)).
-- [`imap_vec()`](https://purrr.tidyverse.org/dev/reference/imap.md)
-  gains an explicit `.ptype` parameter to match
-  [`map2_vec()`](https://purrr.tidyverse.org/dev/reference/map2.md)
-  ([\#1244](https://github.com/tidyverse/purrr/issues/1244)).
-- Many internal parameters across several functions are now passed with
-  names to avoid accidental overwrite by user passing the same parameter
-  to `...` ([\#1248](https://github.com/tidyverse/purrr/issues/1248)).
+- [`pmap()`](https://purrr.tidyverse.org/dev/reference/pmap.md) now
+  passes `user_env` to the vctrs compatibility helpers, fixing a
+  spurious “argument `user_env` is missing” error when given a pairlist.
 
 ## purrr 1.2.2
 
@@ -116,7 +115,7 @@ CRAN release: 2025-11-04
   [`vec_depth()`](https://purrr.tidyverse.org/dev/reference/pluck_depth.md).
 
 - [`map_chr()`](https://purrr.tidyverse.org/dev/reference/map.md) no
-  longer from logical, integer, or double to strings.
+  longer coerces from logical, integer, or double to strings.
 
 - [`every()`](https://purrr.tidyverse.org/dev/reference/every.md),
   [`some()`](https://purrr.tidyverse.org/dev/reference/every.md), and
