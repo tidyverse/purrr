@@ -23,12 +23,12 @@ test_that("direction of reduce determines how generated trees lean", {
 
 test_that("can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  out <- reduce(x, \(.x, .y) if (.y) c(.x, "foo") else done(.x), .init = NULL)
   expect_identical(out, c("foo", "foo"))
 
   # Empty done box yields the same value as returning the
   # result-so-far (the last value) in a done box
-  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done(), .init = NULL)
+  out2 <- reduce(x, \(.x, .y) if (.y) c(.x, "foo") else done(), .init = NULL)
   expect_identical(out2, out)
 })
 
@@ -137,17 +137,20 @@ test_that("accumulate() forces arguments (#643)", {
 })
 
 test_that("accumulate() uses vctrs to simplify results", {
-  out <- list("foo", factor("bar")) |> accumulate(~.y)
+  out <- list("foo", factor("bar")) |> accumulate(\(.x, .y) .y)
   expect_identical(out, c("foo", "bar"))
 })
 
 test_that("accumulate() does not fail when input can't be simplified", {
-  expect_identical(accumulate(list(1L, 2:3), ~.y), list(1L, 2:3))
-  expect_identical(accumulate(list(1, "a"), ~.y), list(1, "a"))
+  expect_identical(accumulate(list(1L, 2:3), \(.x, .y) .y), list(1L, 2:3))
+  expect_identical(accumulate(list(1, "a"), \(.x, .y) .y), list(1, "a"))
 })
 
 test_that("accumulate() does fail when simpification is required", {
-  expect_snapshot(accumulate(list(1, "a"), ~.y, .simplify = TRUE), error = TRUE)
+  expect_snapshot(
+    accumulate(list(1, "a"), \(.x, .y) .y, .simplify = TRUE),
+    error = TRUE
+  )
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -175,7 +178,12 @@ test_that("reduce returns original input if it was length one", {
 
 test_that("can shortcircuit reduce2() with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  out <- reduce2(
+    x,
+    1:5,
+    \(.x, .y, ...) if (.y) c(.x, "foo") else done(.x),
+    .init = NULL
+  )
   expect_identical(out, c("foo", "foo"))
 })
 

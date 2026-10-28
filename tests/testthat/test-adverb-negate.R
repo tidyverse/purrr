@@ -8,7 +8,7 @@ test_that("negate works with both functions and vectors", {
 })
 
 test_that("negate() works with early returns", {
-  expect_false(negate(~ return(TRUE))())
+  expect_false(negate(\(.x) return(TRUE))())
 })
 
 test_that("negate() works with generic functions and local methods", {

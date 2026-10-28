@@ -50,12 +50,12 @@
 # requires output be length 1 and have common type
 
     Code
-      map_vec(1:2, in_parallel(~ rep(1, .x)))
+      map_vec(1:2, in_parallel(function(.x) rep(1, .x)))
     Condition
       Error in `map_vec()`:
       ! `out[[2]]` must have size 1, not size 2.
     Code
-      map_vec(1:2, in_parallel(~ if (.x == 1) factor("x") else 1))
+      map_vec(1:2, in_parallel(function(.x) if (.x == 1) factor("x") else 1))
     Condition
       Error in `map_vec()`:
       ! Can't combine `<list>[[1]]` <factor<9758a>> and `<list>[[2]]` <double>.
@@ -63,7 +63,7 @@
 # can enforce .ptype
 
     Code
-      map_vec(1:2, in_parallel(~ factor("x")), .ptype = integer())
+      map_vec(1:2, in_parallel(function(.x) factor("x")), .ptype = integer())
     Condition
       Error in `map_vec()`:
       ! Can't convert `<list>[[1]]` <factor<9758a>> to <integer>.
@@ -71,17 +71,17 @@
 # verifies result types and length
 
     Code
-      map2_int(1, 1, in_parallel(~"x"))
+      map2_int(1, 1, in_parallel(function(.x, .y) "x"))
     Condition
       Error in `map2_int()`:
       ! Can't convert `<list>[[1]]` <character> to <integer>.
     Code
-      map2_int(1, 1, in_parallel(~ 1:2))
+      map2_int(1, 1, in_parallel(function(.x, .y) 1:2))
     Condition
       Error in `map2_int()`:
       ! `x[[1]]` must have size 1, not size 2.
     Code
-      map2_vec(1, 1, in_parallel(~1), .ptype = character())
+      map2_vec(1, 1, in_parallel(function(.x, .y) 1), .ptype = character())
     Condition
       Error in `map2_vec()`:
       ! Can't convert `<list>[[1]]` <double> to <character>.
@@ -89,17 +89,17 @@
 ---
 
     Code
-      pmap_int(list(1), in_parallel(~"x"))
+      pmap_int(list(1), in_parallel(function(...) "x"))
     Condition
       Error in `pmap_int()`:
       ! Can't convert `<list>[[1]]` <character> to <integer>.
     Code
-      pmap_int(list(1), in_parallel(~ 1:2))
+      pmap_int(list(1), in_parallel(function(...) 1:2))
     Condition
       Error in `pmap_int()`:
       ! `x[[1]]` must have size 1, not size 2.
     Code
-      pmap_vec(list(1), in_parallel(~1), .ptype = character())
+      pmap_vec(list(1), in_parallel(function(...) 1), .ptype = character())
     Condition
       Error in `pmap_vec()`:
       ! Can't convert `<list>[[1]]` <double> to <character>.

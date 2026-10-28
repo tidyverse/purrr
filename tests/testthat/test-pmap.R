@@ -16,22 +16,22 @@ test_that("... are passed after varying argumetns", {
 
 test_that("variants return expected types", {
   l <- list(list(1, 2, 3))
-  expect_true(is_bare_list(pmap(l, ~1)))
-  expect_true(is_bare_logical(pmap_lgl(l, ~TRUE)))
-  expect_true(is_bare_integer(pmap_int(l, ~1)))
-  expect_true(is_bare_double(pmap_dbl(l, ~1.5)))
-  expect_true(is_bare_character(pmap_chr(l, ~"x")))
-  expect_equal(pwalk(l, ~"x"), l)
+  expect_true(is_bare_list(pmap(l, \(...) 1)))
+  expect_true(is_bare_logical(pmap_lgl(l, \(...) TRUE)))
+  expect_true(is_bare_integer(pmap_int(l, \(...) 1)))
+  expect_true(is_bare_double(pmap_dbl(l, \(...) 1.5)))
+  expect_true(is_bare_character(pmap_chr(l, \(...) "x")))
+  expect_equal(pwalk(l, \(...) "x"), l)
 
   l <- list(list(FALSE, 1L, 1))
-  expect_true(is_bare_double(pmap_vec(l, ~.x)))
+  expect_true(is_bare_double(pmap_vec(l, \(.x, ...) .x)))
 })
 
 test_that("verifies result types and length", {
   expect_snapshot(error = TRUE, {
-    pmap_int(list(1), ~"x")
-    pmap_int(list(1), ~ 1:2)
-    pmap_vec(list(1), ~1, .ptype = character())
+    pmap_int(list(1), \(...) "x")
+    pmap_int(list(1), \(...) 1:2)
+    pmap_vec(list(1), \(...) 1, .ptype = character())
   })
 })
 
@@ -87,14 +87,14 @@ test_that("avoid expensive [[ method on data frames", {
   class(df) <- c("mydf", "data.frame")
 
   expect_equal(pmap(df, list), list(list(x = 1, y = 2), list(x = 2, y = 1)))
-  expect_equal(pmap_lgl(df, ~TRUE), c(TRUE, TRUE))
-  expect_equal(pmap_int(df, ~2), c(2, 2))
-  expect_equal(pmap_dbl(df, ~3.5), c(3.5, 3.5))
-  expect_equal(pmap_chr(df, ~"x"), c("x", "x"))
+  expect_equal(pmap_lgl(df, \(...) TRUE), c(TRUE, TRUE))
+  expect_equal(pmap_int(df, \(...) 2), c(2, 2))
+  expect_equal(pmap_dbl(df, \(...) 3.5), c(3.5, 3.5))
+  expect_equal(pmap_chr(df, \(...) "x"), c("x", "x"))
 })
 
 test_that("pmap works with empty lists", {
-  expect_identical(pmap(list(), ~1), list())
+  expect_identical(pmap(list(), \(...) 1), list())
 })
 
 test_that("preserves S3 class of input vectors (#358)", {
@@ -126,12 +126,12 @@ test_that("pmap forces arguments in same way as base R", {
 test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
-  expect_identical(pmap(list(x, 1, 1:2), ~.x), out)
+  expect_identical(pmap(list(x, 1, 1:2), \(.x, ...) .x), out)
 })
 
 test_that("don't evaluate symbolic objects (#428)", {
-  pmap(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
-  pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
+  pmap(list(exprs(1 + 2)), \(.x, ...) expect_identical(.x, quote(1 + 2)))
+  pwalk(list(exprs(1 + 2)), \(.x, ...) expect_identical(.x, quote(1 + 2)))
 })
 
 test_that("can map over missing arguments", {
