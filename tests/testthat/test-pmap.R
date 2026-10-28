@@ -138,3 +138,15 @@ test_that("can map over missing arguments", {
   x <- list(a = quote(expr = ), b = 1)
   expect_equal(pmap_lgl(list(1, x), \(x, y) is.name(y)), c(TRUE, FALSE))
 })
+
+test_that("passing .type parameter to map() results in an error (#1248)", {
+  expect_snapshot(pmap(\(x, ...) x, .type = "character"), error = TRUE)
+})
+
+test_that("pairlists are deprecated but work", {
+  f <- function() {
+    pmap(pairlist(1:2, 3:4), sum)
+  }
+  expect_snapshot(x <- f())
+  expect_equal(x, list(4, 6))
+})

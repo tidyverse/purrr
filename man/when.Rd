@@ -25,11 +25,11 @@ be valid. Note that the input value is always treated as a single object,
 as opposed to the \code{ifelse} function.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#defunct}{\figure{lifecycle-defunct.svg}{options: alt='[Defunct]'}}}{\strong{[Defunct]}}
 
-This function was deprecated in purrr 1.0.0 because it's not related to the
-core purpose of purrr. You can pull your code out of a pipe and use regular
-\code{if}/\verb{else} statements instead.
+This function was deprecated in purrr 1.0.0 and is now defunct because it's
+not related to the core purpose of purrr. You can pull your code out of a
+pipe and use regular \code{if}/\verb{else} statements instead.
 
 \code{when()} is a flavour of pattern matching (or an if-else abstraction) in
 which a value is matched against a sequence of condition-action sets. When a
@@ -37,14 +37,7 @@ valid match/condition is found the action is executed and the result of the
 action is returned.
 }
 \examples{
-1:10 |>
-  when(
-    sum(.) <=  50 ~ sum(.),
-    sum(.) <= 100 ~ sum(.)/2,
-    ~ 0
-  )
-
-# now
+# Instead of when(), use if/else:
 x <- 1:10
 if (sum(x) < 10) {
   sum(x)

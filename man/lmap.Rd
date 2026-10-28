@@ -44,11 +44,7 @@ returns \code{FALSE}.}
 
 \item{.at}{A logical, integer, or character vector giving the elements
 to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
-installed, you can use \code{vars()} and tidyselect helpers to select
-elements.}
+and returns a logical, integer, or character vector of elements to select.}
 }
 \value{
 A list or data frame, matching \code{.x}. There are no guarantees about

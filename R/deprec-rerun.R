@@ -1,11 +1,11 @@
 #' Re-run expressions multiple times
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("defunct")`
 #'
-#' This function was deprecated in purrr 1.0.0 because we believe that NSE
-#' functions are not a  good fit for purrr. Also, `rerun(n, x)` can just as
-#' easily be expressed as `map(1:n, \(i) x)`
+#' This function was deprecated in purrr 1.0.0 and is now defunct because we
+#' believe that NSE functions are not a good fit for purrr. Also, `rerun(n, x)`
+#' can just as easily be expressed as `map(1:n, \(i) x)`
 #'
 #' `rerun()` is a convenient way of generating sample data. It works similarly to
 #' \code{\link{replicate}(..., simplify = FALSE)}.
@@ -21,41 +21,14 @@
 #' @export
 #' @keywords internal
 #' @examples
-#' # old
-#' 5 |> rerun(rnorm(5)) |> str()
-#' # new
+#' # Instead of rerun(5, rnorm(5)), use:
 #' 1:5 |> map(\(i) rnorm(5)) |> str()
 #'
-#' # old
-#' 5 |>
-#'   rerun(x = rnorm(5), y = rnorm(5)) |>
-#'   map_dbl(\(l) cor(l$x, l$y))
-#' # new
+#' # Instead of rerun(5, x = rnorm(5), y = rnorm(5)), use:
 #' 1:5 |>
 #'   map(\(i) list(x = rnorm(5), y = rnorm(5))) |>
 #'   map_dbl(\(l) cor(l$x, l$y))
 rerun <- function(.n, ...) {
-  deprec_rerun(.n, ..., .purrr_user_env = caller_env())
-
-  dots <- quos(...)
-
-  # Special case: if single unnamed argument, insert directly into the output
-  # rather than wrapping in a list.
-  if (length(dots) == 1 && !is_named(dots)) {
-    dots <- dots[[1]]
-    eval_dots <- eval_tidy
-  } else {
-    eval_dots <- function(x) lapply(x, eval_tidy)
-  }
-
-  out <- vector("list", .n)
-  for (i in seq_len(.n)) {
-    out[[i]] <- eval_dots(dots)
-  }
-  out
-}
-
-deprec_rerun <- function(.n, ..., .purrr_user_env) {
   n <- .n
   old <- substitute(rerun(n, ...))
   if (dots_n(...) == 1) {
@@ -64,7 +37,7 @@ deprec_rerun <- function(.n, ..., .purrr_user_env) {
     new <- substitute(map(1:n, ~ list(...)))
   }
 
-  lifecycle::deprecate_warn(
+  lifecycle::deprecate_stop(
     when = "1.0.0",
     what = "rerun()",
     with = "map()",
@@ -74,7 +47,6 @@ deprec_rerun <- function(.n, ..., .purrr_user_env) {
       "",
       " " = "# Now",
       " " = expr_deparse(new)
-    ),
-    user_env = .purrr_user_env
+    )
   )
 }

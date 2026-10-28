@@ -36,14 +36,6 @@ test_that("lmap_at() only affects selected elements", {
   expect_equal(out, list(0, 1, 2, 2))
 })
 
-test_that("lmap_at can use tidyselect", {
-  skip_if_not_installed("tidyselect")
-  local_options(lifecycle_verbosity = "quiet")
-
-  x <- lmap_at(mtcars, vars(tidyselect::contains("vs")), ~ .x + 10)
-  expect_equal(x$vs[1], 10)
-})
-
 test_that("`.else` preserves false elements", {
   x <- list("a", 99)
   out <- lmap_if(x, is.character, ~ list(1, 2), .else = ~ list(3, 4))
@@ -54,6 +46,17 @@ test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
     lmap(list(1), ~1)
     lmap(list(1), environment())
-    lmap(list(1), ~1, .else = environment())
   })
+})
+
+test_that("passing .ind parameter to lmap() results in an error", {
+  expect_snapshot(lmap(1, .ind = FALSE), error = TRUE)
+})
+
+test_that("passing .else parameter to lmap_at() results in an error", {
+  x <- list(a = 1, b = 2, c = 3, d = 4)
+  expect_snapshot(
+    lmap_at(x, "c", \(x) list(1), .else = \(x) list(NULL)),
+    error = TRUE
+  )
 })

@@ -47,3 +47,20 @@
       Error in `pmap()`:
       ! Can't recycle `.l[[1]]` (size 2) to match `.l[[2]]` (size 0).
 
+# passing .type parameter to map() results in an error (#1248)
+
+    Code
+      pmap(function(x, ...) x, .type = "character")
+    Condition
+      Error in `pmap_()`:
+      ! formal argument ".type" matched by multiple actual arguments
+
+# pairlists are deprecated but work
+
+    Code
+      x <- f()
+    Condition
+      Warning:
+      Use of pairlists in purrr functions was deprecated in purrr 1.0.0.
+      i Please coerce explicitly with `as.list()`
+

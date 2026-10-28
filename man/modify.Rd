@@ -8,15 +8,15 @@
 \alias{imodify}
 \title{Modify elements selectively}
 \usage{
-modify(.x, .f, ...)
+modify(.x, .f, ..., .progress = FALSE)
 
 modify_if(.x, .p, .f, ..., .else = NULL)
 
 modify_at(.x, .at, .f, ...)
 
-modify2(.x, .y, .f, ...)
+modify2(.x, .y, .f, ..., .progress = FALSE)
 
-imodify(.x, .f, ...)
+imodify(.x, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A vector.}
@@ -38,6 +38,10 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
 
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
+
 \item{.p}{A single predicate function, a formula describing such a
 predicate function, or a logical vector of the same length as \code{.x}.
 Alternatively, if the elements of \code{.x} are themselves lists of
@@ -50,11 +54,7 @@ returns \code{FALSE}.}
 
 \item{.at}{A logical, integer, or character vector giving the elements
 to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
-installed, you can use \code{vars()} and tidyselect helpers to select
-elements.}
+and returns a logical, integer, or character vector of elements to select.}
 
 \item{.y}{A vector, usually the same length as \code{.x}.}
 }

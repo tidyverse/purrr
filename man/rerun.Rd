@@ -20,26 +20,20 @@ level list will be dropped. In this case, \code{rerun(n, x)} behaves like
 \code{replicate(n, x, simplify = FALSE)}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#defunct}{\figure{lifecycle-defunct.svg}{options: alt='[Defunct]'}}}{\strong{[Defunct]}}
 
-This function was deprecated in purrr 1.0.0 because we believe that NSE
-functions are not a  good fit for purrr. Also, \code{rerun(n, x)} can just as
-easily be expressed as \verb{map(1:n, \\(i) x)}
+This function was deprecated in purrr 1.0.0 and is now defunct because we
+believe that NSE functions are not a good fit for purrr. Also, \code{rerun(n, x)}
+can just as easily be expressed as \verb{map(1:n, \\(i) x)}
 
 \code{rerun()} is a convenient way of generating sample data. It works similarly to
 \code{\link{replicate}(..., simplify = FALSE)}.
 }
 \examples{
-# old
-5 |> rerun(rnorm(5)) |> str()
-# new
+# Instead of rerun(5, rnorm(5)), use:
 1:5 |> map(\(i) rnorm(5)) |> str()
 
-# old
-5 |>
-  rerun(x = rnorm(5), y = rnorm(5)) |>
-  map_dbl(\(l) cor(l$x, l$y))
-# new
+# Instead of rerun(5, x = rnorm(5), y = rnorm(5)), use:
 1:5 |>
   map(\(i) list(x = rnorm(5), y = rnorm(5))) |>
   map_dbl(\(l) cor(l$x, l$y))

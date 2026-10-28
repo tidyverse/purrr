@@ -48,3 +48,11 @@
       Error in `map2()`:
       ! Can't recycle `.x` (size 2) to match `.y` (size 0).
 
+# passing .type parameter to map2() results in an error (#1248)
+
+    Code
+      map2_dbl(1:4, function(x, ...) x, .type = "character")
+    Condition
+      Error in `map2_()`:
+      ! formal argument ".type" matched by multiple actual arguments
+

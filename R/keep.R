@@ -20,6 +20,7 @@
 #'
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
+#' @inheritParams map
 #' @export
 #' @examples
 #' rep(10, 10) |>
@@ -41,23 +42,23 @@
 #' # compact() discards elements that are NULL or that have length zero
 #' list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) |>
 #'   compact()
-keep <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+keep <- function(.x, .p, ..., .progress = FALSE) {
+  where <- where_if(.x, .p, ..., .progress = .progress)
   .x[!is.na(where) & where]
 }
 
 #' @export
 #' @rdname keep
-discard <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+discard <- function(.x, .p, ..., .progress = FALSE) {
+  where <- where_if(.x, .p, ..., .progress = .progress)
   .x[is.na(where) | !where]
 }
 
 #' @export
 #' @rdname keep
-compact <- function(.x, .p = identity) {
+compact <- function(.x, .p = identity, .progress = FALSE) {
   .f <- as_mapper(.p)
-  discard(.x, function(x) is_empty(.f(x)))
+  discard(.x, function(x) is_empty(.f(x)), .progress = .progress)
 }
 
 
@@ -81,13 +82,13 @@ compact <- function(.x, .p = identity) {
 #' x |> keep_at(\(x) nchar(x) == 3)
 #' x |> discard_at(\(x) nchar(x) == 3)
 keep_at <- function(x, at) {
-  where <- where_at(x, at, user_env = caller_env())
+  where <- where_at(x, at)
   x[where]
 }
 
 #' @export
 #' @rdname keep_at
 discard_at <- function(x, at) {
-  where <- where_at(x, at, user_env = caller_env())
+  where <- where_at(x, at)
   x[!where]
 }
