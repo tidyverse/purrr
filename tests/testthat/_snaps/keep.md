@@ -31,11 +31,11 @@
     Code
       keep(1:5, .f = function(x, ...) x > 3, .p = NULL)
     Condition
-      Error in `map_()`:
+      Error in `as_mapper()`:
       ! formal argument ".f" matched by multiple actual arguments
     Code
       discard(1:5, .f = function(x, ...) x > 3, .p = NULL)
     Condition
-      Error in `map_()`:
+      Error in `as_mapper()`:
       ! formal argument ".f" matched by multiple actual arguments
 
