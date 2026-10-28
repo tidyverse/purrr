@@ -437,6 +437,26 @@ test_that("negative .at omits locations", {
   expect_equal(out, list(1, 4, 6))
 })
 
+# where_if ------------------------------------------------------------------
+
+test_that("keep/discard support parallel predicates (#1252)", {
+  is_even <- in_parallel(\(x) x %% 2 == 0)
+  expect_identical(keep(1:4, is_even), c(2L, 4L))
+  expect_identical(discard(1:4, is_even), c(1L, 3L))
+})
+
+test_that("map_if/modify_if support parallel predicates", {
+  is_even <- in_parallel(\(x) x %% 2 == 0)
+  expect_equal(
+    map_if(1:4, is_even, in_parallel(\(x) x * 10)),
+    list(1L, 20, 3L, 40)
+  )
+  expect_equal(
+    modify_if(1:4, is_even, in_parallel(\(x) x * 10)),
+    c(1, 20, 3, 40)
+  )
+})
+
 # ---------------------------------------------------------------------------
 
 mirai::daemons(0)

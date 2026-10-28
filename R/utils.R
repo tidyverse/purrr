@@ -78,6 +78,12 @@ as_predicate <- function(
     .fn <- as_mapper(.f = .fn, ...)
   }
 
+  if (running_in_parallel(.fn)) {
+    # Can't wrap the crate without stripping its class, so return it
+    # untouched; the parallel map checks the output type instead
+    return(.fn)
+  }
+
   function(...) {
     out <- .fn(...)
 
