@@ -30,8 +30,6 @@
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
 #'     set a default value if the indexed element is `NULL` or does not exist.
 #'
-#'   `r lifecycle::badge("experimental")`
-#'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
 #'   Use of `...` is not permitted in this context.
@@ -131,7 +129,7 @@
 #'   map(summary) |>
 #'   map_dbl("r.squared")
 #'
-#' @examplesIf interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
+#' @examplesIf interactive()
 #' # Run in interactive sessions only as spawns additional processes
 #'
 #' # To use parallelized map:
@@ -162,31 +160,31 @@
 #' mirai::daemons(0)
 #'
 map <- function(.x, .f, ..., .progress = FALSE) {
-  map_("list", .x, .f, ..., .progress = .progress)
+  map_(.type = "list", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_lgl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("logical", .x, .f, ..., .progress = .progress)
+  map_(.type = "logical", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_int <- function(.x, .f, ..., .progress = FALSE) {
-  map_("integer", .x, .f, ..., .progress = .progress)
+  map_(.type = "integer", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_dbl <- function(.x, .f, ..., .progress = FALSE) {
-  map_("double", .x, .f, ..., .progress = .progress)
+  map_(.type = "double", .x, .f, ..., .progress = .progress)
 }
 
 #' @rdname map
 #' @export
 map_chr <- function(.x, .f, ..., .progress = FALSE) {
-  map_("character", .x, .f, ..., .progress = .progress)
+  map_(.type = "character", .x, .f, ..., .progress = .progress)
 }
 
 map_ <- function(
@@ -221,7 +219,16 @@ map_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(map_impl, environment(), .type, .progress, n, names, i)
+    call_with_cleanup(
+      map_impl,
+      .x,
+      environment(),
+      .type,
+      .progress,
+      n,
+      names,
+      i
+    )
   )
 }
 

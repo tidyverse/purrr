@@ -31,6 +31,23 @@ test_that("verifies result types and length", {
   })
 })
 
+test_that("creates simple call", {
+  out <- map2(1, 2, function(x, y) sys.call())[[1]]
+  expect_equal(out, quote(.f(.x_i, .y_i)))
+
+  out <- map2(1, 2, function(x, y, z) sys.call(), z = 1)[[1]]
+  expect_equal(out, quote(.f(.x_i, .y_i, ...)))
+})
+
+test_that("handles mix of objects and bare vectors", {
+  date <- as.Date(c("2020-01-01", "2020-01-02"))
+  expect_identical(
+    map2(date, 1:2, \(x, y) x + y),
+    list(date[1] + 1L, date[2] + 2L)
+  )
+  expect_identical(map2(1:2, date, \(x, y) y), list(date[1], date[2]))
+})
+
 test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
@@ -72,4 +89,13 @@ test_that("only takes names from x", {
 test_that("don't evaluate symbolic objects (#428)", {
   map2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
   walk2(exprs(1 + 2), NA, ~ expect_identical(.x, quote(1 + 2)))
+})
+
+test_that("can map over missing arguments", {
+  x <- list(a = quote(expr = ), b = 1)
+  expect_equal(map2_lgl(x, x, \(x, y) is.name(y)), c(a = TRUE, b = FALSE))
+})
+
+test_that("passing .type parameter to map2() results in an error (#1248)", {
+  expect_snapshot(map2_dbl(1:4, \(x, ...) x, .type = "character"), error = TRUE)
 })

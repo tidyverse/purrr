@@ -7,7 +7,7 @@
 #' they share the same notion of "parallel" as [base::pmax()] and [base::pmin()].
 #'
 #' @param .l A list of vectors. The length of `.l` determines the number of
-#'   arguments that `.f` will be called with. Arguments will be supply by
+#'   arguments that `.f` will be called with. Arguments will be supplied by
 #'   position if unnamed, and by name if named.
 #'
 #'   Vectors of length 1 will be recycled to any length; all other elements
@@ -21,8 +21,6 @@
 #'   * An anonymous function, e.g. `\(x, y, z) x + y / z` or
 #'     `function(x, y, z) x + y / z`
 #'   * A formula, e.g. `~ ..1 + ..2 / ..3`. No longer recommended.
-#'
-#'   `r lifecycle::badge("experimental")`
 #'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
@@ -98,28 +96,28 @@
 #' map2_dbl(df$x, df$y, min)
 #' pmap_dbl(df, min)
 pmap <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_("list", .l, .f, ..., .progress = .progress)
+  pmap_(.type = "list", .l, .f, ..., .progress = .progress)
 }
 
 #' @export
 #' @rdname pmap
 pmap_lgl <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_("logical", .l, .f, ..., .progress = .progress)
+  pmap_(.type = "logical", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_int <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_("integer", .l, .f, ..., .progress = .progress)
+  pmap_(.type = "integer", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_dbl <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_("double", .l, .f, ..., .progress = .progress)
+  pmap_(.type = "double", .l, .f, ..., .progress = .progress)
 }
 #' @export
 #' @rdname pmap
 pmap_chr <- function(.l, .f, ..., .progress = FALSE) {
-  pmap_("character", .l, .f, ..., .progress = .progress)
+  pmap_(.type = "character", .l, .f, ..., .progress = .progress)
 }
 
 pmap_ <- function(
@@ -137,8 +135,8 @@ pmap_ <- function(
     caller_env = .purrr_error_call
   )
 
-  .l <- vctrs_list_compat(.l, error_call = .purrr_error_call)
-  .l <- map(.l, vctrs_vec_compat)
+  .l <- vctrs_list_compat(.l, .purrr_user_env, error_call = .purrr_error_call)
+  .l <- map(.l, vctrs_vec_compat, user_env = .purrr_user_env)
 
   n <- vec_size_common(!!!.l, .arg = ".l", .call = .purrr_error_call)
   .l <- vec_recycle_common(
@@ -165,9 +163,6 @@ pmap_ <- function(
     return(mmap_(.l, .f, .progress, .type, .purrr_error_call, ...))
   }
 
-  call_names <- names(.l)
-  call_n <- length(.l)
-
   i <- 0L
   with_indexed_errors(
     i = i,
@@ -175,14 +170,13 @@ pmap_ <- function(
     error_call = .purrr_error_call,
     call_with_cleanup(
       pmap_impl,
+      .l,
       environment(),
       .type,
       .progress,
       n,
       names,
-      i,
-      call_names,
-      call_n
+      i
     )
   )
 }

@@ -12,12 +12,22 @@ map_at(.x, .at, .f, ..., .progress = FALSE)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+\item{.p}{A predicate function specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{is.character}.
+\item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
+\item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
+No longer recommended.
+\item A logical vector of the same length as \code{.x}.
+\item A string, if the elements of \code{.x} are themselves lists of objects,
+giving the name of a logical element in the inner lists.
+}
+
+Only those elements where \code{.p} evaluates to \code{TRUE} will be modified.
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{.f}{A function, specified in one of the following ways:
 \itemize{
@@ -30,8 +40,6 @@ are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
 set a default value if the indexed element is \code{NULL} or does not exist.
 }
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
@@ -56,11 +64,7 @@ returns \code{FALSE}.}
 
 \item{.at}{A logical, integer, or character vector giving the elements
 to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
-installed, you can use \code{vars()} and tidyselect helpers to select
-elements.}
+and returns a logical, integer, or character vector of elements to select.}
 
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
@@ -91,13 +95,13 @@ iris |> map_at(c(4, 5), is.numeric) |> str()
 iris |> map_at("Species", toupper) |> str()
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

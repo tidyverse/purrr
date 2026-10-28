@@ -20,7 +20,7 @@ imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
 
-imap_vec(.x, .f, ...)
+imap_vec(.x, .f, ..., .ptype = NULL)
 
 iwalk(.x, .f, ...)
 }
@@ -35,8 +35,6 @@ iwalk(.x, .f, ...)
 \item A formula, e.g. \code{~ .x + .y}. Use \code{.x} to refer to the current element and
 \code{.y} to refer to the current index. No longer recommended.
 }
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
@@ -55,6 +53,10 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.ptype}{If \code{NULL}, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.}
 }
 \value{
 A vector the same length as \code{.x}.
@@ -73,13 +75,13 @@ imap_chr(sample(10), \(x, idx) paste0(idx, ": ", x))
 iwalk(mtcars, \(x, idx) cat(idx, ": ", median(x), "\n", sep = ""))
 }
 \seealso{
-Other map variants: 
-\code{\link{lmap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=lmap]{lmap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

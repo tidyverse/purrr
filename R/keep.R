@@ -18,8 +18,13 @@
 #'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
 #'     No longer recommended.
 #'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
+#'
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
+#' @inheritParams map
 #' @export
 #' @examples
 #' rep(10, 10) |>
@@ -33,7 +38,7 @@
 #'
 #' # Using a string instead of a function will select all list elements
 #' # where that subelement is TRUE
-#' x <- rerun(5, a = rbernoulli(1), b = sample(10))
+#' x <- map(1:5, ~ list(a = runif(1) > 0.5, b = sample(10)))
 #' x
 #' x |> keep("a")
 #' x |> discard("a")
@@ -41,23 +46,28 @@
 #' # compact() discards elements that are NULL or that have length zero
 #' list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) |>
 #'   compact()
-keep <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+keep <- function(.x, .p, ..., .progress = FALSE) {
+  where <- where_if(.x, .p, ..., .progress = .progress)
   .x[!is.na(where) & where]
 }
 
 #' @export
 #' @rdname keep
-discard <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+discard <- function(.x, .p, ..., .progress = FALSE) {
+  where <- where_if(.x, .p, ..., .progress = .progress)
   .x[is.na(where) | !where]
 }
 
 #' @export
 #' @rdname keep
-compact <- function(.x, .p = identity) {
+compact <- function(.x, .p = identity, .progress = FALSE) {
   .f <- as_mapper(.p)
-  discard(.x, function(x) is_empty(.f(x)))
+  if (running_in_parallel(.f)) {
+    .p <- crate_fn(\(x) is_empty(f(x)), f = .f, is_empty = rlang::is_empty)
+  } else {
+    .p <- function(x) is_empty(.f(x))
+  }
+  discard(.x, .p, .progress = .progress)
 }
 
 
@@ -81,13 +91,16 @@ compact <- function(.x, .p = identity) {
 #' x |> keep_at(\(x) nchar(x) == 3)
 #' x |> discard_at(\(x) nchar(x) == 3)
 keep_at <- function(x, at) {
-  where <- where_at(x, at, user_env = caller_env())
+  where <- where_at(x, at)
   x[where]
 }
 
 #' @export
 #' @rdname keep_at
 discard_at <- function(x, at) {
-  where <- where_at(x, at, user_env = caller_env())
+  where <- where_at(x, at)
   x[!where]
 }
+
+# For f in the crated predicate in compact()
+utils::globalVariables("f")

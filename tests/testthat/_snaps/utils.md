@@ -29,13 +29,13 @@
       Error:
       ! `list()` must be a numeric vector, character vector, or function, not an empty list.
 
-# tidyselect `at` is deprecated
+# tidyselect `at` is defunct
 
     Code
-      . <- where_at(data.frame(x = 1), vars("x"), user_env = globalenv())
+      where_at(data.frame(x = 1), quos(x))
     Condition
-      Warning:
-      Using `vars()` in .at was deprecated in purrr 1.0.0.
+      Error:
+      ! Using `vars()` in .at was deprecated in purrr 1.0.0 and is now defunct.
 
 # pairlists, expressions, and calls are deprecated
 

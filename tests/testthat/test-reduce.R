@@ -64,7 +64,7 @@ test_that("accumulate keeps input names", {
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
   expect_identical(
     accumulate(input, sum, .dir = "backward"),
-    set_names(rev(cumsum(rev(1:26))), rev(letters))
+    set_names(rev(cumsum(rev(1:26))), letters)
   )
 })
 
@@ -81,7 +81,7 @@ test_that("accumulate keeps input names when init is supplied", {
   )
   expect_identical(
     accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"),
-    list(b = 0:2, a = 1:2, .init = 2L)
+    list(a = 0:2, b = 1:2, .init = 2L)
   )
 })
 
@@ -103,6 +103,20 @@ test_that("can terminate accumulate() early", {
   expect_equal(
     accumulate(tt, paste2, .dir = "backward", .init = "z"),
     c("b.c.z", "c.z", "z")
+  )
+})
+
+test_that("can terminate named accumulate() early (#1243)", {
+  f <- function(x, y) {
+    if (y < 3) x + y else done()
+  }
+  expect_identical(
+    accumulate(list(a = 1, b = 2, c = 3), f, .init = 0),
+    c(.init = 0, a = 1, b = 3)
+  )
+  expect_identical(
+    accumulate(list(a = 1, b = 2, c = 3), f, .init = 0, .dir = "backward"),
+    c(c = 3, .init = 0)
   )
 })
 

@@ -128,17 +128,6 @@ test_that("`.else` modifies false elements", {
   )
 })
 
-test_that("modify_at() can use tidyselect", {
-  skip_if_not_installed("tidyselect")
-  local_options(lifecycle_verbosity = "quiet")
-
-  df <- data.frame(x = 1, y = 3)
-  expect_equal(
-    modify_at(df, vars(x), ~2),
-    data.frame(x = 2, y = 3)
-  )
-})
-
 test_that("imodify uses index", {
   expect_equal(imodify(list(2), ~.y), list(1))
   expect_equal(imodify(list(a = 2), ~.y), list(a = "a"))

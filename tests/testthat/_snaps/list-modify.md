@@ -40,11 +40,11 @@
       ! Arguments in `...` must have unique names.
       x Multiple arguments named `x` at positions 1 and 2.
 
-# update_list() is deprecated
+# update_list() is defunct
 
     Code
-      . <- update_list(list())
+      update_list(list())
     Condition
-      Warning:
-      `update_list()` was deprecated in purrr 1.0.0.
+      Error:
+      ! `update_list()` was deprecated in purrr 1.0.0 and is now defunct.
 

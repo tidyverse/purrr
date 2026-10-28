@@ -1,10 +1,10 @@
 #' Produce all combinations of list elements
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("defunct")`
 #'
-#' These functions were deprecated in purrr 1.0.0 because they
-#' are slow and buggy, and we no longer think they are the right
+#' These functions were deprecated in purrr 1.0.0 and are now defunct because
+#' they are slow and buggy, and we no longer think they are the right
 #' approach to solving this problem. Please use `tidyr::expand_grid()`
 #' instead.
 #'
@@ -18,7 +18,7 @@
 #'   greeting = c("Hello.", "Bonjour.")
 #' )
 #'
-#' # With deprecated `cross()`
+#' # With defunct `cross()`
 #' data |> cross() |> map_chr(\(...) paste0(..., collapse = ""))
 #'
 #' # With `expand_grid()`
@@ -63,143 +63,44 @@
 #'   combination.
 #' @keywords internal
 #' @export
-#' @examples
-#' # We build all combinations of names, greetings and separators from our
-#' # list of data and pass each one to paste()
-#' data <- list(
-#'   id = c("John", "Jane"),
-#'   greeting = c("Hello.", "Bonjour."),
-#'   sep = c("! ", "... ")
-#' )
-#'
-#' data |>
-#'   cross() |>
-#'   map(lift(paste))
-#'
-#' # cross() returns the combinations in long format: many elements,
-#' # each representing one combination. With cross_df() we'll get a
-#' # data frame in long format: crossing three objects produces a data
-#' # frame of three columns with each row being a particular
-#' # combination. This is the same format that expand.grid() returns.
-#' args <- data |> cross_df()
-#'
-#' # In case you need a list in long format (and not a data frame)
-#' # just run as.list() after cross_df()
-#' args |> as.list()
-#'
-#' # This format is often less practical for functional programming
-#' # because applying a function to the combinations requires a loop
-#' out <- vector("character", length = nrow(args))
-#' for (i in seq_along(out))
-#'   out[[i]] <- invoke("paste", map(args, i))
-#' out
-#'
-#' # It's easier to transpose and then use invoke_map()
-#' args |> transpose() |> map_chr(\(x) exec(paste, !!!x))
-#'
-#' # Unwanted combinations can be filtered out with a predicate function
-#' filter <- function(x, y) x >= y
-#' cross2(1:5, 1:5, .filter = filter) |> str()
-#'
-#' # To give names to the components of the combinations, we map
-#' # setNames() on the product:
-#' x <- seq_len(3)
-#' cross2(x, x, .filter = `==`) |>
-#'   map(setNames, c("x", "y"))
-#'
-#' # Alternatively we can encapsulate the arguments in a named list
-#' # before crossing to get named components:
-#' list(x = x, y = x) |>
-#'   cross(.filter = `==`)
 cross <- function(.l, .filter = NULL) {
-  lifecycle::deprecate_warn(
+  lifecycle::deprecate_stop(
     "1.0.0",
     "purrr::cross()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
-
-  if (is_empty(.l)) {
-    return(.l)
-  }
-
-  if (!is.null(.filter)) {
-    .filter <- as_mapper(.filter)
-  }
-
-  n <- length(.l)
-  lengths <- lapply(.l, length)
-  names <- names(.l)
-
-  factors <- cumprod(lengths)
-  total_length <- factors[n]
-  factors <- c(1, factors[-n])
-
-  out <- replicate(total_length, vector("list", n), simplify = FALSE)
-
-  for (i in seq_along(out)) {
-    for (j in seq_len(n)) {
-      index <- floor((i - 1) / factors[j]) %% length(.l[[j]]) + 1
-      out[[i]][[j]] <- .l[[j]][[index]]
-    }
-    names(out[[i]]) <- names
-
-    # Filter out unwanted elements. We set them to NULL instead of
-    # completely removing them so we don't mess up the loop indexing.
-    # NULL elements are removed later on.
-    if (!is.null(.filter)) {
-      is_to_filter <- do.call(".filter", unname(out[[i]]))
-      if (!is_bool(is_to_filter)) {
-        cli::cli_abort(
-          "The filter function must return a single `TRUE` or `FALSE`, not {.obj_type_friendly {is_to_filter}}."
-        )
-      }
-      if (is_to_filter) {
-        out[i] <- list(NULL)
-      }
-    }
-  }
-
-  # Remove filtered elements
-  compact(out)
 }
 
 #' @export
 #' @rdname cross
 cross2 <- function(.x, .y, .filter = NULL) {
-  lifecycle::deprecate_warn(
+  lifecycle::deprecate_stop(
     "1.0.0",
     "purrr::cross2()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
-  cross(list(.x, .y), .filter = .filter)
 }
 
 #' @export
 #' @rdname cross
 cross3 <- function(.x, .y, .z, .filter = NULL) {
-  lifecycle::deprecate_warn(
+  lifecycle::deprecate_stop(
     "1.0.0",
     "purrr::cross3()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
-  cross(list(.x, .y, .z), .filter = .filter)
 }
 
 #' @rdname cross
 #' @export
 cross_df <- function(.l, .filter = NULL) {
-  lifecycle::deprecate_warn(
+  lifecycle::deprecate_stop(
     "1.0.0",
     "purrr::cross_df()",
     "tidyr::expand_grid()",
     details = c(i = "See <https://github.com/tidyverse/purrr/issues/768>.")
   )
-  check_installed("tibble")
-  cross(.l, .filter = .filter) |>
-    transpose() |>
-    simplify_all() |>
-    tibble::as_tibble()
 }

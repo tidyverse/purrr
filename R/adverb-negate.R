@@ -2,13 +2,19 @@
 #'
 #' Negating a function changes `TRUE` to `FALSE` and `FALSE` to `TRUE`.
 #'
-#' @inheritParams keep
+#' @param .p A predicate function (i.e. a function that returns either `TRUE`
+#'   or `FALSE`) specified in one of the following ways:
+#'
+#'   * A named function, e.g. `is.character`.
+#'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
+#'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
+#'     No longer recommended.
 #' @inheritSection safely Adverbs
 #' @family adverbs
 #' @return A new predicate function.
 #' @export
 #' @examples
-#' x <- list(x = 1:10, y = rbernoulli(10), z = letters)
+#' x <- list(x = 1:10, y = runif(10) > 0.5, z = letters)
 #' x |> keep(is.numeric) |> names()
 #' x |> keep(negate(is.numeric)) |> names()
 #' # Same as

@@ -32,23 +32,29 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+\item{.p}{A predicate function specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{is.character}.
+\item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
+\item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
+No longer recommended.
+\item A logical vector of the same length as \code{.x}.
+\item A string, if the elements of \code{.x} are themselves lists of objects,
+giving the name of a logical element in the inner lists.
+}
+
+Only those elements where \code{.p} evaluates to \code{TRUE} will be modified.
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{.else}{A function applied to elements of \code{.x} for which \code{.p}
 returns \code{FALSE}.}
 
 \item{.at}{A logical, integer, or character vector giving the elements
 to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}: if the tidyselect package is
-installed, you can use \code{vars()} and tidyselect helpers to select
-elements.}
+and returns a logical, integer, or character vector of elements to select.}
 }
 \value{
 A list or data frame, matching \code{.x}. There are no guarantees about
@@ -90,13 +96,13 @@ x |> lmap_at(c("a", "d"), maybe_rep) |> str()
 x |> lmap_if(is.character, maybe_rep) |> str()
 }
 \seealso{
-Other map variants: 
-\code{\link{imap}()},
-\code{\link{map}()},
-\code{\link{map2}()},
-\code{\link{map_depth}()},
-\code{\link{map_if}()},
-\code{\link{modify}()},
-\code{\link{pmap}()}
+Other map variants:
+\code{\link[=imap]{imap()}},
+\code{\link[=map]{map()}},
+\code{\link[=map2]{map2()}},
+\code{\link[=map_depth]{map_depth()}},
+\code{\link[=map_if]{map_if()}},
+\code{\link[=modify]{modify()}},
+\code{\link[=pmap]{pmap()}}
 }
 \concept{map variants}

@@ -5,7 +5,38 @@ test_that("preserves names", {
 
 test_that("creates simple call", {
   out <- map(1, function(x) sys.call())[[1]]
-  expect_equal(out, quote(.f(.x[[i]], ...)))
+  expect_equal(out, quote(.f(.x_i)))
+
+  out <- map(1, function(x, y) sys.call(), y = 1)[[1]]
+  expect_equal(out, quote(.f(.x_i, ...)))
+})
+
+test_that("extracts elements of every bare vector type", {
+  x <- list(
+    c(TRUE, NA),
+    c(1L, NA),
+    c(1.5, NA),
+    c(1i, NA),
+    as.raw(1:2),
+    c("a", NA),
+    list(1, NULL)
+  )
+  for (xi in x) {
+    expect_identical(map(xi, identity), lapply(xi, identity))
+  }
+})
+
+test_that("drops names and attributes of atomic elements, like [[", {
+  x <- structure(c(a = 1, b = 2), foo = "bar")
+  expect_identical(map(x, identity), list(a = 1, b = 2))
+})
+
+test_that("uses [[ method for objects", {
+  x <- factor(c("a", "b"))
+  expect_identical(
+    map(x, identity),
+    list(factor("a", c("a", "b")), factor("b", c("a", "b")))
+  )
 })
 
 test_that("fails on non-vectors", {
@@ -90,8 +121,16 @@ test_that("logical and integer NA become correct double NA", {
 })
 
 test_that("map forces arguments in same way as base R", {
+  x <- 1:2
   f_map <- map(1:2, function(i) function(x) x + i)
   f_base <- lapply(1:2, function(i) function(x) x + i)
+
+  expect_equal(f_map[[1]](0), f_base[[1]](0))
+  expect_equal(f_map[[2]](0), f_base[[2]](0))
+
+  x <- structure(1:2, class = "foo")
+  f_map <- map(x, function(i) function(x) x + i)
+  f_base <- lapply(x, function(i) function(x) x + i)
 
   expect_equal(f_map[[1]](0), f_base[[1]](0))
   expect_equal(f_map[[2]](0), f_base[[2]](0))
@@ -121,6 +160,9 @@ test_that("map() with empty input copies names", {
   expect_identical(map_chr(named_list, identity), named(chr()))
 })
 
+test_that("passing .type parameter to map() results in an error (#1248)", {
+  expect_snapshot(map_lgl(\(x, ...) x, .type = "character"), error = TRUE)
+})
 
 # map_vec -----------------------------------------------------------------
 
@@ -150,4 +192,11 @@ test_that("can enforce .ptype", {
   expect_snapshot(error = TRUE, {
     map_vec(1:2, ~ factor("x"), .ptype = integer())
   })
+})
+
+test_that("can map over missing arguments", {
+  x <- list(a = quote(expr = ), b = 1)
+  expect_equal(map_lgl(x, is.name), c(a = TRUE, b = FALSE))
+  expect_equal(map_lgl(x, \(x, y) is.name(x), y = 1), c(a = TRUE, b = FALSE))
+  expect_equal(keep(x, is.name), x[1])
 })

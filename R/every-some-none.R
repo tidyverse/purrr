@@ -5,6 +5,13 @@
 #' * `none()` returns `TRUE` when `.p` is `FALSE` for all elements.
 #'
 #' @inheritParams keep
+#' @param .p A predicate function (i.e. a function that returns either `TRUE`
+#'   or `FALSE`) specified in one of the following ways:
+#'
+#'   * A named function, e.g. `is.character`.
+#'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
+#'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
+#'     No longer recommended.
 #' @param ... Additional arguments passed on to `.p`.
 #' @return A logical vector of length 1.
 #' @export
@@ -48,7 +55,7 @@ satisfies_predicate <- function(
   # Not using `as_predicate()` as R level predicate result checks are too slow.
   # Checks are done at the C level instead (#1169). Also, `NA` propagates
   # through these functions, which `as_predicate()` doesn't allow.
-  .p <- as_mapper(.p, ...)
+  .p <- as_mapper(.f = .p, ...)
 
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)

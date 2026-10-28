@@ -12,12 +12,21 @@
 #'   which elements of `.x` are transformed with `.f`.
 #'
 #' @inheritParams map
-#' @param .p A single predicate function, a formula describing such a
-#'   predicate function, or a logical vector of the same length as `.x`.
-#'   Alternatively, if the elements of `.x` are themselves lists of
-#'   objects, a string indicating the name of a logical element in the
-#'   inner lists. Only those elements where `.p` evaluates to
-#'   `TRUE` will be modified.
+#' @param .p A predicate function specified in one of the following ways:
+#'
+#'   * A named function, e.g. `is.character`.
+#'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
+#'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
+#'     No longer recommended.
+#'   * A logical vector of the same length as `.x`.
+#'   * A string, if the elements of `.x` are themselves lists of objects,
+#'     giving the name of a logical element in the inner lists.
+#'
+#'   Only those elements where `.p` evaluates to `TRUE` will be modified.
+#'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
 #' @param .else A function applied to elements of `.x` for which `.p`
 #' returns `FALSE`.
 #' @family map variants
@@ -52,13 +61,9 @@ map_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @param .at A logical, integer, or character vector giving the elements
 #'   to select. Alternatively, a function that takes a vector of names,
 #'   and returns a logical, integer, or character vector of elements to select.
-#'
-#'   `r lifecycle::badge("deprecated")`: if the tidyselect package is
-#'   installed, you can use `vars()` and tidyselect helpers to select
-#'   elements.
 #' @export
 map_at <- function(.x, .at, .f, ..., .progress = FALSE) {
-  where <- where_at(.x, .at, user_env = caller_env())
+  where <- where_at(.x, .at)
 
   out <- vector("list", length(.x))
   out[where] <- map(.x[where], .f, ..., .progress = .progress)

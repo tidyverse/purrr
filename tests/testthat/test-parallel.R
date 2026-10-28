@@ -1,12 +1,10 @@
-skip_if_not_installed("mirai")
-
 test_that("All parallel map variants fall back to sequential with no daemons set", {
   expect_identical(
     map(list(x = 1, y = 2), in_parallel(\(x) list(x))),
     map(list(x = 1, y = 2), \(x) list(x))
   )
   expect_equal(map2(1, 2, in_parallel(\(x, y) x)), list(1))
-  expect_identical(pmap(list(), in_parallel(~ 1)), list())
+  expect_identical(pmap(list(), in_parallel(~1)), list())
 })
 
 # set up daemons
@@ -39,8 +37,6 @@ test_that("works with matrices/arrays (#970)", {
 })
 
 test_that("all inform about location of problem", {
-  skip_if_not_installed("carrier")
-
   expect_snapshot(error = TRUE, {
     map_int(1:3, in_parallel(\(x, bad = 2:1) if (x == 3) bad else x))
     map_int(1:3, in_parallel(\(x, bad = "x") if (x == 3) bad else x))
@@ -60,8 +56,6 @@ test_that("all inform about location of problem", {
 })
 
 test_that("error location uses name if present", {
-  skip_if_not_installed("carrier")
-
   expect_snapshot(error = TRUE, {
     map_int(
       c(a = 1, b = 2, c = 3),
@@ -136,8 +130,6 @@ test_that("map forces arguments in same way as base R", {
 })
 
 test_that("primitive dispatch correctly", {
-  skip_if_not_installed("carrier")
-
   method <- \(x) "dispatched!"
   x <- structure(list(), class = "test_class")
   expect_identical(
@@ -439,27 +431,40 @@ test_that("atomic vector imap works", {
 
 # map_at --------------------------------------------------------------------
 
-test_that("map_at() works with tidyselect", {
-  skip_if_not_installed("tidyselect")
-  local_options(lifecycle_verbosity = "quiet")
-
-  x <- list(a = "b", b = "c", aa = "bb")
-  one <- map_at(x, vars(a), in_parallel(\(x) toupper(x)))
-  expect_identical(one$a, "B")
-  expect_identical(one$aa, "bb")
-  two <- map_at(
-    x,
-    vars(tidyselect::contains("a")),
-    in_parallel(\(x) toupper(x))
-  )
-  expect_identical(two$a, "B")
-  expect_identical(two$aa, "BB")
-})
-
 test_that("negative .at omits locations", {
   x <- c(1, 2, 3)
   out <- map_at(x, -1, in_parallel(~ .x * 2))
   expect_equal(out, list(1, 4, 6))
+})
+
+# where_if ------------------------------------------------------------------
+
+test_that("keep/discard support parallel predicates (#1252)", {
+  is_even <- in_parallel(\(x) x %% 2 == 0)
+  expect_identical(keep(1:4, is_even), c(2L, 4L))
+  expect_identical(discard(1:4, is_even), c(1L, 3L))
+})
+
+test_that("compact() supports parallel predicates", {
+  expect_identical(
+    compact(
+      list(1, NULL, 2),
+      in_parallel(\(x) if (length(x) && x == 1) NULL else x)
+    ),
+    list(2)
+  )
+})
+
+test_that("map_if/modify_if support parallel predicates", {
+  is_even <- in_parallel(\(x) x %% 2 == 0)
+  expect_equal(
+    map_if(1:4, is_even, in_parallel(\(x) x * 10)),
+    list(1L, 20, 3L, 40)
+  )
+  expect_equal(
+    modify_if(1:4, is_even, in_parallel(\(x) x * 10)),
+    c(1, 20, 3, 40)
+  )
 })
 
 # ---------------------------------------------------------------------------

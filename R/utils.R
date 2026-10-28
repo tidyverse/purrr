@@ -1,7 +1,6 @@
 where_at <- function(
   x,
   at,
-  user_env,
   error_arg = caller_arg(at),
   error_call = caller_env()
 ) {
@@ -13,14 +12,10 @@ where_at <- function(
   }
 
   if (is_quosures(at)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "1.0.0",
-      what = I("Using `vars()` in .at"),
-      user_env = user_env
+      what = I("Using `vars()` in .at")
     )
-    check_installed("tidyselect", "for using tidyselect in `map_at()`.")
-
-    at <- tidyselect::vars_select(.vars = names2(x), !!!at)
   }
 
   if (is.numeric(at) || is.logical(at) || is.character(at)) {
@@ -46,13 +41,26 @@ where_at <- function(
   }
 }
 
-where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
+where_if <- function(
+  .x,
+  .p,
+  ...,
+  .progress = FALSE,
+  .purrr_error_call = caller_env()
+) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.p, ..., .mapper = TRUE, .purrr_error_call = NULL)
-    map_(.x, .p, ..., .type = "logical", .purrr_error_call = .purrr_error_call)
+    .p <- as_predicate(.fn = .p, ..., .mapper = TRUE, .purrr_error_call = NULL)
+    map_(
+      .x,
+      .f = .p,
+      ...,
+      .type = "logical",
+      .progress = .progress,
+      .purrr_error_call = .purrr_error_call
+    )
   }
 }
 
@@ -67,7 +75,13 @@ as_predicate <- function(
   force(.purrr_error_arg)
 
   if (.mapper) {
-    .fn <- as_mapper(.fn, ...)
+    .fn <- as_mapper(.f = .fn, ...)
+  }
+
+  if (running_in_parallel(.fn)) {
+    # Can't wrap the crate without stripping its class, so return it
+    # untouched; the parallel map checks the output type instead
+    return(.fn)
   }
 
   function(...) {
@@ -121,7 +135,7 @@ vctrs_vec_compat <- function(x, user_env) {
   if (is.null(x)) {
     list()
   } else if (is.pairlist(x)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "1.0.0",
       what = I("Use of pairlists in purrr functions"),
       details = "Please coerce explicitly with `as.list()`",
@@ -132,7 +146,7 @@ vctrs_vec_compat <- function(x, user_env) {
     dim(x) <- NULL
     x
   } else if (is_call(x) || is.expression(x)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "1.0.0",
       what = I("Use of calls and expressions in purrr functions"),
       details = "Please coerce explicitly with `as.list()`",

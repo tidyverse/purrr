@@ -58,6 +58,14 @@
       Caused by error in `fail_at_3()`:
       ! Error
 
+# passing .type parameter to map() results in an error (#1248)
+
+    Code
+      map_lgl(function(x, ...) x, .type = "character")
+    Condition
+      Error in `map_()`:
+      ! formal argument ".type" matched by multiple actual arguments
+
 # requires output be length 1 and have common type
 
     Code
@@ -69,7 +77,7 @@
       map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
     Condition
       Error in `map_vec()`:
-      ! Can't combine `<list>[[1]]` <factor<bf275>> and `<list>[[2]]` <double>.
+      ! Can't combine `<list>[[1]]` <factor<9758a>> and `<list>[[2]]` <double>.
 
 # can enforce .ptype
 
@@ -77,5 +85,5 @@
       map_vec(1:2, ~ factor("x"), .ptype = integer())
     Condition
       Error in `map_vec()`:
-      ! Can't convert `<list>[[1]]` <factor<bf275>> to <integer>.
+      ! Can't convert `<list>[[1]]` <factor<9758a>> to <integer>.
 
