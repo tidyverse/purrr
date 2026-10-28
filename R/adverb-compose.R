@@ -53,6 +53,10 @@ compose <- function(..., .dir = c("backward", "forward")) {
   }
 
   composed <- function() {
+    # The call must be built here from `sys.call()`, not precomputed from
+    # `formals(first_fn)`, so that missingness, names, and order of the
+    # caller's arguments are preserved exactly. Functions that inspect
+    # `missing()` (e.g. `table()`) break if defaults are passed explicitly.
     call <- call2(first_fn, !!!call_args(sys.call()))
 
     for (fn in fns) {
