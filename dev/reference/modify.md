@@ -27,15 +27,15 @@ the `modify()` family always returns the same type as the input object.
 ## Usage
 
 ``` r
-modify(.x, .f, ...)
+modify(.x, .f, ..., .progress = FALSE)
 
 modify_if(.x, .p, .f, ..., .else = NULL)
 
 modify_at(.x, .at, .f, ...)
 
-modify2(.x, .y, .f, ...)
+modify2(.x, .y, .f, ..., .progress = FALSE)
 
-imodify(.x, .f, ...)
+imodify(.x, .f, ..., .progress = FALSE)
 ```
 
 ## Arguments
@@ -64,6 +64,13 @@ imodify(.x, .f, ...)
 
   This makes it easier to understand which arguments belong to which
   function and will tend to yield better error messages.
+
+- .progress:
+
+  Whether to show a progress bar. Use `TRUE` to turn on a basic progress
+  bar, use a string to give it a name, or see
+  [progress_bars](https://purrr.tidyverse.org/dev/reference/progress_bars.md)
+  for more details.
 
 - .p:
 

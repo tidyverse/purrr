@@ -76,7 +76,7 @@ and the position of an element.</p>
 <span></span>
 <span><span class="fu">imap_dbl</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">imap_vec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">imap_vec</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span>, .ptype <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">iwalk</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.f</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -110,6 +110,12 @@ Use of <code>...</code> is not permitted in this context.</p></dd>
 <span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">2</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.</p></dd>
+
+
+<dt id="arg--ptype">.ptype<a class="anchor" aria-label="anchor" href="#arg--ptype"></a></dt>
+<dd><p>If <code>NULL</code>, the default, the output type is the common type
+of the elements of the result. Otherwise, supply a "prototype" giving
+the desired type of output.</p></dd>
 
 </dl></div>
     <div class="section level2">

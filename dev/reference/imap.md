@@ -18,7 +18,7 @@ imap_int(.x, .f, ...)
 
 imap_dbl(.x, .f, ...)
 
-imap_vec(.x, .f, ...)
+imap_vec(.x, .f, ..., .ptype = NULL)
 
 iwalk(.x, .f, ...)
 ```
@@ -63,6 +63,12 @@ iwalk(.x, .f, ...)
 
   This makes it easier to understand which arguments belong to which
   function and will tend to yield better error messages.
+
+- .ptype:
+
+  If `NULL`, the default, the output type is the common type of the
+  elements of the result. Otherwise, supply a "prototype" giving the
+  desired type of output.
 
 ## Value
 

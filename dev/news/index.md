@@ -51,6 +51,21 @@
   now accepts existing functions, so `.f` no longer needs to be defined
   inside the call, e.g. `in_parallel(sum)` or
   `in_parallel(fun, helper = helper)`.
+- The following functions gain an explicit `.progress` parameter:
+  [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`modify()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  [`modify2()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  [`imodify()`](https://purrr.tidyverse.org/dev/reference/modify.md)
+  ([\#1249](https://github.com/tidyverse/purrr/issues/1249)).
+- [`imap_vec()`](https://purrr.tidyverse.org/dev/reference/imap.md)
+  gains an explicit `.ptype` parameter to match
+  [`map2_vec()`](https://purrr.tidyverse.org/dev/reference/map2.md)
+  ([\#1244](https://github.com/tidyverse/purrr/issues/1244)).
+- Many internal parameters across several functions are now passed with
+  names to avoid accidental overwrite by user passing the same parameter
+  to `...` ([\#1248](https://github.com/tidyverse/purrr/issues/1248)).
 
 ## purrr 1.2.2
 

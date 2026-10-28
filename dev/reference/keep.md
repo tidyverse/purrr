@@ -7,11 +7,11 @@
 ## Usage
 
 ``` r
-keep(.x, .p, ...)
+keep(.x, .p, ..., .progress = FALSE)
 
-discard(.x, .p, ...)
+discard(.x, .p, ..., .progress = FALSE)
 
-compact(.x, .p = identity)
+compact(.x, .p = identity, .progress = FALSE)
 ```
 
 ## Arguments
@@ -36,6 +36,13 @@ compact(.x, .p = identity)
 - ...:
 
   Additional arguments passed on to `.p`.
+
+- .progress:
+
+  Whether to show a progress bar. Use `TRUE` to turn on a basic progress
+  bar, use a string to give it a name, or see
+  [progress_bars](https://purrr.tidyverse.org/dev/reference/progress_bars.md)
+  for more details.
 
 ## Details
 
