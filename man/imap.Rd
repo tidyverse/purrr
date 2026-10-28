@@ -32,8 +32,6 @@ iwalk(.x, .f, ...)
 \item A named function, e.g. \code{paste}.
 \item An anonymous function, e.g. \verb{\\(x, idx) x + idx} or
 \code{function(x, idx) x + idx}.
-\item A formula, e.g. \code{~ .x + .y}. Use \code{.x} to refer to the current element and
-\code{.y} to refer to the current index. No longer recommended.
 }
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed

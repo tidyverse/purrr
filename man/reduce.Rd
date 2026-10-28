@@ -12,9 +12,14 @@ reduce2(.x, .y, .f, ..., .init)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{reduce()}, a 2-argument function. The function will be passed
+\item{.f}{A function, specified in one of the following ways:
+\itemize{
+\item A named function.
+\item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
+For \code{reduce()}, a 2-argument function. The function will be passed
 the accumulated value as the first argument and the "next" value as the
 second argument.
+}
 
 For \code{reduce2()}, a 3-argument function. The function will be passed the
 accumulated value as the first argument, the next value of \code{.x} as the

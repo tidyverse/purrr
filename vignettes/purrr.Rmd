@@ -169,9 +169,9 @@ map_vec(list(1, "a", TRUE), identity)
 `map()` and friends all iterate over a single list, making it poorly suited for some problems. For example, how would you find a weighted mean when you have a list of observations and a list of weights? Imagine we have the following data:
 
 ```{r}
-xs <- map(1:8, ~ runif(10))
+xs <- map(1:8, \(.x) runif(10))
 xs[[1]][[1]] <- NA
-ws <- map(1:8, ~ rpois(10, 5) + 1)
+ws <- map(1:8, \(.x) rpois(10, 5) + 1)
 ```
 
 We could use `map_dbl()` to compute unweighted means:

@@ -11,9 +11,10 @@
 #' in a package, be sure to read [faq-adverbs-export].
 #'
 #' @param .f A function to modify, specified in one of the following ways:
+#'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   * A formula, e.g. `~ .x + 1`. No longer recommended.
+
 #' @param otherwise Default value to use when an error occurs.
 #' @param quiet Hide errors (`TRUE`, the default), or display them
 #'   as they occur?

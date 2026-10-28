@@ -10,7 +10,7 @@ test_that("no lazy evaluation means arguments aren't repeatedly evaluated", {
     counter$n <- counter$n + 1
     NULL
   })
-  walk(1:10, ~ lazy())
+  walk(1:10, \(.x) lazy())
   expect_identical(counter$n, 10)
 
   counter <- env(n = 0)
@@ -21,7 +21,7 @@ test_that("no lazy evaluation means arguments aren't repeatedly evaluated", {
       NULL
     }
   )
-  walk(1:10, ~ qq())
+  walk(1:10, \(.x) qq())
   expect_identical(counter$n, 1)
 })
 

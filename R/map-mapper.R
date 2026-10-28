@@ -5,18 +5,17 @@
 #' generic. The default method forwards its arguments to
 #' [rlang::as_function()].
 #'
-#' @param .f A function, formula, or vector (not necessarily atomic).
+#' @param .f A function, specified in one of the following ways:
 #'
-#'   If a __function__, it is used as is.
-#'
-#'   If a __formula__, e.g. `~ .x + 2`, it is converted to a function.
-#'   No longer recommended.
-#'
-#'   If __character vector__, __numeric vector__, or __list__, it is
-#'   converted to an extractor function. Character vectors index by
-#'   name and numeric vectors index by position; use a list to index
-#'   by position and name at different levels. If a component is not
-#'   present, the value of `.default` will be returned.
+#'   * A named function, e.g. `mean`.
+#'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
+
+#'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
+#'     are converted to extractor functions, i.e. `\(x) pluck(x, "idx")`,
+#'     `\(x) pluck(x, 1)`, and `\(x) pluck(x, "idx", 1)` respectively.
+#'     Character vectors index by name and numeric vectors index by position;
+#'     use a list to index by position and name at different levels. If a
+#'     component is not present, the value of `.default` will be returned.
 #' @param .default,.null Optional additional argument for extractor functions
 #'   (i.e. when `.f` is character, integer, or list). Returned when
 #'   value is absent (does not exist) or empty (has length 0).
@@ -43,6 +42,13 @@ as_mapper <- function(.f, ...) {
 
 #' @export
 as_mapper.default <- function(.f, ...) {
+  if (inherits(.f, "formula")) {
+    lifecycle::deprecate_soft(
+      when = "1.3.0",
+      what = I("Using a formula in place of a function"),
+      with = I("an anonymous function")
+    )
+  }
   rlang::as_function(.f)
 }
 

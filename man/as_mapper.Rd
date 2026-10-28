@@ -16,18 +16,17 @@ as_mapper(.f, ...)
 \method{as_mapper}{list}(.f, ..., .null, .default = NULL)
 }
 \arguments{
-\item{.f}{A function, formula, or vector (not necessarily atomic).
-
-If a \strong{function}, it is used as is.
-
-If a \strong{formula}, e.g. \code{~ .x + 2}, it is converted to a function.
-No longer recommended.
-
-If \strong{character vector}, \strong{numeric vector}, or \strong{list}, it is
-converted to an extractor function. Character vectors index by
-name and numeric vectors index by position; use a list to index
-by position and name at different levels. If a component is not
-present, the value of \code{.default} will be returned.}
+\item{.f}{A function, specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{mean}.
+\item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
+\item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
+are converted to extractor functions, i.e. \verb{\\(x) pluck(x, "idx")},
+\verb{\\(x) pluck(x, 1)}, and \verb{\\(x) pluck(x, "idx", 1)} respectively.
+Character vectors index by name and numeric vectors index by position;
+use a list to index by position and name at different levels. If a
+component is not present, the value of \code{.default} will be returned.
+}}
 
 \item{...}{Additional arguments passed on to methods.}
 

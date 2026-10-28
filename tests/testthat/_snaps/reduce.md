@@ -9,7 +9,7 @@
 # accumulate() does fail when simpification is required
 
     Code
-      accumulate(list(1, "a"), ~.y, .simplify = TRUE)
+      accumulate(list(1, "a"), function(.x, .y) .y, .simplify = TRUE)
     Condition
       Error in `accumulate()`:
       ! Can't combine `res[[1]]` <double> and `res[[2]]` <character>.

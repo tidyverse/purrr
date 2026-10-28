@@ -11,13 +11,15 @@ test_that("imap always returns a list", {
 test_that("atomic vector imap works", {
   expect_true(all(imap_lgl(x, `==`)))
   expect_length(imap_chr(x, paste), 3)
-  expect_equal(imap_int(x, ~ .x + as.integer(.y)), x * 2)
-  expect_equal(imap_dbl(x, ~ .x + as.numeric(.y)), x * 2)
-  expect_equal(imap_vec(x, ~ .x + as.numeric(.y)), x * 2)
+  expect_equal(imap_int(x, \(.x, .y) .x + as.integer(.y)), x * 2)
+  expect_equal(imap_dbl(x, \(.x, .y) .x + as.numeric(.y)), x * 2)
+  expect_equal(imap_vec(x, \(.x, .y) .x + as.numeric(.y)), x * 2)
 })
 
 test_that("iwalk returns invisibly", {
-  expect_output(iwalk(mtcars, ~ cat(.y, ": ", median(.x), "\n", sep = "")))
+  expect_output(iwalk(mtcars, \(.x, .y) {
+    cat(.y, ": ", median(.x), "\n", sep = "")
+  }))
 })
 
 test_that("passing .y parameter to imap() results in an error", {
