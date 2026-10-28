@@ -46,20 +46,28 @@ where_if <- function(
   .p,
   ...,
   .progress = FALSE,
-  .purrr_error_call = caller_env()
+  .purrr_error_call = caller_env(),
+  .purrr_user_env = caller_env(2)
 ) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_predicate(.fn = .p, ..., .mapper = TRUE, .purrr_error_call = NULL)
+    .p <- as_predicate(
+      .fn = .p,
+      ...,
+      .mapper = TRUE,
+      .purrr_error_call = NULL,
+      .purrr_user_env = .purrr_user_env
+    )
     map_(
       .x,
       .f = .p,
       ...,
       .type = "logical",
       .progress = .progress,
-      .purrr_error_call = .purrr_error_call
+      .purrr_error_call = .purrr_error_call,
+      .purrr_user_env = .purrr_user_env
     )
   }
 }
@@ -69,13 +77,15 @@ as_predicate <- function(
   ...,
   .mapper,
   .purrr_error_call = caller_env(),
-  .purrr_error_arg = caller_arg(.fn)
+  .purrr_error_arg = caller_arg(.fn),
+  .purrr_user_env = caller_env(2)
 ) {
   force(.purrr_error_call)
   force(.purrr_error_arg)
+  force(.purrr_user_env)
 
   if (.mapper) {
-    .fn <- as_mapper(.f = .fn, ...)
+    .fn <- as_mapper(.f = .fn, ..., .user_env = .purrr_user_env)
   }
 
   if (running_in_parallel(.fn)) {
