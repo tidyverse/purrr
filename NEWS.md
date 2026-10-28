@@ -1,16 +1,16 @@
 # purrr (development version)
 
-* `pmap()` now passes `user_env` to the vctrs compatibility helpers, fixing a spurious "argument `user_env` is missing" error when given a pairlist.
 * All functions and arguments deprecated in purrr 1.0.0 (released December 2022) are now defunct, so calling them throws an error. They will be removed in a future release. This includes `cross*()`, `flatten_raw()`, `invoke()`, `invoke_map()` (and its typed variants except `invoke_map_df()` and `invoke_map_dfc()`), `lift_*()`, `*map*_raw()`, `prepend()`, `rbernoulli()`, `rdunif()`, `rerun()`, `splice()`, `update_list()`, `vec_depth()`, `when()`, and using `vars()` in `.at`.
-* `list_along()`, `invoke_map_df()`, and `invoke_map_dfc()` now always warn about their deprecation, as does supplying pairlists, calls, or expressions to `map()` and friends.
-* All `map()` functions now have less overhead, particularly on unclassed vectors. This means that they should run faster when `.f` itself is very fast, like with the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea). As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...` omitted when empty) rather than `.f(.x[[i]], ...)`, which affects code that uses `substitute()`, `match.call()`, or `sys.call()`.
-* `keep()`, `discard()`, `compact()`, `map_if()`, and `modify_if()` now support parallel predicates wrapped with `in_parallel()` (#1252).
-* `in_parallel()` is no longer experimental.
-* `in_parallel()` and parallel maps no longer require you to install any additional packages, as mirai (>= 2.5.1) and carrier (>= 0.4.0) are now imported by purrr.
-* `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
-* The following functions gain an explicit `.progress` parameter: `keep()`, `discard()`, `compact()`, `modify()`, `modify2()`, `imodify()` (#1249).
+* Internal parameters are now passed by name to avoid being overwritten when the user passes an argument of the same name to `...` (#1248).
+* `compact()`, `discard()`, `keep()`, `map_if()`, and `modify_if()` now support parallel predicates wrapped with `in_parallel()` (#1252).
 * `imap_vec()` gains an explicit `.ptype` parameter to match `map2_vec()` (#1244).
-* Many internal parameters across several functions are now passed with names to avoid accidental overwrite by user passing the same parameter to `...` (#1248).
+* `in_parallel()` is no longer experimental.
+* `in_parallel()` and parallel maps no longer require any additional packages, as mirai (>= 2.5.1) and carrier (>= 0.4.0) are now imported by purrr.
+* `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
+* `keep()`, `discard()`, `compact()`, `modify()`, `modify2()`, and `imodify()` gain an explicit `.progress` parameter (#1249).
+* `list_along()`, `invoke_map_df()`, and `invoke_map_dfc()` now always warn about their deprecation, as does supplying pairlists, calls, or expressions to `map()` and friends.
+* All `map()` functions now have less overhead, particularly on unclassed vectors, so they run faster when `.f` itself is very fast, as in the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea). As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...` omitted when empty) rather than `.f(.x[[i]], ...)`, which affects code that uses `substitute()`, `match.call()`, or `sys.call()`.
+* `pmap()` now passes `user_env` to the vctrs compatibility helpers, fixing a spurious "argument `user_env` is missing" error when given a pairlist.
 
 # purrr 1.2.2
 
@@ -28,7 +28,7 @@
 
 * All functions that were soft-deprecated in purrr 1.0.0 are now fully deprecated. They will be removed in a future release. This includes: `invoke_*()`, `lift_*()`, `cross*()`, `prepend()`, `splice()`, `rbernoulli()`, `rdunif()`, `when()`, `update_list()`, `*_raw()`, `vec_depth()`.
 
-* `map_chr()` no longer  from logical, integer, or double to strings.
+* `map_chr()` no longer coerces from logical, integer, or double to strings.
 
 * `every()`, `some()`, and `none()` now require that `.p` return logical scalar `TRUE`, `FALSE`, or `NA`. Previously, `NA` was allowed to be a non-logical `NA`, and would be coerced to a logical `NA`.
 
