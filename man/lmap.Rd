@@ -37,7 +37,11 @@ predicate function, or a logical vector of the same length as \code{.x}.
 Alternatively, if the elements of \code{.x} are themselves lists of
 objects, a string indicating the name of a logical element in the
 inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.}
+\code{TRUE} will be modified.
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{.else}{A function applied to elements of \code{.x} for which \code{.p}
 returns \code{FALSE}.}

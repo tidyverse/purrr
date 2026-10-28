@@ -18,6 +18,10 @@
 #'   objects, a string indicating the name of a logical element in the
 #'   inner lists. Only those elements where `.p` evaluates to
 #'   `TRUE` will be modified.
+#'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
 #' @param .else A function applied to elements of `.x` for which `.p`
 #' returns `FALSE`.
 #' @family map variants

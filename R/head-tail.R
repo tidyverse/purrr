@@ -1,6 +1,12 @@
 #' Find head/tail that all satisfies a predicate.
 #'
 #' @inheritParams map_if
+#' @param .p A single predicate function, a formula describing such a
+#'   predicate function, or a logical vector of the same length as `.x`.
+#'   Alternatively, if the elements of `.x` are themselves lists of
+#'   objects, a string indicating the name of a logical element in the
+#'   inner lists. Only those elements where `.p` evaluates to
+#'   `TRUE` will be kept.
 #' @inheritParams map
 #' @return A vector the same type as `.x`.
 #' @export
