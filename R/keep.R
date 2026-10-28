@@ -101,3 +101,6 @@ discard_at <- function(x, at) {
   where <- where_at(x, at)
   x[!where]
 }
+
+# For f in the crated predicate in compact()
+utils::globalVariables("f")
