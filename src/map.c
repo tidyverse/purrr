@@ -26,8 +26,6 @@ static SEXP call_map_dots = NULL;
 static SEXP call_map2 = NULL;
 static SEXP call_map2_dots = NULL;
 
-static SEXP call_quote_missing = NULL;
-
 static void cb_progress_done(void* bar_ptr) {
   SEXP bar = (SEXP)bar_ptr;
   cli_progress_done(bar);
@@ -69,21 +67,6 @@ static inline SEXP call_loop(
 
   UNPROTECT(1);
   return out;
-}
-
-// If an element is the missing argument, binding it to `.x_i` makes `.x_i`
-// itself missing, and putting it directly in the call means the argument is
-// not supplied. Instead, pass `quote(<missing>)`, which evaluates to the
-// missing argument as an ordinary value.
-static SEXP call_quote_missing_sym(SEXP call, SEXP sym) {
-  call = PROTECT(Rf_shallow_duplicate(call));
-  for (SEXP node = CDR(call); node != R_NilValue; node = CDR(node)) {
-    if (CAR(node) == sym) {
-      SETCAR(node, call_quote_missing);
-    }
-  }
-  UNPROTECT(1);
-  return call;
 }
 
 struct map_exec_data {
@@ -145,16 +128,18 @@ static inline SEXP map_exec(const void* p_data_void, int i) {
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
 
-  SEXP call = p_data->call;
   if (x_i == R_MissingArg) {
-    call = call_quote_missing_sym(call, sym_dot_x_i);
+    // If an element is the missing argument, binding it directly to `.x_i` makes
+    // `.x_i` itself missing, so evaluating it is an error. Instead, bind it as a
+    // forced promise whose value is the missing argument, which evaluates to the
+    // missing argument as an ordinary value.
+    env_bind_forced(p_data->env, sym_dot_x_i, R_MissingArg, R_MissingArg);
+  } else {
+    Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
   }
-  PROTECT(call);
-  SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
-  UNPROTECT(1);
-  return out;
+
+  return R_forceAndCall(p_data->call, p_data->force, p_data->env);
 }
 
 static inline SEXP map2_exec(const void* p_data_void, int i) {
@@ -165,25 +150,24 @@ static inline SEXP map2_exec(const void* p_data_void, int i) {
   SEXP x_i = (p_data->x_object) ?
     Rf_eval(call_dot_x_subset2_i, p_data->env) :
     p_vec_get(p_data->v_x, p_data->x_type, i);
-  Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+
+  if (x_i == R_MissingArg) {
+    env_bind_forced(p_data->env, sym_dot_x_i, R_MissingArg, R_MissingArg);
+  } else {
+    Rf_defineVar(sym_dot_x_i, x_i, p_data->env);
+  }
 
   SEXP y_i = (p_data->y_object) ?
     Rf_eval(call_dot_y_subset2_i, p_data->env) :
     p_vec_get(p_data->v_y, p_data->y_type, i);
-  Rf_defineVar(sym_dot_y_i, y_i, p_data->env);
 
-  PROTECT_INDEX pi;
-  SEXP call = p_data->call;
-  PROTECT_WITH_INDEX(call, &pi);
-  if (x_i == R_MissingArg) {
-    REPROTECT(call = call_quote_missing_sym(call, sym_dot_x_i), pi);
-  }
   if (y_i == R_MissingArg) {
-    REPROTECT(call = call_quote_missing_sym(call, sym_dot_y_i), pi);
+    env_bind_forced(p_data->env, sym_dot_y_i, R_MissingArg, R_MissingArg);
+  } else {
+    Rf_defineVar(sym_dot_y_i, y_i, p_data->env);
   }
-  SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
-  UNPROTECT(1);
-  return out;
+
+  return R_forceAndCall(p_data->call, p_data->force, p_data->env);
 }
 
 static inline SEXP pmap_exec(const void* p_data_void, int i) {
@@ -191,26 +175,21 @@ static inline SEXP pmap_exec(const void* p_data_void, int i) {
 
   *p_data->v_i = i + 1;
 
-  PROTECT_INDEX pi;
-  SEXP call = p_data->call;
-  PROTECT_WITH_INDEX(call, &pi);
-
   for (int j = 0; j < p_data->n_l; ++j) {
     const struct pmap_elt* p_elt = &p_data->v_l[j];
 
     SEXP elt_i = (p_elt->elt_object) ?
       Rf_eval(p_elt->call_elt_subset2_i, p_data->env) :
       p_vec_get(p_elt->v_elt, p_elt->elt_type, i);
-    Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
 
     if (elt_i == R_MissingArg) {
-      REPROTECT(call = call_quote_missing_sym(call, p_elt->sym_elt_i), pi);
+      env_bind_forced(p_data->env, p_elt->sym_elt_i, R_MissingArg, R_MissingArg);
+    } else {
+      Rf_defineVar(p_elt->sym_elt_i, elt_i, p_data->env);
     }
   }
 
-  SEXP out = R_forceAndCall(call, p_data->force, p_data->env);
-  UNPROTECT(1);
-  return out;
+  return R_forceAndCall(p_data->call, p_data->force, p_data->env);
 }
 
 SEXP map_impl(
@@ -418,8 +397,4 @@ void map_init(void) {
   R_PreserveObject(call_map2);
   call_map2_dots = Rf_lang4(sym_dot_f, sym_dot_x_i, sym_dot_y_i, R_DotsSymbol);
   R_PreserveObject(call_map2_dots);
-
-  // `quote(<missing>)`
-  call_quote_missing = Rf_lang2(Rf_install("quote"), R_MissingArg);
-  R_PreserveObject(call_quote_missing);
 }

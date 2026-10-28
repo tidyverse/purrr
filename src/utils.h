@@ -70,4 +70,18 @@ static inline R_xlen_t env_dots_length(SEXP env) {
 #endif
 }
 
+// rlang's `r_env_bind_forced()`
+static inline void env_bind_forced(SEXP env, SEXP sym, SEXP expr, SEXP value) {
+#if (defined(R_VERSION) && R_VERSION >= R_Version(4, 6, 0))
+    R_MakeForcedBinding(sym, expr, value, env);
+#else
+    SEXP promise = PROTECT(Rf_allocSExp(PROMSXP));
+    SET_PRCODE(promise, expr);
+    SET_PRENV(promise, R_NilValue);
+    SET_PRVALUE(promise, value);
+    Rf_defineVar(sym, promise, env);
+    UNPROTECT(1);
+#endif
+}
+
 #endif
