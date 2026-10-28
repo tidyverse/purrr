@@ -22,7 +22,11 @@ or \code{FALSE}) specified in one of the following ways:
 \item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
 \item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
 No longer recommended.
-}}
+}
+
+Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
+in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
+Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
 

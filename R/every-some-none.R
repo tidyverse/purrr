@@ -5,6 +5,13 @@
 #' * `none()` returns `TRUE` when `.p` is `FALSE` for all elements.
 #'
 #' @inheritParams keep
+#' @param .p A predicate function (i.e. a function that returns either `TRUE`
+#'   or `FALSE`) specified in one of the following ways:
+#'
+#'   * A named function, e.g. `is.character`.
+#'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
+#'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
+#'     No longer recommended.
 #' @param ... Additional arguments passed on to `.p`.
 #' @return A logical vector of length 1.
 #' @export

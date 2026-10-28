@@ -18,6 +18,10 @@
 #'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
 #'     No longer recommended.
 #'
+#'   Wrap a function with [in_parallel()] to declare that it should be performed
+#'   in parallel. See [in_parallel()] for more details.
+#'   Use of `...` is not permitted in this context.
+#'
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
 #' @inheritParams map
@@ -58,7 +62,12 @@ discard <- function(.x, .p, ..., .progress = FALSE) {
 #' @rdname keep
 compact <- function(.x, .p = identity, .progress = FALSE) {
   .f <- as_mapper(.p)
-  discard(.x, function(x) is_empty(.f(x)), .progress = .progress)
+  if (running_in_parallel(.f)) {
+    .p <- crate_fn(\(x) is_empty(f(x)), f = .f, is_empty = rlang::is_empty)
+  } else {
+    .p <- function(x) is_empty(.f(x))
+  }
+  discard(.x, .p, .progress = .progress)
 }
 
 

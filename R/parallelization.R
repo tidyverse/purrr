@@ -198,3 +198,16 @@ in_parallel <- function(.f, ...) {
 running_in_parallel <- function(x) {
   inherits(x, "crate") && mirai::daemons_set()
 }
+
+# Programmatic version of `in_parallel()` for internal use
+crate_fn <- function(.f, ..., .error_arg = ".f", .error_call = caller_env()) {
+  inject(
+    carrier::crate(
+      !!substitute(.f),
+      !!!list(...),
+      .parent_env = globalenv(),
+      .error_arg = .error_arg,
+      .error_call = .error_call
+    )
+  )
+}
