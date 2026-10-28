@@ -191,7 +191,7 @@ examples.
 ## Examples
 
 ``` r
-if (FALSE) { # interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
+if (FALSE) { # interactive()
 # Run in interactive sessions only as spawns additional processes
 
 default_param <- 0.5

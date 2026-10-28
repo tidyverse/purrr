@@ -48,6 +48,10 @@
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   is no longer experimental.
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  and parallel maps no longer require you to install any additional
+  packages, as mirai (\>= 2.5.1) and carrier (\>= 0.4.0) are now
+  imported by purrr.
+- [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   now accepts existing functions, so `.f` no longer needs to be defined
   inside the call, e.g. `in_parallel(sum)` or
   `in_parallel(fun, helper = helper)`.

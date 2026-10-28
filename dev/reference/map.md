@@ -311,7 +311,7 @@ mtcars |>
 #>         4         6         8 
 #> 0.5086326 0.4645102 0.4229655 
 
-if (FALSE) { # interactive() && rlang::is_installed("mirai") && rlang::is_installed("carrier")
+if (FALSE) { # interactive()
 # Run in interactive sessions only as spawns additional processes
 
 # To use parallelized map:
