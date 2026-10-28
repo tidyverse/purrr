@@ -45,6 +45,14 @@
   that uses [`substitute()`](https://rdrr.io/r/base/substitute.html),
   [`match.call()`](https://rdrr.io/r/base/match.call.html), or
   [`sys.call()`](https://rdrr.io/r/base/sys.parent.html).
+- [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
+  [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md), and
+  [`modify_if()`](https://purrr.tidyverse.org/dev/reference/modify.md)
+  now support parallel predicates wrapped with
+  [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  ([\#1252](https://github.com/tidyverse/purrr/issues/1252)).
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   is no longer experimental.
 - [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)

@@ -18,12 +18,22 @@ tail_while(.x, .p, ...)
 
 - .p:
 
-  A single predicate function, a formula describing such a predicate
-  function, or a logical vector of the same length as `.x`.
-  Alternatively, if the elements of `.x` are themselves lists of
-  objects, a string indicating the name of a logical element in the
-  inner lists. Only those elements where `.p` evaluates to `TRUE` will
-  be modified.
+  A predicate function specified in one of the following ways:
+
+  - A named function, e.g. `is.character`.
+
+  - An anonymous function, e.g. `\(x) all(x < 0)` or
+    `function(x) all(x < 0)`.
+
+  - A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first
+    argument. No longer recommended.
+
+  - A logical vector of the same length as `.x`.
+
+  - A string, if the elements of `.x` are themselves lists of objects,
+    giving the name of a logical element in the inner lists.
+
+  Only those elements where `.p` evaluates to `TRUE` will be kept.
 
 - ...:
 

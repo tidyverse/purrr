@@ -92,12 +92,17 @@ which elements of <code>.x</code> are transformed with <code>.f</code>.</p></li>
 
 
 <dt id="arg--p">.p<a class="anchor" aria-label="anchor" href="#arg--p"></a></dt>
-<dd><p>A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as <code>.x</code>.
-Alternatively, if the elements of <code>.x</code> are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where <code>.p</code> evaluates to
-<code>TRUE</code> will be modified.</p></dd>
+<dd><p>A predicate function specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>is.character</code>.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x) all(x &lt; 0)</code> or <code>function(x) all(x &lt; 0)</code>.</p></li>
+<li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. Use <code>.x</code> to refer to the first argument.
+No longer recommended.</p></li>
+<li><p>A logical vector of the same length as <code>.x</code>.</p></li>
+<li><p>A string, if the elements of <code>.x</code> are themselves lists of objects,
+giving the name of a logical element in the inner lists.</p></li>
+</ul><p>Only those elements where <code>.p</code> evaluates to <code>TRUE</code> will be modified.</p>
+<p>Wrap a function with <code><a href="in_parallel.html">in_parallel()</a></code> to declare that it should be performed
+in parallel. See <code><a href="in_parallel.html">in_parallel()</a></code> for more details.
+Use of <code>...</code> is not permitted in this context.</p></dd>
 
 
 <dt id="arg--f">.f<a class="anchor" aria-label="anchor" href="#arg--f"></a></dt>
