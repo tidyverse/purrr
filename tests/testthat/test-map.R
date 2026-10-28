@@ -204,7 +204,7 @@ test_that("can map over missing arguments", {
 
 test_that("named list progress bar works in parallel (#1253)", {
   mirai::daemons(sync = TRUE)
-  on.exit(mirai::daemons(0), add = TRUE)
+  defer(mirai::daemons(0))
   local_options(cli.progress_handlers = "cli")
 
   f <- in_parallel(\(x) x)
