@@ -57,13 +57,14 @@ compose <- function(..., .dir = c("backward", "forward")) {
     # `formals(first_fn)`, so that missingness, names, and order of the
     # caller's arguments are preserved exactly. Functions that inspect
     # `missing()` (e.g. `table()`) break if defaults are passed explicitly.
-    call <- call2(first_fn, !!!call_args(sys.call()))
+    call <- sys.call()
+    call[[1]] <- first_fn
 
     for (fn in fns) {
-      call <- call2(.fn = fn, call)
+      call <- call2(fn, call)
     }
 
-    eval_tidy(call, env = caller_env())
+    eval_bare(call, env = caller_env())
   }
   formals(composed) <- formals(first_fn)
 
