@@ -1,7 +1,7 @@
 # map_if requires predicate functions
 
     Code
-      map_if(1:3, function(.x) NA, function(.x) "foo")
+      map_if(1:3, ~NA, ~"foo")
     Condition
       Error in `map_if()`:
       i In index: 1.

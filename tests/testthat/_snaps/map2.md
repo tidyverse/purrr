@@ -1,21 +1,21 @@
 # verifies result types and length
 
     Code
-      map2_int(1, 1, function(.x, .y) "x")
+      map2_int(1, 1, ~"x")
     Condition
       Error in `map2_int()`:
       i In index: 1.
       Caused by error:
       ! Can't coerce from a string to an integer.
     Code
-      map2_int(1, 1, function(.x, .y) 1:2)
+      map2_int(1, 1, ~ 1:2)
     Condition
       Error in `map2_int()`:
       i In index: 1.
       Caused by error:
       ! Result must be length 1, not 2.
     Code
-      map2_vec(1, 1, function(.x, .y) 1, .ptype = character())
+      map2_vec(1, 1, ~1, .ptype = character())
     Condition
       Error in `map2_vec()`:
       ! Can't convert `<list>[[1]]` <double> to <character>.

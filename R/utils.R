@@ -46,35 +46,37 @@ where_if <- function(
   .p,
   ...,
   .progress = FALSE,
-  .purrr_error_call = caller_env(),
-  .purrr_user_env = caller_env(2)
+  .purrr_error_call = caller_env()
 ) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
   } else {
-    .p <- as_mapper(.f = .p, ..., .user_env = .purrr_user_env)
-    # Call is `NULL` to avoid repeating the wrapper's "Error in `.fn()`"
-    .p <- as_predicate(.p, .purrr_error_call = NULL)
+    .p <- as_predicate(.fn = .p, ..., .mapper = TRUE, .purrr_error_call = NULL)
     map_(
       .x,
       .f = .p,
       ...,
       .type = "logical",
       .progress = .progress,
-      .purrr_error_call = .purrr_error_call,
-      .purrr_user_env = .purrr_user_env
+      .purrr_error_call = .purrr_error_call
     )
   }
 }
 
 as_predicate <- function(
   .fn,
-  .purrr_error_arg = caller_arg(.fn),
-  .purrr_error_call = caller_env()
+  ...,
+  .mapper,
+  .purrr_error_call = caller_env(),
+  .purrr_error_arg = caller_arg(.fn)
 ) {
-  force(.purrr_error_arg)
   force(.purrr_error_call)
+  force(.purrr_error_arg)
+
+  if (.mapper) {
+    .fn <- as_mapper(.f = .fn, ...)
+  }
 
   if (running_in_parallel(.fn)) {
     # Can't wrap the crate without stripping its class, so return it

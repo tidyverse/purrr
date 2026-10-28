@@ -7,7 +7,7 @@
 \alias{as_mapper.list}
 \title{Convert an object into a mapper function}
 \usage{
-as_mapper(.f, ..., .user_env = caller_env(2))
+as_mapper(.f, ...)
 
 \method{as_mapper}{character}(.f, ..., .null, .default = NULL)
 

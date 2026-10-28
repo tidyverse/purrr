@@ -152,7 +152,7 @@ pmap_ <- function(
     names <- NULL
   }
 
-  .f <- as_mapper(.f, ..., .user_env = .purrr_user_env)
+  .f <- as_mapper(.f, ...)
 
   if (running_in_parallel(.f)) {
     attributes(.l) <- list(

@@ -63,12 +63,12 @@ test_that("all inform about location of problem", {
   }
 
   expect_snapshot(error = TRUE, {
-    map_int(1:3, \(.x) fail_at_3(.x, 2:1))
-    map_int(1:3, \(.x) fail_at_3(.x, "x"))
-    map(1:3, \(.x) fail_at_3(.x, stop("Doesn't work")))
+    map_int(1:3, ~ fail_at_3(.x, 2:1))
+    map_int(1:3, ~ fail_at_3(.x, "x"))
+    map(1:3, ~ fail_at_3(.x, stop("Doesn't work")))
   })
 
-  cnd <- catch_cnd(map(1:3, \(.x) fail_at_3(.x, stop("Doesn't work"))))
+  cnd <- catch_cnd(map(1:3, ~ fail_at_3(.x, stop("Doesn't work"))))
   expect_s3_class(cnd, "purrr_error_indexed")
   expect_equal(cnd$location, 3)
   expect_equal(cnd$name, NULL)
@@ -80,13 +80,11 @@ test_that("error location uses name if present", {
   }
 
   expect_snapshot(error = TRUE, {
-    map_int(c(a = 1, b = 2, c = 3), \(.x) fail_at_3(.x, stop("Error")))
-    map_int(c(a = 1, b = 2, 3), \(.x) fail_at_3(.x, stop("Error")))
+    map_int(c(a = 1, b = 2, c = 3), ~ fail_at_3(.x, stop("Error")))
+    map_int(c(a = 1, b = 2, 3), ~ fail_at_3(.x, stop("Error")))
   })
 
-  cnd <- catch_cnd(map(c(1, 2, c = 3), \(.x) {
-    fail_at_3(.x, stop("Doesn't work"))
-  }))
+  cnd <- catch_cnd(map(c(1, 2, c = 3), ~ fail_at_3(.x, stop("Doesn't work"))))
   expect_s3_class(cnd, "purrr_error_indexed")
   expect_equal(cnd$location, 3)
   expect_equal(cnd$name, "c")
@@ -175,24 +173,24 @@ test_that("still iterates using [[", {
 
 test_that("requires output be length 1 and have common type", {
   expect_snapshot(error = TRUE, {
-    map_vec(1:2, \(.x) rep(1, .x))
-    map_vec(1:2, \(.x) if (.x == 1) factor("x") else 1)
+    map_vec(1:2, ~ rep(1, .x))
+    map_vec(1:2, ~ if (.x == 1) factor("x") else 1)
   })
 })
 
 test_that("row-binds data frame output", {
-  out <- map_vec(1:2, \(.x) data.frame(x = .x))
+  out <- map_vec(1:2, ~ data.frame(x = .x))
   expect_equal(out, data.frame(x = 1:2))
 })
 
 test_that("concatenates list output", {
-  out <- map_vec(1:2, \(.x) list(.x))
+  out <- map_vec(1:2, ~ list(.x))
   expect_equal(out, list(1, 2))
 })
 
 test_that("can enforce .ptype", {
   expect_snapshot(error = TRUE, {
-    map_vec(1:2, \(.x) factor("x"), .ptype = integer())
+    map_vec(1:2, ~ factor("x"), .ptype = integer())
   })
 })
 

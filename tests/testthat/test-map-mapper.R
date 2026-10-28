@@ -1,21 +1,14 @@
 # formulas ----------------------------------------------------------------
 
 test_that("can refer to first argument in three ways", {
-  withr::local_options(lifecycle_verbosity = "quiet")
   expect_equal(map_dbl(1, ~ . + 1), 2)
   expect_equal(map_dbl(1, ~ .x + 1), 2)
   expect_equal(map_dbl(1, ~ ..1 + 1), 2)
 })
 
 test_that("can refer to second arg in two ways", {
-  withr::local_options(lifecycle_verbosity = "quiet")
   expect_equal(map2_dbl(1, 2, ~ .x + .y + 1), 4)
   expect_equal(map2_dbl(1, 2, ~ ..1 + ..2 + 1), 4)
-})
-
-test_that("formulas are soft-deprecated", {
-  withr::local_options(lifecycle_verbosity = "warning")
-  expect_snapshot(map(1, ~ .x + 1))
 })
 
 # vectors --------------------------------------------------------------

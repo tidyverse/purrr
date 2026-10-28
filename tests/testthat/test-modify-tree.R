@@ -1,11 +1,11 @@
 test_that("can modify leaves", {
   expect_equal(
-    modify_tree(c(1, 1, 1), leaf = \(.x) .x + 9),
+    modify_tree(c(1, 1, 1), leaf = ~ .x + 9),
     c(10, 10, 10)
   )
 
   expect_equal(
-    modify_tree(list(1, list(1, list(1))), leaf = \(.x) .x + 9),
+    modify_tree(list(1, list(1, list(1))), leaf = ~ .x + 9),
     list(10, list(10, list(10)))
   )
 })
@@ -37,7 +37,7 @@ test_that("leaf() is applied to non-node input", {
 
 test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
-    modify_tree(list(), is_node = \(.x) 1)
+    modify_tree(list(), is_node = ~1)
     modify_tree(list(), is_node = 1)
   })
 })

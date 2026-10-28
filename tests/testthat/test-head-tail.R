@@ -14,8 +14,8 @@ test_that("original vector returned if predicate satisfied by all elements", {
 })
 
 test_that("head_while and tail_while require predicate function", {
-  expect_snapshot(head_while(1:3, \(.x) NA), error = TRUE)
-  expect_snapshot(tail_while(1:3, \(.x) c(TRUE, FALSE)), error = TRUE)
+  expect_snapshot(head_while(1:3, ~NA), error = TRUE)
+  expect_snapshot(tail_while(1:3, ~ c(TRUE, FALSE)), error = TRUE)
 })
 
 test_that(".f parameter passed to head_while()/tail_while() doesn't override .p parameter", {

@@ -1,7 +1,7 @@
 # validates inputs
 
     Code
-      lmap(list(1), function(.x) 1)
+      lmap(list(1), ~1)
     Condition
       Error in `lmap()`:
       ! `.f(.x[[1]])` must return a list, not a number.

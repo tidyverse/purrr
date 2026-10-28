@@ -24,27 +24,27 @@ test_that("lmap() returns a data frame if input is a data frame", {
 })
 
 test_that("lmap() can increase and decrease elements", {
-  out <- lmap(list(0, 1, 2), \(.x) as.list(rep(.x, .x)))
+  out <- lmap(list(0, 1, 2), ~ as.list(rep(.x, .x)))
   expect_equal(out, list(1, 2, 2))
 })
 
 test_that("lmap_at() only affects selected elements", {
-  out <- lmap_at(list(0, 1, 2), c(1, 3), \(.x) as.list(rep(.x, .x)))
+  out <- lmap_at(list(0, 1, 2), c(1, 3), ~ as.list(rep(.x, .x)))
   expect_equal(out, list(1, 2, 2))
 
-  out <- lmap_at(list(0, 1, 2), c(2, 3), \(.x) as.list(rep(.x, .x)))
+  out <- lmap_at(list(0, 1, 2), c(2, 3), ~ as.list(rep(.x, .x)))
   expect_equal(out, list(0, 1, 2, 2))
 })
 
 test_that("`.else` preserves false elements", {
   x <- list("a", 99)
-  out <- lmap_if(x, is.character, \(.x) list(1, 2), .else = \(.x) list(3, 4))
+  out <- lmap_if(x, is.character, ~ list(1, 2), .else = ~ list(3, 4))
   expect_equal(out, list(1, 2, 3, 4))
 })
 
 test_that("validates inputs", {
   expect_snapshot(error = TRUE, {
-    lmap(list(1), \(.x) 1)
+    lmap(list(1), ~1)
     lmap(list(1), environment())
   })
 })
