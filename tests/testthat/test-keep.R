@@ -8,6 +8,10 @@ test_that("can keep/discard with predicate", {
   expect_equal(discard(1:3, \(.x) .x != 2), c(2))
 })
 
+test_that("formula deprecation warning shows user call", {
+  expect_snapshot(keep(1:3, ~TRUE))
+})
+
 test_that("keep() and discard() require predicate functions", {
   expect_snapshot(error = TRUE, {
     keep(1:3, \(.x) NA)

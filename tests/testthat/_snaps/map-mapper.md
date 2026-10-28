@@ -4,7 +4,7 @@
       map(1, ~ .x + 1)
     Condition
       Warning:
-      Using a formula in place of a function was deprecated in purrr 1.3.0.
+      Using a formula was deprecated in purrr 1.3.0.
       i Please use an anonymous function instead.
     Output
       [[1]]

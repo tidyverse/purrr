@@ -73,9 +73,8 @@ as_is_node <- function(
     is_node_f <- rlang::as_function(f, call = error_call, arg = error_arg)
     as_predicate(
       is_node_f,
-      .mapper = FALSE,
-      .purrr_error_call = error_call,
-      .purrr_error_arg = error_arg
+      .purrr_error_arg = error_arg,
+      .purrr_error_call = error_call
     )
   }
 }

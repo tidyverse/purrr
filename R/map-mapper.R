@@ -43,9 +43,9 @@ as_mapper <- function(.f, ..., .user_env = caller_env(2)) {
 #' @export
 as_mapper.default <- function(.f, ..., .user_env = caller_env(2)) {
   if (inherits(.f, "formula")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "1.3.0",
-      what = I("Using a formula in place of a function"),
+      what = I("Using a formula"),
       with = I("an anonymous function"),
       user_env = .user_env
     )

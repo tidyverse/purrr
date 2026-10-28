@@ -19,7 +19,7 @@
     Code
       head_while(5:-5, .f = function(x, ...) x < 3)
     Condition
-      Error in `as_mapper()`:
+      Error in `detect_index()`:
       ! formal argument ".f" matched by multiple actual arguments
 
 ---
@@ -27,7 +27,7 @@
     Code
       tail_while(5:-5, .f = function(x, ...) x > 3)
     Condition
-      Error in `as_mapper()`:
+      Error in `detect_index()`:
       ! formal argument ".f" matched by multiple actual arguments
 
 # passing .dir parameter to head_while()/tail_while() results in an error
