@@ -62,7 +62,12 @@ discard <- function(.x, .p, ..., .progress = FALSE) {
 #' @rdname keep
 compact <- function(.x, .p = identity, .progress = FALSE) {
   .f <- as_mapper(.p)
-  discard(.x, function(x) is_empty(.f(x)), .progress = .progress)
+  if (running_in_parallel(.f)) {
+    .p <- crate_fn(\(x) is_empty(f(x)), f = .f, is_empty = rlang::is_empty)
+  } else {
+    .p <- function(x) is_empty(.f(x))
+  }
+  discard(.x, .p, .progress = .progress)
 }
 
 

@@ -445,6 +445,16 @@ test_that("keep/discard support parallel predicates (#1252)", {
   expect_identical(discard(1:4, is_even), c(1L, 3L))
 })
 
+test_that("compact() supports parallel predicates", {
+  expect_identical(
+    compact(
+      list(1, NULL, 2),
+      in_parallel(\(x) if (length(x) && x == 1) NULL else x)
+    ),
+    list(2)
+  )
+})
+
 test_that("map_if/modify_if support parallel predicates", {
   is_even <- in_parallel(\(x) x %% 2 == 0)
   expect_equal(
