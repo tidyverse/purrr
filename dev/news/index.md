@@ -42,6 +42,10 @@
   now support parallel predicates wrapped with
   [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   ([\#1252](https://github.com/tidyverse/purrr/issues/1252)).
+- [`compose()`](https://purrr.tidyverse.org/dev/reference/compose.md)
+  now evaluates lazily, allowing composing with functions like
+  [`capture.output()`](https://rdrr.io/r/utils/capture.output.html)
+  ([\#651](https://github.com/tidyverse/purrr/issues/651)).
 - [`imap_vec()`](https://purrr.tidyverse.org/dev/reference/imap.md)
   gains an explicit `.ptype` parameter to match
   [`map2_vec()`](https://purrr.tidyverse.org/dev/reference/map2.md)

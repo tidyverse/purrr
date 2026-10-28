@@ -61,6 +61,8 @@
 <li>
 <code><a href="../reference/keep.html">compact()</a></code>, <code><a href="../reference/keep.html">discard()</a></code>, <code><a href="../reference/keep.html">keep()</a></code>, <code><a href="../reference/map_if.html">map_if()</a></code>, and <code><a href="../reference/modify.html">modify_if()</a></code> now support parallel predicates wrapped with <code><a href="../reference/in_parallel.html">in_parallel()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/1252" class="external-link">#1252</a>).</li>
 <li>
+<code><a href="../reference/compose.html">compose()</a></code> now evaluates lazily, allowing composing with functions like <code><a href="https://rdrr.io/r/utils/capture.output.html" class="external-link">capture.output()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/651" class="external-link">#651</a>).</li>
+<li>
 <code><a href="../reference/imap.html">imap_vec()</a></code> gains an explicit <code>.ptype</code> parameter to match <code><a href="../reference/map2.html">map2_vec()</a></code> (<a href="https://github.com/tidyverse/purrr/issues/1244" class="external-link">#1244</a>).</li>
 <li>
 <code><a href="../reference/in_parallel.html">in_parallel()</a></code> is no longer experimental.</li>
