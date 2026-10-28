@@ -12,12 +12,18 @@ map_at(.x, .at, .f, ..., .progress = FALSE)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.p}{A single predicate function, a formula describing such a
-predicate function, or a logical vector of the same length as \code{.x}.
-Alternatively, if the elements of \code{.x} are themselves lists of
-objects, a string indicating the name of a logical element in the
-inner lists. Only those elements where \code{.p} evaluates to
-\code{TRUE} will be modified.
+\item{.p}{A predicate function specified in one of the following ways:
+\itemize{
+\item A named function, e.g. \code{is.character}.
+\item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
+\item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
+No longer recommended.
+\item A logical vector of the same length as \code{.x}.
+\item A string, if the elements of \code{.x} are themselves lists of objects,
+giving the name of a logical element in the inner lists.
+}
+
+Only those elements where \code{.p} evaluates to \code{TRUE} will be modified.
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
 in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
