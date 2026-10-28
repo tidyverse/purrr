@@ -7,8 +7,6 @@
 #include <R_ext/Visibility.h>
 #define export attribute_visible extern
 
-#include "cleancall.h"
-
 extern void unbound_init(void);
 extern void map_init(void);
 
@@ -26,7 +24,6 @@ extern SEXP transpose_impl(SEXP, SEXP);
 extern SEXP vflatten_impl(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-  CLEANCALL_METHOD_RECORD,
   {"coerce_impl",           (DL_FUNC) &coerce_impl,    2},
   {"pluck_impl",            (DL_FUNC) &pluck_impl,     4},
   {"flatten_impl",          (DL_FUNC) &flatten_impl,   1},
@@ -46,7 +43,6 @@ export void R_init_purrr(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
-    cleancall_init();
     unbound_init();
     map_init();
 }

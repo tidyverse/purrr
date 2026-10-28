@@ -60,3 +60,14 @@ test_that("passing .else parameter to lmap_at() results in an error", {
     error = TRUE
   )
 })
+
+test_that("lmap functions show progress", {
+  x <- list(a = 1, b = 2)
+  expect_no_error(lmap(x, as.list, .progress = TRUE))
+  expect_no_error(lmap_if(x, is.double, as.list, .progress = TRUE))
+  expect_no_error(lmap_at(x, 1, as.list, .progress = TRUE))
+})
+
+test_that("lmap checks .progress", {
+  expect_snapshot(lmap(list(1), as.list, .progress = 1), error = TRUE)
+})

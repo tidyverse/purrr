@@ -43,16 +43,20 @@
 #'
 #' # Use vector of names to specify which elements to change:
 #' iris |> map_at("Species", toupper) |> str()
-map_if <- function(.x, .p, .f, ..., .else = NULL) {
-  where <- where_if(.x, .p)
+map_if <- function(.x, .p, .f, ..., .else = NULL, .progress = FALSE) {
+  .progress <- as_progress(
+    .progress,
+    total = (1 + !is_logical(.p)) * length(.x)
+  )
+  where <- where_if(.x, .p, .progress = .progress)
 
   out <- vector("list", length(.x))
-  out[where] <- map(.x[where], .f, ...)
+  out[where] <- map(.x[where], .f, ..., .progress = .progress)
 
   if (is_null(.else)) {
     out[!where] <- .x[!where]
   } else {
-    out[!where] <- map(.x[!where], .else, ...)
+    out[!where] <- map(.x[!where], .else, ..., .progress = .progress)
   }
 
   set_names(out, names(.x))

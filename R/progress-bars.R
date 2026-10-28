@@ -50,22 +50,68 @@
 #' @name progress_bars
 NULL
 
+# Creates a cli progress bar and returns it wrapped in a
+# `"purrr_progress_bar"` object, which the C mapping loops tick directly
+# instead of creating their own bar. This allows multiple map phases (e.g.
+# the predicate and transformation maps in `map_if()`) to share a single
+# progress bar. The bar is closed automatically when `env` exits.
 as_progress <- function(
   progress,
+  total,
   user_env = caller_env(2),
-  caller_env = caller_env()
+  error_call = caller_env(),
+  env = caller_env()
 ) {
-  if (isFALSE(progress) || isTRUE(progress) || is_string(progress)) {
-    progress
-  } else if (is.list(progress)) {
-    progress$caller <- progress$caller %||% user_env
-    progress
-  } else {
+  if (is.null(progress) || inherits(progress, "purrr_progress_bar")) {
+    return(progress)
+  }
+  if (isFALSE(progress)) {
+    return(NULL)
+  }
+  if (!(isTRUE(progress) || is_string(progress) || is.list(progress))) {
     stop_input_type(
       progress,
       c("TRUE", "FALSE", "a string", "a named list"),
       arg = ".progress",
-      call = caller_env
+      call = error_call
     )
+  }
+
+  opts <- if (isTRUE(progress)) {
+    list()
+  } else if (is_string(progress)) {
+    list(name = progress)
+  } else {
+    progress
+  }
+  bar_env <- opts$caller %||% env
+  opts$caller <- NULL
+  # `show_after` is supported by cli's C API but not the R-level
+  # `cli_progress_bar()`; apply it to the bar object directly below
+  show_after <- opts$show_after
+  opts$show_after <- NULL
+
+  id <- inject(cli::cli_progress_bar(total = total, .envir = bar_env, !!!opts))
+
+  # TODO: Hack! Retrieve cli's internal bar object so that the C loop can
+  # tick this bar. Remove once cli provides a way to pass an R-created bar
+  # to its C API: https://github.com/r-lib/cli/issues/850
+  bar <- getFromNamespace("clienv", "cli")$progress[[id]]
+  # The C tick functions read these fields as doubles
+  bar$current <- as.double(bar$current)
+  bar$tick <- as.double(bar$tick)
+  if (!is.null(show_after)) {
+    bar$show_after <- bar$start + show_after
+    bar$show_50 <- bar$start + show_after / 2
+  }
+
+  structure(list(bar = bar, id = id), class = "purrr_progress_bar")
+}
+
+# For maps implemented with an R loop (e.g. `lmap()`), which can't be
+# ticked from C
+progress_tick <- function(progress) {
+  if (inherits(progress, "purrr_progress_bar")) {
+    cli::cli_progress_update(id = progress$id)
   }
 }

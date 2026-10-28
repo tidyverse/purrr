@@ -27,3 +27,11 @@
       Error in `lmap_helper()`:
       ! formal argument ".else" matched by multiple actual arguments
 
+# lmap checks .progress
+
+    Code
+      lmap(list(1), as.list, .progress = 1)
+    Condition
+      Error in `lmap()`:
+      ! `.progress` must be TRUE, FALSE, a string, or a named list, not the number 1.
+

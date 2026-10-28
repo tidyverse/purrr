@@ -21,3 +21,7 @@ test_that("`.else` maps false elements", {
     list("bar", "bar", "1 suffix")
   )
 })
+
+test_that("map_if() shows progress", {
+  expect_no_error(map_if(1:3, is.numeric, identity, .progress = TRUE))
+})

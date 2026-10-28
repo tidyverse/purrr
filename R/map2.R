@@ -67,12 +67,6 @@ map2_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  .progress <- as_progress(
-    .progress,
-    user_env = .purrr_user_env,
-    caller_env = .purrr_error_call
-  )
-
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   .y <- vctrs_vec_compat(.y, .purrr_user_env)
 
@@ -85,6 +79,13 @@ map2_ <- function(
   )
   .x <- args$.x
   .y <- args$.y
+
+  .progress <- as_progress(
+    .progress,
+    total = n,
+    user_env = .purrr_user_env,
+    error_call = .purrr_error_call
+  )
 
   names <- vec_names(.x)
 
@@ -103,7 +104,7 @@ map2_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(
+    .Call(
       map2_impl,
       .x,
       .y,
