@@ -10,9 +10,20 @@
     Condition
       Error in `lmap()`:
       ! Can't convert `.f`, an environment, to a function.
+
+# passing .ind parameter to lmap() results in an error
+
     Code
-      lmap(list(1), ~1, .else = environment())
+      lmap(1, .ind = FALSE)
     Condition
-      Error in `lmap()`:
-      ! Can't convert `.else`, an environment, to a function.
+      Error in `lmap_helper()`:
+      ! formal argument ".ind" matched by multiple actual arguments
+
+# passing .else parameter to lmap_at() results in an error
+
+    Code
+      lmap_at(x, "c", function(x) list(1), .else = function(x) list(NULL))
+    Condition
+      Error in `lmap_helper()`:
+      ! formal argument ".else" matched by multiple actual arguments
 

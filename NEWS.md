@@ -6,6 +6,9 @@
 * All `map()` functions now have less overhead, particularly on unclassed vectors. This means that they should run faster when `.f` itself is very fast, like with the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea). As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...` omitted when empty) rather than `.f(.x[[i]], ...)`, which affects code that uses `substitute()`, `match.call()`, or `sys.call()`.
 * `in_parallel()` is no longer experimental.
 * `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
+* The following functions gain an explicit `.progress` parameter: `keep()`, `discard()`, `compact()`, `modify()`, `modify2()`, `imodify()` (#1249).
+* `imap_vec()` gains an explicit `.ptype` parameter to match `map2_vec()` (#1244).
+* Many internal parameters across several functions are now passed with names to avoid accidental overwrite by user passing the same parameter to `...` (#1248).
 
 # purrr 1.2.2
 

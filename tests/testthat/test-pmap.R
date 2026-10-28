@@ -134,6 +134,10 @@ test_that("don't evaluate symbolic objects (#428)", {
   pwalk(list(exprs(1 + 2)), ~ expect_identical(.x, quote(1 + 2)))
 })
 
+test_that("passing .type parameter to map() results in an error (#1248)", {
+  expect_snapshot(pmap(\(x, ...) x, .type = "character"), error = TRUE)
+})
+
 test_that("pairlists are deprecated but work", {
   f <- function() {
     pmap(pairlist(1:2, 3:4), sum)

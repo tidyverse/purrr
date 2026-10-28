@@ -209,7 +209,13 @@ test_that("environments error with invalid indices", {
 
 test_that("plucking promise from an environment evaluates it", {
   x <- new_environment()
-  delayedAssign("q", { 1 }, assign.env = x)
+  delayedAssign(
+    "q",
+    {
+      1
+    },
+    assign.env = x
+  )
   expect_equal(pluck(x, "q"), 1)
 })
 
