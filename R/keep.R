@@ -15,8 +15,7 @@
 #'
 #'   * A named function, e.g. `is.character`.
 #'   * An anonymous function, e.g. `\(x) all(x < 0)` or `function(x) all(x < 0)`.
-#'   * A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first argument.
-#'     No longer recommended.
+#'
 #'
 #'   Wrap a function with [in_parallel()] to declare that it should be performed
 #'   in parallel. See [in_parallel()] for more details.
@@ -38,7 +37,7 @@
 #'
 #' # Using a string instead of a function will select all list elements
 #' # where that subelement is TRUE
-#' x <- map(1:5, ~ list(a = runif(1) > 0.5, b = sample(10)))
+#' x <- map(1:5, \(.x) list(a = runif(1) > 0.5, b = sample(10)))
 #' x
 #' x |> keep("a")
 #' x |> discard("a")

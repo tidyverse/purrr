@@ -20,14 +20,19 @@ accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
 \arguments{
 \item{.x}{A list or atomic vector.}
 
-\item{.f}{For \code{accumulate()} \code{.f} is 2-argument function. The function will
-be passed the accumulated result or initial value as the first argument.
-The next value in sequence is passed as the second argument.
+\item{.f}{A function, specified in one of the following ways:
+\itemize{
+\item A named function.
+\item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
+For \code{accumulate()}, a 2-argument function. The function will be passed
+the accumulated result or initial value as the first argument. The next
+value in sequence is passed as the second argument.
+}
 
-For \code{accumulate2()}, a 3-argument function. The
-function will be passed the accumulated result as the first
-argument. The next value in sequence from \code{.x} is passed as the second argument. The
-next value in sequence from \code{.y} is passed as the third argument.
+For \code{accumulate2()}, a 3-argument function. The function will be passed
+the accumulated result as the first argument. The next value in sequence
+from \code{.x} is passed as the second argument. The next value in sequence
+from \code{.y} is passed as the third argument.
 
 The accumulation terminates early if \code{.f} returns a value wrapped in
 a \code{\link[=done]{done()}}.}

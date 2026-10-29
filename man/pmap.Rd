@@ -40,7 +40,6 @@ to be called once for each row.}
 \item A named function.
 \item An anonymous function, e.g. \verb{\\(x, y, z) x + y / z} or
 \code{function(x, y, z) x + y / z}
-\item A formula, e.g. \code{~ ..1 + ..2 / ..3}. No longer recommended.
 }
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed

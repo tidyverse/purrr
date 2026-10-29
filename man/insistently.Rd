@@ -11,7 +11,6 @@ insistently(f, rate = rate_backoff(), quiet = TRUE)
 \itemize{
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
-\item A formula, e.g. \code{~ .x + 1}. No longer recommended.
 }}
 
 \item{rate}{A \link[=rate-helpers]{rate} object. Defaults to jittered exponential

@@ -18,11 +18,16 @@ test_that("compose() preserves missingness of caller's arguments", {
 })
 
 test_that("composed functions are applied in reverse order if .dir is supplied", {
-  expect_identical(compose(~ .x + 100, ~ .x * 2, .dir = "forward")(2), 204)
+  expect_identical(
+    compose(\(.x) .x + 100, \(.x) .x * 2, .dir = "forward")(2),
+    204
+  )
 })
 
-test_that("compose supports formulas", {
-  round_mean <- compose(~ .x * 100, ~ round(.x, 2), ~ mean(.x, na.rm = TRUE))
+test_that("compose supports anonymous functions", {
+  round_mean <- compose(\(.x) .x * 100, \(.x) round(.x, 2), \(.x) {
+    mean(.x, na.rm = TRUE)
+  })
 
   expect_s3_class(round_mean, "purrr_function_compose")
   expect_identical(round_mean(1:100), round(mean(1:100, na.rm = TRUE), 2) * 100)
@@ -38,8 +43,8 @@ test_that("compose() supports character vectors", {
 
 test_that("can splice lists of functions", {
   fns <- list(
-    ~ paste(.x, "a"),
-    ~ paste(.x, "b")
+    \(.x) paste(.x, "a"),
+    \(.x) paste(.x, "b")
   )
   fn <- compose(!!!fns)
   expect_identical(fn("c"), "c b a")
@@ -80,8 +85,8 @@ test_that("compose() works with generic functions (#629)", {
 
   local({
     purrr__gen.default <- function(x) x + 1
-    expect_identical(compose(~ purrr__gen(.x))(0), 1)
-    expect_identical(compose(~ purrr__gen(.x), ~ purrr__gen(.x))(0), 2)
+    expect_identical(compose(\(.x) purrr__gen(.x))(0), 1)
+    expect_identical(compose(\(.x) purrr__gen(.x), \(.x) purrr__gen(.x))(0), 2)
 
     expect_identical(compose(purrr__gen)(0), 1)
     expect_identical(compose(purrr__gen, purrr__gen)(0), 2)
@@ -105,7 +110,7 @@ test_that("compose() works with non-local exits", {
   expect_identical(compose(fn)("foo"), "foo")
   expect_identical(compose(fn, fn)("foo"), "foo")
   expect_identical(
-    compose(~ return(paste(.x, "foo")), ~ return("bar"))(),
+    compose(\(.x) return(paste(.x, "foo")), \(.x) return("bar"))(),
     "bar foo"
   )
 })

@@ -4,7 +4,7 @@ test_that("All parallel map variants fall back to sequential with no daemons set
     map(list(x = 1, y = 2), \(x) list(x))
   )
   expect_equal(map2(1, 2, in_parallel(\(x, y) x)), list(1))
-  expect_identical(pmap(list(), in_parallel(~1)), list())
+  expect_identical(pmap(list(), in_parallel(\(...) 1)), list())
 })
 
 # set up daemons
@@ -174,24 +174,24 @@ test_that("still iterates using [[", {
 
 test_that("requires output be length 1 and have common type", {
   expect_snapshot(error = TRUE, {
-    map_vec(1:2, in_parallel(~ rep(1, .x)))
-    map_vec(1:2, in_parallel(~ if (.x == 1) factor("x") else 1))
+    map_vec(1:2, in_parallel(\(.x) rep(1, .x)))
+    map_vec(1:2, in_parallel(\(.x) if (.x == 1) factor("x") else 1))
   })
 })
 
 test_that("row-binds data frame output", {
-  out <- map_vec(1:2, in_parallel(~ data.frame(x = .x)))
+  out <- map_vec(1:2, in_parallel(\(.x) data.frame(x = .x)))
   expect_equal(out, data.frame(x = 1:2))
 })
 
 test_that("concatenates list output", {
-  out <- map_vec(1:2, in_parallel(~ list(.x)))
+  out <- map_vec(1:2, in_parallel(\(.x) list(.x)))
   expect_equal(out, list(1, 2))
 })
 
 test_that("can enforce .ptype", {
   expect_snapshot(error = TRUE, {
-    map_vec(1:2, in_parallel(~ factor("x")), .ptype = integer())
+    map_vec(1:2, in_parallel(\(.x) factor("x")), .ptype = integer())
   })
 })
 
@@ -204,15 +204,20 @@ test_that("x and y mapped to first and second argument", {
 
 test_that("variants return expected types", {
   x <- list(1, 2, 3)
-  expect_true(is_bare_list(map2(x, 0, in_parallel(~1))))
-  expect_true(is_bare_logical(map2_lgl(x, 0, in_parallel(~TRUE))))
-  expect_true(is_bare_integer(map2_int(x, 0, in_parallel(~1))))
-  expect_true(is_bare_double(map2_dbl(x, 0, in_parallel(~1.5))))
-  expect_true(is_bare_character(map2_chr(x, 0, in_parallel(~"x"))))
-  expect_equal(walk2(x, 0, in_parallel(~"x")), x)
+  expect_true(is_bare_list(map2(x, 0, in_parallel(\(.x, .y) 1))))
+  expect_true(is_bare_logical(map2_lgl(x, 0, in_parallel(\(.x, .y) TRUE))))
+  expect_true(is_bare_integer(map2_int(x, 0, in_parallel(\(.x, .y) 1))))
+  expect_true(is_bare_double(map2_dbl(x, 0, in_parallel(\(.x, .y) 1.5))))
+  expect_true(is_bare_character(map2_chr(x, 0, in_parallel(\(.x, .y) "x"))))
+  expect_equal(walk2(x, 0, in_parallel(\(.x, .y) "x")), x)
 
   x <- list(FALSE, 1L, 1)
-  expect_true(is_bare_double(map2_vec(x, 0, ~.x, .parallel = TRUE)))
+  expect_true(is_bare_double(map2_vec(
+    x,
+    0,
+    \(.x, .y, ...) .x,
+    .parallel = TRUE
+  )))
 })
 
 test_that("0 length input gives 0 length output", {
@@ -224,16 +229,16 @@ test_that("0 length input gives 0 length output", {
 
 test_that("verifies result types and length", {
   expect_snapshot(error = TRUE, {
-    map2_int(1, 1, in_parallel(~"x"))
-    map2_int(1, 1, in_parallel(~ 1:2))
-    map2_vec(1, 1, in_parallel(~1), .ptype = character())
+    map2_int(1, 1, in_parallel(\(.x, .y) "x"))
+    map2_int(1, 1, in_parallel(\(.x, .y) 1:2))
+    map2_vec(1, 1, in_parallel(\(.x, .y) 1), .ptype = character())
   })
 })
 
 test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
-  expect_identical(map2(x, 1, in_parallel(~.x)), out)
+  expect_identical(map2(x, 1, in_parallel(\(.x, .y) .x)), out)
 })
 
 test_that("requires vector inputs", {
@@ -272,12 +277,12 @@ test_that("don't evaluate symbolic objects (#428)", {
   map2(
     exprs(1 + 2),
     NA,
-    in_parallel(~ testthat::expect_identical(.x, quote(1 + 2)))
+    in_parallel(\(.x, .y) testthat::expect_identical(.x, quote(1 + 2)))
   )
   walk2(
     exprs(1 + 2),
     NA,
-    in_parallel(~ testthat::expect_identical(.x, quote(1 + 2)))
+    in_parallel(\(.x, .y) testthat::expect_identical(.x, quote(1 + 2)))
   )
   expect_true(TRUE) # so the test is not deemed empty and skipped
 })
@@ -300,22 +305,22 @@ test_that(".f called with named arguments", {
 
 test_that("variants return expected types", {
   l <- list(list(1, 2, 3))
-  expect_true(is_bare_list(pmap(l, in_parallel(~1))))
-  expect_true(is_bare_logical(pmap_lgl(l, in_parallel(~TRUE))))
-  expect_true(is_bare_integer(pmap_int(l, in_parallel(~1))))
-  expect_true(is_bare_double(pmap_dbl(l, in_parallel(~1.5))))
-  expect_true(is_bare_character(pmap_chr(l, in_parallel(~"x"))))
-  expect_equal(pwalk(l, in_parallel(~"x")), l)
+  expect_true(is_bare_list(pmap(l, in_parallel(\(...) 1))))
+  expect_true(is_bare_logical(pmap_lgl(l, in_parallel(\(...) TRUE))))
+  expect_true(is_bare_integer(pmap_int(l, in_parallel(\(...) 1))))
+  expect_true(is_bare_double(pmap_dbl(l, in_parallel(\(...) 1.5))))
+  expect_true(is_bare_character(pmap_chr(l, in_parallel(\(...) "x"))))
+  expect_equal(pwalk(l, in_parallel(\(...) "x")), l)
 
   l <- list(list(FALSE, 1L, 1))
-  expect_true(is_bare_double(pmap_vec(l, in_parallel(~.x))))
+  expect_true(is_bare_double(pmap_vec(l, in_parallel(\(.x, ...) .x))))
 })
 
 test_that("verifies result types and length", {
   expect_snapshot(error = TRUE, {
-    pmap_int(list(1), in_parallel(~"x"))
-    pmap_int(list(1), in_parallel(~ 1:2))
-    pmap_vec(list(1), in_parallel(~1), .ptype = character())
+    pmap_int(list(1), in_parallel(\(...) "x"))
+    pmap_int(list(1), in_parallel(\(...) 1:2))
+    pmap_vec(list(1), in_parallel(\(...) 1), .ptype = character())
   })
 })
 
@@ -377,22 +382,25 @@ test_that("avoid expensive [[ method on data frames", {
     list(list(x = 1, y = 2), list(x = 2, y = 1))
   )
   expect_equal(
-    pmap_lgl(df, in_parallel(~TRUE, `[[.mydf` = `[[.mydf`)),
+    pmap_lgl(df, in_parallel(\(...) TRUE, `[[.mydf` = `[[.mydf`)),
     c(TRUE, TRUE)
   )
-  expect_equal(pmap_int(df, in_parallel(~2, `[[.mydf` = `[[.mydf`)), c(2, 2))
   expect_equal(
-    pmap_dbl(df, in_parallel(~3.5, `[[.mydf` = `[[.mydf`)),
+    pmap_int(df, in_parallel(\(...) 2, `[[.mydf` = `[[.mydf`)),
+    c(2, 2)
+  )
+  expect_equal(
+    pmap_dbl(df, in_parallel(\(...) 3.5, `[[.mydf` = `[[.mydf`)),
     c(3.5, 3.5)
   )
   expect_equal(
-    pmap_chr(df, in_parallel(~"x", `[[.mydf` = `[[.mydf`)),
+    pmap_chr(df, in_parallel(\(...) "x", `[[.mydf` = `[[.mydf`)),
     c("x", "x")
   )
 })
 
 test_that("pmap works with empty lists", {
-  expect_identical(pmap(list(), in_parallel(~1)), list())
+  expect_identical(pmap(list(), in_parallel(\(...) 1)), list())
 })
 
 test_that("preserves S3 class of input vectors (#358)", {
@@ -403,17 +411,17 @@ test_that("preserves S3 class of input vectors (#358)", {
 test_that("works with vctrs records (#963)", {
   x <- new_rcrd(list(x = c(1, 2), y = c("a", "b")))
   out <- list(new_rcrd(list(x = 1, y = "a")), new_rcrd(list(x = 2, y = "b")))
-  expect_identical(pmap(list(x, 1, 1:2), in_parallel(~.x)), out)
+  expect_identical(pmap(list(x, 1, 1:2), in_parallel(\(.x, ...) .x)), out)
 })
 
 test_that("don't evaluate symbolic objects (#428)", {
   pmap(
     list(exprs(1 + 2)),
-    in_parallel(~ testthat::expect_identical(.x, quote(1 + 2)))
+    in_parallel(\(.x, ...) testthat::expect_identical(.x, quote(1 + 2)))
   )
   pwalk(
     list(exprs(1 + 2)),
-    in_parallel(~ testthat::expect_identical(.x, quote(1 + 2)))
+    in_parallel(\(.x, ...) testthat::expect_identical(.x, quote(1 + 2)))
   )
   expect_true(TRUE) # so the test is not deemed empty and skipped
 })
@@ -424,16 +432,16 @@ test_that("atomic vector imap works", {
   x <- 1:3 |> set_names()
   expect_true(all(imap_lgl(x, in_parallel(\(x, y) x == y))))
   expect_length(imap_chr(x, in_parallel(\(...) paste(...))), 3)
-  expect_equal(imap_int(x, in_parallel(~ .x + as.integer(.y))), x * 2)
-  expect_equal(imap_dbl(x, in_parallel(~ .x + as.numeric(.y))), x * 2)
-  expect_equal(imap_vec(x, in_parallel(~ .x + as.numeric(.y))), x * 2)
+  expect_equal(imap_int(x, in_parallel(\(.x, .y) .x + as.integer(.y))), x * 2)
+  expect_equal(imap_dbl(x, in_parallel(\(.x, .y) .x + as.numeric(.y))), x * 2)
+  expect_equal(imap_vec(x, in_parallel(\(.x, .y) .x + as.numeric(.y))), x * 2)
 })
 
 # map_at --------------------------------------------------------------------
 
 test_that("negative .at omits locations", {
   x <- c(1, 2, 3)
-  out <- map_at(x, -1, in_parallel(~ .x * 2))
+  out <- map_at(x, -1, in_parallel(\(.x) .x * 2))
   expect_equal(out, list(1, 4, 6))
 })
 

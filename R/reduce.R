@@ -26,7 +26,11 @@
 #' @param .y For `reduce2()` an additional
 #'   argument that is passed to `.f`. If `init` is not set, `.y`
 #'   should be 1 element shorter than `.x`.
-#' @param .f For `reduce()`, a 2-argument function. The function will be passed
+#' @param .f A function, specified in one of the following ways:
+#'
+#'   * A named function.
+#'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
+#'   For `reduce()`, a 2-argument function. The function will be passed
 #'   the accumulated value as the first argument and the "next" value as the
 #'   second argument.
 #'
@@ -342,14 +346,18 @@ seq_len2 <- function(start, end) {
 #'     If `.init` is set, `.y` needs to be one element shorted than the
 #'     concatenation of the initial value and `.x`.
 #'
-#' @param .f For `accumulate()` `.f` is 2-argument function. The function will
-#'     be passed the accumulated result or initial value as the first argument.
-#'     The next value in sequence is passed as the second argument.
+#' @param .f A function, specified in one of the following ways:
 #'
-#'   For `accumulate2()`, a 3-argument function. The
-#'   function will be passed the accumulated result as the first
-#'   argument. The next value in sequence from `.x` is passed as the second argument. The
-#'   next value in sequence from `.y` is passed as the third argument.
+#'   * A named function.
+#'   * An anonymous function, e.g. `\(x, y) x + y` or `function(x, y) x + y`.
+#'   For `accumulate()`, a 2-argument function. The function will be passed
+#'   the accumulated result or initial value as the first argument. The next
+#'   value in sequence is passed as the second argument.
+#'
+#'   For `accumulate2()`, a 3-argument function. The function will be passed
+#'   the accumulated result as the first argument. The next value in sequence
+#'   from `.x` is passed as the second argument. The next value in sequence
+#'   from `.y` is passed as the third argument.
 #'
 #'   The accumulation terminates early if `.f` returns a value wrapped in
 #'   a [done()].

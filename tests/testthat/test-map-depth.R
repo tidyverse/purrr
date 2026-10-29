@@ -33,10 +33,10 @@ test_that("map_depth() with .ragged = TRUE operates on leaves", {
     list(list(3))
   )
 
-  expect_equal(map_depth(x1, 3, ~ . + 1, .ragged = TRUE), exp)
-  expect_equal(map_depth(x1, -1, ~ . + 1, .ragged = TRUE), exp)
+  expect_equal(map_depth(x1, 3, \(.x) .x + 1, .ragged = TRUE), exp)
+  expect_equal(map_depth(x1, -1, \(.x) .x + 1, .ragged = TRUE), exp)
   # .ragged should be TRUE is .depth < 0
-  expect_equal(map_depth(x1, -1, ~ . + 1), exp)
+  expect_equal(map_depth(x1, -1, \(.x) .x + 1), exp)
 })
 
 # modify_depth ------------------------------------------------------------
@@ -63,10 +63,10 @@ test_that(".ragged = TRUE operates on leaves", {
     list(list(3))
   )
 
-  expect_equal(modify_depth(x1, 3, ~ . + 1, .ragged = TRUE), x2)
-  expect_equal(modify_depth(x1, -1, ~ . + 1, .ragged = TRUE), x2)
+  expect_equal(modify_depth(x1, 3, \(.x) .x + 1, .ragged = TRUE), x2)
+  expect_equal(modify_depth(x1, -1, \(.x) .x + 1, .ragged = TRUE), x2)
   # .ragged should be TRUE is .depth < 0
-  expect_equal(modify_depth(x1, -1, ~ . + 1), x2)
+  expect_equal(modify_depth(x1, -1, \(.x) .x + 1), x2)
 })
 
 test_that("vectorised operations on the recursive and atomic levels yield same results", {
