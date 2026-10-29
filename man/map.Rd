@@ -97,6 +97,18 @@ most types of simple vectors like Date, POSIXct, factors, etc.
 the input \code{.x}.
 }
 }
+\details{
+\code{.f} is called once for each element of \code{.x}, as
+\verb{.f(.x[[1]], ...), .f(.x[[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} is subset with \code{[[}, using the \code{[[} method if \code{x} has one.
+\item The names of \code{.x} are not passed to \code{.f}. If you need them, use
+\code{\link[=imap]{imap()}}.
+\item If \code{.f} is a function, \code{...} are passed to it on every call, unchanged.
+}
+}
 \examples{
 # Compute normal distributions from an atomic vector
 1:10 |>

@@ -42,6 +42,10 @@ In other languages, \code{keep()} and \code{discard()} are often called \code{se
 \code{filter()} and \code{reject()}/ \code{drop()}, but those names are already taken
 in R. \code{keep()} is similar to \code{\link[=Filter]{Filter()}}, but the argument order is more
 convenient, and the evaluation of the predicate function \code{.p} is stricter.
+
+\code{.p} is called once for each element of \code{.x}, as
+\verb{.p(.x[[1]], ...), .p(.x[[2]], ...), ...}, and must return a single
+\code{TRUE} or \code{FALSE}.
 }
 \examples{
 rep(10, 10) |>

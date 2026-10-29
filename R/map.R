@@ -69,6 +69,16 @@
 #'
 #' Any errors thrown by `.f` will be wrapped in an error with class
 #' [purrr_error_indexed].
+#' @details
+#' `.f` is called once for each element of `.x`, as
+#' `.f(.x[[1]], ...), .f(.x[[2]], ...), ...`.
+#'
+#' Note in particular that:
+#'
+#' * `.x` is subset with `[[`, using the `[[` method if `x` has one.
+#' * The names of `.x` are not passed to `.f`. If you need them, use
+#'   [imap()].
+#' * If `.f` is a function, `...` are passed to it on every call, unchanged.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements

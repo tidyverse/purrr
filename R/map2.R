@@ -17,6 +17,14 @@
 #'   Use of `...` is not permitted in this context.
 #' @inheritParams map
 #' @inherit map return
+#' @details
+#' `.f` is called once for each position in `.x` and `.y`, as
+#' `.f(.x[[1]], .y[[1]], ...), .f(.x[[2]], .y[[2]], ...), ...`.
+#'
+#' Note in particular that:
+#'
+#' * `.x` and `.y` are subset with `[[`, using the `[[` method if they have one.
+#' * The names of `.x` and `.y` are not passed to `.f`.
 #' @family map variants
 #' @export
 #' @examples

@@ -39,6 +39,11 @@ returns 0.
 \description{
 Find the value or position of the first match
 }
+\details{
+\code{.f} is called on each element of \code{.x} in turn, as \code{.f(.x[[i]], ...)},
+stopping at the first element where it returns \code{TRUE}. \code{.dir} controls
+whether the search starts at the beginning or the end of \code{.x}.
+}
 \examples{
 is_even <- function(x) x \%\% 2 == 0
 

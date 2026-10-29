@@ -20,6 +20,10 @@
 #'  If not found, `detect` returns `NULL` and `detect_index`
 #'  returns 0.
 #'
+#' @details
+#' `.f` is called on each element of `.x` in turn, as `.f(.x[[i]], ...)`,
+#' stopping at the first element where it returns `TRUE`. `.dir` controls
+#' whether the search starts at the beginning or the end of `.x`.
 #' @seealso [keep()] for keeping all matching values.
 #' @export
 #' @examples
