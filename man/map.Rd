@@ -31,8 +31,6 @@ walk(.x, .f, ..., .progress = FALSE)
 \itemize{
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
-\item A formula, e.g. \code{~ .x + 1}. Use \code{.x} to refer to the first
-argument. No longer recommended.
 \item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
@@ -97,6 +95,18 @@ atomic vector of the indicated type (or die trying). For these functions,
 most types of simple vectors like Date, POSIXct, factors, etc.
 \item \code{walk()} calls \code{.f} for its side-effect and returns
 the input \code{.x}.
+}
+}
+\details{
+\code{.f} is called once for each element of \code{.x}, as
+\verb{.f(.x[[1]], ...), .f(.x[[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} is subset with \code{[[}, using the \code{[[} method if \code{x} has one.
+\item The names of \code{.x} are not passed to \code{.f}. If you need them, use
+\code{\link[=imap]{imap()}}.
+\item If \code{.f} is a function, \code{...} are passed to it on every call, unchanged.
 }
 }
 \examples{

@@ -40,7 +40,6 @@ to be called once for each row.}
 \item A named function.
 \item An anonymous function, e.g. \verb{\\(x, y, z) x + y / z} or
 \code{function(x, y, z) x + y / z}
-\item A formula, e.g. \code{~ ..1 + ..2 / ..3}. No longer recommended.
 }
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
@@ -92,6 +91,18 @@ These functions are variants of \code{\link[=map]{map()}} that iterate over mult
 simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing, i.e.
 they share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
+}
+\details{
+\code{.f} is called once for each element of the vectors in \code{.l}, as
+\verb{.f(.l[[1]][[1]], .l[[2]][[1]], ...), .f(.l[[1]][[2]], .l[[2]][[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item The vectors in \code{.l} are subset with \code{[[}, using the \code{[[} method if
+they have one.
+\item The arguments are supplied by position if the elements of \code{.l} are
+unnamed, and by name if they are named.
+}
 }
 \examples{
 x <- list(1, 1, 1)

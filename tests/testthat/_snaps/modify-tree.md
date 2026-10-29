@@ -1,7 +1,7 @@
 # validates inputs
 
     Code
-      modify_tree(list(), is_node = ~1)
+      modify_tree(list(), is_node = function(.x) 1)
     Condition
       Error in `modify_tree()`:
       ! `is_node()` must return a single `TRUE` or `FALSE`, not a number.

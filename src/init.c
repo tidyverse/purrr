@@ -35,7 +35,6 @@ static const R_CallMethodDef CallEntries[] = {
   {"pmap_impl",             (DL_FUNC) &pmap_impl,      7},
   {"transpose_impl",        (DL_FUNC) &transpose_impl, 2},
   {"vflatten_impl",         (DL_FUNC) &vflatten_impl,  2},
-  {"purrr_eval",            (DL_FUNC) &Rf_eval,        2},
   {NULL, NULL, 0}
 };
 

@@ -23,8 +23,6 @@
 #'
 #'   * A named function, e.g. `mean`.
 #'   * An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
-#'   * A formula, e.g. `~ .x + 1`. Use `.x` to refer to the first
-#'     argument. No longer recommended.
 #'   * A string, integer, or list, e.g. `"idx"`, `1`, or `list("idx", 1)` which
 #'     are shorthand for `\(x) pluck(x, "idx")`, `\(x) pluck(x, 1)`, and
 #'     `\(x) pluck(x, "idx", 1)` respectively. Optionally supply `.default` to
@@ -71,6 +69,16 @@
 #'
 #' Any errors thrown by `.f` will be wrapped in an error with class
 #' [purrr_error_indexed].
+#' @details
+#' `.f` is called once for each element of `.x`, as
+#' `.f(.x[[1]], ...), .f(.x[[2]], ...), ...`.
+#'
+#' Note in particular that:
+#'
+#' * `.x` is subset with `[[`, using the `[[` method if `x` has one.
+#' * The names of `.x` are not passed to `.f`. If you need them, use
+#'   [imap()].
+#' * If `.f` is a function, `...` are passed to it on every call, unchanged.
 #' @export
 #' @family map variants
 #' @seealso [map_if()] for applying a function to only those elements
@@ -327,6 +335,11 @@ with_parallel_indexed_errors <- function(
     expr,
     error = function(cnd) {
       location <- cnd$location
+      if (is.null(location)) {
+        # Not a task error (e.g. a failure while collecting results),
+        # so rethrow as-is to preserve the message
+        cli::cli_abort("Parallel failure", parent = cnd, call = error_call)
+      }
       iname <- cnd$name
       cli::cli_abort(
         c(

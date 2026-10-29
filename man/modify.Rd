@@ -46,8 +46,6 @@ a basic progress bar, use a string to give it a name, or see
 \itemize{
 \item A named function, e.g. \code{is.character}.
 \item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
-\item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
-No longer recommended.
 \item A logical vector of the same length as \code{.x}.
 \item A string, if the elements of \code{.x} are themselves lists of objects,
 giving the name of a logical element in the inner lists.

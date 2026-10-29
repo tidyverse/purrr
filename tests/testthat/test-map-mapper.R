@@ -11,6 +11,7 @@ test_that("can refer to second arg in two ways", {
   expect_equal(map2_dbl(1, 2, ~ ..1 + ..2 + 1), 4)
 })
 
+
 # vectors --------------------------------------------------------------
 
 # test_that(".null generates warning", {

@@ -23,12 +23,12 @@ test_that("direction of reduce determines how generated trees lean", {
 
 test_that("can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce(x, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  out <- reduce(x, \(.x, .y) if (.y) c(.x, "foo") else done(.x), .init = NULL)
   expect_identical(out, c("foo", "foo"))
 
   # Empty done box yields the same value as returning the
   # result-so-far (the last value) in a done box
-  out2 <- reduce(x, ~ if (.y) c(.x, "foo") else done(), .init = NULL)
+  out2 <- reduce(x, \(.x, .y) if (.y) c(.x, "foo") else done(), .init = NULL)
   expect_identical(out2, out)
 })
 
@@ -64,7 +64,7 @@ test_that("accumulate keeps input names", {
   expect_identical(accumulate(input, sum), set_names(cumsum(1:26), letters))
   expect_identical(
     accumulate(input, sum, .dir = "backward"),
-    set_names(rev(cumsum(rev(1:26))), rev(letters))
+    set_names(rev(cumsum(rev(1:26))), letters)
   )
 })
 
@@ -81,7 +81,7 @@ test_that("accumulate keeps input names when init is supplied", {
   )
   expect_identical(
     accumulate(c(a = 0L, b = 1L), c, .init = 2L, .dir = "backward"),
-    list(b = 0:2, a = 1:2, .init = 2L)
+    list(a = 0:2, b = 1:2, .init = 2L)
   )
 })
 
@@ -103,6 +103,20 @@ test_that("can terminate accumulate() early", {
   expect_equal(
     accumulate(tt, paste2, .dir = "backward", .init = "z"),
     c("b.c.z", "c.z", "z")
+  )
+})
+
+test_that("can terminate named accumulate() early (#1243)", {
+  f <- function(x, y) {
+    if (y < 3) x + y else done()
+  }
+  expect_identical(
+    accumulate(list(a = 1, b = 2, c = 3), f, .init = 0),
+    c(.init = 0, a = 1, b = 3)
+  )
+  expect_identical(
+    accumulate(list(a = 1, b = 2, c = 3), f, .init = 0, .dir = "backward"),
+    c(c = 3, .init = 0)
   )
 })
 
@@ -137,17 +151,20 @@ test_that("accumulate() forces arguments (#643)", {
 })
 
 test_that("accumulate() uses vctrs to simplify results", {
-  out <- list("foo", factor("bar")) |> accumulate(~.y)
+  out <- list("foo", factor("bar")) |> accumulate(\(.x, .y) .y)
   expect_identical(out, c("foo", "bar"))
 })
 
 test_that("accumulate() does not fail when input can't be simplified", {
-  expect_identical(accumulate(list(1L, 2:3), ~.y), list(1L, 2:3))
-  expect_identical(accumulate(list(1, "a"), ~.y), list(1, "a"))
+  expect_identical(accumulate(list(1L, 2:3), \(.x, .y) .y), list(1L, 2:3))
+  expect_identical(accumulate(list(1, "a"), \(.x, .y) .y), list(1, "a"))
 })
 
 test_that("accumulate() does fail when simpification is required", {
-  expect_snapshot(accumulate(list(1, "a"), ~.y, .simplify = TRUE), error = TRUE)
+  expect_snapshot(
+    accumulate(list(1, "a"), \(.x, .y) .y, .simplify = TRUE),
+    error = TRUE
+  )
 })
 
 # reduce2 -----------------------------------------------------------------
@@ -175,7 +192,12 @@ test_that("reduce returns original input if it was length one", {
 
 test_that("can shortcircuit reduce2() with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce2(x, 1:5, ~ if (.y) c(.x, "foo") else done(.x), .init = NULL)
+  out <- reduce2(
+    x,
+    1:5,
+    \(.x, .y, ...) if (.y) c(.x, "foo") else done(.x),
+    .init = NULL
+  )
   expect_identical(out, c("foo", "foo"))
 })
 

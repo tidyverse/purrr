@@ -53,20 +53,18 @@ compose <- function(..., .dir = c("backward", "forward")) {
   }
 
   composed <- function() {
-    env <- env(caller_env(), `_fn` = first_fn)
-
-    first_call <- sys.call()
-    first_call[[1]] <- quote(`_fn`)
-    env$`_out` <- .Call(purrr_eval, first_call, env)
-
-    call <- quote(`_fn`(`_out`))
+    # The call must be built here from `sys.call()`, not precomputed from
+    # `formals(first_fn)`, so that missingness, names, and order of the
+    # caller's arguments are preserved exactly. Functions that inspect
+    # `missing()` (e.g. `table()`) break if defaults are passed explicitly.
+    call <- sys.call()
+    call[[1]] <- first_fn
 
     for (fn in fns) {
-      env$`_fn` <- fn
-      env$`_out` <- .Call(purrr_eval, call, env)
+      call <- call2(fn, call)
     }
 
-    env$`_out`
+    eval_bare(call, env = caller_env())
   }
   formals(composed) <- formals(first_fn)
 

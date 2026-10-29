@@ -32,9 +32,6 @@ of length 1 will be recycled to the length of the other.}
 \itemize{
 \item A named function.
 \item An anonymous function, e.g. \verb{\\(x, y) x + y} or \code{function(x, y) x + y}.
-\item A formula, e.g. \code{~ .x + .y}. Use \code{.x} to refer to the current
-element of \code{x} and \code{.y} to refer to the current element of \code{y}.
-No longer recommended.
 }
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
@@ -84,6 +81,16 @@ Any errors thrown by \code{.f} will be wrapped in an error with class
 \description{
 These functions are variants of \code{\link[=map]{map()}} that iterate over two arguments at
 a time.
+}
+\details{
+\code{.f} is called once for each position in \code{.x} and \code{.y}, as
+\verb{.f(.x[[1]], .y[[1]], ...), .f(.x[[2]], .y[[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} and \code{.y} are subset with \code{[[}, using the \code{[[} method if they have one.
+\item The names of \code{.x} and \code{.y} are not passed to \code{.f}.
+}
 }
 \examples{
 x <- list(1, 1, 1)

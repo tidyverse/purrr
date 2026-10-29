@@ -43,6 +43,8 @@ Remotes:
 Config/Needs/website: tidyverse/tidytemplate, tidyr
 Config/testthat/edition: 3
 Config/testthat/parallel: TRUE
+Remotes:
+    r-lib/mirai
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.1

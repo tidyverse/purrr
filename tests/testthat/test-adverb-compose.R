@@ -6,12 +6,28 @@ test_that("composed functions are applied right to left by default", {
   expect_identical(unname(sort(table(x))), compose(unname, sort, table)(x))
 })
 
-test_that("composed functions are applied in reverse order if .dir is supplied", {
-  expect_identical(compose(~ .x + 100, ~ .x * 2, .dir = "forward")(2), 204)
+test_that("compose() preserves missingness of caller's arguments", {
+  # The call can't be precomputed from formals(first_fn), as that would
+  # pass defaults explicitly to functions that inspect missing()
+  expect_true(compose(identity, function(x, y) missing(y))(1))
+  expect_false(compose(identity, function(x, y) missing(y))(1, 2))
+
+  set.seed(1)
+  x <- sample(1:4, 100, replace = TRUE)
+  expect_identical(compose(unname, sort, table)(x), unname(sort(table(x))))
 })
 
-test_that("compose supports formulas", {
-  round_mean <- compose(~ .x * 100, ~ round(.x, 2), ~ mean(.x, na.rm = TRUE))
+test_that("composed functions are applied in reverse order if .dir is supplied", {
+  expect_identical(
+    compose(\(.x) .x + 100, \(.x) .x * 2, .dir = "forward")(2),
+    204
+  )
+})
+
+test_that("compose supports anonymous functions", {
+  round_mean <- compose(\(.x) .x * 100, \(.x) round(.x, 2), \(.x) {
+    mean(.x, na.rm = TRUE)
+  })
 
   expect_s3_class(round_mean, "purrr_function_compose")
   expect_identical(round_mean(1:100), round(mean(1:100, na.rm = TRUE), 2) * 100)
@@ -27,8 +43,8 @@ test_that("compose() supports character vectors", {
 
 test_that("can splice lists of functions", {
   fns <- list(
-    ~ paste(.x, "a"),
-    ~ paste(.x, "b")
+    \(.x) paste(.x, "a"),
+    \(.x) paste(.x, "b")
   )
   fn <- compose(!!!fns)
   expect_identical(fn("c"), "c b a")
@@ -69,8 +85,8 @@ test_that("compose() works with generic functions (#629)", {
 
   local({
     purrr__gen.default <- function(x) x + 1
-    expect_identical(compose(~ purrr__gen(.x))(0), 1)
-    expect_identical(compose(~ purrr__gen(.x), ~ purrr__gen(.x))(0), 2)
+    expect_identical(compose(\(.x) purrr__gen(.x))(0), 1)
+    expect_identical(compose(\(.x) purrr__gen(.x), \(.x) purrr__gen(.x))(0), 2)
 
     expect_identical(compose(purrr__gen)(0), 1)
     expect_identical(compose(purrr__gen, purrr__gen)(0), 2)
@@ -94,7 +110,7 @@ test_that("compose() works with non-local exits", {
   expect_identical(compose(fn)("foo"), "foo")
   expect_identical(compose(fn, fn)("foo"), "foo")
   expect_identical(
-    compose(~ return(paste(.x, "foo")), ~ return("bar"))(),
+    compose(\(.x) return(paste(.x, "foo")), \(.x) return("bar"))(),
     "bar foo"
   )
 })
@@ -145,5 +161,13 @@ test_that("compose() can take dots from multiple environments", {
   expect_identical(
     unname(map_chr(quos, as_name)),
     c("_baz", "_bar", "_foo", "_quux")
+  )
+})
+
+test_that("compose() evaluates lazily (#651)", {
+  expect_silent(compose(capture.output, print)("purrr, meow"))
+  expect_identical(
+    compose(capture.output, print)("purrr, meow"),
+    capture.output(print("purrr, meow"))
   )
 })

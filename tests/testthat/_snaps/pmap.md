@@ -1,21 +1,21 @@
 # verifies result types and length
 
     Code
-      pmap_int(list(1), ~"x")
+      pmap_int(list(1), function(...) "x")
     Condition
       Error in `pmap_int()`:
       i In index: 1.
       Caused by error:
       ! Can't coerce from a string to an integer.
     Code
-      pmap_int(list(1), ~ 1:2)
+      pmap_int(list(1), function(...) 1:2)
     Condition
       Error in `pmap_int()`:
       i In index: 1.
       Caused by error:
       ! Result must be length 1, not 2.
     Code
-      pmap_vec(list(1), ~1, .ptype = character())
+      pmap_vec(list(1), function(...) 1, .ptype = character())
     Condition
       Error in `pmap_vec()`:
       ! Can't convert `<list>[[1]]` <double> to <character>.

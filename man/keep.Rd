@@ -20,8 +20,6 @@ or \code{FALSE}) specified in one of the following ways:
 \itemize{
 \item A named function, e.g. \code{is.character}.
 \item An anonymous function, e.g. \verb{\\(x) all(x < 0)} or \code{function(x) all(x < 0)}.
-\item A formula, e.g. \code{~ all(.x < 0)}. Use \code{.x} to refer to the first argument.
-No longer recommended.
 }
 
 Wrap a function with \code{\link[=in_parallel]{in_parallel()}} to declare that it should be performed
@@ -44,6 +42,10 @@ In other languages, \code{keep()} and \code{discard()} are often called \code{se
 \code{filter()} and \code{reject()}/ \code{drop()}, but those names are already taken
 in R. \code{keep()} is similar to \code{\link[=Filter]{Filter()}}, but the argument order is more
 convenient, and the evaluation of the predicate function \code{.p} is stricter.
+
+\code{.p} is called once for each element of \code{.x}, as
+\verb{.p(.x[[1]], ...), .p(.x[[2]], ...), ...}, and must return a single
+\code{TRUE} or \code{FALSE}.
 }
 \examples{
 rep(10, 10) |>
@@ -57,7 +59,7 @@ rep(10, 10) |>
 
 # Using a string instead of a function will select all list elements
 # where that subelement is TRUE
-x <- map(1:5, ~ list(a = runif(1) > 0.5, b = sample(10)))
+x <- map(1:5, \(.x) list(a = runif(1) > 0.5, b = sample(10)))
 x
 x |> keep("a")
 x |> discard("a")

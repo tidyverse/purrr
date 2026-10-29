@@ -250,7 +250,7 @@ What if we want just the side effect, such as a plot or a file output, but not t
 -   In purrr, we can use `walk()`.
 
     ```{r, fig.show='hide'}
-    walk(samples, ~ hist(.x, xlab = "value", main = ""))
+    walk(samples, \(.x) hist(.x, xlab = "value", main = ""))
     ```
 
 ### Pipes

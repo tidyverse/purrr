@@ -16,8 +16,6 @@ detect_index(.x, .f, ..., .dir = c("forward", "backward"))
 \itemize{
 \item A named function, e.g. \code{mean}.
 \item An anonymous function, e.g. \verb{\\(x) x + 1} or \code{function(x) x + 1}.
-\item A formula, e.g. \code{~ .x + 1}. Use \code{.x} to refer to the first argument. No
-longer recommended.
 \item A string, integer, or list, e.g. \code{"idx"}, \code{1}, or \code{list("idx", 1)} which
 are shorthand for \verb{\\(x) pluck(x, "idx")}, \verb{\\(x) pluck(x, 1)}, and
 \verb{\\(x) pluck(x, "idx", 1)} respectively. Optionally supply \code{.default} to
@@ -40,6 +38,11 @@ returns 0.
 }
 \description{
 Find the value or position of the first match
+}
+\details{
+\code{.f} is called on each element of \code{.x} in turn, as \code{.f(.x[[i]], ...)},
+stopping at the first element where it returns \code{TRUE}. \code{.dir} controls
+whether the search starts at the beginning or the end of \code{.x}.
 }
 \examples{
 is_even <- function(x) x \%\% 2 == 0
