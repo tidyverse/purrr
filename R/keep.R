@@ -24,6 +24,10 @@
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
 #' @inheritParams map
+#' @details
+#' `.p` is called once for each element of `.x`, as
+#' `.p(.x[[1]], ...), .p(.x[[2]], ...), ...`, and must return a single
+#' `TRUE` or `FALSE`.
 #' @export
 #' @examples
 #' rep(10, 10) |>

@@ -92,6 +92,18 @@ simultaneously. They are parallel in the sense that each input is processed
 in parallel with the others, not in the sense of multicore computing, i.e.
 they share the same notion of "parallel" as \code{\link[base:pmax]{base::pmax()}} and \code{\link[base:pmin]{base::pmin()}}.
 }
+\details{
+\code{.f} is called once for each element of the vectors in \code{.l}, as
+\verb{.f(.l[[1]][[1]], .l[[2]][[1]], ...), .f(.l[[1]][[2]], .l[[2]][[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item The vectors in \code{.l} are subset with \code{[[}, using the \code{[[} method if
+they have one.
+\item The arguments are supplied by position if the elements of \code{.l} are
+unnamed, and by name if they are named.
+}
+}
 \examples{
 x <- list(1, 1, 1)
 y <- list(10, 20, 30)

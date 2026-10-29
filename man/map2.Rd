@@ -82,6 +82,16 @@ Any errors thrown by \code{.f} will be wrapped in an error with class
 These functions are variants of \code{\link[=map]{map()}} that iterate over two arguments at
 a time.
 }
+\details{
+\code{.f} is called once for each position in \code{.x} and \code{.y}, as
+\verb{.f(.x[[1]], .y[[1]], ...), .f(.x[[2]], .y[[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} and \code{.y} are subset with \code{[[}, using the \code{[[} method if they have one.
+\item The names of \code{.x} and \code{.y} are not passed to \code{.f}.
+}
+}
 \examples{
 x <- list(1, 1, 1)
 y <- list(10, 20, 30)
