@@ -113,6 +113,21 @@ by the suffix:
 Any errors thrown by `.f` will be wrapped in an error with class
 [purrr_error_indexed](https://purrr.tidyverse.org/dev/reference/purrr_error_indexed.md).
 
+## Details
+
+`.f` is called once for each element of `.x`, as
+`.f(.x[[1]], ...), .f(.x[[2]], ...), ...`.
+
+Note in particular that:
+
+- `.x` is subset with `[[`, using the `[[` method if `x` has one.
+
+- The names of `.x` are not passed to `.f`. If you need them, use
+  [`imap()`](https://purrr.tidyverse.org/dev/reference/imap.md).
+
+- If `.f` is a function, `...` are passed to it on every call,
+  unchanged.
+
 ## See also
 
 [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md) for

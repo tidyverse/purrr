@@ -106,6 +106,19 @@ of `.l`. The output type is determined by the suffix:
 Any errors thrown by `.f` will be wrapped in an error with class
 [purrr_error_indexed](https://purrr.tidyverse.org/dev/reference/purrr_error_indexed.md).
 
+## Details
+
+`.f` is called once for each element of the vectors in `.l`, as
+`.f(.l[[1]][[1]], .l[[2]][[1]], ...), .f(.l[[1]][[2]], .l[[2]][[2]], ...), ...`.
+
+Note in particular that:
+
+- The vectors in `.l` are subset with `[[`, using the `[[` method if
+  they have one.
+
+- The arguments are supplied by position if the elements of `.l` are
+  unnamed, and by name if they are named.
+
 ## See also
 
 Other map variants:

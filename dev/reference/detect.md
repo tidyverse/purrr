@@ -50,6 +50,12 @@ detect_index(.x, .f, ..., .dir = c("forward", "backward"))
 `detect_index` the position of the matching item. If not found, `detect`
 returns `NULL` and `detect_index` returns 0.
 
+## Details
+
+`.f` is called on each element of `.x` in turn, as `.f(.x[[i]], ...)`,
+stopping at the first element where it returns `TRUE`. `.dir` controls
+whether the search starts at the beginning or the end of `.x`.
+
 ## See also
 
 [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md) for

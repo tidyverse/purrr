@@ -103,6 +103,9 @@ a basic progress bar, use a string to give it a name, or see
 <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> and <code>reject()</code>/ <code><a href="https://rdrr.io/r/base/drop.html" class="external-link">drop()</a></code>, but those names are already taken
 in R. <code>keep()</code> is similar to <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter()</a></code>, but the argument order is more
 convenient, and the evaluation of the predicate function <code>.p</code> is stricter.</p>
+<p><code>.p</code> is called once for each element of <code>.x</code>, as
+<code>.p(.x[[1]], ...), .p(.x[[2]], ...), ...</code>, and must return a single
+<code>TRUE</code> or <code>FALSE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

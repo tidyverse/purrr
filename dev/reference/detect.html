@@ -102,6 +102,12 @@ If not found, <code>detect</code> returns <code>NULL</code> and <code>detect_ind
 returns 0.</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>.f</code> is called on each element of <code>.x</code> in turn, as <code>.f(.x[[i]], ...)</code>,
+stopping at the first element where it returns <code>TRUE</code>. <code>.dir</code> controls
+whether the search starts at the beginning or the end of <code>.x</code>.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="keep.html">keep()</a></code> for keeping all matching values.</p></div>
     </div>

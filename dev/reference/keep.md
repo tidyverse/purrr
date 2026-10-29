@@ -58,6 +58,10 @@ names are already taken in R. `keep()` is similar to
 order is more convenient, and the evaluation of the predicate function
 `.p` is stricter.
 
+`.p` is called once for each element of `.x`, as
+`.p(.x[[1]], ...), .p(.x[[2]], ...), ...`, and must return a single
+`TRUE` or `FALSE`.
+
 ## See also
 
 [`keep_at()`](https://purrr.tidyverse.org/dev/reference/keep_at.md)/[`discard_at()`](https://purrr.tidyverse.org/dev/reference/keep_at.md)
