@@ -246,12 +246,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
     ".stop"
   } else if (is.logical(.progress)) {
     c(".stop", ".progress")
-  } else if (is.character(.progress)) {
-    list(.stop = TRUE, .progress = .progress)
-  } else if (is.list(.progress)) {
-    # mirai passes the list to `cli::cli_progress_bar()`, which doesn't
-    # have a `caller` argument
-    .progress$caller <- NULL
+  } else if (is.character(.progress) || is.list(.progress)) {
     list(.stop = TRUE, .progress = .progress)
   } else {
     cli::cli_abort(
