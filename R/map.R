@@ -246,10 +246,7 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
   options <- if (is.null(.progress)) {
     ".stop"
   } else if (inherits(.progress, "purrr_progress_bar")) {
-    cli::cli_abort(
-      "Can't use a shared progress bar with a parallelized function.",
-      call = error_call
-    )
+    list(.stop = TRUE, .progress = set_names(1L, .progress$id))
   } else if (is.logical(.progress)) {
     c(".stop", ".progress")
   } else if (is.character(.progress) || is.list(.progress)) {
