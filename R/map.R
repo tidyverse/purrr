@@ -332,6 +332,11 @@ with_parallel_indexed_errors <- function(
     expr,
     error = function(cnd) {
       location <- cnd$location
+      if (is.null(location)) {
+        # Not a task error (e.g. a failure while collecting results),
+        # so rethrow as-is to preserve the message
+        cli::cli_abort("Parallel failure", parent = cnd, call = error_call)
+      }
       iname <- cnd$name
       cli::cli_abort(
         c(
