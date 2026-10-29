@@ -96,7 +96,7 @@ as_progress <- function(
   # TODO: Hack! Retrieve cli's internal bar object so that the C loop can
   # tick this bar. Remove once cli provides a way to pass an R-created bar
   # to its C API: https://github.com/r-lib/cli/issues/850
-  bar <- getFromNamespace("clienv", "cli")$progress[[id]]
+  bar <- utils::getFromNamespace("clienv", "cli")$progress[[id]]
   # The C tick functions read these fields as doubles
   bar$current <- as.double(bar$current)
   bar$tick <- as.double(bar$tick)
