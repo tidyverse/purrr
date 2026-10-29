@@ -243,9 +243,9 @@ following data:
 
 ``` r
 
-xs <- map(1:8, ~ runif(10))
+xs <- map(1:8, \(.x) runif(10))
 xs[[1]][[1]] <- NA
-ws <- map(1:8, ~ rpois(10, 5) + 1)
+ws <- map(1:8, \(.x) rpois(10, 5) + 1)
 ```
 
 We could use

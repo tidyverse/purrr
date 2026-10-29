@@ -19,8 +19,6 @@ slowly(f, rate = rate_delay(), quiet = TRUE)
 
   - An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
 
-  - A formula, e.g. `~ .x + 1`. No longer recommended.
-
 - rate:
 
   A [rate](https://purrr.tidyverse.org/dev/reference/rate-helpers.md)

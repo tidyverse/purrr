@@ -30,9 +30,6 @@ compact(.x, .p = identity, .progress = FALSE)
   - An anonymous function, e.g. `\(x) all(x < 0)` or
     `function(x) all(x < 0)`.
 
-  - A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first
-    argument. No longer recommended.
-
   Wrap a function with
   [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
   to declare that it should be performed in parallel. See
@@ -95,7 +92,7 @@ rep(10, 10) |>
 
 # Using a string instead of a function will select all list elements
 # where that subelement is TRUE
-x <- map(1:5, ~ list(a = runif(1) > 0.5, b = sample(10)))
+x <- map(1:5, \(.x) list(a = runif(1) > 0.5, b = sample(10)))
 x
 #> [[1]]
 #> [[1]]$a

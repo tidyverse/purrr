@@ -19,8 +19,6 @@ possibly(.f, otherwise = NULL, quiet = TRUE)
 
   - An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
 
-  - A formula, e.g. `~ .x + 1`. No longer recommended.
-
 - otherwise:
 
   Default value to use when an error occurs.

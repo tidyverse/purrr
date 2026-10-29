@@ -20,9 +20,6 @@ negate(.p)
   - An anonymous function, e.g. `\(x) all(x < 0)` or
     `function(x) all(x < 0)`.
 
-  - A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first
-    argument. No longer recommended.
-
 ## Value
 
 A new predicate function.

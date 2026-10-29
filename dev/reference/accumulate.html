@@ -109,13 +109,15 @@ application.</p>
 
 
 <dt id="arg--f">.f<a class="anchor" aria-label="anchor" href="#arg--f"></a></dt>
-<dd><p>For <code>accumulate()</code> <code>.f</code> is 2-argument function. The function will
-be passed the accumulated result or initial value as the first argument.
-The next value in sequence is passed as the second argument.</p>
-<p>For <code>accumulate2()</code>, a 3-argument function. The
-function will be passed the accumulated result as the first
-argument. The next value in sequence from <code>.x</code> is passed as the second argument. The
-next value in sequence from <code>.y</code> is passed as the third argument.</p>
+<dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x, y) x + y</code> or <code>function(x, y) x + y</code>.
+For <code>accumulate()</code>, a 2-argument function. The function will be passed
+the accumulated result or initial value as the first argument. The next
+value in sequence is passed as the second argument.</p></li>
+</ul><p>For <code>accumulate2()</code>, a 3-argument function. The function will be passed
+the accumulated result as the first argument. The next value in sequence
+from <code>.x</code> is passed as the second argument. The next value in sequence
+from <code>.y</code> is passed as the third argument.</p>
 <p>The accumulation terminates early if <code>.f</code> returns a value wrapped in
 a <code><a href="https://rlang.r-lib.org/reference/done.html" class="external-link">done()</a></code>.</p></dd>
 

@@ -327,7 +327,7 @@ but not the returned values?
 
   ``` r
 
-  walk(samples, ~ hist(.x, xlab = "value", main = ""))
+  walk(samples, \(.x) hist(.x, xlab = "value", main = ""))
   ```
 
 #### Pipes

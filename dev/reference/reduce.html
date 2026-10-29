@@ -80,10 +80,12 @@ function that takes two values and returns a single value: reducing
 
 
 <dt id="arg--f">.f<a class="anchor" aria-label="anchor" href="#arg--f"></a></dt>
-<dd><p>For <code>reduce()</code>, a 2-argument function. The function will be passed
+<dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function.</p></li>
+<li><p>An anonymous function, e.g. <code>\(x, y) x + y</code> or <code>function(x, y) x + y</code>.
+For <code>reduce()</code>, a 2-argument function. The function will be passed
 the accumulated value as the first argument and the "next" value as the
-second argument.</p>
-<p>For <code>reduce2()</code>, a 3-argument function. The function will be passed the
+second argument.</p></li>
+</ul><p>For <code>reduce2()</code>, a 3-argument function. The function will be passed the
 accumulated value as the first argument, the next value of <code>.x</code> as the
 second argument, and the next value of <code>.y</code> as the third argument.</p>
 <p>The reduction terminates early if <code>.f</code> returns a value wrapped in

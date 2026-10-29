@@ -41,9 +41,15 @@ accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
 
 - .f:
 
-  For `accumulate()` `.f` is 2-argument function. The function will be
-  passed the accumulated result or initial value as the first argument.
-  The next value in sequence is passed as the second argument.
+  A function, specified in one of the following ways:
+
+  - A named function.
+
+  - An anonymous function, e.g. `\(x, y) x + y` or
+    `function(x, y) x + y`. For `accumulate()`, a 2-argument function.
+    The function will be passed the accumulated result or initial value
+    as the first argument. The next value in sequence is passed as the
+    second argument.
 
   For `accumulate2()`, a 3-argument function. The function will be
   passed the accumulated result as the first argument. The next value in

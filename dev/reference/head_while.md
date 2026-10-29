@@ -25,9 +25,6 @@ tail_while(.x, .p, ...)
   - An anonymous function, e.g. `\(x) all(x < 0)` or
     `function(x) all(x < 0)`.
 
-  - A formula, e.g. `~ all(.x < 0)`. Use `.x` to refer to the first
-    argument. No longer recommended.
-
   - A logical vector of the same length as `.x`.
 
   - A string, if the elements of `.x` are themselves lists of objects,

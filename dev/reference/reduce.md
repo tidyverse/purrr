@@ -21,9 +21,14 @@ reduce2(.x, .y, .f, ..., .init)
 
 - .f:
 
-  For `reduce()`, a 2-argument function. The function will be passed the
-  accumulated value as the first argument and the "next" value as the
-  second argument.
+  A function, specified in one of the following ways:
+
+  - A named function.
+
+  - An anonymous function, e.g. `\(x, y) x + y` or
+    `function(x, y) x + y`. For `reduce()`, a 2-argument function. The
+    function will be passed the accumulated value as the first argument
+    and the "next" value as the second argument.
 
   For `reduce2()`, a 3-argument function. The function will be passed
   the accumulated value as the first argument, the next value of `.x` as

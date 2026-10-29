@@ -94,8 +94,6 @@ which elements of <code>.x</code> are transformed with <code>.f</code>.</p></li>
 <dt id="arg--p">.p<a class="anchor" aria-label="anchor" href="#arg--p"></a></dt>
 <dd><p>A predicate function specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>is.character</code>.</p></li>
 <li><p>An anonymous function, e.g. <code>\(x) all(x &lt; 0)</code> or <code>function(x) all(x &lt; 0)</code>.</p></li>
-<li><p>A formula, e.g. <code>~ all(.x &lt; 0)</code>. Use <code>.x</code> to refer to the first argument.
-No longer recommended.</p></li>
 <li><p>A logical vector of the same length as <code>.x</code>.</p></li>
 <li><p>A string, if the elements of <code>.x</code> are themselves lists of objects,
 giving the name of a logical element in the inner lists.</p></li>
@@ -108,8 +106,6 @@ Use of <code>...</code> is not permitted in this context.</p></dd>
 <dt id="arg--f">.f<a class="anchor" aria-label="anchor" href="#arg--f"></a></dt>
 <dd><p>A function, specified in one of the following ways:</p><ul><li><p>A named function, e.g. <code>mean</code>.</p></li>
 <li><p>An anonymous function, e.g. <code>\(x) x + 1</code> or <code>function(x) x + 1</code>.</p></li>
-<li><p>A formula, e.g. <code>~ .x + 1</code>. Use <code>.x</code> to refer to the first
-argument. No longer recommended.</p></li>
 <li><p>A string, integer, or list, e.g. <code>"idx"</code>, <code>1</code>, or <code>list("idx", 1)</code> which
 are shorthand for <code>\(x) pluck(x, "idx")</code>, <code>\(x) pluck(x, 1)</code>, and
 <code>\(x) pluck(x, "idx", 1)</code> respectively. Optionally supply <code>.default</code> to

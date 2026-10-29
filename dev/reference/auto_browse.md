@@ -21,8 +21,6 @@ auto_browse(.f)
 
   - An anonymous function, e.g. `\(x) x + 1` or `function(x) x + 1`.
 
-  - A formula, e.g. `~ .x + 1`. No longer recommended.
-
 ## Value
 
 A function that takes the same arguments as `.f`, but returns a
