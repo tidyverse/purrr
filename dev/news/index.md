@@ -59,6 +59,11 @@
   now accepts existing functions, so `.f` no longer needs to be defined
   inside the call, e.g. `in_parallel(sum)` or
   `in_parallel(fun, helper = helper)`.
+- [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) and
+  friends now support a named list for `.progress` when running in
+  parallel, and errors raised while collecting parallel results (rather
+  than in a task itself) now keep their original message
+  ([\#1253](https://github.com/tidyverse/purrr/issues/1253)).
 - [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
   [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
   [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),

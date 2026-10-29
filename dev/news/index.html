@@ -71,6 +71,8 @@
 <li>
 <code><a href="../reference/in_parallel.html">in_parallel()</a></code> now accepts existing functions, so <code>.f</code> no longer needs to be defined inside the call, e.g. <code>in_parallel(sum)</code> or <code>in_parallel(fun, helper = helper)</code>.</li>
 <li>
+<code><a href="../reference/map.html">map()</a></code> and friends now support a named list for <code>.progress</code> when running in parallel, and errors raised while collecting parallel results (rather than in a task itself) now keep their original message (<a href="https://github.com/tidyverse/purrr/issues/1253" class="external-link">#1253</a>).</li>
+<li>
 <code><a href="../reference/keep.html">keep()</a></code>, <code><a href="../reference/keep.html">discard()</a></code>, <code><a href="../reference/keep.html">compact()</a></code>, <code><a href="../reference/modify.html">modify()</a></code>, <code><a href="../reference/modify.html">modify2()</a></code>, and <code><a href="../reference/modify.html">imodify()</a></code> gain an explicit <code>.progress</code> parameter (<a href="https://github.com/tidyverse/purrr/issues/1249" class="external-link">#1249</a>).</li>
 <li>
 <code><a href="../reference/along.html">list_along()</a></code>, <code><a href="../reference/invoke.html">invoke_map_df()</a></code>, and <code><a href="../reference/invoke.html">invoke_map_dfc()</a></code> now always warn about their deprecation, as does supplying pairlists, calls, or expressions to <code><a href="../reference/map.html">map()</a></code> and friends.</li>
