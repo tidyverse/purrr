@@ -43,22 +43,32 @@
 #'
 #' # Or only where a condition is satisfied
 #' x |> lmap_if(is.character, maybe_rep) |> str()
-lmap <- function(.x, .f, ...) {
-  lmap_helper(.x, .ind = rep(TRUE, length(.x)), .f, ..., .else = NULL)
+lmap <- function(.x, .f, ..., .progress = FALSE) {
+  .progress <- as_progress(.progress, total = length(.x))
+  lmap_helper(
+    .x,
+    .ind = rep(TRUE, length(.x)),
+    .f,
+    ...,
+    .else = NULL,
+    .progress = .progress
+  )
 }
 
 #' @rdname lmap
 #' @export
-lmap_if <- function(.x, .p, .f, ..., .else = NULL) {
+lmap_if <- function(.x, .p, .f, ..., .else = NULL, .progress = FALSE) {
   where <- where_if(.x, .p)
-  lmap_helper(.x, .ind = where, .f, ..., .else = .else)
+  .progress <- as_progress(.progress, total = if_total(where, .else))
+  lmap_helper(.x, .ind = where, .f, ..., .else = .else, .progress = .progress)
 }
 
 #' @rdname lmap
 #' @export
-lmap_at <- function(.x, .at, .f, ...) {
+lmap_at <- function(.x, .at, .f, ..., .progress = FALSE) {
+  .progress <- as_progress(.progress, total = length(.x))
   where <- where_at(.x, .at)
-  lmap_helper(.x, .ind = where, .f, ..., .else = NULL)
+  lmap_helper(.x, .ind = where, .f, ..., .else = NULL, .progress = .progress)
 }
 
 lmap_helper <- function(
@@ -67,6 +77,7 @@ lmap_helper <- function(
   .f,
   ...,
   .else = NULL,
+  .progress = NULL,
   .purrr_error_call = caller_env()
 ) {
   .f <- rlang::as_function(.f, call = .purrr_error_call)
@@ -76,6 +87,8 @@ lmap_helper <- function(
 
   out <- vector("list", length(.x))
   for (i in seq_along(.x)) {
+    progress_tick(.progress)
+
     if (.ind[[i]]) {
       res <- .f(.x[i], ...)
     } else if (is.null(.else)) {

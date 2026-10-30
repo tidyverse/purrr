@@ -41,6 +41,11 @@ where_at <- function(
   }
 }
 
+# Number of elements `map_if()`/`modify_if()`/`lmap_if()` will map over
+if_total <- function(where, .else) {
+  if (is_null(.else)) sum(where) else length(where)
+}
+
 where_if <- function(
   .x,
   .p,

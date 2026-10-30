@@ -170,17 +170,19 @@ reduce_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  .progress <- as_progress(
-    .progress,
-    user_env = .purrr_user_env,
-    caller_env = .purrr_error_call
-  )
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
   init_missing <- missing(.init)
 
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
+  .progress <- as_progress(
+    .progress,
+    total = vec_size(.x),
+    user_env = .purrr_user_env,
+    error_call = .purrr_error_call
+  )
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
   input_names <- accumulate_names(names(.x), init_missing, left)
@@ -191,7 +193,7 @@ reduce_ <- function(
   i <- 0L
 
   # We refer to `.f`, `.x`, `i`, and `...` all from C level
-  call_with_cleanup(
+  .Call(
     reduce_impl,
     .acc,
     environment(),
@@ -216,11 +218,6 @@ reduce2_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  .progress <- as_progress(
-    .progress,
-    user_env = .purrr_user_env,
-    caller_env = .purrr_error_call
-  )
   # This can be easily converted into `.dir` parameter if one so wishes
   left <- TRUE
   init_missing <- missing(.init)
@@ -228,6 +225,13 @@ reduce2_ <- function(
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   obj_check_vector(.x, arg = ".x", call = .purrr_error_call)
+
+  .progress <- as_progress(
+    .progress,
+    total = vec_size(.x),
+    user_env = .purrr_user_env,
+    error_call = .purrr_error_call
+  )
 
   out <- reduce_init(.x, .init, left = left, error_call = .purrr_error_call)
   # Here it'd only take replicating analogous line from `reduce_()` to use
@@ -252,7 +256,7 @@ reduce2_ <- function(
   }
 
   # We refer to `.f`, `.x`, `.y`, `i`, and `...` all from C level
-  call_with_cleanup(
+  .Call(
     reduce2_impl,
     .acc,
     environment(),

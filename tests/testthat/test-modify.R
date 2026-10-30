@@ -162,3 +162,11 @@ test_that("user friendly error for non-supported cases", {
     modify2(mean, 1, identity)
   })
 })
+
+test_that("modify_if() shows progress", {
+  expect_no_error(modify_if(1:3, is.numeric, identity, .progress = TRUE))
+})
+
+test_that("modify_at() shows progress", {
+  expect_no_error(modify_at(1:3, 1, identity, .progress = TRUE))
+})
