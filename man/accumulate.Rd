@@ -12,10 +12,20 @@ accumulate(
   .init,
   .dir = c("forward", "backward"),
   .simplify = NA,
-  .ptype = NULL
+  .ptype = NULL,
+  .progress = FALSE
 )
 
-accumulate2(.x, .y, .f, ..., .init, .simplify = NA, .ptype = NULL)
+accumulate2(
+  .x,
+  .y,
+  .f,
+  ...,
+  .init,
+  .simplify = NA,
+  .ptype = NULL,
+  .progress = FALSE
+)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -68,10 +78,13 @@ If \code{FALSE}, the result is not simplified, always returning a list.}
 \item{.ptype}{If \code{simplify} is \code{NA} or \code{TRUE}, optionally supply a vector
 prototype to enforce the output type.}
 
-\item{.y}{For \code{accumulate2()} \code{.y} is the second argument of the pair. It
-needs to be 1 element shorter than the vector to be accumulated (\code{.x}).
-If \code{.init} is set, \code{.y} needs to be one element shorted than the
-concatenation of the initial value and \code{.x}.}
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
+
+\item{.y}{For \code{accumulate2()} an additional
+argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
+should be 1 element shorter than \code{.x}.}
 }
 \value{
 A vector the same length of \code{.x} with the same names as \code{.x}.
@@ -105,6 +118,23 @@ the same way, but discards all results except that of the final function
 application.
 
 \code{accumulate2()} sequentially applies a function to elements of two lists, \code{.x} and \code{.y}.
+}
+\details{
+\code{.f} is called once for each element of \code{.x} (starting with the first
+element if \code{.init} is supplied, and the second otherwise), as
+\verb{.f(acc, .x[[1]], ...), .f(acc, .x[[2]], ...), ...}, where \code{acc} is the
+accumulated value. With \code{.dir = "backward"}, the argument order is
+reversed: \verb{.f(.x[[1]], acc, ...), .f(.x[[2]], acc, ...), ...}.
+
+\code{reduce2()} additionally passes an element of \code{.y}:
+\verb{.f(acc, .x[[1]], .y[[1]], ...), .f(acc, .x[[2]], .y[[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} (and \code{.y}) are subset with \code{[[}, using the \code{[[} method if they
+have one.
+\item If \code{.f} is a function, \code{...} are passed to it on every call, unchanged.
+}
 }
 \section{Direction}{
 

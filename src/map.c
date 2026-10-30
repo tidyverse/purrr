@@ -23,7 +23,6 @@ static SEXP call_map_dots = NULL;
 static SEXP call_map2 = NULL;
 static SEXP call_map2_dots = NULL;
 
-
 static inline SEXP call_loop(
   const void* p_data,
   SEXP (*fn_exec)(const void* p_data, int i),

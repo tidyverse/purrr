@@ -5,9 +5,9 @@
 \alias{reduce2}
 \title{Reduce a list to a single value by iteratively applying a binary function}
 \usage{
-reduce(.x, .f, ..., .init, .dir = c("forward", "backward"))
+reduce(.x, .f, ..., .init, .dir = c("forward", "backward"), .progress = FALSE)
 
-reduce2(.x, .y, .f, ..., .init)
+reduce2(.x, .y, .f, ..., .init, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or atomic vector.}
@@ -51,6 +51,10 @@ is empty. If missing, and \code{.x} is empty, will throw an error.}
 \code{"forward"} (the default) or \code{"backward"}. See the section about
 direction below.}
 
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
+
 \item{.y}{For \code{reduce2()} an additional
 argument that is passed to \code{.f}. If \code{init} is not set, \code{.y}
 should be 1 element shorter than \code{.x}.}
@@ -60,6 +64,23 @@ should be 1 element shorter than \code{.x}.}
 into a single value. The combination is driven by \code{.f}, a binary
 function that takes two values and returns a single value: reducing
 \code{f} over \code{1:3} computes the value \code{f(f(1, 2), 3)}.
+}
+\details{
+\code{.f} is called once for each element of \code{.x} (starting with the first
+element if \code{.init} is supplied, and the second otherwise), as
+\verb{.f(acc, .x[[1]], ...), .f(acc, .x[[2]], ...), ...}, where \code{acc} is the
+accumulated value. With \code{.dir = "backward"}, the argument order is
+reversed: \verb{.f(.x[[1]], acc, ...), .f(.x[[2]], acc, ...), ...}.
+
+\code{reduce2()} additionally passes an element of \code{.y}:
+\verb{.f(acc, .x[[1]], .y[[1]], ...), .f(acc, .x[[2]], .y[[2]], ...), ...}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} (and \code{.y}) are subset with \code{[[}, using the \code{[[} method if they
+have one.
+\item If \code{.f} is a function, \code{...} are passed to it on every call, unchanged.
+}
 }
 \section{Direction}{
 
