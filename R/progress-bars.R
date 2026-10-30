@@ -111,7 +111,7 @@ as_progress <- function(
 # For maps implemented with an R loop (e.g. `lmap()`), which can't be
 # ticked from C
 progress_tick <- function(progress) {
-  if (inherits(progress, "purrr_progress_bar")) {
+  if (!is.null(progress)) {
     cli::cli_progress_update(id = progress$id)
   }
 }
