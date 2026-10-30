@@ -2,9 +2,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
-#include "box.h"
 #include "coerce.h"
-#include "subset.h"
+#include "reduce-helpers.h"
 #include "utils.h"
 
 #include <stdbool.h>
