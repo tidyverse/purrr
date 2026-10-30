@@ -5,6 +5,7 @@
 #include "box.h"
 #include "coerce.h"
 #include "subset.h"
+#include "utils.h"
 
 #include <stdbool.h>
 
@@ -19,6 +20,29 @@ void cb_progress_done(void* bar_ptr) {
   cli_progress_done(bar);
   R_ReleaseObject(bar);
 }
+
+static SEXP sym_i = NULL;
+static SEXP sym_dot_f = NULL;
+static SEXP sym_dot_x = NULL;
+static SEXP sym_dot_y = NULL;
+static SEXP sym_acc = NULL;
+static SEXP sym_dot_x_i = NULL;
+static SEXP sym_dot_y_i = NULL;
+
+// `.x[[i]]`, `.y[[i]]`, and `.y[[i - 1]]`
+static SEXP call_dot_x_subset2_i = NULL;
+static SEXP call_dot_y_subset2_i = NULL;
+static SEXP call_dot_y_subset2_i_minus = NULL;
+
+// `.f(acc, .x_i)` and `.f(.x_i, acc)`, with and without `...`
+static SEXP call_reduce = NULL;
+static SEXP call_reduce_dots = NULL;
+static SEXP call_reduce_bwd = NULL;
+static SEXP call_reduce_bwd_dots = NULL;
+
+// `.f(acc, .x_i, .y_i)`, with and without `...`
+static SEXP call_reduce2 = NULL;
+static SEXP call_reduce2_dots = NULL;
 
 static
 int get_acc_size(int n, int init_index) {
@@ -83,7 +107,8 @@ SEXP shorten_acc_out(
 static
 SEXP reduce_loop(
   SEXP accumulate_arg,
-  SEXP (*call_fn)(SEXP out, bool left, bool init_missing),
+  SEXP call,
+  SEXP y_call,
   SEXP ffi_env,
   SEXP ffi_n,
   SEXP ffi_i,
@@ -136,7 +161,18 @@ SEXP reduce_loop(
       R_CheckUserInterrupt();
     }
 
-    SEXP call = PROTECT(call_fn(out, left, init_missing)); ++nprot;
+    SEXP x_i = PROTECT(Rf_eval(call_dot_x_subset2_i, ffi_env)); ++nprot;
+    Rf_defineVar(sym_dot_x_i, x_i, ffi_env);
+    UNPROTECT(1); --nprot;
+
+    if (y_call != NULL) {
+      SEXP y_i = PROTECT(Rf_eval(y_call, ffi_env)); ++nprot;
+      Rf_defineVar(sym_dot_y_i, y_i, ffi_env);
+      UNPROTECT(1); --nprot;
+    }
+
+    Rf_defineVar(sym_acc, out, ffi_env);
+
     SEXP res = PROTECT(R_forceAndCall(call, force, ffi_env)); ++nprot;
 
     if (is_done_box(res, false)) {
@@ -145,10 +181,10 @@ SEXP reduce_loop(
           SEXP acc_out_shortened = shorten_acc_out(
             acc_out, output_index, left, true
           );
-          UNPROTECT(nprot);  // res, call, acc_out, out
+          UNPROTECT(nprot);  // res, acc_out, out
           return acc_out_shortened;
         }
-        UNPROTECT(nprot);  // res, call, out
+        UNPROTECT(nprot);  // res, out
         return out;
       }
       SEXP unboxed_res = PROTECT(unbox(res)); ++nprot;
@@ -157,10 +193,10 @@ SEXP reduce_loop(
         SEXP acc_out_shortened = shorten_acc_out(
           acc_out, output_index, left, false
         );
-        UNPROTECT(nprot);  // unboxed_res, res, call, acc_out, out
+        UNPROTECT(nprot);  // unboxed_res, res, acc_out, out
         return acc_out_shortened;
       }
-      UNPROTECT(nprot);  // unboxed_res, res, call, out
+      UNPROTECT(nprot);  // unboxed_res, res, out
       return unboxed_res;
     }
 
@@ -171,8 +207,8 @@ SEXP reduce_loop(
     out = res;
     REPROTECT(out, out_shelter);
 
-    UNPROTECT(2);  // res, call
-    nprot -= 2;
+    UNPROTECT(1);  // res
+    nprot -= 1;
   }
 
   *p_i = 0;
@@ -183,26 +219,6 @@ SEXP reduce_loop(
   }
   UNPROTECT(nprot);  // out
   return out;
-}
-
-static
-SEXP make_reduce_call_(SEXP out, bool left, bool init_missing) {
-  static SEXP x_i_sym = NULL;
-  if (x_i_sym == NULL) {
-    SEXP x_sym = Rf_install(".x");
-    SEXP i_sym = Rf_install("i");
-
-    // Constructs a call of the form x[[i]]
-    x_i_sym = Rf_lang3(R_Bracket2Symbol, x_sym, i_sym);
-    R_PreserveObject(x_i_sym);
-  }
-
-  SEXP f_sym = Rf_install(".f");
-  // Left-reduce passes the result-so-far on the left, right-reduce
-  // passes it on the right. A left-reduce produces left-leaning
-  // computation trees while right-reduce produces right-leaning trees.
-  return left ? Rf_lang4(f_sym, out, x_i_sym, R_DotsSymbol) :
-    Rf_lang4(f_sym, x_i_sym, out, R_DotsSymbol);
 }
 
 SEXP reduce_impl(
@@ -218,9 +234,16 @@ SEXP reduce_impl(
 ) {
   const int force = 2; // Number of arguments to force
 
+  const bool left = Rf_asLogical(left_arg);
+  const bool dots = env_dots_length(ffi_env) != 0;
+  SEXP call = left ?
+    (dots ? call_reduce_dots : call_reduce) :
+    (dots ? call_reduce_bwd_dots : call_reduce_bwd);
+
   return reduce_loop(
     accumulate_arg,
-    make_reduce_call_,
+    call,
+    NULL,
     ffi_env,
     ffi_n,
     ffi_i,
@@ -231,48 +254,6 @@ SEXP reduce_impl(
     progress,
     force
   );
-}
-
-static
-SEXP make_reduce2_call_(SEXP out, bool left, bool init_missing) {
-  if (!left) {
-    // This shouldn't be accessible by a normal user
-    Rf_errorcall(
-      R_NilValue,
-      "Cannot use `.dir = \"backward\"` with `reduce2()` or `accumulate2()`."
-    );
-  }
-
-  SEXP i_sym = Rf_install("i");
-
-  static SEXP x_i_sym = NULL;
-  if (x_i_sym == NULL) {
-    SEXP x_sym = Rf_install(".x");
-    // Constructs a call of the form x[[i]]
-    x_i_sym = Rf_lang3(R_Bracket2Symbol, x_sym, i_sym);
-    R_PreserveObject(x_i_sym);
-  }
-
-  static SEXP i_minus_sym = NULL;
-  if (i_minus_sym == NULL) {
-    SEXP minus_sym = Rf_install("-");
-    // Constructs a call of the form `i - 1`
-    i_minus_sym = Rf_lang3(minus_sym, i_sym, Rf_ScalarInteger(1));
-    R_PreserveObject(i_minus_sym);
-  }
-
-  SEXP index_sym = init_missing ? i_minus_sym : i_sym;
-
-  SEXP y_sym = Rf_install(".y");
-  // Constructs a call of the form y[[i]] or y[[i - 1]]
-  SEXP y_i_sym = PROTECT(Rf_lang3(R_Bracket2Symbol, y_sym, index_sym));
-
-  SEXP f_sym = Rf_install(".f");
-
-  // No direction choice for `reduce2()`
-  SEXP call = Rf_lang5(f_sym, out, x_i_sym, y_i_sym, R_DotsSymbol);
-  UNPROTECT(1);  // y_i_sym
-  return call;
 }
 
 SEXP reduce2_impl(
@@ -288,9 +269,25 @@ SEXP reduce2_impl(
   ) {
   const int force = 3; // Number of arguments to force
 
+  if (!Rf_asLogical(left_arg)) {
+    // This shouldn't be accessible by a normal user
+    Rf_errorcall(
+      R_NilValue,
+      "Cannot use `.dir = \"backward\"` with `reduce2()` or `accumulate2()`."
+    );
+  }
+
+  const bool dots = env_dots_length(ffi_env) != 0;
+  SEXP call = dots ? call_reduce2_dots : call_reduce2;
+
+  SEXP y_call = Rf_asLogical(init_missing_arg) ?
+    call_dot_y_subset2_i_minus :
+    call_dot_y_subset2_i;
+
   return reduce_loop(
     accumulate_arg,
-    make_reduce2_call_,
+    call,
+    y_call,
     ffi_env,
     ffi_n,
     ffi_i,
@@ -301,4 +298,50 @@ SEXP reduce2_impl(
     progress,
     force
   );
+}
+
+void reduce_init(void) {
+  sym_i = Rf_install("i");
+  sym_dot_f = Rf_install(".f");
+  sym_dot_x = Rf_install(".x");
+  sym_dot_y = Rf_install(".y");
+  sym_acc = Rf_install("acc");
+  sym_dot_x_i = Rf_install(".x_i");
+  sym_dot_y_i = Rf_install(".y_i");
+
+  // `.x[[i]]` and `.y[[i]]`
+  call_dot_x_subset2_i = Rf_lang3(R_Bracket2Symbol, sym_dot_x, sym_i);
+  R_PreserveObject(call_dot_x_subset2_i);
+  call_dot_y_subset2_i = Rf_lang3(R_Bracket2Symbol, sym_dot_y, sym_i);
+  R_PreserveObject(call_dot_y_subset2_i);
+
+  // `.y[[i - 1]]`
+  SEXP call_i_minus = PROTECT(
+    Rf_lang3(Rf_install("-"), sym_i, Rf_ScalarInteger(1))
+  );
+  call_dot_y_subset2_i_minus = Rf_lang3(
+    R_Bracket2Symbol, sym_dot_y, call_i_minus
+  );
+  R_PreserveObject(call_dot_y_subset2_i_minus);
+  UNPROTECT(1);  // call_i_minus
+
+  // Left-reduce passes the result-so-far on the left, right-reduce
+  // passes it on the right. A left-reduce produces left-leaning
+  // computation trees while right-reduce produces right-leaning trees.
+  call_reduce = Rf_lang3(sym_dot_f, sym_acc, sym_dot_x_i);
+  R_PreserveObject(call_reduce);
+  call_reduce_dots = Rf_lang4(sym_dot_f, sym_acc, sym_dot_x_i, R_DotsSymbol);
+  R_PreserveObject(call_reduce_dots);
+  call_reduce_bwd = Rf_lang3(sym_dot_f, sym_dot_x_i, sym_acc);
+  R_PreserveObject(call_reduce_bwd);
+  call_reduce_bwd_dots = Rf_lang4(sym_dot_f, sym_dot_x_i, sym_acc, R_DotsSymbol);
+  R_PreserveObject(call_reduce_bwd_dots);
+
+  // No direction choice for `reduce2()`
+  call_reduce2 = Rf_lang4(sym_dot_f, sym_acc, sym_dot_x_i, sym_dot_y_i);
+  R_PreserveObject(call_reduce2);
+  call_reduce2_dots = Rf_lang5(
+    sym_dot_f, sym_acc, sym_dot_x_i, sym_dot_y_i, R_DotsSymbol
+  );
+  R_PreserveObject(call_reduce2_dots);
 }

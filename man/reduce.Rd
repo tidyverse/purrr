@@ -68,12 +68,12 @@ function that takes two values and returns a single value: reducing
 \details{
 \code{.f} is called once for each element of \code{.x} (starting with the first
 element if \code{.init} is supplied, and the second otherwise), as
-\code{.f(acc, .x[[i]], ...)}, where \code{acc} is the accumulated value. With
-\code{.dir = "backward"}, the argument order is reversed:
-\code{.f(.x[[i]], acc, ...)}.
+\verb{.f(acc, .x[[1]], ...), .f(acc, .x[[2]], ...), ...}, where \code{acc} is the
+accumulated value. With \code{.dir = "backward"}, the argument order is
+reversed: \verb{.f(.x[[1]], acc, ...), .f(.x[[2]], acc, ...), ...}.
 
 \code{reduce2()} additionally passes an element of \code{.y}:
-\code{.f(acc, .x[[i]], .y[[i]], ...)}.
+\verb{.f(acc, .x[[1]], .y[[1]], ...), .f(acc, .x[[2]], .y[[2]], ...), ...}.
 
 Note in particular that:
 \itemize{

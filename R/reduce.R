@@ -65,12 +65,12 @@
 #' @details
 #' `.f` is called once for each element of `.x` (starting with the first
 #' element if `.init` is supplied, and the second otherwise), as
-#' `.f(acc, .x[[i]], ...)`, where `acc` is the accumulated value. With
-#' `.dir = "backward"`, the argument order is reversed:
-#' `.f(.x[[i]], acc, ...)`.
+#' `.f(acc, .x[[1]], ...), .f(acc, .x[[2]], ...), ...`, where `acc` is the
+#' accumulated value. With `.dir = "backward"`, the argument order is
+#' reversed: `.f(.x[[1]], acc, ...), .f(.x[[2]], acc, ...), ...`.
 #'
 #' `reduce2()` additionally passes an element of `.y`:
-#' `.f(acc, .x[[i]], .y[[i]], ...)`.
+#' `.f(acc, .x[[1]], .y[[1]], ...), .f(acc, .x[[2]], .y[[2]], ...), ...`.
 #'
 #' Note in particular that:
 #'

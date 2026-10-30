@@ -11,6 +11,7 @@
 
 extern void unbound_init(void);
 extern void map_init(void);
+extern void reduce_init(void);
 
 /* .Call calls */
 extern SEXP coerce_impl(SEXP, SEXP);
@@ -52,4 +53,5 @@ export void R_init_purrr(DllInfo *dll)
     cleancall_init();
     unbound_init();
     map_init();
+    reduce_init();
 }
