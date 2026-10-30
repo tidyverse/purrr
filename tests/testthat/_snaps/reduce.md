@@ -57,7 +57,7 @@
 # prototype cannot be specified for accumulate() if told not to simplify
 
     Code
-      accumulate(c("b", "a"), ~.y, .simplify = FALSE, .ptype = character())
+      accumulate(c("b", "a"), function(x, y) y, .simplify = FALSE, .ptype = character())
     Condition
       Error in `accumulate()`:
       ! Can't specify `ptype` when `simplify = FALSE`.
@@ -65,7 +65,7 @@
 # accumulate() fails when cannot simplify to prototype
 
     Code
-      accumulate(list("foo", 1), ~.y, .ptype = integer())
+      accumulate(list("foo", 1), function(x, y) y, .ptype = integer())
     Condition
       Error in `accumulate()`:
       ! Can't convert `res[[1]]` <character> to <integer>.
@@ -145,7 +145,7 @@
 # accumulate2() does fail when simplification is required yet impossible
 
     Code
-      accumulate2(list(1, "a"), 0L, ~.y, .simplify = TRUE)
+      accumulate2(list(1, "a"), 0L, function(x, y, z) y, .simplify = TRUE)
     Condition
       Error in `accumulate2()`:
       ! Can't combine `res[[1]]` <double> and `res[[2]]` <character>.
@@ -153,7 +153,7 @@
 # prototype cannot be specified for accumulate2() if told not to simplify
 
     Code
-      accumulate2(c("b", "a"), 0L, ~.y, .simplify = FALSE, .ptype = character())
+      accumulate2(c("b", "a"), 0L, function(x, y, z) y, .simplify = FALSE, .ptype = character())
     Condition
       Error in `accumulate2()`:
       ! Can't specify `ptype` when `simplify = FALSE`.
@@ -161,7 +161,7 @@
 # accumulate2() fails when cannot simplify to prototype
 
     Code
-      accumulate2(list("foo", 1), 0L, ~.y, .ptype = integer())
+      accumulate2(list("foo", 1), 0L, function(x, y, z) y, .ptype = integer())
     Condition
       Error in `accumulate2()`:
       ! Can't convert `res[[1]]` <character> to <integer>.

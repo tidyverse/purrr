@@ -427,7 +427,7 @@ test_that("accumulate() does fail when simplification is required yet impossible
 
 test_that("accumulate() won't simplify if told not to", {
   expect_identical(
-    accumulate(list("foo", factor("bar")), ~.y, .simplify = FALSE),
+    accumulate(list("foo", factor("bar")), \(x, y) y, .simplify = FALSE),
     list("foo", factor("bar"))
   )
 })
@@ -437,7 +437,7 @@ test_that("prototype can be specified for accumulate() to simplify to", {
   expect_identical(
     accumulate(
       list("foo", factor("bar")),
-      ~.y,
+      \(x, y) y,
       .ptype = factor(levels = c("foo", "bar", "baz"))
     ),
     factor(c("foo", "bar"), levels = c("foo", "bar", "baz"))
@@ -446,14 +446,14 @@ test_that("prototype can be specified for accumulate() to simplify to", {
 
 test_that("prototype cannot be specified for accumulate() if told not to simplify", {
   expect_snapshot(
-    accumulate(c("b", "a"), ~.y, .simplify = FALSE, .ptype = character()),
+    accumulate(c("b", "a"), \(x, y) y, .simplify = FALSE, .ptype = character()),
     error = TRUE
   )
 })
 
 test_that("accumulate() fails when cannot simplify to prototype", {
   expect_snapshot(
-    accumulate(list("foo", 1), ~.y, .ptype = integer()),
+    accumulate(list("foo", 1), \(x, y) y, .ptype = integer()),
     error = TRUE
   )
 })
@@ -533,35 +533,20 @@ test_that("if input length 1 and init given, reduce2() reduces value with init",
 ## Early return tests ----
 test_that("reduce2() can shortcircuit reduction with done()", {
   x <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
-  out <- reduce2(
-    x,
-    1:5,
-    \(.x, .y, ...) if (.y) c(.x, "foo") else done(.x),
-    .init = NULL
-  )
+
+  f1 <- \(.x, .y, ...) if (.y) c(.x, "foo") else done(.x)
+  out <- reduce2(x, 1:5, f1, .init = NULL)
   expect_identical(out, c("foo", "foo"))
 
   # Empty done box yields the same value as returning the
   # result-so-far (the last value) in a done box
-  out2 <- reduce2(
-    x,
-    1:5,
-    ~ {
-      if (.y) c(.x, "foo") else done()
-    },
-    .init = NULL
-  )
+  f2 <- \(x, y, z) if (y) c(x, "foo") else done()
+  out2 <- reduce2(x, 1:5, f2, .init = NULL)
   expect_identical(out2, out)
 
   # Done box can also return a value that had one last transformation applied to it
-  out3 <- reduce2(
-    x,
-    1:5,
-    ~ {
-      if (.y) c(.x, "foo") else done(paste0(.x, "+"))
-    },
-    .init = NULL
-  )
+  f3 <- \(x, y, z) if (y) c(x, "foo") else done(paste0(x, "+"))
+  out3 <- reduce2(x, 1:5, f3, .init = NULL)
   expect_identical(out3, c("foo+", "foo+"))
 })
 
@@ -716,26 +701,31 @@ test_that("accumulate2() cannot take .acc in ... due to argument collision", {
 ## .simplify tests ----
 test_that("accumulate2() uses vctrs to simplify results", {
   expect_identical(
-    accumulate2(list("foo", factor("bar")), 0L, ~.y),
+    accumulate2(list("foo", factor("bar")), 0L, \(x, y, z) y),
     c("foo", "bar")
   )
 })
 
 test_that("accumulate2() does not fail when input can't be simplified", {
-  expect_identical(accumulate2(list(1L, 2:3), 0L, ~.y), list(1L, 2:3))
-  expect_identical(accumulate2(list(1, "a"), 0L, ~.y), list(1, "a"))
+  expect_identical(accumulate2(list(1L, 2:3), 0L, \(x, y, z) y), list(1L, 2:3))
+  expect_identical(accumulate2(list(1, "a"), 0L, \(x, y, z) y), list(1, "a"))
 })
 
 test_that("accumulate2() does fail when simplification is required yet impossible", {
   expect_snapshot(
-    accumulate2(list(1, "a"), 0L, ~.y, .simplify = TRUE),
+    accumulate2(list(1, "a"), 0L, \(x, y, z) y, .simplify = TRUE),
     error = TRUE
   )
 })
 
 test_that("accumulate2() won't simplify if told not to", {
   expect_identical(
-    accumulate2(list("foo", factor("bar")), 0L, ~.y, .simplify = FALSE),
+    accumulate2(
+      list("foo", factor("bar")),
+      0L,
+      \(x, y, z) y,
+      .simplify = FALSE
+    ),
     list("foo", factor("bar"))
   )
 })
@@ -746,7 +736,7 @@ test_that("prototype can be specified for accumulate2() to simplify to", {
     accumulate2(
       list("foo", factor("bar")),
       0L,
-      ~.y,
+      \(x, y, z) y,
       .ptype = factor(levels = c("foo", "bar", "baz"))
     ),
     factor(c("foo", "bar"), levels = c("foo", "bar", "baz"))
@@ -755,14 +745,20 @@ test_that("prototype can be specified for accumulate2() to simplify to", {
 
 test_that("prototype cannot be specified for accumulate2() if told not to simplify", {
   expect_snapshot(
-    accumulate2(c("b", "a"), 0L, ~.y, .simplify = FALSE, .ptype = character()),
+    accumulate2(
+      c("b", "a"),
+      0L,
+      \(x, y, z) y,
+      .simplify = FALSE,
+      .ptype = character()
+    ),
     error = TRUE
   )
 })
 
 test_that("accumulate2() fails when cannot simplify to prototype", {
   expect_snapshot(
-    accumulate2(list("foo", 1), 0L, ~.y, .ptype = integer()),
+    accumulate2(list("foo", 1), 0L, \(x, y, z) y, .ptype = integer()),
     error = TRUE
   )
 })
