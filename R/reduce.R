@@ -62,6 +62,22 @@
 #' the left produces a left-leaning nested list (or tree), while
 #' reducing `list()` from the right produces a right-leaning list.
 #'
+#' @details
+#' `.f` is called once for each element of `.x` (starting with the first
+#' element if `.init` is supplied, and the second otherwise), as
+#' `.f(acc, .x[[i]], ...)`, where `acc` is the accumulated value. With
+#' `.dir = "backward"`, the argument order is reversed:
+#' `.f(.x[[i]], acc, ...)`.
+#'
+#' `reduce2()` additionally passes an element of `.y`:
+#' `.f(acc, .x[[i]], .y[[i]], ...)`.
+#'
+#' Note in particular that:
+#'
+#' * `.x` (and `.y`) are subset with `[[`, using the `[[` method if they
+#'   have one.
+#' * If `.f` is a function, `...` are passed to it on every call, unchanged.
+#'
 #' @seealso [accumulate()] for a version that returns all intermediate
 #'   values of the reduction.
 #' @examples
@@ -351,6 +367,7 @@ reduce_init <- function(x, init, left = TRUE, error_call = caller_env()) {
 #'   iteration).
 #'
 #' @inheritSection reduce Direction
+#' @inherit reduce details
 #'
 #' @seealso [reduce()] when you only need the final reduced value.
 #' @examples

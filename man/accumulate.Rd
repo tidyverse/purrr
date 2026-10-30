@@ -119,6 +119,23 @@ application.
 
 \code{accumulate2()} sequentially applies a function to elements of two lists, \code{.x} and \code{.y}.
 }
+\details{
+\code{.f} is called once for each element of \code{.x} (starting with the first
+element if \code{.init} is supplied, and the second otherwise), as
+\code{.f(acc, .x[[i]], ...)}, where \code{acc} is the accumulated value. With
+\code{.dir = "backward"}, the argument order is reversed:
+\code{.f(.x[[i]], acc, ...)}.
+
+\code{reduce2()} additionally passes an element of \code{.y}:
+\code{.f(acc, .x[[i]], .y[[i]], ...)}.
+
+Note in particular that:
+\itemize{
+\item \code{.x} (and \code{.y}) are subset with \code{[[}, using the \code{[[} method if they
+have one.
+\item If \code{.f} is a function, \code{...} are passed to it on every call, unchanged.
+}
+}
 \section{Direction}{
 
 

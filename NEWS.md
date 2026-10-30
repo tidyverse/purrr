@@ -15,7 +15,7 @@
 * `list_along()`, `invoke_map_df()`, and `invoke_map_dfc()` now always warn about their deprecation, as does supplying pairlists, calls, or expressions to `map()` and friends.
 * All `map()` functions now have less overhead, particularly on unclassed vectors, so they run faster when `.f` itself is very fast, as in the common cases of `map(x, names)` or `map_lgl(x, is.null)` (#1263, with an assist from @ErdaradunGaztea). As a side effect, `.f` is now called as `.f(.x_i, ...)` (with `...` omitted when empty) rather than `.f(.x[[i]], ...)`, which affects code that uses `substitute()`, `match.call()`, or `sys.call()`.
 * `pmap()` now passes `user_env` to the vctrs compatibility helpers, fixing a spurious "argument `user_env` is missing" error when given a pairlist.
-* `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` have now a `.progress` argument to create a progress bar (#1168).
+* `reduce()`, `reduce2()`, `accumulate()`, and `accumulate2()` have now a `.progress` argument to create a progress bar (#1168). As a side effect of the C implementation, `.f` is now called as `.f(acc, .x[[i]], ...)` (or `.f(.x[[i]], acc, ...)` with `.dir = "backward"`, and with an additional `.y[[i]]` argument for `reduce2()`/`accumulate2()`), which affects code that uses `substitute()`, `match.call()`, or `sys.call()`.
 * `reduce()` and `accumulate()` no longer duplicate `.init`, so by-reference accumulators (e.g. environments) are mutated in place as before the C rewrite, and empty inputs avoid an unnecessary copy (#1168).
 
 # purrr 1.2.2

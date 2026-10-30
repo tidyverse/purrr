@@ -143,6 +143,19 @@ test_that("reduce() cannot take .acc in ... due to argument collision", {
 })
 
 ## Other tests ----
+test_that("reduce() creates simple call", {
+  out <- reduce(1, function(acc, x) sys.call(), .init = 0)
+  expect_equal(out, quote(.f(0, .x[[i]], ...)))
+
+  out <- reduce(1, function(x, acc) sys.call(), .dir = "backward", .init = 0)
+  expect_equal(out, quote(.f(.x[[i]], 0, ...)))
+})
+
+test_that("reduce2() creates simple call", {
+  out <- reduce2(1, "a", function(acc, x, y) sys.call(), .init = 0)
+  expect_equal(out, quote(.f(0, .x[[i]], .y[[i]], ...)))
+})
+
 test_that("reduce() forces arguments (#643)", {
   compose <- function(f, g) function(x) f(g(x))
   expect_identical(reduce(list(identity, identity), compose)(1), 1)
