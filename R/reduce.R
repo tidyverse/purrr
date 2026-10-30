@@ -256,10 +256,7 @@ accumulate_names <- function(nms, init_missing, left) {
   }
 
   if (!init_missing) {
-    nms <- c(".init", nms)
-  }
-  if (!left) {
-    nms <- rev(nms)
+    nms <- if (left) c(".init", nms) else c(nms, ".init")
   }
 
   nms
