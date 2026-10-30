@@ -65,11 +65,10 @@
 # accumulate() fails when cannot simplify to prototype
 
     Code
-      accumulate(list("foo", factor("bar")), ~.y, .ptype = factor(levels = "baz"))
+      accumulate(list("foo", 1), ~.y, .ptype = integer())
     Condition
       Error in `accumulate()`:
-      ! Can't convert from `res[[1]]` <character> to <factor<3697e>> due to loss of generality.
-      * Locations: 1
+      ! Can't convert `res[[1]]` <character> to <integer>.
 
 # reduce2() requires .x to be 1 element longer than .y (used for initial value)
 
@@ -162,9 +161,8 @@
 # accumulate2() fails when cannot simplify to prototype
 
     Code
-      accumulate2(list("foo", factor("bar")), 0L, ~.y, .ptype = factor(levels = "baz"))
+      accumulate2(list("foo", 1), 0L, ~.y, .ptype = integer())
     Condition
       Error in `accumulate2()`:
-      ! Can't convert from `res[[1]]` <character> to <factor<3697e>> due to loss of generality.
-      * Locations: 1
+      ! Can't convert `res[[1]]` <character> to <integer>.
 

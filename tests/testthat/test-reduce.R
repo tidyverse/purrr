@@ -434,11 +434,7 @@ test_that("prototype cannot be specified for accumulate() if told not to simplif
 
 test_that("accumulate() fails when cannot simplify to prototype", {
   expect_snapshot(
-    accumulate(
-      list("foo", factor("bar")),
-      ~.y,
-      .ptype = factor(levels = "baz")
-    ),
+    accumulate(list("foo", 1), ~.y, .ptype = integer()),
     error = TRUE
   )
 })
@@ -747,12 +743,7 @@ test_that("prototype cannot be specified for accumulate2() if told not to simpli
 
 test_that("accumulate2() fails when cannot simplify to prototype", {
   expect_snapshot(
-    accumulate2(
-      list("foo", factor("bar")),
-      0L,
-      ~.y,
-      .ptype = factor(levels = "baz")
-    ),
+    accumulate2(list("foo", 1), 0L, ~.y, .ptype = integer()),
     error = TRUE
   )
 })
