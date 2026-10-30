@@ -6,11 +6,11 @@
 \alias{compact}
 \title{Keep/discard elements based on their values}
 \usage{
-keep(.x, .p, ...)
+keep(.x, .p, ..., .progress = FALSE)
 
-discard(.x, .p, ...)
+discard(.x, .p, ..., .progress = FALSE)
 
-compact(.x, .p = identity)
+compact(.x, .p = identity, .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or vector.}
@@ -27,6 +27,10 @@ in parallel. See \code{\link[=in_parallel]{in_parallel()}} for more details.
 Use of \code{...} is not permitted in this context.}
 
 \item{...}{Additional arguments passed on to \code{.p}.}
+
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 }
 \description{
 \code{keep()} selects all elements where \code{.p} evaluates to \code{TRUE};

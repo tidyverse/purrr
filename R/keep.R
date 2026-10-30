@@ -23,6 +23,7 @@
 #'
 #' @seealso [keep_at()]/[discard_at()] to keep/discard elements by name.
 #' @param ... Additional arguments passed on to `.p`.
+#' @inheritParams map
 #' @details
 #' `.p` is called once for each element of `.x`, as
 #' `.p(.x[[1]], ...), .p(.x[[2]], ...), ...`, and must return a single
@@ -48,28 +49,28 @@
 #' # compact() discards elements that are NULL or that have length zero
 #' list(a = "a", b = NULL, c = integer(0), d = NA, e = list()) |>
 #'   compact()
-keep <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+keep <- function(.x, .p, ..., .progress = FALSE) {
+  where <- where_if(.x, .p, ..., .progress = .progress)
   .x[!is.na(where) & where]
 }
 
 #' @export
 #' @rdname keep
-discard <- function(.x, .p, ...) {
-  where <- where_if(.x, .p, ...)
+discard <- function(.x, .p, ..., .progress = FALSE) {
+  where <- where_if(.x, .p, ..., .progress = .progress)
   .x[is.na(where) | !where]
 }
 
 #' @export
 #' @rdname keep
-compact <- function(.x, .p = identity) {
+compact <- function(.x, .p = identity, .progress = FALSE) {
   .f <- as_mapper(.p)
   if (running_in_parallel(.f)) {
     .p <- crate_fn(\(x) is_empty(f(x)), f = .f, is_empty = rlang::is_empty)
   } else {
     .p <- function(x) is_empty(.f(x))
   }
-  discard(.x, .p)
+  discard(.x, .p, .progress = .progress)
 }
 
 
