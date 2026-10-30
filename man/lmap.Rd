@@ -6,11 +6,11 @@
 \alias{lmap_at}
 \title{Apply a function to list-elements of a list}
 \usage{
-lmap(.x, .f, ...)
+lmap(.x, .f, ..., .progress = FALSE)
 
-lmap_if(.x, .p, .f, ..., .else = NULL)
+lmap_if(.x, .p, .f, ..., .else = NULL, .progress = FALSE)
 
-lmap_at(.x, .at, .f, ...)
+lmap_at(.x, .at, .f, ..., .progress = FALSE)
 }
 \arguments{
 \item{.x}{A list or data frame.}
@@ -31,6 +31,10 @@ x |> map(\\(x) f(x, 1, 2, collapse = ","))
 
 This makes it easier to understand which arguments belong to which
 function and will tend to yield better error messages.}
+
+\item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
+a basic progress bar, use a string to give it a name, or see
+\link{progress_bars} for more details.}
 
 \item{.p}{A predicate function specified in one of the following ways:
 \itemize{

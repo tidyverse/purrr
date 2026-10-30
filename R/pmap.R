@@ -139,12 +139,6 @@ pmap_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  .progress <- as_progress(
-    .progress,
-    user_env = .purrr_user_env,
-    caller_env = .purrr_error_call
-  )
-
   .l <- vctrs_list_compat(.l, .purrr_user_env, error_call = .purrr_error_call)
   .l <- map(.l, vctrs_vec_compat, user_env = .purrr_user_env)
 
@@ -154,6 +148,13 @@ pmap_ <- function(
     .size = n,
     .arg = ".l",
     .call = .purrr_error_call
+  )
+
+  .progress <- as_progress(
+    .progress,
+    total = n,
+    user_env = .purrr_user_env,
+    error_call = .purrr_error_call
   )
 
   if (length(.l) > 0L) {
@@ -178,7 +179,7 @@ pmap_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(
+    .Call(
       pmap_impl,
       .l,
       environment(),

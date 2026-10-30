@@ -5,10 +5,7 @@
 #include "coerce.h"
 #include "utils.h"
 
-// Including <cli/progress.h> before "cleancall.h" because we want to register
-// exiting handlers ourselves, rather than letting cli register them for us.
 #include <cli/progress.h>
-#include "cleancall.h"
 
 static SEXP sym_i = NULL;
 static SEXP sym_dot_f = NULL;
@@ -26,11 +23,6 @@ static SEXP call_map_dots = NULL;
 static SEXP call_map2 = NULL;
 static SEXP call_map2_dots = NULL;
 
-static void cb_progress_done(void* bar_ptr) {
-  SEXP bar = (SEXP)bar_ptr;
-  cli_progress_done(bar);
-  R_ReleaseObject(bar);
-}
 
 static inline SEXP call_loop(
   const void* p_data,
@@ -40,16 +32,25 @@ static inline SEXP call_loop(
   int n,
   SEXP names
 ) {
-  SEXP bar = cli_progress_bar(n, progress);
-  R_PreserveObject(bar);
-  r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
+  // `progress` is either `NULL` or a `"purrr_progress_bar"` wrapping a
+  // bar created on the R side (see `as_progress()`), which owns its
+  // initialisation and termination; we just tick it.
+  const bool has_bar = Rf_inherits(progress, "purrr_progress_bar");
+  SEXP bar = R_NilValue;
+  if (has_bar) {
+    bar = VECTOR_ELT(progress, 0);
+    cli_progress_init_timer();
+  }
 
   SEXP out = PROTECT(Rf_allocVector(type, n));
   Rf_setAttrib(out, R_NamesSymbol, names);
 
+  int since_tick = 0;
   for (int i = 0; i < n; ++i) {
-    if (CLI_SHOULD_TICK) {
-      cli_progress_set(bar, i);
+    ++since_tick;
+    if (has_bar && CLI_SHOULD_TICK) {
+      cli_progress_add(bar, since_tick);
+      since_tick = 0;
     }
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
@@ -63,6 +64,11 @@ static inline SEXP call_loop(
 
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);
+  }
+
+  // Add any iterations since the last due tick, so the bar ends at the true count
+  if (has_bar && since_tick > 0) {
+    cli_progress_add(bar, since_tick);
   }
 
   UNPROTECT(1);

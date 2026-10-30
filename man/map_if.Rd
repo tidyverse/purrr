@@ -5,7 +5,7 @@
 \alias{map_at}
 \title{Apply a function to each element of a vector conditionally}
 \usage{
-map_if(.x, .p, .f, ..., .else = NULL)
+map_if(.x, .p, .f, ..., .else = NULL, .progress = FALSE)
 
 map_at(.x, .at, .f, ..., .progress = FALSE)
 }
@@ -58,13 +58,13 @@ function and will tend to yield better error messages.}
 \item{.else}{A function applied to elements of \code{.x} for which \code{.p}
 returns \code{FALSE}.}
 
-\item{.at}{A logical, integer, or character vector giving the elements
-to select. Alternatively, a function that takes a vector of names,
-and returns a logical, integer, or character vector of elements to select.}
-
 \item{.progress}{Whether to show a progress bar. Use \code{TRUE} to turn on
 a basic progress bar, use a string to give it a name, or see
 \link{progress_bars} for more details.}
+
+\item{.at}{A logical, integer, or character vector giving the elements
+to select. Alternatively, a function that takes a vector of names,
+and returns a logical, integer, or character vector of elements to select.}
 }
 \description{
 The functions \code{map_if()} and \code{map_at()} take \code{.x} as input, apply

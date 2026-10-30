@@ -204,14 +204,15 @@ map_ <- function(
   .purrr_user_env = caller_env(2),
   .purrr_error_call = caller_env()
 ) {
-  .progress <- as_progress(
-    .progress,
-    user_env = .purrr_user_env,
-    caller_env = .purrr_error_call
-  )
-
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
   vec_assert(.x, arg = ".x", call = .purrr_error_call)
+
+  .progress <- as_progress(
+    .progress,
+    total = vec_size(.x),
+    user_env = .purrr_user_env,
+    error_call = .purrr_error_call
+  )
 
   if (running_in_parallel(.f)) {
     return(mmap_(.x, .f, .progress, .type, .purrr_error_call, ...))
@@ -227,7 +228,7 @@ map_ <- function(
     i = i,
     names = names,
     error_call = .purrr_error_call,
-    call_with_cleanup(
+    .Call(
       map_impl,
       .x,
       environment(),
@@ -250,8 +251,10 @@ mmap_ <- function(.x, .f, .progress, .type, error_call, ...) {
 
   m <- mirai::mirai_map(.x, .f)
 
-  options <- if (isFALSE(.progress)) {
+  options <- if (is.null(.progress)) {
     ".stop"
+  } else if (inherits(.progress, "purrr_progress_bar")) {
+    list(.stop = TRUE, .progress = set_names(1L, .progress$id))
   } else if (is.logical(.progress)) {
     c(".stop", ".progress")
   } else if (is.character(.progress) || is.list(.progress)) {

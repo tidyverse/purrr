@@ -112,13 +112,14 @@ modify <- function(.x, .f, ..., .progress = FALSE) {
 #' @rdname modify
 #' @inheritParams map_if
 #' @export
-modify_if <- function(.x, .p, .f, ..., .else = NULL) {
+modify_if <- function(.x, .p, .f, ..., .else = NULL, .progress = FALSE) {
   where <- where_if(.x, .p)
-  .x <- modify_where(.x, .where = where, .f, ...)
+  .progress <- as_progress(.progress, total = if_total(where, .else))
+  .x <- modify_where(.x, .where = where, .f, ..., .progress = .progress)
 
   if (!is.null(.else)) {
     .else <- as_mapper(.else, ...)
-    .x <- modify_where(.x, .where = !where, .else, ...)
+    .x <- modify_where(.x, .where = !where, .else, ..., .progress = .progress)
   }
 
   .x
@@ -127,9 +128,9 @@ modify_if <- function(.x, .p, .f, ..., .else = NULL) {
 #' @rdname modify
 #' @inheritParams map_at
 #' @export
-modify_at <- function(.x, .at, .f, ...) {
+modify_at <- function(.x, .at, .f, ..., .progress = FALSE) {
   where <- where_at(.x, .at)
-  modify_where(.x, .where = where, .f, ...)
+  modify_where(.x, .where = where, .f, ..., .progress = .progress)
 }
 
 #' @rdname modify
@@ -176,24 +177,40 @@ modify_where <- function(
   .where,
   .f,
   ...,
+  .progress = FALSE,
   .purrr_error_call = caller_env()
 ) {
   if (obj_is_list(.x)) {
     out <- vec_proxy(.x)
-    out[.where] <- no_zap(map(out[.where], .f, ...), .purrr_error_call)
+    out[.where] <- no_zap(
+      map(out[.where], .f, ..., .progress = .progress),
+      .purrr_error_call
+    )
     vec_restore(out, .x)
   } else if (is.data.frame(.x)) {
     size <- vec_size(.x)
     out <- unclass(vec_proxy(.x))
-    new <- no_zap(map(out[.where], .f, ...), .purrr_error_call)
+    new <- no_zap(
+      map(out[.where], .f, ..., .progress = .progress),
+      .purrr_error_call
+    )
     out[.where] <- vec_recycle_common(!!!new, .size = size, .arg = "out")
     out <- new_data_frame(out, n = size)
     vec_restore(out, .x)
   } else if (vec_is(.x)) {
-    .x[.where] <- map_vec(.x[.where], .f, ..., .ptype = .x)
+    .x[.where] <- map_vec(
+      .x[.where],
+      .f,
+      ...,
+      .ptype = .x,
+      .progress = .progress
+    )
     .x
   } else if (is.null(.x) || is.list(.x)) {
-    .x[.where] <- no_zap(map(.x[.where], .f, ...), .purrr_error_call)
+    .x[.where] <- no_zap(
+      map(.x[.where], .f, ..., .progress = .progress),
+      .purrr_error_call
+    )
     .x
   } else {
     cli::cli_abort(
