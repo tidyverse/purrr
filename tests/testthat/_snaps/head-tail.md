@@ -64,3 +64,35 @@
       ! `.x` must be a vector, not a function.
       i Read our FAQ about scalar types (`?vctrs::faq_error_scalar_type`) to learn more.
 
+# .f parameter passed to head_while()/tail_while() doesn't override .p parameter
+
+    Code
+      head_while(5:-5, .f = function(x, ...) x < 3)
+    Condition
+      Error in `as_mapper()`:
+      ! formal argument ".f" matched by multiple actual arguments
+
+---
+
+    Code
+      tail_while(5:-5, .f = function(x, ...) x > 3)
+    Condition
+      Error in `as_mapper()`:
+      ! formal argument ".f" matched by multiple actual arguments
+
+# passing .dir parameter to head_while()/tail_while() results in an error
+
+    Code
+      head_while(5:-5, function(x) x < 0, .dir = "backward")
+    Condition
+      Error in `which_satisfies_predicate()`:
+      ! formal argument ".dir" matched by multiple actual arguments
+
+---
+
+    Code
+      tail_while(5:-5, function(x) x > 0, .dir = "forward")
+    Condition
+      Error in `which_satisfies_predicate()`:
+      ! formal argument ".dir" matched by multiple actual arguments
+

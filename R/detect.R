@@ -59,14 +59,28 @@ detect <- function(
   .dir = c("forward", "backward"),
   .default = NULL
 ) {
-  index <- which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
+  index <- which_satisfies_predicate(
+    .x = .x,
+    .p = .f,
+    ...,
+    .dir = .dir,
+    .negate = FALSE,
+    .p_arg_name = ".f"
+  )
   if (index == 0) .default else .x[[index]]
 }
 
 #' @export
 #' @rdname detect
 detect_index <- function(.x, .f, ..., .dir = c("forward", "backward")) {
-  which_satisfies_predicate(.x, .p = .f, ..., .dir = .dir, .negate = FALSE, .p_arg_name = ".f")
+  which_satisfies_predicate(
+    .x = .x,
+    .p = .f,
+    ...,
+    .dir = .dir,
+    .negate = FALSE,
+    .p_arg_name = ".f"
+  )
 }
 
 #' Which element satisfies a predicate?
@@ -94,7 +108,7 @@ which_satisfies_predicate <- function(
   left <- arg_match0(.dir, c("forward", "backward")) == "forward"
   # Not using `as_predicate()` as R level predicate result checks are too slow.
   # Checks are done at the C level instead (#1169).
-  .p <- as_mapper(.p, ...)
+  .p <- as_mapper(.f = .p, ...)
 
   # Consistent with `map()`
   .x <- vctrs_vec_compat(.x, .purrr_user_env)
