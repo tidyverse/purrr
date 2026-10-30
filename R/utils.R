@@ -41,13 +41,12 @@ where_at <- function(
   }
 }
 
-where_if <- function(
-  .x,
-  .p,
-  ...,
-  .progress = FALSE,
-  .purrr_error_call = caller_env()
-) {
+# Number of elements `map_if()`/`modify_if()`/`lmap_if()` will map over
+if_total <- function(where, .else) {
+  if (is_null(.else)) sum(where) else length(where)
+}
+
+where_if <- function(.x, .p, ..., .purrr_error_call = caller_env()) {
   if (is_logical(.p)) {
     stopifnot(length(.p) == length(.x))
     .p
@@ -58,7 +57,6 @@ where_if <- function(
       .f = .p,
       ...,
       .type = "logical",
-      .progress = .progress,
       .purrr_error_call = .purrr_error_call
     )
   }

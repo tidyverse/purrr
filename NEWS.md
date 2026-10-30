@@ -10,7 +10,7 @@
 * `in_parallel()` is no longer experimental.
 * `in_parallel()` and parallel maps no longer require any additional packages, as mirai (>= 2.5.1) and carrier (>= 0.4.0) are now imported by purrr.
 * `in_parallel()` now accepts existing functions, so `.f` no longer needs to be defined inside the call, e.g. `in_parallel(sum)` or `in_parallel(fun, helper = helper)`.
-* `keep()`, `discard()`, `compact()`, `modify()`, `modify2()`, `imodify()`, `modify_at()`, `map_if()`, `modify_if()`, `lmap()`, `lmap_if()`, and `lmap_at()` gain an explicit `.progress` parameter (#1249).
+* `modify()`, `modify2()`, `imodify()`, `modify_at()`, `map_if()`, `modify_if()`, `lmap()`, `lmap_if()`, and `lmap_at()` gain an explicit `.progress` parameter (#1249).
 * Parallel maps created with `in_parallel()` can now use a shared progress bar (requires dev mirai).
 * `map()` and friends now support a named list for `.progress` when running in parallel, and errors raised while collecting parallel results (rather than in a task itself) now keep their original message (#1253).
 * `list_along()`, `invoke_map_df()`, and `invoke_map_dfc()` now always warn about their deprecation, as does supplying pairlists, calls, or expressions to `map()` and friends.

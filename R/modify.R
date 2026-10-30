@@ -113,11 +113,8 @@ modify <- function(.x, .f, ..., .progress = FALSE) {
 #' @inheritParams map_if
 #' @export
 modify_if <- function(.x, .p, .f, ..., .else = NULL, .progress = FALSE) {
-  .progress <- as_progress(
-    .progress,
-    total = (1 + !is_logical(.p)) * length(.x)
-  )
-  where <- where_if(.x, .p, .progress = .progress)
+  where <- where_if(.x, .p)
+  .progress <- as_progress(.progress, total = if_total(where, .else))
   .x <- modify_where(.x, .where = where, .f, ..., .progress = .progress)
 
   if (!is.null(.else)) {

@@ -58,11 +58,8 @@ lmap <- function(.x, .f, ..., .progress = FALSE) {
 #' @rdname lmap
 #' @export
 lmap_if <- function(.x, .p, .f, ..., .else = NULL, .progress = FALSE) {
-  .progress <- as_progress(
-    .progress,
-    total = (1 + !is_logical(.p)) * length(.x)
-  )
-  where <- where_if(.x, .p, .progress = .progress)
+  where <- where_if(.x, .p)
+  .progress <- as_progress(.progress, total = if_total(where, .else))
   lmap_helper(.x, .ind = where, .f, ..., .else = .else, .progress = .progress)
 }
 
