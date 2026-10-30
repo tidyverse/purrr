@@ -45,9 +45,12 @@ static inline SEXP call_loop(
   SEXP out = PROTECT(Rf_allocVector(type, n));
   Rf_setAttrib(out, R_NamesSymbol, names);
 
+  int since_tick = 0;
   for (int i = 0; i < n; ++i) {
+    ++since_tick;
     if (has_bar && CLI_SHOULD_TICK) {
-      cli_progress_add(bar, 1);
+      cli_progress_add(bar, since_tick);
+      since_tick = 0;
     }
     if (i % 1024 == 0) {
       R_CheckUserInterrupt();
@@ -61,6 +64,11 @@ static inline SEXP call_loop(
 
     set_vector_value(out, i, res, 0);
     UNPROTECT(1);
+  }
+
+  // Add any iterations since the last due tick, so the bar ends at the true count
+  if (has_bar && since_tick > 0) {
+    cli_progress_add(bar, since_tick);
   }
 
   UNPROTECT(1);

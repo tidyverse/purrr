@@ -100,6 +100,7 @@ as_progress <- function(
   # The C tick functions read these fields as doubles
   bar$current <- as.double(bar$current)
   bar$tick <- as.double(bar$tick)
+  bar$total <- as.double(bar$total)
   if (!is.null(show_after)) {
     bar$show_after <- bar$start + show_after
     bar$show_50 <- bar$start + show_after / 2
