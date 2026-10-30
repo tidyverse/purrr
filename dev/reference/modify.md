@@ -29,9 +29,9 @@ the `modify()` family always returns the same type as the input object.
 ``` r
 modify(.x, .f, ..., .progress = FALSE)
 
-modify_if(.x, .p, .f, ..., .else = NULL)
+modify_if(.x, .p, .f, ..., .else = NULL, .progress = FALSE)
 
-modify_at(.x, .at, .f, ...)
+modify_at(.x, .at, .f, ..., .progress = FALSE)
 
 modify2(.x, .y, .f, ..., .progress = FALSE)
 

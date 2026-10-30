@@ -59,19 +59,28 @@
   now accepts existing functions, so `.f` no longer needs to be defined
   inside the call, e.g. `in_parallel(sum)` or
   `in_parallel(fun, helper = helper)`.
-- [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) and
-  friends now support a named list for `.progress` when running in
-  parallel, and errors raised while collecting parallel results (rather
-  than in a task itself) now keep their original message
-  ([\#1253](https://github.com/tidyverse/purrr/issues/1253)).
 - [`keep()`](https://purrr.tidyverse.org/dev/reference/keep.md),
   [`discard()`](https://purrr.tidyverse.org/dev/reference/keep.md),
   [`compact()`](https://purrr.tidyverse.org/dev/reference/keep.md),
   [`modify()`](https://purrr.tidyverse.org/dev/reference/modify.md),
   [`modify2()`](https://purrr.tidyverse.org/dev/reference/modify.md),
-  and [`imodify()`](https://purrr.tidyverse.org/dev/reference/modify.md)
-  gain an explicit `.progress` parameter
+  [`imodify()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  [`modify_at()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  [`map_if()`](https://purrr.tidyverse.org/dev/reference/map_if.md),
+  [`modify_if()`](https://purrr.tidyverse.org/dev/reference/modify.md),
+  [`lmap()`](https://purrr.tidyverse.org/dev/reference/lmap.md),
+  [`lmap_if()`](https://purrr.tidyverse.org/dev/reference/lmap.md), and
+  [`lmap_at()`](https://purrr.tidyverse.org/dev/reference/lmap.md) gain
+  an explicit `.progress` parameter
   ([\#1249](https://github.com/tidyverse/purrr/issues/1249)).
+- Parallel maps created with
+  [`in_parallel()`](https://purrr.tidyverse.org/dev/reference/in_parallel.md)
+  can now use a shared progress bar (requires dev mirai).
+- [`map()`](https://purrr.tidyverse.org/dev/reference/map.md) and
+  friends now support a named list for `.progress` when running in
+  parallel, and errors raised while collecting parallel results (rather
+  than in a task itself) now keep their original message
+  ([\#1253](https://github.com/tidyverse/purrr/issues/1253)).
 - [`list_along()`](https://purrr.tidyverse.org/dev/reference/along.md),
   [`invoke_map_df()`](https://purrr.tidyverse.org/dev/reference/invoke.md),
   and

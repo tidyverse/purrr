@@ -20,11 +20,11 @@ This has several advantages:
 ## Usage
 
 ``` r
-lmap(.x, .f, ...)
+lmap(.x, .f, ..., .progress = FALSE)
 
-lmap_if(.x, .p, .f, ..., .else = NULL)
+lmap_if(.x, .p, .f, ..., .else = NULL, .progress = FALSE)
 
-lmap_at(.x, .at, .f, ...)
+lmap_at(.x, .at, .f, ..., .progress = FALSE)
 ```
 
 ## Arguments
@@ -53,6 +53,13 @@ lmap_at(.x, .at, .f, ...)
 
   This makes it easier to understand which arguments belong to which
   function and will tend to yield better error messages.
+
+- .progress:
+
+  Whether to show a progress bar. Use `TRUE` to turn on a basic progress
+  bar, use a string to give it a name, or see
+  [progress_bars](https://purrr.tidyverse.org/dev/reference/progress_bars.md)
+  for more details.
 
 - .p:
 

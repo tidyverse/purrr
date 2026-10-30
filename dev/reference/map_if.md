@@ -13,7 +13,7 @@ same length as the input.
 ## Usage
 
 ``` r
-map_if(.x, .p, .f, ..., .else = NULL)
+map_if(.x, .p, .f, ..., .else = NULL, .progress = FALSE)
 
 map_at(.x, .at, .f, ..., .progress = FALSE)
 ```
@@ -86,18 +86,18 @@ map_at(.x, .at, .f, ..., .progress = FALSE)
 
   A function applied to elements of `.x` for which `.p` returns `FALSE`.
 
-- .at:
-
-  A logical, integer, or character vector giving the elements to select.
-  Alternatively, a function that takes a vector of names, and returns a
-  logical, integer, or character vector of elements to select.
-
 - .progress:
 
   Whether to show a progress bar. Use `TRUE` to turn on a basic progress
   bar, use a string to give it a name, or see
   [progress_bars](https://purrr.tidyverse.org/dev/reference/progress_bars.md)
   for more details.
+
+- .at:
+
+  A logical, integer, or character vector giving the elements to select.
+  Alternatively, a function that takes a vector of names, and returns a
+  logical, integer, or character vector of elements to select.
 
 ## See also
 
