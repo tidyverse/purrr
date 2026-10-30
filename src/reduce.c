@@ -112,9 +112,9 @@ SEXP reduce_loop(
   R_PreserveObject(bar);
   r_call_on_exit((void (*)(void*)) cb_progress_done, (void*) bar);
 
-  SEXP out = Rf_duplicate(ffi_init);
   PROTECT_INDEX out_shelter;
-  PROTECT_WITH_INDEX(out, &out_shelter); ++nprot;
+  PROTECT_WITH_INDEX(ffi_init, &out_shelter); ++nprot;
+  SEXP out = ffi_init;
 
   SEXP acc_out = NULL;
   if (accumulate) {

@@ -36,6 +36,24 @@ test_that("if input empty and init given, reduce() returns init", {
   expect_equal(reduce(list(), `+`, .init = 0), 0)
 })
 
+test_that("reduce() and accumulate() don't duplicate .init", {
+  init <- new.env()
+  init$total <- 0
+  f <- function(acc, x) {
+    acc$total <- acc$total + x
+    acc
+  }
+
+  reduce(1:2, f, .init = init)
+  expect_identical(init$total, 3)
+  expect_identical(reduce(list(), f, .init = init), init)
+
+  init$total <- 0
+  out <- accumulate(1:2, f, .init = init)
+  expect_identical(init$total, 3)
+  expect_identical(out[[1]], init)
+})
+
 test_that("if input length 1, reduce() returns the first element", {
   x <- list("a")
   paste_dot <- function(.x, .y) {
